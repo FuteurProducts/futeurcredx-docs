@@ -1,0 +1,137 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 99 102 241;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 17 24 39;
+    --secondary-foreground: 209 213 219;
+
+    --muted: 31 41 55;
+    --muted-foreground: 209 213 219;
+
+    --accent: 17 24 39;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 255 255 255 / 0.1;
+    --input: 255 255 255 / 0.1;
+    --ring: 99 102 241;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 14 14 16;
+    --sidebar-foreground: 209 213 219;
+    --sidebar-primary: 99 102 241;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 17 24 39;
+    --sidebar-accent-foreground: 209 213 219;
+    --sidebar-border: 255 255 255 / 0.1;
+    --sidebar-ring: 99 102 241;
+  }
+
+  .dark {
+    --background: 14 14 16;
+    --foreground: 255 255 255;
+
+    --card: 17 24 39;
+    --card-foreground: 255 255 255;
+
+    --popover: 17 24 39;
+    --popover-foreground: 255 255 255;
+
+    --primary: 99 102 241;
+    --primary-foreground: 255 255 255;
+
+    --secondary: 31 41 55;
+    --secondary-foreground: 209 213 219;
+
+    --muted: 31 41 55;
+    --muted-foreground: 209 213 219;
+
+    --accent: 31 41 55;
+    --accent-foreground: 255 255 255;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 255 255 255 / 0.1;
+    --input: 255 255 255 / 0.1;
+    --ring: 99 102 241;
+    --sidebar-background: 14 14 16;
+    --sidebar-foreground: 209 213 219;
+    --sidebar-primary: 99 102 241;
+    --sidebar-primary-foreground: 255 255 255;
+    --sidebar-accent: 31 41 55;
+    --sidebar-accent-foreground: 209 213 219;
+    --sidebar-border: 255 255 255 / 0.1;
+    --sidebar-ring: 99 102 241;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-[#0E0E10] text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    }
+    to {
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.4), 0 0 40px rgba(99, 102, 241, 0.2);
+    }
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
