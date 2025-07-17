@@ -231,7 +231,7 @@ const Enterprise = () => {
       </section>
 
       {/* Enterprise Logo Subtitle Line */}
-      <section className="py-8 px-6 bg-gradient-to-r from-black via-gray-900 to-black border-y border-white/10">
+      <section className="py-8 px-6 bg-black">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16">
             <img 
