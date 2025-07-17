@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import QRCodeModal from "@/components/QrCode"
 import { getAssetUrl } from "../utils/assetUtils"
+import { getCrossDomainUrl } from "../utils/domainUtils"
 
 export default function FuteurHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,18 +45,21 @@ export default function FuteurHeader() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-white hover:text-gray-300 transition-colors">
+            <a href={getCrossDomainUrl("/")} className="text-white hover:text-gray-300 transition-colors">
               Home
-            </Link>
-            <Link to="/business" className="text-white hover:text-gray-300 transition-colors">
+            </a>
+            <a href={getCrossDomainUrl("/business")} className="text-white hover:text-gray-300 transition-colors">
               Score
-            </Link>
-            <Link to="/lumiq-build" className="text-white hover:text-gray-300 transition-colors">
+            </a>
+            <a href={getCrossDomainUrl("/lumiq-build")} className="text-white hover:text-gray-300 transition-colors">
               Build
-            </Link>
-            <Link to="/credit-journey" className="text-white hover:text-gray-300 transition-colors">
-          Journey
-            </Link>
+            </a>
+            <a href={getCrossDomainUrl("/credit-journey")} className="text-white hover:text-gray-300 transition-colors">
+              Journey
+            </a>
+            <a href={getCrossDomainUrl("/enterprise")} className="text-white hover:text-gray-300 transition-colors">
+              Enterprise
+            </a>
           </nav>
 
           {/* Desktop Download App Button */}
@@ -83,41 +87,41 @@ export default function FuteurHeader() {
           <div className="flex flex-col space-y-6 p-6">
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col space-y-4">
-              <Link 
-                to="/" 
+              <a 
+                href={getCrossDomainUrl("/")} 
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
                 Home
-              </Link>
-              <Link 
-                to="/business" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/business")} 
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
                 Business
-              </Link>
-              <Link 
-                to="/enterprise" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/enterprise")} 
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
                 Enterprise
-              </Link>
-              <Link 
-                to="/lumiq-build" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/lumiq-build")} 
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
                 Build
-              </Link>
-              <Link 
-                to="/credit-journey" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/credit-journey")} 
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
                 Credit Journey
-              </Link>
+              </a>
             </nav>
             
             {/* Mobile Download App Button */}

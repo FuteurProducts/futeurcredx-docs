@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { ArrowRight, Facebook, Instagram, Twitter, Linkedin, Music } from "lucide-react"
+import { getCrossDomainUrl } from "../utils/domainUtils"
 
 export default function Component() {
   return (
@@ -16,9 +17,9 @@ export default function Component() {
               building. Our LUMIQ™ Journey Engine guides you through vendor universe discovery while our PG-Free Builder
               helps establish credit without personal guarantees.
             </p>
-            <Link to="/business">
+            <a href={getCrossDomainUrl("/business")}>
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </Link>
+            </a>
           </div>
 
           {/* For Banks Card */}
@@ -30,9 +31,9 @@ export default function Component() {
               suite includes AI risk assessment capabilities, advanced lending intelligence, and detailed portfolio
               analytics to enhance your decision-making process.
             </p>
-            <Link to="/enterprise">
+            <a href={getCrossDomainUrl("/enterprise")}>
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </Link>
+            </a>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-6">
@@ -45,9 +46,9 @@ export default function Component() {
               comprehensive vendor scoring, detailed report tracking, and thorough credit impact analysis to help you
               make informed decisions about which vendors will truly benefit your business credit profile.
             </p>
-            <Link to="/lumiq-build">
+            <a href={getCrossDomainUrl("/lumiq-build")}>
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -59,15 +60,15 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Main</h4>
             <div className="space-y-3">
-              <Link to="/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href={getCrossDomainUrl("/")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Home
-              </Link>
-              <Link to="/faq" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </a>
+              <a href={getCrossDomainUrl("/faq")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 FAQ's
-              </Link>
-              <Link to="/credit-journey" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </a>
+              <a href={getCrossDomainUrl("/credit-journey")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Credit Journey Demo
-              </Link>
+              </a>
             </div>
           </div>
 
@@ -75,12 +76,12 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Business Solutions</h4>
             <div className="space-y-3">
-              <Link to="/business" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href={getCrossDomainUrl("/business")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Business Credit Score
-              </Link>
-              <Link to="/lumiq-build" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </a>
+              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 LUMIQ Build
-              </Link>
+              </a>
             </div>
           </div>
 
