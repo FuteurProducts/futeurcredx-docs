@@ -57,9 +57,7 @@ export default function FuteurHeader() {
             <a href={getCrossDomainUrl("/credit-journey")} className="text-white hover:text-gray-300 transition-colors">
               Journey
             </a>
-            <a href={getCrossDomainUrl("/enterprise")} className="text-white hover:text-gray-300 transition-colors">
-              Enterprise
-            </a>
+            
           </nav>
 
           {/* Desktop Download App Button */}

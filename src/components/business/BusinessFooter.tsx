@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getCrossDomainUrl } from "../../utils/domainUtils";
 
 const BusinessFooter = () => {
   return (
@@ -18,30 +19,30 @@ const BusinessFooter = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">Explore</h4>
             <div className="space-y-2">
-              <Link to="/" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <a href={getCrossDomainUrl("/")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Home
-              </Link>
-              <Link to="/app" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/app")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Mobile App
-              </Link>
-              <Link to="/business" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/business")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Business Credit App
-              </Link>
-              <Link to="/enterprise" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/enterprise")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 For Banks
-              </Link>
-              <Link to="/fintech" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/fintech")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 For Fintechs
-              </Link>
-              <Link to="/api-docs" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/api-docs")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 API Documentation
-              </Link>
-              <Link to="/lumiq-build" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 LUMIQ Build
-              </Link>
-              <Link to="/credit-journey" className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </a>
+              <a href={getCrossDomainUrl("/credit-journey")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Credit Journey Demo
-              </Link>
+              </a>
             </div>
           </div>
           

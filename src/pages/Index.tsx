@@ -81,9 +81,9 @@ export default function Index() {
               <div>
                 <div className="space-y-4">
                   <h2 className="text-[36px] lg:text-[42px] font-extrabold leading-tight tracking-tight text-black">
-                    We Don't Sell Data.
+                    WE DON'T SELL DATA.
                     <br />
-                    <span className="text-black">We Decode It.</span>
+                    <span className="text-black">WE DECODE IT.</span>
                   </h2>
                   <p className="text-sm md:text-base text-gray-600 leading-normal max-w-md">
                     In a digital economy where business data is constantly harvested and monetized, FUTEURCRED™ redefines credit intelligence through trust and sovereignty.
@@ -108,7 +108,7 @@ export default function Index() {
                   </p>
                 </div>
                 <div className="mt-6">
-                  <a href="https://www.futeursecure.com/use-cases/futeurcred" target="_blank" rel="noopener noreferrer">
+                  <a href="https://futeurcred.futeursecure.com" target="_blank" rel="noopener noreferrer">
                     <Button className="bg-black text-white hover:bg-gray-800 px-6 py-2.5 text-sm md:text-base font-medium rounded-full hover:scale-105 transition-transform duration-300">
                       Learn more
                       <ArrowRight className="ml-2 h-5 w-5" />
@@ -116,14 +116,15 @@ export default function Index() {
                   </a>
                 </div>
               </div>
-              <div className="hidden md:flex justify-center items-center">
-                <ScrollParallax strength={0.15}>
+              <div className="relative">
+                <div className="relative rounded-3xl overflow-hidden">
                   <img
-                    src="/lock.png"
+                    src="/futeursecure.png"
                     alt="Data Protection Shield"
-                    className="w-auto max-w-full object-contain h-[600px] mx-auto hover:scale-105 transition-transform duration-300"
+                    className="w-full h-auto object-cover"
+                    style={{ aspectRatio: "500/600" }}
                   />
-                </ScrollParallax>
+                </div>
               </div>
             </div>
           </div>

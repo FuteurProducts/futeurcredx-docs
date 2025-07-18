@@ -21,7 +21,13 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
     return `https://${targetDomain}${path}`;
   }
   
-  // Otherwise, preserve the current domain
+  // For main navigation paths, always go back to the main domain
+  const mainDomainPaths = ['/', '/business', '/enterprise', '/lumiq-build', '/credit-journey'];
+  if (mainDomainPaths.includes(path) && (isInstitutionsDomain || isPlatformDomain)) {
+    return `https://credbyfuteur.com${path}`;
+  }
+  
+  // Otherwise, preserve the current domain for subdomain-specific paths
   if (isInstitutionsDomain) {
     return `https://institutions.credbyfuteur.com${path}`;
   } else if (isPlatformDomain) {
