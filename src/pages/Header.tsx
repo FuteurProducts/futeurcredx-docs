@@ -97,14 +97,7 @@ export default function FuteurHeader() {
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
-                Business
-              </a>
-              <a 
-                href={getCrossDomainUrl("/enterprise")} 
-                className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
-                onClick={() => setMenuOpen(false)}
-              >
-                Enterprise
+                Score
               </a>
               <a 
                 href={getCrossDomainUrl("/lumiq-build")} 
@@ -118,7 +111,7 @@ export default function FuteurHeader() {
                 className="text-white text-xl py-3 border-b border-gray-800 hover:bg-white/5"
                 onClick={() => setMenuOpen(false)}
               >
-                Credit Journey
+                Journey
               </a>
             </nav>
             
