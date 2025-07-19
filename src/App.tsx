@@ -45,13 +45,15 @@ const AppRouter = () => {
           <Routes>
           {/* Domain-specific routing */}
           {isDomainInstitutions ? (
-            // For institutions.credbyfuteur.com, show Enterprise content for all routes
+            // For institutions.credbyfuteur.com, show Enterprise content for most routes
             <>
+              <Route path="/faq" element={<FAQ />} />
               <Route path="/*" element={<Enterprise />} />
             </>
           ) : isDomainPlatform ? (
-            // For platform.credbyfuteur.com, show Fintech content for all routes
+            // For platform.credbyfuteur.com, show Fintech content for most routes
             <>
+              <Route path="/faq" element={<FAQ />} />
               <Route path="/*" element={<Fintech />} />
             </>
           ) : (
