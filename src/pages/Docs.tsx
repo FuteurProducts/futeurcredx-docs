@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useRef, type Dispatch, type SetStateAction } from "react"
-import Image from "@/components/image"
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Search, ChevronRight, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -34,7 +33,7 @@ const DocsContentItem = ({ id, tagline, title, description, imageQuery, index }:
           className={`relative h-80 md:h-[450px] rounded-3xl overflow-hidden shadow-xl ${isEven ? "lg:order-2" : ""}`}
         >
           <motion.div className="absolute inset-0" style={{ y }}>
-            <Image
+            <img
               src={`/placeholder.svg?height=600&width=800&query=${encodeURIComponent(imageQuery)}`}
               alt={title}
               width={800}
