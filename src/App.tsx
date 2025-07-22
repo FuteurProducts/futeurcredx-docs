@@ -15,6 +15,7 @@ import MobileApp from "./pages/MobileApp";
 import App from "./pages/App";
 import FAQ from "./pages/FAQ";
 import FuteurCredPlus from "./pages/FuteurCredPlus";
+import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 import FuteurHeader from "./pages/Header";
 import Footer from "./pages/Footer";
@@ -71,6 +72,7 @@ const AppRouter = () => {
               <Route path="/app" element={<App />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
+              <Route path="/docs" element={<Docs />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </>
