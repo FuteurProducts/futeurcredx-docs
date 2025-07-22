@@ -15,6 +15,7 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
   // Check if we're on one of our known domains
   const isInstitutionsDomain = currentHostname.includes('institutions.credbyfuteur.com');
   const isPlatformDomain = currentHostname.includes('platform.credbyfuteur.com');
+  const isDocsDomain = currentHostname.includes('docs.credbyfuteur.com');
   
   // If a specific target domain is provided, use it
   if (targetDomain) {
@@ -22,8 +23,8 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
   }
   
   // For main navigation paths, always go back to the main domain
-  const mainDomainPaths = ['/', '/business', '/enterprise', '/lumiq-build', '/credit-journey', '/faq', '/docs'];
-  if (mainDomainPaths.includes(path) && (isInstitutionsDomain || isPlatformDomain)) {
+  const mainDomainPaths = ['/', '/business', '/enterprise', '/lumiq-build', '/credit-journey', '/faq'];
+  if (mainDomainPaths.includes(path) && (isInstitutionsDomain || isPlatformDomain || isDocsDomain)) {
     return `https://credbyfuteur.com${path}`;
   }
   
@@ -32,6 +33,8 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
     return `https://institutions.credbyfuteur.com${path}`;
   } else if (isPlatformDomain) {
     return `https://platform.credbyfuteur.com${path}`;
+  } else if (isDocsDomain) {
+    return `https://docs.credbyfuteur.com${path}`;
   }
   
   // Fallback to relative URL for local development
