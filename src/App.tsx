@@ -34,6 +34,7 @@ const AppRouter = () => {
   // Detect subdomain routing
   const isDomainInstitutions = hostname === 'institutions.credbyfuteur.com' || (isLocalhost && testMode === 'institutions');
   const isDomainPlatform = hostname === 'platform.credbyfuteur.com' || (isLocalhost && testMode === 'platform');
+  const isDomainDocs = hostname === 'docs.credbyfuteur.com' || (isLocalhost && testMode === 'docs');
 
   return (
   <QueryClientProvider client={queryClient}>
@@ -46,7 +47,12 @@ const AppRouter = () => {
         <div className="pt-16"> {/* Add padding top to ensure content starts below header */}
           <Routes>
           {/* Domain-specific routing */}
-          {isDomainInstitutions ? (
+          {isDomainDocs ? (
+            // For docs.credbyfuteur.com, show Docs content for all routes
+            <>
+              <Route path="/*" element={<Docs />} />
+            </>
+          ) : isDomainInstitutions ? (
             // For institutions.credbyfuteur.com, show Enterprise content for most routes
             <>
               <Route path="/faq" element={<FAQ />} />

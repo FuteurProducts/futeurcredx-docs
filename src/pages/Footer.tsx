@@ -150,9 +150,9 @@ export default function Component() {
           <div className="text-xs text-white opacity-80 space-y-4 mb-8 font-medium">
             <p>
               To find out more about FuteurCred services, please visit our{" "}
-              <a href="https://www.futeur.ai/faq" target="_blank" rel="noopener noreferrer" className="underline font-bold text-white hover:opacity-90">
+              <Link to="/faq" className="underline font-bold text-white hover:opacity-90">
                 FAQ page
-              </a>
+              </Link>
               . If you have any questions, please reach out to us via the contact form on our website or through the FuteurCred app.
             </p>
 
