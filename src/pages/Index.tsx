@@ -7,6 +7,7 @@ import DashboardScreen from "@/components/screen"
 import BusinessSection from "@/components/BusinessSection"
 import Component from "@/components/comparison"
 import QRCodeModal from "@/components/QrCode"
+import Pricing from "@/components/Pricing"
 import { Link } from "react-router-dom"
 import { ScrollParallax } from "react-just-parallax";
 
@@ -173,6 +174,9 @@ export default function Index() {
           </div>
         </section>
       </div>
+      
+      {/* Pricing Section */}
+      <Pricing />
     </TooltipProvider>
   )
 }

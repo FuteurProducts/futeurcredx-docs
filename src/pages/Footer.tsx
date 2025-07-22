@@ -66,6 +66,7 @@ export default function Component() {
               <a href={getCrossDomainUrl("/faq")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 FAQ's
               </a>
+              
               <a href={getCrossDomainUrl("/credit-journey")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Credit Journey Demo
               </a>
@@ -94,6 +95,9 @@ export default function Component() {
               </a>
               <a href="https://platform.credbyfuteur.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Platform
+              </a>
+              <a href="https://docs.credbyfuteur.com/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+                Documentation
               </a>
             </div>
           </div>
