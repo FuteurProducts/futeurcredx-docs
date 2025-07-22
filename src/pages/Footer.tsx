@@ -7,46 +7,42 @@ export default function Component() {
     <div className="bg-[#2c2c2c] text-white">
       {/* LUMIQ Products Section */}
       <div className="px-6 py-16 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* For Businesses Card */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {/* Score Card */}
           <div className="bg-[#f5f5f5] text-black rounded-2xl p-8 relative">
-            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">For Businesses</h3>
-            <h4 className="text-lg font-bold mb-4">LUMIQ™ Powered</h4>
+            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">Score</h3>
+            <h4 className="text-lg font-bold mb-4">Know Your Rating</h4>
             <p className="text-sm text-gray-600 mb-8 leading-relaxed">
-              Complete business credit operating system with FSR tracking, vendor universe, and PG-free tradeline
-              building. Our LUMIQ™ Journey Engine guides you through vendor universe discovery while our PG-Free Builder
-              helps establish credit without personal guarantees.
+              Track and monitor your business credit score in real-time with our FSR tracking system. Get instant alerts 
+              when your score changes and understand exactly what factors are affecting your business credit rating.
             </p>
             <a href={getCrossDomainUrl("/business")}>
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
             </a>
           </div>
 
-          {/* For Banks Card */}
+          {/* Build Card */}
           <div className="bg-[#f5f5f5] text-black rounded-2xl p-8 relative">
-            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">For Banks</h3>
-            <h4 className="text-lg font-bold mb-4">Enterprise</h4>
+            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">Build</h3>
+            <h4 className="text-lg font-bold mb-4">Vendor Universe</h4>
             <p className="text-sm text-gray-600 mb-8 leading-relaxed">
-              AI-powered lending intelligence and risk assessment tools for financial institutions. Our comprehensive
-              suite includes AI risk assessment capabilities, advanced lending intelligence, and detailed portfolio
-              analytics to enhance your decision-making process.
+              Discover and connect with vendors that actually report to business credit bureaus. Our platform provides
+              comprehensive vendor scoring and helps you establish business credit without personal guarantees.
             </p>
-            <a href={getCrossDomainUrl("/enterprise")}>
+            <a href={getCrossDomainUrl("/lumiq-build")}>
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
             </a>
           </div>
-        </div>
-        <div className="grid grid-cols-1 gap-6">
-          {/* LUMIQ Build Card */}
+
+          {/* Journey Card */}
           <div className="bg-[#f5f5f5] text-black rounded-2xl p-8 relative">
-            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">LUMIQ Build</h3>
-            <h4 className="text-lg font-bold mb-4">Vendor Universe</h4>
+            <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">Journey</h3>
+            <h4 className="text-lg font-bold mb-4">Credit Transformation</h4>
             <p className="text-sm text-gray-600 mb-8 leading-relaxed">
-              Discover and score vendors that actually report to business credit bureaus. Our platform provides
-              comprehensive vendor scoring, detailed report tracking, and thorough credit impact analysis to help you
-              make informed decisions about which vendors will truly benefit your business credit profile.
+              Follow your personalized credit-building roadmap with AI-powered recommendations. Track your progress with 
+              visual milestones and celebrate every win as you transform your business credit profile.
             </p>
-            <a href={getCrossDomainUrl("/lumiq-build")}>
+            <a href={getCrossDomainUrl("/credit-journey")}>
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
             </a>
           </div>
