@@ -11,29 +11,60 @@
 export const getCrossDomainUrl = (path: string, targetDomain?: string): string => {
   // Default to current hostname
   const currentHostname = window.location.hostname;
+  const isLocalhost = currentHostname === 'localhost' || currentHostname === '127.0.0.1';
   
-  // Check if we're on one of our known domains
-  const isInstitutionsDomain = currentHostname.includes('institutions.credbyfuteur.com');
-  const isPlatformDomain = currentHostname.includes('platform.credbyfuteur.com');
-  const isDocsDomain = currentHostname.includes('docs.credbyfuteur.com');
+  // Get URL parameters for local development testing
+  const urlParams = new URLSearchParams(window.location.search);
+  const testMode = urlParams.get('mode');
+  
+  // Check if we're on one of our known domains (including local testing)
+  const isInstitutionsDomain = currentHostname.includes('institutions.credbyfuteur.com') || 
+                              currentHostname.includes('institutions.credbyfuteur.local') ||
+                              (isLocalhost && testMode === 'institutions');
+  const isPlatformDomain = currentHostname.includes('platform.credbyfuteur.com') || 
+                          currentHostname.includes('platform.credbyfuteur.local') ||
+                          (isLocalhost && testMode === 'platform');
+  const isDocsDomain = currentHostname.includes('docs.credbyfuteur.com') || 
+                      currentHostname.includes('docs.credbyfuteur.local') ||
+                      (isLocalhost && testMode === 'docs');
   
   // If a specific target domain is provided, use it
   if (targetDomain) {
+    if (isLocalhost) {
+      // For localhost, use relative URLs with appropriate mode parameter
+      const targetMode = targetDomain.includes('institutions') ? 'institutions' :
+                        targetDomain.includes('platform') ? 'platform' :
+                        targetDomain.includes('docs') ? 'docs' : null;
+      return targetMode ? `${path}?mode=${targetMode}` : path;
+    }
     return `https://${targetDomain}${path}`;
   }
   
   // For main navigation paths, always go back to the main domain
-  const mainDomainPaths = ['/', '/business', '/enterprise', '/lumiq-build', '/credit-journey', '/faq'];
+  const mainDomainPaths = ['/', '/business', '/enterprise', '/lumiq-build', '/credit-journey', '/faq', '/docs'];
   if (mainDomainPaths.includes(path) && (isInstitutionsDomain || isPlatformDomain || isDocsDomain)) {
+    if (isLocalhost) {
+      // For localhost, remove mode parameter for main domain paths
+      return path;
+    }
     return `https://credbyfuteur.com${path}`;
   }
   
   // Otherwise, preserve the current domain for subdomain-specific paths
   if (isInstitutionsDomain) {
+    if (isLocalhost) {
+      return `${path}?mode=institutions`;
+    }
     return `https://institutions.credbyfuteur.com${path}`;
   } else if (isPlatformDomain) {
+    if (isLocalhost) {
+      return `${path}?mode=platform`;
+    }
     return `https://platform.credbyfuteur.com${path}`;
   } else if (isDocsDomain) {
+    if (isLocalhost) {
+      return `${path}?mode=docs`;
+    }
     return `https://docs.credbyfuteur.com${path}`;
   }
   

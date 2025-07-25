@@ -79,6 +79,15 @@ const AppRouter = () => {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
               <Route path="/docs" element={<Docs />} />
+              
+              {/* Local Development Routes - Physical routes for testing subdomains */}
+              <Route path="/institutions" element={<Enterprise />} />
+              <Route path="/institutions/*" element={<Enterprise />} />
+              <Route path="/platform" element={<Fintech />} />
+              <Route path="/platform/*" element={<Fintech />} />
+              <Route path="/docs-test" element={<Docs />} />
+              <Route path="/docs-test/*" element={<Docs />} />
+              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </>
