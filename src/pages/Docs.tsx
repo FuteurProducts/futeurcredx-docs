@@ -257,38 +257,686 @@ const ApiEndpointItem = ({ endpoint, categoryId, index }: ApiEndpointItemProps) 
       }
     } else if (endpoint.path.includes("lumiq-credit-journey")) {
       mockResponse.data = {
-        "creditJourney": {
-          "currentScore": 785,
-          "scoreHistory": [
-            { "date": "2025-01-01", "score": 720 },
-            { "date": "2025-04-01", "score": 750 },
-            { "date": "2025-07-01", "score": 785 }
-          ],
-          "paymentHistory": {
-            "onTimePayments": 95,
-            "latePayments": 5,
-            "totalAccounts": 12
+        "commercialCreditScoreFactors": [
+          {
+            "code": "011",
+            "definition": "NUMBER OF COMMERCIAL COLLECTION ACCOUNTS"
           },
-          "creditUtilization": {
-            "currentUtilization": 35,
-            "recommendedUtilization": 30,
-            "totalCreditLimit": 150000,
-            "totalBalance": 52500
-          },
-          "recommendations": [
-            {
-              "category": "Payment History",
-              "suggestion": "Continue making on-time payments to maintain excellent credit standing",
-              "impact": "High"
+          {
+            "code": "057",
+            "definition": "BALANCE OF COMMERCIAL ACCOUNTS AT WORST DELINQUENCY"
+          }
+        ],
+        "isAvailable": true,
+        "collectionsDetail": [
+          {
+            "amountPaid": 0,
+            "accountStatus": "Open Account",
+            "collectionAgencyInfo": {
+              "name": "JEFFERSON CAPITAL SYSTEMS LLC",
+              "phoneNumber": "+18338515552"
             },
-            {
-              "category": "Credit Utilization",
-              "suggestion": "Reduce credit utilization below 30% to improve score",
-              "impact": "Medium"
+            "datePlacedForCollection": "2023-12-01",
+            "amountPlacedForCollection": 433
+          },
+          {
+            "amountPaid": 0,
+            "accountStatus": "Open Account",
+            "collectionAgencyInfo": {
+              "name": "JEFFERSON CAPITAL SYSTEMS LLC",
+              "phoneNumber": "+18338515552"
+            },
+            "datePlacedForCollection": "2023-12-01",
+            "amountPlacedForCollection": 208
+          },
+          {
+            "amountPaid": 0,
+            "accountStatus": "Open Account",
+            "collectionAgencyInfo": {
+              "name": "MCCARTHY BURGESS & WOLF",
+              "phoneNumber": "+14407355100"
+            },
+            "datePlacedForCollection": "2020-12-01",
+            "amountPlacedForCollection": 422
+          },
+          {
+            "amountPaid": 0,
+            "dateClosed": "2022-01-01",
+            "accountStatus": "Uncollected",
+            "collectionAgencyInfo": {
+              "name": "ALTUS GLOBAL TRADE SOLUTIONS",
+              "phoneNumber": "+18005096060"
+            },
+            "datePlacedForCollection": "2021-07-01",
+            "amountPlacedForCollection": 971
+          }
+        ],
+        "tradePaymentExperiences": [
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "dbt91Plus": 100,
+            "dateReported": "2025-04-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 23500,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "BUREAU",
+            "dateLastActivity": "2025-04-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 202300,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
             }
-          ],
-          "nextReviewDate": "2025-10-26"
-        },
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "NET 30",
+            "dbt91Plus": 0,
+            "dateReported": "2025-04-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "BUREAU",
+            "dateLastActivity": "2022-12-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "dbt91Plus": 0,
+            "dateReported": "2025-06-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 12100,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "BUS SERVCS",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 24300,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 100,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "NET 30",
+            "dbt91Plus": 0,
+            "dateReported": "2025-04-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "CERAMICS",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 11,
+            "dbt60": 1,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "comments": "ACCTCLOSED",
+            "dbt91Plus": 4,
+            "dateReported": "2025-04-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 74700,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "COMMUNICTN",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 1396100,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 84,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "OTHER",
+            "dbt91Plus": 0,
+            "dateReported": "2025-02-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 26800,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "CONSTRUCTN",
+            "dateLastActivity": "2025-01-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 82100,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 100,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "dbt91Plus": 0,
+            "dateReported": "2025-06-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "DISPOSAL",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "REVOLVE",
+            "comments": "ACCTCLOSED",
+            "dbt91Plus": 0,
+            "dateReported": "2025-06-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "FINCL SVCS",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 3000,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "COD",
+            "dbt91Plus": 0,
+            "dateReported": "2025-05-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "INDUS SUPL",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "NET 30",
+            "comments": "CUST 33 YR",
+            "dbt91Plus": 0,
+            "dateReported": "2025-06-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "PACKAGING",
+            "dateLastActivity": "2019-12-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 1400,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 79,
+            "dbt60": 21,
+            "dbt90": 0,
+            "terms": "VARIOUS",
+            "dbt91Plus": 0,
+            "dateReported": "2025-06-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 400,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "PLUMBING",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 2400,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "NET 45",
+            "dbt91Plus": 0,
+            "dateReported": "2025-02-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 900,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "PRNTG&PUBL",
+            "dateLastActivity": "2025-01-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 8800,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 100,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "dbt91Plus": 0,
+            "dateReported": "2025-05-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "PRNTG&PUBL",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          }
+        ],
+        "additionalPaymentExperiences": [
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "OTHER",
+            "dbt91Plus": 0,
+            "dateReported": "2025-04-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "AUTO RENTL",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "CREDIT",
+            "comments": "ACCTCLOSED",
+            "dbt91Plus": 0,
+            "dateReported": "2022-10-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "BLDG MATRL",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "0",
+            "comments": "CUST  9 YR",
+            "dbt91Plus": 0,
+            "dateReported": "2024-11-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "DP SERVCS",
+            "dateLastActivity": "2016-05-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "COD",
+            "dbt91Plus": 0,
+            "dateReported": "2024-01-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "EQUIPMENT",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 100,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "dbt91Plus": 0,
+            "dateReported": "2023-08-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 300,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "MANUFCTRNG",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 300,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "CONTRCT",
+            "dbt91Plus": 0,
+            "dateReported": "2024-12-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "OFFC EQUIP",
+            "dateLastActivity": "2021-01-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 100,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "VARIED",
+            "dbt91Plus": 0,
+            "dateReported": "2023-01-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 3700,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "OPTIC SUPL",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 3700,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          },
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "OTHER",
+            "dbt91Plus": 0,
+            "dateReported": "2023-04-01",
+            "tradelineFlag": {
+              "definition": " "
+            },
+            "accountBalance": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "RESTR SUPL",
+            "dateLastActivity": "2015-01-01",
+            "paymentIndicator": {
+              "code": " ",
+              "definition": "No Indicator"
+            },
+            "recentHighCredit": {
+              "amount": 0,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 0,
+            "newlyReportedIndicator": {
+              "code": " ",
+              "definition": "Not Available"
+            }
+          }
+        ],
         "isAvailable": true
       }
     } else {
