@@ -340,14 +340,15 @@ const ApiEndpointItem = ({ endpoint, categoryId, index }: ApiEndpointItemProps) 
           <p className="text-left text-gray-600 mt-3 font-medium">{endpoint.description}</p>
         </button>
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isExpanded && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               className="overflow-hidden border-t border-gray-200"
+              style={{ position: "relative", zIndex: 1 }}
             >
               <div className="p-6 bg-gray-50">
                 <div className="grid lg:grid-cols-2 gap-8">
@@ -433,20 +434,22 @@ const ApiEndpointItem = ({ endpoint, categoryId, index }: ApiEndpointItemProps) 
                   
                   <div>
                     <h4 className="text-lg font-bold text-black uppercase tracking-tight mb-4">Response</h4>
-                    <Card className="bg-white border-gray-300 h-full min-h-[400px]">
-                      <CardHeader className="pb-3">
+                    <Card className="bg-white border-gray-300 h-full min-h-[400px] max-h-[600px] flex flex-col">
+                      <CardHeader className="pb-3 flex-shrink-0">
                         <CardTitle className="text-gray-800 text-sm font-medium uppercase tracking-wide">API Response</CardTitle>
                       </CardHeader>
-                      <CardContent>
+                      <CardContent className="flex-1 overflow-hidden">
                         {loading && (
                           <div className="flex items-center justify-center h-64">
                             <LoaderCircle className="h-8 w-8 text-gray-400 animate-spin" />
                           </div>
                         )}
                         {response && (
-                          <pre className="text-xs text-black bg-gray-100 p-4 rounded-lg overflow-x-auto border border-gray-200 font-mono">
-                            {JSON.stringify(response, null, 2)}
-                          </pre>
+                          <div className="h-full overflow-auto">
+                            <pre className="text-xs text-black bg-gray-100 p-4 rounded-lg border border-gray-200 font-mono whitespace-pre-wrap break-words">
+                              {JSON.stringify(response, null, 2)}
+                            </pre>
+                          </div>
                         )}
                         {!response && !loading && (
                           <div className="text-gray-500 text-center py-16 font-medium">
