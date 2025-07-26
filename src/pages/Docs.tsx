@@ -195,7 +195,9 @@ const ApiEndpointItem = ({ endpoint, categoryId, index }: ApiEndpointItemProps) 
       timestamp: new Date().toISOString(),
     }
 
-    if (endpoint.path.includes("login")) {
+    if (endpoint.path === "/api/v1") {
+      mockResponse = "Welcome to FuteurCred API v1.0"
+    } else if (endpoint.path.includes("login")) {
       mockResponse.data = { token: "jwt.mock.token.value", user: { id: "user-123", email: "test@example.com" } }
     } else if (endpoint.path.includes("profile")) {
       mockResponse.data = {
@@ -206,6 +208,89 @@ const ApiEndpointItem = ({ endpoint, categoryId, index }: ApiEndpointItemProps) 
       }
     } else if (endpoint.path.includes("search-company")) {
       mockResponse.data = [{ id: "comp-456", name: "Acme Corp", score: 850 }]
+    } else if (endpoint.path.includes("credit-report")) {
+      mockResponse.data = {
+        "businessInfo": {
+          "name": "Acme Corporation",
+          "address": "123 Business St, City, State 12345",
+          "taxId": "12-3456789",
+          "yearFounded": 2010
+        },
+        "creditScore": {
+          "score": 785,
+          "riskLevel": "Low",
+          "lastUpdated": "2025-07-26"
+        },
+        "collectionsDetail": [
+          {
+            "amountPaid": 0,
+            "accountStatus": "Open Account",
+            "collectionAgencyInfo": {
+              "name": "JEFFERSON CAPITAL SYSTEMS LLC",
+              "phoneNumber": "+18338515552"
+            },
+            "datePlacedForCollection": "2023-12-01",
+            "amountPlacedForCollection": 433
+          }
+        ],
+        "tradePaymentExperiences": [
+          {
+            "dbt30": 0,
+            "dbt60": 0,
+            "dbt90": 0,
+            "terms": "NET 30",
+            "dbt91Plus": 0,
+            "dateReported": "2025-04-01",
+            "accountBalance": {
+              "amount": 12100,
+              "modifier": "Not applicable"
+            },
+            "businessCategory": "BUS SERVCS",
+            "recentHighCredit": {
+              "amount": 24300,
+              "modifier": "Not applicable"
+            },
+            "currentPercentage": 100
+          }
+        ],
+        "isAvailable": true
+      }
+    } else if (endpoint.path.includes("lumiq-credit-journey")) {
+      mockResponse.data = {
+        "creditJourney": {
+          "currentScore": 785,
+          "scoreHistory": [
+            { "date": "2025-01-01", "score": 720 },
+            { "date": "2025-04-01", "score": 750 },
+            { "date": "2025-07-01", "score": 785 }
+          ],
+          "paymentHistory": {
+            "onTimePayments": 95,
+            "latePayments": 5,
+            "totalAccounts": 12
+          },
+          "creditUtilization": {
+            "currentUtilization": 35,
+            "recommendedUtilization": 30,
+            "totalCreditLimit": 150000,
+            "totalBalance": 52500
+          },
+          "recommendations": [
+            {
+              "category": "Payment History",
+              "suggestion": "Continue making on-time payments to maintain excellent credit standing",
+              "impact": "High"
+            },
+            {
+              "category": "Credit Utilization",
+              "suggestion": "Reduce credit utilization below 30% to improve score",
+              "impact": "Medium"
+            }
+          ],
+          "nextReviewDate": "2025-10-26"
+        },
+        "isAvailable": true
+      }
     } else {
       mockResponse.data = { result: "This is a mock response." }
     }
