@@ -23,7 +23,7 @@ interface QRCodeModalProps {
 export default function QRCodeModal({
   buttonText = "Download the app",
   buttonClassName = "bg-white text-black hover:bg-gray-100",
-  title = "GET THE FUTEURCRED APP",
+  title = "GET THE FUTEURCREDX APP",
   description = "Scan the QR code to download the app",
   showIcon = true,
   id = "qr-code-modal-trigger",

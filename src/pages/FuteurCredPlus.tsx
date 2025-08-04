@@ -32,7 +32,7 @@ export default function FuteurCredPlus() {
 
             {/* Main Headline */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[0.9] tracking-tight">
-              FUTEURCRED+
+              FUTEURCREDX+
               <br />
               <span className="text-white">NOT JUST A CREDIT SCORE</span>
               <br />
@@ -41,8 +41,8 @@ export default function FuteurCredPlus() {
 
             {/* Subheading */}
             <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl font-normal leading-relaxed">
-              <strong className="text-white">FUTEURCRED+</strong> unlocks live multi-agency credit reporting, 
-              <strong className="text-white">LUMIQ™</strong> growth tracking, AI-powered score boosters, and automated 
+              <strong className="text-white">FUTEURCREDX+</strong> unlocks live multi-agency credit reporting, 
+              <strong className="text-white">LUMIQX™</strong> growth tracking, AI-powered score boosters, and automated 
               reputation-building tools—all in one sleek dashboard.
             </p>
 
@@ -80,7 +80,7 @@ export default function FuteurCredPlus() {
                   className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full bg-transparent"
                 >
                   <Play className="mr-2 h-5 w-5" />
-                  See LUMIQ™ Demo
+                  See LUMIQX™ Demo
                 </Button>
               </Link>
             </div>
@@ -204,7 +204,7 @@ export default function FuteurCredPlus() {
               UNDERSTAND YOUR BUSINESS CREDIT
             </h2>
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Powered by LUMIQ™, our advanced business credit recommendation engine that analyzes your active tradelines,
+              Powered by LUMIQX™, our advanced business credit recommendation engine that analyzes your active tradelines,
               Days Beyond Terms, Credit Utilization, credit health risk factors, and business obligations to deliver
               actionable insights tailored to your business growth.
             </p>

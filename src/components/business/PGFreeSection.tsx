@@ -12,7 +12,7 @@ const PGFreeSection = () => {
             <span className="text-purple-400">No More Guessing.</span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            <strong className="text-white">FUTEURCRED™ connects you with PG-free tradelines,</strong> underwritten via your EIN, not your SSN.<br/>
+            <strong className="text-white">FUTEURCREDX™ connects you with PG-free tradelines,</strong> underwritten via your EIN, not your SSN.<br/>
             Build trust with vendors, unlock supply chain credit, and scale — with no personal liability.
           </p>
           <div className="mt-8 inline-flex items-center gap-2 bg-purple-600/20 px-6 py-3 rounded-full">

@@ -5,7 +5,7 @@ import { getCrossDomainUrl } from "../utils/domainUtils"
 export default function Component() {
   return (
     <div className="bg-[#2c2c2c] text-white">
-      {/* LUMIQ Products Section */}
+      {/* LUMIQX Products Section */}
       <div className="px-6 py-16 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {/* Score Card */}
@@ -77,7 +77,7 @@ export default function Component() {
                 Business Credit Score
               </a>
               <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
-                LUMIQ Build
+                LUMIQX Build
               </a>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function Component() {
 
             <p>
               <strong>Business Credit Services</strong><br />
-              FuteurCred is a business credit technology platform and program manager. Our LUMIQ™ platform provides business credit monitoring, building, and intelligence services to help businesses establish and grow their credit profiles without personal guarantees.
+              FuteurCred is a business credit technology platform and program manager. Our LUMIQX™ platform provides business credit monitoring, building, and intelligence services to help businesses establish and grow their credit profiles without personal guarantees.
             </p>
 
             <p>
@@ -171,7 +171,7 @@ export default function Component() {
           {/* Copyright */}
           <div className="text-xs text-gray-500 mt-4">
             © 2025 FuteurCred.
-            LUMIQ™ and FuteurCred® are registered trademarks. All rights reserved. Building business credit, empowering growth.
+            LUMIQX™ and FuteurCred® are registered trademarks. All rights reserved. Building business credit, empowering growth.
           </div>
         </div>
       </div>

@@ -40,7 +40,7 @@ const Business = () => {
           <QRCodeModal
             buttonText="START JOURNEY"
             buttonClassName="bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black px-6 py-4 rounded-full shadow-lg border border-white/20 hover:border-white transition-all font-bold flex items-center"
-            title="GET THE FUTEURCRED APP"
+            title="GET THE FUTEURCREDX APP"
             description="Scan the QR code to download the app and start your credit journey"
             showIcon={false}
             id="journey-qr-code-button"
@@ -55,8 +55,8 @@ const Business = () => {
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Product",
-          "name": "FUTEURCRED™",
-          "description": "AI-powered business credit app with LUMIQ™ journey engine, FSR scores, trade payment health tracking, and PG-free tools.",
+          "name": "FUTEURCREDX™",
+          "description": "AI-powered business credit app with LUMIQX™ journey engine, FSR scores, trade payment health tracking, and PG-free tools.",
           "brand": {
             "@type": "Organization",
             "name": "FUTEUR AI"

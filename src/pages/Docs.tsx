@@ -103,7 +103,7 @@ const apiData: ApiCategory[] = [
   
   {
     id: "lumiq-credit",
-    name: "LUMIQ Credit",
+    name: "LUMIQX Credit",
     endpoints: [
       {
         method: "GET",

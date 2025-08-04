@@ -772,7 +772,7 @@ const FAQ = () => {
           <div className="mb-6 p-6 bg-black/30 backdrop-blur-sm border border-white/10 rounded-lg max-w-4xl mx-auto">
             <div className="flex items-center justify-center gap-3 mb-3">
               <Crown className="w-6 h-6 text-white/80" />
-              <h2 className="text-2xl font-bold text-white uppercase tracking-wide">FUTEURCRED+ MEMBERS</h2>
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide">FUTEURCREDX+ MEMBERS</h2>
               <Crown className="w-6 h-6 text-white/80" />
             </div>
             <p className="text-white/70 mb-4">
@@ -794,7 +794,7 @@ const FAQ = () => {
               </div>
             </div>
             <Button className="bg-white/10 hover:bg-white text-white hover:text-black font-bold px-8 py-3 backdrop-blur-sm border border-white/20 hover:border-white transition-all">
-              Upgrade to FUTEURCRED+
+              Upgrade to FUTEURCREDX+
             </Button>
           </div>
 
@@ -981,7 +981,7 @@ const FAQ = () => {
                   <div className="text-center p-4">
                     <Lock className="w-8 h-8 text-white/80 mx-auto mb-2" />
                     <p className="text-white font-bold text-sm mb-1 uppercase tracking-wide">Premium Feature</p>
-                    <p className="text-white/70 text-xs uppercase">Upgrade to FUTEURCRED+</p>
+                    <p className="text-white/70 text-xs uppercase">Upgrade to FUTEURCREDX+</p>
                   </div>
                 </div>
               </div>
@@ -1114,7 +1114,7 @@ const FAQ = () => {
                   <Crown className="w-16 h-16 text-white/80 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-white mb-3">Question Not Found?</h3>
                   <p className="text-white/80 mb-6 tracking-wide">
-                    Sign up for <strong>FUTEURCRED+</strong> to get full access to our complete library of 1,500+ expert answers and advanced search capabilities.
+                    Sign up for <strong>FUTEURCREDX+</strong> to get full access to our complete library of 1,500+ expert answers and advanced search capabilities.
                   </p>
                   
                   <div className="space-y-3 mb-6 text-sm">
@@ -1133,7 +1133,7 @@ const FAQ = () => {
                   </div>
                   
                   <Button className="bg-white/10 hover:bg-white text-white hover:text-black font-bold px-8 py-3 mb-4 backdrop-blur-sm border border-white/20 hover:border-white transition-all">
-                    Upgrade to FUTEURCRED+
+                    Upgrade to FUTEURCREDX+
                   </Button>
                   
                   <div className="pt-4 border-t border-white/10">

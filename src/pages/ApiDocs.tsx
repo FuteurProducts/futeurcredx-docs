@@ -37,7 +37,7 @@ const ApiDocs = () => {
               <span className="text-sm">Back to Home</span>
             </Link>
             <div className="text-2xl font-bold text-slate-900">
-              LUMIQ™ API
+              LUMIQX™ API
             </div>
           </div>
           <div className="flex items-center gap-6">
@@ -55,7 +55,7 @@ const ApiDocs = () => {
       <section className="py-16 px-6 bg-gradient-to-br from-slate-50 to-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl font-bold text-slate-900 mb-6">
-            LUMIQ™ API Documentation
+            LUMIQX™ API Documentation
           </h1>
           <p className="text-xl text-slate-600 mb-8 max-w-3xl mx-auto">
             Complete developer resources for integrating business credit intelligence into your applications. 
@@ -361,7 +361,7 @@ const ApiDocs = () => {
               Developer Resources
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Everything you need to integrate LUMIQ™ into your applications.
+              Everything you need to integrate LUMIQX™ into your applications.
             </p>
           </div>
 
@@ -454,7 +454,7 @@ const ApiDocs = () => {
             Ready to Get Started?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join the waitlist for early access to LUMIQ™ API documentation and SDKs.
+            Join the waitlist for early access to LUMIQX™ API documentation and SDKs.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -475,12 +475,12 @@ const ApiDocs = () => {
       {/* Footer */}
       <footer className="py-12 px-6 bg-slate-900 text-white">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="text-2xl font-bold mb-4">LUMIQ™ API</div>
+          <div className="text-2xl font-bold mb-4">LUMIQX™ API</div>
           <p className="text-slate-400 mb-8">
             Powering the future of business credit intelligence
           </p>
           <div className="text-slate-500">
-            &copy; 2024 LUMIQ™ by Futeur AI. All rights reserved.
+            &copy; 2024 LUMIQX™ by Futeur AI. All rights reserved.
           </div>
         </div>
       </footer>

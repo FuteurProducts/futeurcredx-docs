@@ -21,13 +21,13 @@ export default function MobileApp() {
                 <QRCodeModal
                   buttonText="App Store"
                   buttonClassName="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium flex items-center gap-2 hover:bg-blue-50 transition-colors"
-                  title="GET THE FUTEURCRED iOS APP"
+                  title="GET THE FUTEURCREDX iOS APP"
                   showIcon={true}
                 />
                 <QRCodeModal
                   buttonText="Google Play"
                   buttonClassName="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium flex items-center gap-2 hover:bg-blue-50 transition-colors"
-                  title="GET THE FUTEURCRED ANDROID APP"
+                  title="GET THE FUTEURCREDX ANDROID APP"
                   showIcon={true}
                 />
               </div>

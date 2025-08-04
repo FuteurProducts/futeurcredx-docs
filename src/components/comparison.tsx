@@ -27,11 +27,11 @@ export default function Component() {
         {/* Header Section */}
         <div className="text-center mb-16">
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black mb-4 sm:mb-6 md:mb-8 tracking-tighter leading-none px-4 sm:px-0">
-            FUTEURCRED IS THE WHOLE
+            FUTEURCREDX IS THE WHOLE
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-800 max-w-3xl mx-auto mb-4 sm:mb-6 leading-relaxed font-medium px-4 sm:px-6 md:px-8">
             NAV, Credit Karma, Dun & Bradstreet? All fragments. We're not another credit monitor. We're your complete
-            business credit app powered by the LUMIQ journey engine. FSR tracking. Trade payment health. No PG
+            business credit app powered by the LUMIQX journey engine. FSR tracking. Trade payment health. No PG
             tradelines.
           </p>
           <p className="text-xs sm:text-sm text-gray-600 mb-8 sm:mb-10 md:mb-12 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0">
@@ -142,7 +142,7 @@ export default function Component() {
             </CardContent>
           </Card>
 
-          {/* Right Card - FUTEURCRED */}
+          {/* Right Card - FUTEURCREDX */}
           <Card
             onClick={handleFuteurCredClick}
             className="border-0 rounded-[32px] overflow-hidden h-[520px] transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer relative"
@@ -163,7 +163,7 @@ export default function Component() {
 
               <div className="flex items-center mb-8">
                 <div className="h-10 w-10 mr-3 flex items-center">
-                  <img src="/logos/futeur.png" alt="FUTEURCRED Logo" className="h-full object-contain" />
+                  <img src="/logos/futeur.png" alt="FUTEURCREDX Logo" className="h-full object-contain" />
                 </div>
                 <h3 className="text-3xl font-bold text-white leading-tight">FuteurCred</h3>
               </div>
@@ -172,7 +172,7 @@ export default function Component() {
                 <div className="text-white/90">
                   <div className="text-lg font-semibold text-white mb-3">50K+ users</div>
                   <p className="text-base leading-relaxed h-12">
-                    Complete business credit app powered by LUMIQ journey engine
+                    Complete business credit app powered by LUMIQX journey engine
                   </p>
                 </div>
 

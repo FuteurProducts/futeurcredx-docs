@@ -40,7 +40,7 @@ export default function FuteurHeader() {
         <header className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-white text-2xl font-black uppercase tracking-tight">FUTEURCRED</h1>
+            <h1 className="text-white text-2xl font-black uppercase tracking-tight">FUTEURCREDX</h1>
           </div>
 
           {/* Desktop Navigation */}

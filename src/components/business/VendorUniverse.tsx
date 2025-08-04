@@ -61,7 +61,7 @@ const VendorUniverse = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Zap className="h-4 w-4 text-white" />
-                    <span className="text-xs text-gray-300">Syncs with LUMIQ</span>
+                    <span className="text-xs text-gray-300">Syncs with LUMIQX</span>
                   </div>
                 </div>
                 <Badge className="text-xs bg-white/10 text-white">
@@ -76,7 +76,7 @@ const VendorUniverse = () => {
           <Link to="/lumiq-build">
             <Button className="bg-black text-white hover:bg-white hover:text-black px-8 py-4 border border-white/20 hover:border-white transition-all font-bold">
               <Network className="mr-2 h-5 w-5" />
-              EXPLORE LUMIQ BUILD
+              EXPLORE LUMIQX BUILD
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>

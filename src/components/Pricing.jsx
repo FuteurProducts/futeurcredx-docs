@@ -102,7 +102,7 @@ const Pricing = () => {
               <div className="flex-1">
                 {/* Plan Title */}
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6 text-black">
-                  FUTEURCRED +
+                  FUTEURCREDX +
                 </h2>
 
                 {/* Pricing */}

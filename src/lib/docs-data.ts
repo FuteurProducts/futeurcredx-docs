@@ -29,10 +29,10 @@ export const navigation: NavGroup[] = [
       },
       {
         id: "connect-ai",
-        title: "Connect with LUMIQ AI",
+        title: "Connect with LUMIQX AI",
         tagline: "02",
         description: [
-          "Connect with the LUMIQ AI system to start your credit journey. The AI uses advanced business credit intelligence to understand your business needs and provide relevant recommendations for building credit without personal guarantees.",
+          "Connect with the LUMIQX AI system to start your credit journey. The AI uses advanced business credit intelligence to understand your business needs and provide relevant recommendations for building credit without personal guarantees.",
         ],
         imageQuery: "futuristic AI connecting with business data, neural network",
       },
@@ -41,7 +41,7 @@ export const navigation: NavGroup[] = [
         title: "Get Personalized Credit Strategy",
         tagline: "03",
         description: [
-          "Based on your business profile and credit goals, you will receive personalized recommendations for building business credit. The LUMIQ system analyzes your business data to provide customized vendor recommendations and credit building strategies.",
+          "Based on your business profile and credit goals, you will receive personalized recommendations for building business credit. The LUMIQX system analyzes your business data to provide customized vendor recommendations and credit building strategies.",
         ],
         imageQuery: "personalized business strategy plan on a digital tablet",
       },

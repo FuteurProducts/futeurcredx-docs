@@ -22,10 +22,10 @@ const CompetitorComparison = () => {
       category: "Consumer Toy"
     },
     { 
-      name: "FUTEURCRED™", 
+      name: "FUTEURCREDX™", 
       icon: "🚀", 
       users: "50K+",
-      tagline: "Complete business credit app powered by LUMIQ™ journey engine",
+      tagline: "Complete business credit app powered by LUMIQX™ journey engine",
       limitation: "✅ Full-spectrum AI-powered ecosystem",
       cost: "Member exclusive - Complete App",
       category: "Operating System"
@@ -40,12 +40,12 @@ const CompetitorComparison = () => {
             NAV, Credit Karma, Dun & Bradstreet?<br/>
             <span className="text-gray-400">All fragments.</span><br/>
             <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              FUTEURCRED is the Whole.
+              FUTEURCREDX is the Whole.
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
             We're not another credit monitor. We're your <strong className="text-white">complete business credit app</strong><br/>
-            powered by the <strong className="text-purple-400">LUMIQ™ journey engine</strong>. FSR tracking. Trade payment health. No PG tradelines.
+            powered by the <strong className="text-purple-400">LUMIQX™ journey engine</strong>. FSR tracking. Trade payment health. No PG tradelines.
           </p>
         </div>
 
