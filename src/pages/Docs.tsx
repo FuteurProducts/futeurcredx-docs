@@ -42,20 +42,6 @@ const apiData: ApiCategory[] = [
     ],
   },
   {
-    id: "credit-safe",
-    name: "Credit Safe",
-    endpoints: [
-      {
-        method: "GET",
-        path: "/api/v1/credit-safe/search-company",
-        protected: true,
-        description: "Searches for a company in the CreditSafe database.",
-        parameters: [{ name: "query", type: "string", description: "Company name or ID" }],
-      },
-    ],
-  },
-  
-  {
     id: "lumiq-credit",
     name: "LUMIQX Credit",
     endpoints: [
