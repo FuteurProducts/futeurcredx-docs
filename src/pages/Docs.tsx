@@ -42,52 +42,6 @@ const apiData: ApiCategory[] = [
     ],
   },
   {
-    id: "auth",
-    name: "Authentication",
-    endpoints: [
-      {
-        method: "POST",
-        path: "/api/v1/auth/login",
-        protected: false,
-        description: "Authenticates a user and returns a JWT.",
-        bodySchema: { email: "string", password: "string" },
-      },
-      {
-        method: "GET",
-        path: "/api/v1/auth/refresh-token",
-        protected: false,
-        description: "Refreshes an expired JWT.",
-      },
-      {
-        method: "GET",
-        path: "/api/v1/auth/profile",
-        protected: true,
-        description: "Retrieves the profile of the authenticated user.",
-      },
-      {
-        method: "POST",
-        path: "/api/v1/auth/send-otp",
-        protected: false,
-        description: "Sends a one-time password to the user's email.",
-        bodySchema: { email: "string" },
-      },
-      {
-        method: "POST",
-        path: "/api/v1/auth/verify-otp",
-        protected: false,
-        description: "Verifies the one-time password.",
-        bodySchema: { email: "string", otp: "string" },
-      },
-      {
-        method: "POST",
-        path: "/api/v1/auth/reset-password",
-        protected: true,
-        description: "Resets the user's password.",
-        bodySchema: { newPassword: "string" },
-      },
-    ],
-  },
-  {
     id: "credit-safe",
     name: "Credit Safe",
     endpoints: [
