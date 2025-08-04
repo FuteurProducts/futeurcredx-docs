@@ -124,7 +124,7 @@ export default function Component() {
         <div className="max-w-7xl mx-auto">
           {/* Logo and Social Icons */}
           <div className="flex justify-between items-center mb-8">
-            <div className="text-2xl font-black uppercase tracking-tight">FuteurCred</div>
+            <div className="text-2xl font-black uppercase tracking-tight">FUTEURCREDX</div>
             <div className="flex space-x-4">
             
               <a href="https://www.instagram.com/futeurai/" target="_blank" rel="noopener noreferrer">
@@ -140,21 +140,21 @@ export default function Component() {
           </div>
 
           {/* Copyright */}
-          <div className="text-sm text-white opacity-90 font-medium mb-6">© FuteurCred 2025</div>
+          <div className="text-sm text-white opacity-90 font-medium mb-6">© FUTEURCREDX 2025</div>
 
           {/* Legal Text */}
           <div className="text-xs text-white opacity-80 space-y-4 mb-8 font-medium">
             <p>
-              To find out more about FuteurCred services, please visit our{" "}
+              To find out more about FUTEURCREDX services, please visit our{" "}
               <Link to="/faq" className="underline font-bold text-white hover:opacity-90">
                 FAQ page
               </Link>
-              . If you have any questions, please reach out to us via the contact form on our website or through the FuteurCred app.
+              . If you have any questions, please reach out to us via the contact form on our website or through the FUTEURCREDX app.
             </p>
 
             <p>
               <strong>Business Credit Services</strong><br />
-              FuteurCred is a business credit technology platform and program manager. Our LUMIQX™ platform provides business credit monitoring, building, and intelligence services to help businesses establish and grow their credit profiles without personal guarantees.
+              FUTEURCREDX is a business credit technology platform and program manager. Our LUMIQX™ platform provides business credit monitoring, building, and intelligence services to help businesses establish and grow their credit profiles without personal guarantees.
             </p>
 
             <p>
@@ -164,14 +164,14 @@ export default function Component() {
 
             <p>
               <strong>Data Security</strong><br />
-              FuteurCred employs industry-leading security measures to protect your business data. All information is encrypted and stored according to the highest security standards in compliance with relevant regulations.
+              FUTEURCREDX employs industry-leading security measures to protect your business data. All information is encrypted and stored according to the highest security standards in compliance with relevant regulations.
             </p>
           </div>
 
           {/* Copyright */}
           <div className="text-xs text-gray-500 mt-4">
-            © 2025 FuteurCred.
-            LUMIQX™ and FuteurCred® are registered trademarks. All rights reserved. Building business credit, empowering growth.
+            © 2025 FUTEURCREDX.
+            LUMIQX™ and FUTEURCREDX® are registered trademarks. All rights reserved. Building business credit, empowering growth.
           </div>
         </div>
       </div>
