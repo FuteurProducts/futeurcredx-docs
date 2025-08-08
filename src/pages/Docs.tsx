@@ -61,25 +61,6 @@ const apiData: ApiCategory[] = [
       },
     ],
   },
-  {
-    id: "users",
-    name: "Users",
-    endpoints: [
-      {
-        method: "POST",
-        path: "/api/v1/users",
-        protected: false,
-        description: "Creates a new user.",
-        bodySchema: { name: "string", email: "string", password: "string" },
-      },
-      {
-        method: "GET",
-        path: "/api/v1/users",
-        protected: true,
-        description: "Retrieves a list of users.",
-      },
-    ],
-  },
 ]
 
 const getMethodClass = (method: HttpMethod) => {
