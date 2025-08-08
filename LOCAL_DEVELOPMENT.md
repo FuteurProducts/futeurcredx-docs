@@ -6,7 +6,7 @@ This guide explains how to test the multi-domain setup locally without needing a
 
 Use these URLs to test different domain configurations locally:
 
-### Main Domain (credbyfuteur.com)
+### Main Domain (futeurcredx.com)
 ```
 http://localhost:5173/
 http://localhost:5173/business
@@ -43,21 +43,21 @@ http://localhost:5173/docs-test/api-reference
 
 ### Alternative: URL Parameter Method
 
-#### Institutions Domain (institutions.credbyfuteur.com)
+#### Institutions Domain (institutions.futeurcredx.com)
 ```
 http://localhost:5173/?mode=institutions
 http://localhost:5173/faq?mode=institutions
 http://localhost:5173/any-path?mode=institutions
 ```
 
-#### Platform Domain (platform.credbyfuteur.com)
+#### Platform Domain (platform.futeurcredx.com)
 ```
 http://localhost:5173/?mode=platform
 http://localhost:5173/faq?mode=platform
 http://localhost:5173/any-path?mode=platform
 ```
 
-#### Docs Domain (docs.credbyfuteur.com)
+#### Docs Domain (docs.futeurcredx.com)
 ```
 http://localhost:5173/?mode=docs
 http://localhost:5173/any-path?mode=docs

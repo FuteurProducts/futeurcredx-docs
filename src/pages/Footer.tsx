@@ -86,13 +86,13 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Enterprise Solutions</h4>
             <div className="space-y-3">
-              <a href="https://institutions.credbyfuteur.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href="https://institutions.futeurcredx.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Institutions
               </a>
-              <a href="https://platform.credbyfuteur.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href="https://platform.futeurcredx.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Platform
               </a>
-              <a href="https://docs.credbyfuteur.com/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href="https://docs.futeurcredx.com/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Documentation
               </a>
             </div>

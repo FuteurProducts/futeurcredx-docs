@@ -18,13 +18,13 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
   const testMode = urlParams.get('mode');
   
   // Check if we're on one of our known domains (including local testing)
-  const isInstitutionsDomain = currentHostname.includes('institutions.credbyfuteur.com') || 
+  const isInstitutionsDomain = currentHostname.includes('institutions.futeurcredx.com') || 
                               currentHostname.includes('institutions.credbyfuteur.local') ||
                               (isLocalhost && testMode === 'institutions');
-  const isPlatformDomain = currentHostname.includes('platform.credbyfuteur.com') || 
+  const isPlatformDomain = currentHostname.includes('platform.futeurcredx.com') || 
                           currentHostname.includes('platform.credbyfuteur.local') ||
                           (isLocalhost && testMode === 'platform');
-  const isDocsDomain = currentHostname.includes('docs.credbyfuteur.com') || 
+  const isDocsDomain = currentHostname.includes('docs.futeurcredx.com') || 
                       currentHostname.includes('docs.credbyfuteur.local') ||
                       (isLocalhost && testMode === 'docs');
   
@@ -47,7 +47,7 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
       // For localhost, remove mode parameter for main domain paths
       return path;
     }
-    return `https://credbyfuteur.com${path}`;
+    return `https://futeurcredx.com${path}`;
   }
   
   // Otherwise, preserve the current domain for subdomain-specific paths
@@ -55,17 +55,17 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
     if (isLocalhost) {
       return `${path}?mode=institutions`;
     }
-    return `https://institutions.credbyfuteur.com${path}`;
+    return `https://institutions.futeurcredx.com${path}`;
   } else if (isPlatformDomain) {
     if (isLocalhost) {
       return `${path}?mode=platform`;
     }
-    return `https://platform.credbyfuteur.com${path}`;
+    return `https://platform.futeurcredx.com${path}`;
   } else if (isDocsDomain) {
     if (isLocalhost) {
       return `${path}?mode=docs`;
     }
-    return `https://docs.credbyfuteur.com${path}`;
+    return `https://docs.futeurcredx.com${path}`;
   }
   
   // Fallback to relative URL for local development

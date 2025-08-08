@@ -171,7 +171,7 @@ const EnterpriseCarouselSection = () => {
                   className="w-full max-w-[400px]"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = window.location.protocol + "//credbyfuteur.com/mobile/chase.png";
+                    e.currentTarget.src = window.location.protocol + "//futeurcredx.com/mobile/chase.png";
                   }}
                 />
               ) : currentSlide === 1 ? (
@@ -181,7 +181,7 @@ const EnterpriseCarouselSection = () => {
                   className="w-full max-w-[400px]"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = window.location.protocol + "//credbyfuteur.com/mobile/dun.png";
+                    e.currentTarget.src = window.location.protocol + "//futeurcredx.com/mobile/dun.png";
                   }}
                 />
               ) : (
@@ -191,7 +191,7 @@ const EnterpriseCarouselSection = () => {
                   className="w-full max-w-[400px]"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = window.location.protocol + "//credbyfuteur.com/mobile/wells.png";
+                    e.currentTarget.src = window.location.protocol + "//futeurcredx.com/mobile/wells.png";
                   }}
                 />
               )}

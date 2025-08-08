@@ -26,12 +26,12 @@ export function getAssetUrl(path: string): string {
   // Get the main domain for production
   // This handles subdomains by referring to assets from the main domain
   const hostname = window.location.hostname;
-  const isProdDomain = hostname.includes('credbyfuteur.com');
+  const isProdDomain = hostname.includes('futeurcredx.com');
   
   if (isProdDomain) {
     // Handle subdomains by always loading assets from the main domain
     const protocol = window.location.protocol;
-    return `${protocol}//credbyfuteur.com${normalizedPath}`;
+    return `${protocol}//futeurcredx.com${normalizedPath}`;
   }
   
   // Default case: return the normalized path

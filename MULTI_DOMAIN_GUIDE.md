@@ -1,6 +1,6 @@
 # Multi-Domain Management Guide for Vercel
 
-This guide shows how to manage multiple domains (like `credbyfuteur.com`, `institutions.credbyfuteur.com`, `platform.credbyfuteur.com`) with different content/routing using Vercel.
+This guide shows how to manage multiple domains (like `futeurcredx.com`, `institutions.futeurcredx.com`, `platform.futeurcredx.com`) with different content/routing using Vercel.
 
 ## 1. Vercel Configuration
 
@@ -95,7 +95,7 @@ const AppRouter = () => {
       );
     }
     
-    // Main domain (credbyfuteur.com)
+    // Main domain (futeurcredx.com)
     return (
       <Routes>
         <Route path="/" element={<Index />} />
@@ -138,7 +138,7 @@ export const getDomainType = (): 'main' | 'institutions' | 'platform' | 'unknown
   
   if (hostname.includes('institutions.')) return 'institutions';
   if (hostname.includes('platform.')) return 'platform';
-  if (hostname.includes('credbyfuteur.com') || hostname.includes('localhost')) return 'main';
+  if (hostname.includes('futeurcredx.com') || hostname.includes('localhost')) return 'main';
   
   return 'unknown';
 };
@@ -148,7 +148,7 @@ export const getMainDomain = (): string => {
   
   if (hostname.includes('localhost')) return 'http://localhost:5173';
   
-  return 'https://credbyfuteur.com';
+  return 'https://futeurcredx.com';
 };
 
 export const getInstitutionsDomain = (): string => {
@@ -156,7 +156,7 @@ export const getInstitutionsDomain = (): string => {
   
   if (hostname.includes('localhost')) return 'http://institutions.localhost:5173';
   
-  return 'https://institutions.credbyfuteur.com';
+  return 'https://institutions.futeurcredx.com';
 };
 
 export const getPlatformDomain = (): string => {
@@ -164,7 +164,7 @@ export const getPlatformDomain = (): string => {
   
   if (hostname.includes('localhost')) return 'http://platform.localhost:5173';
   
-  return 'https://platform.credbyfuteur.com';
+  return 'https://platform.futeurcredx.com';
 };
 
 /**
@@ -267,21 +267,21 @@ export default DomainHeader;
 1. Go to your Vercel project dashboard
 2. Navigate to "Settings" → "Domains"
 3. Add your domains:
-   - `credbyfuteur.com`
-   - `institutions.credbyfuteur.com`
-   - `platform.credbyfuteur.com`
+   - `futeurcredx.com`
+   - `institutions.futeurcredx.com`
+   - `platform.futeurcredx.com`
 
 ### Step 2: DNS Configuration
 Add these DNS records to your domain provider:
 
 ```
 # Main domain
-A     credbyfuteur.com          76.76.19.61
-AAAA  credbyfuteur.com          2606:4700:10::6814:55ad
+A     futeurcredx.com          76.76.19.61
+AAAA  futeurcredx.com          2606:4700:10::6814:55ad
 
 # Subdomains
-CNAME institutions.credbyfuteur.com  cname.vercel-dns.com
-CNAME platform.credbyfuteur.com      cname.vercel-dns.com
+CNAME institutions.futeurcredx.com  cname.vercel-dns.com
+CNAME platform.futeurcredx.com      cname.vercel-dns.com
 ```
 
 ### Step 3: Environment Variables
@@ -289,9 +289,9 @@ Set up environment variables in Vercel:
 
 ```bash
 # In Vercel dashboard → Settings → Environment Variables
-VITE_MAIN_DOMAIN=https://credbyfuteur.com
-VITE_INSTITUTIONS_DOMAIN=https://institutions.credbyfuteur.com
-VITE_PLATFORM_DOMAIN=https://platform.credbyfuteur.com
+VITE_MAIN_DOMAIN=https://futeurcredx.com
+VITE_INSTITUTIONS_DOMAIN=https://institutions.futeurcredx.com
+VITE_PLATFORM_DOMAIN=https://platform.futeurcredx.com
 ```
 
 ## 6. Local Development Setup

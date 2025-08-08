@@ -32,9 +32,9 @@ const AppRouter = () => {
   const testMode = urlParams.get('mode');
   
   // Detect subdomain routing
-  const isDomainInstitutions = hostname === 'institutions.credbyfuteur.com' || (isLocalhost && testMode === 'institutions');
-  const isDomainPlatform = hostname === 'platform.credbyfuteur.com' || (isLocalhost && testMode === 'platform');
-  const isDomainDocs = hostname === 'docs.credbyfuteur.com' || (isLocalhost && testMode === 'docs');
+  const isDomainInstitutions = hostname === 'institutions.futeurcredx.com' || (isLocalhost && testMode === 'institutions');
+  const isDomainPlatform = hostname === 'platform.futeurcredx.com' || (isLocalhost && testMode === 'platform');
+  const isDomainDocs = hostname === 'docs.futeurcredx.com' || (isLocalhost && testMode === 'docs');
 
   return (
   <QueryClientProvider client={queryClient}>
@@ -48,18 +48,18 @@ const AppRouter = () => {
           <Routes>
           {/* Domain-specific routing */}
           {isDomainDocs ? (
-            // For docs.credbyfuteur.com, show Docs content for all routes
+            // For docs.futeurcredx.com, show Docs content for all routes
             <>
               <Route path="/*" element={<Docs />} />
             </>
           ) : isDomainInstitutions ? (
-            // For institutions.credbyfuteur.com, show Enterprise content for most routes
+            // For institutions.futeurcredx.com, show Enterprise content for most routes
             <>
               <Route path="/faq" element={<FAQ />} />
               <Route path="/*" element={<Enterprise />} />
             </>
           ) : isDomainPlatform ? (
-            // For platform.credbyfuteur.com, show Fintech content for most routes
+            // For platform.futeurcredx.com, show Fintech content for most routes
             <>
               <Route path="/faq" element={<FAQ />} />
               <Route path="/*" element={<Fintech />} />
