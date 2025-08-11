@@ -44,7 +44,7 @@ export default function Index() {
             <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl font-normal leading-relaxed">
               <strong className="text-white">FUTEURCREDX™</strong> brings together business credit monitoring,
               AI-powered insights, PG-free tradelines, and enterprise banking solutions all powered by the
-              revolutionary <strong className="text-white">LUMIQX™ journey engine</strong>.
+              revolutionary <strong className="text-white">LUMIQ AI™ journey engine</strong>.
             </p>
 
             {/* CTA Buttons - Revolut Style */}
@@ -64,7 +64,7 @@ export default function Index() {
                   className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full bg-transparent"
                 >
                   <Play className="mr-2 h-5 w-5" />
-                  See LUMIQX™ Demo
+                  See LUMIQ AI™ Demo
                 </Button>
               </Link>
             </div>
@@ -105,7 +105,7 @@ export default function Index() {
                     <li>SOC 2 compliant protocols, backed by HSM-ready architecture</li>
                   </ul>
                   <p className="text-sm md:text-base text-gray-500 leading-normal max-w-md mt-3">
-                    Our algorithm—<strong className="text-black">LUMIQX™</strong>—learns only from encrypted meta-patterns. We never monetize your data, we decode it to unlock predictive financial outcomes only you control.
+                    Our algorithm—<strong className="text-black">LUMIQ AI™</strong>—learns only from encrypted meta-patterns. We never monetize your data, we decode it to unlock predictive financial outcomes only you control.
                   </p>
                 </div>
                 <div className="mt-6">

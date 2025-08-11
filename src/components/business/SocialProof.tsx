@@ -26,7 +26,7 @@ const SocialProof = () => {
       business: "SaaS Founder",
       name: "David Chen",
       location: "San Francisco, CA",
-      membership: "LUMIQX Journey Member",
+      membership: "LUMIQ AI Journey Member",
       before: "Credit Karma told me nothing about business credit reality",
       after: "Built 5 PG-free tradelines, trade payment health improved to 95%",
       scoreJump: { from: 0, to: 41, label: "FSR Score" },

@@ -147,7 +147,7 @@ const CreditJourney = () => {
         <div className="max-w-7xl mx-auto relative text-center">
           <div className="inline-flex items-center gap-2 sm:gap-3 bg-white/5 px-3 sm:px-6 py-2 sm:py-3 rounded-full mb-6 sm:mb-8 border border-white/10">
             <Orbit className="h-4 w-4 sm:h-5 sm:w-5 text-white animate-spin" />
-            <span className="font-medium text-white text-xs sm:text-sm">LUMIQX™ CREDIT JOURNEY DEMO</span>
+            <span className="font-medium text-white text-xs sm:text-sm">LUMIQ AI™ CREDIT JOURNEY DEMO</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-6 sm:mb-8 leading-tight tracking-tight text-white uppercase px-2">
@@ -160,7 +160,7 @@ const CreditJourney = () => {
             If Chase Credit Journey was the blueprint for personal credit evolution...
             <br />
             <strong className="text-white font-semibold">
-              LUMIQX is the FUTEUR-powered command center for business credit ascension.
+              LUMIQ AI is the FUTEUR-powered command center for business credit ascension.
             </strong>
           </p>
 
@@ -197,7 +197,7 @@ const CreditJourney = () => {
         <div className="max-w-7xl mx-auto relative">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 sm:mb-6 uppercase tracking-tight">
-              Live LUMIQX™ Dashboard
+              Live LUMIQ AI™ Dashboard
             </h2>
             <p className="text-lg sm:text-xl text-gray-300 px-4">
               Watch your business credit ecosystem come alive in real-time
@@ -498,7 +498,7 @@ const CreditJourney = () => {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 sm:mb-6 uppercase tracking-tight">
-              Chase Credit Journey vs. LUMIQX™
+              Chase Credit Journey vs. LUMIQ AI™
             </h2>
             <p className="text-lg sm:text-xl text-white/70">The evolution from consumer tracking to business command</p>
           </div>
@@ -513,7 +513,7 @@ const CreditJourney = () => {
                     Chase Credit Journey
                   </th>
                   <th className="text-left p-3 sm:p-6 text-white font-bold uppercase tracking-tight text-xs sm:text-sm">
-                    FUTEURCREDX™ (LUMIQX)
+                    FUTEURCREDX™ (LUMIQ AI)
                   </th>
                 </tr>
               </thead>
@@ -554,7 +554,7 @@ const CreditJourney = () => {
               AI-Powered Recommendations
             </h2>
             <p className="text-lg sm:text-xl text-white/70 px-4">
-              Unlike Chase's passive monitoring, LUMIQX actively guides your growth
+              Unlike Chase's passive monitoring, LUMIQ AI actively guides your growth
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 sm:gap-8">

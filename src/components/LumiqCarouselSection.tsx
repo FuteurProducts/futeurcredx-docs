@@ -171,7 +171,7 @@ const LumiqCarouselSection = () => {
             <div>
               <div className="inline-flex items-center gap-2 bg-purple-500/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 border border-purple-500/20">
                 <Orbit className="h-3 w-3 sm:h-4 sm:w-4 text-purple-400 animate-spin" />
-                <span className="text-xs sm:text-sm font-medium text-white">LUMIQX™ JOURNEY ENGINE</span>
+                <span className="text-xs sm:text-sm font-medium text-white">LUMIQ AI™ JOURNEY ENGINE</span>
               </div>
               
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-4 sm:mb-6 leading-tight tracking-tight">

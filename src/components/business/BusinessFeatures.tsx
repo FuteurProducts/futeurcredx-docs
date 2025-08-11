@@ -6,7 +6,7 @@ import { CheckCircle, Orbit, Network, Unlock } from 'lucide-react';
 const BusinessFeatures = () => {
   const features = [
     {
-      name: "LUMIQX™ Journey Engine",
+      name: "LUMIQ AI™ Journey Engine",
       tagline: "Like Chase Journey, But for Business",
       icon: Orbit,
       description: "Interactive FSR scoring with Experian integration, trade payment health tracking, and industry payment insights - just like your personal Credit Journey but for business credit",

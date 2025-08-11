@@ -36,7 +36,7 @@ const App = () => {
           <p className="text-white text-sm md:text-base font-medium text-center">
             <span className="inline-flex items-center gap-2">
               <Eye className="w-4 h-4" />
-              90% of businesses don't know their credit score—LUMIQX users not only know it, they weaponize it.
+              90% of businesses don't know their credit score—LUMIQ AI users not only know it, they weaponize it.
             </span>
           </p>
         </div>
@@ -183,7 +183,7 @@ const App = () => {
                 },
                 {
                   icon: Zap,
-                  title: "LUMIQX Journey",
+                  title: "LUMIQ AI Journey",
                   description: "Follow your personalized credit-building roadmap with AI-powered recommendations.",
                   color: "from-yellow-400 to-orange-400"
                 },
@@ -330,7 +330,7 @@ const App = () => {
               <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"> Track Progress</span>?
             </h2>
             <p className="text-xl text-gray-300 mb-8">
-              Download the LUMIQX app and start building your business credit empire today.
+              Download the LUMIQ AI app and start building your business credit empire today.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

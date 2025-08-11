@@ -5,24 +5,24 @@ const BusinessFAQ = () => {
   const faqItems = [
     {
       question: "What's the difference between FUTEURCREDX and NAV?",
-      answer: "NAV shows you fragments - partial data from some vendors. FUTEURCREDX is your complete operating system with LUMIQX™ journey engine, full vendor universe visibility, AI-powered insights, and PG-free building tools. NAV is a middleman, we're your mission control."
+      answer: "NAV shows you fragments - partial data from some vendors. FUTEURCREDX is your complete operating system with LUMIQ AI™ journey engine, full vendor universe visibility, AI-powered insights, and PG-free building tools. NAV is a middleman, we're your mission control."
     },
     {
       question: "Is this like Credit Karma but for business?",
       answer: <>
-        Credit Karma is a consumer toy with zero business coverage. FUTEURCREDX is an AI-powered business credit app with the LUMIQX™ journey engine that shows your complete credit ecosystem, <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-4 opacity-80" /> FSR scores</span>, trade payment health, and builds PG-free tradelines with real-time vendor intelligence.
+        Credit Karma is a consumer toy with zero business coverage. FUTEURCREDX is an AI-powered business credit app with the LUMIQ AI™ journey engine that shows your complete credit ecosystem, <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-4 opacity-80" /> FSR scores</span>, trade payment health, and builds PG-free tradelines with real-time vendor intelligence.
       </>
     },
     {
-      question: "How is LUMIQX different from Chase Credit Journey?",
+      question: "How is LUMIQ AI different from Chase Credit Journey?",
       answer: <>
-        Chase Credit Journey is for personal credit only. LUMIQX™ is the business credit journey engine that powers FUTEURCREDX, showing <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-4 opacity-80" /> FSR scores</span>, trade payment health, industry payment insights, and vendor relationships - everything Chase Journey does for personal credit, but for your business.
+        Chase Credit Journey is for personal credit only. LUMIQ AI™ is the business credit journey engine that powers FUTEURCREDX, showing <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-4 opacity-80" /> FSR scores</span>, trade payment health, industry payment insights, and vendor relationships - everything Chase Journey does for personal credit, but for your business.
       </>
     },
     {
       question: "What if I have no credit history?",
       answer: <>
-        Perfect! Our LUMIQX™ engine identifies the fastest path to establish business credit through strategic vendor partnerships and PG-free tradelines. We show you exactly which vendors to approach first for maximum <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-4 opacity-80" /> FSR</span> and Intelliscore impact.
+        Perfect! Our LUMIQ AI™ engine identifies the fastest path to establish business credit through strategic vendor partnerships and PG-free tradelines. We show you exactly which vendors to approach first for maximum <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-4 opacity-80" /> FSR</span> and Intelliscore impact.
       </>
     },
     {

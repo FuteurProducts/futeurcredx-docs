@@ -93,7 +93,7 @@ const Enterprise = () => {
 
   const lumiqAdvantages = [
     {
-      name: "LUMIQX Intelligence™",
+      name: "LUMIQ AI Intelligence™",
       description: "Multi-bureau business credit scoring with 340+ data points",
       icon: TrendingUp,
       bankBenefit: "5x more accurate than traditional scoring",
@@ -101,7 +101,7 @@ const Enterprise = () => {
       compliance: "FCRA compliant, audit-ready"
     },
     {
-      name: "LUMIQX Engage™", 
+      name: "LUMIQ AI Engage™", 
       description: "SMB credit engagement platform with personalized insights",
       icon: Users,
       bankBenefit: "3.2x increase in digital banking usage",
@@ -109,7 +109,7 @@ const Enterprise = () => {
       compliance: "SOC 2 Type II certified"
     },
     {
-      name: "LUMIQX Convert™",
+      name: "LUMIQ AI Convert™",
       description: "AI-powered pre-qualification engine for business products",
       icon: Target,
       bankBenefit: "+40% loan application completion",
@@ -117,7 +117,7 @@ const Enterprise = () => {
       compliance: "Transparent AI, explainable decisions"
     },
     {
-      name: "LUMIQX Retain™",
+      name: "LUMIQ AI Retain™",
       description: "Proactive SMB relationship management through credit monitoring",
       icon: Bell,
       bankBenefit: "65% reduction in SMB churn",
@@ -384,7 +384,7 @@ const Enterprise = () => {
         </div>
       </section>
 
-      {/* LUMIQX Solution */}
+      {/* LUMIQ AI Solution */}
       <section className="py-16 px-6 bg-black">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -393,7 +393,7 @@ const Enterprise = () => {
               <span className="font-medium text-white text-sm">ENTERPRISE-GRADE SOLUTION</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-black text-white mb-6 uppercase tracking-tight">
-              LUMIQX™ — Your Consumer Playbook for SMBs
+              LUMIQ AI™ — Your Consumer Playbook for SMBs
             </h2>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-6">
               The same proven engagement strategy that generated billions for consumer credit — 

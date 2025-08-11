@@ -25,7 +25,7 @@ const CompetitorComparison = () => {
       name: "FUTEURCREDX™", 
       icon: "🚀", 
       users: "50K+",
-      tagline: "Complete business credit app powered by LUMIQX™ journey engine",
+      tagline: "Complete business credit app powered by LUMIQ AI™ journey engine",
       limitation: "✅ Full-spectrum AI-powered ecosystem",
       cost: "Member exclusive - Complete App",
       category: "Operating System"
@@ -45,7 +45,7 @@ const CompetitorComparison = () => {
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto">
             We're not another credit monitor. We're your <strong className="text-white">complete business credit app</strong><br/>
-            powered by the <strong className="text-purple-400">LUMIQX™ journey engine</strong>. FSR tracking. Trade payment health. No PG tradelines.
+            powered by the <strong className="text-purple-400">LUMIQ AI™ journey engine</strong>. FSR tracking. Trade payment health. No PG tradelines.
           </p>
         </div>
 
