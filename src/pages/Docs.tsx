@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
-import { useNavigate } from "react-router-dom"
+import { getCrossDomainUrl } from "@/utils/domainUtils"
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -1119,7 +1119,6 @@ const DocsSidebar = ({ categories, openGroupId, setOpenGroupId }: DocsSidebarPro
 export default function DocsPage() {
   const [openGroupId, setOpenGroupId] = useState<string | null>(apiData[0]?.id || null)
   const [searchQuery, setSearchQuery] = useState("")
-  const navigate = useNavigate()
 
   const filteredCategories = apiData.filter(category =>
     category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -1140,7 +1139,7 @@ export default function DocsPage() {
           </p>
           <div className="mt-8">
             <Button
-              onClick={() => navigate('/login')}
+              onClick={() => window.location.href = getCrossDomainUrl('/login')}
               className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
             >
               Start Testing Now
