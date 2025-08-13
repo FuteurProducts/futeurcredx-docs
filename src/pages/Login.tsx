@@ -1,37 +1,9 @@
-import React, { useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Eye, EyeOff, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react'
-import { useAuth } from '../contexts/AuthContext'
+import { SignIn } from '@clerk/clerk-react'
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  const { login } = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const from = location.state?.from?.pathname || '/dashboard'
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setIsLoading(true)
-
-    try {
-      await login(email, password)
-      navigate(from, { replace: true })
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   return (
     <div className="min-h-screen bg-[#0E0E10] text-white">
       {/* Background Pattern */}
@@ -52,98 +24,53 @@ const Login: React.FC = () => {
             <p className="mt-4 text-gray-400 text-lg">Sign in to access your API dashboard</p>
           </div>
 
-          {/* Login Form */}
-          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400"
-                >
-                  <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                  <span className="text-sm">{error}</span>
-                </motion.div>
-              )}
+          {/* Clerk Sign In Component */}
+          <div className="flex justify-center">
+            <SignIn 
+              redirectUrl="/dashboard"
+              signUpUrl="/register"
+              appearance={{
+                elements: {
+                  rootBox: "w-full max-w-md",
+                  card: "bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-2xl p-8",
+                  headerTitle: "text-white font-black uppercase tracking-tight text-2xl mb-2",
+                  headerSubtitle: "text-gray-400 text-sm font-medium mb-6",
+                  socialButtonsBlockButton: "bg-white/10 border border-white/20 text-white hover:bg-white/20 transition-all duration-200 rounded-xl font-semibold py-3 mb-4",
+                  socialButtonsBlockButtonText: "font-semibold text-white",
+                  dividerLine: "bg-white/20",
+                  dividerText: "text-gray-400 font-medium uppercase tracking-wide text-xs",
+                  formFieldInput: "bg-white/5 border border-white/10 text-white placeholder-gray-400 focus:border-white/30 focus:ring-2 focus:ring-white/10 rounded-xl py-3 px-4 transition-all duration-200",
+                  formFieldLabel: "text-white font-bold uppercase tracking-wide text-xs mb-2",
+                  formButtonPrimary: "bg-white text-black font-black uppercase tracking-wide hover:bg-gray-100 transition-all duration-200 rounded-xl py-3 w-full",
+                  footerActionLink: "text-white hover:text-gray-300 font-semibold transition-colors duration-200",
+                  identityPreviewText: "text-white",
+                  formFieldInputShowPasswordButton: "text-gray-400 hover:text-white",
+                  alertError: "bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-3",
+                  formFieldSuccessText: "text-green-400",
+                  formFieldErrorText: "text-red-400 text-sm mt-1",
+                  otpCodeFieldInput: "bg-white/5 border border-white/10 text-white rounded-lg",
+                  formResendCodeLink: "text-white hover:text-gray-300 font-semibold",
+                },
+                variables: {
+                  colorPrimary: "#ffffff",
+                  colorBackground: "transparent",
+                  colorInputBackground: "rgba(255, 255, 255, 0.05)",
+                  colorInputText: "#ffffff",
+                  colorText: "#ffffff",
+                  colorTextSecondary: "#9ca3af",
+                  borderRadius: "12px",
+                }
+              }}
+            />
+          </div>
 
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-bold text-white mb-2 uppercase tracking-wide">
-                    Email Address
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-white/10 transition-colors text-white placeholder-gray-400"
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="password" className="block text-sm font-bold text-white mb-2 uppercase tracking-wide">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      id="password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full pl-12 pr-14 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-white/10 transition-colors text-white placeholder-gray-400"
-                      placeholder="Enter your password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-white text-black font-black py-4 px-6 rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 uppercase tracking-wide"
-              >
-                {isLoading ? (
-                  <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
-                ) : (
-                  <>
-                    Sign In
-                    <ArrowRight className="w-5 h-5" />
-                  </>
-                )}
-              </button>
-            </form>
-
-            <div className="mt-8 text-center">
-              <p className="text-gray-400">
-                Don't have an account?{' '}
-                <Link to="/register" className="text-white hover:underline font-bold">
-                  Sign up
-                </Link>
-              </p>
-            </div>
-
-            <div className="mt-6 pt-6 border-t border-white/10 text-center">
-              <Link
-                to="/docs"
-                className="text-gray-400 hover:text-white transition-colors text-sm font-medium"
-              >
-                ← Back to API Documentation
-              </Link>
-            </div>
+          <div className="mt-6 pt-6 border-t border-white/10 text-center">
+            <Link
+              to="/docs"
+              className="text-gray-400 hover:text-white transition-colors text-sm font-medium"
+            >
+              ← Back to API Documentation
+            </Link>
           </div>
         </motion.div>
       </div>

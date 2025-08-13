@@ -1,46 +1,252 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
-  Key, 
-  BarChart3, 
-  CreditCard, 
-  FileText, 
-  Plus, 
-  Copy, 
-  Trash2, 
-  Eye, 
+  Activity,
+  Key,
+  Copy,
+  Eye,
   EyeOff,
+  Plus,
+  Trash2,
+  BarChart3,
+  DollarSign,
+  Shield,
+  Users,
+  Settings,
+  FileText,
   ExternalLink,
   TrendingUp,
   Calendar,
-  DollarSign,
-  Activity,
-  Zap,
-  Shield,
-  Users
+  CreditCard
 } from 'lucide-react'
-import { useAuth } from '../contexts/AuthContext'
+import { useUser, SignOutButton, useAuth } from '@clerk/clerk-react'
 
 const Dashboard: React.FC = () => {
-  const { user, apiKeys, generateApiKey, revokeApiKey, logout } = useAuth()
+  const { user } = useUser()
+  const { getToken } = useAuth()
+  const navigate = useNavigate()
+  // Real API keys data from backend
+  const [apiKeys, setApiKeys] = useState([])
+  const [isLoadingKeys, setIsLoadingKeys] = useState(true)
   const [showApiKey, setShowApiKey] = useState<Record<string, boolean>>({})
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
+  const [error, setError] = useState('')
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
+  const [showDebugInfo, setShowDebugInfo] = useState(false)
+  const [debugInfo, setDebugInfo] = useState('')
+  const [currentToken, setCurrentToken] = useState('')
+  const [showToken, setShowToken] = useState(false)
+  const [keyConfig, setKeyConfig] = useState({
+    scopes: [] as string[],
+    expiresInDays: 30,
+    ipWhitelist: [] as string[],
+    geoRestrictions: [] as string[]
+  })
 
+  // Fetch API keys from backend
+  const fetchApiKeys = async () => {
+    try {
+      // Get the default Clerk token
+      const token = await getToken()
+      
+      console.log('Clerk token obtained:', token ? 'Token exists' : 'No token')
+      if (token) {
+        console.log('Token preview:', token.substring(0, 20) + '...')
+      }
+      
+      if (!token) {
+        setError('No authentication token available. Please sign in again.')
+        setIsLoadingKeys(false)
+        return
+      }
+
+      const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      console.log('Making API request to:', apiUrl)
+      
+      const response = await fetch(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      console.log('API Response status:', response.status)
+      
+      if (response.ok) {
+        const keys = await response.json()
+        setApiKeys(keys)
+        setError('') // Clear any previous errors
+      } else {
+        const errorText = await response.text()
+        console.error('API Error Response:', response.status, errorText)
+        
+        if (response.status === 401) {
+          setError('Authentication failed. Your session may have expired. Please sign out and sign in again.')
+          setApiKeys([]) // Ensure empty array so dashboard renders
+        } else if (response.status === 500 && errorText.includes('User not found')) {
+          setError('⚠️ User account exists but API access issue. This might be a backend user lookup problem.')
+          setApiKeys([]) // Ensure empty array so dashboard renders
+          console.error('Backend user lookup issue - user exists but API calls failing')
+        } else if (response.status === 404 && errorText.includes('User not found')) {
+          setError('⚠️ User account exists but API access issue. This might be a backend user lookup problem.')
+          setApiKeys([]) // Ensure empty array so dashboard renders
+          console.error('Backend user lookup issue - user exists but API calls failing')
+        } else {
+          setError(`API Error: ${response.status} - ${response.statusText}`)
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching API keys:', error)
+      if (error instanceof TypeError && error.message === 'Load failed') {
+        setError('CORS Error: Backend API not configured for localhost. This will work in production.')
+        // For development, use mock data
+        setApiKeys([
+          {
+            id: 'dev-1',
+            name: 'Development Key (Mock)',
+            key: 'fc_dev_1234567890abcdef',
+            createdAt: new Date().toISOString(),
+            lastUsed: new Date().toISOString(),
+            callsUsed: 150,
+            scopes: ['read:users', 'write:orders'],
+            expiresInDays: 30,
+            ipWhitelist: ['127.0.0.1'],
+            geoRestrictions: ['US']
+          }
+        ])
+      } else {
+        setError('Failed to load API keys. Please try again.')
+        // Set empty array so dashboard still renders
+        setApiKeys([])
+      }
+    } finally {
+      setIsLoadingKeys(false)
+    }
+  }
+
+  // Generate new API key
   const handleGenerateKey = async () => {
     if (!newKeyName.trim()) return
     
     setIsGeneratingKey(true)
+    setError('')
+    
     try {
-      await generateApiKey(newKeyName.trim())
-      setNewKeyName('')
+      const token = await getToken()
+      
+      if (!token) {
+        setError('No authentication token available. Please sign in again.')
+        return
+      }
+      
+      const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      console.log('Generating API key with token preview:', token.substring(0, 20) + '...')
+      
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newKeyName.trim(),
+          scopes: keyConfig.scopes,
+          expiresInDays: keyConfig.expiresInDays,
+          ipWhitelist: keyConfig.ipWhitelist,
+          geoRestrictions: keyConfig.geoRestrictions
+        }),
+      })
+
+      if (response.ok) {
+        const newKey = await response.json()
+        setApiKeys(prev => [...prev, newKey])
+        setNewKeyName('')
+        setKeyConfig({
+          scopes: [],
+          expiresInDays: 30,
+          ipWhitelist: [],
+          geoRestrictions: []
+        })
+        setShowAdvancedOptions(false)
+        setError('') // Clear any previous errors
+      } else {
+        const errorData = await response.json()
+        setError(errorData.message || 'Failed to generate API key')
+      }
     } catch (error) {
       console.error('Failed to generate API key:', error)
+      if (error instanceof TypeError && error.message === 'Load failed') {
+        // CORS error - simulate successful creation for development
+        const mockKey = {
+          id: `dev-${Date.now()}`,
+          name: newKeyName.trim(),
+          key: `fc_dev_${Math.random().toString(36).substring(2, 15)}`,
+          createdAt: new Date().toISOString(),
+          lastUsed: null,
+          callsUsed: 0,
+          scopes: keyConfig.scopes,
+          expiresInDays: keyConfig.expiresInDays,
+          ipWhitelist: keyConfig.ipWhitelist,
+          geoRestrictions: keyConfig.geoRestrictions
+        }
+        setApiKeys(prev => [...prev, mockKey])
+        setNewKeyName('')
+        setKeyConfig({
+          scopes: [],
+          expiresInDays: 30,
+          ipWhitelist: [],
+          geoRestrictions: []
+        })
+        setShowAdvancedOptions(false)
+        setError('✓ Mock key created (CORS prevents real API call in development)')
+      } else {
+        setError('Network error. Please try again.')
+      }
     } finally {
       setIsGeneratingKey(false)
     }
   }
+
+  // Revoke API key
+  const handleRevokeKey = async (keyId: string) => {
+    try {
+      const token = await getToken()
+      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      const response = await fetch(`${baseUrl}/${keyId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        setApiKeys(prev => prev.filter(key => key.id !== keyId))
+        setError('') // Clear any errors
+      } else {
+        console.error('Failed to revoke API key:', response.statusText)
+        setError('Failed to revoke API key')
+      }
+    } catch (error) {
+      console.error('Error revoking API key:', error)
+      if (error instanceof TypeError && error.message === 'Load failed') {
+        // CORS error - simulate successful deletion for development
+        setApiKeys(prev => prev.filter(key => key.id !== keyId))
+        setError('✓ Mock key revoked (CORS prevents real API call in development)')
+      } else {
+        setError('Network error while revoking key')
+      }
+    }
+  }
+
+  // Load API keys on component mount
+  useEffect(() => {
+    if (user) {
+      fetchApiKeys()
+    }
+  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCopyKey = (key: string) => {
     navigator.clipboard.writeText(key)
@@ -54,15 +260,169 @@ const Dashboard: React.FC = () => {
     }))
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+  const availableScopes = [
+    'read:users', 'write:users', 'delete:users',
+    'read:orders', 'write:orders', 'delete:orders',
+    'read:invoices', 'write:invoices', 'delete:invoices',
+    'read:analytics', 'write:analytics'
+  ]
+
+  const availableCountries = ['US', 'CA', 'GB', 'DE', 'FR', 'AU', 'JP']
+
+  const handleScopeToggle = (scope: string) => {
+    setKeyConfig(prev => ({
+      ...prev,
+      scopes: prev.scopes.includes(scope)
+        ? prev.scopes.filter(s => s !== scope)
+        : [...prev.scopes, scope]
+    }))
+  }
+
+  const handleAddIP = (ip: string) => {
+    if (ip.trim() && !keyConfig.ipWhitelist.includes(ip.trim())) {
+      setKeyConfig(prev => ({
+        ...prev,
+        ipWhitelist: [...prev.ipWhitelist, ip.trim()]
+      }))
+    }
+  }
+
+  const handleRemoveIP = (ip: string) => {
+    setKeyConfig(prev => ({
+      ...prev,
+      ipWhitelist: prev.ipWhitelist.filter(i => i !== ip)
+    }))
+  }
+
+  const handleCountryToggle = (country: string) => {
+    setKeyConfig(prev => ({
+      ...prev,
+      geoRestrictions: prev.geoRestrictions.includes(country)
+        ? prev.geoRestrictions.filter(c => c !== country)
+        : [...prev.geoRestrictions, country]
+    }))
+  }
+
+  const fetchCurrentToken = async () => {
+    try {
+      const token = await getToken()
+      setCurrentToken(token || '')
+      return token
+    } catch (error) {
+      console.error('Error fetching token:', error)
+      setCurrentToken('')
+      return null
+    }
+  }
+
+  const debugClerkToken = async () => {
+    try {
+      const defaultToken = await fetchCurrentToken()
+      
+      // Decode JWT to see claims (for debugging only)
+      let tokenClaims = 'Unable to decode'
+      if (defaultToken) {
+        try {
+          const payload = JSON.parse(atob(defaultToken.split('.')[1]))
+          tokenClaims = JSON.stringify(payload, null, 2)
+        } catch (e) {
+          tokenClaims = 'Invalid JWT format'
+        }
+      }
+
+      // Test different auth header formats
+      let authTests = 'Testing different auth formats...\n'
+      if (defaultToken) {
+        const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+        
+        // Test 1: Bearer token
+        try {
+          const response1 = await fetch(apiUrl, {
+            method: 'HEAD',
+            headers: { 'Authorization': `Bearer ${defaultToken}` }
+          })
+          authTests += `Bearer Token: ${response1.status} ${response1.statusText}\n`
+        } catch (e) {
+          authTests += `Bearer Token: Error - ${e}\n`
+        }
+
+        // Test 2: Different header name
+        try {
+          const response2 = await fetch(apiUrl, {
+            method: 'HEAD', 
+            headers: { 'X-Auth-Token': defaultToken }
+          })
+          authTests += `X-Auth-Token: ${response2.status} ${response2.statusText}\n`
+        } catch (e) {
+          authTests += `X-Auth-Token: Error - ${e}\n`
+        }
+
+        // Test 3: API Key format
+        try {
+          const response3 = await fetch(apiUrl, {
+            method: 'HEAD',
+            headers: { 'X-API-Key': defaultToken }
+          })
+          authTests += `X-API-Key: ${response3.status} ${response3.statusText}\n`
+        } catch (e) {
+          authTests += `X-API-Key: Error - ${e}\n`
+        }
+      }
+      
+      const info = `
+Debug Information:
+- User ID: ${user?.id}
+- User Email: ${user?.emailAddresses[0]?.emailAddress}
+- Default Token: ${defaultToken ? 'EXISTS (' + defaultToken.substring(0, 50) + '...)' : 'NULL'}
+- Token Length: ${defaultToken ? defaultToken.length : 0} characters
+- Environment: ${import.meta.env.DEV ? 'DEVELOPMENT' : 'PRODUCTION'}
+- API URL: ${import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'}
+- Clerk Publishable Key: ${import.meta.env.VITE_CLERK_PUBLISHABLE_KEY?.substring(0, 20)}...
+
+Auth Header Tests:
+${authTests}
+
+Token Claims:
+${tokenClaims}
+
+USER SYNC DEBUG:
+Frontend (Clerk) User Data:
+- Clerk User ID: ${user?.id}
+- Email: ${user?.emailAddresses[0]?.emailAddress}
+- First Name: ${user?.firstName}
+- Last Name: ${user?.lastName}
+- Created: ${user?.createdAt}
+
+JWT Token Claims (what backend sees):
+${tokenClaims}
+
+BACKEND REQUIREMENTS:
+Your backend needs to either:
+1. Auto-create users from JWT claims on first API call
+2. Set up Clerk webhooks to sync users (user.created event)
+3. Manual user creation endpoint
+4. Check if backend is looking for correct user identifier
+      `
+      setDebugInfo(info)
+      setShowDebugInfo(true)
+    } catch (error) {
+      setDebugInfo(`Error getting debug info: ${error}`)
+      setShowDebugInfo(true)
+    }
+  }
+
+  const formatDate = (date: string | Date) => {
+    const dateObj = typeof date === 'string' ? new Date(date) : date
+    return dateObj.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
     })
   }
 
-  const usagePercentage = user ? (user.apiCallsUsed / user.apiCallsLimit) * 100 : 0
+  // Mock usage data - in real app this would come from your backend
+  const mockUsage = { used: 1250, limit: 10000 }
+  const usagePercentage = (mockUsage.used / mockUsage.limit) * 100
 
   return (
     <div className="min-h-screen bg-[#0E0E10] text-white">
@@ -83,13 +443,12 @@ const Dashboard: React.FC = () => {
               </nav>
             </div>
             <div className="flex items-center gap-6">
-              <span className="text-sm text-gray-400 font-medium">Welcome, <span className="text-white font-bold">{user?.name}</span></span>
-              <button
-                onClick={logout}
-                className="text-sm text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-wide"
-              >
-                Sign Out
-              </button>
+              <span className="text-sm text-gray-400 font-medium">Welcome, <span className="text-white font-bold">{user?.firstName || user?.emailAddresses[0]?.emailAddress}</span></span>
+              <SignOutButton>
+                <button className="text-sm text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-wide">
+                  Sign Out
+                </button>
+              </SignOutButton>
             </div>
           </div>
         </div>
@@ -122,10 +481,10 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-3xl font-black">{user?.apiCallsUsed.toLocaleString()}</div>
-              <div className="text-sm text-gray-400 font-medium">
-                of {user?.apiCallsLimit.toLocaleString()} limit
-              </div>
+              <div className="text-lg font-black">Free</div>
+              <div>{mockUsage.used.toLocaleString()}</div>
+              <div className="text-sm text-gray-400 font-medium">API Calls Used</div>
+              <div className="text-xs text-gray-500">of {mockUsage.limit.toLocaleString()} this month</div>
               <div className="w-full bg-white/10 rounded-full h-3">
                 <div 
                   className="bg-blue-400 h-3 rounded-full transition-all duration-500"
@@ -211,42 +570,281 @@ const Dashboard: React.FC = () => {
               </Link>
             </div>
 
+            {/* Debug Panel */}
+            <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-bold text-yellow-400">🔧 Authentication Debug</h4>
+                <div className="flex gap-2">
+                  <button
+                    onClick={async () => {
+                      await fetchCurrentToken()
+                      setShowToken(true)
+                    }}
+                    className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-sm font-medium"
+                  >
+                    Show Token
+                  </button>
+                  <button
+                    onClick={debugClerkToken}
+                    className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors text-sm font-medium"
+                  >
+                    Debug Token
+                  </button>
+                </div>
+              </div>
+              
+              {/* Token Display Section */}
+              {showToken && currentToken && (
+                <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h5 className="font-bold text-blue-400 text-sm">🎫 Current Clerk JWT Token</h5>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(currentToken)
+                          // Could add toast notification here
+                        }}
+                        className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs hover:bg-blue-500/30 transition-colors flex items-center gap-1"
+                      >
+                        <Copy className="w-3 h-3" />
+                        Copy
+                      </button>
+                      <button
+                        onClick={() => setShowToken(false)}
+                        className="px-2 py-1 bg-gray-500/20 text-gray-400 rounded text-xs hover:bg-gray-500/30 transition-colors"
+                      >
+                        Hide
+                      </button>
+                    </div>
+                  </div>
+                  <div className="bg-black/30 p-3 rounded border border-blue-500/20">
+                    <code className="text-xs text-blue-200 break-all font-mono leading-relaxed">
+                      {currentToken}
+                    </code>
+                  </div>
+                  <p className="text-xs text-blue-300 mt-2">
+                    💡 Use this token to test your backend API directly with tools like Postman or curl:
+                    <br />
+                    <code className="text-blue-200">curl -H "Authorization: Bearer [token]" https://staging.futeur.app/api/v1/api-keys</code>
+                  </p>
+                </div>
+              )}
+              
+              {showToken && !currentToken && (
+                <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                  <p className="text-red-400 text-sm">❌ No token available. Please ensure you're signed in.</p>
+                </div>
+              )}
+              {showDebugInfo && (
+                <pre className="text-xs text-yellow-200 bg-black/30 p-3 rounded-lg overflow-x-auto whitespace-pre-wrap">
+                  {debugInfo}
+                </pre>
+              )}
+              <p className="text-xs text-yellow-300 mt-2">
+                Getting 401 "User not authenticated" errors? This means your backend doesn't recognize the Clerk JWT. Click "Debug Token" to see what's being sent.
+              </p>
+              
+              {error.includes('User not authenticated') && (
+                <div className="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                  <h5 className="font-bold text-red-400 text-sm mb-2">🚨 Backend Authentication Issue</h5>
+                  <p className="text-xs text-red-300 mb-2">
+                    Your backend API doesn't recognize the Clerk JWT token. Common fixes:
+                  </p>
+                  <ul className="text-xs text-red-300 space-y-1 ml-4">
+                    <li>• Backend needs Clerk JWT verification setup</li>
+                    <li>• Wrong JWT audience/issuer configuration</li>
+                    <li>• Backend expects different auth header format</li>
+                    <li>• Clerk webhook/integration not configured</li>
+                  </ul>
+                </div>
+              )}
+
+              {error.includes('Authentication Success') && error.includes('User not found') && (
+                <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                  <h5 className="font-bold text-blue-400 text-sm mb-2">🚀 Redirecting to Complete Setup!</h5>
+                  <p className="text-xs text-blue-300 mb-2">
+                    Authentication successful! You need to complete your business profile to access the dashboard.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-blue-300">
+                    <div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin"></div>
+                    Redirecting to business signup form in 2 seconds...
+                  </div>
+                  <button
+                    onClick={() => navigate('/business-signup')}
+                    className="mt-2 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-xs font-medium"
+                  >
+                    Go Now →
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* Generate New Key */}
             <div className="mb-8 p-6 bg-white/5 rounded-xl border border-white/10">
               <h3 className="font-black uppercase tracking-tight mb-4">Generate New API Key</h3>
-              <div className="flex gap-4">
-                <input
-                  type="text"
-                  value={newKeyName}
-                  onChange={(e) => setNewKeyName(e.target.value)}
-                  placeholder="Enter key name (e.g., Production App)"
-                  className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400 font-medium"
-                />
+              
+              {error && (
+                <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
+              
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <input
+                    type="text"
+                    value={newKeyName}
+                    onChange={(e) => setNewKeyName(e.target.value)}
+                    placeholder="Enter key name (e.g., Production App)"
+                    className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400 font-medium"
+                  />
+                  <button
+                    onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
+                    className="px-4 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors flex items-center gap-2 font-medium"
+                  >
+                    <Settings className="w-4 h-4" />
+                    Advanced
+                  </button>
+                </div>
+
+                {showAdvancedOptions && (
+                  <div className="space-y-6 p-4 bg-white/5 rounded-xl border border-white/10">
+                    {/* Scopes */}
+                    <div>
+                      <label className="block text-sm font-bold text-white mb-3">API Scopes</label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                        {availableScopes.map(scope => (
+                          <button
+                            key={scope}
+                            onClick={() => handleScopeToggle(scope)}
+                            className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                              keyConfig.scopes.includes(scope)
+                                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                                : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
+                            }`}
+                          >
+                            {scope}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Expiration */}
+                    <div>
+                      <label className="block text-sm font-bold text-white mb-3">Expires In (Days)</label>
+                      <input
+                        type="number"
+                        value={keyConfig.expiresInDays}
+                        onChange={(e) => setKeyConfig(prev => ({ ...prev, expiresInDays: parseInt(e.target.value) || 30 }))}
+                        min="1"
+                        max="365"
+                        className="w-32 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 text-white font-medium"
+                      />
+                    </div>
+
+                    {/* IP Whitelist */}
+                    <div>
+                      <label className="block text-sm font-bold text-white mb-3">IP Whitelist</label>
+                      <div className="flex gap-2 mb-2">
+                        <input
+                          type="text"
+                          placeholder="192.168.1.100"
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              handleAddIP(e.currentTarget.value)
+                              e.currentTarget.value = ''
+                            }
+                          }}
+                          className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 text-white placeholder-gray-400 font-medium"
+                        />
+                        <button
+                          onClick={(e) => {
+                            const input = e.currentTarget.previousElementSibling as HTMLInputElement
+                            handleAddIP(input.value)
+                            input.value = ''
+                          }}
+                          className="px-3 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors"
+                        >
+                          Add
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {keyConfig.ipWhitelist.map(ip => (
+                          <span
+                            key={ip}
+                            className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-medium flex items-center gap-1"
+                          >
+                            {ip}
+                            <button
+                              onClick={() => handleRemoveIP(ip)}
+                              className="text-green-400 hover:text-green-300"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Geo Restrictions */}
+                    <div>
+                      <label className="block text-sm font-bold text-white mb-3">Geo Restrictions</label>
+                      <div className="flex flex-wrap gap-2">
+                        {availableCountries.map(country => (
+                          <button
+                            key={country}
+                            onClick={() => handleCountryToggle(country)}
+                            className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                              keyConfig.geoRestrictions.includes(country)
+                                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                                : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
+                            }`}
+                          >
+                            {country}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <button
                   onClick={handleGenerateKey}
                   disabled={!newKeyName.trim() || isGeneratingKey}
-                  className="px-6 py-3 bg-white text-black rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-black uppercase tracking-wide"
+                  className="w-full px-6 py-3 bg-white text-black rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-black uppercase tracking-wide"
                 >
                   {isGeneratingKey ? (
                     <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                   ) : (
                     <Plus className="w-4 h-4" />
                   )}
-                  Generate
+                  Generate API Key
                 </button>
               </div>
             </div>
 
             {/* API Keys List */}
             <div className="space-y-4">
-              {apiKeys.length === 0 ? (
+              {isLoadingKeys ? (
+                <div className="text-center py-12 text-gray-400">
+                  <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4" />
+                  <p className="font-bold text-lg mb-2">Loading API keys...</p>
+                </div>
+              ) : apiKeys.length === 0 ? (
                 <div className="text-center py-12 text-gray-400">
                   <Key className="w-16 h-16 mx-auto mb-4 opacity-50" />
                   <p className="font-bold text-lg mb-2">No API keys yet</p>
                   <p className="text-sm">Generate your first key to get started</p>
                 </div>
               ) : (
-                apiKeys.map((apiKey) => (
+                apiKeys.map((apiKey: {
+                  id: string;
+                  name: string;
+                  key: string;
+                  createdAt: string;
+                  lastUsed?: string;
+                  callsUsed?: number;
+                }) => (
                   <div key={apiKey.id} className="p-6 bg-white/5 rounded-xl border border-white/10">
                     <div className="flex items-center justify-between mb-3">
                       <div>
@@ -257,12 +855,8 @@ const Dashboard: React.FC = () => {
                         </p>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
-                          apiKey.isActive 
-                            ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
-                            : 'bg-red-500/20 text-red-400 border border-red-500/30'
-                        }`}>
-                          {apiKey.isActive ? 'Active' : 'Inactive'}
+                        <span className="text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wide bg-green-500/20 text-green-400">
+                          Active
                         </span>
                       </div>
                     </div>
@@ -284,15 +878,16 @@ const Dashboard: React.FC = () => {
                         <Copy className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => revokeApiKey(apiKey.id)}
-                        className="p-3 text-red-400 hover:text-red-300 transition-colors bg-red-500/10 rounded-xl border border-red-500/20"
+                        onClick={() => handleRevokeKey(apiKey.id)}
+                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+                        title="Revoke API Key"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                     
-                    <div className="text-sm text-gray-400 font-medium">
-                      {apiKey.callsUsed.toLocaleString()} calls made
+                    <div className="text-sm text-gray-400">
+                      Calls: {apiKey.callsUsed || 0}
                     </div>
                   </div>
                 ))
@@ -331,7 +926,7 @@ const Dashboard: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <div className="font-black uppercase tracking-tight">Usage Analytics</div>
-                    <div className="text-sm text-gray-400 font-medium">View detailed usage metrics</div>
+                    <div className="text-sm text-gray-400 font-medium">Member since {formatDate(user?.createdAt?.toISOString() || new Date().toISOString())}</div>
                   </div>
                   <span className="text-xs bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wide">Coming Soon</span>
                 </div>

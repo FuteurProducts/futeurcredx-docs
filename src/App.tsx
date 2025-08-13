@@ -21,7 +21,8 @@ import FuteurHeader from "./pages/Header";
 import Footer from "./pages/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from './pages/Dashboard'
+import BusinessSignup from './pages/BusinessSignup';
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -76,6 +77,11 @@ const AppRouter = () => {
               {/* Authentication Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/business-signup" element={
+                <ProtectedRoute>
+                  <BusinessSignup />
+                </ProtectedRoute>
+              } />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={
