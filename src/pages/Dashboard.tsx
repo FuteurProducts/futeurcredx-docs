@@ -33,6 +33,13 @@ const Dashboard: React.FC = () => {
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
   const [error, setError] = useState('')
+  
+  // API Statistics
+  const [apiStats, setApiStats] = useState(null)
+  const [isLoadingStats, setIsLoadingStats] = useState(true)
+  
+  // Show all keys for authenticated user (keys expire after 30 days)
+  // Removed environment filtering since keys are user-specific
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
   const [showDebugInfo, setShowDebugInfo] = useState(false)
   const [debugInfo, setDebugInfo] = useState('')
@@ -45,7 +52,7 @@ const Dashboard: React.FC = () => {
     geoRestrictions: [] as string[]
   })
 
-  // Fetch API keys from backend
+  // Fetch all API keys for authenticated user (keys expire after 30 days)
   const fetchApiKeys = async () => {
     try {
       // Get the default Clerk token
@@ -63,7 +70,7 @@ const Dashboard: React.FC = () => {
       }
 
       const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
-      console.log('Making API request to:', apiUrl)
+      console.log('Making API request to:', apiUrl, 'for all user keys')
       
       const response = await fetch(apiUrl, {
         headers: {
@@ -126,6 +133,76 @@ const Dashboard: React.FC = () => {
     }
   }
 
+  // Fetch API statistics from backend
+  const fetchApiStats = async () => {
+    try {
+      const token = await getToken()
+      
+      if (!token) {
+        console.log('No token available for stats')
+        return
+      }
+
+      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      const statsUrl = `${baseUrl}/stats`
+      console.log('Fetching API statistics from:', statsUrl)
+      
+      const response = await fetch(statsUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        const stats = await response.json()
+        console.log('API Statistics Response:', stats)
+        setApiStats(stats)
+      } else {
+        console.log('Failed to fetch API stats:', response.status)
+      }
+    } catch (error) {
+      console.error('Error fetching API stats:', error)
+    } finally {
+      setIsLoadingStats(false)
+    }
+  }
+
+  // Get detailed information about a specific API key
+  const getApiKeyDetails = async (keyId: string) => {
+    try {
+      const token = await getToken()
+      
+      if (!token) {
+        console.log('No token available for API key details')
+        return null
+      }
+
+      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      const detailsUrl = `${baseUrl}/${keyId}`
+      console.log('Fetching API key details from:', detailsUrl)
+      
+      const response = await fetch(detailsUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.ok) {
+        const keyDetails = await response.json()
+        console.log('API Key Details Response:', keyDetails)
+        return keyDetails
+      } else {
+        console.log('Failed to fetch API key details:', response.status)
+        return null
+      }
+    } catch (error) {
+      console.error('Error fetching API key details:', error)
+      return null
+    }
+  }
+
   // Generate new API key
   const handleGenerateKey = async () => {
     if (!newKeyName.trim()) return
@@ -141,10 +218,10 @@ const Dashboard: React.FC = () => {
         return
       }
       
-      const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
       console.log('Generating API key with token preview:', token.substring(0, 20) + '...')
       
-      const response = await fetch(apiUrl, {
+      const response = await fetch(baseUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -160,23 +237,64 @@ const Dashboard: React.FC = () => {
       })
 
       if (response.ok) {
-        const newKey = await response.json()
-        setApiKeys(prev => [...prev, newKey])
-        setNewKeyName('')
-        setKeyConfig({
-          scopes: [],
-          expiresInDays: 30,
-          ipWhitelist: [],
-          geoRestrictions: []
-        })
-        setShowAdvancedOptions(false)
-        setError('') // Clear any previous errors
+        try {
+          const newKey = await response.json()
+          console.log('API Key Creation Response:', newKey)
+          
+          // Handle nested API key structure - the actual key data is in newKey.apiKey
+          const apiKeyData = newKey.apiKey || newKey
+          
+          // Validate the response structure - only name is required
+          if (!apiKeyData || typeof apiKeyData !== 'object' || !apiKeyData.name) {
+            console.error('Invalid API key response format (missing name):', { response: newKey, apiKeyData })
+            setError('Invalid response format from server - missing name field')
+            return
+          }
+          
+          // Build API key object with minimal required fields (only name is necessary)
+          const validatedKey = {
+            id: apiKeyData.id || `temp-${Date.now()}`,
+            name: apiKeyData.name, // Only required field from backend
+            key: apiKeyData.key || apiKeyData.apiKey || 'key-not-provided',
+            keyPrefix: apiKeyData.keyPrefix || null, // Include key prefix if available
+            createdAt: apiKeyData.createdAt || apiKeyData.created_at || new Date().toISOString(),
+            lastUsed: apiKeyData.lastUsed || apiKeyData.last_used || null,
+            callsUsed: apiKeyData.callsUsed || apiKeyData.calls_used || 0,
+            isActive: apiKeyData.isActive !== undefined ? apiKeyData.isActive : true,
+            environment: apiKeyData.environment || 'development',
+            // Include any additional fields from backend response
+            ...apiKeyData,
+            // Also include the success message if available
+            message: newKey.message || null
+          }
+          
+          console.log('Validated API Key:', validatedKey)
+          setApiKeys(prev => Array.isArray(prev) ? [...prev, validatedKey] : [validatedKey])
+          setNewKeyName('')
+          setKeyConfig({
+            scopes: [],
+            expiresInDays: 30,
+            ipWhitelist: [],
+            geoRestrictions: []
+          })
+          setShowAdvancedOptions(false)
+          setError('') // Clear any previous errors
+        } catch (parseError) {
+          console.error('Failed to parse API key response:', parseError)
+          setError('Failed to process server response')
+        }
       } else {
-        const errorData = await response.json()
-        setError(errorData.message || 'Failed to generate API key')
+        try {
+          const errorData = await response.json()
+          setError(errorData.message || 'Failed to generate API key')
+        } catch (parseError) {
+          setError(`Failed to generate API key: ${response.status} ${response.statusText}`)
+        }
       }
     } catch (error) {
       console.error('Failed to generate API key:', error)
+      setError(`Error generating API key: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      
       if (error instanceof TypeError && error.message === 'Load failed') {
         // CORS error - simulate successful creation for development
         const mockKey = {
@@ -191,7 +309,7 @@ const Dashboard: React.FC = () => {
           ipWhitelist: keyConfig.ipWhitelist,
           geoRestrictions: keyConfig.geoRestrictions
         }
-        setApiKeys(prev => [...prev, mockKey])
+        setApiKeys(prev => Array.isArray(prev) ? [...prev, mockKey] : [mockKey])
         setNewKeyName('')
         setKeyConfig({
           scopes: [],
@@ -245,6 +363,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     if (user) {
       fetchApiKeys()
+      fetchApiStats()
     }
   }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -463,6 +582,8 @@ Your backend needs to either:
           </p>
         </div>
 
+
+
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           <motion.div
@@ -481,16 +602,40 @@ Your backend needs to either:
               </div>
             </div>
             <div className="space-y-3">
-              <div className="text-lg font-black">Free</div>
-              <div>{mockUsage.used.toLocaleString()}</div>
-              <div className="text-sm text-gray-400 font-medium">API Calls Used</div>
-              <div className="text-xs text-gray-500">of {mockUsage.limit.toLocaleString()} this month</div>
-              <div className="w-full bg-white/10 rounded-full h-3">
-                <div 
-                  className="bg-blue-400 h-3 rounded-full transition-all duration-500"
-                  style={{ width: `${Math.min(usagePercentage, 100)}%` }}
-                />
-              </div>
+              {isLoadingStats ? (
+                <div className="animate-pulse">
+                  <div className="h-6 bg-white/10 rounded mb-2"></div>
+                  <div className="h-4 bg-white/10 rounded mb-2"></div>
+                  <div className="h-3 bg-white/10 rounded"></div>
+                </div>
+              ) : apiStats ? (
+                <>
+                  <div className="text-lg font-black">{apiStats.plan || 'Free'}</div>
+                  <div>{(apiStats.totalCalls || 0).toLocaleString()}</div>
+                  <div className="text-sm text-gray-400 font-medium">API Calls Used</div>
+                  <div className="text-xs text-gray-500">
+                    of {(apiStats.monthlyLimit || 10000).toLocaleString()} this month
+                  </div>
+                  <div className="w-full bg-white/10 rounded-full h-3">
+                    <div 
+                      className="bg-blue-400 h-3 rounded-full transition-all duration-500"
+                      style={{ 
+                        width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000)) * 100, 100)}%` 
+                      }}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-lg font-black">Free</div>
+                  <div>0</div>
+                  <div className="text-sm text-gray-400 font-medium">API Calls Used</div>
+                  <div className="text-xs text-gray-500">of 10,000 this month</div>
+                  <div className="w-full bg-white/10 rounded-full h-3">
+                    <div className="bg-blue-400 h-3 rounded-full transition-all duration-500" style={{ width: '0%' }} />
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
 
@@ -509,7 +654,7 @@ Your backend needs to either:
                 <p className="text-sm text-gray-400 font-medium">Active keys</p>
               </div>
             </div>
-            <div className="text-3xl font-black">{apiKeys.filter(key => key.isActive).length}</div>
+            <div className="text-3xl font-black">{Array.isArray(apiKeys) ? apiKeys.filter(key => key.isActive).length : 0}</div>
           </motion.div>
 
           <motion.div
@@ -830,14 +975,14 @@ Your backend needs to either:
                   <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4" />
                   <p className="font-bold text-lg mb-2">Loading API keys...</p>
                 </div>
-              ) : apiKeys.length === 0 ? (
+              ) : (!Array.isArray(apiKeys) || apiKeys.length === 0) ? (
                 <div className="text-center py-12 text-gray-400">
                   <Key className="w-16 h-16 mx-auto mb-4 opacity-50" />
                   <p className="font-bold text-lg mb-2">No API keys yet</p>
                   <p className="text-sm">Generate your first key to get started</p>
                 </div>
               ) : (
-                apiKeys.map((apiKey: {
+                Array.isArray(apiKeys) ? apiKeys.map((apiKey: {
                   id: string;
                   name: string;
                   key: string;
@@ -861,36 +1006,42 @@ Your backend needs to either:
                       </div>
                     </div>
                     
-                    <div className="flex items-center gap-3 mb-3">
-                      <code className="flex-1 px-4 py-3 bg-black/50 rounded-xl border border-white/10 text-sm font-mono">
-                        {showApiKey[apiKey.id] ? apiKey.key : '••••••••••••••••••••••••••••••••'}
-                      </code>
-                      <button
-                        onClick={() => toggleKeyVisibility(apiKey.id)}
-                        className="p-3 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-white/10"
-                      >
-                        {showApiKey[apiKey.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                      <button
-                        onClick={() => handleCopyKey(apiKey.key)}
-                        className="p-3 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-white/10"
-                      >
-                        <Copy className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleRevokeKey(apiKey.id)}
-                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
-                        title="Revoke API Key"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                    <div className="space-y-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <code className="flex-1 px-4 py-3 bg-black/50 rounded-xl border border-white/10 text-sm font-mono break-all overflow-hidden">
+                          {showApiKey[apiKey.id] ? apiKey.key : '••••••••••••••••••••••••••••••••'}
+                        </code>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <button
+                            onClick={() => toggleKeyVisibility(apiKey.id)}
+                            className="p-3 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-white/10"
+                            title={showApiKey[apiKey.id] ? "Hide API Key" : "Show API Key"}
+                          >
+                            {showApiKey[apiKey.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                          <button
+                            onClick={() => handleCopyKey(apiKey.key)}
+                            className="p-3 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-white/10"
+                            title="Copy API Key"
+                          >
+                            <Copy className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleRevokeKey(apiKey.id)}
+                            className="p-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-colors"
+                            title="Revoke API Key"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                     
                     <div className="text-sm text-gray-400">
                       Calls: {apiKey.callsUsed || 0}
                     </div>
                   </div>
-                ))
+                )) : null
               )}
             </div>
           </motion.div>
@@ -975,11 +1126,13 @@ Your backend needs to either:
                 </div>
                 <div className="flex items-center gap-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-black font-black text-sm ${
-                    apiKeys.length > 0 ? 'bg-green-500' : 'bg-gray-500'
+                    (Array.isArray(apiKeys) && apiKeys.length > 0) ? 'bg-green-500' : 'bg-gray-500'
                   }`}>
-                    {apiKeys.length > 0 ? '✓' : '2'}
+                    {(Array.isArray(apiKeys) && apiKeys.length > 0) ? '✓' : '2'}
                   </div>
-                  <span className="font-medium">Generate your first API key</span>
+                  <span className="font-medium">
+                    {(Array.isArray(apiKeys) && apiKeys.length > 0) ? 'API key generated' : 'Generate your first API key'}
+                  </span>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-black font-black text-sm">
