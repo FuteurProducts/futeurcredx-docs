@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   Activity,
@@ -10,47 +10,41 @@ import {
   Plus,
   Trash2,
   BarChart3,
-  DollarSign,
   Shield,
-  Users,
-  Settings,
   FileText,
   ExternalLink,
   TrendingUp,
   Calendar,
+  Code,
   CreditCard
 } from 'lucide-react'
 import { useUser, SignOutButton, useAuth } from '@clerk/clerk-react'
+import ApiTesting from '../components/dashboard/ApiTesting'
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
   const { getToken } = useAuth()
-  const navigate = useNavigate()
-  // Real API keys data from backend
+  
+  // State management
   const [apiKeys, setApiKeys] = useState([])
   const [isLoadingKeys, setIsLoadingKeys] = useState(true)
   const [showApiKey, setShowApiKey] = useState<Record<string, boolean>>({})
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
   const [error, setError] = useState('')
-  
-  // API Statistics
   const [apiStats, setApiStats] = useState(null)
   const [isLoadingStats, setIsLoadingStats] = useState(true)
-  
-  // Show all keys for authenticated user (keys expire after 30 days)
-  // Removed environment filtering since keys are user-specific
-  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
-  const [showDebugInfo, setShowDebugInfo] = useState(false)
-  const [debugInfo, setDebugInfo] = useState('')
-  const [currentToken, setCurrentToken] = useState('')
-  const [showToken, setShowToken] = useState(false)
+  const [activeTab, setActiveTab] = useState('overview')
   const [keyConfig, setKeyConfig] = useState({
     scopes: [] as string[],
     expiresInDays: 30,
     ipWhitelist: [] as string[],
     geoRestrictions: [] as string[]
   })
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
+  const [currentToken, setCurrentToken] = useState('')
+  const [debugInfo, setDebugInfo] = useState('')
+  const [showDebugInfo, setShowDebugInfo] = useState(false)
 
   // Fetch all API keys for authenticated user (keys expire after 30 days)
   const fetchApiKeys = async () => {
@@ -544,27 +538,25 @@ Your backend needs to either:
   const usagePercentage = (mockUsage.used / mockUsage.limit) * 100
 
   return (
-    <div className="min-h-screen bg-[#0E0E10] text-white">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url(/grid.png)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-5"></div>
-      
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-[#0E0E10]/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-8">
-              <Link to="/" className="text-2xl font-black uppercase tracking-tight">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/20 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-4">
+              <Link to="/" className="text-xl sm:text-2xl font-black uppercase tracking-tight">
                 FUTEURCREDX
               </Link>
-              <nav className="hidden md:flex items-center gap-8">
-                <Link to="/dashboard" className="text-white font-bold uppercase tracking-wide text-sm">Dashboard</Link>
-                <Link to="/docs" className="text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-wide text-sm">API Docs</Link>
-              </nav>
+              <div className="hidden sm:block text-sm text-gray-400 font-medium">
+                Dashboard
+              </div>
             </div>
-            <div className="flex items-center gap-6">
-              <span className="text-sm text-gray-400 font-medium">Welcome, <span className="text-white font-bold">{user?.firstName || user?.emailAddresses[0]?.emailAddress}</span></span>
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="hidden md:block text-sm text-gray-400 truncate max-w-48">
+                Welcome, {user?.firstName || user?.emailAddresses?.[0]?.emailAddress}
+              </div>
               <SignOutButton>
-                <button className="text-sm text-gray-400 hover:text-white transition-colors font-bold uppercase tracking-wide">
+                <button className="px-3 sm:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-sm font-medium">
                   Sign Out
                 </button>
               </SignOutButton>
@@ -573,19 +565,94 @@ Your backend needs to either:
         </div>
       </header>
 
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tight mb-6">API Dashboard</h1>
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            Monitor your API usage, manage keys, and track your business credit integration performance.
-          </p>
+      {/* Navigation Tabs */}
+      <nav className="sticky top-16 z-40 border-b border-white/10 bg-black/10 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-2 sm:space-x-8 overflow-x-auto">
+            {[
+              { id: 'overview', label: 'Overview', icon: BarChart3 },
+              { id: 'api-keys', label: 'API Keys', icon: Key },
+              { id: 'api-testing', label: 'API Testing', icon: Code }
+            ].map((tab) => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-4 border-b-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                    activeTab === tab.id
+                      ? 'border-blue-400 text-blue-400'
+                      : 'border-transparent text-gray-400 hover:text-white hover:border-gray-300'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span className="hidden sm:inline">{tab.label}</span>
+                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
 
-
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+{/* Stats Overview */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+<motion.div
+initial={{ opacity: 0, y: 20 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ delay: 0.1 }}
+className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm"
+>
+<div className="flex items-center gap-4 mb-4">
+<div className="p-3 bg-blue-500/20 rounded-xl">
+<Activity className="w-8 h-8 text-blue-400" />
+</div>
+<div>
+<h3 className="font-black uppercase tracking-tight">API Calls</h3>
+<p className="text-sm text-gray-400 font-medium">This month</p>
+</div>
+</div>
+<div className="space-y-3">
+{isLoadingStats ? (
+<div className="animate-pulse">
+<div className="h-6 bg-white/10 rounded mb-2"></div>
+<div className="h-4 bg-white/10 rounded mb-2"></div>
+<div className="h-3 bg-white/10 rounded"></div>
+</div>
+) : apiStats ? (
+<>
+<div className="text-lg font-black">{apiStats.plan || 'Free'}</div>
+<div>{(apiStats.totalCalls || 0).toLocaleString()}</div>
+<div className="text-sm text-gray-400 font-medium">API Calls Used</div>
+<div className="text-xs text-gray-500">
+of {(apiStats.monthlyLimit || 10000).toLocaleString()} this month
+</div>
+<div className="w-full bg-white/10 rounded-full h-3">
+<div 
+className="bg-blue-400 h-3 rounded-full transition-all duration-500"
+style={{ 
+width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000)) * 100, 100)}%` 
+}}
+/>
+</div>
+</>
+) : (
+<>
+<div className="text-lg font-black">Free</div>
+<div>0</div>
+<div className="text-sm text-gray-400 font-medium">API Calls Used</div>
+<div className="text-xs text-gray-500">of 10,000 this month</div>
+<div className="w-full bg-white/10 rounded-full h-3">
+<div className="bg-blue-400 h-3 rounded-full transition-all duration-500" style={{ width: '0%' }} />
+</div>
+</>
+)}
+</div>
+</motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -672,7 +739,7 @@ Your backend needs to either:
                 <p className="text-sm text-gray-400 font-medium">Current tier</p>
               </div>
             </div>
-            <div className="text-3xl font-black capitalize">{user?.plan}</div>
+            <div className="text-3xl font-black capitalize">{"Pro"}</div>
           </motion.div>
 
           <motion.div
@@ -694,456 +761,311 @@ Your backend needs to either:
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* API Keys Management */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
-            className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm"
-          >
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
-                <Key className="w-6 h-6" />
-                API Keys
-              </h2>
-              <Link
-                to="/docs"
-                className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2 font-bold uppercase tracking-wide"
-              >
-                View Docs <ExternalLink className="w-4 h-4" />
-              </Link>
-            </div>
+        {/* Tab Navigation */}
+        <div className="mb-12">
+          <div className="flex items-center gap-2 p-2 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+                activeTab === 'overview' 
+                  ? 'bg-white text-black' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <BarChart3 className="w-4 h-4" />
+              Overview
+            </button>
+            <button
+              onClick={() => setActiveTab('api-keys')}
+              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+                activeTab === 'api-keys' 
+                  ? 'bg-white text-black' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Key className="w-4 h-4" />
+              API Keys
+            </button>
+            <button
+              onClick={() => setActiveTab('api-testing')}
+              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+                activeTab === 'api-testing' 
+                  ? 'bg-white text-black' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Code className="w-4 h-4" />
+              API Testing
+            </button>
+          </div>
+        </div>
 
-            {/* Debug Panel */}
-            <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="font-bold text-yellow-400">🔧 Authentication Debug</h4>
-                <div className="flex gap-2">
+        {/* Tab Content */}
+        {activeTab === 'overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Quick Actions & Billing */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className="space-y-8"
+            >
+              {/* Quick Actions */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+                <h2 className="text-2xl font-black uppercase tracking-tight mb-6">Quick Actions</h2>
+                <div className="space-y-4">
                   <button
-                    onClick={async () => {
-                      await fetchCurrentToken()
-                      setShowToken(true)
-                    }}
-                    className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-sm font-medium"
+                    onClick={() => setActiveTab('api-testing')}
+                    className="w-full flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group"
                   >
-                    Show Token
+                    <div className="p-3 bg-blue-500/20 rounded-xl group-hover:bg-blue-500/30 transition-colors">
+                      <Code className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <div className="font-black uppercase tracking-tight">API Testing</div>
+                      <div className="text-sm text-gray-400 font-medium">Test APIs with your generated tokens</div>
+                    </div>
                   </button>
-                  <button
-                    onClick={debugClerkToken}
-                    className="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/30 transition-colors text-sm font-medium"
+                  
+                  <Link
+                    to="/docs"
+                    className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group"
                   >
-                    Debug Token
-                  </button>
+                    <div className="p-3 bg-green-500/20 rounded-xl group-hover:bg-green-500/30 transition-colors">
+                      <FileText className="w-6 h-6 text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-black uppercase tracking-tight">API Documentation</div>
+                      <div className="text-sm text-gray-400 font-medium">View examples and guides</div>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
+                  </Link>
+                  
+                  <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group">
+                    <div className="p-3 bg-purple-500/20 rounded-xl group-hover:bg-purple-500/30 transition-colors">
+                      <BarChart3 className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-black uppercase tracking-tight">Usage Analytics</div>
+                      <div className="text-sm text-gray-400 font-medium">Detailed usage insights</div>
+                    </div>
+                    <span className="text-xs bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wide">Coming Soon</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group">
+                    <div className="p-3 bg-orange-500/20 rounded-xl group-hover:bg-orange-500/30 transition-colors">
+                      <CreditCard className="w-6 h-6 text-orange-400" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-black uppercase tracking-tight">Billing & Subscriptions</div>
+                      <div className="text-sm text-gray-400 font-medium">Manage your billing settings</div>
+                    </div>
+                    <span className="text-xs bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wide">Coming Soon</span>
+                  </div>
                 </div>
               </div>
-              
-              {/* Token Display Section */}
-              {showToken && currentToken && (
-                <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h5 className="font-bold text-blue-400 text-sm">🎫 Current Clerk JWT Token</h5>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => {
-                          navigator.clipboard.writeText(currentToken)
-                          // Could add toast notification here
-                        }}
-                        className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs hover:bg-blue-500/30 transition-colors flex items-center gap-1"
-                      >
-                        <Copy className="w-3 h-3" />
-                        Copy
-                      </button>
-                      <button
-                        onClick={() => setShowToken(false)}
-                        className="px-2 py-1 bg-gray-500/20 text-gray-400 rounded text-xs hover:bg-gray-500/30 transition-colors"
-                      >
-                        Hide
-                      </button>
+
+              {/* Getting Started */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+                <h2 className="text-2xl font-black uppercase tracking-tight mb-6">Getting Started</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-black font-black text-sm">
+                      ✓
                     </div>
+                    <span className="font-medium">Account created</span>
                   </div>
-                  <div className="bg-black/30 p-3 rounded border border-blue-500/20">
-                    <code className="text-xs text-blue-200 break-all font-mono leading-relaxed">
-                      {currentToken}
-                    </code>
+                  <div className="flex items-center gap-4">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-black font-black text-sm ${
+                      (Array.isArray(apiKeys) && apiKeys.length > 0) ? 'bg-green-500' : 'bg-gray-500'
+                    }`}>
+                      {(Array.isArray(apiKeys) && apiKeys.length > 0) ? '✓' : '2'}
+                    </div>
+                    <span className="font-medium">
+                      {(Array.isArray(apiKeys) && apiKeys.length > 0) ? 'API key generated' : 'Generate your first API key'}
+                    </span>
                   </div>
-                  <p className="text-xs text-blue-300 mt-2">
-                    💡 Use this token to test your backend API directly with tools like Postman or curl:
-                    <br />
-                    <code className="text-blue-200">curl -H "Authorization: Bearer [token]" https://staging.futeur.app/api/v1/api-keys</code>
-                  </p>
-                </div>
-              )}
-              
-              {showToken && !currentToken && (
-                <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                  <p className="text-red-400 text-sm">❌ No token available. Please ensure you're signed in.</p>
-                </div>
-              )}
-              {showDebugInfo && (
-                <pre className="text-xs text-yellow-200 bg-black/30 p-3 rounded-lg overflow-x-auto whitespace-pre-wrap">
-                  {debugInfo}
-                </pre>
-              )}
-              <p className="text-xs text-yellow-300 mt-2">
-                Getting 401 "User not authenticated" errors? This means your backend doesn't recognize the Clerk JWT. Click "Debug Token" to see what's being sent.
-              </p>
-              
-              {error.includes('User not authenticated') && (
-                <div className="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                  <h5 className="font-bold text-red-400 text-sm mb-2">🚨 Backend Authentication Issue</h5>
-                  <p className="text-xs text-red-300 mb-2">
-                    Your backend API doesn't recognize the Clerk JWT token. Common fixes:
-                  </p>
-                  <ul className="text-xs text-red-300 space-y-1 ml-4">
-                    <li>• Backend needs Clerk JWT verification setup</li>
-                    <li>• Wrong JWT audience/issuer configuration</li>
-                    <li>• Backend expects different auth header format</li>
-                    <li>• Clerk webhook/integration not configured</li>
-                  </ul>
-                </div>
-              )}
-
-              {error.includes('Authentication Success') && error.includes('User not found') && (
-                <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                  <h5 className="font-bold text-blue-400 text-sm mb-2">🚀 Redirecting to Complete Setup!</h5>
-                  <p className="text-xs text-blue-300 mb-2">
-                    Authentication successful! You need to complete your business profile to access the dashboard.
-                  </p>
-                  <div className="flex items-center gap-2 text-xs text-blue-300">
-                    <div className="w-4 h-4 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin"></div>
-                    Redirecting to business signup form in 2 seconds...
+                  <div className="flex items-center gap-4">
+                    <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-black font-black text-sm">
+                      3
+                    </div>
+                    <span className="font-medium">Make your first API call</span>
                   </div>
-                  <button
-                    onClick={() => navigate('/business-signup')}
-                    className="mt-2 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors text-xs font-medium"
-                  >
-                    Go Now →
-                  </button>
                 </div>
-              )}
-            </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
 
-            {/* Generate New Key */}
-            <div className="mb-8 p-6 bg-white/5 rounded-xl border border-white/10">
-              <h3 className="font-black uppercase tracking-tight mb-4">Generate New API Key</h3>
-              
-              {error && (
-                <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
-                  {error}
-                </div>
-              )}
-              
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <input
-                    type="text"
-                    value={newKeyName}
-                    onChange={(e) => setNewKeyName(e.target.value)}
-                    placeholder="Enter key name (e.g., Production App)"
-                    className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400 font-medium"
-                  />
-                  <button
-                    onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
-                    className="px-4 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors flex items-center gap-2 font-medium"
-                  >
-                    <Settings className="w-4 h-4" />
-                    Advanced
-                  </button>
-                </div>
+        {activeTab === 'api-keys' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+          >
+            {/* API Keys Management */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
+                  <Key className="w-6 h-6" />
+                  API Keys
+                </h2>
+                <Link
+                  to="/docs"
+                  className="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2 font-bold uppercase tracking-wide"
+                >
+                  View Docs <ExternalLink className="w-4 h-4" />
+                </Link>
+              </div>
 
-                {showAdvancedOptions && (
-                  <div className="space-y-6 p-4 bg-white/5 rounded-xl border border-white/10">
-                    {/* Scopes */}
-                    <div>
-                      <label className="block text-sm font-bold text-white mb-3">API Scopes</label>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                        {availableScopes.map(scope => (
-                          <button
-                            key={scope}
-                            onClick={() => handleScopeToggle(scope)}
-                            className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
-                              keyConfig.scopes.includes(scope)
-                                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                                : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
-                            }`}
-                          >
-                            {scope}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Expiration */}
-                    <div>
-                      <label className="block text-sm font-bold text-white mb-3">Expires In (Days)</label>
-                      <input
-                        type="number"
-                        value={keyConfig.expiresInDays}
-                        onChange={(e) => setKeyConfig(prev => ({ ...prev, expiresInDays: parseInt(e.target.value) || 30 }))}
-                        min="1"
-                        max="365"
-                        className="w-32 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 text-white font-medium"
-                      />
-                    </div>
-
-                    {/* IP Whitelist */}
-                    <div>
-                      <label className="block text-sm font-bold text-white mb-3">IP Whitelist</label>
-                      <div className="flex gap-2 mb-2">
-                        <input
-                          type="text"
-                          placeholder="192.168.1.100"
-                          onKeyPress={(e) => {
-                            if (e.key === 'Enter') {
-                              handleAddIP(e.currentTarget.value)
-                              e.currentTarget.value = ''
-                            }
-                          }}
-                          className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg focus:outline-none focus:border-white/30 text-white placeholder-gray-400 font-medium"
-                        />
-                        <button
-                          onClick={(e) => {
-                            const input = e.currentTarget.previousElementSibling as HTMLInputElement
-                            handleAddIP(input.value)
-                            input.value = ''
-                          }}
-                          className="px-3 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors"
-                        >
-                          Add
-                        </button>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {keyConfig.ipWhitelist.map(ip => (
-                          <span
-                            key={ip}
-                            className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-medium flex items-center gap-1"
-                          >
-                            {ip}
-                            <button
-                              onClick={() => handleRemoveIP(ip)}
-                              className="text-green-400 hover:text-green-300"
-                            >
-                              ×
-                            </button>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Geo Restrictions */}
-                    <div>
-                      <label className="block text-sm font-bold text-white mb-3">Geo Restrictions</label>
-                      <div className="flex flex-wrap gap-2">
-                        {availableCountries.map(country => (
-                          <button
-                            key={country}
-                            onClick={() => handleCountryToggle(country)}
-                            className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
-                              keyConfig.geoRestrictions.includes(country)
-                                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
-                            }`}
-                          >
-                            {country}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+              {/* Generate New Key */}
+              <div className="mb-8 p-6 bg-white/5 rounded-xl border border-white/10">
+                <h3 className="font-black uppercase tracking-tight mb-4">Generate New API Key</h3>
+                
+                {error && (
+                  <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+                    {error}
                   </div>
                 )}
-
-                <button
-                  onClick={handleGenerateKey}
-                  disabled={!newKeyName.trim() || isGeneratingKey}
-                  className="w-full px-6 py-3 bg-white text-black rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-black uppercase tracking-wide"
-                >
-                  {isGeneratingKey ? (
-                    <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
-                  ) : (
-                    <Plus className="w-4 h-4" />
-                  )}
-                  Generate API Key
-                </button>
+                
+                <div className="space-y-4">
+                  <div className="flex gap-4">
+                    <input
+                      type="text"
+                      value={newKeyName}
+                      onChange={(e) => setNewKeyName(e.target.value)}
+                      placeholder="Enter key name (e.g., Production App)"
+                      className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400 font-medium"
+                    />
+                    <button
+                      onClick={handleGenerateKey}
+                      disabled={isGeneratingKey || !newKeyName.trim()}
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-xl font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-2"
+                    >
+                      {isGeneratingKey ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Plus className="w-4 h-4" />
+                          Generate Key
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* API Keys List */}
-            <div className="space-y-4">
-              {isLoadingKeys ? (
-                <div className="text-center py-12 text-gray-400">
-                  <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin mx-auto mb-4" />
-                  <p className="font-bold text-lg mb-2">Loading API keys...</p>
-                </div>
-              ) : (!Array.isArray(apiKeys) || apiKeys.length === 0) ? (
-                <div className="text-center py-12 text-gray-400">
-                  <Key className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p className="font-bold text-lg mb-2">No API keys yet</p>
-                  <p className="text-sm">Generate your first key to get started</p>
-                </div>
-              ) : (
-                Array.isArray(apiKeys) ? apiKeys.map((apiKey: {
-                  id: string;
-                  name: string;
-                  key: string;
-                  createdAt: string;
-                  lastUsed?: string;
-                  callsUsed?: number;
-                }) => (
-                  <div key={apiKey.id} className="p-6 bg-white/5 rounded-xl border border-white/10">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h4 className="font-black text-lg">{apiKey.name}</h4>
-                        <p className="text-sm text-gray-400 font-medium">
-                          Created {formatDate(apiKey.createdAt)}
-                          {apiKey.lastUsed && ` • Last used ${formatDate(apiKey.lastUsed)}`}
-                        </p>
+              {/* API Keys List */}
+              <div className="space-y-4">
+                <h3 className="font-black uppercase tracking-tight">Your API Keys</h3>
+                {isLoadingKeys ? (
+                  <div className="space-y-3">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="animate-pulse p-4 bg-white/5 rounded-xl">
+                        <div className="h-4 bg-white/10 rounded mb-2"></div>
+                        <div className="h-3 bg-white/10 rounded w-3/4"></div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wide bg-green-500/20 text-green-400">
-                          Active
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-3 mb-3">
-                      <div className="flex items-center gap-3">
-                        <code className="flex-1 px-4 py-3 bg-black/50 rounded-xl border border-white/10 text-sm font-mono break-all overflow-hidden">
-                          {showApiKey[apiKey.id] ? apiKey.key : '••••••••••••••••••••••••••••••••'}
-                        </code>
-                        <div className="flex items-center gap-2 flex-shrink-0">
+                    ))}
+                  </div>
+                ) : Array.isArray(apiKeys) && apiKeys.length > 0 ? (
+                  <div className="space-y-3">
+                    {apiKeys.map((key: { id: string; name: string; key: string; created: string; lastUsed: string; requests: number }) => (
+                      <div key={key.id} className="p-4 bg-white/5 rounded-xl border border-white/10">
+                        <div className="flex items-center justify-between mb-3">
+                          <div>
+                            <h4 className="font-bold text-sm">{key.name}</h4>
+                            <p className="text-xs text-gray-400">Created {formatDate(key.created)}</p>
+                          </div>
                           <button
-                            onClick={() => toggleKeyVisibility(apiKey.id)}
-                            className="p-3 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-white/10"
-                            title={showApiKey[apiKey.id] ? "Hide API Key" : "Show API Key"}
-                          >
-                            {showApiKey[apiKey.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                          </button>
-                          <button
-                            onClick={() => handleCopyKey(apiKey.key)}
-                            className="p-3 text-gray-400 hover:text-white transition-colors bg-white/5 rounded-xl border border-white/10"
-                            title="Copy API Key"
-                          >
-                            <Copy className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleRevokeKey(apiKey.id)}
-                            className="p-3 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-colors"
-                            title="Revoke API Key"
+                            onClick={() => handleRevokeKey(key.id)}
+                            className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
+                        <div className="flex items-center gap-2">
+                          <code className="flex-1 p-2 bg-black/30 rounded text-xs font-mono text-gray-300">
+                            {showApiKey[key.id] ? key.key : '•'.repeat(40)}
+                          </code>
+                          <button
+                            onClick={() => toggleKeyVisibility(key.id)}
+                            className="p-2 hover:bg-white/10 rounded transition-colors"
+                          >
+                            {showApiKey[key.id] ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                          </button>
+                          <button
+                            onClick={() => handleCopyKey(key.key)}
+                            className="p-2 hover:bg-white/10 rounded transition-colors"
+                          >
+                            <Copy className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <Key className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-400 mb-4">No API keys found. Generate your first API key to get started.</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Usage Statistics */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+              <h2 className="text-2xl font-black uppercase tracking-tight mb-6">Usage Statistics</h2>
+              
+              {isLoadingStats ? (
+                <div className="space-y-4">
+                  <div className="animate-pulse">
+                    <div className="h-6 bg-white/10 rounded mb-2"></div>
+                    <div className="h-4 bg-white/10 rounded mb-2"></div>
+                    <div className="h-3 bg-white/10 rounded"></div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-400">API Calls This Month</span>
+                      <span className="text-lg font-black">{apiStats?.totalCalls || 0}</span>
                     </div>
-                    
-                    <div className="text-sm text-gray-400">
-                      Calls: {apiKey.callsUsed || 0}
+                    <div className="w-full bg-white/10 rounded-full h-3">
+                      <div 
+                        className="bg-blue-400 h-3 rounded-full transition-all duration-500"
+                        style={{ 
+                          width: `${Math.min(((apiStats?.totalCalls || 0) / (apiStats?.monthlyLimit || 10000)) * 100, 100)}%` 
+                        }}
+                      />
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      of {(apiStats?.monthlyLimit || 10000).toLocaleString()} monthly limit
                     </div>
                   </div>
-                )) : null
+                  
+                  <div className="text-center py-4">
+                    <p className="text-gray-400 text-sm">More detailed analytics coming soon!</p>
+                  </div>
+                </div>
               )}
             </div>
           </motion.div>
+        )}
 
-          {/* Quick Actions & Billing */}
+        {activeTab === 'api-testing' && (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
           >
-            {/* Quick Actions */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
-              <h2 className="text-2xl font-black uppercase tracking-tight mb-6">Quick Actions</h2>
-              <div className="space-y-4">
-                <Link
-                  to="/docs"
-                  className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group"
-                >
-                  <div className="p-3 bg-blue-500/20 rounded-xl group-hover:bg-blue-500/30 transition-colors">
-                    <FileText className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-black uppercase tracking-tight">API Documentation</div>
-                    <div className="text-sm text-gray-400 font-medium">Test APIs and view examples</div>
-                  </div>
-                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />
-                </Link>
-                
-                <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group">
-                  <div className="p-3 bg-green-500/20 rounded-xl group-hover:bg-green-500/30 transition-colors">
-                    <BarChart3 className="w-6 h-6 text-green-400" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-black uppercase tracking-tight">Usage Analytics</div>
-                    <div className="text-sm text-gray-400 font-medium">Member since {formatDate(user?.createdAt?.toISOString() || new Date().toISOString())}</div>
-                  </div>
-                  <span className="text-xs bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wide">Coming Soon</span>
-                </div>
-                
-                <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group">
-                  <div className="p-3 bg-purple-500/20 rounded-xl group-hover:bg-purple-500/30 transition-colors">
-                    <CreditCard className="w-6 h-6 text-purple-400" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-black uppercase tracking-tight">Billing & Subscriptions</div>
-                    <div className="text-sm text-gray-400 font-medium">Manage your billing settings</div>
-                  </div>
-                  <span className="text-xs bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full font-bold uppercase tracking-wide">Coming Soon</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Usage Warning */}
-            {usagePercentage > 80 && (
-              <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-2xl p-8 backdrop-blur-sm">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-3 bg-yellow-500/20 rounded-xl">
-                    <DollarSign className="w-8 h-8 text-yellow-400" />
-                  </div>
-                  <h3 className="font-black uppercase tracking-tight text-yellow-400 text-xl">Usage Alert</h3>
-                </div>
-                <p className="text-sm text-yellow-200 mb-6 font-medium leading-relaxed">
-                  You've used {usagePercentage.toFixed(1)}% of your monthly API limit. 
-                  Consider upgrading your plan to avoid service interruption.
-                </p>
-                <button className="px-6 py-3 bg-yellow-400 text-black rounded-xl font-black text-sm hover:bg-yellow-300 transition-colors uppercase tracking-wide">
-                  Upgrade Plan
-                </button>
-              </div>
-            )}
-
-            {/* Getting Started */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
-              <h2 className="text-2xl font-black uppercase tracking-tight mb-6">Getting Started</h2>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-black font-black text-sm">
-                    ✓
-                  </div>
-                  <span className="font-medium">Account created</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-black font-black text-sm ${
-                    (Array.isArray(apiKeys) && apiKeys.length > 0) ? 'bg-green-500' : 'bg-gray-500'
-                  }`}>
-                    {(Array.isArray(apiKeys) && apiKeys.length > 0) ? '✓' : '2'}
-                  </div>
-                  <span className="font-medium">
-                    {(Array.isArray(apiKeys) && apiKeys.length > 0) ? 'API key generated' : 'Generate your first API key'}
-                  </span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-black font-black text-sm">
-                    3
-                  </div>
-                  <span className="font-medium">Make your first API call</span>
-                </div>
-              </div>
-            </div>
+            <ApiTesting apiKeys={apiKeys} />
           </motion.div>
-        </div>
+        )}
       </main>
     </div>
   )
