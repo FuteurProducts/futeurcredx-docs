@@ -12,6 +12,10 @@ import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { getCrossDomainUrl } from "@/utils/domainUtils"
 
+import { useNavigate } from "react-router-dom"
+import { useUser } from "@clerk/clerk-react"
+
+
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
 interface ApiEndpoint {
@@ -982,6 +986,8 @@ const ApiEndpointItem = ({ endpoint, categoryId, index }: ApiEndpointItemProps) 
                         </TabsContent>
                       </Tabs>
                       
+
+                      
                       <Button
                         onClick={handleSendRequest}
                         disabled={loading}
@@ -1119,6 +1125,8 @@ const DocsSidebar = ({ categories, openGroupId, setOpenGroupId }: DocsSidebarPro
 export default function DocsPage() {
   const [openGroupId, setOpenGroupId] = useState<string | null>(apiData[0]?.id || null)
   const [searchQuery, setSearchQuery] = useState("")
+  const navigate = useNavigate()
+  const { isSignedIn } = useUser()
 
   const filteredCategories = apiData.filter(category =>
     category.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -1139,10 +1147,26 @@ export default function DocsPage() {
           </p>
           <div className="mt-8">
             <Button
+
+              onClick={() => {
+                const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const targetPath = isSignedIn ? '/dashboard' : '/login';
+                
+                if (isLocalhost) {
+                  navigate(targetPath);
+                } else {
+                  window.location.href = getCrossDomainUrl(targetPath);
+                }
+              }}
+              className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
+            >
+              {isSignedIn ? 'Go to Dashboard' : 'Start Testing Now'}
+
               onClick={() => window.location.href = getCrossDomainUrl('/login')}
               className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
             >
               Start Testing Now
+
             </Button>
           </div>
         </div>

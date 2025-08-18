@@ -1,0 +1,389 @@
+import React, { useState } from 'react'
+import { useUser, useAuth } from '@clerk/clerk-react'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Building2, MapPin, Users, FileText, ArrowRight, CheckCircle } from 'lucide-react'
+
+const BusinessSignup: React.FC = () => {
+  const { user } = useUser()
+  const { getToken } = useAuth()
+  const navigate = useNavigate()
+  
+  const [formData, setFormData] = useState({
+    businessName: '',
+    streetAddress: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: 'US',
+    yearFounded: new Date().getFullYear(),
+    legalStruct: '',
+    empCount: 1,
+    phoneNum: ''
+  })
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+
+  const legalStructures = [
+    'LLC', 'Corporation', 'Partnership', 'Sole Proprietorship', 
+    'S-Corp', 'C-Corp', 'Non-Profit', 'Other'
+  ]
+
+  const usStates = [
+    'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+    'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
+    'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ',
+    'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',
+    'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'
+  ]
+
+  // Generate a secure random password for backend (not used since we use Clerk)
+  const generateSecurePassword = (): string => {
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz'
+    const numbers = '0123456789'
+    const specials = '!@#$%^&*()_+-=[]{}|;:,.<>?'
+    
+    // Ensure at least one character from each required category
+    let password = ''
+    password += uppercase[Math.floor(Math.random() * uppercase.length)]
+    password += lowercase[Math.floor(Math.random() * lowercase.length)]
+    password += numbers[Math.floor(Math.random() * numbers.length)]
+    password += specials[Math.floor(Math.random() * specials.length)]
+    
+    // Fill remaining length with random characters
+    const allChars = uppercase + lowercase + numbers + specials
+    for (let i = password.length; i < 12; i++) {
+      password += allChars[Math.floor(Math.random() * allChars.length)]
+    }
+    
+    // Shuffle the password
+    return password.split('').sort(() => Math.random() - 0.5).join('')
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setError('')
+
+    try {
+      const token = await getToken()
+      if (!token) {
+        setError('Authentication required. Please sign in again.')
+        return
+      }
+
+      // Prepare user data for backend
+      const userData = {
+        clerkId: user?.id,
+        email: user?.emailAddresses[0]?.emailAddress,
+        userFname: user?.firstName,
+        userLname: user?.lastName,
+        businessName: formData.businessName,
+        streetAddress: formData.streetAddress,
+        city: formData.city,
+        state: formData.state.toUpperCase(), // Ensure uppercase for state validation
+        zipCode: formData.zipCode,
+        country: formData.country,
+        yearFounded: parseInt(formData.yearFounded.toString()),
+        legalStruct: formData.legalStruct,
+        empCount: parseInt(formData.empCount.toString()),
+        phoneNum: formData.phoneNum,
+        // Set required fields that aren't needed for initial signup
+        password: generateSecurePassword(), // Generate secure password for backend requirement
+        ownerFname: user?.firstName || '',
+        ownerMname: '',
+        ownerLname: user?.lastName || '',
+        ownerTitle: 'Owner',
+        taxId: '' // Can be collected later if needed
+      }
+
+      const apiUrl = import.meta.env.DEV ? '/api/v1/users' : 'https://staging.futeur.app/api/v1/users'
+      
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData)
+      })
+
+      if (response.ok) {
+        setSuccess(true)
+        setTimeout(() => {
+          navigate('/dashboard')
+        }, 2000)
+      } else {
+        const errorData = await response.text()
+        console.error('Backend user creation failed:', response.status, errorData)
+        
+        // Check if user already exists
+        if (response.status === 400 && errorData.includes('already exists')) {
+          setError('✅ Account already exists! Redirecting to dashboard...')
+          setTimeout(() => {
+            navigate('/dashboard')
+          }, 2000)
+        } else {
+          setError(`Failed to create business profile: ${response.statusText}`)
+        }
+      }
+    } catch (error) {
+      console.error('Error creating business profile:', error)
+      setError('Network error. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+          <h1 className="text-3xl font-black mb-2">Welcome to FUTEURCREDX!</h1>
+          <p className="text-gray-400 mb-4">Your business profile has been created successfully.</p>
+          <p className="text-sm text-gray-500">Redirecting to dashboard...</p>
+        </motion.div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Background Effects */}
+      <div className="fixed inset-0 bg-gradient-to-br from-blue-900/20 via-black to-purple-900/20" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent" />
+      
+      <div className="relative z-10 container mx-auto px-6 py-12">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-black uppercase tracking-tight mb-4">
+              Complete Your Business Profile
+            </h1>
+            <p className="text-gray-400 text-lg">
+              Welcome {user?.firstName}! Let's set up your business information to complete your FUTEURCREDX account.
+            </p>
+          </div>
+
+          {/* Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8"
+          >
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Business Information */}
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-bold mb-4">
+                  <Building2 className="w-5 h-5" />
+                  Business Information
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium mb-2">Business Name *</label>
+                    <input
+                      type="text"
+                      name="businessName"
+                      value={formData.businessName}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      placeholder="Your Business Name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Legal Structure *</label>
+                    <select
+                      name="legalStruct"
+                      value={formData.legalStruct}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                    >
+                      <option value="">Select Structure</option>
+                      {legalStructures.map(structure => (
+                        <option key={structure} value={structure} className="bg-black">
+                          {structure}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Year Founded</label>
+                    <input
+                      type="number"
+                      name="yearFounded"
+                      value={formData.yearFounded}
+                      onChange={handleInputChange}
+                      min="1900"
+                      max={new Date().getFullYear()}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Address Information */}
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-bold mb-4">
+                  <MapPin className="w-5 h-5" />
+                  Business Address
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium mb-2">Street Address *</label>
+                    <input
+                      type="text"
+                      name="streetAddress"
+                      value={formData.streetAddress}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      placeholder="123 Business St"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">City *</label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      placeholder="City"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">State *</label>
+                    <select
+                      name="state"
+                      value={formData.state}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                    >
+                      <option value="">Select State</option>
+                      {usStates.map(state => (
+                        <option key={state} value={state} className="bg-black">
+                          {state}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">ZIP Code *</label>
+                    <input
+                      type="text"
+                      name="zipCode"
+                      value={formData.zipCode}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      placeholder="12345"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Country</label>
+                    <select
+                      name="country"
+                      value={formData.country}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                    >
+                      <option value="US" className="bg-black">United States</option>
+                      <option value="CA" className="bg-black">Canada</option>
+                      <option value="GB" className="bg-black">United Kingdom</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Information */}
+              <div>
+                <h3 className="flex items-center gap-2 text-lg font-bold mb-4">
+                  <Users className="w-5 h-5" />
+                  Additional Information
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Employee Count</label>
+                    <input
+                      type="number"
+                      name="empCount"
+                      value={formData.empCount}
+                      onChange={handleInputChange}
+                      min="1"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Phone Number</label>
+                    <input
+                      type="tel"
+                      name="phoneNum"
+                      value={formData.phoneNum}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      placeholder="(555) 123-4567"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting || !formData.businessName || !formData.legalStruct}
+                className="w-full px-6 py-4 bg-white text-black rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-black uppercase tracking-wide"
+              >
+                {isSubmitting ? (
+                  <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                ) : (
+                  <>
+                    Complete Setup
+                    <ArrowRight className="w-5 h-5" />
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default BusinessSignup

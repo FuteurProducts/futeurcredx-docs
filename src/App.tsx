@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Business from "./pages/Business";
@@ -18,7 +18,14 @@ import FuteurCredPlus from "./pages/FuteurCredPlus";
 import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 import FuteurHeader from "./pages/Header";
-import Footer from "./pages/Footer";
+import Footer from "./pages/Footer"
+import CleanFooter from "./pages/CleanFooter";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from './pages/Dashboard'
+import BusinessSignup from './pages/BusinessSignup';
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -38,35 +45,37 @@ const AppRouter = () => {
 
   return (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <FuteurHeader />
-        <div className="pt-16"> {/* Add padding top to ensure content starts below header */}
-          <Routes>
-          {/* Domain-specific routing */}
-          {isDomainDocs ? (
-            // For docs.futeurcredx.com, show Docs content for all routes
-            <>
-              <Route path="/*" element={<Docs />} />
-            </>
-          ) : isDomainInstitutions ? (
-            // For institutions.futeurcredx.com, show Enterprise content for most routes
-            <>
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/*" element={<Enterprise />} />
-            </>
-          ) : isDomainPlatform ? (
-            // For platform.futeurcredx.com, show Fintech content for most routes
-            <>
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/*" element={<Fintech />} />
-            </>
-          ) : (
-            // Regular routing for main domain
-            <>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <FuteurHeader />
+          <div className="pt-16"> {/* Add padding top to ensure content starts below header */}
+            <Routes>
+              {/* Regular routing for main domain */}
+              <>
+              {/* Authentication Routes */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/business-signup" element={
+                <ProtectedRoute>
+                  <BusinessSignup />
+                </ProtectedRoute>
+              } />
+              
+              {/* Protected Routes */}
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <div className="bg-white min-h-screen">
+                    <Dashboard />
+                    <CleanFooter />
+                  </div>
+                </ProtectedRoute>
+              } />
+              
+              {/* Public Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/mobile-app" element={<MobileApp />} />
               <Route path="/business" element={<Business />} />
@@ -91,15 +100,15 @@ const AppRouter = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </>
-          )}
         </Routes>
         </div>
-        <Footer />
+        {/* Conditionally render Footer - exclude from Dashboard */}
+        {window.location.pathname !== '/dashboard' && <Footer />}
       </BrowserRouter>
     </TooltipProvider>
+  </AuthProvider>
   </QueryClientProvider>
   );
 };
 
 export default AppRouter;
-
