@@ -18,7 +18,8 @@ import FuteurCredPlus from "./pages/FuteurCredPlus";
 import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 import FuteurHeader from "./pages/Header";
-import Footer from "./pages/Footer";
+import Footer from "./pages/Footer"
+import CleanFooter from "./pages/CleanFooter";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from './pages/Dashboard'
@@ -53,27 +54,8 @@ const AppRouter = () => {
           <FuteurHeader />
           <div className="pt-16"> {/* Add padding top to ensure content starts below header */}
             <Routes>
-          {/* TEMPORARILY DISABLED DOMAIN ROUTING FOR TESTING */}
-          {false ? (
-            // For docs.futeurcredx.com, show Docs content for all routes
-            <>
-              <Route path="/*" element={<Docs />} />
-            </>
-          ) : false ? (
-            // For institutions.futeurcredx.com, show Enterprise content for most routes
-            <>
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/*" element={<Enterprise />} />
-            </>
-          ) : false ? (
-            // For platform.futeurcredx.com, show Fintech content for most routes
-            <>
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/*" element={<Fintech />} />
-            </>
-          ) : (
-            // Regular routing for main domain - ALWAYS ACTIVE FOR TESTING
-            <>
+              {/* Regular routing for main domain */}
+              <>
               {/* Authentication Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -86,7 +68,10 @@ const AppRouter = () => {
               {/* Protected Routes */}
               <Route path="/dashboard" element={
                 <ProtectedRoute>
-                  <Dashboard />
+                  <div className="bg-white min-h-screen">
+                    <Dashboard />
+                    <CleanFooter />
+                  </div>
                 </ProtectedRoute>
               } />
               
@@ -115,10 +100,10 @@ const AppRouter = () => {
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </>
-          )}
         </Routes>
         </div>
-        <Footer />
+        {/* Conditionally render Footer - exclude from Dashboard */}
+        {window.location.pathname !== '/dashboard' && <Footer />}
       </BrowserRouter>
     </TooltipProvider>
   </AuthProvider>

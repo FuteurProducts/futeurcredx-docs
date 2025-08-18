@@ -46,6 +46,23 @@ const apiData: ApiCategory[] = [
     ],
   },
   {
+    id: "experian-credit",
+    name: "Experian Credit Score",
+    endpoints: [
+      {
+        method: "POST",
+        path: "/api/v1/crs-credit/u/experian/score",
+        protected: true,
+        description: "Get Experian credit score for a business using name, city, and state information.",
+        bodySchema: {
+          name: "string",
+          city: "string", 
+          state: "string"
+        }
+      },
+    ],
+  },
+  {
     id: "lumiq-credit",
     name: "LUMIQ AI Credit",
     endpoints: [
@@ -94,51 +111,51 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
   const [openCategory, setOpenCategory] = useState<string | null>(apiData[0]?.id || null)
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+    <div className="bg-white border border-blue-200 rounded-2xl p-8">
       <div className="flex items-center gap-4 mb-8">
-        <div className="p-3 bg-blue-500/20 rounded-xl">
-          <Code className="w-8 h-8 text-blue-400" />
+        <div className="p-3 bg-blue-50 rounded-xl">
+          <Code className="w-8 h-8 text-blue-600" />
         </div>
         <div>
-          <h2 className="text-2xl font-black uppercase tracking-tight">API Testing</h2>
-          <p className="text-gray-400 font-medium">Test your APIs with your generated tokens</p>
+          <h2 className="text-2xl font-black uppercase tracking-tight text-blue-900">API Testing</h2>
+          <p className="text-slate-600 font-medium">Test your APIs with your generated tokens</p>
         </div>
       </div>
 
       {/* API Key Selection */}
-      <div className="mb-8 p-6 bg-white/5 rounded-xl border border-white/10">
-        <h3 className="font-black uppercase tracking-tight mb-4 text-lg">Select API Key</h3>
+      <div className="mb-8 p-6 bg-blue-50/30 rounded-xl border border-blue-200">
+        <h3 className="font-black uppercase tracking-tight mb-4 text-lg text-blue-900">Select API Key</h3>
         {apiKeys && apiKeys.length > 0 ? (
           <div className="space-y-4">
             <select
               value={selectedApiKey}
               onChange={(e) => setSelectedApiKey(e.target.value)}
-              className="w-full p-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
+              className="w-full p-3 bg-white border border-blue-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="">Choose an API key...</option>
+              <option value="" className="text-slate-500">Choose an API key...</option>
               {apiKeys.map((key: any) => (
-                <option key={key.id} value={key.key} className="bg-gray-800 text-white">
+                <option key={key.id} value={key.key} className="text-slate-800">
                   {key.name} - Created {new Date(key.createdAt).toLocaleDateString()}
                 </option>
               ))}
             </select>
             
             {selectedApiKey && (
-              <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl">
+              <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-blue-200">
                 <div className="flex-1">
-                  <div className="font-mono text-sm text-gray-300">
+                  <div className="font-mono text-sm text-slate-700">
                     {showApiKey ? selectedApiKey : '•'.repeat(40)}
                   </div>
                 </div>
                 <button
                   onClick={() => setShowApiKey(!showApiKey)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-slate-600"
                 >
                   {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
                 <button
                   onClick={() => navigator.clipboard.writeText(selectedApiKey)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-slate-600"
                 >
                   <Copy className="w-4 h-4" />
                 </button>
@@ -147,8 +164,8 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
           </div>
         ) : (
           <div className="text-center py-8">
-            <AlertCircle className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
-            <p className="text-gray-400 mb-4">No API keys found. Generate your first API key to start testing.</p>
+            <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+            <p className="text-slate-600 mb-4">No API keys found. Generate your first API key to start testing.</p>
           </div>
         )}
       </div>
@@ -183,19 +200,19 @@ const ApiCategorySection: React.FC<ApiCategorySectionProps> = ({
   onToggle 
 }) => {
   return (
-    <div className="border border-white/10 rounded-xl overflow-hidden">
+    <div className="border border-blue-200 rounded-xl overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full p-6 bg-white/5 hover:bg-white/10 transition-colors flex items-center justify-between"
+        className="w-full p-6 bg-blue-50/50 hover:bg-blue-100/50 transition-colors flex items-center justify-between"
       >
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-purple-500/20 rounded-lg">
-            <Code className="w-5 h-5 text-purple-400" />
+          <div className="p-2 bg-blue-100 rounded-lg">
+            <Code className="w-5 h-5 text-blue-600" />
           </div>
-          <h3 className="font-black uppercase tracking-tight text-lg">{category.name}</h3>
-          <span className="text-sm text-gray-400">({category.endpoints.length} endpoints)</span>
+          <h3 className="font-black uppercase tracking-tight text-lg text-blue-900">{category.name}</h3>
+          <span className="text-sm text-slate-500">({category.endpoints.length} endpoints)</span>
         </div>
-        {isOpen ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
+        {isOpen ? <ChevronDown className="w-5 h-5 text-slate-600" /> : <ChevronRight className="w-5 h-5 text-slate-600" />}
       </button>
       
       <AnimatePresence>
@@ -247,20 +264,67 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
     setResponse(null)
     setResponseStatus(null)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // Handle real API call for Experian endpoint
+      if (endpoint.path === "/api/v1/crs-credit/u/experian/score") {
+        try {
+          const requestBodyData = requestBody ? JSON.parse(requestBody) : {}
+          
+          const response = await fetch('https://staging.futeur.app/api/v1/crs-credit/u/experian/score', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'accept': '*/*',
+              'X-API-Key': selectedApiKey,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBodyData)
+          })
 
-    // Mock response based on endpoint
-    let mockResponse: any = {
-      status: 200,
-      message: `Success for ${endpoint.method} ${endpoint.path}`,
-      timestamp: new Date().toISOString(),
-    }
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+          }
 
-    if (endpoint.path === "/api/v1") {
-      mockResponse = "Welcome to FuteurCred API v1.0"
-      setResponseStatus(200)
-    } else if (endpoint.path === "/api/v1/credit-report") {
+          const responseData = await response.json()
+          setResponse(responseData)
+          setResponseStatus(response.status)
+        } catch (error: any) {
+          console.error('API request failed:', error)
+          
+          if (error.message.includes('CORS') || error.message.includes('Access-Control') || error.name === 'TypeError') {
+            setResponse({
+              error: 'CORS Error - Direct browser calls blocked',
+              message: 'The API endpoint blocks direct browser requests due to CORS policy. This is normal for production APIs.',
+              suggestion: 'Use this API from your backend server or use a CORS proxy for testing.',
+              details: error.message
+            })
+            setResponseStatus(0)
+          } else {
+            setResponse({
+              error: error.message || 'Request failed',
+              details: 'Check console for more details'
+            })
+            setResponseStatus(error.status || 500)
+          }
+        }
+        setLoading(false)
+        return
+      }
+
+      // Simulate API call for other endpoints
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
+      // Mock response based on endpoint
+      let mockResponse: any = {
+        status: 200,
+        message: `Success for ${endpoint.method} ${endpoint.path}`,
+        timestamp: new Date().toISOString(),
+      }
+
+      if (endpoint.path === "/api/v1") {
+        mockResponse = "Welcome to FuteurCred API v1.0"
+        setResponseStatus(200)
+      } else if (endpoint.path === "/api/v1/credit-report") {
       mockResponse = {
         businessId: paramValues.businessId || "12345",
         businessName: "Sample Business LLC",
@@ -322,8 +386,17 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
       setResponseStatus(200)
     }
 
-    setResponse(mockResponse)
-    setLoading(false)
+      setResponse(mockResponse)
+      setLoading(false)
+    } catch (error) {
+      console.error('API request failed:', error)
+      setResponse({ 
+        error: error instanceof Error ? error.message : 'Failed to make API request',
+        details: 'Check console for more details'
+      })
+      setResponseStatus(500)
+      setLoading(false)
+    }
   }
 
   const handleParamChange = (paramName: string, value: string) => {
@@ -331,18 +404,18 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
   }
 
   return (
-    <div className="border border-white/10 rounded-xl overflow-hidden">
-      <div className="p-4 bg-white/5 flex items-center justify-between">
+    <div className="border border-blue-200 rounded-xl overflow-hidden">
+      <div className="p-4 bg-blue-50/30 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getMethodClass(endpoint.method)}`}>
             {endpoint.method}
           </span>
-          <code className="font-mono text-sm text-gray-300">{endpoint.path}</code>
-          {endpoint.protected && <Lock className="w-4 h-4 text-yellow-400" />}
+          <code className="font-mono text-sm text-slate-700">{endpoint.path}</code>
+          {endpoint.protected && <Lock className="w-4 h-4 text-yellow-500" />}
         </div>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+          className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-slate-600"
         >
           {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </button>
@@ -358,24 +431,24 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
             className="overflow-hidden"
           >
             <div className="p-6 space-y-6">
-              <p className="text-gray-300 text-sm leading-relaxed">{endpoint.description}</p>
+              <p className="text-slate-600 text-sm leading-relaxed">{endpoint.description}</p>
 
               {/* Parameters */}
               {endpoint.parameters && endpoint.parameters.length > 0 && (
                 <div>
-                  <h4 className="font-bold text-sm uppercase tracking-wide mb-3">Parameters</h4>
+                  <h4 className="font-bold text-sm uppercase tracking-wide mb-3 text-blue-900">Parameters</h4>
                   <div className="space-y-3">
                     {endpoint.parameters.map((param) => (
                       <div key={param.name} className="space-y-2">
-                        <label className="block text-sm font-medium text-gray-300">
-                          {param.name} <span className="text-gray-500">({param.type})</span>
+                        <label className="block text-sm font-medium text-slate-700">
+                          {param.name} <span className="text-slate-500">({param.type})</span>
                         </label>
                         <input
                           type="text"
                           value={paramValues[param.name] || ''}
                           onChange={(e) => handleParamChange(param.name, e.target.value)}
                           placeholder={param.description}
-                          className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50"
+                          className="w-full p-3 bg-white border border-blue-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                     ))}
@@ -386,13 +459,21 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               {/* Request Body */}
               {endpoint.method !== 'GET' && (
                 <div>
-                  <h4 className="font-bold text-sm uppercase tracking-wide mb-3">Request Body</h4>
+                  <h4 className="font-bold text-sm uppercase tracking-wide mb-3 text-blue-900">Request Body</h4>
+                  {endpoint.bodySchema && (
+                    <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-xs text-blue-700 mb-2">Required fields:</p>
+                      <code className="text-xs text-blue-600">
+                        {JSON.stringify(endpoint.bodySchema, null, 2)}
+                      </code>
+                    </div>
+                  )}
                   <textarea
-                    value={requestBody}
+                    value={requestBody || (endpoint.bodySchema ? JSON.stringify(endpoint.bodySchema, null, 2) : '')}
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                     rows={6}
-                    className="w-full p-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 font-mono text-sm"
+                    className="w-full p-3 bg-white border border-blue-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
                   />
                 </div>
               )}
@@ -401,7 +482,7 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               <button
                 onClick={handleSendRequest}
                 disabled={loading || (endpoint.protected && !selectedApiKey)}
-                className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-bold text-sm uppercase tracking-wide transition-colors"
+                className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white rounded-lg font-bold text-sm uppercase tracking-wide transition-colors"
               >
                 {loading ? (
                   <LoaderCircle className="w-4 h-4 animate-spin" />
@@ -415,25 +496,25 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               {(response || loading) && (
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <h4 className="font-bold text-sm uppercase tracking-wide">Response</h4>
+                    <h4 className="font-bold text-sm uppercase tracking-wide text-blue-900">Response</h4>
                     {responseStatus && (
                       <span className={`px-2 py-1 rounded text-xs font-bold ${
                         responseStatus >= 200 && responseStatus < 300 
-                          ? 'bg-green-500/20 text-green-400' 
-                          : 'bg-red-500/20 text-red-400'
+                          ? 'bg-green-100 text-green-700' 
+                          : 'bg-red-100 text-red-700'
                       }`}>
                         {responseStatus}
                       </span>
                     )}
                   </div>
-                  <div className="bg-black/50 rounded-lg p-4 max-h-96 overflow-auto">
+                  <div className="bg-slate-50 rounded-lg p-4 max-h-96 overflow-auto border border-slate-200">
                     {loading ? (
-                      <div className="flex items-center gap-3 text-gray-400">
+                      <div className="flex items-center gap-3 text-slate-600">
                         <LoaderCircle className="w-4 h-4 animate-spin" />
                         <span>Loading...</span>
                       </div>
                     ) : (
-                      <pre className="text-sm text-gray-300 whitespace-pre-wrap">
+                      <pre className="text-sm text-slate-700 whitespace-pre-wrap">
                         {JSON.stringify(response, null, 2)}
                       </pre>
                     )}

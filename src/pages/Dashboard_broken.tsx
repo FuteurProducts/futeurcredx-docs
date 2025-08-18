@@ -851,7 +851,7 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                         <Code className="w-5 h-5 text-blue-700" />
                       </div>
                       <div className="flex-1 text-left">
-                        <div className="font-bold text-blue-900 mb-1">API Testing</div>
+                        <div className="font-bold text-blue-900 mb-1">API Sandbox</div>
                         <div className="text-sm text-slate-600">Test APIs with your generated tokens</div>
                       </div>
                     </div>
@@ -966,15 +966,16 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            transition={{ delay: 0.2 }}
+            className="space-y-8"
           >
-            {/* API Keys Management */}
-            <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3 text-blue-900">
+            {/* API Keys and Sandbox Side by Side */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
+              {/* API Key Management */}
+              <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
+                <h2 className="text-2xl font-black uppercase tracking-tight mb-8 flex items-center gap-3 text-blue-900">
                   <Key className="w-6 h-6" />
-                  API Keys
+                  API Key Management
                 </h2>
                 <Link
                   to="/docs"
@@ -982,139 +983,141 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                 >
                   View Docs <ExternalLink className="w-4 h-4" />
                 </Link>
-              </div>
 
-              {/* Token Debug Section */}
-              <div className="mb-8 p-6 bg-blue-50/80 border border-blue-200 rounded-xl backdrop-blur-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-black uppercase tracking-tight text-blue-700">🔑 Token Debug</h3>
-                  <button
-                    onClick={() => setShowTokenDebug(!showTokenDebug)}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-colors"
-                  >
-                    {showTokenDebug ? 'Hide' : 'Show'} Token
-                  </button>
-                </div>
-                
-                {showTokenDebug && (
-                  <div className="space-y-4">
+                {/* Token Debug Section */}
+                <div className="mb-8 p-6 bg-blue-50/80 border border-blue-200 rounded-xl backdrop-blur-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-black uppercase tracking-tight text-blue-700">🔑 Token Debug</h3>
                     <button
-                      onClick={fetchCurrentToken}
-                      className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold transition-colors"
+                      onClick={() => setShowTokenDebug(!showTokenDebug)}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-colors"
                     >
-                      Get Current Token
+                      {showTokenDebug ? 'Hide' : 'Show'} Token
                     </button>
-                    
-                    {tokenInfo && (
-                      <div className="bg-black/20 p-4 rounded-lg">
-                        <div className="text-xs text-gray-400 mb-2">JWT Token (Length: {tokenInfo.length} chars):</div>
-                        <div className="font-mono text-xs text-green-400 break-all mb-4">
-                          {tokenInfo.preview}
+                  </div>
+                
+                  {showTokenDebug && (
+                    <div className="space-y-4">
+                      <button
+                        onClick={fetchCurrentToken}
+                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold transition-colors"
+                      >
+                        Get Current Token
+                      </button>
+                      
+                      {tokenInfo && (
+                        <div className="bg-black/20 p-4 rounded-lg">
+                          <div className="text-xs text-gray-400 mb-2">JWT Token (Length: {tokenInfo.length} chars):</div>
+                          <div className="font-mono text-xs text-green-400 break-all mb-4">
+                            {tokenInfo.preview}
+                          </div>
+                          <div className="text-xs text-gray-400 mb-2">Full Token (for backend testing):</div>
+                          <textarea
+                            value={tokenInfo.token}
+                            readOnly
+                            className="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 text-xs font-mono text-white resize-none"
+                            onClick={(e) => e.currentTarget.select()}
+                          />
                         </div>
-                        <div className="text-xs text-gray-400 mb-2">Full Token (for backend testing):</div>
-                        <textarea
-                          value={tokenInfo.token}
-                          readOnly
-                          className="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 text-xs font-mono text-white resize-none"
-                          onClick={(e) => e.currentTarget.select()}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              {/* Generate New Key */}
-              <div className="mb-8 p-6 bg-blue-50/80 rounded-xl border border-blue-200 backdrop-blur-sm">
-                <h3 className="font-black uppercase tracking-tight mb-4 text-blue-900">Generate New API Key</h3>
-                
-                {error && (
-                  <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
-                    <div className="font-bold mb-2">Debug Information:</div>
-                    <div className="whitespace-pre-wrap font-mono text-xs">{error}</div>
-                    <div className="mt-3 text-xs text-gray-400">
-                      💡 Check browser console (F12) for detailed error logs
-                    </div>
-                  </div>
-                )}
-                
-                <div className="space-y-4">
-                  <div className="flex gap-4">
-                    <input
-                      type="text"
-                      value={newKeyName}
-                      onChange={(e) => setNewKeyName(e.target.value)}
-                      placeholder="Enter key name (e.g., Production App)"
-                      className="flex-1 px-4 py-3 bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 text-slate-800 placeholder-slate-500 font-medium"
-                    />
-                    <button
-                      onClick={handleGenerateKey}
-                      disabled={isGeneratingKey || !newKeyName.trim()}
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-xl font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-2"
-                    >
-                      {isGeneratingKey ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          Generating...
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-4 h-4" />
-                          Generate Key
-                        </>
                       )}
-                    </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Generate New Key */}
+                <div className="mb-8 p-6 bg-blue-50/80 rounded-xl border border-blue-200 backdrop-blur-sm">
+                  <h3 className="font-black uppercase tracking-tight mb-4 text-blue-900">Generate New API Key</h3>
+                  
+                  {error && (
+                    <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+                      <div className="font-bold mb-2">Debug Information:</div>
+                      <div className="whitespace-pre-wrap font-mono text-xs">{error}</div>
+                      <div className="mt-3 text-xs text-gray-400">
+                        💡 Check browser console (F12) for detailed error logs
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="space-y-4">
+                    <div className="flex gap-4">
+                      <input
+                        type="text"
+                        value={newKeyName}
+                        onChange={(e) => setNewKeyName(e.target.value)}
+                        placeholder="Enter key name (e.g., Production App)"
+                        className="flex-1 px-4 py-3 bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 text-slate-800 placeholder-slate-500 font-medium"
+                      />
+                      <button
+                        onClick={handleGenerateKey}
+                        disabled={isGeneratingKey || !newKeyName.trim()}
+                        className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white rounded-xl font-bold uppercase tracking-wide transition-colors flex items-center gap-2"
+                      >
+                        {isGeneratingKey ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <Plus className="w-4 h-4" />
+                            Generate
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
               {/* API Keys List */}
               <div className="space-y-4">
-                <h3 className="font-black uppercase tracking-tight">Your API Keys</h3>
-                {isLoadingKeys ? (
-                  <div className="space-y-3">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="animate-pulse p-4 bg-blue-50/50 rounded-xl border border-blue-200">
-                        <div className="h-4 bg-blue-100 rounded mb-2"></div>
-                        <div className="h-3 bg-blue-100 rounded w-3/4"></div>
-                      </div>
-                    ))}
-                  </div>
-                ) : Array.isArray(apiKeys) && apiKeys.length > 0 ? (
-                  <div className="space-y-3">
-                    {apiKeys.map((key: { id: string; name: string; key?: string; apiKey?: string; fullKey?: string; secretKey?: string; keyPrefix?: string; fullKeyOnCreation?: string; token?: string; value?: string; createdAt: string; lastUsedAt: string | null; usageCount: number }) => (
-                      <div key={key.id} className="p-4 bg-blue-50/50 rounded-xl border border-blue-200 backdrop-blur-sm">
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <h4 className="font-bold text-sm text-blue-900">{key.name}</h4>
-                            <p className="text-xs text-slate-600">Created {formatDate(key.createdAt)}</p>
+                <h3 className="font-black uppercase tracking-tight text-blue-900">Your API Keys</h3>
+                {apiKeys.length > 0 ? (
+                  <div className="space-y-4">
+                    {apiKeys.map((key: { id: string; name: string; key: string; keyPrefix?: string; fullKeyOnCreation?: string; createdAt: string; lastUsedAt?: string; usageCount: number }) => (
+                      <div key={key.id} className="p-6 bg-white/60 border border-blue-200 rounded-xl backdrop-blur-sm">
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="flex-1">
+                            <h4 className="font-bold text-slate-800 mb-2">{key.name}</h4>
+                            <div className="flex items-center gap-3 mb-3">
+                              <code className="px-3 py-2 bg-slate-100 border border-slate-200 rounded-lg text-sm font-mono text-slate-700 flex-1 min-w-0">
+                                {showApiKey[key.id] ? (key.fullKeyOnCreation || key.key) : '•'.repeat(40)}
+                              </code>
+                              <button
+                                onClick={() => setShowApiKey(prev => ({ ...prev, [key.id]: !prev[key.id] }))}
+                                className="px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg text-sm font-bold transition-colors flex items-center gap-2"
+                              >
+                                {showApiKey[key.id] ? (
+                                  <>
+                                    <EyeOff className="w-4 h-4" />
+                                    Hide
+                                  </>
+                                ) : (
+                                  <>
+                                    <Eye className="w-4 h-4" />
+                                    Show Full Key
+                                  </>
+                                )}
+                              </button>
+                              <button
+                                onClick={() => handleCopyKey(key.fullKeyOnCreation || key.key)}
+                                className="px-3 py-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg text-sm font-bold transition-colors flex items-center gap-2"
+                              >
+                                <Copy className="w-4 h-4" />
+                                Copy
+                              </button>
+                              <button
+                                onClick={() => handleRevokeKey(key.id)}
+                                className="px-3 py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg text-sm font-bold transition-colors flex items-center gap-2"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                                Revoke
+                              </button>
+                            </div>
                           </div>
-                          <button
-                            onClick={() => handleRevokeKey(key.id)}
-                            className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
                         </div>
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <code className="flex-1 p-2 bg-slate-100 rounded text-xs font-mono text-slate-700 break-all">
-                              {showApiKey[key.id] ? (key.key || key.apiKey || key.fullKey || key.secretKey || key.fullKeyOnCreation || key.token || key.value || key.keyPrefix || 'No key available') : (key.keyPrefix ? key.keyPrefix : '•'.repeat(40))}
-                            </code>
-                            <button
-                              onClick={() => navigator.clipboard.writeText(key.key || key.apiKey || key.fullKey || key.secretKey || key.fullKeyOnCreation || key.token || key.value || key.keyPrefix || '')}
-                              className="p-2 hover:bg-blue-100 rounded transition-colors text-slate-600"
-                              title="Copy API Key"
-                            >
-                              <Copy className="w-4 h-4" />
-                            </button>
-                          </div>
-                          <button
-                            onClick={() => toggleKeyVisibility(key.id)}
-                            className="px-3 py-1 text-xs font-medium bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors border border-blue-200"
-                          >
-                            {showApiKey[key.id] ? 'Hide Full Key' : 'Show Full Key'}
-                          </button>
+                        <div className="text-xs text-slate-500 mt-2">
+                          Created: {formatDate(key.createdAt)} • 
                         </div>
                         <div className="text-xs text-slate-500 mt-2">
                           Last used: {key.lastUsedAt ? formatDate(key.lastUsedAt) : 'Never'} • {key.usageCount} calls
@@ -1129,11 +1132,18 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                   </div>
                 )}
               </div>
-            </div>
+              </div>
 
-            {/* API Testing Panel */}
-            <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
-              <ApiTesting apiKeys={apiKeys} />
+              {/* Sandbox Panel */}
+              <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
+                <h2 className="text-2xl font-black uppercase tracking-tight mb-8 flex items-center gap-3 text-blue-900">
+                  <Code className="w-6 h-6" />
+                  API Sandbox
+                </h2>
+                <div className="h-full">
+                  <ApiTesting apiKeys={apiKeys} />
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
