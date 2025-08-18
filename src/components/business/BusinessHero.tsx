@@ -51,7 +51,7 @@ export default function Component() {
               </h1>
               <p className="text-lg md:text-xl text-gray-300 max-w-lg leading-relaxed">
                 <span className="font-semibold text-blue-500">Futercred™</span> is your AI-powered business credit app
-                with the revolutionary <span className="font-semibold text-black-400">LUMIQX™</span> journey engine— FSR
+                with the revolutionary <span className="font-semibold text-black-400">LUMIQ AI™</span> journey engine— FSR
                 scoring, trade payment health, vendor syncing, and PG-free tools in one cosmic dashboard.
               </p>
             </div>

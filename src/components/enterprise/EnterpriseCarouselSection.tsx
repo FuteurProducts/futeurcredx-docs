@@ -106,7 +106,7 @@ const EnterpriseCarouselSection = () => {
           </h2>
           <p className="text-lg text-gray-300">
             The biggest names in banking have already proven that credit visibility tools drive massive ROI. 
-            Their success stories validate the LUMIQX approach to business credit visibility.
+            Their success stories validate the LUMIQ AI approach to business credit visibility.
           </p>
         </div>
 

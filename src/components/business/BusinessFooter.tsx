@@ -10,7 +10,7 @@ const BusinessFooter = () => {
             <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-2">
               FUTEURCREDX™
             </div>
-            <div className="text-sm text-purple-400 mb-4">Powered by LUMIQX™</div>
+            <div className="text-sm text-purple-400 mb-4">Powered by LUMIQ AI™</div>
             <p className="text-gray-400 text-sm">
               Your Business Credit Operating System. AI-powered insights, <span className="inline-flex items-center gap-1"><img src="/Dark-Experian.png" alt="Experian" className="h-3 opacity-80" /> FSR tracking</span>, and PG-free tradelines.
             </p>
@@ -38,7 +38,7 @@ const BusinessFooter = () => {
                 API Documentation
               </a>
               <a href={getCrossDomainUrl("/lumiq-build")} className="block text-gray-400 hover:text-white transition-colors text-sm">
-                LUMIQX Build
+                LUMIQ AI Build
               </a>
               <a href={getCrossDomainUrl("/credit-journey")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Credit Journey Demo
@@ -49,7 +49,7 @@ const BusinessFooter = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">Features</h4>
             <div className="space-y-2 text-sm text-gray-400">
-              <div>LUMIQX™ Journey Engine</div>
+              <div>LUMIQ AI™ Journey Engine</div>
               <div>Vendor Universe</div>
               <div>PG-Free Builder</div>
               <div className="inline-flex items-center gap-1">

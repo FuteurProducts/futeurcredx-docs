@@ -11,8 +11,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 import { getCrossDomainUrl } from "@/utils/domainUtils"
+
 import { useNavigate } from "react-router-dom"
 import { useUser } from "@clerk/clerk-react"
+
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -46,7 +48,7 @@ const apiData: ApiCategory[] = [
   },
   {
     id: "lumiq-credit",
-    name: "LUMIQX Credit",
+    name: "LUMIQ AI Credit",
     endpoints: [
       {
         method: "GET",
@@ -1145,6 +1147,7 @@ export default function DocsPage() {
           </p>
           <div className="mt-8">
             <Button
+
               onClick={() => {
                 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const targetPath = isSignedIn ? '/dashboard' : '/login';
@@ -1158,6 +1161,12 @@ export default function DocsPage() {
               className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
             >
               {isSignedIn ? 'Go to Dashboard' : 'Start Testing Now'}
+
+              onClick={() => window.location.href = getCrossDomainUrl('/login')}
+              className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
+            >
+              Start Testing Now
+
             </Button>
           </div>
         </div>

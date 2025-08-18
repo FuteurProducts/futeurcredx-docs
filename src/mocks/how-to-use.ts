@@ -21,7 +21,7 @@ export const navigation = [
   },
   {
     id: "g2",
-    title: "LUMIQX Platform",
+    title: "LUMIQ AI Platform",
     items: [
       { id: "0", title: "Dashboard Overview" },
       { id: "1", title: "Credit Journey" },

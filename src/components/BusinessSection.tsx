@@ -23,7 +23,7 @@ export default function BusinessSection() {
             <div className="relative rounded-3xl overflow-hidden">
               <img
                 src="/lumiq.png"
-                alt="LUMIQX Credit Journey Platform"
+                alt="LUMIQ AI Credit Journey Platform"
                 className="w-full h-auto object-cover"
                 style={{ aspectRatio: "500/600" }}
               />

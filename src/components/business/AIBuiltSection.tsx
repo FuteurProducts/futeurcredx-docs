@@ -13,7 +13,7 @@ const AIBuiltSection = () => {
           </h2>
           <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
             Traditional platforms sell your clicks. We give you clarity.<br/>
-            <strong className="text-white">Built by FUTEUR AI™,</strong> your data is encrypted, your LUMIQX™ journey is clear, 
+            <strong className="text-white">Built by FUTEUR AI™,</strong> your data is encrypted, your LUMIQ AI™ journey is clear, 
             and your growth is predictive — not reactive.
           </p>
         </div>

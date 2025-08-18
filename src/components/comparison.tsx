@@ -31,7 +31,7 @@ export default function Component() {
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-800 max-w-3xl mx-auto mb-4 sm:mb-6 leading-relaxed font-medium px-4 sm:px-6 md:px-8">
             NAV, Credit Karma, Dun & Bradstreet? All fragments. We're not another credit monitor. We're your complete
-            business credit app powered by the LUMIQX journey engine. FSR tracking. Trade payment health. No PG
+            business credit app powered by the LUMIQ AI journey engine. FSR tracking. Trade payment health. No PG
             tradelines.
           </p>
           <p className="text-xs sm:text-sm text-gray-600 mb-8 sm:mb-10 md:mb-12 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0">
@@ -172,7 +172,7 @@ export default function Component() {
                 <div className="text-white/90">
                   <div className="text-lg font-semibold text-white mb-3">50K+ users</div>
                   <p className="text-base leading-relaxed h-12">
-                    Complete business credit app powered by LUMIQX journey engine
+                    Complete business credit app powered by LUMIQ AI journey engine
                   </p>
                 </div>
 

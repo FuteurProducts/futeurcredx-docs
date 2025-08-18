@@ -56,7 +56,7 @@ const Business = () => {
           "@context": "https://schema.org",
           "@type": "Product",
           "name": "FUTEURCREDX™",
-          "description": "AI-powered business credit app with LUMIQX™ journey engine, FSR scores, trade payment health tracking, and PG-free tools.",
+          "description": "AI-powered business credit app with LUMIQ AI™ journey engine, FSR scores, trade payment health tracking, and PG-free tools.",
           "brand": {
             "@type": "Organization",
             "name": "FUTEUR AI"

@@ -108,7 +108,7 @@ const FintechPage = () => {
                     <div className="text-white font-bold">12% application conversion</div>
                   </div>
                   <div className="bg-white/10 p-4 rounded-xl border border-white/10">
-                    <div className="text-white font-semibold mb-1">With LUMIQX</div>
+                    <div className="text-white font-semibold mb-1">With LUMIQ AI</div>
                     <div className="text-white font-bold">19% projected conversion (+58%)</div>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ const FintechPage = () => {
                     <div className="text-white font-bold">15% underwriting approval</div>
                   </div>
                   <div className="bg-white/10 p-4 rounded-xl border border-white/10">
-                    <div className="text-white font-semibold mb-1">With LUMIQX</div>
+                    <div className="text-white font-semibold mb-1">With LUMIQ AI</div>
                     <div className="text-white font-bold">24% projected approval (+60%)</div>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ const FintechPage = () => {
                     <div className="text-white font-bold">8% lending product uptake</div>
                   </div>
                   <div className="bg-white/10 p-4 rounded-xl border border-white/10">
-                    <div className="text-white font-semibold mb-1">With LUMIQX</div>
+                    <div className="text-white font-semibold mb-1">With LUMIQ AI</div>
                     <div className="text-white font-bold">14% projected uptake (+75%)</div>
                   </div>
                 </div>
@@ -216,7 +216,7 @@ const FintechPage = () => {
         </div>
       </section>
 
-      {/* LUMIQX Built for Modern Fintechs */}
+      {/* LUMIQ AI Built for Modern Fintechs */}
       <section className="py-20 px-6 bg-black">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -225,21 +225,21 @@ const FintechPage = () => {
               <span className="font-medium text-white text-sm">Fintech-Optimized APIs</span>
             </div>
             <h2 className="text-5xl font-bold text-white mb-6 tracking-tight uppercase">
-              <span className="text-white">LUMIQX™</span> — Built for Modern Fintechs
+              <span className="text-white">LUMIQ AI™</span> — Built for Modern Fintechs
             </h2>
             <p className="text-xl text-gray-300 font-light">
               Drop-in credit intelligence that integrates with your existing stack in hours, not months.
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            {/* LUMIQX Conversion Engine */}
+            {/* LUMIQ AI Conversion Engine */}
             <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <Target className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl text-white">LUMIQX Conversion Engine™</h3>
+                  <h3 className="font-bold text-2xl text-white">LUMIQ AI Conversion Engine™</h3>
                   <p className="text-[#D1D5DB]">
                     Real-time credit scoring integration for higher application completions
                   </p>
@@ -260,14 +260,14 @@ const FintechPage = () => {
                 </div>
               </div>
             </Card>
-            {/* LUMIQX Underwriting Assistant */}
+            {/* LUMIQ AI Underwriting Assistant */}
             <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <Database className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl text-white">LUMIQX Underwriting Assistant™</h3>
+                  <h3 className="font-bold text-2xl text-white">LUMIQ AI Underwriting Assistant™</h3>
                   <p className="text-gray-300">Multi-bureau credit intelligence for smarter lending decisions</p>
                 </div>
               </div>
@@ -286,14 +286,14 @@ const FintechPage = () => {
                 </div>
               </div>
             </Card>
-            {/* LUMIQX Engagement Dashboard */}
+            {/* LUMIQ AI Engagement Dashboard */}
             <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <BarChart3 className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl text-white">LUMIQX Engagement Dashboard™</h3>
+                  <h3 className="font-bold text-2xl text-white">LUMIQ AI Engagement Dashboard™</h3>
                   <p className="text-gray-300">Credit health monitoring that keeps customers coming back</p>
                 </div>
               </div>
@@ -312,14 +312,14 @@ const FintechPage = () => {
                 </div>
               </div>
             </Card>
-            {/* LUMIQX Risk Intelligence */}
+            {/* LUMIQ AI Risk Intelligence */}
             <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <Bell className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl text-white">LUMIQX Risk Intelligence™</h3>
+                  <h3 className="font-bold text-2xl text-white">LUMIQ AI Risk Intelligence™</h3>
                   <p className="text-gray-300">Predictive credit monitoring for portfolio management</p>
                 </div>
               </div>
@@ -433,7 +433,7 @@ const preQual = await lumiq.prequalify({
             Every day without credit intelligence is money lost to competitors who get it.
           </p>
           <p className="text-lg text-white/80 mb-12">
-            Join the fintechs already using LUMIQX to dominate their markets.
+            Join the fintechs already using LUMIQ AI to dominate their markets.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Button

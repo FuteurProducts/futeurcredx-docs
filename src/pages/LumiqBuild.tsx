@@ -157,13 +157,13 @@ const LumiqBuild = () => {
     {
       icon: Shield,
       title: "PG-Free Guarantee",
-      description: "All vendor relationships built through LUMIQX Build are underwritten via your EIN, protecting your personal credit.",
+      description: "All vendor relationships built through LUMIQ AI Build are underwritten via your EIN, protecting your personal credit.",
       benefit: "Scale without personal liability"
     },
     {
       icon: Activity,
       title: "Real-Time Sync",
-      description: "Vendor payments and credit updates sync directly with your LUMIQX journey engine for complete visibility.",
+      description: "Vendor payments and credit updates sync directly with your LUMIQ AI journey engine for complete visibility.",
       benefit: "Never miss a credit-building opportunity"
     },
     {
@@ -178,7 +178,7 @@ const LumiqBuild = () => {
     {
       number: "01",
       title: "Profile Analysis",
-      description: "LUMIQX analyzes your business profile, industry, and current credit standing to create your personalized vendor strategy.",
+      description: "LUMIQ AI analyzes your business profile, industry, and current credit standing to create your personalized vendor strategy.",
       visual: (
         <div className="bg-gradient-to-br from-blue-900/50 to-black-900/50 p-8 rounded-2xl h-64 flex items-center justify-center">
           <div className="text-center">
@@ -206,7 +206,7 @@ const LumiqBuild = () => {
     {
       number: "03",
       title: "Automated Building",
-      description: "LUMIQX handles applications, setup, and ongoing relationship management while you focus on growing your business.",
+      description: "LUMIQ AI handles applications, setup, and ongoing relationship management while you focus on growing your business.",
       visual: (
         <div className="bg-gradient-to-br from-blue-900/50 to-black-900/50 p-8 rounded-2xl h-64 flex items-center justify-center">
           <div className="text-center">
@@ -264,7 +264,7 @@ const LumiqBuild = () => {
          
           <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
             <span className="text-white">
-              LUMIQX Build
+              LUMIQ AI Build
             </span>
           </h1>
           
@@ -317,7 +317,7 @@ const LumiqBuild = () => {
               Smart Vendor <span className="text-white">Discovery</span>
             </h2>
             <p className="text-xl text-white/70 max-w-4xl mx-auto mb-12">
-              Get a glimpse of LUMIQX's intelligent vendor matching system. See how our AI categorizes and matches 
+              Get a glimpse of LUMIQ AI's intelligent vendor matching system. See how our AI categorizes and matches 
               credit-building vendors based on your unique business profile.
             </p>
           </div>
@@ -425,7 +425,7 @@ const LumiqBuild = () => {
                         <div>
                           <div className="flex items-center gap-2 mb-2">
                             <Lock className="h-5 w-5 text-white" />
-                            <span className="text-white font-semibold">LUMIQX Intelligence Preview</span>
+                            <span className="text-white font-semibold">LUMIQ AI Intelligence Preview</span>
                           </div>
                           <p className="text-white/70 text-sm">
                             See detailed approval odds, credit impact scores, application requirements, and 
@@ -452,16 +452,16 @@ const LumiqBuild = () => {
                   {!selectedCategory ? (
                     <div className="text-white/70">
                       <Sparkles className="h-8 w-8 mx-auto mb-3 animate-pulse text-white" />
-                      Select options above to see LUMIQX's AI in action
+                      Select options above to see LUMIQ AI's AI in action
                     </div>
                   ) : (
                     <div className="space-y-4">
                       <div className="text-white flex items-center justify-center gap-2">
                         <CheckCircle className="h-5 w-5" />
-                        <span>This is just a preview of LUMIQX's intelligence</span>
+                        <span>This is just a preview of LUMIQ AI's intelligence</span>
                       </div>
                       <p className="text-white/70 text-sm">
-                        The full LUMIQX Build experience includes real-time analysis, automated applications, 
+                        The full LUMIQ AI Build experience includes real-time analysis, automated applications, 
                         and ongoing relationship management for 500+ verified vendors.
                       </p>
                     </div>
@@ -478,7 +478,7 @@ const LumiqBuild = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-white mb-6">
-              How <span className="text-white">LUMIQX Build</span> Works
+              How <span className="text-white">LUMIQ AI Build</span> Works
             </h2>
             <p className="text-xl text-white/70 max-w-4xl mx-auto">
               Three simple steps to transform your business credit profile with AI-powered vendor relationships.
@@ -549,7 +549,7 @@ const LumiqBuild = () => {
               Proven <span className="text-white">Results</span>
             </h2>
             <p className="text-xl text-gray-300">
-              Real metrics from FUTEURCREDX members using LUMIQX Build beta.
+              Real metrics from FUTEURCREDX members using LUMIQ AI Build beta.
             </p>
           </div>
 
@@ -577,7 +577,7 @@ const LumiqBuild = () => {
               <span className="text-white">Different?</span>
             </h2>
             <p className="text-xl text-white/70 max-w-3xl mx-auto mb-8">
-              LUMIQX Build is launching exclusively for FUTEURCREDX members.<br/>
+              LUMIQ AI Build is launching exclusively for FUTEURCREDX members.<br/>
               <strong className="text-white">Join the waitlist to get early access.</strong>
             </p>
           </div>
@@ -591,7 +591,7 @@ const LumiqBuild = () => {
               <div className="bg-black/40 border border-white/10 backdrop-blur-sm p-6 rounded-xl">
                 <Crown className="h-8 w-8 text-white mx-auto mb-3" />
                 <div className="font-semibold text-white">Priority Access</div>
-                <div className="text-sm text-white/70 mt-1">First to use LUMIQX Build</div>
+                <div className="text-sm text-white/70 mt-1">First to use LUMIQ AI Build</div>
               </div>
               <div className="bg-black/40 border border-white/10 backdrop-blur-sm p-6 rounded-xl">
                 <Gift className="h-8 w-8 text-white mx-auto mb-3" />
@@ -610,7 +610,7 @@ const LumiqBuild = () => {
             <a href="https://www.futeur.ai/contact" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="bg-black/30 backdrop-blur-sm text-white hover:bg-black/50 border border-white/10 hover:border-white/20 px-12 py-6 text-xl font-bold transition-all">
                 <Gauge className="mr-2 h-6 w-6" />
-                Join LUMIQX Build Waitlist
+                Join LUMIQ AI Build Waitlist
                 <ArrowRight className="ml-2 h-6 w-6" />
               </Button>
             </a>
