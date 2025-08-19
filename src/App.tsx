@@ -24,8 +24,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from './pages/Dashboard'
 import BusinessSignup from './pages/BusinessSignup';
-import { AuthProvider } from "./contexts/AuthContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 
 const queryClient = new QueryClient();
 
@@ -49,7 +48,7 @@ const AppRouter = () => {
     if (isDomainDocs) {
       return (
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
+          
             <TooltipProvider>
               <Toaster />
               <Sonner />
@@ -62,7 +61,7 @@ const AppRouter = () => {
                 <Footer />
               </BrowserRouter>
             </TooltipProvider>
-          </AuthProvider>
+          
         </QueryClientProvider>
       );
     }
@@ -71,7 +70,7 @@ const AppRouter = () => {
     if (isDomainInstitutions) {
       return (
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
+          
             <TooltipProvider>
               <Toaster />
               <Sonner />
@@ -84,7 +83,7 @@ const AppRouter = () => {
                 <Footer />
               </BrowserRouter>
             </TooltipProvider>
-          </AuthProvider>
+          
         </QueryClientProvider>
       );
     }
@@ -93,7 +92,7 @@ const AppRouter = () => {
     if (isDomainPlatform) {
       return (
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
+          
             <TooltipProvider>
               <Toaster />
               <Sonner />
@@ -106,7 +105,7 @@ const AppRouter = () => {
                 <Footer />
               </BrowserRouter>
             </TooltipProvider>
-          </AuthProvider>
+          
         </QueryClientProvider>
       );
     }
@@ -114,7 +113,7 @@ const AppRouter = () => {
 
   return (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
+    
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -129,19 +128,19 @@ const AppRouter = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/business-signup" element={
-                <ProtectedRoute>
+                <SignedIn>
                   <BusinessSignup />
-                </ProtectedRoute>
+                </SignedIn>
               } />
               
               {/* Protected Routes */}
               <Route path="/dashboard" element={
-                <ProtectedRoute>
+                <SignedIn>
                   <div className="bg-white min-h-screen">
                     <Dashboard />
                     <CleanFooter />
                   </div>
-                </ProtectedRoute>
+                </SignedIn>
               } />
               
               {/* Public Routes */}
@@ -175,7 +174,7 @@ const AppRouter = () => {
         {window.location.pathname !== '/dashboard' && <Footer />}
       </BrowserRouter>
     </TooltipProvider>
-  </AuthProvider>
+  
   </QueryClientProvider>
   );
 };
