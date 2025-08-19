@@ -1,18 +1,18 @@
-import React, { useState, useRef } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { 
-  Play, 
-  Copy, 
+  Code, 
   Eye, 
   EyeOff, 
-  Lock, 
-  LoaderCircle, 
+  Copy, 
+  AlertCircle, 
   ChevronDown, 
-  ChevronRight,
-  Code,
-  Send,
-  CheckCircle,
-  AlertCircle
+  ChevronRight, 
+  Lock, 
+  Send, 
+  LoaderCircle, 
+  Play,
+  Key
 } from 'lucide-react'
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
@@ -107,65 +107,142 @@ interface ApiTestingProps {
 
 const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
   const [selectedApiKey, setSelectedApiKey] = useState('')
+  const [manualApiKey, setManualApiKey] = useState('')
+  const [useManualKey, setUseManualKey] = useState(false)
   const [showApiKey, setShowApiKey] = useState(false)
   const [openCategory, setOpenCategory] = useState<string | null>(apiData[0]?.id || null)
 
   return (
-    <div className="bg-white border border-blue-200 rounded-2xl p-8">
-      <div className="flex items-center gap-4 mb-8">
-        <div className="p-3 bg-blue-50 rounded-xl">
-          <Code className="w-8 h-8 text-blue-600" />
-        </div>
+    <div className="bg-white border border-slate-200 rounded-lg p-6">
+      <div className="flex items-center gap-3 mb-6">
+        <Code className="w-6 h-6 text-slate-600" />
         <div>
-          <h2 className="text-2xl font-black uppercase tracking-tight text-blue-900">API Testing</h2>
-          <p className="text-slate-600 font-medium">Test your APIs with your generated tokens</p>
+          <h2 className="text-xl font-semibold text-slate-900">API Testing</h2>
+          <p className="text-slate-600 text-sm">Test your APIs with your generated tokens</p>
         </div>
       </div>
 
       {/* API Key Selection */}
-      <div className="mb-8 p-6 bg-blue-50/30 rounded-xl border border-blue-200">
-        <h3 className="font-black uppercase tracking-tight mb-4 text-lg text-blue-900">Select API Key</h3>
-        {apiKeys && apiKeys.length > 0 ? (
-          <div className="space-y-4">
-            <select
-              value={selectedApiKey}
-              onChange={(e) => setSelectedApiKey(e.target.value)}
-              className="w-full p-3 bg-white border border-blue-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="" className="text-slate-500">Choose an API key...</option>
-              {apiKeys.map((key: any) => (
-                <option key={key.id} value={key.key} className="text-slate-800">
-                  {key.name} - Created {new Date(key.createdAt).toLocaleDateString()}
-                </option>
-              ))}
-            </select>
-            
-            {selectedApiKey && (
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-blue-200">
-                <div className="flex-1">
-                  <div className="font-mono text-sm text-slate-700">
-                    {showApiKey ? selectedApiKey : '•'.repeat(40)}
-                  </div>
+      <div className="mb-8 p-6 bg-slate-50 rounded-lg">
+        <div className="flex items-center gap-3 mb-4">
+          <Key className="w-5 h-5 text-slate-600" />
+          <h3 className="font-semibold text-slate-900">SELECT API KEY</h3>
+        </div>
+
+        {/* Toggle between saved keys and manual input */}
+        <div className="flex items-center gap-4 mb-4">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="keySource"
+              checked={!useManualKey}
+              onChange={() => setUseManualKey(false)}
+              className="text-blue-600 focus:ring-blue-500"
+            />
+            <span className="text-sm font-medium text-slate-700">Use Saved Keys</span>
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="keySource"
+              checked={useManualKey}
+              onChange={() => setUseManualKey(true)}
+              className="text-blue-600 focus:ring-blue-500"
+            />
+            <span className="text-sm font-medium text-slate-700">Enter Key Manually</span>
+          </label>
+        </div>
+
+        {!useManualKey ? (
+          // Saved Keys Section
+          apiKeys && apiKeys.length > 0 ? (
+            <div className="space-y-4">
+              <div className="relative">
+                <select
+                  value={selectedApiKey}
+                  onChange={(e) => setSelectedApiKey(e.target.value)}
+                  className="w-full p-3 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none cursor-pointer"
+                >
+                  <option value="" className="text-slate-500">Choose an API key...</option>
+                  {apiKeys.map((key: any) => (
+                    <option key={key.id} value={key.key} className="text-slate-900">
+                      {key.name} - Created {new Date(key.createdAt).toLocaleDateString()}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <ChevronDown className="w-4 h-4 text-slate-400" />
                 </div>
-                <button
-                  onClick={() => setShowApiKey(!showApiKey)}
-                  className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-slate-600"
-                >
-                  {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-                <button
-                  onClick={() => navigator.clipboard.writeText(selectedApiKey)}
-                  className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-slate-600"
-                >
-                  <Copy className="w-4 h-4" />
-                </button>
               </div>
-            )}
-          </div>
+              
+              {selectedApiKey && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-white rounded-lg"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-medium text-slate-600 mb-1">Selected API Key</div>
+                      <div className="font-mono text-sm text-slate-900 bg-slate-50 px-3 py-2 rounded border break-all">
+                        {showApiKey ? selectedApiKey : '•'.repeat(40)}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 flex-shrink-0">
+                      <button
+                        onClick={() => setShowApiKey(!showApiKey)}
+                        className="p-2 hover:bg-slate-100 rounded transition-colors text-slate-600"
+                        title={showApiKey ? "Hide API Key" : "Show API Key"}
+                      >
+                        {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                      <button
+                        onClick={() => navigator.clipboard.writeText(selectedApiKey)}
+                        className="p-2 hover:bg-slate-100 rounded transition-colors text-slate-600"
+                        title="Copy API Key"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+              <p className="text-slate-600 mb-4">No API keys found. Generate your first API key to start testing.</p>
+            </div>
+          )
         ) : (
-          <div className="text-center py-8">
-            <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
-            <p className="text-slate-600 mb-4">No API keys found. Generate your first API key to start testing.</p>
+          // Manual Key Input Section
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Enter API Key
+              </label>
+              <div className="relative">
+                <input
+                  type={showApiKey ? "text" : "password"}
+                  value={manualApiKey}
+                  onChange={(e) => setManualApiKey(e.target.value)}
+                  placeholder="Paste your API key here..."
+                  className="w-full p-3 pr-20 bg-white border border-slate-300 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center gap-1 pr-3">
+                  <button
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="p-2 hover:bg-slate-100 rounded transition-colors text-slate-600"
+                    title={showApiKey ? "Hide API Key" : "Show API Key"}
+                  >
+                    {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+              <p className="text-xs text-slate-500 mt-2">
+                Your API key will only be used for testing and won't be saved.
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -176,7 +253,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
           <ApiCategorySection
             key={category.id}
             category={category}
-            selectedApiKey={selectedApiKey}
+            selectedApiKey={useManualKey ? manualApiKey : selectedApiKey}
             isOpen={openCategory === category.id}
             onToggle={() => setOpenCategory(openCategory === category.id ? null : category.id)}
           />
@@ -200,19 +277,17 @@ const ApiCategorySection: React.FC<ApiCategorySectionProps> = ({
   onToggle 
 }) => {
   return (
-    <div className="border border-blue-200 rounded-xl overflow-hidden">
+    <div className="rounded-lg overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full p-6 bg-blue-50/50 hover:bg-blue-100/50 transition-colors flex items-center justify-between"
+        className="w-full p-4 bg-slate-50 hover:bg-slate-100 transition-colors flex items-center justify-between"
       >
-        <div className="flex items-center gap-4">
-          <div className="p-2 bg-blue-100 rounded-lg">
-            <Code className="w-5 h-5 text-blue-600" />
-          </div>
-          <h3 className="font-black uppercase tracking-tight text-lg text-blue-900">{category.name}</h3>
+        <div className="flex items-center gap-3">
+          <Code className="w-4 h-4 text-slate-600" />
+          <h3 className="font-semibold text-slate-900">{category.name}</h3>
           <span className="text-sm text-slate-500">({category.endpoints.length} endpoints)</span>
         </div>
-        {isOpen ? <ChevronDown className="w-5 h-5 text-slate-600" /> : <ChevronRight className="w-5 h-5 text-slate-600" />}
+        {isOpen ? <ChevronDown className="w-4 h-4 text-slate-600" /> : <ChevronRight className="w-4 h-4 text-slate-600" />}
       </button>
       
       <AnimatePresence>
@@ -469,18 +544,18 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
   }
 
   return (
-    <div className="border border-blue-200 rounded-xl overflow-hidden">
-      <div className="p-4 bg-blue-50/30 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getMethodClass(endpoint.method)}`}>
+    <div className="rounded-lg overflow-hidden">
+      <div className="p-4 bg-slate-50 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className={`px-2 py-1 rounded text-xs font-medium ${getMethodClass(endpoint.method)}`}>
             {endpoint.method}
           </span>
           <code className="font-mono text-sm text-slate-700">{endpoint.path}</code>
-          {endpoint.protected && <Lock className="w-4 h-4 text-yellow-500" />}
+          {endpoint.protected && <Lock className="w-4 h-4 text-slate-500" />}
         </div>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="p-2 hover:bg-blue-100 rounded-lg transition-colors text-slate-600"
+          className="p-2 hover:bg-slate-100 rounded transition-colors text-slate-600"
         >
           {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
         </button>
@@ -495,16 +570,16 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="p-6 space-y-6">
-              <p className="text-slate-600 text-sm leading-relaxed">{endpoint.description}</p>
+            <div className="p-4 space-y-4 bg-white">
+              <p className="text-slate-600 text-sm">{endpoint.description}</p>
 
               {/* Parameters */}
               {endpoint.parameters && endpoint.parameters.length > 0 && (
                 <div>
-                  <h4 className="font-bold text-sm uppercase tracking-wide mb-3 text-blue-900">Parameters</h4>
+                  <h4 className="font-medium text-slate-900 mb-3">Parameters</h4>
                   <div className="space-y-3">
                     {endpoint.parameters.map((param) => (
-                      <div key={param.name} className="space-y-2">
+                      <div key={param.name} className="space-y-1">
                         <label className="block text-sm font-medium text-slate-700">
                           {param.name} <span className="text-slate-500">({param.type})</span>
                         </label>
@@ -513,7 +588,7 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
                           value={paramValues[param.name] || ''}
                           onChange={(e) => handleParamChange(param.name, e.target.value)}
                           placeholder={param.description}
-                          className="w-full p-3 bg-white border border-blue-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full p-2 bg-white border border-slate-300 rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
                     ))}
@@ -524,11 +599,11 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               {/* Request Body */}
               {endpoint.method !== 'GET' && (
                 <div>
-                  <h4 className="font-bold text-sm uppercase tracking-wide mb-3 text-blue-900">Request Body</h4>
+                  <h4 className="font-medium text-slate-900 mb-3">Request Body</h4>
                   {endpoint.bodySchema && (
-                    <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                      <p className="text-xs text-blue-700 mb-2">Required fields:</p>
-                      <code className="text-xs text-blue-600">
+                    <div className="mb-3 p-3 bg-slate-50 border border-slate-200 rounded">
+                      <p className="text-xs text-slate-600 mb-2">Required fields:</p>
+                      <code className="text-xs text-slate-700">
                         {JSON.stringify(endpoint.bodySchema, null, 2)}
                       </code>
                     </div>
@@ -542,7 +617,7 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                     rows={6}
-                    className="w-full p-3 bg-white border border-blue-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                    className="w-full p-3 bg-white border border-slate-300 rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
                   />
                 </div>
               )}
@@ -551,7 +626,7 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               <button
                 onClick={handleSendRequest}
                 disabled={loading || (endpoint.protected && !selectedApiKey)}
-                className="flex items-center gap-3 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white rounded-lg font-bold text-sm uppercase tracking-wide transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white rounded font-medium text-sm transition-colors"
               >
                 {loading ? (
                   <LoaderCircle className="w-4 h-4 animate-spin" />
@@ -565,9 +640,9 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               {(response || loading) && (
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <h4 className="font-bold text-sm uppercase tracking-wide text-blue-900">Response</h4>
+                    <h4 className="font-medium text-slate-900">Response</h4>
                     {responseStatus && (
-                      <span className={`px-2 py-1 rounded text-xs font-bold ${
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${
                         responseStatus >= 200 && responseStatus < 300 
                           ? 'bg-green-100 text-green-700' 
                           : 'bg-red-100 text-red-700'
@@ -576,9 +651,9 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
                       </span>
                     )}
                   </div>
-                  <div className="bg-slate-50 rounded-lg p-4 max-h-96 overflow-auto border border-slate-200">
+                  <div className="bg-slate-50 rounded p-3 max-h-96 overflow-auto border border-slate-200">
                     {loading ? (
-                      <div className="flex items-center gap-3 text-slate-600">
+                      <div className="flex items-center gap-2 text-slate-600">
                         <LoaderCircle className="w-4 h-4 animate-spin" />
                         <span>Loading...</span>
                       </div>

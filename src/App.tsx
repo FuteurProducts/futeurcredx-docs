@@ -119,59 +119,64 @@ const AppRouter = () => {
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
-          <FuteurHeader />
-          <div className="pt-16"> {/* Add padding top to ensure content starts below header */}
-            <Routes>
-              {/* Regular routing for main domain */}
+          <Routes>
+            {/* Authentication Routes - No Header/Footer */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* All other routes with Header/Footer */}
+            <Route path="/*" element={
               <>
-              {/* Authentication Routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/business-signup" element={
-                <SignedIn>
-                  <BusinessSignup />
-                </SignedIn>
-              } />
-              
-              {/* Protected Routes */}
-              <Route path="/dashboard" element={
-                <SignedIn>
-                  <div className="bg-white min-h-screen">
-                    <Dashboard />
-                    <CleanFooter />
-                  </div>
-                </SignedIn>
-              } />
-              
-              {/* Public Routes */}
-              <Route path="/" element={<Index />} />
-              <Route path="/mobile-app" element={<MobileApp />} />
-              <Route path="/business" element={<Business />} />
-              <Route path="/enterprise" element={<Enterprise />} />
-              <Route path="/fintech" element={<Fintech />} />
-              <Route path="/api-docs" element={<ApiDocs />} />
-              <Route path="/lumiq-build" element={<LumiqBuild />} />
-              <Route path="/credit-journey" element={<CreditJourney />} />
-              <Route path="/app" element={<App />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
-              <Route path="/docs" element={<Docs />} />
-              
-              {/* Local Development Routes - Physical routes for testing subdomains */}
-              <Route path="/institutions" element={<Enterprise />} />
-              <Route path="/institutions/*" element={<Enterprise />} />
-              <Route path="/platform" element={<Fintech />} />
-              <Route path="/platform/*" element={<Fintech />} />
-              <Route path="/docs-test" element={<Docs />} />
-              <Route path="/docs-test/*" element={<Docs />} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </>
-        </Routes>
-        </div>
-        {/* Conditionally render Footer - exclude from Dashboard */}
-        {window.location.pathname !== '/dashboard' && <Footer />}
+                <FuteurHeader />
+                <div className="pt-16">
+                  <Routes>
+                    <Route path="/business-signup" element={
+                      <SignedIn>
+                        <BusinessSignup />
+                      </SignedIn>
+                    } />
+                    
+                    {/* Protected Routes */}
+                    <Route path="/dashboard" element={
+                      <SignedIn>
+                        <div className="bg-white min-h-screen">
+                          <Dashboard />
+                          <CleanFooter />
+                        </div>
+                      </SignedIn>
+                    } />
+                    
+                    {/* Public Routes */}
+                    <Route path="/" element={<Index />} />
+                    <Route path="/mobile-app" element={<MobileApp />} />
+                    <Route path="/business" element={<Business />} />
+                    <Route path="/enterprise" element={<Enterprise />} />
+                    <Route path="/fintech" element={<Fintech />} />
+                    <Route path="/api-docs" element={<ApiDocs />} />
+                    <Route path="/lumiq-build" element={<LumiqBuild />} />
+                    <Route path="/credit-journey" element={<CreditJourney />} />
+                    <Route path="/app" element={<App />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
+                    <Route path="/docs" element={<Docs />} />
+                    
+                    {/* Local Development Routes - Physical routes for testing subdomains */}
+                    <Route path="/institutions" element={<Enterprise />} />
+                    <Route path="/institutions/*" element={<Enterprise />} />
+                    <Route path="/platform" element={<Fintech />} />
+                    <Route path="/platform/*" element={<Fintech />} />
+                    <Route path="/docs-test" element={<Docs />} />
+                    <Route path="/docs-test/*" element={<Docs />} />
+                    
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </div>
+                {/* Conditionally render Footer - exclude from Dashboard */}
+                {window.location.pathname !== '/dashboard' && <Footer />}
+              </>
+            } />
+          </Routes>
       </BrowserRouter>
     </TooltipProvider>
   

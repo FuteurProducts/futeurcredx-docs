@@ -1043,59 +1043,20 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                 </Link>
               </div>
 
-              {/* Token Debug Section */}
-              <div className="mb-8 p-6 bg-blue-50/80 border border-blue-200 rounded-xl backdrop-blur-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-black uppercase tracking-tight text-blue-700">🔑 Token Debug</h3>
-                  <button
-                    onClick={() => setShowTokenDebug(!showTokenDebug)}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-colors"
-                  >
-                    {showTokenDebug ? 'Hide' : 'Show'} Token
-                  </button>
-                </div>
-                
-                {showTokenDebug && (
-                  <div className="space-y-4">
-                    <button
-                      onClick={fetchCurrentToken}
-                      className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold transition-colors"
-                    >
-                      Get Current Token
-                    </button>
-                    
-                    {tokenInfo && (
-                      <div className="bg-black/20 p-4 rounded-lg">
-                        <div className="text-xs text-gray-400 mb-2">JWT Token (Length: {tokenInfo.length} chars):</div>
-                        <div className="font-mono text-xs text-green-400 break-all mb-4">
-                          {tokenInfo.preview}
-                        </div>
-                        <div className="text-xs text-gray-400 mb-2">Full Token (for backend testing):</div>
-                        <textarea
-                          value={tokenInfo.token}
-                          readOnly
-                          className="w-full h-32 bg-black/40 border border-white/10 rounded-lg p-3 text-xs font-mono text-white resize-none"
-                          onClick={(e) => e.currentTarget.select()}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
 
               {/* Generate New Key */}
               <div className="mb-8 p-6 bg-blue-50/80 rounded-xl border border-blue-200 backdrop-blur-sm">
                 <h3 className="font-black uppercase tracking-tight mb-4 text-blue-900">Generate New API Key</h3>
                 
                 {/* Security Warning */}
-                <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
                   <div className="flex items-start gap-3">
-                    <div className="p-1 bg-amber-100 rounded-full mt-0.5">
-                      <Shield className="w-4 h-4 text-amber-600" />
+                    <div className="p-1 bg-blue-100 rounded-full mt-0.5">
+                      <Shield className="w-4 h-4 text-blue-700" />
                     </div>
                     <div>
-                      <div className="font-bold text-amber-800 mb-1">⚠️ Important Security Notice</div>
-                      <div className="text-sm text-amber-700 leading-relaxed">
+                      <div className="font-bold text-blue-900 mb-1">Important Security Notice</div>
+                      <div className="text-sm text-blue-800 leading-relaxed">
                         <strong>Save your API key immediately!</strong> For security reasons, the full key is only shown once during generation. 
                         After you close this session, only a partial key will be visible. Store it securely in your password manager or environment variables.
                       </div>
@@ -1260,7 +1221,7 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                               {showApiKey[key.id] ? 'Hide Key' : 'Show Key'}
                             </button>
                             {!key.key && !key.apiKey && !key.fullKey && !key.secretKey && !key.fullKeyOnCreation && !key.token && !key.value && (
-                              <span className="text-xs text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-200">
+                              <span className="text-xs text-blue-700 bg-blue-50 px-2 py-1 rounded border border-blue-200">
                                 Full key only shown during generation
                               </span>
                             )}
