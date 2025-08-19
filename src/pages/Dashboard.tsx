@@ -85,7 +85,8 @@ const Dashboard: React.FC = () => {
         return
       }
 
-      const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      // Always use relative URL to work with Vercel proxy
+      const apiUrl = '/api/v1/api-keys'
       console.log('Making API request to:', apiUrl, 'for all user keys')
       
       const response = await fetch(apiUrl, {
@@ -161,7 +162,8 @@ const Dashboard: React.FC = () => {
         return
       }
 
-      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      // Always use relative URL to work with Vercel proxy
+      const baseUrl = '/api/v1/api-keys'
       const statsUrl = `${baseUrl}/stats`
       console.log('Fetching API statistics from:', statsUrl)
       
@@ -196,7 +198,8 @@ const Dashboard: React.FC = () => {
         return null
       }
 
-      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      // Always use relative URL to work with Vercel proxy
+      const baseUrl = '/api/v1/api-keys'
       const detailsUrl = `${baseUrl}/${keyId}`
       console.log('Fetching API key details from:', detailsUrl)
       
@@ -236,7 +239,8 @@ const Dashboard: React.FC = () => {
         return
       }
       
-      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      // Always use relative URL to work with Vercel proxy
+      const baseUrl = '/api/v1/api-keys'
       
       // Build request payload - only include optional fields if they have values
       const requestPayload: {
@@ -421,7 +425,8 @@ const Dashboard: React.FC = () => {
   const handleRevokeKey = async (keyId: string) => {
     try {
       const token = await getToken()
-      const baseUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+      // Always use relative URL to work with Vercel proxy
+      const baseUrl = '/api/v1/api-keys'
       const response = await fetch(`${baseUrl}/${keyId}`, {
         method: 'DELETE',
         headers: {
@@ -555,7 +560,8 @@ const Dashboard: React.FC = () => {
       // Test different auth header formats
       let authTests = 'Testing different auth formats...\n'
       if (defaultToken) {
-        const apiUrl = import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'
+        // Always use relative URL to work with Vercel proxy
+      const apiUrl = '/api/v1/api-keys'
         
         // Test 1: Bearer token
         try {
@@ -598,7 +604,7 @@ Debug Information:
 - Default Token: ${defaultToken ? 'EXISTS (' + defaultToken.substring(0, 50) + '...)' : 'NULL'}
 - Token Length: ${defaultToken ? defaultToken.length : 0} characters
 - Environment: ${import.meta.env.DEV ? 'DEVELOPMENT' : 'PRODUCTION'}
-- API URL: ${import.meta.env.DEV ? '/api/v1/api-keys' : 'https://staging.futeur.app/api/v1/api-keys'}
+- API URL: /api/v1/api-keys
 - Clerk Publishable Key: ${import.meta.env.VITE_CLERK_PUBLISHABLE_KEY?.substring(0, 20)}...
 
 Auth Header Tests:

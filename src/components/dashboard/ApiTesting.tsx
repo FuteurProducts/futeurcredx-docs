@@ -270,7 +270,8 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
         try {
           const requestBodyData = requestBody ? JSON.parse(requestBody) : {}
           
-          const response = await fetch('https://staging.futeur.app/api/v1/crs-credit/u/experian/score', {
+          // Use relative URL to work with Vercel proxy
+          const response = await fetch('/api/v1/crs-credit/u/experian/score', {
             method: 'POST',
             mode: 'cors',
             headers: {
