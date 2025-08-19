@@ -270,8 +270,8 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
         try {
           const requestBodyData = requestBody ? JSON.parse(requestBody) : {}
           
-          // Use relative URL to work with Vercel proxy
-          const response = await fetch('/api/v1/crs-credit/u/experian/score', {
+          // Use staging backend URL directly
+          const response = await fetch('https://staging.futeur.app/api/v1/crs-credit/u/experian/score', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -296,14 +296,24 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
             setResponse({
               error: 'CORS Error - Direct browser calls blocked',
               message: 'The API endpoint blocks direct browser requests due to CORS policy. This is normal for production APIs.',
-              suggestion: 'Use this API from your backend server or use a CORS proxy for testing.',
-              details: error.message
+              suggestion: 'The API is working correctly. CORS prevents direct browser calls for security.',
+              details: error.message,
+              note: 'Use this API from your backend server or mobile app where CORS does not apply.'
             })
             setResponseStatus(0)
+          } else if (error.message.includes('HTTP 401')) {
+            setResponse({
+              error: 'Authentication Error',
+              message: 'Invalid or missing API key. Please check your API key.',
+              suggestion: 'Ensure you have selected a valid API key from the dropdown above.',
+              details: error.message
+            })
+            setResponseStatus(401)
           } else {
             setResponse({
               error: error.message || 'Request failed',
-              details: 'Check console for more details'
+              details: 'Check console for more details',
+              troubleshooting: 'Common issues: Invalid API key, network connectivity, or server maintenance.'
             })
             setResponseStatus(error.status || 500)
           }
@@ -470,7 +480,11 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
                     </div>
                   )}
                   <textarea
-                    value={requestBody || (endpoint.bodySchema ? JSON.stringify(endpoint.bodySchema, null, 2) : '')}
+                    value={requestBody || (endpoint.bodySchema ? JSON.stringify({
+                      "name": "EXPERIAN CONSUMER DIRECT",
+                      "city": "Costa Mesa", 
+                      "state": "CA"
+                    }, null, 2) : '')}
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                     rows={6}

@@ -1147,7 +1147,6 @@ export default function DocsPage() {
           </p>
           <div className="mt-8">
             <Button
-
               onClick={() => {
                 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const targetPath = isSignedIn ? '/dashboard' : '/login';
@@ -1161,12 +1160,6 @@ export default function DocsPage() {
               className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
             >
               {isSignedIn ? 'Go to Dashboard' : 'Start Testing Now'}
-            </Button>
-            <Button
-              onClick={() => window.location.href = getCrossDomainUrl('/login')}
-              className="bg-black hover:bg-gray-800 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200 ml-4"
-            >
-              Start Testing Now
             </Button>
           </div>
         </div>
