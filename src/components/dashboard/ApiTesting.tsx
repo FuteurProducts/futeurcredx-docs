@@ -270,10 +270,8 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
         try {
           const requestBodyData = requestBody ? JSON.parse(requestBody) : {}
           
-          // Use staging backend URL directly
-          const response = await fetch('https://staging.futeur.app/api/v1/crs-credit/u/experian/score', {
+          const response = await fetch('/api/v1/crs-credit/u/experian/score', {
             method: 'POST',
-            mode: 'cors',
             headers: {
               'accept': '*/*',
               'X-API-Key': selectedApiKey,

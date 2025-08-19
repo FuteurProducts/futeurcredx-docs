@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
   const [error, setError] = useState('')
-  const [apiStats, setApiStats] = useState(null)
+  const [apiStats, setApiStats] = useState<any>(null)
   const [isLoadingStats, setIsLoadingStats] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
   const [keyConfig, setKeyConfig] = useState({
@@ -152,37 +152,41 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  // Fetch API statistics from backend
+  // Fetch API usage statistics from backend
   const fetchApiStats = async () => {
     try {
-      const token = await getToken()
+      setIsLoadingStats(true)
       
+      const token = await getToken()
       if (!token) {
-        console.log('No token available for stats')
-        return
+        throw new Error('No authentication token available')
       }
 
-      // Always use relative URL to work with Vercel proxy
-      const baseUrl = '/api/v1/api-keys'
-      const statsUrl = `${baseUrl}/stats`
-      console.log('Fetching API statistics from:', statsUrl)
-      
-      const response = await fetch(statsUrl, {
+      const response = await fetch('/api/v1/api-keys/stats', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       })
 
-      if (response.ok) {
-        const stats = await response.json()
-        console.log('API Statistics Response:', stats)
-        setApiStats(stats)
-      } else {
-        console.log('Failed to fetch API stats:', response.status)
+      if (!response.ok) {
+        const errorText = await response.text()
+        throw new Error(`HTTP ${response.status}: ${errorText}`)
       }
-    } catch (error) {
-      console.error('Error fetching API stats:', error)
+
+      const data = await response.json()
+      setApiStats(data)
+    } catch (error: any) {
+      console.error('Failed to fetch API stats:', error)
+      // Set default stats on error
+      setApiStats({
+        totalCalls: 0,
+        monthlyLimit: 10000,
+        plan: 'Free',
+        thisMonth: 0,
+        lastMonth: 0,
+        growth: 0
+      })
     } finally {
       setIsLoadingStats(false)
     }
@@ -648,9 +652,8 @@ Your backend needs to either:
     })
   }
 
-  // Mock usage data - in real app this would come from your backend
-  const mockUsage = { used: 1250, limit: 10000 }
-  const usagePercentage = (mockUsage.used / mockUsage.limit) * 100
+  // Calculate usage percentage from real API stats
+  const usagePercentage = apiStats ? Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000)) * 100, 100) : 0
 
   return (
     <div className="min-h-screen bg-white text-slate-800">
@@ -781,6 +784,45 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
             <div className="text-3xl font-black">{Array.isArray(apiKeys) ? apiKeys.filter(key => key.isActive).length : 0}</div>
           </motion.div>
 
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="p-3 bg-blue-50 rounded-xl">
+                <TrendingUp className="w-8 h-8 text-blue-600" />
+              </div>
+              <div>
+                <h3 className="font-black uppercase tracking-tight text-blue-900">Growth</h3>
+                <p className="text-sm text-slate-600 font-medium">Month over month</p>
+              </div>
+            </div>
+            <div className="space-y-2">
+              {isLoadingStats ? (
+                <div className="animate-pulse">
+                  <div className="h-6 bg-blue-100 rounded mb-2"></div>
+                  <div className="h-4 bg-blue-100 rounded"></div>
+                </div>
+              ) : apiStats ? (
+                <>
+                  <div className="text-2xl font-black text-green-600">
+                    +{apiStats.growth || 0}%
+                  </div>
+                  <div className="text-sm text-slate-600">
+                    {(apiStats.thisMonth || 0).toLocaleString()} this month vs {(apiStats.lastMonth || 0).toLocaleString()} last month
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-2xl font-black text-slate-400">+0%</div>
+                  <div className="text-sm text-slate-600">0 this month vs 0 last month</div>
+                </>
+              )}
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
