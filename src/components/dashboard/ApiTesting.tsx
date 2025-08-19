@@ -270,6 +270,17 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
         try {
           const requestBodyData = requestBody ? JSON.parse(requestBody) : {}
           
+          console.log('Making API request with:', {
+            url: '/api/v1/crs-credit/u/experian/score',
+            method: 'POST',
+            headers: {
+              'accept': '*/*',
+              'X-API-Key': selectedApiKey ? `${selectedApiKey.substring(0, 10)}...` : 'NOT_PROVIDED',
+              'Content-Type': 'application/json',
+            },
+            body: requestBodyData
+          })
+          
           const response = await fetch('/api/v1/crs-credit/u/experian/score', {
             method: 'POST',
             headers: {
@@ -281,7 +292,13 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
           })
 
           if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+            const errorText = await response.text()
+            console.error('API Error Response:', {
+              status: response.status,
+              statusText: response.statusText,
+              body: errorText
+            })
+            throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`)
           }
 
           const responseData = await response.json()
@@ -307,6 +324,15 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               details: error.message
             })
             setResponseStatus(401)
+          } else if (error.message.includes('HTTP 400')) {
+            setResponse({
+              error: 'Bad Request Error',
+              message: 'The request format is invalid. Check the request body and parameters.',
+              suggestion: 'Verify that all required fields are provided with correct data types.',
+              details: error.message,
+              troubleshooting: 'Common issues: Missing required fields, incorrect data format, or invalid values.'
+            })
+            setResponseStatus(400)
           } else {
             setResponse({
               error: error.message || 'Request failed',
