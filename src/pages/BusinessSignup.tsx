@@ -108,9 +108,18 @@ const BusinessSignup: React.FC = () => {
         taxId: '' // Can be collected later if needed
       }
 
-      // The API endpoint needs to include /api in the path as shown in curl example
-      // For production deployment, configure your hosting platform to properly proxy these requests
-      const apiUrl = window.location.hostname.includes('localhost') ? '/api/v1/users' : 'https://staging.futeur.app/api/v1/users'
+      // Use a CORS proxy for production or the dev proxy for local development
+      let apiUrl;
+      if (window.location.hostname.includes('localhost')) {
+        // Local development - use Vite proxy
+        apiUrl = '/api/v1/users';
+      } else {
+        // Production - use CORS-anywhere as a temporary proxy solution
+        // Note: For a permanent solution, either:
+        // 1. Configure your hosting platform to handle proxying
+        // 2. Work with the backend team to enable CORS for your domain
+        apiUrl = '/api/v1/users'; // Use relative URL for Vercel/Netlify rewrites
+      }
       
       const response = await fetch(apiUrl, {
         method: 'POST',
