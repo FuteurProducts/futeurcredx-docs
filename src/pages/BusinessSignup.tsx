@@ -108,8 +108,9 @@ const BusinessSignup: React.FC = () => {
         taxId: '' // Can be collected later if needed
       }
 
-      // Always use the proxied endpoint to avoid CORS issues
-      const apiUrl = '/api/v1/users'
+      // The API endpoint needs to include /api in the path as shown in curl example
+      // For production deployment, configure your hosting platform to properly proxy these requests
+      const apiUrl = window.location.hostname.includes('localhost') ? '/api/v1/users' : 'https://staging.futeur.app/api/v1/users'
       
       const response = await fetch(apiUrl, {
         method: 'POST',
