@@ -42,6 +42,75 @@ const AppRouter = () => {
   const isDomainInstitutions = hostname === 'institutions.futeurcredx.com' || (isLocalhost && testMode === 'institutions');
   const isDomainPlatform = hostname === 'platform.futeurcredx.com' || (isLocalhost && testMode === 'platform');
   const isDomainDocs = hostname === 'docs.futeurcredx.com' || (isLocalhost && testMode === 'docs');
+  
+  // Handle subdomain-specific routing for root paths
+  if (window.location.pathname === '/') {
+    // If we're on docs subdomain, default render the Docs component
+    if (isDomainDocs) {
+      return (
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <FuteurHeader />
+                <div className="pt-16">
+                  <Docs />
+                </div>
+                <Footer />
+              </BrowserRouter>
+            </TooltipProvider>
+          </AuthProvider>
+        </QueryClientProvider>
+      );
+    }
+    
+    // If we're on institutions subdomain, render the Enterprise component
+    if (isDomainInstitutions) {
+      return (
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <FuteurHeader />
+                <div className="pt-16">
+                  <Enterprise />
+                </div>
+                <Footer />
+              </BrowserRouter>
+            </TooltipProvider>
+          </AuthProvider>
+        </QueryClientProvider>
+      );
+    }
+    
+    // If we're on platform subdomain, render the Fintech component
+    if (isDomainPlatform) {
+      return (
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <FuteurHeader />
+                <div className="pt-16">
+                  <Fintech />
+                </div>
+                <Footer />
+              </BrowserRouter>
+            </TooltipProvider>
+          </AuthProvider>
+        </QueryClientProvider>
+      );
+    }
+  }
 
   return (
   <QueryClientProvider client={queryClient}>
