@@ -270,26 +270,33 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
         try {
           let requestBodyData: any = {}
           
-          if (requestBody) {
+          if (requestBody && requestBody.trim()) {
             try {
               requestBodyData = JSON.parse(requestBody)
             } catch (jsonError: any) {
               throw new Error(`Invalid JSON format: ${jsonError.message}`)
             }
-          }
-          
-          // Validate required fields for Experian endpoint
-          if (!requestBodyData.name || typeof requestBodyData.name !== 'string') {
-            throw new Error('Missing or invalid "name" field - must be a string')
-          }
-          if (!requestBodyData.city || typeof requestBodyData.city !== 'string') {
-            throw new Error('Missing or invalid "city" field - must be a string')
-          }
-          if (!requestBodyData.state || typeof requestBodyData.state !== 'string') {
-            throw new Error('Missing or invalid "state" field - must be a string')
-          }
-          if (requestBodyData.state.length !== 2) {
-            throw new Error('State must be a valid two-letter abbreviation (e.g., "CA", "NY", "TX")')
+            
+            // Validate required fields for Experian endpoint only if we have data
+            if (!requestBodyData.name || typeof requestBodyData.name !== 'string') {
+              throw new Error('Missing or invalid "name" field - must be a string')
+            }
+            if (!requestBodyData.city || typeof requestBodyData.city !== 'string') {
+              throw new Error('Missing or invalid "city" field - must be a string')
+            }
+            if (!requestBodyData.state || typeof requestBodyData.state !== 'string') {
+              throw new Error('Missing or invalid "state" field - must be a string')
+            }
+            if (requestBodyData.state.length !== 2) {
+              throw new Error('State must be a valid two-letter abbreviation (e.g., "CA", "NY", "TX")')
+            }
+          } else {
+            // Use default values if no request body provided
+            requestBodyData = {
+              "name": "EXPERIAN CONSUMER DIRECT",
+              "city": "Costa Mesa",
+              "state": "CA"
+            }
           }
           
           console.log('Making API request with:', {
