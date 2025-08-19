@@ -1026,37 +1026,37 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
           >
             {/* API Keys Management */}
-            <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3 text-blue-900">
-                  <Key className="w-6 h-6" />
+            <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight flex items-center gap-2 sm:gap-3 text-blue-900">
+                  <Key className="w-5 h-5 sm:w-6 sm:h-6" />
                   API Keys
                 </h2>
                 <Link
                   to="/docs"
-                  className="text-sm text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-2 font-bold uppercase tracking-wide"
+                  className="text-xs sm:text-sm text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-2 font-bold uppercase tracking-wide"
                 >
-                  View Docs <ExternalLink className="w-4 h-4" />
+                  View Docs <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Link>
               </div>
 
 
               {/* Generate New Key */}
-              <div className="mb-8 p-6 bg-blue-50/80 rounded-xl border border-blue-200 backdrop-blur-sm">
-                <h3 className="font-black uppercase tracking-tight mb-4 text-blue-900">Generate New API Key</h3>
+              <div className="mb-6 sm:mb-8 p-4 sm:p-6 bg-blue-50/80 rounded-xl border border-blue-200 backdrop-blur-sm">
+                <h3 className="font-black uppercase tracking-tight mb-3 sm:mb-4 text-sm sm:text-base text-blue-900">Generate New API Key</h3>
                 
                 {/* Security Warning */}
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                  <div className="flex items-start gap-3">
-                    <div className="p-1 bg-blue-100 rounded-full mt-0.5">
-                      <Shield className="w-4 h-4 text-blue-700" />
+                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="p-1 bg-blue-100 rounded-full mt-0.5 flex-shrink-0">
+                      <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-blue-700" />
                     </div>
-                    <div>
-                      <div className="font-bold text-blue-900 mb-1">Important Security Notice</div>
-                      <div className="text-sm text-blue-800 leading-relaxed">
+                    <div className="min-w-0">
+                      <div className="font-bold text-blue-900 mb-1 text-xs sm:text-sm">Important Security Notice</div>
+                      <div className="text-xs sm:text-sm text-blue-800 leading-relaxed">
                         <strong>Save your API key immediately!</strong> For security reasons, the full key is only shown once during generation. 
                         After you close this session, only a partial key will be visible. Store it securely in your password manager or environment variables.
                       </div>
@@ -1074,19 +1074,19 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                   </div>
                 )}
                 
-                <div className="space-y-4">
-                  <div className="flex gap-4">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <input
                       type="text"
                       value={newKeyName}
                       onChange={(e) => setNewKeyName(e.target.value)}
                       placeholder="Enter key name (e.g., Production App)"
-                      className="flex-1 px-4 py-3 bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 text-slate-800 placeholder-slate-500 font-medium"
+                      className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 text-slate-800 placeholder-slate-500 font-medium text-sm"
                     />
                     <button
                       onClick={handleGenerateKey}
                       disabled={isGeneratingKey || !newKeyName.trim()}
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-xl font-bold text-sm uppercase tracking-wide transition-colors flex items-center gap-2"
+                      className="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
                     >
                       {isGeneratingKey ? (
                         <>
@@ -1170,22 +1170,22 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                 ) : Array.isArray(apiKeys) && apiKeys.length > 0 ? (
                   <div className="space-y-3">
                     {apiKeys.map((key: { id: string; name: string; key?: string; apiKey?: string; fullKey?: string; secretKey?: string; keyPrefix?: string; fullKeyOnCreation?: string; token?: string; value?: string; createdAt: string; lastUsedAt: string | null; usageCount: number }) => (
-                      <div key={key.id} className="p-4 bg-blue-50/50 rounded-xl border border-blue-200 backdrop-blur-sm">
-                        <div className="flex items-center justify-between mb-3">
-                          <div>
-                            <h4 className="font-bold text-sm text-blue-900">{key.name}</h4>
+                      <div key={key.id} className="p-3 sm:p-4 bg-blue-50/50 rounded-xl border border-blue-200 backdrop-blur-sm">
+                        <div className="flex items-start sm:items-center justify-between mb-3 gap-2">
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-bold text-xs sm:text-sm text-blue-900 truncate">{key.name}</h4>
                             <p className="text-xs text-slate-600">Created {formatDate(key.createdAt)}</p>
                           </div>
                           <button
                             onClick={() => handleRevokeKey(key.id)}
-                            className="p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors"
+                            className="p-1.5 sm:p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors flex-shrink-0"
                           >
-                            <Trash2 className="w-4 h-4" />
+                            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                           </button>
                         </div>
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
-                            <code className="flex-1 p-2 bg-slate-100 rounded text-xs font-mono text-slate-700 break-all">
+                            <code className="flex-1 p-2 bg-slate-100 rounded text-xs font-mono text-slate-700 break-all min-w-0 overflow-hidden">
                               {(() => {
                                 const fullKey = key.key || key.apiKey || key.fullKey || key.secretKey || key.fullKeyOnCreation || key.token || key.value
                                 const prefix = key.keyPrefix
@@ -1206,7 +1206,7 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
                                   navigator.clipboard.writeText(keyToCopy)
                                 }
                               }}
-                              className="p-2 hover:bg-blue-100 rounded transition-colors text-slate-600"
+                              className="p-1.5 sm:p-2 hover:bg-blue-100 rounded transition-colors text-slate-600 flex-shrink-0"
                               title="Copy API Key"
                               disabled={!key.key && !key.apiKey && !key.fullKey && !key.secretKey && !key.fullKeyOnCreation && !key.token && !key.value}
                             >
