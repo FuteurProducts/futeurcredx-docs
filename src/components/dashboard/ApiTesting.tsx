@@ -268,7 +268,29 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
       // Handle real API call for Experian endpoint
       if (endpoint.path === "/api/v1/crs-credit/u/experian/score") {
         try {
-          const requestBodyData = requestBody ? JSON.parse(requestBody) : {}
+          let requestBodyData: any = {}
+          
+          if (requestBody) {
+            try {
+              requestBodyData = JSON.parse(requestBody)
+            } catch (jsonError: any) {
+              throw new Error(`Invalid JSON format: ${jsonError.message}`)
+            }
+          }
+          
+          // Validate required fields for Experian endpoint
+          if (!requestBodyData.name || typeof requestBodyData.name !== 'string') {
+            throw new Error('Missing or invalid "name" field - must be a string')
+          }
+          if (!requestBodyData.city || typeof requestBodyData.city !== 'string') {
+            throw new Error('Missing or invalid "city" field - must be a string')
+          }
+          if (!requestBodyData.state || typeof requestBodyData.state !== 'string') {
+            throw new Error('Missing or invalid "state" field - must be a string')
+          }
+          if (requestBodyData.state.length !== 2) {
+            throw new Error('State must be a valid two-letter abbreviation (e.g., "CA", "NY", "TX")')
+          }
           
           console.log('Making API request with:', {
             url: '/api/v1/crs-credit/u/experian/score',
@@ -278,7 +300,8 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               'X-API-Key': selectedApiKey ? `${selectedApiKey.substring(0, 10)}...` : 'NOT_PROVIDED',
               'Content-Type': 'application/json',
             },
-            body: requestBodyData
+            body: requestBodyData,
+            bodyString: JSON.stringify(requestBodyData)
           })
           
           const response = await fetch('/api/v1/crs-credit/u/experian/score', {
@@ -504,11 +527,11 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
                     </div>
                   )}
                   <textarea
-                    value={requestBody || (endpoint.bodySchema ? JSON.stringify({
+                    value={requestBody || (endpoint.path === "/api/v1/crs-credit/u/experian/score" ? JSON.stringify({
                       "name": "EXPERIAN CONSUMER DIRECT",
-                      "city": "Costa Mesa", 
+                      "city": "Costa Mesa",
                       "state": "CA"
-                    }, null, 2) : '')}
+                    }, null, 2) : (endpoint.bodySchema ? JSON.stringify(endpoint.bodySchema, null, 2) : ''))}
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                     rows={6}
