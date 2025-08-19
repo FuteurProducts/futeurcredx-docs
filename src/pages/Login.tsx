@@ -2,16 +2,47 @@ import { SignIn } from "@clerk/clerk-react"
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-black flex flex-col">
-      {/* Back to website button */}
-      <div className="p-4 sm:p-6">
-        <a
-          href="/"
-          className="text-white text-xs sm:text-sm font-mono hover:text-gray-300 transition-colors"
-        >
-          &lt; Back to website
-        </a>
-      </div>
+    <>
+      <style>{`
+        @media (max-width: 640px) {
+          .cl-formFieldInput {
+            font-size: 14px !important;
+            padding: 8px 12px !important;
+          }
+          .cl-formButtonPrimary {
+            font-size: 14px !important;
+            padding: 8px 12px !important;
+          }
+          .cl-headerTitle {
+            font-size: 16px !important;
+            margin-bottom: 12px !important;
+          }
+          .cl-footerActionLink {
+            font-size: 14px !important;
+          }
+          .cl-formFieldLabel {
+            font-size: 12px !important;
+            margin-bottom: 4px !important;
+          }
+          .cl-main {
+            padding: 0 !important;
+          }
+          .cl-card {
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+        }
+      `}</style>
+      <div className="min-h-screen bg-black flex flex-col">
+        {/* Back to website button */}
+        <div className="p-4 sm:p-6">
+          <a
+            href="/"
+            className="text-white text-xs sm:text-sm font-mono hover:text-gray-300 transition-colors"
+          >
+            &lt; Back to website
+          </a>
+        </div>
 
       {/* Main content */}
       <div className="flex-1 flex items-center justify-center px-4 py-4 min-h-0">
@@ -66,8 +97,11 @@ export default function Page() {
                   colorText: "#ffffff",
                   colorTextSecondary: "#9ca3af",
                   borderRadius: "6px",
-                  spacingUnit: "1rem",
                   fontSize: "14px",
+                },
+                layout: {
+                  logoImageUrl: "",
+                  showOptionalFields: false,
                 },
               }}
             />
@@ -81,7 +115,8 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 
