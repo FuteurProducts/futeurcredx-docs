@@ -108,7 +108,8 @@ const BusinessSignup: React.FC = () => {
         taxId: '' // Can be collected later if needed
       }
 
-      const apiUrl = import.meta.env.DEV ? '/api/v1/users' : 'https://staging.futeur.app/api/v1/users'
+      // Always use the proxied endpoint to avoid CORS issues
+      const apiUrl = '/api/v1/users'
       
       const response = await fetch(apiUrl, {
         method: 'POST',
