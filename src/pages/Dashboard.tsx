@@ -723,12 +723,12 @@ Your backend needs to either:
 
 
 {/* Stats Overview */}
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-16">
 <motion.div
 initial={{ opacity: 0, y: 20 }}
 animate={{ opacity: 1, y: 0 }}
 transition={{ delay: 0.1 }}
-className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm"
+className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
 >
 <div className="flex items-center gap-4 mb-4">
 <div className="p-3 bg-blue-50 rounded-xl">
@@ -781,7 +781,7 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm"
+            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-blue-50 rounded-xl">
@@ -800,7 +800,7 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm"
+            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-blue-50 rounded-xl">
@@ -839,7 +839,7 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm"
+            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
           >
             <div className="flex items-center gap-4 mb-4">
               <div className="p-3 bg-blue-50 rounded-xl">
