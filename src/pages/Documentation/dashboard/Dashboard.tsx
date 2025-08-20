@@ -33,7 +33,7 @@ const Dashboard: React.FC = () => {
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
   const [error, setError] = useState('')
-  const [apiStats, setApiStats] = useState<any>(null)
+  const [apiStats, setApiStats] = useState<any>({ totalCalls: 0, monthlyLimit: 10000, plan: 'Free', thisMonth: 0, lastMonth: 0, growth: 0 })
   const [isLoadingStats, setIsLoadingStats] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
   const [keyConfig, setKeyConfig] = useState({
@@ -103,7 +103,13 @@ const Dashboard: React.FC = () => {
         const data = await response.json()
         console.log('API Response data:', data)
         console.log('Raw API Keys from backend:', JSON.stringify(data.apiKeys, null, 2))
-        setApiKeys(data.apiKeys || [])
+        const keys = data.apiKeys || [];
+        setApiKeys(keys);
+        const totalCallsFromKeys = keys.reduce((sum, key) => sum + (key.callsUsed || 0), 0);
+        setApiStats(prevStats => ({
+          ...prevStats,
+          totalCalls: totalCallsFromKeys,
+        }));
         setError('') // Clear any previous errors
       } else {
         const errorText = await response.text()
@@ -155,12 +161,11 @@ const Dashboard: React.FC = () => {
 
   // Fetch API usage statistics from backend
   const fetchApiStats = async () => {
+    setIsLoadingStats(true);
     try {
-      setIsLoadingStats(true)
-      
-      const token = await getToken()
+      const token = await getToken();
       if (!token) {
-        throw new Error('No authentication token available')
+        throw new Error('Authentication token not available.');
       }
 
       const response = await fetch('/api/v1/api-keys/stats', {
@@ -168,30 +173,42 @@ const Dashboard: React.FC = () => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-      })
+      });
 
       if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`HTTP ${response.status}: ${errorText}`)
+        // Log the error and fall back to default stats
+        const errorText = await response.text();
+        console.error(`Failed to fetch API stats: ${response.status} ${errorText}`);
+        throw new Error(`API error: ${response.status}`);
       }
 
-      const data = await response.json()
-      setApiStats(data)
-    } catch (error: any) {
-      console.error('Failed to fetch API stats:', error)
-      // Set default stats on error
-      setApiStats({
-        totalCalls: 0,
+      const data = await response.json();
+      console.log('API Stats Response Data:', JSON.stringify(data, null, 2));
+      // Update stats but preserve totalCalls, which is calculated from the keys list
+      setApiStats(prevStats => ({
+        ...prevStats,
+        monthlyLimit: data.monthlyLimit || prevStats.monthlyLimit,
+        plan: data.plan || prevStats.plan,
+        thisMonth: data.thisMonth || 0,
+        lastMonth: data.lastMonth || 0,
+        growth: data.growth || 0,
+      }));
+
+    } catch (error) {
+      console.error('An error occurred while fetching API stats:', error);
+      // Set default stats on any error, but preserve totalCalls
+      setApiStats(prevStats => ({
+        ...prevStats,
         monthlyLimit: 10000,
         plan: 'Free',
         thisMonth: 0,
         lastMonth: 0,
-        growth: 0
-      })
+        growth: 0,
+      }));
     } finally {
-      setIsLoadingStats(false)
+      setIsLoadingStats(false);
     }
-  }
+  };
 
   // Get detailed information about a specific API key
   const getApiKeyDetails = async (keyId: string) => {
@@ -472,10 +489,13 @@ const Dashboard: React.FC = () => {
   // Load API keys on component mount
   useEffect(() => {
     if (user) {
-      fetchApiKeys()
-      fetchApiStats()
+      const fetchData = async () => {
+        await fetchApiKeys();
+        await fetchApiStats();
+      };
+      fetchData();
     }
-  }, [user]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCopyKey = (key: string) => {
     navigator.clipboard.writeText(key)
@@ -689,34 +709,33 @@ Your backend needs to either:
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <nav className="border-b border-blue-100 bg-white">
+      {/* Tab Navigation */}
+      <div className="bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-2 sm:space-x-8 overflow-x-auto">
-            {[
-              { id: 'overview', label: 'Overview', icon: BarChart3 },
-              { id: 'api-keys', label: 'API Keys', icon: Key }
-            ].map((tab) => {
-              const Icon = tab.icon
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-3 sm:px-4 py-4 border-b-2 font-medium text-sm whitespace-nowrap transition-colors ${
-                    activeTab === tab.id
-                      ? 'border-blue-600 text-blue-700'
-                      : 'border-transparent text-slate-500 hover:text-blue-600 hover:border-blue-300'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="hidden sm:inline">{tab.label}</span>
-                  <span className="sm:hidden">{tab.label.split(' ')[0]}</span>
-                </button>
-              )
-            })}
+          <div className="flex items-center gap-2 p-2 bg-blue-50/50 backdrop-blur-sm rounded-2xl border border-blue-200 my-4">
+            <button
+              onClick={() => setActiveTab('overview')}
+              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+                activeTab === 'overview' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
+              }`}>
+              <BarChart3 className="w-5 h-5" />
+              Overview
+            </button>
+            <button
+              onClick={() => setActiveTab('api-keys')}
+              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+                activeTab === 'api-keys' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
+              }`}>
+              <Key className="w-5 h-5" />
+              API Keys
+            </button>
           </div>
         </div>
-      </nav>
+      </div>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -724,58 +743,6 @@ Your backend needs to either:
 
 {/* Stats Overview */}
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-16">
-<motion.div
-initial={{ opacity: 0, y: 20 }}
-animate={{ opacity: 1, y: 0 }}
-transition={{ delay: 0.1 }}
-className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
->
-<div className="flex items-center gap-4 mb-4">
-<div className="p-3 bg-blue-50 rounded-xl">
-<Activity className="w-8 h-8 text-blue-600" />
-</div>
-<div>
-<h3 className="font-black uppercase tracking-tight text-blue-900">API Calls</h3>
-<p className="text-sm text-slate-600 font-medium">This month</p>
-</div>
-</div>
-<div className="space-y-3">
-{isLoadingStats ? (
-<div className="animate-pulse">
-<div className="h-6 bg-blue-100 rounded mb-2"></div>
-<div className="h-4 bg-blue-100 rounded mb-2"></div>
-<div className="h-3 bg-blue-100 rounded"></div>
-</div>
-) : apiStats ? (
-<>
-<div className="text-lg font-black">{apiStats.plan || 'Free'}</div>
-<div>{(apiStats.totalCalls || 0).toLocaleString()}</div>
-<div className="text-sm text-gray-400 font-medium">API Calls Used</div>
-<div className="text-xs text-gray-500">
-of {(apiStats.monthlyLimit || 10000).toLocaleString()} this month
-</div>
-<div className="w-full bg-blue-100 rounded-full h-3">
-<div 
-className="bg-blue-600 h-3 rounded-full transition-all duration-500"
-style={{ 
-width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000)) * 100, 100)}%` 
-}}
-/>
-</div>
-</>
-) : (
-<>
-<div className="text-lg font-black">Free</div>
-<div>0</div>
-<div className="text-sm text-gray-400 font-medium">API Calls Used</div>
-<div className="text-xs text-gray-500">of 10,000 this month</div>
-<div className="w-full bg-blue-100 rounded-full h-3">
-<div className="bg-blue-600 h-3 rounded-full transition-all duration-500" style={{ width: '0%' }} />
-</div>
-</>
-)}
-</div>
-</motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -789,51 +756,12 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
               </div>
               <div>
                 <h3 className="font-black uppercase tracking-tight text-blue-900">API Keys</h3>
-                <p className="text-sm text-slate-600 font-medium">Active keys</p>
+                <p className="text-sm text-slate-600 font-medium">Total keys</p>
               </div>
             </div>
-            <div className="text-3xl font-black">{Array.isArray(apiKeys) ? apiKeys.filter(key => key.isActive).length : 0}</div>
+            <div className="text-3xl font-black">{Array.isArray(apiKeys) ? apiKeys.length : 0}</div>
           </motion.div>
 
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-blue-50 rounded-xl">
-                <TrendingUp className="w-8 h-8 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-black uppercase tracking-tight text-blue-900">Growth</h3>
-                <p className="text-sm text-slate-600 font-medium">Month over month</p>
-              </div>
-            </div>
-            <div className="space-y-2">
-              {isLoadingStats ? (
-                <div className="animate-pulse">
-                  <div className="h-6 bg-blue-100 rounded mb-2"></div>
-                  <div className="h-4 bg-blue-100 rounded"></div>
-                </div>
-              ) : apiStats ? (
-                <>
-                  <div className="text-2xl font-black text-green-600">
-                    +{apiStats.growth || 0}%
-                  </div>
-                  <div className="text-sm text-slate-600">
-                    {(apiStats.thisMonth || 0).toLocaleString()} this month vs {(apiStats.lastMonth || 0).toLocaleString()} last month
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="text-2xl font-black text-slate-400">+0%</div>
-                  <div className="text-sm text-slate-600">0 this month vs 0 last month</div>
-                </>
-              )}
-            </div>
-          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -852,34 +780,6 @@ width: `${Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000
             </div>
             <div className="text-lg font-bold">{user ? formatDate(user.createdAt) : ''}</div>
           </motion.div>
-        </div>
-
-        {/* Tab Navigation */}
-        <div className="mb-12">
-          <div className="flex items-center gap-2 p-2 bg-blue-50/50 backdrop-blur-sm rounded-2xl border border-blue-200">
-            <button
-              onClick={() => setActiveTab('overview')}
-              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
-                activeTab === 'overview' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
-              }`}
-            >
-              <BarChart3 className="w-4 h-4" />
-              Overview
-            </button>
-            <button
-              onClick={() => setActiveTab('api-keys')}
-              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
-                activeTab === 'api-keys' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
-              }`}
-            >
-              <Key className="w-4 h-4" />
-              API Keys
-            </button>
-          </div>
         </div>
 
         {/* Tab Content */}

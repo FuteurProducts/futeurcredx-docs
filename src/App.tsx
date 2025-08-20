@@ -24,7 +24,7 @@ import Footer from "./pages/Footer"
 import CleanFooter from "@/pages/Documentation/CleanFooter"
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from './pages/Documentation/dashboard/Dashboard'
+import MainLayout from './pages/MainLayout';
 import BusinessSignup from './pages/BusinessSignup';
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 
@@ -128,56 +128,7 @@ const AppRouter = () => {
             <Route path="/docs-test/*" element={<DocsLayout />} />
             
             {/* All other routes with Header/Footer */}
-            <Route path="/*" element={
-              <>
-                <FuteurHeader />
-                <div className="pt-16">
-                  <Routes>
-                    <Route path="/business-signup" element={
-                      <SignedIn>
-                        <BusinessSignup />
-                      </SignedIn>
-                    } />
-                    
-                    {/* Protected Routes */}
-                    <Route path="/dashboard" element={
-                      <SignedIn>
-                        <div className="bg-white min-h-screen">
-                          <Dashboard />
-                          <CleanFooter />
-                        </div>
-                      </SignedIn>
-                    } />
-                    
-                    {/* Public Routes */}
-                    <Route path="/" element={<Index />} />
-                    <Route path="/mobile-app" element={<MobileApp />} />
-                    <Route path="/business" element={<Business />} />
-                    <Route path="/enterprise" element={<Enterprise />} />
-                    <Route path="/fintech" element={<Fintech />} />
-                  
-                    <Route path="/lumiq-build" element={<LumiqBuild />} />
-                    <Route path="/credit-journey" element={<CreditJourney />} />
-                    <Route path="/app" element={<App />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
-                    {/* The /docs route is now handled outside this block to use a different header */}
-                    
-                    {/* Local Development Routes - Physical routes for testing subdomains */}
-                    <Route path="/institutions" element={<Enterprise />} />
-                    <Route path="/institutions/*" element={<Enterprise />} />
-                    <Route path="/platform" element={<Fintech />} />
-                    <Route path="/platform/*" element={<Fintech />} />
-                    {/* The /docs-test routes are now handled outside this block to use a different header */}
-                    
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </div>
-                {/* Conditionally render Footer - exclude from Dashboard */}
-                {window.location.pathname !== '/dashboard' && <Footer />}
-              </>
-            } />
+            <Route path="/*" element={<MainLayout />} />
           </Routes>
       </BrowserRouter>
     </TooltipProvider>
