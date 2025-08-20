@@ -20,7 +20,7 @@ import {
   Rocket
 } from 'lucide-react'
 import { useUser, SignOutButton, useAuth } from '@clerk/clerk-react'
-import ApiTesting from '../components/dashboard/ApiTesting'
+import ApiTesting from './ApiTesting'
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()

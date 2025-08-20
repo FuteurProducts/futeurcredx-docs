@@ -9,22 +9,22 @@ import Index from "./pages/Index";
 import Business from "./pages/Business";
 import Enterprise from "./pages/Enterprise";
 import Fintech from "./pages/Fintech";
-import ApiDocs from "./pages/ApiDocs";
+
 import LumiqBuild from "./pages/LumiqBuild";
 import CreditJourney from "./pages/CreditJourney";
 import MobileApp from "./pages/MobileApp";
 import App from "./pages/App";
 import FAQ from "./pages/FAQ";
 import FuteurCredPlus from "./pages/FuteurCredPlus";
-import Docs from "./pages/Docs";
+import Docs from "./pages/Documentation/Docs";
 import NotFound from "./pages/NotFound";
 import FuteurHeader from "./pages/Header";
-import DocsLayout from "./pages/DocsLayout";
+import DocsLayout from "./pages/Documentation/DocsLayout";
 import Footer from "./pages/Footer"
-import CleanFooter from "./pages/CleanFooter";
+import CleanFooter from "@/pages/Documentation/CleanFooter"
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Documentation/dashboard/Dashboard'
 import BusinessSignup from './pages/BusinessSignup';
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 
@@ -123,8 +123,8 @@ const AppRouter = () => {
             <Route path="/register" element={<Register />} />
 
             {/* Docs routes with custom header */}
-            <Route path="/docs" element={<DocsLayout />} />
-            <Route path="/docs-test" element={<DocsLayout />} />
+                        <Route path="/docs/*" element={<DocsLayout />} />
+                                    <Route path="/docs-test" element={<DocsLayout />} />
             <Route path="/docs-test/*" element={<DocsLayout />} />
             
             {/* All other routes with Header/Footer */}
@@ -155,7 +155,7 @@ const AppRouter = () => {
                     <Route path="/business" element={<Business />} />
                     <Route path="/enterprise" element={<Enterprise />} />
                     <Route path="/fintech" element={<Fintech />} />
-                    <Route path="/api-docs" element={<ApiDocs />} />
+                  
                     <Route path="/lumiq-build" element={<LumiqBuild />} />
                     <Route path="/credit-journey" element={<CreditJourney />} />
                     <Route path="/app" element={<App />} />
@@ -187,3 +187,4 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
+

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import { Instagram, Twitter, Linkedin } from "lucide-react"
-import { getCrossDomainUrl } from "../utils/domainUtils"
+import { getCrossDomainUrl } from "../../utils/domainUtils"
 
 export default function CleanFooter() {
   return (
-    <div className="bg-[#2c2c2c] text-white">
+    <div className="bg-[#0d0d0f] text-white">
       {/* Footer Links Section */}
       <div className="px-6 py-12 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-sm">
@@ -31,8 +31,8 @@ export default function CleanFooter() {
               <a href={getCrossDomainUrl("/business")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Business Credit Score
               </a>
-              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
-                LUMIQX Build
+              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-70 hover:opacity-100 font-medium tracking-wide">
+                Lumiq AI Build
               </a>
             </div>
           </div>
