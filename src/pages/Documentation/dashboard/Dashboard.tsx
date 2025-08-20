@@ -21,6 +21,19 @@ import {
 } from 'lucide-react'
 import { useUser, SignOutButton, useAuth } from '@clerk/clerk-react'
 import ApiTesting from './ApiTesting'
+import MetricCards from '../../../components/dashboard/MetricCards';
+import DashboardTabs from '../../../components/dashboard/DashboardTabs';
+import OverviewTab from '../../../components/dashboard/OverviewTab';
+import ApiKeysTab from '../../../components/dashboard/ApiKeysTab';
+
+interface ApiStats {
+  totalCalls: number;
+  monthlyLimit: number;
+  plan: string;
+  thisMonth: number;
+  lastMonth: number;
+  growth: number;
+}
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
@@ -33,7 +46,7 @@ const Dashboard: React.FC = () => {
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
   const [error, setError] = useState('')
-  const [apiStats, setApiStats] = useState<any>({ totalCalls: 0, monthlyLimit: 10000, plan: 'Free', thisMonth: 0, lastMonth: 0, growth: 0 })
+    const [apiStats, setApiStats] = useState<ApiStats>({ totalCalls: 0, monthlyLimit: 10000, plan: 'Free', thisMonth: 0, lastMonth: 0, growth: 0 })
   const [isLoadingStats, setIsLoadingStats] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
   const [keyConfig, setKeyConfig] = useState({
@@ -686,7 +699,7 @@ Your backend needs to either:
   // Calculate usage percentage from real API stats
   const usagePercentage = apiStats ? Math.min(((apiStats.totalCalls || 0) / (apiStats.monthlyLimit || 10000)) * 100, 100) : 0
 
-  return (
+    return (
     <div className="min-h-screen bg-white text-slate-800">
       {/* User Profile Section */}
       <div className="sticky top-0 z-40 border-b border-blue-100 bg-white backdrop-blur-sm">
@@ -709,449 +722,44 @@ Your backend needs to either:
         </div>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2 p-2 bg-blue-50/50 backdrop-blur-sm rounded-2xl border border-blue-200 my-4">
-            <button
-              onClick={() => setActiveTab('overview')}
-              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
-                activeTab === 'overview' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
-              }`}>
-              <BarChart3 className="w-5 h-5" />
-              Overview
-            </button>
-            <button
-              onClick={() => setActiveTab('api-keys')}
-              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
-                activeTab === 'api-keys' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
-              }`}>
-              <Key className="w-5 h-5" />
-              API Keys
-            </button>
-          </div>
-        </div>
-      </div>
+      <DashboardTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
-
-{/* Stats Overview */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-16">
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-blue-50 rounded-xl">
-                <Key className="w-8 h-8 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-black uppercase tracking-tight text-blue-900">API Keys</h3>
-                <p className="text-sm text-slate-600 font-medium">Total keys</p>
-              </div>
-            </div>
-            <div className="text-3xl font-black">{Array.isArray(apiKeys) ? apiKeys.length : 0}</div>
-          </motion.div>
-
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-blue-50 rounded-xl">
-                <Calendar className="w-8 h-8 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-black uppercase tracking-tight text-blue-900">Member Since</h3>
-                <p className="text-sm text-slate-600 font-medium">Account created</p>
-              </div>
-            </div>
-            <div className="text-lg font-bold">{user ? formatDate(user.createdAt) : ''}</div>
-          </motion.div>
-        </div>
+        {/* Stats Overview */}
+        <MetricCards apiKeys={apiKeys} user={user} formatDate={formatDate} />
 
         {/* Tab Content */}
-        {activeTab === 'overview' && (
-          <div className="space-y-8">
-            {/* Quick Actions & Getting Started Side by Side */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
-              {/* Quick Actions */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 }}
-                className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="p-3 bg-blue-50 rounded-2xl">
-                    <Code className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h2 className="text-2xl font-black uppercase tracking-tight text-blue-900">Quick Actions</h2>
-                </div>
-                <div className="space-y-3">
-                  <button
-                    onClick={() => setActiveTab('api-keys')}
-                    className="w-full group relative overflow-hidden bg-blue-50/50 hover:bg-blue-100/70 border border-blue-200 hover:border-blue-300 rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 bg-blue-100 rounded-xl group-hover:bg-blue-200 transition-colors">
-                        <Code className="w-5 h-5 text-blue-700" />
-                      </div>
-                      <div className="flex-1 text-left">
-                        <div className="font-bold text-blue-900 mb-1">API Testing</div>
-                        <div className="text-sm text-slate-600">Test APIs with your generated tokens</div>
-                      </div>
-                    </div>
-                  </button>
-                  
-                  <Link
-                    to="/docs"
-                    className="w-full group relative overflow-hidden bg-blue-50/30 hover:bg-blue-100/50 border border-blue-200 hover:border-blue-300 rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg backdrop-blur-sm block"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 bg-blue-100 rounded-xl group-hover:bg-blue-200 transition-colors">
-                        <FileText className="w-5 h-5 text-blue-700" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-bold text-blue-900 mb-1">API Documentation</div>
-                        <div className="text-sm text-slate-600">View examples and guides</div>
-                      </div>
-                      <ExternalLink className="w-4 h-4 text-blue-700 group-hover:text-blue-600 transition-colors" />
-                    </div>
-                  </Link>
-                  
-                  <div className="w-full group relative overflow-hidden bg-blue-50/20 hover:bg-blue-100/40 border border-blue-200 hover:border-blue-300 rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] cursor-pointer backdrop-blur-sm">
-                    <div className="flex items-center gap-4">
-                      <div className="p-3 bg-blue-100 rounded-xl group-hover:bg-blue-200 transition-colors">
-                        <BarChart3 className="w-5 h-5 text-blue-700" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-bold text-blue-900 mb-1">Usage Analytics</div>
-                        <div className="text-sm text-slate-600">Detailed usage insights</div>
-                      </div>
-                      <span className="text-xs bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-medium">Coming Soon</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+        <div className="mt-8">
+          {activeTab === 'overview' && <OverviewTab />}
 
-              {/* Getting Started */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 }}
-                className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="p-3 bg-blue-50 rounded-2xl">
-                    <Rocket className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <h2 className="text-2xl font-black uppercase tracking-tight text-blue-900">Getting Started</h2>
-                </div>
-                <div className="space-y-5">
-                  <div className="flex items-center gap-4 p-4 bg-green-50/80 border border-green-200 rounded-2xl backdrop-blur-sm">
-                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-sm">
-                      <span className="text-white font-black text-sm">✓</span>
-                    </div>
-                    <div className="flex-1">
-                      <span className="font-bold text-green-800">Account Created</span>
-                      <div className="text-sm text-green-600">Welcome to FuteurCredX!</div>
-                    </div>
-                  </div>
-                  
-                  <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 backdrop-blur-sm ${
-                    (Array.isArray(apiKeys) && apiKeys.length > 0) 
-                      ? 'bg-green-50/80 border-green-200' 
-                      : 'bg-blue-50/80 border-blue-200'
-                  }`}>
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 ${
-                      (Array.isArray(apiKeys) && apiKeys.length > 0) 
-                        ? 'bg-green-500' 
-                        : 'bg-blue-500'
-                    }`}>
-                      <span className="text-white font-black text-sm">
-                        {(Array.isArray(apiKeys) && apiKeys.length > 0) ? '✓' : '2'}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <span className={`font-bold ${
-                        (Array.isArray(apiKeys) && apiKeys.length > 0) 
-                          ? 'text-green-800' 
-                          : 'text-blue-800'
-                      }`}>
-                        {(Array.isArray(apiKeys) && apiKeys.length > 0) ? 'API Key Generated' : 'Generate Your First API Key'}
-                      </span>
-                      <div className={`text-sm transition-colors ${
-                        (Array.isArray(apiKeys) && apiKeys.length > 0) 
-                          ? 'text-green-600' 
-                          : 'text-blue-600'
-                      }`}>
-                        {(Array.isArray(apiKeys) && apiKeys.length > 0) 
-                          ? 'Ready to make API calls' 
-                          : 'Click on API Keys tab to create one'
-                        }
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-4 p-4 bg-slate-50/80 border border-slate-200 rounded-2xl backdrop-blur-sm">
-                    <div className="w-10 h-10 bg-slate-500 rounded-full flex items-center justify-center shadow-sm">
-                      <span className="text-white font-black text-sm">3</span>
-                    </div>
-                    <div className="flex-1">
-                      <span className="font-bold text-slate-800">Make Your First API Call</span>
-                      <div className="text-sm text-slate-600">Test the API with your key</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'api-keys' && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8"
-          >
-            {/* API Keys Management */}
-            <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
-                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight flex items-center gap-2 sm:gap-3 text-blue-900">
-                  <Key className="w-5 h-5 sm:w-6 sm:h-6" />
-                  API Keys
-                </h2>
-                <Link
-                  to="/docs"
-                  className="text-xs sm:text-sm text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-2 font-bold uppercase tracking-wide"
-                >
-                  View Docs <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                </Link>
-              </div>
-
-
-              {/* Generate New Key */}
-              <div className="mb-6 sm:mb-8 p-4 sm:p-6 bg-blue-50/80 rounded-xl border border-blue-200 backdrop-blur-sm">
-                <h3 className="font-black uppercase tracking-tight mb-3 sm:mb-4 text-sm sm:text-base text-blue-900">Generate New API Key</h3>
-                
-                {/* Security Warning */}
-                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <div className="p-1 bg-blue-100 rounded-full mt-0.5 flex-shrink-0">
-                      <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-blue-700" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="font-bold text-blue-900 mb-1 text-xs sm:text-sm">Important Security Notice</div>
-                      <div className="text-xs sm:text-sm text-blue-800 leading-relaxed">
-                        <strong>Save your API key immediately!</strong> For security reasons, the full key is only shown once during generation. 
-                        After you close this session, only a partial key will be visible. Store it securely in your password manager or environment variables.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {error && (
-                  <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
-                    <div className="font-bold mb-2">Debug Information:</div>
-                    <div className="whitespace-pre-wrap font-mono text-xs">{error}</div>
-                    <div className="mt-3 text-xs text-gray-400">
-                      💡 Check browser console (F12) for detailed error logs
-                    </div>
-                  </div>
-                )}
-                
-                <div className="space-y-3 sm:space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                    <input
-                      type="text"
-                      value={newKeyName}
-                      onChange={(e) => setNewKeyName(e.target.value)}
-                      placeholder="Enter key name (e.g., Production App)"
-                      className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-white border border-blue-200 rounded-xl focus:outline-none focus:border-blue-400 text-slate-800 placeholder-slate-500 font-medium text-sm"
-                    />
-                    <button
-                      onClick={handleGenerateKey}
-                      disabled={isGeneratingKey || !newKeyName.trim()}
-                      className="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wide transition-colors flex items-center justify-center gap-2 whitespace-nowrap"
-                    >
-                      {isGeneratingKey ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                          Generating...
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-4 h-4" />
-                          Generate Key
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Newly Generated Key Alert */}
-              {newlyGeneratedKey && (
-                <div className="mb-6 p-6 bg-green-50 border-2 border-green-200 rounded-xl shadow-lg">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 bg-green-100 rounded-full">
-                      <Shield className="w-6 h-6 text-green-600" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-bold text-green-800 mb-2 text-lg">🎉 API Key Generated Successfully!</div>
-                      <div className="text-sm text-green-700 mb-4">
-                        <strong>"{newlyGeneratedKey.name}"</strong> has been created. 
-                        <span className="text-red-600 font-bold"> This is the ONLY time you'll see the full key!</span>
-                      </div>
-                      
-                      <div className="bg-white border border-green-200 rounded-lg p-4 mb-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-xs font-bold text-green-700 uppercase">Your API Key:</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <code className="flex-1 p-3 bg-gray-50 border rounded text-sm font-mono text-gray-800 break-all select-all">
-                            {newlyGeneratedKey.key}
-                          </code>
-                          <button
-                            onClick={() => {
-                              navigator.clipboard.writeText(newlyGeneratedKey.key)
-                              // Could add a toast notification here
-                            }}
-                            className="p-3 bg-green-600 hover:bg-green-700 text-white rounded transition-colors"
-                            title="Copy to Clipboard"
-                          >
-                            <Copy className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      <div className="text-sm text-green-700 mb-4">
-                        ✅ <strong>Next steps:</strong> Copy this key and store it securely in your password manager or environment variables. 
-                        After you close this alert, only a partial key will be visible for security reasons.
-                      </div>
-                      
-                      <button
-                        onClick={() => setNewlyGeneratedKey(null)}
-                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-bold transition-colors"
-                      >
-                        I've Saved My Key Securely
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* API Keys List */}
-              <div className="space-y-4">
-                <h3 className="font-black uppercase tracking-tight">Your API Keys</h3>
-                {isLoadingKeys ? (
-                  <div className="space-y-3">
-                    {[1, 2, 3].map((i) => (
-                      <div key={i} className="animate-pulse p-4 bg-blue-50/50 rounded-xl border border-blue-200">
-                        <div className="h-4 bg-blue-100 rounded mb-2"></div>
-                        <div className="h-3 bg-blue-100 rounded w-3/4"></div>
-                      </div>
-                    ))}
-                  </div>
-                ) : Array.isArray(apiKeys) && apiKeys.length > 0 ? (
-                  <div className="space-y-3">
-                    {apiKeys.map((key: { id: string; name: string; key?: string; apiKey?: string; fullKey?: string; secretKey?: string; keyPrefix?: string; fullKeyOnCreation?: string; token?: string; value?: string; createdAt: string; lastUsedAt: string | null; usageCount: number }) => (
-                      <div key={key.id} className="p-3 sm:p-4 bg-blue-50/50 rounded-xl border border-blue-200 backdrop-blur-sm">
-                        <div className="flex items-start sm:items-center justify-between mb-3 gap-2">
-                          <div className="min-w-0 flex-1">
-                            <h4 className="font-bold text-xs sm:text-sm text-blue-900 truncate">{key.name}</h4>
-                            <p className="text-xs text-slate-600">Created {formatDate(key.createdAt)}</p>
-                          </div>
-                          <button
-                            onClick={() => handleRevokeKey(key.id)}
-                            className="p-1.5 sm:p-2 text-red-400 hover:bg-red-500/20 rounded-lg transition-colors flex-shrink-0"
-                          >
-                            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                          </button>
-                        </div>
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <code className="flex-1 p-2 bg-slate-100 rounded text-xs font-mono text-slate-700 break-all min-w-0 overflow-hidden">
-                              {(() => {
-                                const fullKey = key.key || key.apiKey || key.fullKey || key.secretKey || key.fullKeyOnCreation || key.token || key.value
-                                const prefix = key.keyPrefix
-                                
-                                if (showApiKey[key.id]) {
-                                  // Show full key if available, otherwise show prefix with explanation
-                                  return fullKey || (prefix ? `${prefix} (Full key only available during generation)` : 'No key available')
-                                } else {
-                                  // Show masked version
-                                  return prefix ? `${prefix}${'•'.repeat(32)}` : '•'.repeat(40)
-                                }
-                              })()}
-                            </code>
-                            <button
-                              onClick={() => {
-                                const keyToCopy = key.key || key.apiKey || key.fullKey || key.secretKey || key.fullKeyOnCreation || key.token || key.value || key.keyPrefix || ''
-                                if (keyToCopy) {
-                                  navigator.clipboard.writeText(keyToCopy)
-                                }
-                              }}
-                              className="p-1.5 sm:p-2 hover:bg-blue-100 rounded transition-colors text-slate-600 flex-shrink-0"
-                              title="Copy API Key"
-                              disabled={!key.key && !key.apiKey && !key.fullKey && !key.secretKey && !key.fullKeyOnCreation && !key.token && !key.value}
-                            >
-                              <Copy className="w-4 h-4" />
-                            </button>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => toggleKeyVisibility(key.id)}
-                              className="px-3 py-1 text-xs font-medium bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg transition-colors border border-blue-200"
-                            >
-                              {showApiKey[key.id] ? 'Hide Key' : 'Show Key'}
-                            </button>
-                            {!key.key && !key.apiKey && !key.fullKey && !key.secretKey && !key.fullKeyOnCreation && !key.token && !key.value && (
-                              <span className="text-xs text-blue-700 bg-blue-50 px-2 py-1 rounded border border-blue-200">
-                                Full key only shown during generation
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="text-xs text-slate-500 mt-2">
-                          Last used: {key.lastUsedAt ? formatDate(key.lastUsedAt) : 'Never'} • {key.usageCount} calls
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8 text-slate-600">
-                    <Key className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                    <p>No API keys yet. Generate your first key above.</p>
-                  </div>
-                )}
+          {activeTab === 'api-keys' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+              <ApiKeysTab
+                apiKeys={apiKeys}
+                isLoadingKeys={isLoadingKeys}
+                error={error}
+                newKeyName={newKeyName}
+                setNewKeyName={setNewKeyName}
+                handleGenerateKey={handleGenerateKey}
+                isGeneratingKey={isGeneratingKey}
+                newlyGeneratedKey={newlyGeneratedKey}
+                setNewlyGeneratedKey={setNewlyGeneratedKey}
+                handleRevokeKey={handleRevokeKey}
+                showApiKey={showApiKey}
+                toggleKeyVisibility={toggleKeyVisibility}
+                formatDate={formatDate}
+              />
+              <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
+                <ApiTesting apiKeys={apiKeys} />
               </div>
             </div>
-
-            {/* API Testing Panel */}
-            <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
-              <ApiTesting apiKeys={apiKeys} />
-            </div>
-          </motion.div>
-        )}
-
+          )}
+        </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
