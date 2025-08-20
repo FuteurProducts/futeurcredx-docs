@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
@@ -18,6 +19,7 @@ import FuteurCredPlus from "./pages/FuteurCredPlus";
 import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 import FuteurHeader from "./pages/Header";
+import DocsLayout from "./pages/DocsLayout";
 import Footer from "./pages/Footer"
 import CleanFooter from "./pages/CleanFooter";
 import Login from "./pages/Login";
@@ -47,30 +49,26 @@ const AppRouter = () => {
     // If we're on docs subdomain, default render the Docs component
     if (isDomainDocs) {
       return (
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
-          
             <TooltipProvider>
               <Toaster />
               <Sonner />
               <BrowserRouter>
                 <ScrollToTop />
-                <FuteurHeader />
-                <div className="pt-16">
-                  <Docs />
-                </div>
-                <Footer />
+                <DocsLayout />
               </BrowserRouter>
             </TooltipProvider>
-          
         </QueryClientProvider>
+      </ThemeProvider>
       );
     }
     
     // If we're on institutions subdomain, render the Enterprise component
     if (isDomainInstitutions) {
       return (
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
-          
             <TooltipProvider>
               <Toaster />
               <Sonner />
@@ -83,16 +81,16 @@ const AppRouter = () => {
                 <Footer />
               </BrowserRouter>
             </TooltipProvider>
-          
         </QueryClientProvider>
+      </ThemeProvider>
       );
     }
     
     // If we're on platform subdomain, render the Fintech component
     if (isDomainPlatform) {
       return (
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
-          
             <TooltipProvider>
               <Toaster />
               <Sonner />
@@ -105,15 +103,15 @@ const AppRouter = () => {
                 <Footer />
               </BrowserRouter>
             </TooltipProvider>
-          
         </QueryClientProvider>
+      </ThemeProvider>
       );
     }
   }
 
   return (
-  <QueryClientProvider client={queryClient}>
-    
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -123,6 +121,11 @@ const AppRouter = () => {
             {/* Authentication Routes - No Header/Footer */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+
+            {/* Docs routes with custom header */}
+            <Route path="/docs" element={<DocsLayout />} />
+            <Route path="/docs-test" element={<DocsLayout />} />
+            <Route path="/docs-test/*" element={<DocsLayout />} />
             
             {/* All other routes with Header/Footer */}
             <Route path="/*" element={
@@ -158,15 +161,14 @@ const AppRouter = () => {
                     <Route path="/app" element={<App />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
-                    <Route path="/docs" element={<Docs />} />
+                    {/* The /docs route is now handled outside this block to use a different header */}
                     
                     {/* Local Development Routes - Physical routes for testing subdomains */}
                     <Route path="/institutions" element={<Enterprise />} />
                     <Route path="/institutions/*" element={<Enterprise />} />
                     <Route path="/platform" element={<Fintech />} />
                     <Route path="/platform/*" element={<Fintech />} />
-                    <Route path="/docs-test" element={<Docs />} />
-                    <Route path="/docs-test/*" element={<Docs />} />
+                    {/* The /docs-test routes are now handled outside this block to use a different header */}
                     
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                     <Route path="*" element={<NotFound />} />
@@ -179,8 +181,8 @@ const AppRouter = () => {
           </Routes>
       </BrowserRouter>
     </TooltipProvider>
-  
   </QueryClientProvider>
+</ThemeProvider>
   );
 };
 
