@@ -7,7 +7,7 @@ export default function CleanFooter() {
     <div className="bg-[#0d0d0f] text-white">
       {/* Footer Links Section */}
       <div className="px-6 py-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm justify-items-center">
           {/* Main Navigation */}
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Main</h4>
@@ -75,7 +75,7 @@ export default function CleanFooter() {
       </div>
 
       {/* Bottom Footer Section */}
-      <div className="border-t border-gray-600 px-6 py-8">
+      <div className="px-6 py-8">
         <div className="max-w-7xl mx-auto">
           {/* Logo and Social Icons */}
           <div className="flex justify-between items-center mb-8">

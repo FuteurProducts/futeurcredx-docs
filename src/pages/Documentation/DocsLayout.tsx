@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import DocsHeader from '@/pages/Documentation/DocsHeader';
 import DocsPage from '@/pages/Documentation/Docs';
 import ApiReferencePage from '@/pages/Documentation/ApiReferencePage';
+import ChangelogPage from './Changelog';
 import CleanFooter from '@/pages/Documentation/CleanFooter';
 
 export default function DocsLayout() {
@@ -15,6 +16,7 @@ export default function DocsLayout() {
         <Routes>
           <Route path="/" element={<DocsPage searchQuery={searchQuery} setSearchQuery={setSearchQuery} />} />
           <Route path="/api-reference" element={<ApiReferencePage />} />
+          <Route path="/changelog" element={<ChangelogPage />} />
         </Routes>
       </div>
       <CleanFooter />
