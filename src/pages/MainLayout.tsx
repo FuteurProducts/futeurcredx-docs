@@ -16,13 +16,14 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 import ContactUs from './ContactUs';
 import Dashboard from './Documentation/dashboard/Dashboard';
+import DocsLayout from './Documentation/DocsLayout';
 import BusinessSignup from './BusinessSignup';
 import CleanFooter from '@/pages/Documentation/CleanFooter';
 import { SignedIn } from '@clerk/clerk-react';
 
 const MainLayout = () => {
   const location = useLocation();
-  const showHeader = location.pathname !== '/dashboard';
+  const showHeader = location.pathname !== '/dashboard' && !location.pathname.startsWith('/docs');
 
   return (
     <>
@@ -59,6 +60,9 @@ const MainLayout = () => {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/contact-us" element={<ContactUs />} />
           
+          {/* Documentation Routes */}
+          <Route path="/docs/*" element={<DocsLayout />} />
+          
           {/* Local Development Routes */}
           <Route path="/institutions" element={<Enterprise />} />
           <Route path="/institutions/*" element={<Enterprise />} />
@@ -68,7 +72,7 @@ const MainLayout = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
-      {location.pathname !== '/dashboard' && <Footer />}
+      {location.pathname !== '/dashboard' && !location.pathname.startsWith('/docs') && <Footer />}
     </>
   );
 };
