@@ -62,13 +62,15 @@ export default function FuteurHeader() {
         <header className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className={`text-2xl font-black uppercase tracking-tight transition-colors ${
-              isScrolled 
-                ? 'text-white'
-                : isWhiteHeader 
-                  ? 'text-black'
-                  : 'text-white'
-            }`}>FUTEURCREDX</h1>
+            <a href={getCrossDomainUrl("/")} className="cursor-pointer">
+              <h1 className={`text-2xl font-black uppercase tracking-tight transition-colors hover:opacity-80 ${
+                isScrolled 
+                  ? 'text-white'
+                  : isWhiteHeader 
+                    ? 'text-black'
+                    : 'text-white'
+              }`}>FUTEURCREDX</h1>
+            </a>
           </div>
 
           {/* Desktop Navigation */}
