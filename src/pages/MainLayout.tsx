@@ -12,6 +12,8 @@ import App from './App';
 import FAQ from './FAQ';
 import FuteurCredPlus from './FuteurCredPlus';
 import NotFound from './NotFound';
+import PrivacyPolicy from './PrivacyPolicy';
+import TermsOfService from './TermsOfService';
 import Dashboard from './Documentation/dashboard/Dashboard';
 import BusinessSignup from './BusinessSignup';
 import CleanFooter from '@/pages/Documentation/CleanFooter';
@@ -52,6 +54,8 @@ const MainLayout = () => {
           <Route path="/app" element={<App />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           
           {/* Local Development Routes */}
           <Route path="/institutions" element={<Enterprise />} />

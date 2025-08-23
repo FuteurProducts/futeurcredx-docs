@@ -108,10 +108,10 @@ export default function Component() {
               <a href="https://www.futeur.ai/contact" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Contact
               </a>
-              <a href="https://www.futeur.ai/privacy-policy" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href={getCrossDomainUrl("/privacy-policy")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Privacy Policy
               </a>
-              <a href="https://www.futeur.ai/terms-and-condition" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href={getCrossDomainUrl("/terms-of-service")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Terms of Service
               </a>
             </div>
