@@ -15,6 +15,10 @@ export default function FuteurHeader() {
   const whiteHeaderRoutes = ['/dashboard', '/login', '/register', '/docs'];
   const isWhiteHeader = whiteHeaderRoutes.includes(location.pathname);
   
+  // Define which routes should have transparent header
+  const transparentHeaderRoutes = ['/contact-us'];
+  const isTransparentHeader = transparentHeaderRoutes.includes(location.pathname);
+  
   // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
@@ -54,10 +58,14 @@ export default function FuteurHeader() {
     <>
       <div className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-black/60 backdrop-blur-md border-b border-white/10'
+          ? isTransparentHeader 
+            ? 'bg-white/90 backdrop-blur-md border-b border-gray-200'
+            : 'bg-black/60 backdrop-blur-md border-b border-white/10'
           : isWhiteHeader 
             ? 'bg-white/80 backdrop-blur-sm border-b border-gray-200'
-            : 'bg-transparent'
+            : isTransparentHeader
+              ? 'bg-transparent'
+              : 'bg-transparent'
       }`}>
         <header className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
           {/* Logo */}
@@ -65,10 +73,14 @@ export default function FuteurHeader() {
             <a href={getCrossDomainUrl("/")} className="cursor-pointer">
               <h1 className={`text-2xl font-black uppercase tracking-tight transition-colors hover:opacity-80 ${
                 isScrolled 
-                  ? 'text-white'
-                  : isWhiteHeader 
+                  ? isTransparentHeader 
                     ? 'text-black'
                     : 'text-white'
+                  : isWhiteHeader 
+                    ? 'text-black'
+                    : isTransparentHeader
+                      ? 'text-white'
+                      : 'text-white'
               }`}>FUTEURCREDX</h1>
             </a>
           </div>
@@ -77,16 +89,22 @@ export default function FuteurHeader() {
           <nav className="hidden md:flex items-center space-x-8">
             <a href={getCrossDomainUrl("/")} className={`transition-colors ${
               isScrolled 
-                ? 'text-white hover:text-gray-300'
-                : isWhiteHeader 
+                ? isTransparentHeader 
                   ? 'text-slate-700 hover:text-blue-600'
                   : 'text-white hover:text-gray-300'
+                : isWhiteHeader 
+                  ? 'text-slate-700 hover:text-blue-600'
+                  : isTransparentHeader
+                    ? 'text-white hover:text-gray-300'
+                    : 'text-white hover:text-gray-300'
             }`}>
               Home
             </a>
             <a href={getCrossDomainUrl("/business")} className={`transition-colors ${
               isScrolled 
-                ? 'text-white hover:text-gray-300'
+                ? isTransparentHeader 
+                  ? 'text-slate-700 hover:text-blue-600'
+                  : 'text-white hover:text-gray-300'
                 : isWhiteHeader 
                   ? 'text-slate-700 hover:text-blue-600'
                   : 'text-white hover:text-gray-300'
@@ -95,7 +113,9 @@ export default function FuteurHeader() {
             </a>
             <a href={getCrossDomainUrl("/lumiq-build")} className={`transition-colors ${
               isScrolled 
-                ? 'text-white hover:text-gray-300'
+                ? isTransparentHeader 
+                  ? 'text-slate-700 hover:text-blue-600'
+                  : 'text-white hover:text-gray-300'
                 : isWhiteHeader 
                   ? 'text-slate-700 hover:text-blue-600'
                   : 'text-white hover:text-gray-300'
@@ -104,7 +124,9 @@ export default function FuteurHeader() {
             </a>
             <a href={getCrossDomainUrl("/credit-journey")} className={`transition-colors ${
               isScrolled 
-                ? 'text-white hover:text-gray-300'
+                ? isTransparentHeader 
+                  ? 'text-slate-700 hover:text-blue-600'
+                  : 'text-white hover:text-gray-300'
                 : isWhiteHeader 
                   ? 'text-slate-700 hover:text-blue-600'
                   : 'text-white hover:text-gray-300'
@@ -120,7 +142,9 @@ export default function FuteurHeader() {
               buttonText="Download the App" 
               buttonClassName={`rounded-full px-6 py-2 font-bold transition-colors ${
                 isScrolled 
-                  ? 'bg-white text-black hover:bg-gray-100'
+                  ? isTransparentHeader 
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-white text-black hover:bg-gray-100'
                   : isWhiteHeader 
                     ? 'bg-blue-600 text-white hover:bg-blue-700'
                     : 'bg-white text-black hover:bg-gray-100'
@@ -132,7 +156,9 @@ export default function FuteurHeader() {
           <button 
             className={`md:hidden p-1 focus:outline-none transition-colors ${
               isScrolled 
-                ? 'text-white'
+                ? isTransparentHeader 
+                  ? 'text-slate-700'
+                  : 'text-white'
                 : isWhiteHeader 
                   ? 'text-slate-700'
                   : 'text-white'
