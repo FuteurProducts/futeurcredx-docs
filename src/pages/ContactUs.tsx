@@ -128,7 +128,7 @@ const ContactUs = () => {
                         </h5>
                         <a 
                           href={`mailto:${obj.desc}`}
-                          className='text-gray-500 text-lg hover:text-cyan-500 transition-colors'
+                          className='text-gray-500 text-lg hover:text-orange-500 transition-colors'
                         >
                           {obj.desc}
                         </a>
@@ -235,9 +235,9 @@ const ContactUs = () => {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <p className="text-lg sm:text-xl text-gray-800 font-medium leading-relaxed">
+                      <a href="mailto:support@futeurcredx.com" className="text-lg sm:text-xl text-gray-800 font-medium leading-relaxed hover:text-black transition-colors">
                         support@futeurcredx.com
-                      </p>
+                      </a>
                     </div>
                   </div>
                   
