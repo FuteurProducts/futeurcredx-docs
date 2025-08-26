@@ -726,7 +726,7 @@ const FAQ = () => {
       1: { name: 'Credit Curious', color: 'bg-gray-500', next: 5 },
       2: { name: 'Credit Builder', color: 'bg-blue-500', next: 15 },
       3: { name: 'Credit Expert', color: 'bg-purple-500', next: 30 },
-      4: { name: 'Credit Master', color: 'bg-yellow-500', next: null }
+      4: { name: 'Credit Master', color: 'bg-orange-400', next: null }
     };
     return levels[level as keyof typeof levels] || levels[1];
   };
@@ -793,7 +793,7 @@ const FAQ = () => {
                 <span className="text-white/80">Industry Insights</span>
               </div>
             </div>
-            <Button className="bg-white/10 hover:bg-white text-white hover:text-black font-bold px-8 py-3 backdrop-blur-sm border border-white/20 hover:border-white transition-all">
+            <Button className="bg-white/10 hover:bg-white text-white hover:text-orange-500 font-bold px-8 py-3 backdrop-blur-sm border border-white/20 hover:border-white transition-all text-crisp">
               Upgrade to FUTEURCREDX+
             </Button>
           </div>
@@ -948,7 +948,7 @@ const FAQ = () => {
                       <span>Industry Insights</span>
                     </div>
                   </div>
-                  <Button className="w-full mt-4 bg-white/10 hover:bg-white text-white hover:text-black font-bold backdrop-blur-sm border border-white/20 hover:border-white transition-all">
+                  <Button className="w-full mt-4 bg-white/10 hover:bg-white text-white hover:text-orange-500 font-bold backdrop-blur-sm border border-white/20 hover:border-white transition-all text-crisp">
                     Upgrade Now
                   </Button>
                 </CardContent>
@@ -969,7 +969,7 @@ const FAQ = () => {
                     </p>
                     <Button 
                       onClick={() => setShowChatbox(true)}
-                      className="w-full bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black border border-white/20 hover:border-white transition-all font-medium"
+                      className="w-full bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-orange-500 border border-white/20 hover:border-white transition-all font-medium text-crisp"
                     >
                       Chat with Expert
                     </Button>
@@ -1101,7 +1101,7 @@ const FAQ = () => {
                 <Button 
                   onClick={loadMore}
                   variant="outline"
-                  className="border-white/20 text-white hover:bg-white hover:text-black px-8 py-3 transition-all backdrop-blur-sm"
+                  className="border-white/20 text-white hover:bg-white hover:text-orange-500 px-8 py-3 transition-all backdrop-blur-sm text-crisp"
                 >
                   Load More Questions ({filteredFAQs.length - visibleCount} remaining)
                 </Button>
@@ -1132,7 +1132,7 @@ const FAQ = () => {
                     </div>
                   </div>
                   
-                  <Button className="bg-white/10 hover:bg-white text-white hover:text-black font-bold px-8 py-3 mb-4 backdrop-blur-sm border border-white/20 hover:border-white transition-all">
+                  <Button className="bg-white/10 hover:bg-white text-white hover:text-orange-500 font-bold px-8 py-3 mb-4 backdrop-blur-sm border border-white/20 hover:border-white transition-all text-crisp">
                     Upgrade to FUTEURCREDX+
                   </Button>
                   
@@ -1188,7 +1188,7 @@ const FAQ = () => {
                 placeholder="Ask your question..."
                 className="flex-1 px-3 py-2 bg-black/30 border border-white/10 rounded text-white text-sm placeholder-white/50 backdrop-blur-sm"
               />
-              <Button size="sm" className="bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black border border-white/20 hover:border-white transition-all font-medium">
+              <Button size="sm" className="bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-orange-500 border border-white/20 hover:border-white transition-all font-medium text-crisp">
                 Send
               </Button>
             </div>

@@ -66,7 +66,7 @@ export default function Component() {
               </a>
               <Link 
                 to="/credit-journey"
-                className="border border-white/60 text-white hover:bg-white hover:text-black px-8 py-3 text-lg font-medium rounded-full bg-white/10 backdrop-blur-sm transition-colors duration-200 cursor-pointer text-center"
+                className="border border-white/60 text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg font-medium rounded-full bg-white/10 backdrop-blur-sm transition-colors duration-200 cursor-pointer text-center text-crisp"
               >
                 See Credit Journey Demo
               </Link>

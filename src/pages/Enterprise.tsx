@@ -611,7 +611,7 @@ const Enterprise = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
             <a href="https://www.futeur.ai/contact" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="bg-black/30 backdrop-blur-sm text-white border border-white/10 hover:bg-white hover:text-black transition-all px-8 py-4 text-lg font-bold uppercase">
+              <Button size="lg" className="bg-black/30 backdrop-blur-sm text-white border border-white/10 hover:bg-white hover:text-orange-500 transition-all px-8 py-4 text-lg font-bold uppercase text-crisp">
                 <Briefcase className="mr-2 h-5 w-5" />
                 Contact Us for Demo
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -654,7 +654,7 @@ const Enterprise = () => {
       {/* Floating CTA Button */}
       <div className="fixed bottom-8 right-8 z-50">
         <Link to="/credit-journey#dashboard">
-          <Button className="bg-black/30 backdrop-blur-sm text-white hover:bg-white hover:text-black px-6 py-4 rounded-full shadow-lg border border-white/10 transition-all font-bold uppercase">
+          <Button className="bg-black/30 backdrop-blur-sm text-white hover:bg-white hover:text-orange-500 px-6 py-4 rounded-full shadow-lg border border-white/10 transition-all font-bold uppercase text-crisp">
             <Gauge className="mr-2 h-5 w-5" />
             Start Journey
           </Button>

@@ -39,7 +39,7 @@ const Business = () => {
         <div className="flex items-center">
           <QRCodeModal
             buttonText="START JOURNEY"
-            buttonClassName="bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black px-6 py-4 rounded-full shadow-lg border border-white/20 hover:border-white transition-all font-bold flex items-center"
+            buttonClassName="bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-orange-500 px-6 py-4 rounded-full shadow-lg border border-white/20 hover:border-white transition-all font-bold flex items-center text-crisp"
             title="GET THE FUTEURCREDX APP"
             description="Scan the QR code to download the app and start your credit journey"
             showIcon={false}

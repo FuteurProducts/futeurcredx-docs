@@ -141,7 +141,7 @@ const SocialProof = () => {
                     <p className="text-sm italic text-gray-700 pl-4 pr-2">{story.quote}</p>
                     <div className="flex items-center gap-1 mt-3 pl-4">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <Star key={i} className="h-3 w-3 fill-orange-400 text-orange-400" />
                       ))}
                     </div>
                   </blockquote>

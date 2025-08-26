@@ -41,7 +41,7 @@ const FintechPage = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Button
               size="lg"
-              className="bg-black/30 text-white border border-white/10 hover:bg-white hover:text-black transition-all px-10 py-4 text-lg font-bold uppercase"
+              className="bg-black/30 text-white border border-white/10 hover:bg-white hover:text-orange-500 transition-all px-10 py-4 text-lg font-bold uppercase text-crisp"
             >
               <Gauge className="mr-3 h-6 w-6" />
               Start Free Integration
@@ -389,7 +389,7 @@ const FintechPage = () => {
             <div className="bg-[#111827] border border-white/10 rounded-2xl p-8">
               <div className="flex items-center gap-2 mb-6">
                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-orange-400 rounded-full"></div>
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                 <span className="ml-4 text-[#D1D5DB] text-sm font-mono">lumiq-integration.js</span>
               </div>

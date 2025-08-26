@@ -91,7 +91,7 @@ const getMethodClass = (method: HttpMethod) => {
     case "POST":
       return "bg-green-600 hover:bg-green-700 text-white"
     case "PUT":
-      return "bg-yellow-600 hover:bg-yellow-700 text-white"
+      return "bg-orange-400 hover:bg-orange-500 text-white"
     case "DELETE":
       return "bg-red-600 hover:bg-red-700 text-white"
     case "PATCH":
@@ -210,7 +210,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+              <AlertCircle className="w-12 h-12 text-orange-400 mx-auto mb-4" />
               <p className="text-slate-600 mb-4">No API keys found. Generate your first API key to start testing.</p>
             </div>
           )

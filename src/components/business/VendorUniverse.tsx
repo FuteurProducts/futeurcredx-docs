@@ -74,7 +74,7 @@ const VendorUniverse = () => {
         
         <div className="text-center mt-12">
           <Link to="/lumiq-build">
-            <Button className="bg-black text-white hover:bg-white hover:text-black px-8 py-4 border border-white/20 hover:border-white transition-all font-bold">
+            <Button className="bg-black text-white hover:bg-white hover:text-orange-500 px-8 py-4 border border-white/20 hover:border-white transition-all font-bold text-crisp">
               <Network className="mr-2 h-5 w-5" />
               EXPLORE LUMIQ AI BUILD
               <ArrowRight className="ml-2 h-5 w-5" />

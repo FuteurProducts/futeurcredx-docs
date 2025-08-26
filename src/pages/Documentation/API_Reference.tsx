@@ -29,7 +29,7 @@ const getMethodBadgeClass = (method: HttpMethod) => {
   const colors: Record<HttpMethod, string> = {
     POST: "bg-blue-500 text-white dark:bg-blue-500/30 dark:text-blue-300 dark:border dark:border-blue-500/50",
     GET: "bg-green-600 text-white dark:bg-green-500/30 dark:text-green-300 dark:border dark:border-green-500/50",
-    PUT: "bg-yellow-500 text-white dark:bg-yellow-500/30 dark:text-yellow-300 dark:border dark:border-yellow-500/50",
+    PUT: "bg-orange-400 text-white dark:bg-orange-400/30 dark:text-orange-300 dark:border dark:border-orange-400/50",
     DELETE: "bg-red-500 text-white dark:bg-red-500/30 dark:text-red-300 dark:border dark:border-red-500/50",
     PATCH: "bg-orange-500 text-white dark:bg-orange-500/30 dark:text-orange-300 dark:border dark:border-orange-500/50",
   }

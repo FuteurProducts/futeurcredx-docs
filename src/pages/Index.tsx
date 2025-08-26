@@ -34,7 +34,7 @@ export default function Index() {
             </div>
 
             {/* Main Headline - Revolut Style */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[0.9] tracking-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[0.9] tracking-tight text-crisp">
               YOUR BUSINESS CREDIT
               <br />
               <span className="text-white">OPERATING SYSTEM</span>
@@ -61,7 +61,7 @@ export default function Index() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full bg-transparent"
+                  className="border-2 border-white text-white hover:bg-white hover:text-black hover:border-white hover:shadow-lg hover:scale-105 px-8 py-4 text-lg rounded-full bg-transparent transition-all duration-300 ease-in-out text-crisp"
                 >
                   <Play className="mr-2 h-5 w-5" />
                   See LUMIQ AI™ Demo

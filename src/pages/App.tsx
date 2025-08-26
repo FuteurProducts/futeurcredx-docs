@@ -88,7 +88,7 @@ const App = () => {
                   </div>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="w-4 h-4 fill-orange-400 text-orange-400" />
                     ))}
                     <span>4.9 rating</span>
                   </div>
@@ -185,7 +185,7 @@ const App = () => {
                   icon: Zap,
                   title: "LUMIQ AI Journey",
                   description: "Follow your personalized credit-building roadmap with AI-powered recommendations.",
-                  color: "from-yellow-400 to-orange-400"
+                  color: "from-orange-300 to-orange-500"
                 },
                 {
                   icon: Award,
@@ -231,7 +231,7 @@ const App = () => {
                 {
                   stage: "Building Phase",
                   score: 680,
-                  color: "from-yellow-400 to-orange-400",
+                  color: "from-orange-300 to-orange-500",
                   icon: TrendingUp,
                   status: "Good Progress"
                 },
