@@ -109,7 +109,7 @@ const TermsOfService = () => {
           ))}
         </div>
       </main>
-      <Footer />
+ 
     </motion.div>
   );
 };

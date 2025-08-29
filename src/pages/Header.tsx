@@ -195,7 +195,9 @@ export default function FuteurHeader() {
           isWhiteHeader 
             ? 'bg-white border-gray-200'
             : isTransparentHeader
-              ? 'bg-white border-gray-200'
+              ? isScrolled 
+                ? useBlackText ? 'bg-white/95 backdrop-blur-md border-gray-200' : 'bg-black/90 backdrop-blur-md border-white/10'
+                : 'bg-black/80 backdrop-blur-md border-white/10'
               : 'bg-black border-white/10'
         }`}>
           <div className="flex flex-col space-y-6 p-6">
@@ -204,9 +206,13 @@ export default function FuteurHeader() {
               <a 
                 href={getCrossDomainUrl("/")} 
                 className={`text-xl py-3 border-b transition-colors ${
-                  isWhiteHeader || isTransparentHeader
+                  isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
-                    : 'text-white border-white/10 hover:bg-white/5'
+                    : isTransparentHeader
+                      ? isScrolled
+                        ? useBlackText ? 'text-slate-700 border-gray-200 hover:bg-blue-50' : 'text-white border-white/20 hover:bg-white/10'
+                        : 'text-white border-white/10 hover:bg-white/5'
+                      : 'text-white border-white/10 hover:bg-white/5'
                 }`}
                 onClick={() => setMenuOpen(false)}
               >
@@ -215,9 +221,13 @@ export default function FuteurHeader() {
               <a 
                 href={getCrossDomainUrl("/business")} 
                 className={`text-xl py-3 border-b transition-colors ${
-                  isWhiteHeader || isTransparentHeader
+                  isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
-                    : 'text-white border-white/10 hover:bg-white/5'
+                    : isTransparentHeader
+                      ? isScrolled
+                        ? useBlackText ? 'text-slate-700 border-gray-200 hover:bg-blue-50' : 'text-white border-white/20 hover:bg-white/10'
+                        : 'text-white border-white/10 hover:bg-white/5'
+                      : 'text-white border-white/10 hover:bg-white/5'
                 }`}
                 onClick={() => setMenuOpen(false)}
               >
@@ -226,9 +236,13 @@ export default function FuteurHeader() {
               <a 
                 href={getCrossDomainUrl("/lumiq-build")} 
                 className={`text-xl py-3 border-b transition-colors ${
-                  isWhiteHeader || isTransparentHeader
+                  isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
-                    : 'text-white border-white/10 hover:bg-white/5'
+                    : isTransparentHeader
+                      ? isScrolled
+                        ? useBlackText ? 'text-slate-700 border-gray-200 hover:bg-blue-50' : 'text-white border-white/20 hover:bg-white/10'
+                        : 'text-white border-white/10 hover:bg-white/5'
+                      : 'text-white border-white/10 hover:bg-white/5'
                 }`}
                 onClick={() => setMenuOpen(false)}
               >
@@ -237,9 +251,13 @@ export default function FuteurHeader() {
               <a 
                 href={getCrossDomainUrl("/credit-journey")} 
                 className={`text-xl py-3 border-b transition-colors ${
-                  isWhiteHeader || isTransparentHeader
+                  isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
-                    : 'text-white border-white/10 hover:bg-white/5'
+                    : isTransparentHeader
+                      ? isScrolled
+                        ? useBlackText ? 'text-slate-700 border-gray-200 hover:bg-blue-50' : 'text-white border-white/20 hover:bg-white/10'
+                        : 'text-white border-white/10 hover:bg-white/5'
+                      : 'text-white border-white/10 hover:bg-white/5'
                 }`}
                 onClick={() => setMenuOpen(false)}
               >
@@ -250,14 +268,20 @@ export default function FuteurHeader() {
             {/* Mobile Download App Button */}
             <div className="flex flex-col space-y-4 pt-4">
               <div onClick={() => setMenuOpen(false)}>
-                <QRCodeModal 
-                  buttonText="Download the App" 
-                  buttonClassName={`rounded-lg py-5 text-xl font-bold w-full transition-colors ${
-                    isWhiteHeader || isTransparentHeader
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
-                      : 'bg-white text-black hover:bg-gray-100'
-                  }`}
-                />
+                <div style={{
+                  '--custom-mobile-bg-color': isWhiteHeader ? '#3B82F6' : isScrolled && useBlackText ? '#07124A' : '#07124A'
+                } as React.CSSProperties}>
+                  <QRCodeModal 
+                    buttonText="Download the App" 
+                    buttonClassName={`rounded-lg py-5 text-xl font-bold w-full transition-colors ${
+                      isWhiteHeader
+                        ? 'text-white hover:opacity-80'
+                        : isTransparentHeader
+                          ? isScrolled && useBlackText ? 'text-white hover:opacity-80' : 'text-white hover:opacity-80'
+                          : 'bg-white text-black hover:bg-gray-100'
+                    } ${isWhiteHeader || isTransparentHeader ? '[background-color:var(--custom-mobile-bg-color)]' : ''}`}
+                  />
+                </div>
               </div>
             </div>
           </div>

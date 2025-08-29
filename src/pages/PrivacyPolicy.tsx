@@ -125,7 +125,7 @@ const PrivacyPolicy = () => {
           ))}
         </div>
       </main>
-      <Footer />
+
     </motion.div>
   );
 };
