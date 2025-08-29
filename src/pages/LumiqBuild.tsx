@@ -257,10 +257,10 @@ const LumiqBuild = () => {
       {/* Navigation is now provided by the RevolutHeader component */}
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-6 relative overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
         {/* Background image with overlay - using HeroBackground component for better loading */}
         <HeroBackground imagePath="/9.jpg" overlayOpacity={5} showNoise={true} />
-        <div className="max-w-7xl mx-auto relative text-center">
+        <div className="max-w-7xl mx-auto relative text-center px-6">
          
           <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
             <span className="text-white">
@@ -268,17 +268,10 @@ const LumiqBuild = () => {
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-5xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/70 mb-12 max-w-5xl mx-auto leading-relaxed pb-60">
             The world's first <strong className="text-white">AI-powered business credit builder</strong> that automatically discovers, 
             scores, and builds relationships with vendors that actually report to credit bureaus.
           </p>
-
-          <div className="mb-16">
-            <Badge className="bg-black/30 backdrop-blur-sm text-white border border-white/10 hover:border-white/30 px-8 py-5 text-lg mb-60">
-              <Crown className="mr-2 h-6 w-6" />
-              Exclusively for FUTEURCREDX Members
-            </Badge>
-          </div>
 
           {/* Hero visual placeholder */}
           <div className="relative mx-auto max-w-4xl ">

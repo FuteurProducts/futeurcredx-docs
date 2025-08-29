@@ -16,7 +16,7 @@ export default function Index() {
     <TooltipProvider>
       <div className="min-h-screen text-white">
         {/* Hero Section */}
-        <section className="relative -mt-20 pt-44 pb-16 px-6">
+        <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
           {/* Background image */}
           <div className="absolute inset-0 -z-10">
             <img 
@@ -26,7 +26,7 @@ export default function Index() {
             />
             <div className="absolute inset-0 bg-black/10"></div> {/* Overlay for text readability */}
           </div>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto px-6">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-8">
               <Orbit className="h-4 w-4 text-white" />

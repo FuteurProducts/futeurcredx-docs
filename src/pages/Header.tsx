@@ -68,7 +68,7 @@ export default function FuteurHeader() {
           : isWhiteHeader 
             ? 'bg-white/80 backdrop-blur-sm border-b border-gray-200'
             : isTransparentHeader
-              ? useBlackText ? 'bg-transparent' : 'bg-transparent'
+              ? 'bg-transparent border-b-0'
               : 'bg-transparent'
       }`}>
         <header className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">

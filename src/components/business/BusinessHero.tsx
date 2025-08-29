@@ -35,32 +35,32 @@ export default function Component() {
     };
   }, []);
   return (
-    <div className="min-h-[calc(100vh-64px)] md:min-h-screen relative overflow-hidden">
+    <div className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
       {/* Background image - using HeroBackground component for better loading */}
       <HeroBackground imagePath="/45.jpg" overlayOpacity={20} showNoise={true} />
 
-      <div className="relative z-10 container mx-auto px-4 md:px-6 flex items-center justify-center min-h-[calc(100vh-64px)] md:min-h-screen py-12 md:py-0">
+      <div className="relative z-10 container mx-auto px-2 md:px-6 w-full">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center max-w-7xl mx-auto">
           {/* Left content */}
           <div className="space-y-8 lg:w-1/2 w-full">
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight tracking-tight pt-4 md:pt-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight tracking-tight pt-4 md:pt-4 pl-5">
                 THIS ISN'T JUST YOUR CREDIT SCORE.
                 <br />
                 IT'S YOUR LEGACY SCORE.
               </h1>
-              <p className="text-lg md:text-xl text-gray-300 max-w-lg leading-relaxed">
-                <span className="font-semibold text-blue-500">Futercred™</span> is your AI-powered business credit app
+              <p className="text-lg md:text-xl text-gray-300 max-w-lg leading-relaxed pl-5">
+                <span className="font-semibold text-white">FUTERCREDX™</span> is your AI-powered business credit app
                 with the revolutionary <span className="font-semibold text-black-400">LUMIQ AI™</span> journey engine— FSR
                 scoring, trade payment health, vendor syncing, and PG-free tools in one cosmic dashboard.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 ">
               <a 
                 href="https://app.futeur.ai/signin"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/80 backdrop-blur-sm text-black hover:bg-white px-8 py-3 text-lg font-medium rounded-full transition-colors duration-200 cursor-pointer text-center"
+                className="border border-white/60 text-white hover:bg-white hover:text-orange-500 px-8 py-3 text-lg font-medium rounded-full bg-white/10 backdrop-blur-sm transition-colors duration-200 cursor-pointer text-center text-crisp"
               >
                 Check My Business Credit
               </a>
@@ -74,7 +74,7 @@ export default function Component() {
           </div>
 
           {/* Right content - Phone mockup */}
-          <div className="flex justify-center lg:w-1/2 w-full mt-4 lg:mt-16">
+          <div className="flex justify-center lg:w-1/2 w-full mt-4 lg:mt-16 pl-40">
             <div className="relative">
               {/* Phone frame */}
               <div className="w-80 h-[600px] bg-gradient-to-b from-gray-900/90 to-black/90 rounded-[3rem] p-2 shadow-2xl border border-white/20 backdrop-blur-sm">

@@ -140,11 +140,11 @@ const CreditJourney = () => {
   return (
     <div className="min-h-screen bg-[#0E0E10] text-white">
       {/* Hero Section */}
-      <section className="pt-16 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6 relative overflow-hidden bg-black">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
         {/* Background image with overlay - using HeroBackground component for better loading */}
         <HeroBackground imagePath="/46.jpg" overlayOpacity={30} showNoise={true} />
 
-        <div className="max-w-7xl mx-auto relative text-center">
+        <div className="max-w-7xl mx-auto relative text-center px-4 sm:px-6">
           <div className="inline-flex items-center gap-2 sm:gap-3 bg-white/5 px-3 sm:px-6 py-2 sm:py-3 rounded-full mb-6 sm:mb-8 border border-white/10">
             <Orbit className="h-4 w-4 sm:h-5 sm:w-5 text-white animate-spin" />
             <span className="font-medium text-white text-xs sm:text-sm">LUMIQ AI™ CREDIT JOURNEY DEMO</span>

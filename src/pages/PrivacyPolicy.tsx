@@ -98,7 +98,7 @@ const PrivacyPolicy = () => {
       animate="visible"
       variants={containerVariants}
     >
-      <FuteurHeader />
+      
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <motion.div className="text-center mb-12" variants={itemVariants}>
           <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Terms & Policies</p>
@@ -131,3 +131,4 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
+
