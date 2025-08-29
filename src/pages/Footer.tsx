@@ -102,7 +102,7 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Company</h4>
             <div className="space-y-3">
-              <a href="https://www.futeur.ai/about" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <a href={getCrossDomainUrl("/about")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 About Us
               </a>
               <a href={getCrossDomainUrl("/contact-us")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">

@@ -11,6 +11,7 @@ import MobileApp from './MobileApp';
 import App from './App';
 import FAQ from './FAQ';
 import FuteurCredPlus from './FuteurCredPlus';
+import About from './About';
 import NotFound from './NotFound';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
@@ -55,6 +56,7 @@ const MainLayout = () => {
           <Route path="/credit-journey" element={<CreditJourney />} />
           <Route path="/app" element={<App />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/about" element={<About />} />
           <Route path="/futeurcred-plus" element={<FuteurCredPlus />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
