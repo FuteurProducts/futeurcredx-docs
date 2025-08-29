@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import ImagePreloader from "./components/ImagePreloader";
 import Index from "./pages/Index";
 import Business from "./pages/Business";
 import Enterprise from "./pages/Enterprise";
@@ -113,6 +114,7 @@ const AppRouter = () => {
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <ImagePreloader />
         <Toaster />
         <Sonner />
         <BrowserRouter>
