@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
-import FuteurHeader from './Header';
 import Footer from './Footer';
 import { Briefcase, Scale, Megaphone, User, MapPin } from 'lucide-react';
 
@@ -45,7 +44,6 @@ const ContactUs = () => {
 
   return (
     <div className="bg-white text-gray-800 font-sans">
-      <FuteurHeader />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Background Image */}

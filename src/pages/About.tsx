@@ -26,7 +26,7 @@ export default function About() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Background Image */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -60,15 +60,15 @@ export default function About() {
       </section>
 
       {/* Why It Matters Section */}
-      <section className="py-20 md:py-40 px-6 bg-white animate-fade-in-up opacity-0 animation-delay-800">
+      <section className="py-20 md:py-40 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Content */}
             <div className="space-y-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight animate-slide-in-left">
                 Why It Matters
               </h2>
-              <p className="text-lg text-black/70 leading-relaxed">
+              <p className="text-lg text-black/70 leading-relaxed animate-fade-in-words">
                 The old ways of building business credit are slow, opaque, and outdated. You shouldn't need to sacrifice control or resort to personal guarantees to grow your company's financial backbone. So, FuteurCredX flipped the script:
               </p>
               
@@ -115,7 +115,7 @@ export default function About() {
       </section>
 
       {/* Our Secret Sauce Section */}
-      <section className="py-20 md:py-40 px-6 bg-white animate-fade-in-up opacity-0 animation-delay-1000">
+      <section className="py-20 md:py-40 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Column - Image */}
@@ -129,16 +129,16 @@ export default function About() {
 
             {/* Right Column - Content */}
             <div className="space-y-6 lg:space-y-8 order-1 lg:order-2">
-              <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight animate-slide-in-right">
                 Our Secret Sauce
               </h2>
-              <p className="text-lg text-black/70 leading-relaxed">
+              <p className="text-lg text-black/70 leading-relaxed animate-fade-in-words">
                 Everything you see, every digital pulse, is powered by:
               </p>
               
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-xl font-bold text-black mb-2">
+                  <h3 className="text-xl font-bold text-black mb-2 text-shimmer">
                     LUMIQ™
                   </h3>
                   <p className="text-base text-black/70 leading-relaxed mb-4">
@@ -170,15 +170,15 @@ export default function About() {
       </section>
 
       {/* Built for Growth-Driven Businesses Section */}
-      <section className="py-20 md:py-40 px-6 bg-white animate-fade-in-up opacity-0 animation-delay-1200">
+      <section className="py-20 md:py-40 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Content */}
             <div className="space-y-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight animate-slide-in-left">
                 Built for Growth-Driven Businesses
               </h2>
-              <p className="text-lg text-black/70 leading-relaxed">
+              <p className="text-lg text-black/70 leading-relaxed animate-fade-in-words">
                 Whether you're scaling from zero or managing multiple business lines
               </p>
               
@@ -255,9 +255,9 @@ export default function About() {
       {/* Additional Content Sections */}
     
       {/* Our Promise Section */}
-      <section className="py-16 lg:py-20 px-6 bg-gray-50 animate-fade-in-up opacity-0 animation-delay-1400">
+      <section className="py-16 lg:py-20 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-8 text-glow">
             Our Promise
           </h2>
           <p className="text-xl text-black/70 leading-relaxed mb-8">
@@ -281,9 +281,9 @@ export default function About() {
       </section>
 
       {/* Join the New Credit Order */}
-      <section className="py-16 lg:py-20 px-6 bg-white animate-fade-in-up opacity-0 animation-delay-1600">
+      <section className="py-16 lg:py-20 px-6 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 text-shimmer">
             Join the New Credit Order
           </h2>
           <p className="text-xl text-black/70 mb-8">

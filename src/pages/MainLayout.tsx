@@ -29,7 +29,7 @@ const MainLayout = () => {
   return (
     <>
       {showHeader && <FuteurHeader />}
-      <div className={showHeader ? 'pt-16' : ''}>
+      <div>
         <Routes>
           {/* Protected Routes */}
           <Route path="/dashboard" element={
