@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     proxy: {
       '/api': {
-        target: 'https://staging.futeur.app',
+        target: 'https://futeur.app',
         changeOrigin: true,
         secure: true,
         configure: (proxy, _options) => {

@@ -1,6 +1,7 @@
 import { SignIn } from "@clerk/clerk-react"
 
 export default function Page() {
+  console.log('Login page rendered');
   return (
     <>
       <style>{`

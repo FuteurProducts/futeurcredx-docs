@@ -1,25 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-
-interface User {
-  id: string
-  email: string
-  name: string
-  customerId: string
-  plan: 'free' | 'starter' | 'pro' | 'enterprise'
-  apiCallsUsed: number
-  apiCallsLimit: number
-  createdAt: string
-}
-
-interface ApiKey {
-  id: string
-  name: string
-  key: string
-  lastUsed?: string
-  callsUsed: number
-  isActive: boolean
-  createdAt: string
-}
+import authService, { User, AuthError } from '../services/authService'
+import dashboardService, { ApiKey, CreateApiKeyRequest } from '../services/dashboardService'
 
 interface AuthContextType {
   user: User | null
@@ -30,9 +11,11 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<void>
   logout: () => void
   refreshUser: () => Promise<void>
-  generateApiKey: (name: string) => Promise<ApiKey>
+  generateApiKey: (name: string, config?: Partial<CreateApiKeyRequest>) => Promise<ApiKey>
   revokeApiKey: (keyId: string) => Promise<void>
   refreshApiKeys: () => Promise<void>
+  error: string | null
+  clearError: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -53,16 +36,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const isAuthenticated = !!user
 
-  // API base URL - replace with your actual backend URL
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.futeurcredx.com'
-
   useEffect(() => {
     // Check if user is logged in on app start
-    const token = localStorage.getItem('authToken')
-    if (token) {
+    if (authService.isAuthenticated()) {
       refreshUser()
     } else {
       setIsLoading(false)
@@ -71,168 +51,119 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      // MOCK LOGIN FOR TESTING - Replace with real API call later
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate network delay
+      setError(null)
+      setIsLoading(true)
       
-      // Check if user exists in localStorage
-      const users = JSON.parse(localStorage.getItem('mockUsers') || '{}')
-      const user = users[email]
-      
-      if (!user || user.password !== password) {
-        throw new Error('Invalid email or password')
-      }
-      
-      // Generate mock token
-      const token = `mock_token_${Date.now()}`
-      localStorage.setItem('authToken', token)
-      localStorage.setItem('currentUserEmail', email) // Store current user email
-      setUser(user)
+      const authResponse = await authService.login({ email, password })
+      setUser(authResponse.user)
       await refreshApiKeys()
-    } catch (error) {
-      console.error('Login error:', error)
-      throw error
-    }
-  }
-
-  const register = async (name: string, email: string, password: string) => {
-    try {
-      // MOCK REGISTRATION FOR TESTING - Replace with real API call later
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate network delay
-      
-      // Check if user already exists
-      const users = JSON.parse(localStorage.getItem('mockUsers') || '{}')
-      if (users[email]) {
-        throw new Error('User already exists with this email')
-      }
-      
-      // Create new mock user
-      const newUser = {
-        id: `user_${Date.now()}`,
-        email,
-        name,
-        password, // In real app, this would be hashed
-        customerId: `cust_${Date.now()}`,
-        plan: 'free' as const,
-        apiCallsUsed: 0,
-        apiCallsLimit: 1000,
-        createdAt: new Date().toISOString()
-      }
-      
-      // Save to localStorage
-      users[email] = newUser
-      localStorage.setItem('mockUsers', JSON.stringify(users))
-      
-      // Generate mock token
-      const token = `mock_token_${Date.now()}`
-      localStorage.setItem('authToken', token)
-      localStorage.setItem('currentUserEmail', email) // Store current user email
-      setUser(newUser)
-      await refreshApiKeys()
-    } catch (error) {
-      console.error('Registration error:', error)
-      throw error
-    }
-  }
-
-  const logout = () => {
-    localStorage.removeItem('authToken')
-    localStorage.removeItem('currentUserEmail')
-    setUser(null)
-    setApiKeys([])
-  }
-
-  const refreshUser = async () => {
-    try {
-      const token = localStorage.getItem('authToken')
-      if (!token || !token.startsWith('mock_token_')) {
-        setIsLoading(false)
-        return
-      }
-
-      // MOCK USER REFRESH FOR TESTING
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      // Get user from localStorage based on token
-      const users = JSON.parse(localStorage.getItem('mockUsers') || '{}')
-      const userEmail = localStorage.getItem('currentUserEmail')
-      
-      if (!userEmail || !users[userEmail]) {
-        localStorage.removeItem('authToken')
-        localStorage.removeItem('currentUserEmail')
-        setUser(null)
-        setIsLoading(false)
-        return
-      }
-
-      setUser(users[userEmail])
-      await refreshApiKeys()
-    } catch (error) {
-      console.error('Refresh user error:', error)
-      localStorage.removeItem('authToken')
-      localStorage.removeItem('currentUserEmail')
-      setUser(null)
+    } catch (error: any) {
+      const authError = error as AuthError
+      setError(authError.message)
+      console.error('Login error:', authError)
+      throw authError
     } finally {
       setIsLoading(false)
     }
   }
 
-  const generateApiKey = async (name: string): Promise<ApiKey> => {
+  const register = async (name: string, email: string, password: string) => {
     try {
-      // MOCK API KEY GENERATION FOR TESTING
-      await new Promise(resolve => setTimeout(resolve, 500))
+      setError(null)
+      setIsLoading(true)
       
-      const newApiKey: ApiKey = {
-        id: `key_${Date.now()}`,
-        name,
-        key: `sk_test_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`,
-        callsUsed: 0,
-        isActive: true,
-        createdAt: new Date().toISOString()
+      const authResponse = await authService.register({ name, email, password })
+      setUser(authResponse.user)
+      await refreshApiKeys()
+    } catch (error: any) {
+      const authError = error as AuthError
+      setError(authError.message)
+      console.error('Registration error:', authError)
+      throw authError
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const logout = () => {
+    authService.logout()
+    setUser(null)
+    setApiKeys([])
+    setError(null)
+  }
+
+  const refreshUser = async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      
+      const user = await authService.refreshUser()
+      if (user) {
+        setUser(user)
+        await refreshApiKeys()
+      } else {
+        setUser(null)
+        setApiKeys([])
       }
+    } catch (error: any) {
+      const authError = error as AuthError
+      setError(authError.message)
+      console.error('Refresh user error:', authError)
+      setUser(null)
+      setApiKeys([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const generateApiKey = async (name: string, config?: Partial<CreateApiKeyRequest>): Promise<ApiKey> => {
+    try {
+      setError(null)
       
-      // Save to localStorage
-      const currentKeys = JSON.parse(localStorage.getItem('mockApiKeys') || '[]')
-      currentKeys.push(newApiKey)
-      localStorage.setItem('mockApiKeys', JSON.stringify(currentKeys))
+      const newApiKey = await dashboardService.createApiKey({
+        name,
+        ...config
+      })
       
       setApiKeys(prev => [...prev, newApiKey])
       return newApiKey
-    } catch (error) {
-      console.error('Generate API key error:', error)
-      throw error
+    } catch (error: any) {
+      const apiError = error as any
+      setError(apiError.message)
+      console.error('Generate API key error:', apiError)
+      throw apiError
     }
   }
 
   const revokeApiKey = async (keyId: string) => {
     try {
-      // MOCK API KEY REVOCATION FOR TESTING
-      await new Promise(resolve => setTimeout(resolve, 300))
+      setError(null)
       
-      // Remove from localStorage
-      const currentKeys = JSON.parse(localStorage.getItem('mockApiKeys') || '[]')
-      const updatedKeys = currentKeys.filter((key: ApiKey) => key.id !== keyId)
-      localStorage.setItem('mockApiKeys', JSON.stringify(updatedKeys))
-      
+      await dashboardService.revokeApiKey(keyId)
       setApiKeys(prev => prev.filter(key => key.id !== keyId))
-    } catch (error) {
-      console.error('Revoke API key error:', error)
-      throw error
+    } catch (error: any) {
+      const apiError = error as any
+      setError(apiError.message)
+      console.error('Revoke API key error:', apiError)
+      throw apiError
     }
   }
 
   const refreshApiKeys = async () => {
     try {
-      const token = localStorage.getItem('authToken')
-      if (!token) return
+      if (!authService.isAuthenticated()) return
 
-      // MOCK API KEYS REFRESH FOR TESTING
-      await new Promise(resolve => setTimeout(resolve, 300))
-      
-      const keys = JSON.parse(localStorage.getItem('mockApiKeys') || '[]')
+      const keys = await dashboardService.getApiKeys()
       setApiKeys(keys)
-    } catch (error) {
-      console.error('Refresh API keys error:', error)
+    } catch (error: any) {
+      const apiError = error as any
+      setError(apiError.message)
+      console.error('Refresh API keys error:', apiError)
     }
+  }
+
+  const clearError = () => {
+    setError(null)
   }
 
   const value: AuthContextType = {
@@ -247,6 +178,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     generateApiKey,
     revokeApiKey,
     refreshApiKeys,
+    error,
+    clearError,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -1,6 +1,7 @@
 import { SignUp } from '@clerk/clerk-react'
 
 const Register: React.FC = () => {
+  console.log('Register page rendered');
   return (
     <>
       <style>{`
