@@ -50,6 +50,22 @@ console.log('Localhost:', isLocalhost);
 // For localhost development, we'll use a different approach
 const shouldUseClerk = !isLocalhost || window.location.hostname.includes('futeur');
 
+// Create a development-friendly Clerk configuration
+const clerkConfig = {
+  publishableKey: PUBLISHABLE_KEY,
+  // For localhost, don't use custom frontendApi to avoid domain issues
+  ...(isLocalhost ? {} : { frontendApi: "https://clerk.app.futeur.ai" }),
+  appearance: {
+    baseTheme: undefined,
+  },
+  signInUrl: "/login",
+  signUpUrl: "/register", 
+  afterSignInUrl: "/dashboard",
+  afterSignUpUrl: "/business-signup"
+};
+
+console.log('Clerk config:', clerkConfig);
+
 const queryClient = new QueryClient();
 
 const AppRouter = () => {
@@ -71,14 +87,7 @@ const AppRouter = () => {
     // If we're on docs subdomain, default render the Docs component
     if (isDomainDocs) {
       return (
-        <ClerkProvider 
-          publishableKey={PUBLISHABLE_KEY}
-          frontendApi={isLocalhost ? undefined : "https://clerk.app.futeur.ai"}
-          signInUrl="/login"
-          signUpUrl="/register"
-          afterSignInUrl="/dashboard"
-          afterSignUpUrl="/business-signup"
-        >
+        <ClerkProvider {...clerkConfig}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
               <TooltipProvider>
@@ -98,14 +107,7 @@ const AppRouter = () => {
     // If we're on institutions subdomain, render the Enterprise component
     if (isDomainInstitutions) {
       return (
-        <ClerkProvider 
-          publishableKey={PUBLISHABLE_KEY}
-          frontendApi={isLocalhost ? undefined : "https://clerk.app.futeur.ai"}
-          signInUrl="/login"
-          signUpUrl="/register"
-          afterSignInUrl="/dashboard"
-          afterSignUpUrl="/business-signup"
-        >
+        <ClerkProvider {...clerkConfig}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
               <TooltipProvider>
@@ -129,14 +131,7 @@ const AppRouter = () => {
     // If we're on platform subdomain, render the Fintech component
     if (isDomainPlatform) {
       return (
-        <ClerkProvider 
-          publishableKey={PUBLISHABLE_KEY}
-          frontendApi={isLocalhost ? undefined : "https://clerk.app.futeur.ai"}
-          signInUrl="/login"
-          signUpUrl="/register"
-          afterSignInUrl="/dashboard"
-          afterSignUpUrl="/business-signup"
-        >
+        <ClerkProvider {...clerkConfig}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
               <TooltipProvider>
@@ -159,17 +154,7 @@ const AppRouter = () => {
   }
 
   return (
-  <ClerkProvider 
-    publishableKey={PUBLISHABLE_KEY}
-    frontendApi={isLocalhost ? undefined : "https://clerk.app.futeur.ai"}
-    appearance={{
-      baseTheme: undefined,
-    }}
-    signInUrl="/login"
-    signUpUrl="/register"
-    afterSignInUrl="/dashboard"
-    afterSignUpUrl="/business-signup"
-  >
+  <ClerkProvider {...clerkConfig}>
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>

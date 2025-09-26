@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clerk Test</title>
+    <script src="https://unpkg.com/@clerk/clerk-js@latest/dist/clerk.browser.js"></script>
+</head>
+<body>
+    <div id="clerk-test">
+        <h1>Testing Clerk</h1>
+        <div id="sign-in"></div>
+    </div>
+    
+    <script>
+        const publishableKey = 'pk_live_Y2xlcmsuYXBwLmZ1dGV1ci5haSQ';
+        
+        console.log('Testing Clerk with key:', publishableKey);
+        
+        window.Clerk.load({
+            publishableKey: publishableKey
+        }).then(() => {
+            console.log('Clerk loaded successfully');
+            window.Clerk.mountSignIn(document.getElementById('sign-in'));
+        }).catch((error) => {
+            console.error('Clerk failed to load:', error);
+            document.getElementById('sign-in').innerHTML = '<p style="color: red;">Error: ' + error.message + '</p>';
+        });
+    </script>
+</body>
+</html>
