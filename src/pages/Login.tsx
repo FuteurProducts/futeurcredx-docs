@@ -56,24 +56,25 @@ export default function Page() {
             <div className="bg-black border border-white rounded-lg p-4 sm:p-6 md:p-8">
               <div className="text-center mb-6">
                 <h2 className="text-white text-lg mb-4">Sign In</h2>
-                <p className="text-gray-400 text-sm mb-6">
-                  To test authentication, please add localhost:8080 to your Clerk Dashboard domains.
-                </p>
-                <div className="bg-yellow-900/20 border border-yellow-800 text-yellow-400 rounded-md p-4 mb-4">
+                <div className="bg-blue-900/20 border border-blue-800 text-blue-400 rounded-md p-4 mb-4">
                   <p className="text-sm">
-                    <strong>Setup Required:</strong><br/>
-                    1. Go to <a href="https://clerk.app.futeur.ai" target="_blank" className="underline">Clerk Dashboard</a><br/>
-                    2. Settings → Domains<br/>
-                    3. Add: localhost:8080
+                    <strong>🔧 Setup Required:</strong><br/>
+                    Your Clerk key is configured for production domains only.<br/>
+                    To test locally, you need to add localhost to your Clerk Dashboard.
                   </p>
                 </div>
-                <a 
-                  href="https://clerk.app.futeur.ai" 
-                  target="_blank"
-                  className="inline-block bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
-                >
-                  Open Clerk Dashboard
-                </a>
+                <div className="space-y-3">
+                  <a 
+                    href="https://clerk.app.futeur.ai" 
+                    target="_blank"
+                    className="block bg-white text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                  >
+                    Open Clerk Dashboard
+                  </a>
+                  <p className="text-xs text-gray-400">
+                    Go to Settings → Domains → Add: localhost:8080
+                  </p>
+                </div>
               </div>
             </div>
 

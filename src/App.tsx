@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster as HotToaster } from "react-hot-toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -25,7 +26,9 @@ import DocsLayout from "./pages/Documentation/DocsLayout";
 import Footer from "./pages/Footer"
 import CleanFooter from "@/pages/Documentation/CleanFooter"
 import Login from "./pages/Login";
+import AdvancedLogin from "./pages/AdvancedLogin";
 import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
 import MainLayout from './pages/MainLayout';
 import BusinessSignup from './pages/BusinessSignup';
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
@@ -50,11 +53,9 @@ console.log('Localhost:', isLocalhost);
 // For localhost development, we'll use a different approach
 const shouldUseClerk = !isLocalhost || window.location.hostname.includes('futeur');
 
-// Create a development-friendly Clerk configuration
+// Create a basic Clerk configuration - no custom domains for now
 const clerkConfig = {
   publishableKey: PUBLISHABLE_KEY,
-  // For localhost, don't use custom frontendApi to avoid domain issues
-  ...(isLocalhost ? {} : { frontendApi: "https://clerk.app.futeur.ai" }),
   appearance: {
     baseTheme: undefined,
   },
@@ -161,12 +162,15 @@ const AppRouter = () => {
           <ImagePreloader />
           <Toaster />
           <Sonner />
+          <HotToaster position="top-right" />
           <BrowserRouter>
             <ScrollToTop />
             <Routes>
               {/* Authentication Routes - No Header/Footer */}
               <Route path="/login" element={<Login />} />
+              <Route path="/advanced-login" element={<AdvancedLogin />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<Dashboard />} />
 
               {/* Docs routes with custom header */}
                           <Route path="/docs/*" element={<DocsLayout />} />
