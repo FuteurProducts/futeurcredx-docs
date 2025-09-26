@@ -53,7 +53,7 @@ console.log('Localhost:', isLocalhost);
 // For localhost development, we'll use a different approach
 const shouldUseClerk = !isLocalhost || window.location.hostname.includes('futeur');
 
-// Create a basic Clerk configuration - no custom domains for now
+// Create a basic Clerk configuration
 const clerkConfig = {
   publishableKey: PUBLISHABLE_KEY,
   appearance: {

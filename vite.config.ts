@@ -38,4 +38,28 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      external: (id) => {
+        // Don't externalize Clerk modules
+        if (id.includes('@clerk')) {
+          return false;
+        }
+        return false;
+      },
+      output: {
+        manualChunks: {
+          'clerk': ['@clerk/clerk-react'],
+          'vendor': ['react', 'react-dom'],
+        },
+      },
+    },
+    commonjsOptions: {
+      include: [/node_modules/],
+    },
+    chunkSizeWarningLimit: 1000,
+  },
+  optimizeDeps: {
+    include: ['@clerk/clerk-react'],
+  },
 }));
