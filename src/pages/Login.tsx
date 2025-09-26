@@ -56,8 +56,11 @@ export default function Page() {
           {/* Login form container */}
           <div className="bg-black border border-white rounded-lg p-4 sm:p-6 md:p-8">
             <SignIn
-              redirectUrl="/dashboard"
+              fallbackRedirectUrl="/dashboard"
               signUpUrl="/register"
+              routing="path"
+              oauthFlow="auto"
+              transferable={true}
               appearance={{
                 elements: {
                   rootBox: "w-full max-w-full",

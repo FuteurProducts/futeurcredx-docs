@@ -56,8 +56,11 @@ const Register: React.FC = () => {
             {/* Signup form container */}
             <div className="bg-black border border-white rounded-lg p-4 sm:p-6 md:p-8">
             <SignUp 
-              afterSignUpUrl="/business-signup"
-              afterSignInUrl="/dashboard"
+              fallbackRedirectUrl="/business-signup"
+              signInUrl="/login"
+              routing="path"
+              oauthFlow="auto"
+              transferable={true}
               appearance={{
                 elements: {
                   rootBox: "w-full max-w-full",

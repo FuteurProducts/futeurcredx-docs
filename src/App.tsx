@@ -47,6 +47,9 @@ const isLocalhost = window.location.hostname === 'localhost' || window.location.
 console.log('Development mode:', isDevelopment);
 console.log('Localhost:', isLocalhost);
 
+// For localhost development, we'll use a different approach
+const shouldUseClerk = !isLocalhost || window.location.hostname.includes('futeur');
+
 const queryClient = new QueryClient();
 
 const AppRouter = () => {
