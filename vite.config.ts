@@ -37,30 +37,5 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    dedupe: ['@clerk/clerk-react'],
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes('@clerk')) {
-            return 'clerk';
-          }
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        },
-      },
-    },
-    commonjsOptions: {
-      include: [/node_modules/],
-      transformMixedEsModules: true,
-    },
-    chunkSizeWarningLimit: 1000,
-    target: 'es2015',
-    minify: 'esbuild',
-  },
-  optimizeDeps: {
-    include: ['@clerk/clerk-react'],
   },
 }));

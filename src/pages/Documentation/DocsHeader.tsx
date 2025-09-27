@@ -1,7 +1,7 @@
 "use client"
 
 import { getCrossDomainUrl } from "@/utils/domainUtils";
-import { useAuth } from "../../contexts/AuthContext";
+import { useUser } from "@clerk/clerk-react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Search, Sparkles, ChevronRight, Sun, Moon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -14,7 +14,7 @@ type DocsHeaderProps = {
 
 export default function DocsHeader({ searchQuery, setSearchQuery }: DocsHeaderProps) {
   const { theme, setTheme } = useTheme();
-  const { isSignedIn } = useAuth();
+  const { isSignedIn } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const searchInputRef = useRef<HTMLInputElement>(null);

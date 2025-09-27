@@ -19,7 +19,7 @@ import {
   CreditCard,
   Rocket
 } from 'lucide-react'
-import { useAuth } from '../../../contexts/AuthContext'
+import { useUser, SignOutButton, useAuth } from '@clerk/clerk-react'
 import ApiTesting from './ApiTesting'
 import MetricCards from '../../../components/dashboard/MetricCards';
 import DashboardTabs from '../../../components/dashboard/DashboardTabs';
@@ -36,7 +36,8 @@ interface ApiStats {
 }
 
 const Dashboard: React.FC = () => {
-  const { user, signOut } = useAuth()
+  const { user } = useUser()
+  const { getToken } = useAuth()
   
   // State management
   const [apiKeys, setApiKeys] = useState([])
@@ -711,12 +712,11 @@ Your backend needs to either:
               <div className="hidden md:block text-sm text-slate-600 truncate max-w-48">
                 Welcome, {user?.firstName || user?.emailAddresses?.[0]?.emailAddress}
               </div>
-              <button 
-                onClick={signOut}
-                className="px-3 sm:px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors text-sm font-medium text-blue-700"
-              >
-                Sign Out
-              </button>
+              <SignOutButton>
+                <button className="px-3 sm:px-4 py-2 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors text-sm font-medium text-blue-700">
+                  Sign Out
+                </button>
+              </SignOutButton>
             </div>
           </div>
         </div>

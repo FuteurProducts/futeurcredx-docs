@@ -1,103 +1,122 @@
-import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { SignIn } from "@clerk/clerk-react"
 
-const Login: React.FC = () => {
-  const { signIn, isLoading } = useAuth();
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!formData.email || !formData.password) {
-      toast.error('Please fill in all fields');
-      return;
-    }
-
-    const result = await signIn(formData.email, formData.password);
-    
-    if (result.success) {
-      toast.success('Signed in successfully!');
-      navigate('/dashboard');
-    } else {
-      toast.error(result.error || 'Sign in failed');
-    }
-  };
-
+export default function Page() {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8 p-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-white mb-2">Sign In</h2>
-          <p className="text-gray-400">Welcome back! Please enter your details.</p>
-        </div>
-        
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your email"
-            />
-          </div>
-          
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
-              Password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-600 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-            />
-          </div>
-          
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+    <>
+      <style>{`
+        @media (max-width: 640px) {
+          .cl-formFieldInput {
+            font-size: 14px !important;
+            padding: 8px 12px !important;
+          }
+          .cl-formButtonPrimary {
+            font-size: 14px !important;
+            padding: 8px 12px !important;
+          }
+          .cl-headerTitle {
+            font-size: 16px !important;
+            margin-bottom: 12px !important;
+          }
+          .cl-footerActionLink {
+            font-size: 14px !important;
+          }
+          .cl-formFieldLabel {
+            font-size: 12px !important;
+            margin-bottom: 4px !important;
+          }
+          .cl-main {
+            padding: 0 !important;
+          }
+          .cl-card {
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+        }
+      `}</style>
+      <div className="min-h-screen bg-black flex flex-col">
+        {/* Back to website button */}
+        <div className="p-4 sm:p-6">
+          <a
+            href="/"
+            className="text-white text-xs sm:text-sm font-mono hover:text-gray-300 transition-colors"
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-        
-        <div className="text-center">
-          <p className="text-gray-400">
-            Don't have an account?{' '}
-            <Link to="/register" className="text-blue-400 hover:text-blue-300">
-              Sign up
-            </Link>
-          </p>
+            &lt; Back to website
+          </a>
+        </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex items-center justify-center px-4 py-4 min-h-0">
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+          {/* Brand */}
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-white text-lg sm:text-xl md:text-2xl font-normal mb-2">FUTEURCREDX</h1>
+          </div>
+
+          {/* Login form container */}
+          <div className="bg-black border border-white rounded-lg p-4 sm:p-6 md:p-8">
+            <SignIn
+              redirectUrl="/dashboard"
+              signUpUrl="/register"
+              appearance={{
+                elements: {
+                  rootBox: "w-full max-w-full",
+                  card: "bg-transparent shadow-none border-0 p-0 m-0 w-full max-w-full",
+                  headerTitle: "text-white font-normal text-sm sm:text-base md:text-lg mb-3 sm:mb-4 md:mb-6 text-left",
+                  headerSubtitle: "hidden",
+                  socialButtonsBlockButton: "hidden",
+                  socialButtonsBlockButtonText: "hidden",
+                  socialButtonsProviderIcon: "hidden",
+                  socialButtonsBlock: "hidden",
+                  dividerLine: "hidden",
+                  dividerText: "hidden",
+                  formFieldRow: "w-full mb-3 sm:mb-4",
+                  formFieldInput:
+                    "bg-black border border-white text-white placeholder-gray-500 focus:border-white focus:ring-0 rounded-md py-2 sm:py-3 px-3 sm:px-4 transition-all duration-200 text-xs sm:text-sm w-full min-w-0",
+                  formFieldLabel: "text-white font-normal text-xs sm:text-sm mb-1 sm:mb-2",
+                  formButtonPrimary:
+                    "bg-white text-black font-normal hover:bg-gray-100 transition-all duration-200 rounded-md py-2 sm:py-3 px-3 sm:px-4 w-full text-xs sm:text-sm min-w-0",
+                  footerActionLink: "text-white hover:text-gray-300 font-normal transition-colors duration-200 text-xs sm:text-sm",
+                  identityPreviewText: "text-white text-xs sm:text-sm",
+                  formFieldInputShowPasswordButton: "text-gray-400 hover:text-white transition-colors p-1 sm:p-2",
+                  alertError: "bg-red-900/20 border border-red-800 text-red-400 rounded-md p-2 sm:p-3 mb-3 sm:mb-4 text-xs sm:text-sm",
+                  formFieldSuccessText: "text-green-400 text-xs sm:text-sm mt-1 sm:mt-2",
+                  formFieldErrorText: "text-red-400 text-xs sm:text-sm mt-1 sm:mt-2",
+                  otpCodeFieldInput: "bg-black border border-white text-white rounded-md py-2 sm:py-3 px-2 sm:px-4 text-center text-sm sm:text-lg font-mono min-w-0",
+                  footer: "w-full max-w-full mt-4 sm:mt-6 text-center",
+                  footerAction: "w-full max-w-full text-center",
+                  formResendCodeLink: "text-white hover:text-gray-300 font-normal transition-colors text-xs sm:text-sm",
+                  formField: "mb-3 sm:mb-4",
+                  main: "space-y-3 sm:space-y-4 w-full",
+                  formFieldsContainer: "w-full",
+                },
+                variables: {
+                  colorPrimary: "#ffffff",
+                  colorBackground: "#000000",
+                  colorInputBackground: "#000000",
+                  colorInputText: "#ffffff",
+                  colorText: "#ffffff",
+                  colorTextSecondary: "#9ca3af",
+                  borderRadius: "6px",
+                  fontSize: "14px",
+                },
+                layout: {
+                  logoImageUrl: "",
+                  showOptionalFields: false,
+                },
+              }}
+            />
+          </div>
+
+          {/* Footer */}
+          <div className="text-center mt-8">
+            <p className="text-gray-500 text-xs">
+              © 2025 FUTEURCREDX API. All Rights Reserved.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+      </div>
+    </>
+  )
+}
 
-export default Login;

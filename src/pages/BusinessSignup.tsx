@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
+import { useUser, useAuth } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Building2, MapPin, Users, FileText, ArrowRight, CheckCircle } from 'lucide-react'

@@ -1,11 +1,9 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster as HotToaster } from "react-hot-toast";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from './contexts/AuthContext';
 import ScrollToTop from "./components/ScrollToTop";
 import ImagePreloader from "./components/ImagePreloader";
 import Index from "./pages/Index";
@@ -26,13 +24,10 @@ import DocsLayout from "./pages/Documentation/DocsLayout";
 import Footer from "./pages/Footer"
 import CleanFooter from "@/pages/Documentation/CleanFooter"
 import Login from "./pages/Login";
-import AdvancedLogin from "./pages/AdvancedLogin";
 import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
 import MainLayout from './pages/MainLayout';
 import BusinessSignup from './pages/BusinessSignup';
-
-console.log('Using custom authentication system');
+import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
 
 const queryClient = new QueryClient();
 
@@ -55,104 +50,94 @@ const AppRouter = () => {
     // If we're on docs subdomain, default render the Docs component
     if (isDomainDocs) {
       return (
-        <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <QueryClientProvider client={queryClient}>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <ScrollToTop />
-                  <DocsLayout />
-                </BrowserRouter>
-              </TooltipProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-        </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <DocsLayout />
+              </BrowserRouter>
+            </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
       );
     }
     
     // If we're on institutions subdomain, render the Enterprise component
     if (isDomainInstitutions) {
       return (
-        <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <QueryClientProvider client={queryClient}>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <ScrollToTop />
-                  <FuteurHeader />
-                  <div className="pt-16">
-                    <Enterprise />
-                  </div>
-                  <Footer />
-                </BrowserRouter>
-              </TooltipProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-        </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <FuteurHeader />
+                <div className="pt-16">
+                  <Enterprise />
+                </div>
+                <Footer />
+              </BrowserRouter>
+            </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
       );
     }
     
     // If we're on platform subdomain, render the Fintech component
     if (isDomainPlatform) {
       return (
-        <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <QueryClientProvider client={queryClient}>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-                <BrowserRouter>
-                  <ScrollToTop />
-                  <FuteurHeader />
-                  <div className="pt-16">
-                    <Fintech />
-                  </div>
-                  <Footer />
-                </BrowserRouter>
-              </TooltipProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-        </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <FuteurHeader />
+                <div className="pt-16">
+                  <Fintech />
+                </div>
+                <Footer />
+              </BrowserRouter>
+            </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
       );
     }
   }
 
   return (
-  <AuthProvider>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <ImagePreloader />
-          <Toaster />
-          <Sonner />
-          <HotToaster position="top-right" />
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              {/* Authentication Routes - No Header/Footer */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/advanced-login" element={<AdvancedLogin />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <ImagePreloader />
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            {/* Authentication Routes - No Header/Footer */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-              {/* Docs routes with custom header */}
-                          <Route path="/docs/*" element={<DocsLayout />} />
-                                      <Route path="/docs-test" element={<DocsLayout />} />
-              <Route path="/docs-test/*" element={<DocsLayout />} />
-              
-              {/* All other routes with Header/Footer */}
-              <Route path="/*" element={<MainLayout />} />
-            </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
-  </AuthProvider>
+            {/* Docs routes with custom header */}
+                        <Route path="/docs/*" element={<DocsLayout />} />
+                                    <Route path="/docs-test" element={<DocsLayout />} />
+            <Route path="/docs-test/*" element={<DocsLayout />} />
+            
+            {/* All other routes with Header/Footer */}
+            <Route path="/*" element={<MainLayout />} />
+          </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+</ThemeProvider>
   );
 };
 
 export default AppRouter;
+
