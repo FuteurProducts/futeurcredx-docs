@@ -20,10 +20,11 @@ import Dashboard from './Documentation/dashboard/Dashboard';
 import DocsLayout from './Documentation/DocsLayout';
 import BusinessSignup from './BusinessSignup';
 import CleanFooter from '@/pages/Documentation/CleanFooter';
-import { SignedIn } from '@clerk/clerk-react';
+import { useAuth } from '../contexts/AuthContext';
 
 const MainLayout = () => {
   const location = useLocation();
+  const { isSignedIn } = useAuth();
   const showHeader = location.pathname !== '/dashboard' && !location.pathname.startsWith('/docs');
 
   return (
@@ -33,17 +34,31 @@ const MainLayout = () => {
         <Routes>
           {/* Protected Routes */}
           <Route path="/dashboard" element={
-            <SignedIn>
+            isSignedIn ? (
               <div className="bg-white min-h-screen">
                 <Dashboard />
                 <CleanFooter />
               </div>
-            </SignedIn>
+            ) : (
+              <div className="min-h-screen bg-black flex items-center justify-center text-white">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold mb-4">Please sign in to access the dashboard</h2>
+                  <a href="/login" className="text-blue-400 hover:text-blue-300">Go to Login</a>
+                </div>
+              </div>
+            )
           } />
           <Route path="/business-signup" element={
-            <SignedIn>
+            isSignedIn ? (
               <BusinessSignup />
-            </SignedIn>
+            ) : (
+              <div className="min-h-screen bg-black flex items-center justify-center text-white">
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold mb-4">Please sign in to access business signup</h2>
+                  <a href="/login" className="text-blue-400 hover:text-blue-300">Go to Login</a>
+                </div>
+              </div>
+            )
           } />
 
           {/* Public Routes */}

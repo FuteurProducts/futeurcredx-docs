@@ -19,7 +19,7 @@ import {
   CreditCard,
   Rocket
 } from 'lucide-react'
-import { useUser, SignOutButton, useAuth } from '@clerk/clerk-react'
+import { useAuth } from '../../../contexts/AuthContext'
 import ApiTesting from './ApiTesting'
 import MetricCards from '../../../components/dashboard/MetricCards';
 import DashboardTabs from '../../../components/dashboard/DashboardTabs';
@@ -28,8 +28,7 @@ import ApiKeysTab from '../../../components/dashboard/ApiKeysTab';
 import dashboardService, { ApiStats } from '../../../services/dashboardService';
 
 const Dashboard: React.FC = () => {
-  const { user } = useUser()
-  const { getToken } = useAuth()
+  const { user, signOut } = useAuth()
   
   // State management
   const [apiKeys, setApiKeys] = useState([])
@@ -236,11 +235,12 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <SignOutButton>
-                <button className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                  Sign Out
-                </button>
-              </SignOutButton>
+              <button 
+                onClick={signOut}
+                className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Sign Out
+              </button>
             </div>
           </div>
         </div>
