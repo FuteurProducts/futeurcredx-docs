@@ -25,15 +25,9 @@ import MetricCards from '../../../components/dashboard/MetricCards';
 import DashboardTabs from '../../../components/dashboard/DashboardTabs';
 import OverviewTab from '../../../components/dashboard/OverviewTab';
 import ApiKeysTab from '../../../components/dashboard/ApiKeysTab';
+import KeyUsageStats from '../../../components/dashboard/KeyUsageStats';
+import type { ApiStats } from '../../../types';
 
-interface ApiStats {
-  totalCalls: number;
-  monthlyLimit: number;
-  plan: string;
-  thisMonth: number;
-  lastMonth: number;
-  growth: number;
-}
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
@@ -46,7 +40,17 @@ const Dashboard: React.FC = () => {
   const [newKeyName, setNewKeyName] = useState('')
   const [isGeneratingKey, setIsGeneratingKey] = useState(false)
   const [error, setError] = useState('')
-    const [apiStats, setApiStats] = useState<ApiStats>({ totalCalls: 0, monthlyLimit: 10000, plan: 'Free', thisMonth: 0, lastMonth: 0, growth: 0 })
+    const [apiStats, setApiStats] = useState<ApiStats>({ 
+      totalCalls: 0, 
+      monthlyLimit: 10000, 
+      plan: 'Free', 
+      thisMonth: 0, 
+      lastMonth: 0, 
+      growth: 0,
+      keyStats: [],
+      totalCallsThisMonth: 0,
+      totalCallsLastMonth: 0
+    })
   const [isLoadingStats, setIsLoadingStats] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
   const [keyConfig, setKeyConfig] = useState({
@@ -62,6 +66,9 @@ const Dashboard: React.FC = () => {
   const [showTokenDebug, setShowTokenDebug] = useState(false)
   const [tokenInfo, setTokenInfo] = useState<{token: string, preview: string, length: number} | null>(null)
   const [newlyGeneratedKey, setNewlyGeneratedKey] = useState<{id: string, key: string, name: string} | null>(null)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [isDataFresh, setIsDataFresh] = useState(true)
 
   // Get current authentication token for debugging
   const fetchCurrentToken = async () => {
@@ -118,10 +125,20 @@ const Dashboard: React.FC = () => {
         console.log('Raw API Keys from backend:', JSON.stringify(data.apiKeys, null, 2))
         const keys = data.apiKeys || [];
         setApiKeys(keys);
-        const totalCallsFromKeys = keys.reduce((sum, key) => sum + (key.callsUsed || 0), 0);
+        // Calculate individual key stats
+        const keyStats: ApiKeyStats[] = keys.map(key => ({
+          keyId: key.id,
+          keyName: key.name,
+          callsUsed: key.callsUsed || 0,
+          lastUsed: key.lastUsed || null,
+          isActive: key.isActive !== false
+        }));
+        
+        const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
         setApiStats(prevStats => ({
           ...prevStats,
           totalCalls: totalCallsFromKeys,
+          keyStats: keyStats,
         }));
         setError('') // Clear any previous errors
       } else {
@@ -173,55 +190,234 @@ const Dashboard: React.FC = () => {
   }
 
   // Fetch API usage statistics from backend
-  const fetchApiStats = async () => {
-    setIsLoadingStats(true);
+  const fetchApiStats = async (isRefresh = false) => {
+    if (isRefresh) {
+      setIsRefreshing(true);
+    } else {
+      setIsLoadingStats(true);
+    }
     try {
       const token = await getToken();
       if (!token) {
         throw new Error('Authentication token not available.');
       }
 
-      const response = await fetch('/api/v1/api-keys/stats', {
+      // Add timestamp to URL to bypass cache
+      const timestamp = new Date().getTime();
+      const response = await fetch(`/api/v1/api-keys/stats?t=${timestamp}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
         },
+        cache: 'no-store'
       });
 
-      if (!response.ok) {
+      if (!response.ok && response.status !== 304) {
         // Log the error and fall back to default stats
         const errorText = await response.text();
         console.error(`Failed to fetch API stats: ${response.status} ${errorText}`);
         throw new Error(`API error: ${response.status}`);
       }
 
+      // Handle 304 Not Modified - data hasn't changed, use existing stats
+      if (response.status === 304) {
+        console.log('=== API STATS RESPONSE (304) ===');
+        console.log('Timestamp:', new Date().toISOString());
+        console.log('URL:', `/api/v1/api-keys/stats?t=${timestamp}`);
+        console.log('Response Status:', response.status);
+        console.log('Response Headers:', Object.fromEntries(response.headers.entries()));
+        console.log('Data not modified - using existing stats');
+        console.log('Current API Stats:', apiStats);
+        console.log('================================');
+        // Don't update stats, just update the last updated time
+        setLastUpdated(new Date());
+        setIsDataFresh(true);
+        return;
+      }
+
       const data = await response.json();
-      console.log('API Stats Response Data:', JSON.stringify(data, null, 2));
-      // Update stats but preserve totalCalls, which is calculated from the keys list
-      setApiStats(prevStats => ({
-        ...prevStats,
-        monthlyLimit: data.monthlyLimit || prevStats.monthlyLimit,
-        plan: data.plan || prevStats.plan,
-        thisMonth: data.thisMonth || 0,
-        lastMonth: data.lastMonth || 0,
-        growth: data.growth || 0,
+      console.log('=== API STATS RESPONSE (200) ===');
+      console.log('Timestamp:', new Date().toISOString());
+      console.log('URL:', `/api/v1/api-keys/stats?t=${timestamp}`);
+      console.log('Response Status:', response.status);
+      console.log('Response Headers:', Object.fromEntries(response.headers.entries()));
+      console.log('Raw Response Data:', data);
+      console.log('Formatted Response Data:', JSON.stringify(data, null, 2));
+      console.log('================================');
+      
+      // Calculate individual key stats from the current API keys
+      const keyStats: ApiKeyStats[] = apiKeys.map(key => ({
+        keyId: key.id,
+        keyName: key.name,
+        callsUsed: key.callsUsed || 0,
+        lastUsed: key.lastUsed || null,
+        isActive: key.isActive !== false
       }));
+
+      // Calculate total calls across all keys
+      const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
+      
+      // Use API stats data if available, otherwise fall back to key data
+      const totalCallsThisMonth = data.thisMonth || totalCallsFromKeys;
+      const totalCallsLastMonth = data.lastMonth || 0;
+      const growth = totalCallsLastMonth > 0 ? 
+        ((totalCallsThisMonth - totalCallsLastMonth) / totalCallsLastMonth) * 100 : 0;
+
+      console.log('=== DATA SOURCE ANALYSIS ===');
+      console.log('API Response thisMonth:', data.thisMonth);
+      console.log('API Response lastMonth:', data.lastMonth);
+      console.log('API Response monthlyLimit:', data.monthlyLimit);
+      console.log('API Response plan:', data.plan);
+      console.log('Total from individual keys:', totalCallsFromKeys);
+      console.log('Using thisMonth as:', totalCallsThisMonth);
+      console.log('================================');
+
+      console.log('=== CALCULATED STATS ===');
+      console.log('Current API Keys:', apiKeys);
+      console.log('Key Stats:', keyStats);
+      console.log('Total Calls from Keys:', totalCallsFromKeys);
+      console.log('This Month (from API):', totalCallsThisMonth);
+      console.log('Last Month (from API):', totalCallsLastMonth);
+      console.log('Growth %:', growth);
+      console.log('API Keys with callsUsed:', apiKeys.map(key => ({ 
+        id: key.id, 
+        name: key.name, 
+        callsUsed: key.callsUsed,
+        lastUsed: key.lastUsed 
+      })));
+      console.log('========================');
+
+      // If individual keys don't have call data, use the API stats data
+      const finalTotalCalls = totalCallsFromKeys > 0 ? totalCallsFromKeys : totalCallsThisMonth;
+      
+      const finalStats = {
+        totalCalls: finalTotalCalls,
+        monthlyLimit: data.monthlyLimit || 10000,
+        plan: data.plan || 'Free',
+        thisMonth: totalCallsThisMonth,
+        lastMonth: totalCallsLastMonth,
+        growth: Math.round(growth * 100) / 100, // Round to 2 decimal places
+        keyStats: keyStats,
+        totalCallsThisMonth: totalCallsThisMonth,
+        totalCallsLastMonth: totalCallsLastMonth
+      };
+
+      console.log('=== FINAL STATS STATE ===');
+      console.log('Setting API Stats:', finalStats);
+      console.log('========================');
+
+      setApiStats(finalStats);
+      setIsDataFresh(true);
 
     } catch (error) {
       console.error('An error occurred while fetching API stats:', error);
-      // Set default stats on any error, but preserve totalCalls
+      // Set default stats on any error, but preserve key stats
+      const keyStats: ApiKeyStats[] = apiKeys.map(key => ({
+        keyId: key.id,
+        keyName: key.name,
+        callsUsed: key.callsUsed || 0,
+        lastUsed: key.lastUsed || null,
+        isActive: key.isActive !== false
+      }));
+      
+      const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
+      
       setApiStats(prevStats => ({
         ...prevStats,
+        totalCalls: totalCallsFromKeys,
         monthlyLimit: 10000,
         plan: 'Free',
         thisMonth: 0,
         lastMonth: 0,
         growth: 0,
+        keyStats: keyStats,
+        totalCallsThisMonth: 0,
+        totalCallsLastMonth: 0
       }));
     } finally {
-      setIsLoadingStats(false);
+      if (isRefresh) {
+        setIsRefreshing(false);
+      } else {
+        setIsLoadingStats(false);
+      }
+      setLastUpdated(new Date());
     }
   };
+
+  // Manual refresh function
+  const refreshStats = async () => {
+    await fetchApiStats(true);
+  };
+
+  // Test function to simulate API calls (for debugging)
+  const testApiCall = async () => {
+    console.log('=== TEST API CALL STARTED ===');
+    try {
+      const token = await getToken();
+      console.log('Token obtained:', token ? 'Yes' : 'No');
+      if (!token) {
+        console.log('No token available');
+        return;
+      }
+
+      console.log('Making test API call...');
+      // Make a test API call to increment usage
+      const response = await fetch('/api/v1/lumiq/u/experian/score', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: "Test Company",
+          city: "Test City", 
+          state: "CA"
+        })
+      });
+
+      console.log('Test API call response status:', response.status);
+      console.log('Test API call response ok:', response.ok);
+      
+      // Refresh stats after test call
+      console.log('Refreshing stats in 1 second...');
+      setTimeout(() => {
+        console.log('Calling refreshStats...');
+        refreshStats();
+      }, 1000);
+      
+      console.log('=== TEST API CALL COMPLETED ===');
+    } catch (error) {
+      console.error('Test API call failed:', error);
+    }
+  };
+
+  // Debug function to check current state
+  const debugCurrentState = () => {
+    console.log('=== CURRENT STATE DEBUG ===');
+    console.log('API Keys:', apiKeys);
+    console.log('API Stats:', apiStats);
+    console.log('Is Refreshing:', isRefreshing);
+    console.log('Last Updated:', lastUpdated);
+    console.log('Is Data Fresh:', isDataFresh);
+    console.log('===========================');
+  };
+
+  // Simple test function to verify console logging works
+  const testConsole = () => {
+    console.log('=== CONSOLE TEST ===');
+    console.log('This is a test message');
+    console.log('Current time:', new Date().toISOString());
+    console.log('===================');
+    return 'Console test completed';
+  };
+
+  // Expose functions to window for console access
+  (window as any).testApiCall = testApiCall;
+  (window as any).debugCurrentState = debugCurrentState;
+  (window as any).refreshStats = refreshStats;
+  (window as any).testConsole = testConsole;
 
   // Get detailed information about a specific API key
   const getApiKeyDetails = async (keyId: string) => {
@@ -501,13 +697,30 @@ const Dashboard: React.FC = () => {
 
   // Load API keys on component mount
   useEffect(() => {
+    console.log('=== DASHBOARD COMPONENT MOUNTED ===');
+    console.log('User:', user ? 'Logged in' : 'Not logged in');
     if (user) {
+      console.log('Fetching data...');
       const fetchData = async () => {
+        console.log('Fetching API keys...');
         await fetchApiKeys();
+        console.log('Fetching API stats...');
         await fetchApiStats();
+        console.log('Data fetch completed');
       };
       fetchData();
     }
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Real-time polling for API stats
+  useEffect(() => {
+    if (!user) return;
+
+    const interval = setInterval(() => {
+      refreshStats();
+    }, 30000); // Refresh every 30 seconds
+
+    return () => clearInterval(interval);
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCopyKey = (key: string) => {
@@ -728,11 +941,25 @@ Your backend needs to either:
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
         {/* Stats Overview */}
-        <MetricCards apiKeys={apiKeys} user={user} formatDate={formatDate} />
+        <MetricCards 
+          apiKeys={apiKeys} 
+          user={user} 
+          formatDate={formatDate} 
+          apiStats={apiStats}
+          isRefreshing={isRefreshing}
+          lastUpdated={lastUpdated}
+          isDataFresh={isDataFresh}
+          onRefresh={refreshStats}
+        />
 
         {/* Tab Content */}
         <div className="mt-8">
-          {activeTab === 'overview' && <OverviewTab />}
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
+              <OverviewTab />
+              <KeyUsageStats keyStats={apiStats.keyStats} isLive={true} />
+            </div>
+          )}
 
           {activeTab === 'api-keys' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">

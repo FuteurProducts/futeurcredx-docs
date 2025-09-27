@@ -47,13 +47,13 @@ const apiData: ApiCategory[] = [
   },
   {
     id: "experian-credit",
-    name: "Experian Credit Score",
+    name: "Lumiq Credit Score",
     endpoints: [
       {
         method: "POST",
-        path: "/api/v1/crs-credit/u/experian/score",
+        path: "/api/v1/lumiq/u/experian/score",
         protected: true,
-        description: "Get Experian credit score for a business using name, city, and state information.",
+        description: "Get Lumiq credit score for a business using name, city, and state information.",
         bodySchema: {
           name: "string",
           city: "string", 
@@ -340,8 +340,8 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
     setResponseStatus(null)
 
     try {
-      // Handle real API call for Experian endpoint
-      if (endpoint.path === "/api/v1/crs-credit/u/experian/score") {
+      // Handle real API call for Lumiq endpoint
+      if (endpoint.path === "/api/v1/lumiq/u/experian/score") {
         try {
           let requestBodyData: any = {}
           
@@ -352,7 +352,7 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
               throw new Error(`Invalid JSON format: ${jsonError.message}`)
             }
             
-            // Validate required fields for Experian endpoint only if we have data
+            // Validate required fields for Lumiq endpoint only if we have data
             if (!requestBodyData.name || typeof requestBodyData.name !== 'string') {
               throw new Error('Missing or invalid "name" field - must be a string')
             }
@@ -609,7 +609,7 @@ const ApiEndpointTester: React.FC<ApiEndpointTesterProps> = ({ endpoint, selecte
                     </div>
                   )}
                   <textarea
-                    value={requestBody || (endpoint.path === "/api/v1/crs-credit/u/experian/score" ? JSON.stringify({
+                    value={requestBody || (endpoint.path === "/api/v1/lumiq/u/experian/score" ? JSON.stringify({
                       "name": "EXPERIAN CONSUMER DIRECT",
                       "city": "Costa Mesa",
                       "state": "CA"

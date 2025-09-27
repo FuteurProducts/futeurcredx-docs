@@ -19,6 +19,14 @@ export interface ApiKey {
   message?: string | null;
 }
 
+export interface ApiKeyStats {
+  keyId: string;
+  keyName: string;
+  callsUsed: number;
+  lastUsed: string | null;
+  isActive: boolean;
+}
+
 export interface ApiStats {
   totalCalls: number;
   monthlyLimit: number;
@@ -26,4 +34,7 @@ export interface ApiStats {
   thisMonth: number;
   lastMonth: number;
   growth: number;
+  keyStats: ApiKeyStats[];
+  totalCallsThisMonth: number;
+  totalCallsLastMonth: number;
 }
