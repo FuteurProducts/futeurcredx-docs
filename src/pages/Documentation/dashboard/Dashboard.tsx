@@ -136,6 +136,17 @@ const Dashboard: React.FC = () => {
         console.log('API Response data:', data)
         console.log('Raw API Keys from backend:', JSON.stringify(data.apiKeys, null, 2))
         const keys = data.apiKeys || [];
+        console.log('=== API KEYS DEBUG ===');
+        console.log('Keys array length:', keys.length);
+        console.log('First key structure:', keys[0]);
+        console.log('Keys with usage data:', keys.map(k => ({ 
+          name: k.name, 
+          usageCount: k.usageCount, 
+          callsUsed: k.callsUsed,
+          lastUsedAt: k.lastUsedAt,
+          lastUsed: k.lastUsed
+        })));
+        console.log('======================');
         setApiKeys(keys);
         // Calculate individual key stats using the new API structure
         const keyStats: ApiKeyStats[] = keys.map(key => ({
@@ -266,20 +277,37 @@ const Dashboard: React.FC = () => {
       console.log('========================');
 
       // Calculate individual key stats from the current API keys
-      const keyStats: ApiKeyStats[] = apiKeys.map(key => ({
-        keyId: key.id,
-        keyName: key.name,
-        callsUsed: key.usageCount || key.callsUsed || 0,
-        lastUsed: key.lastUsedAt || key.lastUsed || null,
-        isActive: key.isActive !== false,
-        environment: key.environment || 'development'
-      }));
+      const keyStats: ApiKeyStats[] = apiKeys.map(key => {
+        const callsUsed = key.usageCount || key.callsUsed || 0;
+        const lastUsed = key.lastUsedAt || key.lastUsed || null;
+        const isActive = key.isActive !== false;
+        const environment = key.environment || 'development';
+        
+        console.log(`Key ${key.name}: usageCount=${key.usageCount}, callsUsed=${key.callsUsed}, final=${callsUsed}`);
+        
+        return {
+          keyId: key.id,
+          keyName: key.name,
+          callsUsed: callsUsed,
+          lastUsed: lastUsed,
+          isActive: isActive,
+          environment: environment
+        };
+      });
 
       // Calculate total calls from individual keys (as backup)
       const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
       
       // Use the API stats total usage as the primary source
       const finalTotalCalls = totalUsage > 0 ? totalUsage : totalCallsFromKeys;
+      
+      console.log('=== KEY STATS DEBUG ===');
+      console.log('API Keys:', apiKeys);
+      console.log('Key Stats:', keyStats);
+      console.log('Total Calls from Keys:', totalCallsFromKeys);
+      console.log('API Total Usage:', totalUsage);
+      console.log('Final Total Calls:', finalTotalCalls);
+      console.log('========================');
       
       const finalStats = {
         totalCalls: finalTotalCalls,
@@ -989,25 +1017,28 @@ Your backend needs to either:
           )}
 
           {activeTab === 'api-keys' && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-              <ApiKeysTab
-                apiKeys={apiKeys}
-                isLoadingKeys={isLoadingKeys}
-                error={error}
-                newKeyName={newKeyName}
-                setNewKeyName={setNewKeyName}
-                handleGenerateKey={handleGenerateKey}
-                isGeneratingKey={isGeneratingKey}
-                newlyGeneratedKey={newlyGeneratedKey}
-                setNewlyGeneratedKey={setNewlyGeneratedKey}
-                handleRevokeKey={handleRevokeKey}
-                showApiKey={showApiKey}
-                toggleKeyVisibility={toggleKeyVisibility}
-                formatDate={formatDate}
-              />
-              <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
-                <ApiTesting apiKeys={apiKeys} />
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+                <ApiKeysTab
+                  apiKeys={apiKeys}
+                  isLoadingKeys={isLoadingKeys}
+                  error={error}
+                  newKeyName={newKeyName}
+                  setNewKeyName={setNewKeyName}
+                  handleGenerateKey={handleGenerateKey}
+                  isGeneratingKey={isGeneratingKey}
+                  newlyGeneratedKey={newlyGeneratedKey}
+                  setNewlyGeneratedKey={setNewlyGeneratedKey}
+                  handleRevokeKey={handleRevokeKey}
+                  showApiKey={showApiKey}
+                  toggleKeyVisibility={toggleKeyVisibility}
+                  formatDate={formatDate}
+                />
+                <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-8 shadow-sm">
+                  <ApiTesting apiKeys={apiKeys} />
+                </div>
               </div>
+              <KeyUsageStats keyStats={apiStats.keyStats} isLive={true} />
             </div>
           )}
 
