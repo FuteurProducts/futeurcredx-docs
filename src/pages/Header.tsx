@@ -235,7 +235,7 @@ export default function FuteurHeader() {
             </motion.div>
           </motion.button>
         </header>
-      </div>
+      </motion.div>
       
       {/* Mobile Menu Drawer - separate from header to avoid z-index issues */}
       <AnimatePresence>
