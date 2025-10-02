@@ -28,7 +28,7 @@ import ApiKeysTab from '../../../components/dashboard/ApiKeysTab';
 import KeyUsageStats from '../../../components/dashboard/KeyUsageStats';
 import PartnerDashboard from '../../../components/dashboard/PartnerDashboard';
 import { usePartnerRole } from '../../../hooks/usePartnerRole';
-import type { ApiStats } from '../../../types';
+import type { ApiStats, ApiKey } from '../../../types';
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
@@ -71,6 +71,7 @@ const Dashboard: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [isDataFresh, setIsDataFresh] = useState(true)
+  const [deletedKeys, setDeletedKeys] = useState<ApiKey[]>([])
 
   // Get token from Clerk
   const getBackendToken = async (): Promise<string | null> => {
@@ -276,14 +277,15 @@ const Dashboard: React.FC = () => {
       console.log('Total Keys:', totalKeys);
       console.log('========================');
 
-      // Calculate individual key stats from the current API keys
-      const keyStats: ApiKeyStats[] = apiKeys.map(key => {
+      // Calculate individual key stats from both active and deleted API keys
+      const allKeys = [...apiKeys, ...deletedKeys];
+      const keyStats: ApiKeyStats[] = allKeys.map(key => {
         const callsUsed = key.usageCount || key.callsUsed || 0;
         const lastUsed = key.lastUsedAt || key.lastUsed || null;
-        const isActive = key.isActive !== false;
+        const isActive = key.isActive !== false && !deletedKeys.some(deleted => deleted.id === key.id);
         const environment = key.environment || 'development';
         
-        console.log(`Key ${key.name}: usageCount=${key.usageCount}, callsUsed=${key.callsUsed}, final=${callsUsed}`);
+        console.log(`Key ${key.name}: usageCount=${key.usageCount}, callsUsed=${key.callsUsed}, final=${callsUsed}, isActive=${isActive}`);
         
         return {
           keyId: key.id,
@@ -727,8 +729,18 @@ const Dashboard: React.FC = () => {
       })
 
       if (response.ok) {
+        // Find the key being deleted to preserve its usage data
+        const keyToDelete = apiKeys.find(key => key.id === keyId);
+        if (keyToDelete) {
+          // Add to deleted keys to preserve usage statistics
+          setDeletedKeys(prev => [...prev, { ...keyToDelete, isActive: false }]);
+        }
+        
+        // Remove from active keys
         setApiKeys(prev => prev.filter(key => key.id !== keyId))
         setError('') // Clear any errors
+        
+        console.log('Key deleted but usage data preserved:', keyToDelete?.name);
       } else {
         console.error('Failed to revoke API key:', response.statusText)
         setError('Failed to revoke API key')
@@ -737,6 +749,10 @@ const Dashboard: React.FC = () => {
       console.error('Error revoking API key:', error)
       if (error instanceof TypeError && error.message === 'Load failed') {
         // CORS error - simulate successful deletion for development
+        const keyToDelete = apiKeys.find(key => key.id === keyId);
+        if (keyToDelete) {
+          setDeletedKeys(prev => [...prev, { ...keyToDelete, isActive: false }]);
+        }
         setApiKeys(prev => prev.filter(key => key.id !== keyId))
         setError('✓ Mock key revoked (CORS prevents real API call in development)')
       } else {

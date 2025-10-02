@@ -43,6 +43,7 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
           <div>
             <h3 className="text-lg font-semibold text-gray-900">API Key Usage Statistics</h3>
             <p className="text-sm text-gray-500">Real-time usage tracking across all keys</p>
+            <p className="text-xs text-gray-400 mt-1">💡 Deleted keys are preserved for historical usage tracking</p>
           </div>
         </div>
         {isLive && (
@@ -166,8 +167,8 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                         </>
                       ) : (
                         <>
-                          <XCircle className="w-4 h-4 text-blue-400" />
-                          <span className="text-sm font-medium text-blue-600">Inactive</span>
+                          <XCircle className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-500">Deleted</span>
                         </>
                       )}
                     </div>
