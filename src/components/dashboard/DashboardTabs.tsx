@@ -1,12 +1,13 @@
 import React from 'react';
-import { BarChart3, Key } from 'lucide-react';
+import { BarChart3, Key, Building2 } from 'lucide-react';
 
 interface DashboardTabsProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  isPartner?: boolean;
 }
 
-const DashboardTabs: React.FC<DashboardTabsProps> = ({ activeTab, setActiveTab }) => {
+const DashboardTabs: React.FC<DashboardTabsProps> = ({ activeTab, setActiveTab, isPartner = false }) => {
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,6 +32,18 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ activeTab, setActiveTab }
             <Key className="w-5 h-5" />
             API Keys
           </button>
+          {isPartner && (
+            <button
+              onClick={() => setActiveTab('partner')}
+              className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+                activeTab === 'partner'
+                  ? 'bg-blue-600 text-white'
+                  : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
+              }`}>
+              <Building2 className="w-5 h-5" />
+              Partner Dashboard
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -38,3 +51,4 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ activeTab, setActiveTab }
 };
 
 export default DashboardTabs;
+

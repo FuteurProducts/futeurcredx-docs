@@ -54,11 +54,6 @@ const MetricCards: React.FC<MetricCardsProps> = ({
               <span className="text-sm text-gray-500">
                 Last updated: {lastUpdated.toLocaleTimeString()}
               </span>
-              {isDataFresh && (
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                  ✓ Fresh
-                </span>
-              )}
             </div>
           )}
           <button
@@ -77,7 +72,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-white/80 backdrop-blur-sm border border-blue-300 rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="p-3 bg-blue-50 rounded-xl">
@@ -95,14 +90,14 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-white/80 backdrop-blur-sm border border-green-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-white/80 backdrop-blur-sm border border-blue-300 rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-green-50 rounded-xl">
-            <Activity className="w-8 h-8 text-green-600" />
+          <div className="p-3 bg-blue-50 rounded-xl">
+            <Activity className="w-8 h-8 text-blue-600" />
           </div>
           <div>
-            <h3 className="font-black uppercase tracking-tight text-green-900">Total API Calls</h3>
+            <h3 className="font-black uppercase tracking-tight text-blue-900">Total API Calls</h3>
             <p className="text-sm text-slate-600 font-medium">All time usage</p>
           </div>
         </div>
@@ -113,20 +108,20 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/80 backdrop-blur-sm border border-purple-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-white/80 backdrop-blur-sm border border-blue-300 rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-purple-50 rounded-xl">
-            <TrendingUp className="w-8 h-8 text-purple-600" />
+          <div className="p-3 bg-blue-50 rounded-xl">
+            <TrendingUp className="w-8 h-8 text-blue-600" />
           </div>
           <div>
-            <h3 className="font-black uppercase tracking-tight text-purple-900">This Month</h3>
+            <h3 className="font-black uppercase tracking-tight text-blue-900">This Month</h3>
             <p className="text-sm text-slate-600 font-medium">Current month calls</p>
           </div>
         </div>
         <div className="text-3xl font-black">{apiStats?.thisMonth || 0}</div>
         {apiStats?.growth !== undefined && (
-          <div className={`text-sm font-medium ${apiStats.growth >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+          <div className={`text-sm font-medium ${apiStats.growth >= 0 ? 'text-blue-600' : 'text-blue-500'}`}>
             {apiStats.growth >= 0 ? '+' : ''}{apiStats.growth.toFixed(1)}% vs last month
           </div>
         )}
@@ -136,7 +131,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-white/80 backdrop-blur-sm border border-blue-300 rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="p-3 bg-blue-50 rounded-xl">

@@ -179,6 +179,39 @@ class ApiService {
     const url = endpoint.startsWith('http') ? endpoint : `${this.config.baseURL}${endpoint}`;
     const requestConfig = this.applyRequestInterceptors(config);
 
+    // Attempt to attach Clerk session token if available and no Authorization header present
+    try {
+      const currentHeaders: Record<string, string> = requestConfig.headers || {};
+      const hasAuthorizationHeader = !!currentHeaders['Authorization'];
+      const clerk = (window as any)?.Clerk;
+
+      if (!hasAuthorizationHeader && clerk?.session?.getToken) {
+        // Prefer a specific JWT template if configured; fall back to default token
+        const jwtTemplate = (import.meta as any)?.env?.VITE_CLERK_JWT_TEMPLATE;
+        let jwt: string | null = null;
+        if (jwtTemplate) {
+          try {
+            jwt = await clerk.session.getToken({ template: jwtTemplate });
+          } catch (_) {
+            jwt = null;
+          }
+        }
+        if (!jwt) {
+          jwt = await clerk.session.getToken();
+        }
+        if (jwt) {
+          requestConfig.headers = {
+            ...currentHeaders,
+            Authorization: `Bearer ${jwt}`,
+          };
+        }
+      }
+    } catch (tokenError) {
+      if (this.config.enableLogging) {
+        console.warn('Unable to attach Clerk token to request:', tokenError);
+      }
+    }
+
     if (this.config.enableLogging) {
       console.log(`🚀 API Request: ${requestConfig.method || 'GET'} ${url}`, {
         headers: requestConfig.headers,
@@ -347,3 +380,4 @@ apiService.addErrorInterceptor((error) => {
 
 export default apiService;
 export { ApiService };
+

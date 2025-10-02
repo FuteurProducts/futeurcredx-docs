@@ -26,12 +26,14 @@ import DashboardTabs from '../../../components/dashboard/DashboardTabs';
 import OverviewTab from '../../../components/dashboard/OverviewTab';
 import ApiKeysTab from '../../../components/dashboard/ApiKeysTab';
 import KeyUsageStats from '../../../components/dashboard/KeyUsageStats';
+import PartnerDashboard from '../../../components/dashboard/PartnerDashboard';
+import { usePartnerRole } from '../../../hooks/usePartnerRole';
 import type { ApiStats } from '../../../types';
-
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
   const { getToken } = useAuth()
+  const { isPartner } = usePartnerRole()
   
   // State management
   const [apiKeys, setApiKeys] = useState([])
@@ -70,10 +72,20 @@ const Dashboard: React.FC = () => {
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const [isDataFresh, setIsDataFresh] = useState(true)
 
+  // Get token from Clerk
+  const getBackendToken = async (): Promise<string | null> => {
+    try {
+      const clerkToken = await getToken()
+      return clerkToken
+    } catch {
+      return null
+    }
+  }
+
   // Get current authentication token for debugging
   const fetchCurrentToken = async () => {
     try {
-      const token = await getToken()
+      const token = await getBackendToken()
       if (token) {
         setTokenInfo({
           token: token,
@@ -93,7 +105,7 @@ const Dashboard: React.FC = () => {
   const fetchApiKeys = async () => {
     try {
       // Get the default Clerk token
-      const token = await getToken()
+      const token = await getBackendToken()
       
       console.log('Clerk token obtained:', token ? 'Token exists' : 'No token')
       if (token) {
@@ -125,13 +137,14 @@ const Dashboard: React.FC = () => {
         console.log('Raw API Keys from backend:', JSON.stringify(data.apiKeys, null, 2))
         const keys = data.apiKeys || [];
         setApiKeys(keys);
-        // Calculate individual key stats
+        // Calculate individual key stats using the new API structure
         const keyStats: ApiKeyStats[] = keys.map(key => ({
           keyId: key.id,
           keyName: key.name,
-          callsUsed: key.callsUsed || 0,
-          lastUsed: key.lastUsed || null,
-          isActive: key.isActive !== false
+          callsUsed: key.usageCount || key.callsUsed || 0,
+          lastUsed: key.lastUsedAt || key.lastUsed || null,
+          isActive: key.isActive !== false,
+          environment: key.environment || 'development'
         }));
         
         const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
@@ -197,7 +210,7 @@ const Dashboard: React.FC = () => {
       setIsLoadingStats(true);
     }
     try {
-      const token = await getToken();
+      const token = await getBackendToken();
       if (!token) {
         throw new Error('Authentication token not available.');
       }
@@ -224,14 +237,7 @@ const Dashboard: React.FC = () => {
       // Handle 304 Not Modified - data hasn't changed, use existing stats
       if (response.status === 304) {
         console.log('=== API STATS RESPONSE (304) ===');
-        console.log('Timestamp:', new Date().toISOString());
-        console.log('URL:', `/api/v1/api-keys/stats?t=${timestamp}`);
-        console.log('Response Status:', response.status);
-        console.log('Response Headers:', Object.fromEntries(response.headers.entries()));
         console.log('Data not modified - using existing stats');
-        console.log('Current API Stats:', apiStats);
-        console.log('================================');
-        // Don't update stats, just update the last updated time
         setLastUpdated(new Date());
         setIsDataFresh(true);
         return;
@@ -239,69 +245,56 @@ const Dashboard: React.FC = () => {
 
       const data = await response.json();
       console.log('=== API STATS RESPONSE (200) ===');
-      console.log('Timestamp:', new Date().toISOString());
-      console.log('URL:', `/api/v1/api-keys/stats?t=${timestamp}`);
-      console.log('Response Status:', response.status);
-      console.log('Response Headers:', Object.fromEntries(response.headers.entries()));
       console.log('Raw Response Data:', data);
-      console.log('Formatted Response Data:', JSON.stringify(data, null, 2));
       console.log('================================');
       
+      // Extract total usage from the new API structure
+      const developmentStats = data.stats?.development || {};
+      const productionStats = data.stats?.production || {};
+      
+      // Calculate total usage across all environments
+      const totalUsage = (developmentStats.totalUsage || 0) + (productionStats.totalUsage || 0);
+      const totalKeys = (developmentStats.totalKeys || 0) + (productionStats.totalKeys || 0);
+      
+      console.log('=== USAGE CALCULATION ===');
+      console.log('Development Usage:', developmentStats.totalUsage);
+      console.log('Production Usage:', productionStats.totalUsage);
+      console.log('Total Usage:', totalUsage);
+      console.log('Development Keys:', developmentStats.totalKeys);
+      console.log('Production Keys:', productionStats.totalKeys);
+      console.log('Total Keys:', totalKeys);
+      console.log('========================');
+
       // Calculate individual key stats from the current API keys
       const keyStats: ApiKeyStats[] = apiKeys.map(key => ({
         keyId: key.id,
         keyName: key.name,
-        callsUsed: key.callsUsed || 0,
-        lastUsed: key.lastUsed || null,
-        isActive: key.isActive !== false
+        callsUsed: key.usageCount || key.callsUsed || 0,
+        lastUsed: key.lastUsedAt || key.lastUsed || null,
+        isActive: key.isActive !== false,
+        environment: key.environment || 'development'
       }));
 
-      // Calculate total calls across all keys
+      // Calculate total calls from individual keys (as backup)
       const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
       
-      // Use API stats data if available, otherwise fall back to key data
-      const totalCallsThisMonth = data.thisMonth || totalCallsFromKeys;
-      const totalCallsLastMonth = data.lastMonth || 0;
-      const growth = totalCallsLastMonth > 0 ? 
-        ((totalCallsThisMonth - totalCallsLastMonth) / totalCallsLastMonth) * 100 : 0;
-
-      console.log('=== DATA SOURCE ANALYSIS ===');
-      console.log('API Response thisMonth:', data.thisMonth);
-      console.log('API Response lastMonth:', data.lastMonth);
-      console.log('API Response monthlyLimit:', data.monthlyLimit);
-      console.log('API Response plan:', data.plan);
-      console.log('Total from individual keys:', totalCallsFromKeys);
-      console.log('Using thisMonth as:', totalCallsThisMonth);
-      console.log('================================');
-
-      console.log('=== CALCULATED STATS ===');
-      console.log('Current API Keys:', apiKeys);
-      console.log('Key Stats:', keyStats);
-      console.log('Total Calls from Keys:', totalCallsFromKeys);
-      console.log('This Month (from API):', totalCallsThisMonth);
-      console.log('Last Month (from API):', totalCallsLastMonth);
-      console.log('Growth %:', growth);
-      console.log('API Keys with callsUsed:', apiKeys.map(key => ({ 
-        id: key.id, 
-        name: key.name, 
-        callsUsed: key.callsUsed,
-        lastUsed: key.lastUsed 
-      })));
-      console.log('========================');
-
-      // If individual keys don't have call data, use the API stats data
-      const finalTotalCalls = totalCallsFromKeys > 0 ? totalCallsFromKeys : totalCallsThisMonth;
+      // Use the API stats total usage as the primary source
+      const finalTotalCalls = totalUsage > 0 ? totalUsage : totalCallsFromKeys;
       
       const finalStats = {
         totalCalls: finalTotalCalls,
-        monthlyLimit: data.monthlyLimit || 10000,
-        plan: data.plan || 'Free',
-        thisMonth: totalCallsThisMonth,
-        lastMonth: totalCallsLastMonth,
-        growth: Math.round(growth * 100) / 100, // Round to 2 decimal places
+        monthlyLimit: 10000, // Default limit
+        plan: 'Free', // Default plan
+        thisMonth: finalTotalCalls, // Use total usage as this month's usage
+        lastMonth: 0, // No historical data available
+        growth: 0, // No growth calculation without historical data
         keyStats: keyStats,
-        totalCallsThisMonth: totalCallsThisMonth,
-        totalCallsLastMonth: totalCallsLastMonth
+        totalCallsThisMonth: finalTotalCalls,
+        totalCallsLastMonth: 0,
+        // Add environment breakdown
+        developmentUsage: developmentStats.totalUsage || 0,
+        productionUsage: productionStats.totalUsage || 0,
+        totalKeys: totalKeys
       };
 
       console.log('=== FINAL STATS STATE ===');
@@ -317,9 +310,10 @@ const Dashboard: React.FC = () => {
       const keyStats: ApiKeyStats[] = apiKeys.map(key => ({
         keyId: key.id,
         keyName: key.name,
-        callsUsed: key.callsUsed || 0,
-        lastUsed: key.lastUsed || null,
-        isActive: key.isActive !== false
+        callsUsed: key.usageCount || key.callsUsed || 0,
+        lastUsed: key.lastUsedAt || key.lastUsed || null,
+        isActive: key.isActive !== false,
+        environment: key.environment || 'development'
       }));
       
       const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
@@ -329,12 +323,15 @@ const Dashboard: React.FC = () => {
         totalCalls: totalCallsFromKeys,
         monthlyLimit: 10000,
         plan: 'Free',
-        thisMonth: 0,
+        thisMonth: totalCallsFromKeys,
         lastMonth: 0,
         growth: 0,
         keyStats: keyStats,
-        totalCallsThisMonth: 0,
-        totalCallsLastMonth: 0
+        totalCallsThisMonth: totalCallsFromKeys,
+        totalCallsLastMonth: 0,
+        developmentUsage: 0,
+        productionUsage: 0,
+        totalKeys: apiKeys.length
       }));
     } finally {
       if (isRefresh) {
@@ -355,7 +352,7 @@ const Dashboard: React.FC = () => {
   const testApiCall = async () => {
     console.log('=== TEST API CALL STARTED ===');
     try {
-      const token = await getToken();
+      const token = await getBackendToken();
       console.log('Token obtained:', token ? 'Yes' : 'No');
       if (!token) {
         console.log('No token available');
@@ -413,6 +410,17 @@ const Dashboard: React.FC = () => {
     return 'Console test completed';
   };
 
+  // Expose dev helper to set a manual token at runtime (for local testing)
+  (window as any).setDevAuthToken = (token: string | null) => {
+    if (token && token.length > 0) {
+      localStorage.setItem('devAuthToken', token)
+      console.log('devAuthToken set in localStorage (preview):', token.substring(0, 20) + '...')
+    } else {
+      localStorage.removeItem('devAuthToken')
+      console.log('devAuthToken removed from localStorage')
+    }
+  }
+
   // Expose functions to window for console access
   (window as any).testApiCall = testApiCall;
   (window as any).debugCurrentState = debugCurrentState;
@@ -422,7 +430,7 @@ const Dashboard: React.FC = () => {
   // Get detailed information about a specific API key
   const getApiKeyDetails = async (keyId: string) => {
     try {
-      const token = await getToken()
+      const token = await getBackendToken()
       
       if (!token) {
         console.log('No token available for API key details')
@@ -463,7 +471,7 @@ const Dashboard: React.FC = () => {
     setError('')
     
     try {
-      const token = await getToken()
+      const token = await getBackendToken()
       
       if (!token) {
         setError('No authentication token available. Please sign in again.')
@@ -553,10 +561,24 @@ const Dashboard: React.FC = () => {
             message: newKey.message || null
           }
           
-          console.log('🔑 API Key Creation - Full Response:', JSON.stringify(newKey, null, 2))
-          console.log('🔑 Validated Key Object:', JSON.stringify(validatedKey, null, 2))
+          console.log('🔑 API Key Creation - Full Response (sanitized):', {
+            message: newKey.message,
+            hasApiKey: !!newKey.apiKey,
+            apiKeyName: newKey.apiKey?.name
+          })
+          console.log('🔑 Validated Key Object (sanitized):', {
+            name: validatedKey.name,
+            environment: validatedKey.environment,
+            hasKey: !!validatedKey.key,
+            keyPrefix: validatedKey.keyPrefix,
+            createdAt: validatedKey.createdAt
+          })
           
-          console.log('Validated API Key:', validatedKey)
+          console.log('Validated API Key (sanitized):', {
+            name: validatedKey.name,
+            environment: validatedKey.environment,
+            hasKey: !!validatedKey.key
+          })
           
           // Store the newly generated key for the security warning
           if (validatedKey.key || validatedKey.fullKeyOnCreation) {
@@ -665,7 +687,7 @@ const Dashboard: React.FC = () => {
   // Revoke API key
   const handleRevokeKey = async (keyId: string) => {
     try {
-      const token = await getToken()
+      const token = await getBackendToken()
       // Always use relative URL to work with Vercel proxy
       const baseUrl = '/api/v1/api-keys'
       const response = await fetch(`${baseUrl}/${keyId}`, {
@@ -729,23 +751,26 @@ const Dashboard: React.FC = () => {
   }
 
   const toggleKeyVisibility = (keyId: string) => {
-    console.log('Toggling key visibility for:', keyId)
+    console.log('Toggling key visibility for key')
     console.log('Current showApiKey state:', showApiKey)
-    console.log('API Keys:', apiKeys)
+    console.log('API Keys count:', apiKeys.length)
     
-    // Find the specific key and log all its properties
+    // Find the specific key and log sanitized properties
     const currentKey = apiKeys.find(k => k.id === keyId)
     if (currentKey) {
-      console.log('Current key object:', JSON.stringify(currentKey, null, 2))
+      console.log('Current key object (sanitized):', {
+        name: currentKey.name,
+        environment: currentKey.environment,
+        isActive: currentKey.isActive,
+        createdAt: currentKey.createdAt
+      })
       console.log('Available key properties:', Object.keys(currentKey))
-      console.log('Key values:', {
-        key: currentKey.key,
-        apiKey: currentKey.apiKey,
-        fullKey: currentKey.fullKey,
-        secretKey: currentKey.secretKey,
+      console.log('Key values (sanitized):', {
         keyPrefix: currentKey.keyPrefix,
-        token: currentKey.token,
-        value: currentKey.value
+        hasKey: !!currentKey.key,
+        hasApiKey: !!currentKey.apiKey,
+        hasToken: !!currentKey.token,
+        hasValue: !!currentKey.value
       })
     }
     
@@ -805,7 +830,7 @@ const Dashboard: React.FC = () => {
   // Debug Clerk token and backend connectivity
   const debugClerkToken = async () => {
     try {
-      const defaultToken = await getToken()
+      const defaultToken = await getBackendToken()
       
       // Decode JWT to see claims (for debugging only)
       let tokenClaims = 'Unable to decode'
@@ -935,7 +960,9 @@ Your backend needs to either:
         </div>
       </div>
 
-      <DashboardTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+
+
+      <DashboardTabs activeTab={activeTab} setActiveTab={setActiveTab} isPartner={isPartner} />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -983,6 +1010,17 @@ Your backend needs to either:
               </div>
             </div>
           )}
+
+          {activeTab === 'partner' && isPartner && (
+            <PartnerDashboard 
+              user={user}
+              formatDate={formatDate}
+              isRefreshing={isRefreshing}
+              lastUpdated={lastUpdated}
+              isDataFresh={isDataFresh}
+              onRefresh={refreshStats}
+            />
+          )}
         </div>
       </main>
     </div>
@@ -990,3 +1028,4 @@ Your backend needs to either:
 };
 
 export default Dashboard;
+

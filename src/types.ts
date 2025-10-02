@@ -8,12 +8,15 @@ export interface ApiKey {
   keyPrefix?: string | null;
   fullKeyOnCreation?: string | null;
   createdAt: string;
-  lastUsed: string | null;
-  callsUsed: number;
+  lastUsed?: string | null;
+  lastUsedAt?: string | null;
+  callsUsed?: number;
+  usageCount?: number;
   isActive: boolean;
   environment: string;
   scopes: string[];
-  expiresInDays: number;
+  expiresInDays?: number;
+  expiresAt?: string;
   ipWhitelist: string[];
   geoRestrictions: string[];
   message?: string | null;
@@ -25,6 +28,7 @@ export interface ApiKeyStats {
   callsUsed: number;
   lastUsed: string | null;
   isActive: boolean;
+  environment?: string;
 }
 
 export interface ApiStats {
@@ -37,4 +41,7 @@ export interface ApiStats {
   keyStats: ApiKeyStats[];
   totalCallsThisMonth: number;
   totalCallsLastMonth: number;
+  developmentUsage?: number;
+  productionUsage?: number;
+  totalKeys?: number;
 }

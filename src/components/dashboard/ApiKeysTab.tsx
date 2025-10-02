@@ -149,21 +149,21 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
 
         {/* Newly Generated Key Alert */}
         {newlyGeneratedKey && (
-          <div className="mb-6 p-6 bg-green-50 border-2 border-green-200 rounded-xl shadow-lg">
+          <div className="mb-6 p-6 bg-blue-50 border-2 border-blue-300 rounded-xl shadow-lg">
             <div className="flex items-start gap-4">
-              <div className="p-2 bg-green-100 rounded-full">
-                <Shield className="w-6 h-6 text-green-600" />
+              <div className="p-2 bg-blue-100 rounded-full">
+                <Shield className="w-6 h-6 text-blue-600" />
               </div>
               <div className="flex-1">
-                <div className="font-bold text-green-800 mb-2 text-lg">🎉 API Key Generated Successfully!</div>
-                <div className="text-sm text-green-700 mb-4">
-                  <strong>\"{newlyGeneratedKey.name}\"</strong> has been created. 
-                  <span className="text-red-600 font-bold"> This is the ONLY time you'll see the full key!</span>
+                <div className="font-bold text-blue-800 mb-2 text-lg">API Key Generated Successfully!</div>
+                <div className="text-sm text-blue-700 mb-4">
+                  <strong>{newlyGeneratedKey.name}</strong> has been created. 
+                  <span className="text-blue-600 font-bold"> This is the ONLY time you'll see the full key!</span>
                 </div>
                 
-                <div className="bg-white border border-green-200 rounded-lg p-4 mb-4">
+                <div className="bg-white border border-blue-200 rounded-lg p-4 mb-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-bold text-green-700 uppercase">Your API Key:</span>
+                    <span className="text-xs font-bold text-blue-700 uppercase">Your API Key:</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <code className="flex-1 p-3 bg-gray-50 border rounded text-sm font-mono text-gray-800 break-all select-all">
