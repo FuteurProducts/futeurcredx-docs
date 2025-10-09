@@ -37,13 +37,26 @@ const getMethodBadgeClass = (method: HttpMethod) => {
 }
 
 export default function ApiReference() {
-  // Find the first endpoint to display by default
-  const defaultEndpoint = apiData.flatMap(category => category.endpoints)[0];
-  const [selectedEndpoint, setSelectedEndpoint] = useState<ApiEndpoint | InfoSection>(defaultEndpoint);
+  // Find the first actual API endpoint to display by default (not info sections)
+  const allEndpoints = apiData.flatMap(category => category.endpoints);
+  const defaultEndpoint = allEndpoints.find(endpoint => endpoint.type === 'endpoint') || allEndpoints[0];
+  const [selectedEndpoint, setSelectedEndpoint] = useState<ApiEndpoint | InfoSection | null>(defaultEndpoint || null);
   const [selectedResponse, setSelectedResponse] = useState("200")
 
-  const curlExample = selectedEndpoint.type === 'endpoint' ? generateCurl(selectedEndpoint) : '';
-  const responseExample = selectedEndpoint.type === 'endpoint' ? JSON.stringify(mockResponses[selectedEndpoint.path] || { message: "Success" }, null, 2) : '';
+  // Early return if no endpoints are available
+  if (!selectedEndpoint) {
+    return (
+      <div className="max-w-7xl mx-auto p-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">API Reference</h2>
+          <p className="text-gray-600 dark:text-gray-400">No API endpoints available at the moment.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const curlExample = selectedEndpoint && selectedEndpoint.type === 'endpoint' ? generateCurl(selectedEndpoint) : '';
+  const responseExample = selectedEndpoint && selectedEndpoint.type === 'endpoint' ? JSON.stringify(mockResponses[selectedEndpoint.path] || { message: "Success" }, null, 2) : '';
 
   return (
     <div className="max-w-7xl mx-auto">
@@ -87,7 +100,7 @@ export default function ApiReference() {
 
       {/* Main Content */}
       <main className="flex-1 flex overflow-hidden">
-        {selectedEndpoint.type === 'endpoint' ? (
+        {selectedEndpoint && selectedEndpoint.type === 'endpoint' ? (
           <>
             {/* Documentation Content (Center) */}
             <div className="flex-1 p-8 max-w-4xl bg-white dark:bg-[#0d0d0f] overflow-y-auto h-screen">
@@ -195,7 +208,7 @@ export default function ApiReference() {
               )}
             </aside>
           </>
-        ) : (
+        ) : selectedEndpoint ? (
           <div className="flex-1 p-8 max-w-4xl bg-white dark:bg-[#0d0d0f] overflow-y-auto h-screen text-gray-800 dark:text-gray-300">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{selectedEndpoint.description}</h1>
@@ -267,9 +280,17 @@ export default function ApiReference() {
               })}
             </div>
           </div>
+        ) : (
+          <div className="flex-1 p-8 max-w-4xl bg-white dark:bg-[#0d0d0f] overflow-y-auto h-screen text-gray-800 dark:text-gray-300">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">No Content Available</h1>
+              <p className="text-gray-600 dark:text-gray-400">Please select an endpoint from the sidebar.</p>
+            </div>
+          </div>
         )}
       </main>
       </div>
     </div>
   )
 }
+
