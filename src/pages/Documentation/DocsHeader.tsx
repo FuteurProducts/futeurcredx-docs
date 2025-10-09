@@ -99,9 +99,9 @@ export default function DocsHeader({ searchQuery, setSearchQuery }: DocsHeaderPr
         <div className="relative">
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-200 dark:bg-white/10" />
           <nav className="flex space-x-8 text-sm font-medium">
-            <Link to="/docs" className={`py-3 transition-colors ${location.pathname === '/docs' ? 'text-black dark:text-white border-b-2 border-blue-500' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>Docs</Link>
-            <Link to="/docs/api-reference" className={`py-3 transition-colors ${location.pathname === '/docs/api-reference' ? 'text-black dark:text-white border-b-2 border-blue-500' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>API Reference</Link>
-            <Link to="/docs/changelog" className={`py-3 transition-colors ${location.pathname === '/docs/changelog' ? 'text-black dark:text-white border-b-2 border-blue-500' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>Changelog</Link>
+            <Link to="/" className={`py-3 transition-colors ${location.pathname === '/' ? 'text-black dark:text-white border-b-2 border-blue-500' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>Docs</Link>
+            <Link to="/api-reference" className={`py-3 transition-colors ${location.pathname === '/api-reference' ? 'text-black dark:text-white border-b-2 border-blue-500' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>API Reference</Link>
+            <Link to="/changelog" className={`py-3 transition-colors ${location.pathname === '/changelog' ? 'text-black dark:text-white border-b-2 border-blue-500' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>Changelog</Link>
           </nav>
         </div>
       </div>

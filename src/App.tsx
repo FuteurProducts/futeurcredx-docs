@@ -46,26 +46,37 @@ const AppRouter = () => {
   const isDomainPlatform = hostname === 'platform.futeurcredx.com' || (isLocalhost && testMode === 'platform');
   const isDomainDocs = hostname === 'docs.futeurcredx.com' || (isLocalhost && testMode === 'docs');
   
-  // Handle subdomain-specific routing for root paths
+  // Debug logging for production
+  console.log('App Router Debug:', {
+    hostname,
+    pathname: window.location.pathname,
+    isDomainDocs,
+    isDomainInstitutions,
+    isDomainPlatform,
+    isLocalhost
+  });
+  
+  // Handle subdomain-specific routing
+  // If we're on docs subdomain, render the Docs component for all paths
+  if (isDomainDocs) {
+    return (
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <ScrollToTop />
+              <DocsLayout />
+            </BrowserRouter>
+          </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+    );
+  }
+  
+  // Handle subdomain-specific routing for root paths only
   if (window.location.pathname === '/') {
-    // If we're on docs subdomain, default render the Docs component
-    if (isDomainDocs) {
-      return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <ScrollToTop />
-                <DocsLayout />
-              </BrowserRouter>
-            </TooltipProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-      );
-    }
-    
     // If we're on institutions subdomain, render the Enterprise component
     if (isDomainInstitutions) {
       return (
