@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Menu, X } from "lucide-react"
 import QRCodeModal from "@/components/QrCode"
 import { getAssetUrl } from "../utils/assetUtils"
+import { getCrossDomainUrl } from "../utils/domainUtils"
 
 export default function FuteurHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,7 +74,7 @@ export default function FuteurHeader() {
         <header className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="cursor-pointer">
+            <a href={getCrossDomainUrl("/")} className="cursor-pointer">
               <h1 className={`text-2xl font-black uppercase tracking-tight transition-colors hover:opacity-80 ${
                 isScrolled 
                   ? isTransparentHeader 
@@ -85,12 +86,12 @@ export default function FuteurHeader() {
                       ? useBlackText ? 'text-black' : 'text-white'
                       : 'text-white'
               }`}>FUTEURCREDX</h1>
-            </Link>
+            </a>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className={`transition-colors ${
+            <a href={getCrossDomainUrl("/")} className={`transition-colors ${
               isScrolled 
                 ? isTransparentHeader 
                   ? useBlackText ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-gray-300'
@@ -102,8 +103,8 @@ export default function FuteurHeader() {
                     : 'text-white hover:text-gray-300'
             }`}>
               Home
-            </Link>
-            <Link to="/business" className={`transition-colors ${
+            </a>
+            <a href={getCrossDomainUrl("/business")} className={`transition-colors ${
               isScrolled 
                 ? isTransparentHeader 
                   ? useBlackText ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-gray-300'
@@ -115,8 +116,8 @@ export default function FuteurHeader() {
                     : 'text-white hover:text-gray-300'
             }`}>
               Score
-            </Link>
-            <Link to="/lumiq-build" className={`transition-colors ${
+            </a>
+            <a href={getCrossDomainUrl("/lumiq-build")} className={`transition-colors ${
               isScrolled 
                 ? isTransparentHeader 
                   ? useBlackText ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-gray-300'
@@ -128,8 +129,8 @@ export default function FuteurHeader() {
                     : 'text-white hover:text-gray-300'
             }`}>
               Build
-            </Link>
-            <Link to="/credit-journey" className={`transition-colors ${
+            </a>
+            <a href={getCrossDomainUrl("/credit-journey")} className={`transition-colors ${
               isScrolled 
                 ? isTransparentHeader 
                   ? useBlackText ? 'text-slate-700 hover:text-blue-600' : 'text-white hover:text-gray-300'
@@ -141,7 +142,7 @@ export default function FuteurHeader() {
                     : 'text-white hover:text-gray-300'
             }`}>
               Journey
-            </Link>
+            </a>
             
           </nav>
 
@@ -202,8 +203,8 @@ export default function FuteurHeader() {
           <div className="flex flex-col space-y-6 p-6">
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col space-y-4">
-              <Link 
-                to="/" 
+              <a 
+                href={getCrossDomainUrl("/")} 
                 className={`text-xl py-3 border-b transition-colors ${
                   isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
@@ -216,9 +217,9 @@ export default function FuteurHeader() {
                 onClick={() => setMenuOpen(false)}
               >
                 Home
-              </Link>
-              <Link 
-                to="/business" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/business")} 
                 className={`text-xl py-3 border-b transition-colors ${
                   isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
@@ -231,9 +232,9 @@ export default function FuteurHeader() {
                 onClick={() => setMenuOpen(false)}
               >
                 Score
-              </Link>
-              <Link 
-                to="/lumiq-build" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/lumiq-build")} 
                 className={`text-xl py-3 border-b transition-colors ${
                   isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
@@ -246,9 +247,9 @@ export default function FuteurHeader() {
                 onClick={() => setMenuOpen(false)}
               >
                 Build
-              </Link>
-              <Link 
-                to="/credit-journey" 
+              </a>
+              <a 
+                href={getCrossDomainUrl("/credit-journey")} 
                 className={`text-xl py-3 border-b transition-colors ${
                   isWhiteHeader
                     ? 'text-slate-700 border-gray-200 hover:bg-blue-50'
@@ -261,7 +262,7 @@ export default function FuteurHeader() {
                 onClick={() => setMenuOpen(false)}
               >
                 Journey
-              </Link>
+              </a>
             </nav>
             
             {/* Mobile Download App Button */}

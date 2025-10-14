@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { getCrossDomainUrl } from "../utils/domainUtils";
 import EnterpriseCarouselSection from "@/components/enterprise/EnterpriseCarouselSection";
 import { 
   TrendingUp, 
@@ -653,12 +654,12 @@ const Enterprise = () => {
 
       {/* Floating CTA Button */}
       <div className="fixed bottom-8 right-8 z-50">
-        <Link to="/credit-journey#dashboard">
+        <a href={getCrossDomainUrl("/credit-journey#dashboard")}>
           <Button className="bg-black/30 backdrop-blur-sm text-white hover:bg-white hover:text-orange-500 px-6 py-4 rounded-full shadow-lg border border-white/10 transition-all font-bold uppercase text-crisp">
             <Gauge className="mr-2 h-5 w-5" />
             Start Journey
           </Button>
-        </Link>
+        </a>
       </div>
     </div>
   );

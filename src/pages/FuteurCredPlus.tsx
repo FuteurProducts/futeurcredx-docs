@@ -6,6 +6,7 @@ import { ArrowRight, Orbit, Rocket, Play, Info, ExternalLink, CheckCircle, Eye, 
 import DashboardScreen from "@/components/screen"
 import QRCodeModal from "@/components/QrCode"
 import { Link } from "react-router-dom"
+import { getCrossDomainUrl } from "../utils/domainUtils"
 import { ScrollParallax } from "react-just-parallax"
 
 export default function FuteurCredPlus() {
@@ -73,7 +74,7 @@ export default function FuteurCredPlus() {
                   Join FuteurCred+
                 </Button>
               </a>
-              <Link to="/credit-journey" className="inline-block">
+              <a href={getCrossDomainUrl("/credit-journey")} className="inline-block">
                 <Button
                   size="lg"
                   variant="outline"
@@ -82,7 +83,7 @@ export default function FuteurCredPlus() {
                   <Play className="mr-2 h-5 w-5" />
                   See LUMIQ AI™ Demo
                 </Button>
-              </Link>
+              </a>
             </div>
 
             {/* Dashboard Screen */}
@@ -358,7 +359,7 @@ export default function FuteurCredPlus() {
                   Start Your Journey
                 </Button>
               </a>
-              <Link to="/credit-journey" className="inline-block w-full sm:w-auto">
+              <a href={getCrossDomainUrl("/credit-journey")} className="inline-block w-full sm:w-auto">
                 <Button
                   size="lg"
                   variant="outline"
@@ -367,7 +368,7 @@ export default function FuteurCredPlus() {
                   <Eye className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 md:h-5 md:w-5" />
                   See Demo
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </section>
