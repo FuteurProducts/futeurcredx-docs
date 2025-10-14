@@ -76,29 +76,30 @@ export class ImagePreloader {
   }
 }
 
-// Critical images that should be preloaded immediately
+// Critical images that should be preloaded immediately (only essential logos)
 export const CRITICAL_IMAGES = [
   '/futeur.png',
+  '/logos/futeur.png'
+];
+
+// Hero and feature images (only the most important ones)
+export const HERO_IMAGES = [
+  '/enterprisesubhero/1.jpg'
+];
+
+// All other images that can be preloaded with lower priority
+export const SECONDARY_IMAGES = [
   '/futeursecure.png',
-  '/logos/futeur.png',
   '/business-logos/grainger.svg',
   '/business-logos/office-depot.svg',
   '/business-logos/staples.svg',
   '/fintech-logos/Brex.png',
   '/fintech-logos/Ramp.jpeg',
-  '/fintech-logos/mercury.png'
-];
-
-// Hero and feature images
-export const HERO_IMAGES = [
-  '/enterprisesubhero/1.jpg',
+  '/fintech-logos/mercury.png',
   '/enterprisesubhero/2.png',
-  '/enterprisesubhero/3.png'
-];
-
-// All other images that can be preloaded with lower priority
-export const SECONDARY_IMAGES = [
+  '/enterprisesubhero/3.png',
   '/business-logos-white/grainger.svg',
   '/business-logos-white/office-depot.svg',
   '/business-logos-white/staples.svg'
 ];
+

@@ -28,6 +28,22 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  build: {
+    // Optimize build for better performance
+    target: 'esnext',
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-tooltip'],
+          icons: ['lucide-react']
+        }
+      }
+    },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000
+  },
   plugins: [
     react(),
     mode === 'development' &&
@@ -39,3 +55,4 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+

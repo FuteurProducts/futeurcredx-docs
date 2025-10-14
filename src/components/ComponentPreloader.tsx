@@ -34,8 +34,8 @@ export default function ComponentPreloader() {
       }
     };
 
-    // Start preloading after a short delay to not interfere with initial load
-    const timer = setTimeout(preloadComponents, 2000);
+    // Start preloading after a longer delay to prioritize initial page load
+    const timer = setTimeout(preloadComponents, 5000);
     return () => clearTimeout(timer);
   }, []);
 

@@ -6,63 +6,36 @@ let isInitialPreloadComplete = false;
 let preloadPromise: Promise<void> | null = null;
 
 export const useImagePreloader = () => {
-  const [isLoading, setIsLoading] = useState(!isInitialPreloadComplete);
+  const [isLoading, setIsLoading] = useState(false); // Never show loading screen
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // If already preloaded, don't show loading screen
-    if (isInitialPreloadComplete) {
-      setIsLoading(false);
-      return;
+    // Start background preloading without blocking UI
+    if (!isInitialPreloadComplete && !preloadPromise) {
+      preloadPromise = (async () => {
+        try {
+          // Only preload critical images in background
+          await ImagePreloader.preloadImages(CRITICAL_IMAGES, { 
+            priority: 'high', 
+            batchSize: 3 
+          });
+          setProgress(50);
+
+          // Preload hero images in background
+          await ImagePreloader.preloadImages(HERO_IMAGES, { 
+            priority: 'medium', 
+            batchSize: 2 
+          });
+          setProgress(100);
+          
+          // Mark as complete
+          isInitialPreloadComplete = true;
+        } catch (error) {
+          console.warn('Background image preloading completed with some errors:', error);
+          isInitialPreloadComplete = true;
+        }
+      })();
     }
-
-    // If preload is in progress, wait for it
-    if (preloadPromise) {
-      preloadPromise.then(() => {
-        setIsLoading(false);
-      });
-      return;
-    }
-
-    // Start preloading
-    preloadPromise = (async () => {
-      try {
-        // Phase 1: Critical images (logos, icons) - highest priority
-        await ImagePreloader.preloadImages(CRITICAL_IMAGES, { 
-          priority: 'high', 
-          batchSize: 5 
-        });
-        setProgress(33);
-
-        // Phase 2: Hero images - medium priority
-        await ImagePreloader.preloadImages(HERO_IMAGES, { 
-          priority: 'medium', 
-          batchSize: 3 
-        });
-        setProgress(66);
-
-        // Phase 3: Secondary images - low priority
-        await ImagePreloader.preloadImages(SECONDARY_IMAGES, { 
-          priority: 'low', 
-          batchSize: 2 
-        });
-        setProgress(100);
-        
-        // Mark as complete
-        isInitialPreloadComplete = true;
-        
-        // Small delay to show completion
-        setTimeout(() => setIsLoading(false), 200);
-      } catch (error) {
-        console.warn('Image preloading completed with some errors:', error);
-        isInitialPreloadComplete = true;
-        setIsLoading(false);
-      }
-    })();
-
-    preloadPromise.then(() => {
-      setIsLoading(false);
-    });
   }, []);
 
   return { isLoading, progress };

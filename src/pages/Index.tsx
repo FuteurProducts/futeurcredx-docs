@@ -8,6 +8,8 @@ import BusinessSection from "@/components/BusinessSection"
 import Component from "@/components/comparison"
 import QRCodeModal from "@/components/QrCode"
 import Pricing from "@/components/Pricing"
+import LazyImage from "@/components/LazyImage"
+import SkeletonLoader from "@/components/SkeletonLoader"
 import { Link } from "react-router-dom"
 import { ScrollParallax } from "react-just-parallax";
 
@@ -17,9 +19,9 @@ export default function Index() {
       <div className="min-h-screen text-white">
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
-          {/* Background image */}
+          {/* Background image with lazy loading */}
           <div className="absolute inset-0 -z-10">
-            <img 
+            <LazyImage 
               src="/53.jpg" 
               alt="Hero background" 
               className="w-full h-full object-cover" 

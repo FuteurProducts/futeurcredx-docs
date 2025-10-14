@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import ImagePreloader from "./components/ImagePreloader";
 import ComponentPreloader from "./components/ComponentPreloader";
+import QuickLoader from "./components/QuickLoader";
 import Index from "./pages/Index";
 import Business from "./pages/Business";
 import Enterprise from "./pages/Enterprise";
@@ -127,6 +128,7 @@ const AppRouter = () => {
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <QuickLoader />
         <ImagePreloader />
         <ComponentPreloader />
         <Toaster />
