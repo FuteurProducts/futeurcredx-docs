@@ -26,22 +26,22 @@ const BusinessFooter = () => {
               <SmartLink to="/app" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Mobile App
               </SmartLink>
-              <a href={getCrossDomainUrl("/business")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/business" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Business Credit App
               </SmartLink>
-              <a href={getCrossDomainUrl("/enterprise")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/enterprise" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 For Banks
               </SmartLink>
-              <a href={getCrossDomainUrl("/fintech")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/fintech" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 For Fintechs
               </SmartLink>
-              <a href={getCrossDomainUrl("/api-docs")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/api-docs" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 API Documentation
               </SmartLink>
-              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/lumiq-build" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 LUMIQ AI Build
               </SmartLink>
-              <a href={getCrossDomainUrl("/credit-journey")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/credit-journey" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Credit Journey Demo
               </SmartLink>
             </div>
