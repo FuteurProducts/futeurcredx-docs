@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Link } from "react-router-dom"
 import { getCrossDomainUrl } from "../utils/domainUtils"
+import SmartLink from "@/components/SmartLink"
 import {
   ArrowRight,
   TrendingUp,
@@ -650,7 +651,7 @@ const CreditJourney = () => {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
-            <a href={getCrossDomainUrl("/business")}>
+            <SmartLink to="/business">
               <Button
                 size="lg"
                 className="w-full sm:w-auto bg-black/30 backdrop-blur-sm text-white hover:bg-black/40 px-8 sm:px-12 py-4 sm:py-6 text-lg sm:text-xl font-bold uppercase rounded-full border border-white/10 hover:border-white/30 transition-all"
@@ -659,7 +660,7 @@ const CreditJourney = () => {
                 Start My Credit Journey
                 <ArrowRight className="ml-2 h-5 w-5 sm:h-6 sm:w-6" />
               </Button>
-            </a>
+            </SmartLink>
           </div>
         </div>
       </section>

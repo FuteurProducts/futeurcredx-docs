@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { getCrossDomainUrl } from "../utils/domainUtils"
+import SmartLink from "@/components/SmartLink"
 import { ArrowRight, Facebook, Instagram, Twitter, Linkedin, Music } from "lucide-react"
 
 export default function Component() {
@@ -16,9 +17,9 @@ export default function Component() {
               Track and monitor your business credit score in real-time with our FSR tracking system. Get instant alerts 
               when your score changes and understand exactly what factors are affecting your business credit rating.
             </p>
-            <a href={getCrossDomainUrl("/business")}>
+            <SmartLink to="/business">
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </a>
+            </SmartLink>
           </div>
 
           {/* Build Card */}
@@ -29,9 +30,9 @@ export default function Component() {
               Discover and connect with vendors that actually report to business credit bureaus. Our platform provides
               comprehensive vendor scoring and helps you establish business credit without personal guarantees.
             </p>
-            <a href={getCrossDomainUrl("/lumiq-build")}>
+            <SmartLink to="/lumiq-build">
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </a>
+            </SmartLink>
           </div>
 
           {/* Journey Card */}
@@ -42,9 +43,9 @@ export default function Component() {
               Follow your personalized credit-building roadmap with AI-powered recommendations. Track your progress with 
               visual milestones and celebrate every win as you transform your business credit profile.
             </p>
-            <a href={getCrossDomainUrl("/credit-journey")}>
+            <SmartLink to="/credit-journey">
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </a>
+            </SmartLink>
           </div>
         </div>
       </div>
@@ -56,16 +57,16 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Main</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <SmartLink to="/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Home
-              </a>
-              <a href={getCrossDomainUrl("/faq")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/faq" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 FAQ's
-              </a>
+              </SmartLink>
               
-              <a href={getCrossDomainUrl("/credit-journey")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <SmartLink to="/credit-journey" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Credit Journey Demo
-              </a>
+              </SmartLink>
             </div>
           </div>
 
@@ -73,12 +74,12 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Business Solutions</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/business")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <SmartLink to="/business" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Business Credit Score
-              </a>
-              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/lumiq-build" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 LUMIQ AI Build
-              </a>
+              </SmartLink>
             </div>
           </div>
 
@@ -102,18 +103,18 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Company</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/about")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <SmartLink to="/about" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 About Us
-              </a>
-              <a href={getCrossDomainUrl("/contact-us")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/contact-us" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Contact Us
-              </a>
-              <a href={getCrossDomainUrl("/privacy-policy")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/privacy-policy" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Privacy Policy
-              </a>
-              <a href={getCrossDomainUrl("/terms-of-service")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/terms-of-service" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Terms of Service
-              </a>
+              </SmartLink>
             </div>
           </div>
         </div>
@@ -146,9 +147,9 @@ export default function Component() {
           <div className="text-xs text-white opacity-80 space-y-4 mb-8 font-medium">
             <p>
               To find out more about FUTEURCREDX services, please visit our{" "}
-              <a href={getCrossDomainUrl("/faq")} className="underline font-bold text-white hover:opacity-90">
+              <SmartLink to="/faq" className="underline font-bold text-white hover:opacity-90">
                 FAQ page
-              </a>
+              </SmartLink>
               . If you have any questions, please reach out to us via the contact form on our website or through the FUTEURCREDX app.
             </p>
 

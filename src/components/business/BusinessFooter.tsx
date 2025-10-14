@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getCrossDomainUrl } from "../../utils/domainUtils";
+import SmartLink from "@/components/SmartLink";
 
 const BusinessFooter = () => {
   return (
@@ -19,30 +20,30 @@ const BusinessFooter = () => {
           <div>
             <h4 className="font-semibold text-white mb-4">Explore</h4>
             <div className="space-y-2">
-              <a href={getCrossDomainUrl("/")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              <SmartLink to="/" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Home
-              </a>
-              <a href={getCrossDomainUrl("/app")} className="block text-gray-400 hover:text-white transition-colors text-sm">
+              </SmartLink>
+              <SmartLink to="/app" className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Mobile App
-              </a>
+              </SmartLink>
               <a href={getCrossDomainUrl("/business")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Business Credit App
-              </a>
+              </SmartLink>
               <a href={getCrossDomainUrl("/enterprise")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 For Banks
-              </a>
+              </SmartLink>
               <a href={getCrossDomainUrl("/fintech")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 For Fintechs
-              </a>
+              </SmartLink>
               <a href={getCrossDomainUrl("/api-docs")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 API Documentation
-              </a>
+              </SmartLink>
               <a href={getCrossDomainUrl("/lumiq-build")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 LUMIQ AI Build
-              </a>
+              </SmartLink>
               <a href={getCrossDomainUrl("/credit-journey")} className="block text-gray-400 hover:text-white transition-colors text-sm">
                 Credit Journey Demo
-              </a>
+              </SmartLink>
             </div>
           </div>
           
@@ -83,3 +84,4 @@ const BusinessFooter = () => {
 };
 
 export default BusinessFooter;
+

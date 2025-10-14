@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { Instagram, Twitter, Linkedin } from "lucide-react"
 import { getCrossDomainUrl } from "../../utils/domainUtils"
+import SmartLink from "@/components/SmartLink"
 
 export default function CleanFooter() {
   return (
@@ -12,15 +13,15 @@ export default function CleanFooter() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Main</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <SmartLink to="/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Home
-              </a>
-              <a href={getCrossDomainUrl("/faq")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/faq" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 FAQ's
-              </a>
-              <a href={getCrossDomainUrl("/credit-journey")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/credit-journey" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Credit Journey Demo
-              </a>
+              </SmartLink>
             </div>
           </div>
 
@@ -28,12 +29,12 @@ export default function CleanFooter() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Business Solutions</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/business")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <SmartLink to="/business" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Business Credit Score
-              </a>
-              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-70 hover:opacity-100 font-medium tracking-wide">
+              </SmartLink>
+              <SmartLink to="/lumiq-build" className="block text-white opacity-70 hover:opacity-100 font-medium tracking-wide">
                 Lumiq AI Build
-              </a>
+              </SmartLink>
             </div>
           </div>
 
@@ -43,13 +44,13 @@ export default function CleanFooter() {
             <div className="space-y-3">
               <a href="https://institutions.futeurcredx.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Institutions
-              </a>
+              </SmartLink>
               <a href="https://platform.futeurcredx.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Platform
-              </a>
+              </SmartLink>
               <a href="https://docs.futeurcredx.com/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Documentation
-              </a>
+              </SmartLink>
             </div>
           </div>
 
@@ -59,16 +60,16 @@ export default function CleanFooter() {
             <div className="space-y-3">
               <a href="https://www.futeur.ai/about" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 About Us
-              </a>
+              </SmartLink>
               <a href="https://www.futeur.ai/contact" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Contact
-              </a>
+              </SmartLink>
               <a href="https://www.futeur.ai/privacy-policy" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Privacy Policy
-              </a>
+              </SmartLink>
               <a href="https://www.futeur.ai/terms-and-condition" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Terms of Service
-              </a>
+              </SmartLink>
             </div>
           </div>
         </div>
@@ -83,13 +84,13 @@ export default function CleanFooter() {
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/futeurai/" target="_blank" rel="noopener noreferrer">
                 <Instagram className="w-5 h-5 text-white opacity-90 hover:opacity-100 cursor-pointer" />
-              </a>
+              </SmartLink>
               <a href="https://x.com/FuteurAI" target="_blank" rel="noopener noreferrer">
                 <Twitter className="w-5 h-5 text-white opacity-90 hover:opacity-100 cursor-pointer" />
-              </a>
+              </SmartLink>
               <a href="https://www.linkedin.com/company/futeurai/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="w-5 h-5 text-white opacity-90 hover:opacity-100 cursor-pointer" />
-              </a>
+              </SmartLink>
             </div>
           </div>
 
@@ -132,3 +133,4 @@ export default function CleanFooter() {
     </div>
   )
 }
+
