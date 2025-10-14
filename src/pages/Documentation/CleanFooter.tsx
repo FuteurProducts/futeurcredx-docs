@@ -66,10 +66,10 @@ export default function CleanFooter() {
               </SmartLink>
               <a href="https://www.futeur.ai/privacy-policy" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Privacy Policy
-              </SmartLink>
+              </a>
               <a href="https://www.futeur.ai/terms-and-condition" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Terms of Service
-              </SmartLink>
+              </a>
             </div>
           </div>
         </div>
@@ -84,13 +84,13 @@ export default function CleanFooter() {
             <div className="flex space-x-4">
               <a href="https://www.instagram.com/futeurai/" target="_blank" rel="noopener noreferrer">
                 <Instagram className="w-5 h-5 text-white opacity-90 hover:opacity-100 cursor-pointer" />
-              </SmartLink>
+              </a>
               <a href="https://x.com/FuteurAI" target="_blank" rel="noopener noreferrer">
                 <Twitter className="w-5 h-5 text-white opacity-90 hover:opacity-100 cursor-pointer" />
-              </SmartLink>
+              </a>
               <a href="https://www.linkedin.com/company/futeurai/posts/?feedView=all" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="w-5 h-5 text-white opacity-90 hover:opacity-100 cursor-pointer" />
-              </SmartLink>
+              </a>
             </div>
           </div>
 
