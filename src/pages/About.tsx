@@ -26,7 +26,7 @@ export default function About() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Background Image */}
-      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -37,7 +37,7 @@ export default function About() {
             }`}
           />
           {!imagesLoaded && (
-            <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+            <div className="absolute inset-0 bg-black" />
           )}
         </div>
         

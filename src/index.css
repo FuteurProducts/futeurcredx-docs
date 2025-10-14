@@ -101,6 +101,38 @@
     text-rendering: optimizeLegibility;
     transform: translateZ(0);
     backface-visibility: hidden;
+    overflow-x: hidden;
+    /* Prevent background flash during navigation */
+    background-attachment: fixed;
+  }
+
+  /* Prevent layout shifts during page transitions */
+  #root {
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Smooth page transitions */
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  }
+
+  .page-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -123,7 +155,6 @@
     text-wrap: balance;
   }
   
-  
   .glass-effect {
     backdrop-filter: blur(12px);
     background: rgba(255, 255, 255, 0.05);
@@ -141,3 +172,4 @@
     text-rendering: optimizeLegibility;
   }
 }
+

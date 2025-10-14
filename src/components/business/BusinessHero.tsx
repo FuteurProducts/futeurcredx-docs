@@ -35,7 +35,7 @@ export default function Component() {
     };
   }, []);
   return (
-    <div className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
+    <div className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
       {/* Background image - using HeroBackground component for better loading */}
       <HeroBackground imagePath="/45.jpg" overlayOpacity={20} showNoise={true} />
 

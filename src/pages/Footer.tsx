@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import { ArrowRight, Facebook, Instagram, Twitter, Linkedin, Music } from "lucide-react"
-import { getCrossDomainUrl } from "../utils/domainUtils"
 
 export default function Component() {
   return (
@@ -16,9 +15,9 @@ export default function Component() {
               Track and monitor your business credit score in real-time with our FSR tracking system. Get instant alerts 
               when your score changes and understand exactly what factors are affecting your business credit rating.
             </p>
-            <a href={getCrossDomainUrl("/business")}>
+            <Link to="/business">
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </a>
+            </Link>
           </div>
 
           {/* Build Card */}
@@ -29,9 +28,9 @@ export default function Component() {
               Discover and connect with vendors that actually report to business credit bureaus. Our platform provides
               comprehensive vendor scoring and helps you establish business credit without personal guarantees.
             </p>
-            <a href={getCrossDomainUrl("/lumiq-build")}>
+            <Link to="/lumiq-build">
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </a>
+            </Link>
           </div>
 
           {/* Journey Card */}
@@ -42,9 +41,9 @@ export default function Component() {
               Follow your personalized credit-building roadmap with AI-powered recommendations. Track your progress with 
               visual milestones and celebrate every win as you transform your business credit profile.
             </p>
-            <a href={getCrossDomainUrl("/credit-journey")}>
+            <Link to="/credit-journey">
               <ArrowRight className="absolute bottom-8 right-8 w-6 h-6" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -56,16 +55,16 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Main</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <Link to="/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Home
-              </a>
-              <a href={getCrossDomainUrl("/faq")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </Link>
+              <Link to="/faq" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 FAQ's
-              </a>
+              </Link>
               
-              <a href={getCrossDomainUrl("/credit-journey")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <Link to="/credit-journey" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Credit Journey Demo
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -73,12 +72,12 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Business Solutions</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/business")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <Link to="/business" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Business Credit Score
-              </a>
-              <a href={getCrossDomainUrl("/lumiq-build")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </Link>
+              <Link to="/lumiq-build" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 LUMIQ AI Build
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -102,18 +101,18 @@ export default function Component() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-tight text-white text-base">Company</h4>
             <div className="space-y-3">
-              <a href={getCrossDomainUrl("/about")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              <Link to="/about" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 About Us
-              </a>
-              <a href={getCrossDomainUrl("/contact-us")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </Link>
+              <Link to="/contact-us" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Contact Us
-              </a>
-              <a href={getCrossDomainUrl("/privacy-policy")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </Link>
+              <Link to="/privacy-policy" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Privacy Policy
-              </a>
-              <a href={getCrossDomainUrl("/terms-of-service")} className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
+              </Link>
+              <Link to="/terms-of-service" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Terms of Service
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -140,7 +140,7 @@ const CreditJourney = () => {
   return (
     <div className="min-h-screen bg-[#0E0E10] text-white">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
         {/* Background image with overlay - using HeroBackground component for better loading */}
         <HeroBackground imagePath="/46.jpg" overlayOpacity={30} showNoise={true} />
 

@@ -1,12 +1,31 @@
 import { useEffect, useState } from 'react';
 import { ImagePreloader, CRITICAL_IMAGES, HERO_IMAGES, SECONDARY_IMAGES } from '@/utils/imagePreloader';
 
+// Global state to track if initial preload is complete
+let isInitialPreloadComplete = false;
+let preloadPromise: Promise<void> | null = null;
+
 export const useImagePreloader = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!isInitialPreloadComplete);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const preloadImages = async () => {
+    // If already preloaded, don't show loading screen
+    if (isInitialPreloadComplete) {
+      setIsLoading(false);
+      return;
+    }
+
+    // If preload is in progress, wait for it
+    if (preloadPromise) {
+      preloadPromise.then(() => {
+        setIsLoading(false);
+      });
+      return;
+    }
+
+    // Start preloading
+    preloadPromise = (async () => {
       try {
         // Phase 1: Critical images (logos, icons) - highest priority
         await ImagePreloader.preloadImages(CRITICAL_IMAGES, { 
@@ -29,16 +48,23 @@ export const useImagePreloader = () => {
         });
         setProgress(100);
         
+        // Mark as complete
+        isInitialPreloadComplete = true;
+        
         // Small delay to show completion
         setTimeout(() => setIsLoading(false), 200);
       } catch (error) {
         console.warn('Image preloading completed with some errors:', error);
+        isInitialPreloadComplete = true;
         setIsLoading(false);
       }
-    };
+    })();
 
-    preloadImages();
+    preloadPromise.then(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   return { isLoading, progress };
 };
+

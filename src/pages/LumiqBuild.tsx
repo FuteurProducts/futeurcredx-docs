@@ -257,7 +257,7 @@ const LumiqBuild = () => {
       {/* Navigation is now provided by the RevolutHeader component */}
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
         {/* Background image with overlay - using HeroBackground component for better loading */}
         <HeroBackground imagePath="/9.jpg" overlayOpacity={5} showNoise={true} />
         <div className="max-w-7xl mx-auto relative text-center px-6">

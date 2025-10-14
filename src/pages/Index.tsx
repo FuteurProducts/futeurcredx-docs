@@ -16,7 +16,7 @@ export default function Index() {
     <TooltipProvider>
       <div className="min-h-screen text-white">
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-40">
+        <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
           {/* Background image */}
           <div className="absolute inset-0 -z-10">
             <img 

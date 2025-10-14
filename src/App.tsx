@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import ImagePreloader from "./components/ImagePreloader";
+import ComponentPreloader from "./components/ComponentPreloader";
 import Index from "./pages/Index";
 import Business from "./pages/Business";
 import Enterprise from "./pages/Enterprise";
@@ -127,6 +128,7 @@ const AppRouter = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <ImagePreloader />
+        <ComponentPreloader />
         <Toaster />
         <Sonner />
         <BrowserRouter>

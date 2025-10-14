@@ -119,8 +119,8 @@ const FintechPage = () => {
               </CardContent>
             </Card>
             {/* Ramp Card */}
-            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10 bg-gradient-to-br from-[#1F2937] to-[#111827] hover:border-white/20 hover:shadow-2xl hover:shadow-white/10" style={{ backgroundImage: "url('/17.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
-              <div className="absolute inset-0 bg-black/5"></div>
+            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-2xl hover:shadow-white/10" style={{ backgroundImage: "url('/17.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+              <div className="absolute inset-0 bg-black/30"></div>
               <CardContent className="p-0 relative z-10">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="bg-white/10 p-4 rounded-2xl">
@@ -148,8 +148,8 @@ const FintechPage = () => {
               </CardContent>
             </Card>
             {/* Mercury Card */}
-            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10 bg-gradient-to-br from-[#1F2937] to-[#111827] hover:border-white/20 hover:shadow-2xl hover:shadow-white/10" style={{ backgroundImage: "url('/18.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
-              <div className="absolute inset-0 bg-black/5"></div>
+            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-2xl hover:shadow-white/10" style={{ backgroundImage: "url('/18.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+              <div className="absolute inset-0 bg-black/30"></div>
               <CardContent className="p-0 relative z-10">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="bg-white/10 p-4 rounded-2xl">
