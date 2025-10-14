@@ -44,13 +44,13 @@ export default function CleanFooter() {
             <div className="space-y-3">
               <a href="https://institutions.futeurcredx.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Institutions
-              </SmartLink>
+              </a>
               <a href="https://platform.futeurcredx.com" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Platform
-              </SmartLink>
+              </a>
               <a href="https://docs.futeurcredx.com/" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Documentation
-              </SmartLink>
+              </a>
             </div>
           </div>
 
@@ -60,10 +60,10 @@ export default function CleanFooter() {
             <div className="space-y-3">
               <a href="https://www.futeur.ai/about" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 About Us
-              </SmartLink>
+              </a>
               <a href="https://www.futeur.ai/contact" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Contact
-              </SmartLink>
+              </a>
               <a href="https://www.futeur.ai/privacy-policy" target="_blank" rel="noopener noreferrer" className="block text-white opacity-90 hover:opacity-100 font-medium tracking-wide">
                 Privacy Policy
               </a>
