@@ -60,18 +60,18 @@ const FintechPage = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
               <div className="text-3xl font-bold text-white mb-2">+47%</div>
-              <div className="text-sm text-gray-300 font-medium">Average conversion increase</div>
-              <div className="text-xs text-gray-400 mt-1">With credit intelligence</div>
+              <div className="text-sm text-white font-semibold">Average conversion increase</div>
+              <div className="text-xs text-white/80 mt-1">With credit intelligence</div>
             </div>
             <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
               <div className="text-3xl font-bold text-white mb-2">+23%</div>
-              <div className="text-sm text-gray-300 font-medium">More accurate approvals</div>
-              <div className="text-xs text-gray-400 mt-1">Better risk assessment</div>
+              <div className="text-sm text-white font-semibold">More accurate approvals</div>
+              <div className="text-xs text-white/80 mt-1">Better risk assessment</div>
             </div>
             <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
               <div className="text-3xl font-bold text-white mb-2">85%</div>
-              <div className="text-sm text-gray-300 font-medium">Faster decisions</div>
-              <div className="text-xs text-gray-400 mt-1">Real-time processing</div>
+              <div className="text-sm text-white font-semibold">Faster decisions</div>
+              <div className="text-xs text-white/80 mt-1">Real-time processing</div>
             </div>
           </div>
         </div>
@@ -84,14 +84,13 @@ const FintechPage = () => {
             <h2 className="text-5xl font-bold text-white mb-6 tracking-tight uppercase">
               Your Revenue Potential with <span className="text-white">Credit Intelligence</span>
             </h2>
-            <p className="text-xl text-gray-300 font-light">
+            <p className="text-xl text-white/90 font-medium">
               Conservative projections based on proven fintech implementations.
             </p>
           </div>
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
             {/* Brex Card */}
-            <Card className="p-8 border border-white/10 bg-black/20" style={{ backgroundImage: "url('/16.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
-              <div className="absolute inset-0 bg-black/30"></div>
+            <Card className="p-8 border border-white/10 bg-black">
               <CardContent className="p-0 relative z-10">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="bg-white p-4 rounded-2xl">
@@ -104,7 +103,7 @@ const FintechPage = () => {
                 </div>
                 <div className="space-y-4 mb-6">
                   <div className="bg-black/30 p-4 rounded-xl border border-white/10">
-                    <div className="text-gray-400 font-semibold mb-1">Current State</div>
+                    <div className="text-white/90 font-semibold mb-1">Current State</div>
                     <div className="text-white font-bold">12% application conversion</div>
                   </div>
                   <div className="bg-white/10 p-4 rounded-xl border border-white/10">
@@ -114,7 +113,7 @@ const FintechPage = () => {
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl text-center border border-white/10">
                   <div className="text-white font-bold text-lg">$174M additional ARR potential</div>
-                  <div className="text-gray-300 text-sm">Based on credit visibility impact</div>
+                  <div className="text-white/90 text-sm">Based on credit visibility impact</div>
                 </div>
               </CardContent>
             </Card>
@@ -133,7 +132,7 @@ const FintechPage = () => {
                 </div>
                 <div className="space-y-4 mb-6">
                   <div className="bg-black/30 p-4 rounded-xl border border-white/10">
-                    <div className="text-gray-400 font-semibold mb-1">Current State</div>
+                    <div className="text-white/90 font-semibold mb-1">Current State</div>
                     <div className="text-white font-bold">15% underwriting approval</div>
                   </div>
                   <div className="bg-white/10 p-4 rounded-xl border border-white/10">
@@ -143,7 +142,7 @@ const FintechPage = () => {
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl text-center border border-white/10">
                   <div className="text-white font-bold text-lg">$120M additional ARR potential</div>
-                  <div className="text-gray-300 text-sm">With enhanced credit intelligence</div>
+                  <div className="text-white/90 text-sm">With enhanced credit intelligence</div>
                 </div>
               </CardContent>
             </Card>
@@ -162,7 +161,7 @@ const FintechPage = () => {
                 </div>
                 <div className="space-y-4 mb-6">
                   <div className="bg-black/30 p-4 rounded-xl border border-white/10">
-                    <div className="text-gray-400 font-semibold mb-1">Current State</div>
+                    <div className="text-white/90 font-semibold mb-1">Current State</div>
                     <div className="text-white font-bold">8% lending product uptake</div>
                   </div>
                   <div className="bg-white/10 p-4 rounded-xl border border-white/10">
@@ -172,7 +171,7 @@ const FintechPage = () => {
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl text-center border border-white/10">
                   <div className="text-white font-bold text-lg">$90M additional ARR potential</div>
-                  <div className="text-gray-300 text-sm">Through credit journey integration</div>
+                  <div className="text-white/90 text-sm">Through credit journey integration</div>
                 </div>
               </CardContent>
             </Card>
@@ -183,15 +182,15 @@ const FintechPage = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <div>
                 <div className="text-4xl font-bold text-white mb-2">$384M+</div>
-                <div className="text-white/80">Additional ARR potential</div>
+                <div className="text-white font-semibold">Additional ARR potential</div>
               </div>
               <div>
                 <div className="text-5xl font-bold text-white mb-4">47%</div>
-                <div className="text-white/80">Average conversion increase</div>
+                <div className="text-white font-semibold">Average conversion increase</div>
               </div>
               <div>
                 <div className="text-4xl font-bold text-white mb-2">90%</div>
-                <div className="text-white/80">Customer satisfaction boost</div>
+                <div className="text-white font-semibold">Customer satisfaction boost</div>
               </div>
             </div>
           </div>
@@ -201,15 +200,15 @@ const FintechPage = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <div>
                 <div className="text-5xl font-bold text-white mb-4">580%</div>
-                <div className="text-white/90 text-lg">ROI in first year</div>
+                <div className="text-white font-semibold text-lg">ROI in first year</div>
               </div>
               <div>
                 <div className="text-5xl font-bold text-white mb-4">$2.4M</div>
-                <div className="text-white/90 text-lg">Additional revenue per 10K MAU</div>
+                <div className="text-white font-semibold text-lg">Additional revenue per 10K MAU</div>
               </div>
               <div>
                 <div className="text-5xl font-bold text-white mb-4">4 weeks</div>
-                <div className="text-white/90 text-lg">Time to break even</div>
+                <div className="text-white font-semibold text-lg">Time to break even</div>
               </div>
             </div>
           </div>
@@ -227,7 +226,7 @@ const FintechPage = () => {
             <h2 className="text-5xl font-bold text-white mb-6 tracking-tight uppercase">
               <span className="text-white">LUMIQ AI™</span> — Built for Modern Fintechs
             </h2>
-            <p className="text-xl text-gray-300 font-light">
+            <p className="text-xl text-white/90 font-medium">
               Drop-in credit intelligence that integrates with your existing stack in hours, not months.
             </p>
           </div>
