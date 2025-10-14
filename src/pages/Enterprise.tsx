@@ -174,7 +174,7 @@ const Enterprise = () => {
       {/* Navigation is now provided by the RevolutHeader component */}
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-6 relative overflow-hidden bg-black">
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24 px-6 bg-black">
         {/* Background image with overlay - using HeroBackground component for better loading */}
         <HeroBackground imagePath="/01.jpg" overlayOpacity={30} showNoise={true} />
         

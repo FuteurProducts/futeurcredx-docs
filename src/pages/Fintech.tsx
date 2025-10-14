@@ -22,9 +22,9 @@ const FintechPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
       {/* Revenue Alert Section */}
-      <section className="pt-32 pb-12 px-6 relative bg-cover bg-center" style={{ backgroundImage: "url('/60.jpg')" }}>
+      <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24 px-6 bg-cover bg-center" style={{ backgroundImage: "url('/60.jpg')" }}>
         <div className="absolute inset-0 bg-black/5"></div>
-        <div className="max-w-7xl mx-auto text-center relative z-10">
+        <div className="max-w-7xl mx-auto text-center relative z-10 w-full">
           <div className="inline-flex items-center gap-3 bg-white/10 px-6 py-3 rounded-full mb-8 border border-white/20">
             <TrendingUp className="h-5 w-5 text-white animate-pulse" />
             <span className="font-medium text-white text-sm uppercase tracking-tight">Revenue Optimization Alert</span>
@@ -41,7 +41,7 @@ const FintechPage = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Button
               size="lg"
-              className="bg-black/30 text-white border border-white/10 hover:bg-white hover:text-orange-500 transition-all px-10 py-4 text-lg font-bold uppercase text-crisp"
+              className="bg-black/30 text-white border border-white/10 hover:bg-white hover:text-orange-500 transition-colors duration-200 px-10 py-4 text-lg font-bold uppercase text-crisp"
             >
               <Gauge className="mr-3 h-6 w-6" />
               Start Free Integration
@@ -90,8 +90,8 @@ const FintechPage = () => {
           </div>
           <div className="grid lg:grid-cols-3 gap-8 mb-16">
             {/* Brex Card */}
-            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10  hover:border-white/20 hover:shadow-2xl hover:shadow-white/10">
-              <div className="absolute inset-0 bg-black/5"></div>
+            <Card className="group p-8 hover:scale-[1.005] transition-transform duration-200 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-lg" style={{ backgroundImage: "url('/16.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+              <div className="absolute inset-0 bg-black/30"></div>
               <CardContent className="p-0 relative z-10">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="bg-white p-4 rounded-2xl">
@@ -119,7 +119,7 @@ const FintechPage = () => {
               </CardContent>
             </Card>
             {/* Ramp Card */}
-            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-2xl hover:shadow-white/10" style={{ backgroundImage: "url('/17.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+            <Card className="group p-8 hover:scale-[1.005] transition-transform duration-200 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-lg" style={{ backgroundImage: "url('/17.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="absolute inset-0 bg-black/30"></div>
               <CardContent className="p-0 relative z-10">
                 <div className="flex items-center gap-4 mb-6">
@@ -148,7 +148,7 @@ const FintechPage = () => {
               </CardContent>
             </Card>
             {/* Mercury Card */}
-            <Card className="group p-8 hover:scale-[1.02] transition-all duration-500 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-2xl hover:shadow-white/10" style={{ backgroundImage: "url('/18.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
+            <Card className="group p-8 hover:scale-[1.005] transition-transform duration-200 border border-white/10 bg-black/20 hover:border-white/20 hover:shadow-lg" style={{ backgroundImage: "url('/18.jpg')", backgroundSize: "cover", backgroundPosition: "center" }}>
               <div className="absolute inset-0 bg-black/30"></div>
               <CardContent className="p-0 relative z-10">
                 <div className="flex items-center gap-4 mb-6">
@@ -233,7 +233,7 @@ const FintechPage = () => {
           </div>
           <div className="grid lg:grid-cols-2 gap-8 mb-16">
             {/* LUMIQ AI Conversion Engine */}
-            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
+            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-colors duration-200">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <Target className="h-8 w-8 text-white" />
@@ -261,7 +261,7 @@ const FintechPage = () => {
               </div>
             </Card>
             {/* LUMIQ AI Underwriting Assistant */}
-            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
+            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-colors duration-200">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <Database className="h-8 w-8 text-white" />
@@ -287,7 +287,7 @@ const FintechPage = () => {
               </div>
             </Card>
             {/* LUMIQ AI Engagement Dashboard */}
-            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
+            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-colors duration-200">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <BarChart3 className="h-8 w-8 text-white" />
@@ -313,7 +313,7 @@ const FintechPage = () => {
               </div>
             </Card>
             {/* LUMIQ AI Risk Intelligence */}
-            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-300">
+            <Card className="p-8 bg-white/5 border border-white/10 hover:border-white/20 transition-colors duration-200">
               <div className="flex items-center gap-4 mb-6">
                 <div className="bg-white/10 p-4 rounded-2xl">
                   <Bell className="h-8 w-8 text-white" />
