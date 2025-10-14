@@ -53,10 +53,11 @@ export class ImagePreloader {
       const promises = batch.map(src => this.preloadImage(src).catch(console.warn));
       await Promise.all(promises);
       
-      // Small delay between batches for low priority images
+      // Small delay between batches only for low priority images
       if (options.priority === 'low' && i + batchSize < images.length) {
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 50)); // Reduced delay
       }
+      // No delay for high priority images
     }
   }
 
@@ -76,10 +77,18 @@ export class ImagePreloader {
   }
 }
 
-// Critical images that should be preloaded immediately (only essential logos)
+// Critical images that should be preloaded immediately (essential logos and hero backgrounds)
 export const CRITICAL_IMAGES = [
   '/futeur.png',
-  '/logos/futeur.png'
+  '/logos/futeur.png',
+  '/53.jpg', // Main hero background
+  '/60.jpg', // Fintech page background
+  '/about-bg.jpg', // About page background
+  '/contact-hero.jpg', // Contact page background
+  '/cover.jpg', // FuteurCredPlus background
+  '/Dark-Experian.png', // Frequently used logo
+  '/Dark-Equifax.png', // Frequently used logo
+  '/lumiq.png' // LUMIQ logo
 ];
 
 // Hero and feature images (only the most important ones)

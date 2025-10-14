@@ -19,9 +19,9 @@ export default function Index() {
       <div className="min-h-screen text-white">
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24">
-          {/* Background image with lazy loading */}
+          {/* Background image - critical, loads immediately */}
           <div className="absolute inset-0 -z-10">
-            <LazyImage 
+            <img 
               src="/53.jpg" 
               alt="Hero background" 
               className="w-full h-full object-cover" 

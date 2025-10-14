@@ -14,17 +14,17 @@ export const useImagePreloader = () => {
     if (!isInitialPreloadComplete && !preloadPromise) {
       preloadPromise = (async () => {
         try {
-          // Only preload critical images in background
+          // Preload critical images immediately with high priority
           await ImagePreloader.preloadImages(CRITICAL_IMAGES, { 
             priority: 'high', 
-            batchSize: 3 
+            batchSize: 5 // Larger batch for critical images
           });
           setProgress(50);
 
           // Preload hero images in background
           await ImagePreloader.preloadImages(HERO_IMAGES, { 
             priority: 'medium', 
-            batchSize: 2 
+            batchSize: 3 
           });
           setProgress(100);
           
