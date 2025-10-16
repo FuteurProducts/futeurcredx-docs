@@ -194,3 +194,49 @@ img {
   }
 }
 
+/* Clerk input border overrides */
+.cl-formFieldInput,
+.cl-input,
+.cl-input__input,
+.cl-otpCodeFieldInput {
+  border: 1px solid #ffffff !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+/* Stronger selectors to catch all Clerk inputs */
+.cl-root input,
+.cl-root .cl-input > input,
+.cl-root .cl-formFieldInput,
+.cl-root .cl-otpCodeFieldInput {
+  border: 1px solid #ffffff !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+.cl-input:focus-within,
+.cl-formFieldInput:focus,
+.cl-input__input:focus,
+.cl-otpCodeFieldInput:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #ffffff !important;
+}
+
+.cl-root input:focus,
+.cl-root .cl-input > input:focus,
+.cl-root .cl-formFieldInput:focus,
+.cl-root .cl-otpCodeFieldInput:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #ffffff !important;
+}
+
+.cl-formFieldLabel,
+.cl-headerTitle,
+.cl-footerActionLink {
+  color: #ffffff !important;
+}
+
