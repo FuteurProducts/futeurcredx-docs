@@ -221,8 +221,10 @@ img {
 .cl-input__input:focus,
 .cl-otpCodeFieldInput:focus {
   outline: none !important;
-  box-shadow: none !important;
   border-color: #ffffff !important;
+  background: rgba(59, 130, 246, 0.08) !important; /* subtle blue tint */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35) !important; /* glow ring */
+  caret-color: #ffffff !important;
 }
 
 .cl-root input:focus,
@@ -230,8 +232,10 @@ img {
 .cl-root .cl-formFieldInput:focus,
 .cl-root .cl-otpCodeFieldInput:focus {
   outline: none !important;
-  box-shadow: none !important;
   border-color: #ffffff !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35) !important;
+  caret-color: #ffffff !important;
 }
 
 .cl-formFieldLabel,
