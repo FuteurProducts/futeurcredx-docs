@@ -71,7 +71,7 @@ const Register: React.FC = () => {
                   dividerText: "hidden",
                   formFieldRow: "w-full mb-3 sm:mb-4",
                   formFieldInput:
-                    "bg-black border border-white text-white placeholder-gray-500 focus:border-white focus:ring-0 rounded-md py-2 sm:py-3 px-3 sm:px-4 transition-all duration-200 text-xs sm:text-sm w-full min-w-0",
+                    "bg-black border border-white text-white placeholder-gray-500 focus:border-white focus:ring-0 focus:outline-none ring-0 outline-none rounded-md py-2 sm:py-3 px-3 sm:px-4 transition-all duration-200 text-xs sm:text-sm w-full min-w-0",
                   formFieldLabel: "text-white font-normal text-xs sm:text-sm mb-1 sm:mb-2",
                   formButtonPrimary:
                     "bg-white text-black font-normal hover:bg-gray-100 transition-all duration-200 rounded-md py-2 sm:py-3 px-3 sm:px-4 w-full text-xs sm:text-sm min-w-0",

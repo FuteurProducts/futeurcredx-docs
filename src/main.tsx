@@ -30,6 +30,11 @@ createRoot(document.getElementById("root")!).render(
         baseTheme: undefined,
         variables: {
           colorPrimary: "#3b82f6",
+          colorInputBackground: "#000000",
+          colorInputText: "#ffffff",
+          colorText: "#ffffff",
+          colorInputBorder: "#ffffff",
+          colorInputBorderFocus: "#ffffff",
         },
       }}
     >
@@ -37,3 +42,4 @@ createRoot(document.getElementById("root")!).render(
     </ClerkProvider>
   </StrictMode>
 );
+
