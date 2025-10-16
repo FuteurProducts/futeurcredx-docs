@@ -29,10 +29,6 @@
       ]
     }
   ],
-  "functions": {
-    "src/pages/api/**/*.js": {
-      "maxDuration": 30
-    }
-  }
+  
 }
 
