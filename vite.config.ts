@@ -42,7 +42,15 @@ export default defineConfig(({ mode }) => ({
       }
     },
     // Increase chunk size warning limit
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    // Optimize assets
+    assetsInlineLimit: 4096,
+    // Enable asset optimization
+    assetsDir: 'assets'
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
   },
   plugins: [
     react(),
