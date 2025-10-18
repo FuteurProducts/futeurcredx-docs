@@ -25,10 +25,10 @@ export default function FuteurCredPlus() {
 
   // Handle video loading with timeout
   useEffect(() => {
-    // Set a maximum loading time of 3 seconds
+    // Set a maximum loading time of 5 seconds for production
     const maxLoadingTimer = setTimeout(() => {
       setIsLoading(false)
-    }, 3000)
+    }, 5000)
 
     if (videoLoaded) {
       // Add a small delay to ensure smooth transition
@@ -152,17 +152,15 @@ export default function FuteurCredPlus() {
                         disablePictureInPicture
                         onLoadedData={() => setVideoLoaded(true)}
                         onCanPlayThrough={() => setVideoLoaded(true)}
-                        preload="auto"
+                        onLoadStart={() => setVideoLoaded(true)}
+                        preload="metadata"
+                        crossOrigin="anonymous"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
                         {/* Fallback content */}
-                        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-                          <p className="text-white text-center">
-                            Video not supported
-                            <br />
-                            <span className="text-sm opacity-70">Animation.mp4</span>
-                          </p>
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <p className="text-gray-500 text-sm">Video loading...</p>
                         </div>
                       </video>
                     </div>
@@ -185,17 +183,15 @@ export default function FuteurCredPlus() {
                         disablePictureInPicture
                         onLoadedData={() => setVideoLoaded(true)}
                         onCanPlayThrough={() => setVideoLoaded(true)}
-                        preload="auto"
+                        onLoadStart={() => setVideoLoaded(true)}
+                        preload="metadata"
+                        crossOrigin="anonymous"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
                         {/* Fallback content */}
-                        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-                          <p className="text-white text-center">
-                            Video not supported
-                            <br />
-                            <span className="text-sm opacity-70">Animation.mp4</span>
-                          </p>
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <p className="text-gray-500 text-sm">Video loading...</p>
                         </div>
                       </video>
                     </div>
