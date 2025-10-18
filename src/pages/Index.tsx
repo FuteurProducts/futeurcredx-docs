@@ -166,7 +166,7 @@ export default function Index() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white/10 px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl rounded-full bg-transparent w-full sm:w-auto"
+                  className="border-2 border-white text-white hover:bg-white/10 hover:text-white px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl rounded-full bg-transparent w-full sm:w-auto"
                 >
                   <Eye className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 md:h-5 md:w-5" />
                   See Operating System Demo

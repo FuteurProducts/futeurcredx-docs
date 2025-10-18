@@ -50,7 +50,7 @@ const FintechPage = () => {
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-white/10 text-white px-8 py-4 text-lg uppercase bg-transparent"
+              className="border-2 border-white/10 text-white hover:text-white px-8 py-4 text-lg uppercase bg-transparent"
             >
               <Code className="mr-3 h-5 w-5" />
               View API Docs
@@ -446,7 +446,7 @@ const preQual = await lumiq.prequalify({
             <Button
               size="lg"
               variant="outline"
-              className="border-2 border-white/30 text-white px-8 py-4 text-lg rounded-full bg-transparent"
+              className="border-2 border-white/30 text-white hover:text-white px-8 py-4 text-lg rounded-full bg-transparent"
             >
               <Code className="mr-3 h-5 w-5" />
               View Technical Docs

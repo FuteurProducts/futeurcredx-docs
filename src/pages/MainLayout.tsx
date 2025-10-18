@@ -26,7 +26,7 @@ import { SignedIn } from '@clerk/clerk-react';
 
 const MainLayout = () => {
   const location = useLocation();
-  const showHeader = location.pathname !== '/dashboard' && !location.pathname.startsWith('/docs');
+  const showHeader = location.pathname !== '/dashboard' && !location.pathname.startsWith('/docs') && location.pathname !== '/futeurcred-plus';
 
   return (
     <>

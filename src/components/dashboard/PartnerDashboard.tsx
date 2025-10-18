@@ -403,7 +403,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                       business.status === 'active' 
                         ? 'bg-green-100 text-green-800'
                         : business.status === 'trial'
-                        ? 'bg-yellow-100 text-yellow-800'
+                        ? 'bg-white/20 text-white'
                         : 'bg-gray-100 text-gray-800'
                     }`}>
                       {business.status === 'active' && <CheckCircle className="w-3 h-3 mr-1" />}

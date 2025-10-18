@@ -2,94 +2,156 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { ArrowRight, Orbit, Rocket, Play, Info, ExternalLink, CheckCircle, Eye, Network, Building2, Gauge, Download, Shield, BarChart3, Brain, LineChart, LockKeyhole, RefreshCw, Globe, TrendingUp, Lock, Trophy, ShoppingCart, FileSearch, MessageSquare, Search, Receipt, Compass, Handshake, Building, Presentation } from "lucide-react"
+import { ArrowRight, Orbit, Rocket, Play, Info, ExternalLink, CheckCircle, Eye, Network, Building2, Gauge, Download, Shield, BarChart3, Brain, LineChart, LockKeyhole, RefreshCw, Globe, TrendingUp, Lock, Trophy, ShoppingCart, FileSearch, MessageSquare, Search, Receipt, Compass, Handshake, Building, Presentation, ArrowLeft } from "lucide-react"
 import DashboardScreen from "@/components/screen"
 import QRCodeModal from "@/components/QrCode"
 import { Link } from "react-router-dom"
 import { getCrossDomainUrl } from "../utils/domainUtils"
 import SmartLink from "@/components/SmartLink"
 import { ScrollParallax } from "react-just-parallax"
+import { useState, useEffect } from "react"
 
 export default function FuteurCredPlus() {
+  const [videoLoaded, setVideoLoaded] = useState(false)
+  const [scrollY, setScrollY] = useState(0)
+
+  // Handle scroll for blur effect
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
   return (
     <TooltipProvider>
       <div className="min-h-screen text-white">
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center overflow-hidden -mt-20 pt-24 px-6">
-          {/* Background image */}
-          <div className="absolute inset-0 -z-10">
-            <img 
-              src="/53.jpg" 
-              alt="Hero background" 
-              className="w-full h-full object-cover" 
-            />
-            <div className="absolute inset-0 bg-black/20"></div> {/* Overlay for text readability */}
-          </div>
-          <div className="max-w-6xl mx-auto">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-8">
-              <Orbit className="h-4 w-4 text-white" />
-              <span className="text-sm font-medium text-white">FuteurCred+ Premium Business Credit Suite</span>
+        {/* Back Button */}
+        <div className="fixed top-6 left-6 z-50">
+          <button
+            onClick={() => window.history.back()}
+            className="flex items-center gap-2 bg-black/20 backdrop-blur-sm text-white px-4 py-2 rounded-full border border-white/20 hover:bg-black/40 transition-all duration-200"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="text-sm font-medium">Back</span>
+          </button>
+        </div>
+
+        {/* Hero Section - White Background */}
+        <section className="min-h-screen bg-white text-black flex items-center justify-center px-4 relative overflow-hidden">
+          {/* Top blur overlay */}
+          <div
+            className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/80 to-transparent backdrop-blur-sm z-10"
+            style={{
+              backdropFilter: `blur(${Math.min(scrollY / 50, 8)}px)`,
+              opacity: Math.min(scrollY / 200, 0.8),
+            }}
+          ></div>
+
+          <div className="max-w-7xl mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center justify-between relative z-10 py-20">
+            {/* Text content positioned on the left */}
+            <div className="lg:max-w-[45%] w-full">
+              <p className="text-gray-600 mb-4 text-sm">FuteurCred+ for $32 per month</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-2 leading-tight text-black">
+                FUTEURCRED+
+                <br />
+                </h1>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-black">
+                NOT JUST A CREDIT SCORE
+                <br />
+                A PATH TO POWER
+              </h1>
+              <p className="text-lg text-gray-700 mb-8 max-w-md leading-relaxed">
+                FuteurCred+ unlocks live multi-agency credit reporting, Lumiq™ growth tracking, AI-powered score boosters, and automated reputation-building tools—all in one sleek dashboard.
+              </p>
+              <ul className="mb-8 max-w-md space-y-2">
+                <li className="flex items-start">
+                  <span className="mr-2 font-bold">✓</span>
+                  <span>Equifax. Experian. D&B.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 font-bold">✓</span>
+                  <span>Smart score triggers, not static numbers.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="mr-2 font-bold">✓</span>
+                  <span>Every action fuels your score. Literally.</span>
+                </li>
+              </ul>
+              <button 
+                className="bg-black text-white px-8 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors"
+                onClick={() => window.location.href = 'https://app.futeur.ai/signin'}
+              >
+                Join FuteurCred+
+              </button>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[0.9] tracking-tight">
-              FUTEURCREDX+
-              <br />
-              <span className="text-white">NOT JUST A CREDIT SCORE</span>
-              <br />
-              <span className="text-white">A PATH TO POWER</span>
-            </h1>
+            {/* Video Container positioned on the right */}
+            <div className="lg:max-w-[50%] w-full mt-12 lg:mt-0 flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Desktop Video Container */}
+                <div className="lg:block hidden">
+                  <div className="relative w-[600px] h-[720px]">
+                    {/* Video container seamless with white background */}
+                    <div className="w-full h-full overflow-hidden bg-transparent">
+                      <video
+                        className="w-full h-full object-cover scale-110 origin-center"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
+                        onLoadedData={() => setVideoLoaded(true)}
+                        preload="auto"
+                      >
+                        <source src="/Animation.mp4" type="video/mp4" />
+                        <source src="/Animation.mp4" type="video/mp4" />
+                        {/* Fallback content */}
+                        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                          <p className="text-white text-center">
+                            Video not supported
+                            <br />
+                            <span className="text-sm opacity-70">Animation.mp4</span>
+                          </p>
+                        </div>
+                      </video>
+                    </div>
 
-            {/* Subheading */}
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl font-normal leading-relaxed">
-              <strong className="text-white">FUTEURCREDX+</strong> unlocks live multi-agency credit reporting, 
-              <strong className="text-white">LUMIQ AI™</strong> growth tracking, AI-powered score boosters, and automated 
-              reputation-building tools—all in one sleek dashboard.
-            </p>
+                    {/* Removing decorative elements for cleaner look */}
+                  </div>
+                </div>
 
-            {/* Features List */}
-            <ul className="mb-12 max-w-md space-y-3 text-lg">
-              <li className="flex items-start">
-                <CheckCircle className="mr-3 h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>Equifax. Experian. D&B.</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="mr-3 h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>Smart score triggers, not static numbers.</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="mr-3 h-6 w-6 text-green-400 mt-0.5 flex-shrink-0" />
-                <span>Every action fuels your score. Literally.</span>
-              </li>
-            </ul>
+                {/* Mobile Video Container */}
+                <div className="lg:hidden w-full flex justify-center">
+                  <div className="relative w-[320px] h-[400px]">
+                    <div className="w-full h-full overflow-hidden bg-transparent">
+                      <video
+                        className="w-full h-full rounded-lg object-cover"
+                        muted
+                        loop
+                        autoPlay
+                        playsInline
+                        controlsList="nodownload nofullscreen noremoteplayback"
+                        disablePictureInPicture
+                        onLoadedData={() => setVideoLoaded(true)}
+                        preload="auto"
+                      >
+                        <source src="/Animation.mp4" type="video/mp4" />
+                        <source src="/Animation.mp4" type="video/mp4" />
+                        {/* Fallback content */}
+                        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
+                          <p className="text-white text-center">
+                            Video not supported
+                            <br />
+                            <span className="text-sm opacity-70">Animation.mp4</span>
+                          </p>
+                        </div>
+                      </video>
+                    </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-16 justify-center relative z-50">
-              <a href="https://app.futeur.ai/signin" target="_blank" rel="noopener noreferrer">
-                <Button
-                  size="lg"
-                  className="bg-white text-black hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full relative z-50"
-                >
-                  <Download className="mr-2 h-5 w-5" />
-                  Join FuteurCred+
-                </Button>
-              </a>
-              <SmartLink to="/credit-journey" className="inline-block">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full bg-transparent"
-                >
-                  <Play className="mr-2 h-5 w-5" />
-                  See LUMIQ AI™ Demo
-                </Button>
-              </SmartLink>
-            </div>
-
-            {/* Dashboard Screen */}
-            <div className="relative w-full max-w-5xl mx-auto min-h-[70vh] flex items-center justify-center z-10">
-              <DashboardScreen className="w-full" />
+                    {/* Removing mobile decorative elements */}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -194,7 +256,7 @@ export default function FuteurCredPlus() {
           {/* Background image */}
           <div className="absolute inset-0 -z-10">
             <img 
-              src="/cover.jpg" 
+              src="/credit-back.jpg" 
               alt="Credit background" 
               className="w-full h-full object-cover" 
             />
@@ -281,15 +343,15 @@ export default function FuteurCredPlus() {
             {/* Feature Cards */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {/* Pre-Approval Alerts Card */}
-              <div className="bg-gradient-to-br from-amber-100 to-orange-200 rounded-3xl p-8 text-left relative overflow-hidden h-auto">
+              <div className="bg-black/25 backdrop-blur-[2px] rounded-3xl p-8 text-center relative overflow-hidden h-auto border border-white/10">
                 <div className="relative z-10">
-                  <div className="flex items-center mb-3">
-                    <Trophy className="w-6 h-6 text-amber-600 mr-2" />
+                  <div className="flex items-center justify-center mb-3">
+                    <Trophy className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-4">
-                    Auto-Trigger Pre-Approval Alerts
+                  <h3 className="text-xl font-bold text-white mb-4">
+                    PRE-APPROVAL
                   </h3>
-                  <p className="text-gray-700 text-sm mb-6">
+                  <p className="text-white/80 text-sm mb-6">
                     Be the first to know when lenders are watching.
                     Our Lumiq Radar™ detects bureau pings and predictive interest from banks — before they send the mailers.
                     Know when you're hot. Strike when you're golden.
@@ -298,15 +360,15 @@ export default function FuteurCredPlus() {
               </div>
               
               {/* Dynamic Credit Limit Engine Card */}
-              <div className="bg-gradient-to-br from-blue-100 to-cyan-200 rounded-3xl p-8 text-left relative overflow-hidden h-auto">
+              <div className="bg-black/25 backdrop-blur-[2px] rounded-3xl p-8 text-center relative overflow-hidden h-auto border border-white/10">
                 <div className="relative z-10">
-                  <div className="flex items-center mb-3">
-                    <TrendingUp className="w-6 h-6 text-blue-600 mr-2" />
+                  <div className="flex items-center justify-center mb-3">
+                    <TrendingUp className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-4">
-                    Dynamic Credit Limit Engine
+                  <h3 className="text-xl font-bold text-white mb-4">
+                    CREDIT LIMITS
                   </h3>
-                  <p className="text-gray-700 text-sm mb-6">
+                  <p className="text-white/80 text-sm mb-6">
                     We don't set limits. You grow them.
                     Our system dynamically unlocks higher credit thresholds based on your Lumiq™ behavior — not fixed underwriting.
                     It's not what you have. It's what your data says you deserve.
@@ -315,15 +377,15 @@ export default function FuteurCredPlus() {
               </div>
               
               {/* Invite-Only Lending Tiers Card */}
-              <div className="bg-gradient-to-br from-emerald-100 to-green-200 rounded-3xl p-8 text-left relative overflow-hidden h-auto">
+              <div className="bg-black/25 backdrop-blur-[2px] rounded-3xl p-8 text-center relative overflow-hidden h-auto border border-white/10">
                 <div className="relative z-10">
-                  <div className="flex items-center mb-3">
-                    <Lock className="w-6 h-6 text-emerald-600 mr-2" />
+                  <div className="flex items-center justify-center mb-3">
+                    <Lock className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-black mb-4">
-                    Invite-Only Lending Tiers
+                  <h3 className="text-xl font-bold text-white mb-4">
+                    LENDING TIERS
                   </h3>
-                  <p className="text-gray-700 text-sm mb-6">
+                  <p className="text-white/80 text-sm mb-6">
                     Hit Lumiq milestones. Unlock private capital.
                     Access FuteurCred+ tiered lending vaults — only available once your AI score unlocks the gateway.
                     Your score is the key. The vault is real.
@@ -364,7 +426,7 @@ export default function FuteurCredPlus() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white/10 px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl rounded-full bg-transparent w-full sm:w-auto"
+                  className="border-2 border-white text-white hover:bg-white/10 hover:text-white px-6 sm:px-8 md:px-10 py-4 sm:py-5 md:py-6 text-base sm:text-lg md:text-xl rounded-full bg-transparent w-full sm:w-auto"
                 >
                   <Eye className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 md:h-5 md:w-5" />
                   See Demo

@@ -204,7 +204,7 @@ const Enterprise = () => {
               SCHEDULE C-SUITE DEMO
               <ArrowRight className="ml-3 h-6 w-6" />
             </Button>
-            <Button size="lg" variant="outline" className="border border-white/10 text-white hover:bg-black/30 px-8 py-4 text-lg rounded-full">
+            <Button size="lg" variant="outline" className="border border-white/10 text-white hover:bg-black/30 hover:text-white px-8 py-4 text-lg rounded-full">
               <Code className="mr-3 h-5 w-5" />
               REQUEST TECHNICAL SPECS
             </Button>
@@ -620,7 +620,7 @@ const Enterprise = () => {
               </Button>
             </a>
             <a href="https://www.futeur.ai/contact" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline" className="border-2 border-white/10 text-white hover:bg-black/30 px-6 py-4 uppercase">
+              <Button size="lg" variant="outline" className="border-2 border-white/10 text-white hover:bg-black/30 hover:text-white px-6 py-4 uppercase">
                 <Code className="mr-2 h-4 w-4" />
                 Request Technical Documentation
               </Button>

@@ -136,9 +136,9 @@ const ProductionTest: React.FC = () => {
         )}
 
         {/* Instructions */}
-        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <h3 className="text-yellow-800 font-medium mb-2">Setup Instructions:</h3>
-          <ol className="text-yellow-700 text-sm space-y-1 list-decimal list-inside">
+        <div className="mt-8 bg-white/10 border border-white/20 rounded-lg p-4">
+          <h3 className="text-white font-medium mb-2">Setup Instructions:</h3>
+          <ol className="text-white/80 text-sm space-y-1 list-decimal list-inside">
             <li>Go to your Clerk Dashboard (https://dashboard.clerk.com)</li>
             <li>Select your application</li>
             <li>Go to Settings → Domains</li>

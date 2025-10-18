@@ -108,14 +108,11 @@ const Pricing = () => {
                 {/* Pricing */}
                 <div className="mb-4 sm:mb-6">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-black line-through opacity-70">
-                      $32
-                    </span>
-                    <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-black opacity-60">FREE</span>
+                    <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-black">FREE</span>
                   </div>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-sm sm:text-base md:text-lg text-gray-600">
-                      First month free, then $32/month
+                      First month free, then $32/m
                     </span>
                   </div>
                 </div>

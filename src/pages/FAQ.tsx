@@ -1141,7 +1141,7 @@ const FAQ = () => {
                     <Button 
                       onClick={() => {setSearchTerm(''); setSelectedCategory('all');}}
                       variant="outline"
-                      className="border-white/20 text-white hover:bg-white/10 text-sm"
+                      className="border-white/20 text-white hover:bg-white/10 hover:text-white text-sm"
                     >
                       Clear Filters
                     </Button>

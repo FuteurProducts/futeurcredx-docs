@@ -608,7 +608,7 @@ const LumiqBuild = () => {
               </Button>
             </a>
             <a href="https://apps.apple.com/us/app/futeurcred/id6736497241" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline" className="border border-white/10 text-white hover:bg-black/40 px-8 py-6 text-lg transition-all">
+              <Button size="lg" variant="outline" className="border border-white/10 text-white hover:bg-black/40 hover:text-white px-8 py-6 text-lg transition-all">
                 <Eye className="mr-2 h-5 w-5" />
                 Explore FUTEURCREDX App
               </Button>

@@ -331,9 +331,9 @@ const AuthTestPage: React.FC = () => {
         )}
 
         {/* Troubleshooting Tips */}
-        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <h3 className="text-yellow-800 font-medium mb-2">Troubleshooting Tips:</h3>
-          <ul className="text-yellow-700 text-sm space-y-1">
+        <div className="mt-8 bg-white/10 border border-white/20 rounded-lg p-4">
+          <h3 className="text-white font-medium mb-2">Troubleshooting Tips:</h3>
+          <ul className="text-white/80 text-sm space-y-1">
             <li>• If login/register works but API calls fail, it's likely a CORS or domain restriction issue</li>
             <li>• Check the browser console for detailed error messages</li>
             <li>• Make sure you're using the correct API key for your domain</li>
