@@ -9,43 +9,89 @@ import { Link } from "react-router-dom"
 import { getCrossDomainUrl } from "../utils/domainUtils"
 import SmartLink from "@/components/SmartLink"
 import { ScrollParallax } from "react-just-parallax"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function FuteurCredPlus() {
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [mediaLoading, setMediaLoading] = useState(true)
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [prevScrollY, setPrevScrollY] = useState(0)
 
-  // Handle scroll for blur effect
+  // Handle scroll for blur effect and header visibility
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      setIsHeaderVisible(prevScrollY > currentScrollY || currentScrollY < 10)
+      setPrevScrollY(currentScrollY)
+      setScrollY(currentScrollY)
+    }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [prevScrollY])
 
-  // Handle video loading with timeout
+  // Preload critical media with better loading logic
   useEffect(() => {
-    // Set a maximum loading time of 5 seconds for production
-    const maxLoadingTimer = setTimeout(() => {
-      setIsLoading(false)
-    }, 5000)
-
-    if (videoLoaded) {
-      // Add a small delay to ensure smooth transition
-      const timer = setTimeout(() => {
-        setIsLoading(false)
-      }, 500)
-      return () => {
-        clearTimeout(timer)
-        clearTimeout(maxLoadingTimer)
-      }
+    // Preload video with proper event handling
+    const video = document.createElement('video')
+    video.preload = 'auto'
+    video.muted = true
+    
+    // Create source element for the video
+    const source = document.createElement('source')
+    source.src = "/Animation.mp4"
+    source.type = 'video/mp4'
+    video.appendChild(source)
+    
+    // Handle video loading events
+    const handleVideoLoad = () => {
+      setVideoLoaded(true)
     }
-
-    return () => clearTimeout(maxLoadingTimer)
-  }, [videoLoaded])
+    
+    video.onloadeddata = handleVideoLoad
+    video.oncanplaythrough = handleVideoLoad
+    
+    // Hide loading state when video is ready
+    Promise.all([
+      new Promise(resolve => {
+        // Short timeout for smooth transition
+        setTimeout(() => resolve(true), 100)
+      }),
+      new Promise(resolve => {
+        video.oncanplaythrough = () => resolve(true)
+        // Fallback in case video takes too long
+        setTimeout(() => resolve(true), 3000)
+      })
+    ]).then(() => {
+      setMediaLoading(false)
+    })
+    
+    return () => {
+      video.onloadeddata = null
+      video.oncanplaythrough = null
+    }
+  }, [])
   return (
     <TooltipProvider>
-      <div className="min-h-screen text-white">
+      <div className="min-h-screen bg-white">
+        {/* Loading overlay with smooth animation */}
+        <AnimatePresence>
+          {mediaLoading && (
+            <motion.div 
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="fixed inset-0 bg-white z-[100] flex items-center justify-center"
+            >
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 border-4 border-gray-200 border-t-black rounded-full animate-spin mb-4"></div>
+                <p className="text-gray-600 font-medium">Loading FuteurCred+...</p>
+              </div>
+            </motion.div>
+          )}  
+        </AnimatePresence>
+
         {/* Back Button */}
         <div className="fixed top-6 left-6 z-50">
           <button
@@ -57,35 +103,7 @@ export default function FuteurCredPlus() {
           </button>
         </div>
 
-        {/* Loading Screen - Replaces Hero Section */}
-        {isLoading ? (
-          <section className="min-h-screen bg-white text-black flex items-center justify-center px-4 relative overflow-hidden">
-            <div className="text-center">
-              {/* Logo */}
-              <div className="mb-8">
-                <h1 className="text-4xl font-black uppercase tracking-tight text-black mb-2">
-                  FUTEURCREDX
-                </h1>
-                <div className="w-16 h-1 bg-black mx-auto"></div>
-              </div>
-              
-              {/* Loading Animation */}
-              <div className="flex items-center justify-center mb-6">
-                <div className="relative">
-                  <div className="w-16 h-16 border-4 border-black/20 border-t-black rounded-full animate-spin"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-8 h-8 border-2 border-transparent border-t-black/60 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '0.8s'}}></div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Loading Text */}
-              <p className="text-black/80 text-lg mb-2">Loading FuteurCred+</p>
-              <p className="text-black/60 text-sm">Preparing your credit journey...</p>
-            </div>
-          </section>
-        ) : (
-          /* Hero Section - White Background */
+        {/* Hero Section - White Background */}
         <section className="min-h-screen bg-white text-black flex items-center justify-center px-4 relative overflow-hidden">
           {/* Top blur overlay */}
           <div
@@ -151,10 +169,7 @@ export default function FuteurCredPlus() {
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
                         onLoadedData={() => setVideoLoaded(true)}
-                        onCanPlayThrough={() => setVideoLoaded(true)}
-                        onLoadStart={() => setVideoLoaded(true)}
-                        preload="metadata"
-                        crossOrigin="anonymous"
+                        preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
@@ -182,10 +197,7 @@ export default function FuteurCredPlus() {
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
                         onLoadedData={() => setVideoLoaded(true)}
-                        onCanPlayThrough={() => setVideoLoaded(true)}
-                        onLoadStart={() => setVideoLoaded(true)}
-                        preload="metadata"
-                        crossOrigin="anonymous"
+                        preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
@@ -203,7 +215,6 @@ export default function FuteurCredPlus() {
             </div>
           </div>
         </section>
-        )}
 
         {/* Features Overview Section */}
         <section className="min-h-screen flex items-center justify-center px-6 bg-gray-50">
