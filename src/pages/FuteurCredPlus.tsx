@@ -33,6 +33,13 @@ export default function FuteurCredPlus() {
 
   // Preload critical media with better loading logic
   useEffect(() => {
+    // Preload critical images
+    const bgImage = new Image()
+    bgImage.src = "/cover.jpg"
+    
+    const creditBgImage = new Image()
+    creditBgImage.src = "/credit-back.jpg"
+    
     // Preload video with proper event handling
     const video = document.createElement('video')
     video.preload = 'auto'
@@ -312,16 +319,17 @@ export default function FuteurCredPlus() {
         </section>
 
         {/* Credit Understanding Section */}
-        <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6">
-          {/* Background image */}
-          <div className="absolute inset-0 -z-10">
-            <img 
-              src="/credit-back.jpg" 
-              alt="Credit background" 
-              className="w-full h-full object-cover" 
-            />
-            <div className="absolute inset-0 bg-black/40"></div>
-          </div>
+        <section 
+          className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 min-h-screen flex items-center"
+          style={{
+            backgroundImage: 'url(/credit-back.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Background overlay */}
+          <div className="absolute inset-0 bg-black/40 -z-10"></div>
           
           <div className="max-w-6xl mx-auto text-center relative z-10">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-white max-w-4xl mx-auto">
@@ -457,7 +465,7 @@ export default function FuteurCredPlus() {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6">
+        <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-black">
           <div className="max-w-5xl mx-auto text-center">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight px-2">
               Ready to unlock
