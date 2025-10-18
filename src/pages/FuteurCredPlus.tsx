@@ -14,6 +14,7 @@ import { useState, useEffect } from "react"
 export default function FuteurCredPlus() {
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   // Handle scroll for blur effect
   useEffect(() => {
@@ -21,8 +22,48 @@ export default function FuteurCredPlus() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Handle video loading
+  useEffect(() => {
+    if (videoLoaded) {
+      // Add a small delay to ensure smooth transition
+      const timer = setTimeout(() => {
+        setIsLoading(false)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [videoLoaded])
   return (
     <TooltipProvider>
+      {/* Loading Screen */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <div className="text-center">
+            {/* Logo */}
+            <div className="mb-8">
+              <h1 className="text-4xl font-black uppercase tracking-tight text-white mb-2">
+                FUTEURCREDX
+              </h1>
+              <div className="w-16 h-1 bg-white mx-auto"></div>
+            </div>
+            
+            {/* Loading Animation */}
+            <div className="flex items-center justify-center mb-6">
+              <div className="relative">
+                <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-8 h-8 border-2 border-transparent border-t-white/60 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '0.8s'}}></div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Loading Text */}
+            <p className="text-white/80 text-lg mb-2">Loading FuteurCred+</p>
+            <p className="text-white/60 text-sm">Preparing your credit journey...</p>
+          </div>
+        </div>
+      )}
+
       <div className="min-h-screen text-white">
         {/* Back Button */}
         <div className="fixed top-6 left-6 z-50">
@@ -101,6 +142,7 @@ export default function FuteurCredPlus() {
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
                         onLoadedData={() => setVideoLoaded(true)}
+                        onCanPlayThrough={() => setVideoLoaded(true)}
                         preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
@@ -133,6 +175,7 @@ export default function FuteurCredPlus() {
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
                         onLoadedData={() => setVideoLoaded(true)}
+                        onCanPlayThrough={() => setVideoLoaded(true)}
                         preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
