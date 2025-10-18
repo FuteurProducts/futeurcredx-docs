@@ -33,6 +33,23 @@ export default function FuteurCredPlus() {
 
   // Preload critical media with better loading logic
   useEffect(() => {
+    // Test if video file exists first
+    fetch('/Animation.mp4', { method: 'HEAD' })
+      .then(response => {
+        console.log('Video file exists:', response.ok)
+        if (!response.ok) {
+          console.error('Video file not found or not accessible')
+          // If video doesn't exist, hide loading immediately
+          setMediaLoading(false)
+          return
+        }
+      })
+      .catch(error => {
+        console.error('Error checking video file:', error)
+        // If there's an error checking, hide loading immediately
+        setMediaLoading(false)
+      })
+
     // Preload video with proper event handling
     const video = document.createElement('video')
     video.preload = 'auto'
@@ -44,13 +61,20 @@ export default function FuteurCredPlus() {
     source.type = 'video/mp4'
     video.appendChild(source)
     
-    // Handle video loading events
+    // Handle video loading events with debugging
     const handleVideoLoad = () => {
+      console.log('Video loaded successfully')
       setVideoLoaded(true)
+    }
+    
+    const handleVideoError = (e) => {
+      console.error('Video loading error:', e)
+      setVideoLoaded(true) // Still hide loading even if video fails
     }
     
     video.onloadeddata = handleVideoLoad
     video.oncanplaythrough = handleVideoLoad
+    video.onerror = handleVideoError
     
     // Hide loading state when video is ready
     Promise.all([
@@ -59,17 +83,25 @@ export default function FuteurCredPlus() {
         setTimeout(() => resolve(true), 100)
       }),
       new Promise(resolve => {
-        video.oncanplaythrough = () => resolve(true)
+        video.oncanplaythrough = () => {
+          console.log('Video can play through')
+          resolve(true)
+        }
         // Fallback in case video takes too long
-        setTimeout(() => resolve(true), 3000)
+        setTimeout(() => {
+          console.log('Video loading timeout, proceeding anyway')
+          resolve(true)
+        }, 2000) // Reduced timeout since video is missing
       })
     ]).then(() => {
+      console.log('Media loading complete')
       setMediaLoading(false)
     })
     
     return () => {
       video.onloadeddata = null
       video.oncanplaythrough = null
+      video.onerror = null
     }
   }, [])
   return (
@@ -160,6 +192,15 @@ export default function FuteurCredPlus() {
                   <div className="relative w-[600px] h-[720px]">
                     {/* Video container seamless with white background */}
                     <div className="w-full h-full overflow-hidden bg-transparent">
+                      {/* Fallback image when video is not available */}
+                      <img 
+                        src="/dashboard.png" 
+                        alt="FuteurCred+ Dashboard Preview" 
+                        className="w-full h-full object-cover scale-110 origin-center"
+                        onError={() => {
+                          console.log('Dashboard image also failed to load')
+                        }}
+                      />
                       <video
                         className="w-full h-full object-cover scale-110 origin-center"
                         autoPlay
@@ -168,14 +209,29 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
-                        onLoadedData={() => setVideoLoaded(true)}
+                        onLoadedData={() => {
+                          console.log('Desktop video loaded')
+                          setVideoLoaded(true)
+                        }}
+                        onError={(e) => {
+                          console.error('Desktop video error:', e)
+                        }}
+                        onCanPlay={() => {
+                          console.log('Desktop video can play')
+                        }}
                         preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
                         {/* Fallback content */}
-                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                          <p className="text-gray-500 text-sm">Video loading...</p>
+                        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                          <div className="text-center text-white">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <Play className="w-8 h-8" />
+                            </div>
+                            <p className="text-lg font-semibold mb-2">FuteurCred+ Demo</p>
+                            <p className="text-sm opacity-80">Video loading...</p>
+                          </div>
                         </div>
                       </video>
                     </div>
@@ -188,6 +244,15 @@ export default function FuteurCredPlus() {
                 <div className="lg:hidden w-full flex justify-center">
                   <div className="relative w-[320px] h-[400px]">
                     <div className="w-full h-full overflow-hidden bg-transparent">
+                      {/* Fallback image when video is not available */}
+                      <img 
+                        src="/dashboard.png" 
+                        alt="FuteurCred+ Dashboard Preview" 
+                        className="w-full h-full rounded-lg object-cover"
+                        onError={() => {
+                          console.log('Mobile dashboard image also failed to load')
+                        }}
+                      />
                       <video
                         className="w-full h-full rounded-lg object-cover"
                         muted
@@ -196,14 +261,29 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
-                        onLoadedData={() => setVideoLoaded(true)}
+                        onLoadedData={() => {
+                          console.log('Mobile video loaded')
+                          setVideoLoaded(true)
+                        }}
+                        onError={(e) => {
+                          console.error('Mobile video error:', e)
+                        }}
+                        onCanPlay={() => {
+                          console.log('Mobile video can play')
+                        }}
                         preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
                         {/* Fallback content */}
-                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                          <p className="text-gray-500 text-sm">Video loading...</p>
+                        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                          <div className="text-center text-white">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                              <Play className="w-8 h-8" />
+                            </div>
+                            <p className="text-lg font-semibold mb-2">FuteurCred+ Demo</p>
+                            <p className="text-sm opacity-80">Video loading...</p>
+                          </div>
                         </div>
                       </video>
                     </div>
