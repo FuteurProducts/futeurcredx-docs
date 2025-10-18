@@ -237,15 +237,27 @@ export default function FuteurCredPlus() {
         </section>
 
         {/* Credit Understanding Section */}
-        <section 
-          className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 min-h-screen flex items-center"
-          style={{
-            backgroundImage: 'url(/credit-back.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
+        <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 min-h-screen flex items-center bg-black">
+          {/* Background image with multiple fallbacks */}
+          <div 
+            className="absolute inset-0 -z-10"
+            style={{
+              backgroundImage: 'url(/credit-back.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              backgroundAttachment: 'fixed'
+            }}
+          >
+            <img 
+              src="/credit-back.jpg" 
+              alt="Credit background" 
+              className="w-full h-full object-cover absolute inset-0"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          </div>
           {/* Background overlay */}
           <div className="absolute inset-0 bg-black/40 -z-10"></div>
           
