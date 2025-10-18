@@ -44,20 +44,13 @@ export default function FuteurCredPlus() {
     source.type = 'video/mp4'
     video.appendChild(source)
     
-    // Handle video loading events with debugging
+    // Handle video loading events
     const handleVideoLoad = () => {
-      console.log('Video loaded successfully')
       setVideoLoaded(true)
-    }
-    
-    const handleVideoError = (e) => {
-      console.error('Video loading error:', e)
-      setVideoLoaded(true) // Still hide loading even if video fails
     }
     
     video.onloadeddata = handleVideoLoad
     video.oncanplaythrough = handleVideoLoad
-    video.onerror = handleVideoError
     
     // Hide loading state when video is ready
     Promise.all([
@@ -66,25 +59,17 @@ export default function FuteurCredPlus() {
         setTimeout(() => resolve(true), 100)
       }),
       new Promise(resolve => {
-        video.oncanplaythrough = () => {
-          console.log('Video can play through')
-          resolve(true)
-        }
+        video.oncanplaythrough = () => resolve(true)
         // Fallback in case video takes too long
-        setTimeout(() => {
-          console.log('Video loading timeout, proceeding anyway')
-          resolve(true)
-        }, 3000)
+        setTimeout(() => resolve(true), 3000)
       })
     ]).then(() => {
-      console.log('Media loading complete')
       setMediaLoading(false)
     })
     
     return () => {
       video.onloadeddata = null
       video.oncanplaythrough = null
-      video.onerror = null
     }
   }, [])
   return (
@@ -183,29 +168,14 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
-                        onLoadedData={() => {
-                          console.log('Desktop video loaded')
-                          setVideoLoaded(true)
-                        }}
-                        onError={(e) => {
-                          console.error('Desktop video error:', e)
-                        }}
-                        onCanPlay={() => {
-                          console.log('Desktop video can play')
-                        }}
+                        onLoadedData={() => setVideoLoaded(true)}
                         preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
                         {/* Fallback content */}
-                        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                          <div className="text-center text-white">
-                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <Play className="w-8 h-8" />
-                            </div>
-                            <p className="text-lg font-semibold mb-2">FuteurCred+ Demo</p>
-                            <p className="text-sm opacity-80">Video loading...</p>
-                          </div>
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <p className="text-gray-500 text-sm">Video loading...</p>
                         </div>
                       </video>
                     </div>
@@ -226,29 +196,14 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
-                        onLoadedData={() => {
-                          console.log('Mobile video loaded')
-                          setVideoLoaded(true)
-                        }}
-                        onError={(e) => {
-                          console.error('Mobile video error:', e)
-                        }}
-                        onCanPlay={() => {
-                          console.log('Mobile video can play')
-                        }}
+                        onLoadedData={() => setVideoLoaded(true)}
                         preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
                         <source src="/Animation.mp4" type="video/mp4" />
                         {/* Fallback content */}
-                        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                          <div className="text-center text-white">
-                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <Play className="w-8 h-8" />
-                            </div>
-                            <p className="text-lg font-semibold mb-2">FuteurCred+ Demo</p>
-                            <p className="text-sm opacity-80">Video loading...</p>
-                          </div>
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <p className="text-gray-500 text-sm">Video loading...</p>
                         </div>
                       </video>
                     </div>
