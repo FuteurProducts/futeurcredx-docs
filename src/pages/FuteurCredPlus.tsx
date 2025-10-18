@@ -33,23 +33,6 @@ export default function FuteurCredPlus() {
 
   // Preload critical media with better loading logic
   useEffect(() => {
-    // Test if video file exists first
-    fetch('/Animation.mp4', { method: 'HEAD' })
-      .then(response => {
-        console.log('Video file exists:', response.ok)
-        if (!response.ok) {
-          console.error('Video file not found or not accessible')
-          // If video doesn't exist, hide loading immediately
-          setMediaLoading(false)
-          return
-        }
-      })
-      .catch(error => {
-        console.error('Error checking video file:', error)
-        // If there's an error checking, hide loading immediately
-        setMediaLoading(false)
-      })
-
     // Preload video with proper event handling
     const video = document.createElement('video')
     video.preload = 'auto'
@@ -91,7 +74,7 @@ export default function FuteurCredPlus() {
         setTimeout(() => {
           console.log('Video loading timeout, proceeding anyway')
           resolve(true)
-        }, 2000) // Reduced timeout since video is missing
+        }, 3000)
       })
     ]).then(() => {
       console.log('Media loading complete')
@@ -192,15 +175,6 @@ export default function FuteurCredPlus() {
                   <div className="relative w-[600px] h-[720px]">
                     {/* Video container seamless with white background */}
                     <div className="w-full h-full overflow-hidden bg-transparent">
-                      {/* Fallback image when video is not available */}
-                      <img 
-                        src="/dashboard.png" 
-                        alt="FuteurCred+ Dashboard Preview" 
-                        className="w-full h-full object-cover scale-110 origin-center"
-                        onError={() => {
-                          console.log('Dashboard image also failed to load')
-                        }}
-                      />
                       <video
                         className="w-full h-full object-cover scale-110 origin-center"
                         autoPlay
@@ -244,15 +218,6 @@ export default function FuteurCredPlus() {
                 <div className="lg:hidden w-full flex justify-center">
                   <div className="relative w-[320px] h-[400px]">
                     <div className="w-full h-full overflow-hidden bg-transparent">
-                      {/* Fallback image when video is not available */}
-                      <img 
-                        src="/dashboard.png" 
-                        alt="FuteurCred+ Dashboard Preview" 
-                        className="w-full h-full rounded-lg object-cover"
-                        onError={() => {
-                          console.log('Mobile dashboard image also failed to load')
-                        }}
-                      />
                       <video
                         className="w-full h-full rounded-lg object-cover"
                         muted
