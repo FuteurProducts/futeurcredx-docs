@@ -23,47 +23,28 @@ export default function FuteurCredPlus() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Handle video loading
+  // Handle video loading with timeout
   useEffect(() => {
+    // Set a maximum loading time of 3 seconds
+    const maxLoadingTimer = setTimeout(() => {
+      setIsLoading(false)
+    }, 3000)
+
     if (videoLoaded) {
       // Add a small delay to ensure smooth transition
       const timer = setTimeout(() => {
         setIsLoading(false)
       }, 500)
-      return () => clearTimeout(timer)
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(maxLoadingTimer)
+      }
     }
+
+    return () => clearTimeout(maxLoadingTimer)
   }, [videoLoaded])
   return (
     <TooltipProvider>
-      {/* Loading Screen */}
-      {isLoading && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
-          <div className="text-center">
-            {/* Logo */}
-            <div className="mb-8">
-              <h1 className="text-4xl font-black uppercase tracking-tight text-white mb-2">
-                FUTEURCREDX
-              </h1>
-              <div className="w-16 h-1 bg-white mx-auto"></div>
-            </div>
-            
-            {/* Loading Animation */}
-            <div className="flex items-center justify-center mb-6">
-              <div className="relative">
-                <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 border-2 border-transparent border-t-white/60 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '0.8s'}}></div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Loading Text */}
-            <p className="text-white/80 text-lg mb-2">Loading FuteurCred+</p>
-            <p className="text-white/60 text-sm">Preparing your credit journey...</p>
-          </div>
-        </div>
-      )}
-
       <div className="min-h-screen text-white">
         {/* Back Button */}
         <div className="fixed top-6 left-6 z-50">
@@ -76,7 +57,35 @@ export default function FuteurCredPlus() {
           </button>
         </div>
 
-        {/* Hero Section - White Background */}
+        {/* Loading Screen - Replaces Hero Section */}
+        {isLoading ? (
+          <section className="min-h-screen bg-white text-black flex items-center justify-center px-4 relative overflow-hidden">
+            <div className="text-center">
+              {/* Logo */}
+              <div className="mb-8">
+                <h1 className="text-4xl font-black uppercase tracking-tight text-black mb-2">
+                  FUTEURCREDX
+                </h1>
+                <div className="w-16 h-1 bg-black mx-auto"></div>
+              </div>
+              
+              {/* Loading Animation */}
+              <div className="flex items-center justify-center mb-6">
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-black/20 border-t-black rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-8 h-8 border-2 border-transparent border-t-black/60 rounded-full animate-spin" style={{animationDirection: 'reverse', animationDuration: '0.8s'}}></div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Loading Text */}
+              <p className="text-black/80 text-lg mb-2">Loading FuteurCred+</p>
+              <p className="text-black/60 text-sm">Preparing your credit journey...</p>
+            </div>
+          </section>
+        ) : (
+          /* Hero Section - White Background */
         <section className="min-h-screen bg-white text-black flex items-center justify-center px-4 relative overflow-hidden">
           {/* Top blur overlay */}
           <div
@@ -198,6 +207,7 @@ export default function FuteurCredPlus() {
             </div>
           </div>
         </section>
+        )}
 
         {/* Features Overview Section */}
         <section className="min-h-screen flex items-center justify-center px-6 bg-gray-50">
