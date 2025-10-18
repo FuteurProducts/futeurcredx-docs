@@ -10,6 +10,8 @@ import { getCrossDomainUrl } from "../utils/domainUtils"
 import SmartLink from "@/components/SmartLink"
 import { ScrollParallax } from "react-just-parallax"
 import { useState, useEffect } from "react"
+import creditBackImage from "../assets/images/credit-back.jpg"
+import animationVideo from "../assets/videos/Animation.mp4"
 
 export default function FuteurCredPlus() {
   const [scrollY, setScrollY] = useState(0)
@@ -107,8 +109,8 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
+                        src={animationVideo}
                       >
-                        <source src="/Animation.mp4" type="video/mp4" />
                       </video>
                     </div>
 
@@ -128,8 +130,8 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
+                        src={animationVideo}
                       >
-                        <source src="/Animation.mp4" type="video/mp4" />
                       </video>
                     </div>
 
@@ -238,30 +240,30 @@ export default function FuteurCredPlus() {
 
         {/* Credit Understanding Section */}
         <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 min-h-screen flex items-center bg-black">
-          {/* Background image with multiple fallbacks */}
+          {/* Background image */}
           <div 
-            className="absolute inset-0 -z-10"
+            className="absolute inset-0 z-0"
             style={{
-              backgroundImage: 'url(/credit-back.jpg)',
+              backgroundImage: `url(${creditBackImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              backgroundAttachment: 'fixed'
+              backgroundRepeat: 'no-repeat'
             }}
           >
             <img 
-              src="/credit-back.jpg" 
+              src={creditBackImage} 
               alt="Credit background" 
-              className="w-full h-full object-cover absolute inset-0"
+              className="w-full h-full object-cover"
               onError={(e) => {
+                console.log('Image failed to load:', e);
                 e.currentTarget.style.display = 'none';
               }}
             />
           </div>
           {/* Background overlay */}
-          <div className="absolute inset-0 bg-black/40 -z-10"></div>
+          <div className="absolute inset-0 bg-black/40 z-10"></div>
           
-          <div className="max-w-6xl mx-auto text-center relative z-10">
+          <div className="max-w-6xl mx-auto text-center relative z-20">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-white max-w-4xl mx-auto">
               UNDERSTAND YOUR BUSINESS CREDIT
             </h2>
