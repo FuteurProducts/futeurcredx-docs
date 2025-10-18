@@ -9,13 +9,10 @@ import { Link } from "react-router-dom"
 import { getCrossDomainUrl } from "../utils/domainUtils"
 import SmartLink from "@/components/SmartLink"
 import { ScrollParallax } from "react-just-parallax"
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
 
 export default function FuteurCredPlus() {
-  const [videoLoaded, setVideoLoaded] = useState(false)
   const [scrollY, setScrollY] = useState(0)
-  const [mediaLoading, setMediaLoading] = useState(true)
   const [isHeaderVisible, setIsHeaderVisible] = useState(true)
   const [prevScrollY, setPrevScrollY] = useState(0)
 
@@ -30,74 +27,9 @@ export default function FuteurCredPlus() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [prevScrollY])
-
-  // Preload critical media with better loading logic
-  useEffect(() => {
-    // Preload critical images
-    const bgImage = new Image()
-    bgImage.src = "/cover.jpg"
-    
-    const creditBgImage = new Image()
-    creditBgImage.src = "/credit-back.jpg"
-    
-    // Preload video with proper event handling
-    const video = document.createElement('video')
-    video.preload = 'auto'
-    video.muted = true
-    
-    // Create source element for the video
-    const source = document.createElement('source')
-    source.src = "/Animation.mp4"
-    source.type = 'video/mp4'
-    video.appendChild(source)
-    
-    // Handle video loading events
-    const handleVideoLoad = () => {
-      setVideoLoaded(true)
-    }
-    
-    video.onloadeddata = handleVideoLoad
-    video.oncanplaythrough = handleVideoLoad
-    
-    // Hide loading state when video is ready
-    Promise.all([
-      new Promise(resolve => {
-        // Short timeout for smooth transition
-        setTimeout(() => resolve(true), 100)
-      }),
-      new Promise(resolve => {
-        video.oncanplaythrough = () => resolve(true)
-        // Fallback in case video takes too long
-        setTimeout(() => resolve(true), 3000)
-      })
-    ]).then(() => {
-      setMediaLoading(false)
-    })
-    
-    return () => {
-      video.onloadeddata = null
-      video.oncanplaythrough = null
-    }
-  }, [])
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-white">
-        {/* Loading overlay with smooth animation */}
-        <AnimatePresence>
-          {mediaLoading && (
-            <motion.div 
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="fixed inset-0 bg-white z-[100] flex items-center justify-center"
-            >
-              <div className="flex flex-col items-center">
-                <div className="w-16 h-16 border-4 border-gray-200 border-t-black rounded-full animate-spin mb-4"></div>
-                <p className="text-gray-600 font-medium">Loading FuteurCred+...</p>
-              </div>
-            </motion.div>
-          )}  
-        </AnimatePresence>
 
         {/* Back Button */}
         <div className="fixed top-6 left-6 z-50">
@@ -175,15 +107,8 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
-                        onLoadedData={() => setVideoLoaded(true)}
-                        preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
-                        <source src="/Animation.mp4" type="video/mp4" />
-                        {/* Fallback content */}
-                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                          <p className="text-gray-500 text-sm">Video loading...</p>
-                        </div>
                       </video>
                     </div>
 
@@ -203,15 +128,8 @@ export default function FuteurCredPlus() {
                         playsInline
                         controlsList="nodownload nofullscreen noremoteplayback"
                         disablePictureInPicture
-                        onLoadedData={() => setVideoLoaded(true)}
-                        preload="auto"
                       >
                         <source src="/Animation.mp4" type="video/mp4" />
-                        <source src="/Animation.mp4" type="video/mp4" />
-                        {/* Fallback content */}
-                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                          <p className="text-gray-500 text-sm">Video loading...</p>
-                        </div>
                       </video>
                     </div>
 
