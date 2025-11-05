@@ -69,9 +69,7 @@ const OverviewTab: React.FC = () => {
           </div>
         </div>
         </div>
-      </div>
-
-        {/* Getting Started */}
+      {/* Getting Started */}
         <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
         <h3 className="text-base font-black uppercase tracking-wider text-blue-900 flex items-center gap-2 mb-4">
           <Rocket className="w-5 h-5" />
@@ -95,7 +93,6 @@ const OverviewTab: React.FC = () => {
               </div>
             </div>
           ))}
-        </div>
         </div>
         </div>
       </div>
