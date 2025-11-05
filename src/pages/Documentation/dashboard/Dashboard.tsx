@@ -31,6 +31,7 @@ import { usePartnerRole } from '../../../hooks/usePartnerRole';
 import type { ApiStats, ApiKey } from '../../../types';
 import Analytics from '../../../components/dashboard/pages/Analytics';
 import Users from '../../../components/dashboard/pages/Users';
+import { WhiteLabelPreview } from '../../../components/dashboard/dashboard/WhiteLabelPreview';
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
@@ -1088,6 +1089,15 @@ Your backend needs to either:
           {activeTab === 'analytics' && (
             <div className="space-y-6">
               <Analytics />
+            </div>
+          )}
+
+          {activeTab === 'products' && (
+            <div className="space-y-6">
+              <div className="bg-white/90 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
+                <h3 className="text-base font-black uppercase tracking-wider text-blue-900 mb-4">Products</h3>
+                <WhiteLabelPreview />
+              </div>
             </div>
           )}
 
