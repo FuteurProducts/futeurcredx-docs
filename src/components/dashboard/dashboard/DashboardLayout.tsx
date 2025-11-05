@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { DashboardHeader } from "./DashboardHeader";
-import { DashboardTopNav } from "./DashboardTopNav";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -15,8 +14,7 @@ export function DashboardLayout({ children, hideSidebar = false }: DashboardLayo
       <div className="min-h-screen flex w-full bg-slate-50">
         {!hideSidebar && <DashboardSidebar />}
         <div className="flex-1 flex flex-col">
-          <DashboardHeader />
-          {hideSidebar && <DashboardTopNav />}
+          <DashboardHeader showMenu={hideSidebar} />
           <main className="flex-1 p-6 overflow-auto bg-slate-50">
             {children}
           </main>
