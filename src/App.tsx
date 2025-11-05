@@ -63,7 +63,7 @@ const AppRouter = () => {
   // If we're on docs subdomain, render the Docs component for all paths
   if (isDomainDocs) {
     return (
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <StagingBadge />
@@ -84,7 +84,7 @@ const AppRouter = () => {
     // If we're on institutions subdomain, render the Enterprise component
     if (isDomainInstitutions) {
       return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
         <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <StagingBadge />
@@ -107,7 +107,7 @@ const AppRouter = () => {
     // If we're on platform subdomain, render the Fintech component
     if (isDomainPlatform) {
       return (
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
         <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <StagingBadge />
@@ -129,7 +129,7 @@ const AppRouter = () => {
   }
 
   return (
-  <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+  <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <StagingBadge />
