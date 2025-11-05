@@ -199,9 +199,9 @@ img {
 .cl-input,
 .cl-input__input,
 .cl-otpCodeFieldInput {
-  border: 1px solid #ffffff !important;
-  background: #000000 !important;
-  color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.15) !important; /* slate-900/15 */
+  background: #ffffff !important;
+  color: #0f172a !important; /* slate-900 */
   border-radius: 6px !important;
 }
 
@@ -210,9 +210,9 @@ img {
 .cl-root .cl-input > input,
 .cl-root .cl-formFieldInput,
 .cl-root .cl-otpCodeFieldInput {
-  border: 1px solid #ffffff !important;
-  background: #000000 !important;
-  color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.15) !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
   border-radius: 6px !important;
 }
 
@@ -221,10 +221,10 @@ img {
 .cl-input__input:focus,
 .cl-otpCodeFieldInput:focus {
   outline: none !important;
-  border-color: #ffffff !important;
+  border-color: rgba(59, 130, 246, 0.6) !important;
   background: rgba(59, 130, 246, 0.08) !important; /* subtle blue tint */
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35) !important; /* glow ring */
-  caret-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important; /* glow ring */
+  caret-color: #0f172a !important;
 }
 
 .cl-root input:focus,
@@ -232,15 +232,15 @@ img {
 .cl-root .cl-formFieldInput:focus,
 .cl-root .cl-otpCodeFieldInput:focus {
   outline: none !important;
-  border-color: #ffffff !important;
+  border-color: rgba(59, 130, 246, 0.6) !important;
   background: rgba(59, 130, 246, 0.08) !important;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35) !important;
-  caret-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+  caret-color: #0f172a !important;
 }
 
 .cl-formFieldLabel,
 .cl-headerTitle,
 .cl-footerActionLink {
-  color: #ffffff !important;
+  color: #0f172a !important;
 }
 
