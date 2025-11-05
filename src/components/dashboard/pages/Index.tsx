@@ -90,7 +90,7 @@ const Index = () => {
               Enterprise API Platform • Real-time Business Credit Intelligence
             </p>
           </div>
-          <div className="px-4 py-2 glass-card rounded-lg">
+          <div className="px-4 py-2 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-lg shadow-sm">
             <p className="text-xs text-muted-foreground">API Status</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="w-2 h-2 bg-success rounded-full pulse-glow" />
@@ -104,7 +104,7 @@ const Index = () => {
 
         {/* Tabs for organized content */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="glass-card">
+          <TabsList className="bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-sm">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="intelligence">Intelligence</TabsTrigger>
             <TabsTrigger value="developer">Developer</TabsTrigger>

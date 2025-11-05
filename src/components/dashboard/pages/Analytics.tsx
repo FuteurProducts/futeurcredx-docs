@@ -67,8 +67,8 @@ const Analytics = () => {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">Analytics</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
+          <p className="text-slate-500 mt-1">
             Detailed insights into your application performance and user behavior
           </p>
         </div>
@@ -98,7 +98,7 @@ const Analytics = () => {
         {/* Charts */}
         <div className="grid gap-6 md:grid-cols-2">
           {/* User Growth Chart */}
-          <Card className="p-6">
+          <Card className="p-6 border border-slate-200/80 shadow-sm">
             <div className="flex items-center gap-2 mb-6">
               <Users className="w-5 h-5 text-primary" />
               <h3 className="text-lg font-semibold">User Growth</h3>
@@ -135,7 +135,7 @@ const Analytics = () => {
           </Card>
 
           {/* API Calls Chart */}
-          <Card className="p-6">
+          <Card className="p-6 border border-slate-200/80 shadow-sm">
             <div className="flex items-center gap-2 mb-6">
               <BarChart3 className="w-5 h-5 text-primary" />
               <h3 className="text-lg font-semibold">API Calls This Week</h3>

@@ -176,12 +176,12 @@ const Users = () => {
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Small Business Users</h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-slate-500 mt-2">
             Overview of businesses with different credit profiles
           </p>
         </div>
 
-        <Card>
+        <Card className="border border-slate-200/80 shadow-sm">
           <CardHeader>
             <CardTitle>Business Credit Profiles</CardTitle>
             <CardDescription>
