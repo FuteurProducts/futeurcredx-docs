@@ -1029,23 +1029,22 @@ Your backend needs to either:
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
 
-        {/* Stats Overview */}
-        <MetricCards 
-          apiKeys={apiKeys} 
-          user={user} 
-          formatDate={formatDate} 
-          apiStats={apiStats}
-          isRefreshing={isRefreshing}
-          lastUpdated={lastUpdated}
-          isDataFresh={isDataFresh}
-          onRefresh={refreshStats}
-        />
-
         {/* Tab Content */}
         <div className="mt-8">
           {activeTab === 'overview' && (
             <div className="space-y-6">
               <OverviewTab />
+              {/* API Usage should only appear on Overview and as the last section */}
+              <MetricCards 
+                apiKeys={apiKeys} 
+                user={user} 
+                formatDate={formatDate} 
+                apiStats={apiStats}
+                isRefreshing={isRefreshing}
+                lastUpdated={lastUpdated}
+                isDataFresh={isDataFresh}
+                onRefresh={refreshStats}
+              />
               <KeyUsageStats keyStats={apiStats.keyStats} isLive={true} />
             </div>
           )}
@@ -1072,7 +1071,6 @@ Your backend needs to either:
                   <ApiTesting apiKeys={apiKeys} />
                 </div>
               </div>
-              <KeyUsageStats keyStats={apiStats.keyStats} isLive={true} />
             </div>
           )}
 
