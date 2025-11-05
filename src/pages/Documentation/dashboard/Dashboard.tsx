@@ -30,6 +30,7 @@ import type { ApiStats, ApiKey } from '../../../types';
 import Analytics from '../../../components/dashboard/pages/Analytics';
 import Users from '../../../components/dashboard/pages/Users';
 import Products from '../../../components/dashboard/pages/Products';
+import Reports from '../../../components/dashboard/pages/Reports';
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
@@ -1083,6 +1084,12 @@ Your backend needs to either:
           {activeTab === 'products' && (
             <div className="space-y-6">
               <Products />
+            </div>
+          )}
+
+          {activeTab === 'reports' && (
+            <div className="space-y-6">
+              <Reports />
             </div>
           )}
 
