@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3, Key, Building2 } from 'lucide-react';
+import { BarChart3, Key, Building2, LineChart, Users as UsersIcon } from 'lucide-react';
 
 interface DashboardTabsProps {
   activeTab: string;
@@ -31,6 +31,26 @@ const DashboardTabs: React.FC<DashboardTabsProps> = ({ activeTab, setActiveTab, 
             }`}>
             <Key className="w-5 h-5" />
             API Keys
+          </button>
+          <button
+            onClick={() => setActiveTab('analytics')}
+            className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+              activeTab === 'analytics'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
+            }`}>
+            <LineChart className="w-5 h-5" />
+            Analytics
+          </button>
+          <button
+            onClick={() => setActiveTab('users')}
+            className={`flex items-center gap-3 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-wide transition-all ${
+              activeTab === 'users'
+                ? 'bg-blue-600 text-white'
+                : 'text-slate-600 hover:text-blue-700 hover:bg-white/80'
+            }`}>
+            <UsersIcon className="w-5 h-5" />
+            Users
           </button>
           {isPartner && (
             <button

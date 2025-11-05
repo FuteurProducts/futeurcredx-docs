@@ -29,6 +29,8 @@ import KeyUsageStats from '../../../components/dashboard/KeyUsageStats';
 import PartnerDashboard from '../../../components/dashboard/PartnerDashboard';
 import { usePartnerRole } from '../../../hooks/usePartnerRole';
 import type { ApiStats, ApiKey } from '../../../types';
+import Analytics from '../../../components/dashboard/pages/Analytics';
+import Users from '../../../components/dashboard/pages/Users';
 
 const Dashboard: React.FC = () => {
   const { user } = useUser()
@@ -1067,6 +1069,18 @@ Your backend needs to either:
               isDataFresh={isDataFresh}
               onRefresh={refreshStats}
             />
+          )}
+
+          {activeTab === 'analytics' && (
+            <div className="space-y-6">
+              <Analytics />
+            </div>
+          )}
+
+          {activeTab === 'users' && (
+            <div className="space-y-6">
+              <Users />
+            </div>
           )}
         </div>
       </main>
