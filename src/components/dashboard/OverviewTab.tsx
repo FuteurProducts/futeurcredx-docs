@@ -159,23 +159,20 @@ const OverviewTab: React.FC = () => {
         </div>
       </div>
 
-      {/* Live API Health */}
+      {/* Live API Health with Support Actions */}
       <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-base font-black uppercase tracking-wider text-blue-900 flex items-center gap-2 mb-4">
-          <BarChart2 className="w-5 h-5" />
-          API Health
-        </h3>
-        <ApiHealthMonitor />
-      </div>
-
-      {/* Support Quick Actions */}
-      <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-base font-black uppercase tracking-wider text-blue-900 mb-4">Support</h3>
-        <div className="flex flex-wrap gap-3">
-          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.open('/docs#support', '_self')}>Chat</Button>
-          <Button variant="outline" onClick={() => window.open('/docs#troubleshooting', '_self')}>Troubleshoot</Button>
-          <Button className="bg-red-600 hover:bg-red-700" onClick={() => window.open('/contact-us', '_self')}>SOS</Button>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-black uppercase tracking-wider text-blue-900 flex items-center gap-2">
+            <BarChart2 className="w-5 h-5" />
+            API Health
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            <Button className="bg-blue-600 hover:bg-blue-700 h-8 py-0" onClick={() => window.open('/docs#support', '_self')}>Chat</Button>
+            <Button variant="outline" className="h-8 py-0" onClick={() => window.open('/docs#troubleshooting', '_self')}>Troubleshoot</Button>
+            <Button className="bg-red-600 hover:bg-red-700 h-8 py-0" onClick={() => window.open('/contact-us', '_self')}>SOS</Button>
+          </div>
         </div>
+        <ApiHealthMonitor />
       </div>
 
       {/* Performance */}
