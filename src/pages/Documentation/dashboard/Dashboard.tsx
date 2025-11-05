@@ -26,8 +26,6 @@ import DashboardTabs from '../../../components/dashboard/DashboardTabs';
 import OverviewTab from '../../../components/dashboard/OverviewTab';
 import ApiKeysTab from '../../../components/dashboard/ApiKeysTab';
 import KeyUsageStats from '../../../components/dashboard/KeyUsageStats';
-import PartnerDashboard from '../../../components/dashboard/PartnerDashboard';
-import { usePartnerRole } from '../../../hooks/usePartnerRole';
 import type { ApiStats, ApiKey } from '../../../types';
 import Analytics from '../../../components/dashboard/pages/Analytics';
 import Users from '../../../components/dashboard/pages/Users';
@@ -36,7 +34,6 @@ import Products from '../../../components/dashboard/pages/Products';
 const Dashboard: React.FC = () => {
   const { user } = useUser()
   const { getToken } = useAuth()
-  const { isPartner } = usePartnerRole()
   
   // State management
   const [apiKeys, setApiKeys] = useState([])
@@ -1025,7 +1022,7 @@ Your backend needs to either:
 
 
 
-      <DashboardTabs activeTab={activeTab} setActiveTab={setActiveTab} isPartner={isPartner} />
+      <DashboardTabs activeTab={activeTab} setActiveTab={setActiveTab} />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -1075,16 +1072,7 @@ Your backend needs to either:
             </div>
           )}
 
-          {activeTab === 'partner' && isPartner && (
-            <PartnerDashboard 
-              user={user}
-              formatDate={formatDate}
-              isRefreshing={isRefreshing}
-              lastUpdated={lastUpdated}
-              isDataFresh={isDataFresh}
-              onRefresh={refreshStats}
-            />
-          )}
+          {/* Partner dashboard removed */}
 
           {activeTab === 'analytics' && (
             <div className="space-y-6">
