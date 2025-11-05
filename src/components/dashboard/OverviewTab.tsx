@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Code, FileText, BarChart2, Rocket, CheckCircle, ExternalLink, TrendingUp, Users as UsersIcon, AlertCircle, Clock, DollarSign, Shield, Target, Zap } from 'lucide-react';
 import { ApiHealthMonitor } from '@/components/dashboard/dashboard/ApiHealthMonitor';
 import { ConversionChart } from '@/components/dashboard/dashboard/ConversionChart';
+import { Button } from '@/components/ui/button';
 import { MetricSection, CompactMetricCard } from '@/components/dashboard/dashboard/MetricSection';
 import { ROICalculator } from '@/components/dashboard/dashboard/ROICalculator';
 import { WebhookEventStream } from '@/components/dashboard/dashboard/WebhookEventStream';
@@ -165,6 +166,16 @@ const OverviewTab: React.FC = () => {
           API Health
         </h3>
         <ApiHealthMonitor />
+      </div>
+
+      {/* Support Quick Actions */}
+      <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
+        <h3 className="text-base font-black uppercase tracking-wider text-blue-900 mb-4">Support</h3>
+        <div className="flex flex-wrap gap-3">
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.open('/docs#support', '_self')}>Chat</Button>
+          <Button variant="outline" onClick={() => window.open('/docs#troubleshooting', '_self')}>Troubleshoot</Button>
+          <Button className="bg-red-600 hover:bg-red-700" onClick={() => window.open('/contact-us', '_self')}>SOS</Button>
+        </div>
       </div>
 
       {/* Performance */}
