@@ -31,6 +31,7 @@ import Register from "./pages/Register";
 import MainLayout from './pages/MainLayout';
 import BusinessSignup from './pages/BusinessSignup';
 import { SignedIn, SignedOut, RedirectToSignIn } from '@clerk/clerk-react';
+import StagingBadge from "./components/StagingBadge";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,7 @@ const AppRouter = () => {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <QueryClientProvider client={queryClient}>
           <TooltipProvider>
+            <StagingBadge />
             <Toaster />
             <Sonner />
             <BrowserRouter>
@@ -85,6 +87,7 @@ const AppRouter = () => {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
             <TooltipProvider>
+              <StagingBadge />
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -107,6 +110,7 @@ const AppRouter = () => {
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>
             <TooltipProvider>
+              <StagingBadge />
               <Toaster />
               <Sonner />
               <BrowserRouter>
@@ -128,6 +132,7 @@ const AppRouter = () => {
   <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <StagingBadge />
         <QuickLoader />
         <ImagePreloader />
         <ComponentPreloader />
