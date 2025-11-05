@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { 
   Activity,
@@ -56,7 +56,17 @@ const Dashboard: React.FC = () => {
       totalCallsLastMonth: 0
     })
   const [isLoadingStats, setIsLoadingStats] = useState(true)
-  const [activeTab, setActiveTab] = useState('overview')
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [activeTab, _setActiveTab] = useState('overview')
+
+  // Keep state and URL in sync
+  const setActiveTab = (tab: string) => {
+    _setActiveTab(tab)
+    const params = new URLSearchParams(location.search)
+    params.set('tab', tab)
+    navigate(`/dashboard?${params.toString()}`, { replace: true })
+  }
   const [keyConfig, setKeyConfig] = useState({
     scopes: [] as string[],
     expiresInDays: 30,
@@ -763,8 +773,14 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  // Load API keys on component mount
+  // Initialize activeTab from URL and load data
   useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const tabParam = params.get('tab')
+    if (tabParam && tabParam !== activeTab) {
+      _setActiveTab(tabParam)
+    }
+
     console.log('=== DASHBOARD COMPONENT MOUNTED ===');
     console.log('User:', user ? 'Logged in' : 'Not logged in');
     if (user) {
@@ -778,7 +794,7 @@ const Dashboard: React.FC = () => {
       };
       fetchData();
     }
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [user, location.search]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Real-time polling for API stats
   useEffect(() => {

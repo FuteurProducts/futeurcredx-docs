@@ -18,12 +18,12 @@ interface DashboardHeaderProps {
 }
 
 const defaultMenu = [
-  { title: "Overview", url: "/", icon: LayoutDashboard },
-  { title: "Analytics", url: "/analytics", icon: BarChart3 },
-  { title: "Users", url: "/users", icon: Users },
-  { title: "Reports", url: "/reports", icon: FileText },
-  { title: "Performance", url: "/performance", icon: TrendingUp },
-  { title: "Settings", url: "/settings", icon: Settings },
+  { title: "Overview", url: "/dashboard?tab=overview", icon: LayoutDashboard },
+  { title: "Analytics", url: "/dashboard?tab=analytics", icon: BarChart3 },
+  { title: "Users", url: "/dashboard?tab=users", icon: Users },
+  { title: "Reports", url: "/dashboard?tab=reports", icon: FileText },
+  { title: "Performance", url: "/dashboard?tab=performance", icon: TrendingUp },
+  { title: "Settings", url: "/dashboard?tab=settings", icon: Settings },
 ];
 
 export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
