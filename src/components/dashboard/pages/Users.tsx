@@ -1,168 +1,75 @@
+import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/dashboard/dashboard/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useAuth } from "@clerk/clerk-react";
+import dashboardService from "@/services/dashboardService";
+import { CheckCircle, XCircle, Loader2 } from "lucide-react";
 
-interface Business {
+interface BusinessInsight {
   id: string;
+  userId: string;
   name: string;
-  industry: string;
-  creditScore: number;
-  creditStatus: 'Excellent' | 'Good' | 'Fair' | 'Poor';
-  creditLimit: number;
-  utilization: number;
-  paymentsOnTime: number;
-  delinquencies: number;
-  yearsInBusiness: number;
-  monthlyRevenue: number;
+  streetAddress?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  taxId?: string | null;
+  empCount?: number;
+  legalStruct?: string;
+  yearFounded?: number;
+  ownerFname?: string;
+  ownerLname?: string;
+  ownerMname?: string;
+  ownerTitle?: string;
+  createdAt: string;
+  recommendation?: {
+    score: number;
+    business: string;
+    recommendations: Array<{
+      reason: string;
+      cardName: string;
+      fitScore: number;
+      suggestedUsage: string;
+    }>;
+  };
+  recommendationUpdatedAt?: string;
+  score?: {
+    id: string;
+    businessId: string;
+    score: number;
+    type: string;
+    reportUrl?: string | null;
+    metadata?: any;
+  };
 }
 
-const dummyBusinesses: Business[] = [
-  {
-    id: "1",
-    name: "Green Valley Landscaping",
-    industry: "Landscaping",
-    creditScore: 785,
-    creditStatus: "Excellent",
-    creditLimit: 50000,
-    utilization: 28,
-    paymentsOnTime: 98,
-    delinquencies: 0,
-    yearsInBusiness: 8,
-    monthlyRevenue: 45000
-  },
-  {
-    id: "2",
-    name: "Main Street Cafe",
-    industry: "Food & Beverage",
-    creditScore: 720,
-    creditStatus: "Good",
-    creditLimit: 35000,
-    utilization: 45,
-    paymentsOnTime: 92,
-    delinquencies: 1,
-    yearsInBusiness: 5,
-    monthlyRevenue: 28000
-  },
-  {
-    id: "3",
-    name: "Tech Solutions LLC",
-    industry: "IT Services",
-    creditScore: 810,
-    creditStatus: "Excellent",
-    creditLimit: 100000,
-    utilization: 22,
-    paymentsOnTime: 100,
-    delinquencies: 0,
-    yearsInBusiness: 12,
-    monthlyRevenue: 85000
-  },
-  {
-    id: "4",
-    name: "Urban Construction Co",
-    industry: "Construction",
-    creditScore: 650,
-    creditStatus: "Fair",
-    creditLimit: 75000,
-    utilization: 68,
-    paymentsOnTime: 85,
-    delinquencies: 3,
-    yearsInBusiness: 4,
-    monthlyRevenue: 62000
-  },
-  {
-    id: "5",
-    name: "Bright Minds Tutoring",
-    industry: "Education",
-    creditScore: 690,
-    creditStatus: "Good",
-    creditLimit: 25000,
-    utilization: 35,
-    paymentsOnTime: 90,
-    delinquencies: 2,
-    yearsInBusiness: 3,
-    monthlyRevenue: 18000
-  },
-  {
-    id: "6",
-    name: "Peak Performance Gym",
-    industry: "Fitness",
-    creditScore: 745,
-    creditStatus: "Good",
-    creditLimit: 60000,
-    utilization: 40,
-    paymentsOnTime: 94,
-    delinquencies: 1,
-    yearsInBusiness: 6,
-    monthlyRevenue: 52000
-  },
-  {
-    id: "7",
-    name: "Sunset Auto Repair",
-    industry: "Automotive",
-    creditScore: 580,
-    creditStatus: "Poor",
-    creditLimit: 30000,
-    utilization: 85,
-    paymentsOnTime: 72,
-    delinquencies: 5,
-    yearsInBusiness: 10,
-    monthlyRevenue: 35000
-  },
-  {
-    id: "8",
-    name: "Cloud Nine Bakery",
-    industry: "Food & Beverage",
-    creditScore: 760,
-    creditStatus: "Good",
-    creditLimit: 40000,
-    utilization: 32,
-    paymentsOnTime: 96,
-    delinquencies: 0,
-    yearsInBusiness: 7,
-    monthlyRevenue: 38000
-  },
-  {
-    id: "9",
-    name: "Elite Marketing Agency",
-    industry: "Marketing",
-    creditScore: 795,
-    creditStatus: "Excellent",
-    creditLimit: 80000,
-    utilization: 25,
-    paymentsOnTime: 99,
-    delinquencies: 0,
-    yearsInBusiness: 9,
-    monthlyRevenue: 72000
-  },
-  {
-    id: "10",
-    name: "Riverside Plumbing",
-    industry: "Trade Services",
-    creditScore: 615,
-    creditStatus: "Fair",
-    creditLimit: 45000,
-    utilization: 72,
-    paymentsOnTime: 80,
-    delinquencies: 4,
-    yearsInBusiness: 2,
-    monthlyRevenue: 42000
-  }
-];
+const getCreditStatusFromScore = (score?: number): 'Excellent' | 'Good' | 'Fair' | 'Poor' => {
+  if (!score) return 'Fair';
+  if (score >= 750) return 'Excellent';
+  if (score >= 700) return 'Good';
+  if (score >= 650) return 'Fair';
+  return 'Poor';
+};
 
 const getCreditStatusColor = (status: string) => {
   switch (status) {
     case 'Excellent':
-      return 'bg-success/10 text-success border-success/20';
+      return 'bg-green-100 text-green-800 border-green-200';
     case 'Good':
-      return 'bg-primary/10 text-primary border-primary/20';
+      return 'bg-blue-100 text-blue-800 border-blue-200';
     case 'Fair':
-      return 'bg-warning/10 text-warning border-warning/20';
+      return 'bg-yellow-100 text-yellow-800 border-yellow-200';
     case 'Poor':
-      return 'bg-destructive/10 text-destructive border-destructive/20';
+      return 'bg-red-100 text-red-800 border-red-200';
     default:
-      return 'bg-muted text-muted-foreground';
+      return 'bg-slate-100 text-slate-800 border-slate-200';
   }
 };
 
@@ -170,22 +77,129 @@ const getInitials = (name: string) => {
   return name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
 };
 
+const calculateYearsInBusiness = (yearFounded?: number): number => {
+  if (!yearFounded) return 0;
+  return new Date().getFullYear() - yearFounded;
+};
+
 const Users = () => {
+  const { getToken } = useAuth();
+  const [businesses, setBusinesses] = useState<BusinessInsight[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [hasRecommendationFilter, setHasRecommendationFilter] = useState<boolean | undefined>(undefined);
+  const [hasScoreFilter, setHasScoreFilter] = useState<boolean | undefined>(undefined);
+  const [selectedBusiness, setSelectedBusiness] = useState<BusinessInsight | null>(null);
+
+  const fetchBusinesses = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error('No authentication token available');
+      }
+
+      // Use the dashboard service to fetch business insights
+      const filters: { hasRecommendation?: boolean; hasScore?: boolean } = {};
+      if (hasRecommendationFilter !== undefined) {
+        filters.hasRecommendation = hasRecommendationFilter;
+      }
+      if (hasScoreFilter !== undefined) {
+        filters.hasScore = hasScoreFilter;
+      }
+
+      const data = await dashboardService.getBusinessInsights(filters);
+      setBusinesses(data);
+    } catch (err: any) {
+      console.error('Error fetching businesses:', err);
+      setError(err.message || 'Failed to load businesses');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBusinesses();
+  }, [hasRecommendationFilter, hasScoreFilter]);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout hideSidebar>
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+        </div>
+      </DashboardLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <DashboardLayout hideSidebar>
+        <div className="space-y-6">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-800">{error}</p>
+            <Button onClick={fetchBusinesses} className="mt-2">Retry</Button>
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout hideSidebar>
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Small Business Users</h1>
-          <p className="text-slate-500 mt-2">
-            Overview of businesses with different credit profiles
-          </p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Business Users</h1>
+            <p className="text-slate-500 mt-2">
+              Overview of businesses with credit profiles, recommendations, and scores
+            </p>
+          </div>
         </div>
+
+        {/* Filters */}
+        <Card className="border border-slate-200/80 shadow-sm p-4">
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Select
+              value={hasRecommendationFilter === undefined ? "all" : String(hasRecommendationFilter)}
+              onValueChange={(value) => setHasRecommendationFilter(value === "all" ? undefined : value === "true")}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Has Recommendation" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Recommendations</SelectItem>
+                <SelectItem value="true">With Recommendations</SelectItem>
+                <SelectItem value="false">Without Recommendations</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={hasScoreFilter === undefined ? "all" : String(hasScoreFilter)}
+              onValueChange={(value) => setHasScoreFilter(value === "all" ? undefined : value === "true")}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Has Score" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Scores</SelectItem>
+                <SelectItem value="true">With Scores</SelectItem>
+                <SelectItem value="false">Without Scores</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button onClick={fetchBusinesses} variant="outline">
+              Refresh
+            </Button>
+          </div>
+        </Card>
 
         <Card className="border border-slate-200/80 shadow-sm">
           <CardHeader>
             <CardTitle>Business Credit Profiles</CardTitle>
             <CardDescription>
-              Showing {dummyBusinesses.length} small businesses with varying credit scores and payment histories
+              Showing {businesses.length} businesses with credit information
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -193,75 +207,186 @@ const Users = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Business</TableHead>
-                  <TableHead>Industry</TableHead>
-                  <TableHead>Credit Score</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead>Score</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Credit Limit</TableHead>
-                  <TableHead>Utilization</TableHead>
-                  <TableHead>On-Time %</TableHead>
-                  <TableHead>Delinquencies</TableHead>
                   <TableHead>Years</TableHead>
-                  <TableHead>Monthly Revenue</TableHead>
+                  <TableHead>Recommendation</TableHead>
+                  <TableHead>Details</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {dummyBusinesses.map((business) => (
-                  <TableRow key={business.id}>
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarFallback className="text-xs bg-primary/10 text-primary">
-                            {getInitials(business.name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <span className="font-medium">{business.name}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">{business.industry}</TableCell>
-                    <TableCell>
-                      <span className="font-semibold">{business.creditScore}</span>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className={getCreditStatusColor(business.creditStatus)}>
-                        {business.creditStatus}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>${business.creditLimit.toLocaleString()}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full ${
-                              business.utilization > 70 ? 'bg-destructive' : 
-                              business.utilization > 50 ? 'bg-warning' : 
-                              'bg-success'
-                            }`}
-                            style={{ width: `${business.utilization}%` }}
-                          />
-                        </div>
-                        <span className="text-sm text-muted-foreground">{business.utilization}%</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <span className={
-                        business.paymentsOnTime >= 95 ? 'text-success font-medium' :
-                        business.paymentsOnTime >= 85 ? 'text-warning' :
-                        'text-destructive'
-                      }>
-                        {business.paymentsOnTime}%
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <span className={business.delinquencies === 0 ? 'text-success' : 'text-destructive'}>
-                        {business.delinquencies}
-                      </span>
-                    </TableCell>
-                    <TableCell>{business.yearsInBusiness}y</TableCell>
-                    <TableCell className="text-muted-foreground">
-                      ${(business.monthlyRevenue / 1000).toFixed(0)}k
+                {businesses.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} className="text-center py-8 text-slate-500">
+                      No businesses found
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  businesses.map((business) => {
+                    const creditStatus = getCreditStatusFromScore(business.score?.score);
+                    const yearsInBusiness = calculateYearsInBusiness(business.yearFounded);
+                    const location = [business.city, business.state].filter(Boolean).join(', ') || 'N/A';
+
+                    return (
+                      <TableRow key={business.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Avatar className="h-8 w-8">
+                              <AvatarFallback className="text-xs bg-primary/10 text-primary">
+                                {getInitials(business.name)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <span className="font-medium">{business.name}</span>
+                              {business.legalStruct && (
+                                <p className="text-xs text-slate-500">{business.legalStruct}</p>
+                              )}
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-muted-foreground">{location}</TableCell>
+                        <TableCell>
+                          {business.score ? (
+                            <span className="font-semibold">{business.score.score}</span>
+                          ) : (
+                            <span className="text-slate-400">N/A</span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className={getCreditStatusColor(creditStatus)}>
+                            {creditStatus}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{yearsInBusiness > 0 ? `${yearsInBusiness}y` : 'N/A'}</TableCell>
+                        <TableCell>
+                          {business.recommendation ? (
+                            <div className="flex items-center gap-2">
+                              <CheckCircle className="w-4 h-4 text-green-600" />
+                              <span className="text-sm">{business.recommendation.recommendations.length} cards</span>
+                            </div>
+                          ) : (
+                            <XCircle className="w-4 h-4 text-slate-400" />
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setSelectedBusiness(business)}
+                              >
+                                View
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                              <DialogHeader>
+                                <DialogTitle>{business.name}</DialogTitle>
+                                <DialogDescription>
+                                  Complete business information, recommendations, and credit score details
+                                </DialogDescription>
+                              </DialogHeader>
+                              <div className="space-y-6 mt-4">
+                                {/* Business Info */}
+                                <div>
+                                  <h3 className="font-semibold mb-2">Business Information</h3>
+                                  <div className="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                      <p className="text-slate-500">Address</p>
+                                      <p className="font-medium">
+                                        {[business.streetAddress, business.city, business.state, business.zipCode]
+                                          .filter(Boolean)
+                                          .join(', ') || 'N/A'}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="text-slate-500">Legal Structure</p>
+                                      <p className="font-medium">{business.legalStruct || 'N/A'}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-slate-500">Employees</p>
+                                      <p className="font-medium">{business.empCount || 'N/A'}</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-slate-500">Year Founded</p>
+                                      <p className="font-medium">{business.yearFounded || 'N/A'}</p>
+                                    </div>
+                                    {business.ownerFname && (
+                                      <div>
+                                        <p className="text-slate-500">Owner</p>
+                                        <p className="font-medium">
+                                          {[business.ownerFname, business.ownerMname, business.ownerLname]
+                                            .filter(Boolean)
+                                            .join(' ')}
+                                          {business.ownerTitle && ` (${business.ownerTitle})`}
+                                        </p>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Score Information */}
+                                {business.score && (
+                                  <div>
+                                    <h3 className="font-semibold mb-2">Credit Score</h3>
+                                    <div className="bg-slate-50 rounded-lg p-4">
+                                      <div className="flex items-center justify-between mb-2">
+                                        <span className="text-sm text-slate-600">Score</span>
+                                        <span className="text-2xl font-bold">{business.score.score}</span>
+                                      </div>
+                                      <div className="text-sm text-slate-600">
+                                        <p>Type: {business.score.type}</p>
+                                        {business.score.reportUrl && (
+                                          <a
+                                            href={business.score.reportUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-600 hover:underline"
+                                          >
+                                            View Full Report
+                                          </a>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Recommendations */}
+                                {business.recommendation && (
+                                  <div>
+                                    <h3 className="font-semibold mb-2">
+                                      Recommendations ({business.recommendation.recommendations.length})
+                                    </h3>
+                                    <div className="space-y-4">
+                                      {business.recommendation.recommendations.map((rec, idx) => (
+                                        <div key={idx} className="border border-slate-200 rounded-lg p-4">
+                                          <div className="flex items-start justify-between mb-2">
+                                            <h4 className="font-semibold">{rec.cardName}</h4>
+                                            <Badge variant="outline">
+                                              Fit Score: {(rec.fitScore * 100).toFixed(0)}%
+                                            </Badge>
+                                          </div>
+                                          <p className="text-sm text-slate-600 mb-2">{rec.reason}</p>
+                                          <div className="mt-2">
+                                            <p className="text-xs font-semibold text-slate-700 mb-1">
+                                              Suggested Usage:
+                                            </p>
+                                            <p className="text-sm text-slate-600">{rec.suggestedUsage}</p>
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                )}
               </TableBody>
             </Table>
           </CardContent>

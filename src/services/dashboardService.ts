@@ -192,6 +192,30 @@ class DashboardService {
   }
 
   /**
+   * Get business insights with optional filters
+   */
+  async getBusinessInsights(filters?: { hasRecommendation?: boolean; hasScore?: boolean }): Promise<any[]> {
+    try {
+      const params = new URLSearchParams();
+      if (filters?.hasRecommendation !== undefined) {
+        params.append('hasRecommendation', String(filters.hasRecommendation));
+      }
+      if (filters?.hasScore !== undefined) {
+        params.append('hasScore', String(filters.hasScore));
+      }
+      
+      const queryString = params.toString();
+      const endpoint = `/api/v1/businesses/insights${queryString ? `?${queryString}` : ''}`;
+      
+      const response = await apiService.get<{ data: any[] }>(endpoint);
+      return response.data.data || [];
+    } catch (error: any) {
+      console.error('Failed to fetch business insights:', error);
+      throw this.handleApiKeyError(error);
+    }
+  }
+
+  /**
    * Handle API key related errors
    */
   private handleApiKeyError(error: any): ApiKeyError {
