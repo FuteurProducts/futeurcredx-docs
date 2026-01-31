@@ -48,7 +48,7 @@ export const PortfolioSegmentCard: React.FC<PortfolioSegmentCardProps> = ({ segm
     const isPositive = value >= 0;
     return (
       <span className={`flex items-center gap-0.5 text-xs font-medium ${
-        isPositive ? 'text-emerald-600' : 'text-red-600'
+        isPositive ? 'text-success' : 'text-destructive'
       }`}>
         {isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
         {Math.abs(value)}%
@@ -60,7 +60,7 @@ export const PortfolioSegmentCard: React.FC<PortfolioSegmentCardProps> = ({ segm
     <motion.div
       whileHover={{ y: -2 }}
       onClick={onClick}
-      className="bg-white rounded-xl border border-slate-200 p-5 cursor-pointer hover:shadow-md transition-all"
+      className="bg-card rounded-xl border border-border p-5 cursor-pointer hover:shadow-md transition-all"
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
@@ -69,8 +69,8 @@ export const PortfolioSegmentCard: React.FC<PortfolioSegmentCardProps> = ({ segm
             <Building2 className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-slate-800">{segment.name}</h3>
-            <p className="text-xs text-slate-500">{segment.applicationCount.toLocaleString()} applications</p>
+            <h3 className="font-semibold text-foreground">{segment.name}</h3>
+            <p className="text-xs text-muted-foreground">{segment.applicationCount.toLocaleString()} applications</p>
           </div>
         </div>
         <TrendIndicator value={segment.trend} />
@@ -78,32 +78,32 @@ export const PortfolioSegmentCard: React.FC<PortfolioSegmentCardProps> = ({ segm
 
       {/* Main Stats */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="p-3 bg-slate-50 rounded-lg">
-          <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">
+        <div className="p-3 bg-muted rounded-lg">
+          <div className="flex items-center gap-1.5 text-muted-foreground text-xs mb-1">
             <DollarSign className="w-3 h-3" />
             Total Volume
           </div>
-          <div className="font-bold text-lg text-slate-800">{formatCurrency(segment.totalVolume)}</div>
+          <div className="font-bold text-lg text-foreground">{formatCurrency(segment.totalVolume)}</div>
         </div>
-        <div className="p-3 bg-slate-50 rounded-lg">
-          <div className="flex items-center gap-1.5 text-slate-500 text-xs mb-1">
+        <div className="p-3 bg-muted rounded-lg">
+          <div className="flex items-center gap-1.5 text-muted-foreground text-xs mb-1">
             <BarChart3 className="w-3 h-3" />
             Avg. Loan Size
           </div>
-          <div className="font-bold text-lg text-slate-800">{formatCurrency(segment.avgLoanSize)}</div>
+          <div className="font-bold text-lg text-foreground">{formatCurrency(segment.avgLoanSize)}</div>
         </div>
       </div>
 
       {/* Approval Rate & Processing Time */}
-      <div className="flex items-center justify-between py-3 border-t border-b border-slate-100 mb-4">
+      <div className="flex items-center justify-between py-3 border-t border-b border-border mb-4">
         <div className="text-center flex-1">
-          <div className="text-2xl font-bold text-emerald-600">{segment.approvalRate}%</div>
-          <div className="text-xs text-slate-500">Approval Rate</div>
+          <div className="text-2xl font-bold text-success">{segment.approvalRate}%</div>
+          <div className="text-xs text-muted-foreground">Approval Rate</div>
         </div>
-        <div className="w-px h-10 bg-slate-200" />
+        <div className="w-px h-10 bg-border" />
         <div className="text-center flex-1">
-          <div className="text-2xl font-bold text-blue-600">{segment.avgProcessingTime}h</div>
-          <div className="text-xs text-slate-500">Avg. Processing</div>
+          <div className="text-2xl font-bold text-info">{segment.avgProcessingTime}h</div>
+          <div className="text-xs text-muted-foreground">Avg. Processing</div>
         </div>
       </div>
 
@@ -132,36 +132,36 @@ export const PortfolioSegmentCard: React.FC<PortfolioSegmentCardProps> = ({ segm
         <div className="flex-1 space-y-1">
           <div className="flex items-center justify-between text-xs">
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="w-2 h-2 rounded-full bg-success" />
               Low Risk
             </span>
-            <span className="font-medium text-slate-700">{segment.riskDistribution.low}%</span>
+            <span className="font-medium text-foreground">{segment.riskDistribution.low}%</span>
           </div>
           <div className="flex items-center justify-between text-xs">
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-amber-500" />
+              <span className="w-2 h-2 rounded-full bg-warning" />
               Medium
             </span>
-            <span className="font-medium text-slate-700">{segment.riskDistribution.medium}%</span>
+            <span className="font-medium text-foreground">{segment.riskDistribution.medium}%</span>
           </div>
           <div className="flex items-center justify-between text-xs">
             <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-red-500" />
+              <span className="w-2 h-2 rounded-full bg-destructive" />
               High Risk
             </span>
-            <span className="font-medium text-slate-700">{segment.riskDistribution.high}%</span>
+            <span className="font-medium text-foreground">{segment.riskDistribution.high}%</span>
           </div>
         </div>
       </div>
 
       {/* Top Products */}
-      <div className="pt-3 border-t border-slate-100">
-        <p className="text-xs text-slate-500 mb-2">Top Products</p>
+      <div className="pt-3 border-t border-border">
+        <p className="text-xs text-muted-foreground mb-2">Top Products</p>
         <div className="flex flex-wrap gap-1.5">
           {segment.topProducts.slice(0, 3).map(product => (
-            <span 
+            <span
               key={product.name}
-              className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs font-medium"
+              className="px-2 py-1 bg-info/10 text-info rounded text-xs font-medium"
             >
               {product.name} ({product.count})
             </span>
@@ -170,7 +170,7 @@ export const PortfolioSegmentCard: React.FC<PortfolioSegmentCardProps> = ({ segm
       </div>
 
       {/* View Details Link */}
-      <button className="mt-4 w-full flex items-center justify-center gap-1 text-sm text-blue-600 font-medium hover:text-blue-700 transition-colors">
+      <button className="mt-4 w-full flex items-center justify-center gap-1 text-sm text-info font-medium hover:text-info/80 transition-colors">
         View Segment Details
         <ChevronRight className="w-4 h-4" />
       </button>

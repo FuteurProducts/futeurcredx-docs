@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
 import {
   AnalyticsGlobalControls,
   PortfolioKPITiles,
@@ -28,6 +29,8 @@ import type { AnalyticsFilters } from '@/components/enterprise/analytics/types';
 // ============================================
 
 const Analytics: React.FC = () => {
+  const { toast } = useToast();
+
   // State - aligned with AnalyticsFilters type
   const [filters, setFilters] = useState<AnalyticsFilters>({
     product: 'All',
@@ -41,21 +44,24 @@ const Analytics: React.FC = () => {
   // Handlers
   const handleFiltersChange = (newFilters: AnalyticsFilters) => {
     setFilters(newFilters);
+    if (newFilters.analysisMode !== filters.analysisMode) {
+      toast({ title: "View changed", description: `Switched to ${newFilters.analysisMode} analysis mode.` });
+    }
   };
 
   const handleKPIDrilldown = (kpiId: string) => {
-    console.log('KPI drilldown:', kpiId);
-    // Future: open drill-down modal
+    const kpi = mockPortfolioKPIs.find(k => k.id === kpiId);
+    toast({ title: "KPI detail", description: `${kpi?.label || kpiId}: ${kpi?.value}${kpi?.format === 'percent' ? '%' : ''} — Source: ${kpi?.dataSource || 'Portfolio Analytics'}` });
   };
 
   const handleViewClients = (driverId: string) => {
-    console.log('View clients for driver:', driverId);
-    // Future: navigate to filtered customer list
+    const driver = mockRiskDrivers.find(d => d.id === driverId);
+    toast({ title: "Client list", description: `${driver?.affectedClients.toLocaleString() || '—'} clients affected by ${driver?.name || driverId}. Navigate to Customers tab for full list.` });
   };
 
   const handleViewOpportunity = (product: string) => {
-    console.log('View opportunity:', product);
-    // Future: show product opportunity details
+    const prod = mockProductPenetration.find(p => p.product === product);
+    toast({ title: "Opportunity detail", description: `${product}: ${prod?.opportunity}% gap between held (${prod?.held}%) and eligible (${prod?.eligible}%).` });
   };
 
   // Animation variants

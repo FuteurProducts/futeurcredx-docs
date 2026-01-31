@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useUser } from './contexts/AuthContext'
 import { PortfolioProvider } from './contexts/PortfolioContext'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 import Login from './pages/Authentication/Login'
 import Register from './pages/Authentication/Register'
 import BusinessSignup from './pages/Authentication/BusinessSignup'
@@ -53,6 +54,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function App() {
   return (
+    <ThemeProvider>
     <BrowserRouter>
       <PortfolioProvider>
         <Toaster position="top-right" />
@@ -155,6 +157,7 @@ function App() {
         </Routes>
       </PortfolioProvider>
     </BrowserRouter>
+    </ThemeProvider>
   )
 }
 

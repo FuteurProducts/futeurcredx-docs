@@ -28,25 +28,25 @@ interface WebhookEventsCardProps {
 }
 
 const statusConfig: Record<string, { icon: React.ReactNode; color: string; bg: string }> = {
-  delivered: { 
-    icon: <CheckCircle2 className="h-3.5 w-3.5" />, 
-    color: "text-emerald-600", 
-    bg: "bg-emerald-100 dark:bg-emerald-900/30" 
+  delivered: {
+    icon: <CheckCircle2 className="h-3.5 w-3.5" />,
+    color: "text-success",
+    bg: "bg-success/10"
   },
-  failed: { 
-    icon: <XCircle className="h-3.5 w-3.5" />, 
-    color: "text-red-600", 
-    bg: "bg-red-100 dark:bg-red-900/30" 
+  failed: {
+    icon: <XCircle className="h-3.5 w-3.5" />,
+    color: "text-destructive",
+    bg: "bg-destructive/10"
   },
-  pending: { 
-    icon: <Clock className="h-3.5 w-3.5" />, 
-    color: "text-amber-600", 
-    bg: "bg-amber-100 dark:bg-amber-900/30" 
+  pending: {
+    icon: <Clock className="h-3.5 w-3.5" />,
+    color: "text-warning",
+    bg: "bg-warning/10"
   },
-  retrying: { 
-    icon: <Send className="h-3.5 w-3.5" />, 
-    color: "text-blue-600", 
-    bg: "bg-blue-100 dark:bg-blue-900/30" 
+  retrying: {
+    icon: <Send className="h-3.5 w-3.5" />,
+    color: "text-info",
+    bg: "bg-info/10"
   },
 };
 
@@ -88,7 +88,7 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
           <span className="text-xs text-muted-foreground">Sent</span>
         </div>
         <div className="text-center p-2 bg-muted/50 rounded-lg">
-          <span className="text-lg font-semibold text-emerald-600 block">
+          <span className="text-lg font-semibold text-success block">
             {stats.deliveryRate}%
           </span>
           <span className="text-xs text-muted-foreground">Delivered</span>
@@ -100,7 +100,7 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
           <span className="text-xs text-muted-foreground">Avg Time</span>
         </div>
         <div className="text-center p-2 bg-muted/50 rounded-lg">
-          <span className="text-lg font-semibold text-red-600 block">
+          <span className="text-lg font-semibold text-destructive block">
             {stats.failedCount}
           </span>
           <span className="text-xs text-muted-foreground">Failed</span>
@@ -130,7 +130,7 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
                     {event.eventType}
                   </span>
                   {event.retryCount && event.retryCount > 0 && (
-                    <span className="text-xs px-1.5 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 rounded">
+                    <span className="text-xs px-1.5 py-0.5 bg-warning/10 text-warning rounded">
                       Retry #{event.retryCount}
                     </span>
                   )}

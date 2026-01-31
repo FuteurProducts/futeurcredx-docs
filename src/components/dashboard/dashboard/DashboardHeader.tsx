@@ -1,4 +1,5 @@
-import { Bell, Search, User, LayoutDashboard, BarChart3, Users, FileText, TrendingUp, Settings } from "lucide-react";
+import { Bell, Search, User, LayoutDashboard, BarChart3, Users, FileText, TrendingUp, Settings, Sun, Moon, Monitor } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ const defaultMenu = [
 ];
 
 export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-10">
@@ -54,7 +56,7 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
                       `flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                         isActive
                           ? "bg-primary/10 text-primary"
-                          : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                          : "text-muted-foreground hover:bg-accent hover:text-foreground"
                       }`
                     }
                   >
@@ -72,14 +74,36 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
         {/* Sandbox/Production Toggle */}
         <ConnectedEnvironmentToggle variant="minimal" />
 
-        <Button variant="ghost" size="icon" className="relative">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="Toggle theme">
+              {resolvedTheme === 'dark' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="bg-popover z-50">
+            <DropdownMenuItem onClick={() => setTheme('light')} className="gap-2">
+              <Sun className="w-4 h-4" /> Light
+              {theme === 'light' && <span className="ml-auto text-xs text-muted-foreground">Active</span>}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme('dark')} className="gap-2">
+              <Moon className="w-4 h-4" /> Dark
+              {theme === 'dark' && <span className="ml-auto text-xs text-muted-foreground">Active</span>}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme('system')} className="gap-2">
+              <Monitor className="w-4 h-4" /> System
+              {theme === 'system' && <span className="ml-auto text-xs text-muted-foreground">Active</span>}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Button variant="ghost" size="icon" className="relative" aria-label="Notifications">
           <Bell className="w-5 h-5" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2">
+            <Button variant="ghost" className="flex items-center gap-2" aria-label="User menu">
               <Avatar className="w-8 h-8">
                 <AvatarFallback className="bg-primary/10 text-primary">
                   <User className="w-4 h-4" />

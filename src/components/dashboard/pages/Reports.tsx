@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
 import {
   ReportsGlobalControls,
   ReportLibraryPanel,
@@ -21,9 +22,11 @@ import {
 } from '@/components/enterprise/reports';
 
 const Reports: React.FC = () => {
+  const { toast } = useToast();
+
   // View state: library or custom builder
   const [activeView, setActiveView] = useState<'library' | 'custom'>('library');
-  
+
   // Filters state
   const [filters, setFilters] = useState<ReportFilters>({
     product: 'All',
@@ -33,17 +36,17 @@ const Reports: React.FC = () => {
     timeWindow: '30d',
     environment: 'sandbox',
   });
-  
+
   // Selected template for configuration
   const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(null);
-  
+
   // Reports history
   const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>(mockGeneratedReports);
-  
+
   // Preview drawer state
   const [previewReport, setPreviewReport] = useState<GeneratedReport | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  
+
   // Generating state
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -53,7 +56,7 @@ const Reports: React.FC = () => {
 
   const handleGenerateReport = (config: ReportConfig) => {
     setIsGenerating(true);
-    // Simulate report generation
+    toast({ title: "Generating report", description: `${config.name} is being compiled...` });
     setTimeout(() => {
       const newReport: GeneratedReport = {
         id: `rpt-${Date.now()}`,
@@ -65,7 +68,7 @@ const Reports: React.FC = () => {
         status: 'ready',
         generatedAt: new Date().toISOString(),
         generatedBy: 'current.user@bank.com',
-        fileSize: '1.2 MB',
+        fileSize: config.format === 'csv' ? '456 KB' : config.format === 'xlsx' ? '1.1 MB' : '2.4 MB',
         downloadUrl: '#',
         metadata: {
           dataSources: ['LumiqAI Score Engine', 'Bureau Data Feed'],
@@ -80,6 +83,7 @@ const Reports: React.FC = () => {
       setIsGenerating(false);
       setPreviewReport(newReport);
       setIsPreviewOpen(true);
+      toast({ title: "Report ready", description: `${config.name} has been generated and is ready for download.` });
     }, 2000);
   };
 
@@ -89,8 +93,18 @@ const Reports: React.FC = () => {
   };
 
   const handleDownloadReport = (report: GeneratedReport) => {
-    // In real implementation, trigger download
-    console.log('Downloading report:', report.id);
+    // Generate a real downloadable file with sample data
+    const sampleData = `Report: ${report.name}\nGenerated: ${report.generatedAt}\nScope: ${report.scope}\nPeriod: ${report.period}\n\nBusiness ID,Business Name,LumiqAI Score,Risk Tier,Pre-Qualified,Product\nBIZ-001,Stellar Dynamics LLC,78,Low,Yes,Business Line of Credit\nBIZ-002,Metro Logistics Corp,71,Medium,Yes,Working Capital\nBIZ-003,Apex Construction Group,82,Low,Yes,Equipment Financing\nBIZ-004,Sunrise Healthcare Partners,85,Low,No,-\nBIZ-005,GreenLeaf Organics,65,Medium,Yes,Term Loan\nBIZ-006,Coastal Hospitality Group,58,High,No,-\nBIZ-007,Precision Manufacturing Co,76,Low,No,-\nBIZ-008,TechVenture Solutions,88,Low,Yes,Business Credit Card\nBIZ-009,Urban Retail Partners,62,Medium,No,-\nBIZ-010,Pacific Marine Services,73,Medium,No,-\n`;
+    const mimeType = report.format === 'csv' ? 'text/csv' : 'text/plain';
+    const ext = report.format === 'csv' ? 'csv' : report.format === 'xlsx' ? 'csv' : 'txt';
+    const blob = new Blob([sampleData], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${report.name.replace(/\s+/g, '-').toLowerCase()}.${ext}`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "Download started", description: `${report.name} is downloading.` });
   };
 
   const handleClosePreview = () => {
@@ -99,16 +113,16 @@ const Reports: React.FC = () => {
   };
 
   const handleRefreshHistory = () => {
-    // In real implementation, refetch from server
-    console.log('Refreshing report history');
+    toast({ title: "History refreshed", description: "Report history is up to date." });
   };
 
   const handleRunCustomReport = (blocks: ReportBlock[]) => {
-    console.log('Running custom report with blocks:', blocks);
+    toast({ title: "Custom report running", description: `Report with ${blocks.length} metrics is being compiled.` });
   };
 
   const handleSaveCustomReport = (name: string, blocks: ReportBlock[]) => {
-    console.log('Saving custom report template:', name, blocks);
+    localStorage.setItem(`lumiq_custom_report_${name}`, JSON.stringify(blocks));
+    toast({ title: "Template saved", description: `"${name}" saved with ${blocks.length} metric blocks.` });
   };
 
   return (

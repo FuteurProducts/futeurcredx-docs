@@ -85,27 +85,27 @@ export function BffErrorDisplay({ error, onRetry, className }: BffErrorDisplayPr
           icon: Lock,
           title: 'Access Denied',
           description: 'You don\'t have permission to access this portfolio.',
-          color: 'text-red-600',
-          bgColor: 'bg-red-50',
-          borderColor: 'border-red-200',
+          color: 'text-destructive',
+          bgColor: 'bg-destructive/10',
+          borderColor: 'border-destructive/20',
         };
       case 'UNAUTHORIZED':
         return {
           icon: Lock,
           title: 'Session Expired',
           description: 'Please log in again to continue.',
-          color: 'text-red-600',
-          bgColor: 'bg-red-50',
-          borderColor: 'border-red-200',
+          color: 'text-destructive',
+          bgColor: 'bg-destructive/10',
+          borderColor: 'border-destructive/20',
         };
       default:
         return {
           icon: AlertTriangle,
           title: 'Error',
           description: errorMessage,
-          color: 'text-red-600',
-          bgColor: 'bg-red-50',
-          borderColor: 'border-red-200',
+          color: 'text-destructive',
+          bgColor: 'bg-destructive/10',
+          borderColor: 'border-destructive/20',
         };
     }
   };

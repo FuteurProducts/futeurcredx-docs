@@ -235,9 +235,9 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                   </div>
                   <div className="flex items-center gap-2">
                     {customer.rhsStatus === 'growing' ? (
-                      <TrendingUp className="h-4 w-4 text-emerald-500" />
+                      <TrendingUp className="h-4 w-4 text-success" />
                     ) : customer.rhsStatus === 'declining' ? (
-                      <TrendingDown className="h-4 w-4 text-red-500" />
+                      <TrendingDown className="h-4 w-4 text-destructive" />
                     ) : (
                       <Activity className="h-4 w-4 text-muted-foreground" />
                     )}
@@ -380,8 +380,8 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                       <div>
                         <p className="text-sm font-medium text-foreground">{product.name}</p>
                         <span className={`text-xs font-medium ${
-                          product.status === 'active' ? 'text-emerald-500' :
-                          product.status === 'approved' ? 'text-amber-500' : 'text-muted-foreground'
+                          product.status === 'active' ? 'text-success' :
+                          product.status === 'approved' ? 'text-warning' : 'text-muted-foreground'
                         }`}>
                           {product.status.charAt(0).toUpperCase() + product.status.slice(1)}
                         </span>

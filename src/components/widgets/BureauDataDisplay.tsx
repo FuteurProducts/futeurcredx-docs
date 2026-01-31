@@ -98,11 +98,11 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className={`bg-white rounded-2xl p-5 shadow-sm border border-slate-200 ${className}`}
+        className={`bg-card rounded-2xl p-5 shadow-sm border border-border ${className}`}
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-slate-700">Multi-Bureau Summary</h3>
-          <span className="text-xs text-slate-500">{scores.length} sources</span>
+          <h3 className="text-sm font-semibold text-muted-foreground">Multi-Bureau Summary</h3>
+          <span className="text-xs text-muted-foreground">{scores.length} sources</span>
         </div>
 
         <div className="flex justify-between">
@@ -113,12 +113,12 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                 <div className="relative inline-block">
                   {renderScoreRing(bureau.score, bureau.maxScore, 60)}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-sm font-bold text-slate-900">{bureau.score}</span>
+                    <span className="text-sm font-bold text-foreground">{bureau.score}</span>
                   </div>
                 </div>
-                <p className="text-xs text-slate-500 mt-1 font-medium">{config.name.split(' ')[0]}</p>
+                <p className="text-xs text-muted-foreground mt-1 font-medium">{config.name.split(' ')[0]}</p>
                 <div className={`flex items-center justify-center gap-1 text-xs ${
-                  bureau.trend === 'up' ? 'text-green-600' : bureau.trend === 'down' ? 'text-red-600' : 'text-slate-500'
+                  bureau.trend === 'up' ? 'text-success' : bureau.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'
                 }`}>
                   {bureau.trend === 'up' ? <TrendingUp className="w-3 h-3" /> : 
                    bureau.trend === 'down' ? <TrendingDown className="w-3 h-3" /> : null}
@@ -137,11 +137,11 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className={`bg-white rounded-2xl p-6 shadow-sm border border-slate-200 ${className}`}
+        className={`bg-card rounded-2xl p-6 shadow-sm border border-border ${className}`}
       >
         <div className="flex items-center gap-2 mb-6">
-          <Building className="w-5 h-5 text-slate-600" />
-          <h3 className="text-lg font-semibold text-slate-900">Bureau Reports</h3>
+          <Building className="w-5 h-5 text-muted-foreground" />
+          <h3 className="text-lg font-semibold text-foreground">Bureau Reports</h3>
         </div>
 
         <div className="space-y-4">
@@ -152,10 +152,10 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
             return (
               <div 
                 key={bureau.bureau}
-                className="border border-slate-200 rounded-xl overflow-hidden"
+                className="border border-border rounded-xl overflow-hidden"
               >
                 <div 
-                  className="p-4 cursor-pointer hover:bg-slate-50 transition-colors"
+                  className="p-4 cursor-pointer hover:bg-accent transition-colors"
                   onClick={() => setExpandedBureau(isExpanded ? null : bureau.bureau)}
                 >
                   <div className="flex items-center justify-between">
@@ -165,24 +165,24 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                         style={{ backgroundColor: config.color }}
                       />
                       <div>
-                        <h4 className="font-semibold text-slate-800">{config.name}</h4>
+                        <h4 className="font-semibold text-foreground">{config.name}</h4>
                         <div className="flex items-center gap-2 mt-1">
                           {bureau.status === 'active' && (
-                            <span className="flex items-center gap-1 text-xs text-green-600">
+                            <span className="flex items-center gap-1 text-xs text-success">
                               <CheckCircle className="w-3 h-3" /> Active
                             </span>
                           )}
                           {bureau.status === 'pending' && (
-                            <span className="flex items-center gap-1 text-xs text-amber-600">
+                            <span className="flex items-center gap-1 text-xs text-warning">
                               <Clock className="w-3 h-3" /> Pending
                             </span>
                           )}
                           {bureau.status === 'unavailable' && (
-                            <span className="flex items-center gap-1 text-xs text-slate-500">
+                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
                               <AlertCircle className="w-3 h-3" /> Unavailable
                             </span>
                           )}
-                          <span className="text-xs text-slate-400">
+                          <span className="text-xs text-muted-foreground">
                             Updated: {bureau.lastUpdated}
                           </span>
                         </div>
@@ -191,17 +191,17 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                     
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <span className="text-2xl font-bold text-slate-900">{bureau.score}</span>
-                        <span className="text-sm text-slate-400">/{bureau.maxScore}</span>
+                        <span className="text-2xl font-bold text-foreground">{bureau.score}</span>
+                        <span className="text-sm text-muted-foreground">/{bureau.maxScore}</span>
                         <div className={`flex items-center justify-end gap-1 text-sm ${
-                          bureau.trend === 'up' ? 'text-green-600' : bureau.trend === 'down' ? 'text-red-600' : 'text-slate-500'
+                          bureau.trend === 'up' ? 'text-success' : bureau.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'
                         }`}>
                           {bureau.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : 
                            bureau.trend === 'down' ? <TrendingDown className="w-4 h-4" /> : null}
                           {bureau.trend !== 'stable' && `${bureau.trend === 'up' ? '+' : '-'}${bureau.trendValue}`}
                         </div>
                       </div>
-                      <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                     </div>
                   </div>
                 </div>
@@ -212,13 +212,13 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      className="border-t border-slate-100 bg-slate-50"
+                      className="border-t border-border bg-muted"
                     >
                       <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
                         {bureau.details.map((detail, i) => (
                           <div key={i}>
-                            <p className="text-xs text-slate-500">{detail.label}</p>
-                            <p className="text-sm font-semibold text-slate-800">{detail.value}</p>
+                            <p className="text-xs text-muted-foreground">{detail.label}</p>
+                            <p className="text-sm font-semibold text-foreground">{detail.value}</p>
                           </div>
                         ))}
                       </div>
@@ -226,7 +226,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                         {onRefresh && (
                           <button 
                             onClick={(e) => { e.stopPropagation(); onRefresh(bureau.bureau); }}
-                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent rounded-lg transition-colors"
                           >
                             <RefreshCw className="w-4 h-4" />
                             Refresh
@@ -235,7 +235,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                         {onViewReport && (
                           <button 
                             onClick={(e) => { e.stopPropagation(); onViewReport(bureau.bureau); }}
-                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-info hover:bg-info/10 rounded-lg transition-colors"
                           >
                             <ExternalLink className="w-4 h-4" />
                             View Full Report
@@ -261,8 +261,8 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
       className={`${className}`}
     >
       <div className="flex items-center gap-2 mb-6">
-        <Building className="w-5 h-5 text-slate-600" />
-        <h3 className="text-lg font-semibold text-slate-900">Multi-Bureau Credit Data</h3>
+        <Building className="w-5 h-5 text-muted-foreground" />
+        <h3 className="text-lg font-semibold text-foreground">Multi-Bureau Credit Data</h3>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -275,7 +275,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200"
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-4">
@@ -287,8 +287,8 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                 </div>
                 {bureau.status === 'active' && (
                   <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-xs text-green-600 font-medium">Live</span>
+                    <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
+                    <span className="text-xs text-success font-medium">Live</span>
                   </div>
                 )}
               </div>
@@ -298,45 +298,45 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                 <div className="relative">
                   {renderScoreRing(bureau.score, bureau.maxScore, 100)}
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <span className="text-3xl font-bold text-slate-900">{bureau.score}</span>
-                    <span className="text-xs text-slate-400">of {bureau.maxScore}</span>
+                    <span className="text-3xl font-bold text-foreground">{bureau.score}</span>
+                    <span className="text-xs text-muted-foreground">of {bureau.maxScore}</span>
                   </div>
                 </div>
               </div>
 
               {/* Score name */}
-              <h4 className="text-center font-medium text-slate-800 mb-2">{bureau.scoreName}</h4>
+              <h4 className="text-center font-medium text-foreground mb-2">{bureau.scoreName}</h4>
 
               {/* Trend */}
               <div className="flex items-center justify-center gap-2 mb-4">
                 <span className={`flex items-center gap-1 text-sm font-medium ${
-                  bureau.trend === 'up' ? 'text-green-600' : bureau.trend === 'down' ? 'text-red-600' : 'text-slate-500'
+                  bureau.trend === 'up' ? 'text-success' : bureau.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'
                 }`}>
                   {bureau.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : 
                    bureau.trend === 'down' ? <TrendingDown className="w-4 h-4" /> : null}
                   {bureau.trend === 'up' ? '+' : bureau.trend === 'down' ? '-' : ''}{bureau.trendValue} pts
                 </span>
-                <span className="text-xs text-slate-400">(30d)</span>
+                <span className="text-xs text-muted-foreground">(30d)</span>
               </div>
 
               {/* Details */}
               {showDetails && bureau.details && (
-                <div className="space-y-2 mb-4 pt-4 border-t border-slate-100">
+                <div className="space-y-2 mb-4 pt-4 border-t border-border">
                   {bureau.details.slice(0, 3).map((detail, i) => (
                     <div key={i} className="flex justify-between text-sm">
-                      <span className="text-slate-500">{detail.label}</span>
-                      <span className="font-medium text-slate-800">{detail.value}</span>
+                      <span className="text-muted-foreground">{detail.label}</span>
+                      <span className="font-medium text-foreground">{detail.value}</span>
                     </div>
                   ))}
                 </div>
               )}
 
               {/* Actions */}
-              <div className="flex gap-2 pt-4 border-t border-slate-100">
+              <div className="flex gap-2 pt-4 border-t border-border">
                 {onRefresh && (
                   <button 
                     onClick={() => onRefresh(bureau.bureau)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium text-muted-foreground hover:bg-accent rounded-lg transition-colors"
                   >
                     <RefreshCw className="w-4 h-4" />
                     Refresh
@@ -345,7 +345,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
                 {onViewReport && (
                   <button 
                     onClick={() => onViewReport(bureau.bureau)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium text-info hover:bg-info/10 rounded-lg transition-colors"
                   >
                     <ExternalLink className="w-4 h-4" />
                     Report
@@ -354,7 +354,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
               </div>
 
               {/* Last updated */}
-              <p className="text-xs text-slate-400 text-center mt-3">
+              <p className="text-xs text-muted-foreground text-center mt-3">
                 Updated: {bureau.lastUpdated}
               </p>
             </motion.div>

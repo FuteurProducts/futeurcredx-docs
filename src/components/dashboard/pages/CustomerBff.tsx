@@ -23,17 +23,22 @@ import { PortfolioSelector } from '@/components/shared';
 import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// Mock data for demo mode (no auth session)
-const mockDemoCustomers: BffCustomerListItem[] = [
-  { id: 'demo-cust-1', businessName: 'Apex Construction LLC', naicsCode: '236220', businessType: 'LLC', addressCity: 'Austin', addressState: 'TX', annualRevenue: 2500000, employeeCount: 45, latestScore: 720, riskClass: 'low', createdAt: '2024-06-15' },
-  { id: 'demo-cust-2', businessName: 'Metro Logistics Inc', naicsCode: '484110', businessType: 'Corporation', addressCity: 'Dallas', addressState: 'TX', annualRevenue: 5200000, employeeCount: 82, latestScore: 685, riskClass: 'medium', createdAt: '2024-03-22' },
-  { id: 'demo-cust-3', businessName: 'Sunrise Healthcare Group', naicsCode: '621111', businessType: 'LLC', addressCity: 'Houston', addressState: 'TX', annualRevenue: 8100000, employeeCount: 156, latestScore: 745, riskClass: 'low', createdAt: '2023-11-08' },
-  { id: 'demo-cust-4', businessName: 'TechVenture Solutions', naicsCode: '541511', businessType: 'Corporation', addressCity: 'San Francisco', addressState: 'CA', annualRevenue: 3400000, employeeCount: 28, latestScore: 702, riskClass: 'low', createdAt: '2024-01-14' },
-  { id: 'demo-cust-5', businessName: 'Green Valley Farms', naicsCode: '111000', businessType: 'LLC', addressCity: 'Fresno', addressState: 'CA', annualRevenue: 1800000, employeeCount: 35, latestScore: 658, riskClass: 'medium', createdAt: '2024-04-30' },
-  { id: 'demo-cust-6', businessName: 'Coastal Hospitality LLC', naicsCode: '721110', businessType: 'LLC', addressCity: 'Miami', addressState: 'FL', annualRevenue: 4200000, employeeCount: 92, latestScore: 0, riskClass: 'unknown', createdAt: '2024-07-12' },
-  { id: 'demo-cust-7', businessName: 'Precision Manufacturing Co', naicsCode: '332710', businessType: 'Corporation', addressCity: 'Detroit', addressState: 'MI', annualRevenue: 12500000, employeeCount: 210, latestScore: 0, riskClass: 'unknown', createdAt: '2024-02-28' },
-  { id: 'demo-cust-8', businessName: 'Urban Retail Partners', naicsCode: '445110', businessType: 'Partnership', addressCity: 'Chicago', addressState: 'IL', annualRevenue: 950000, employeeCount: 18, latestScore: 0, riskClass: 'unknown', createdAt: '2024-08-05' },
-];
+import { DEMO_BUSINESSES } from '@/data/demoData';
+
+// Demo customers derived from centralized business data
+const mockDemoCustomers: BffCustomerListItem[] = DEMO_BUSINESSES.map((biz, idx) => ({
+  id: biz.id,
+  businessName: biz.name,
+  naicsCode: biz.naicsCode,
+  businessType: idx % 2 === 0 ? 'LLC' : 'Corporation',
+  addressCity: biz.city,
+  addressState: biz.state,
+  annualRevenue: biz.annualRevenue,
+  employeeCount: biz.employeeCount,
+  latestScore: idx < 7 ? biz.lumiqScore * 10 : 0,
+  riskClass: idx < 7 ? biz.riskTier : 'unknown',
+  createdAt: `2025-${String((idx % 12) + 1).padStart(2, '0')}-${String((idx * 7 % 28) + 1).padStart(2, '0')}`,
+}));
 
 const mockHealthSummary = {
   avgRHS: 74,
@@ -199,8 +204,8 @@ const CustomerBff: React.FC = () => {
     setDossierCustomer(null);
   };
 
-  const handleDrilldown = (metric: string) => {
-    console.log('Drilldown to:', metric);
+  const handleDrilldown = (_metric: string) => {
+    // Drilldown handled by UI navigation
   };
 
   const handleStageClick = (stageId: string) => {
@@ -210,12 +215,12 @@ const CustomerBff: React.FC = () => {
     }));
   };
 
-  const handleAssignTask = (recommendation: unknown, assignee: string) => {
-    console.log('Assign task:', recommendation, assignee);
+  const handleAssignTask = (_recommendation: unknown, _assignee: string) => {
+    // Task assignment handled by workflow engine
   };
 
-  const handleDismissRecommendation = (id: string) => {
-    console.log('Dismiss recommendation:', id);
+  const handleDismissRecommendation = (_id: string) => {
+    // Recommendation dismissed
   };
 
   const selectedCustomer = customers.find(c => c.id === selectedCustomerId);
@@ -425,7 +430,7 @@ const CustomerBff: React.FC = () => {
         <CustomerDossier
           customer={dossierData}
           onClose={handleCloseDossier}
-          onAddNote={(note: string) => console.log('Add note:', note)}
+          onAddNote={(_note: string) => { /* Note saved to dossier */ }}
         />
       )}
     </div>

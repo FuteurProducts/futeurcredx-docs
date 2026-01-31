@@ -36,8 +36,8 @@ export interface AuditControlsPanelProps {
 
 const getActionStyle = (action: string) => {
   switch (action) {
-    case 'view': return { bg: 'bg-blue-50', text: 'text-blue-700', icon: Eye };
-    case 'export': return { bg: 'bg-amber-50', text: 'text-amber-700', icon: Download };
+    case 'view': return { bg: 'bg-info/10', text: 'text-info', icon: Eye };
+    case 'export': return { bg: 'bg-warning/10', text: 'text-warning', icon: Download };
     case 'modify': return { bg: 'bg-violet-50', text: 'text-violet-700', icon: FileText };
     case 'delete': return { bg: 'bg-rose-50', text: 'text-rose-700', icon: FileText };
     default: return { bg: 'bg-muted', text: 'text-foreground', icon: Eye };
@@ -80,8 +80,8 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-slate-500/10 rounded-xl flex items-center justify-center">
-            <Shield className="w-5 h-5 text-slate-600" />
+          <div className="w-10 h-10 bg-muted rounded-xl flex items-center justify-center">
+            <Shield className="w-5 h-5 text-muted-foreground" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">Audit & Access Controls</h3>
@@ -92,11 +92,11 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
         <div className="flex items-center gap-4">
           {/* Security Status */}
           <div className="flex items-center gap-2">
-            <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${mfaEnforced ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
+            <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${mfaEnforced ? 'bg-success/10 text-success' : 'bg-rose-50 text-rose-700'}`}>
               <Key className="w-3.5 h-3.5" />
               <span className="text-xs font-medium">MFA {mfaEnforced ? 'ON' : 'OFF'}</span>
             </div>
-            <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${ssoEnabled ? 'bg-emerald-50 text-emerald-700' : 'bg-muted text-muted-foreground'}`}>
+            <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${ssoEnabled ? 'bg-success/10 text-success' : 'bg-muted text-muted-foreground'}`}>
               <span className="text-xs font-medium">SSO {ssoEnabled ? 'Enabled' : 'Disabled'}</span>
             </div>
           </div>
@@ -113,9 +113,9 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
           <div className="text-2xl font-bold text-foreground">{totalExports24h}</div>
           <div className="text-xs text-muted-foreground">Exports (24h)</div>
         </div>
-        <div className="p-3 bg-amber-50 rounded-lg">
-          <div className="text-2xl font-bold text-amber-700">{sensitiveAccessCount}</div>
-          <div className="text-xs text-amber-600">Sensitive Data Access</div>
+        <div className="p-3 bg-warning/10 rounded-lg">
+          <div className="text-2xl font-bold text-warning">{sensitiveAccessCount}</div>
+          <div className="text-xs text-warning">Sensitive Data Access</div>
         </div>
         <div className="p-3 bg-muted/30 rounded-lg">
           <div className="text-2xl font-bold text-foreground">{permissionChanges.length}</div>
@@ -207,20 +207,20 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
                 className="flex items-center gap-3 p-3 bg-muted/20 rounded-lg"
               >
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-                  change.changeType === 'grant' ? 'bg-emerald-50' :
-                  change.changeType === 'revoke' ? 'bg-rose-50' : 'bg-blue-50'
+                  change.changeType === 'grant' ? 'bg-success/10' :
+                  change.changeType === 'revoke' ? 'bg-rose-50' : 'bg-info/10'
                 }`}>
                   <Key className={`w-4 h-4 ${
-                    change.changeType === 'grant' ? 'text-emerald-600' :
-                    change.changeType === 'revoke' ? 'text-rose-600' : 'text-blue-600'
+                    change.changeType === 'grant' ? 'text-success' :
+                    change.changeType === 'revoke' ? 'text-rose-600' : 'text-info'
                   }`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-foreground">{change.userName}</span>
                     <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
-                      change.changeType === 'grant' ? 'bg-emerald-100 text-emerald-700' :
-                      change.changeType === 'revoke' ? 'bg-rose-100 text-rose-700' : 'bg-blue-100 text-blue-700'
+                      change.changeType === 'grant' ? 'bg-success/10 text-success' :
+                      change.changeType === 'revoke' ? 'bg-rose-100 text-rose-700' : 'bg-info/10 text-info'
                     }`}>
                       {change.changeType.toUpperCase()}
                     </span>

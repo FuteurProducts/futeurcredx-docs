@@ -92,7 +92,7 @@ export const RelationshipHealthSummary: React.FC<RelationshipHealthSummaryProps>
       <div className="flex items-center justify-between">
         <span className="text-sm text-muted-foreground">{label}</span>
         <div className={`flex items-center gap-1 text-xs font-medium ${
-          trend > 0 ? 'text-emerald-500' : trend < 0 ? 'text-red-500' : 'text-muted-foreground'
+          trend > 0 ? 'text-success' : trend < 0 ? 'text-destructive' : 'text-muted-foreground'
         }`}>
           {trend !== 0 && (
             trend > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />
@@ -217,7 +217,7 @@ export const RelationshipHealthSummary: React.FC<RelationshipHealthSummaryProps>
           className="bg-card border border-border rounded-xl p-5"
         >
           <div className="flex items-center gap-2 mb-4">
-            <Lightbulb className="h-4 w-4 text-amber-500" />
+            <Lightbulb className="h-4 w-4 text-warning" />
             <h3 className="text-sm font-semibold text-foreground">Top Opportunities</h3>
           </div>
 
@@ -240,7 +240,7 @@ export const RelationshipHealthSummary: React.FC<RelationshipHealthSummaryProps>
                     </p>
                   </div>
                 </div>
-                <span className="text-sm font-semibold text-emerald-500">
+                <span className="text-sm font-semibold text-success">
                   +${(opp.estimatedValue / 1000).toFixed(0)}K
                 </span>
               </div>

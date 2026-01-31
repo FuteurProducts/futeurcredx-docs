@@ -27,11 +27,11 @@ const formatNumber = (num: number): string => {
 const getFreshnessColors = (freshness: string) => {
   switch (freshness) {
     case "fresh":
-      return { bg: "bg-emerald-500/10", text: "text-emerald-600", label: "Fresh" };
+      return { bg: "bg-success/10", text: "text-success", label: "Fresh" };
     case "stale":
-      return { bg: "bg-amber-500/10", text: "text-amber-600", label: "Stale" };
+      return { bg: "bg-warning/10", text: "text-warning", label: "Stale" };
     case "critical":
-      return { bg: "bg-red-500/10", text: "text-red-600", label: "Critical" };
+      return { bg: "bg-destructive/10", text: "text-destructive", label: "Critical" };
     default:
       return { bg: "bg-muted", text: "text-muted-foreground", label: "Unknown" };
   }
@@ -76,9 +76,9 @@ export const DataSourceHealthCard: React.FC<DataSourceHealthCardProps> = ({
   className = "",
 }) => {
   const getHealthColor = (health: number) => {
-    if (health >= 90) return "text-emerald-600";
-    if (health >= 70) return "text-amber-600";
-    return "text-red-600";
+    if (health >= 90) return "text-success";
+    if (health >= 70) return "text-warning";
+    return "text-destructive";
   };
 
   return (

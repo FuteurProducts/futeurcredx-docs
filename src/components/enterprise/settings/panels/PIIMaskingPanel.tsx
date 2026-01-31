@@ -54,7 +54,7 @@ export const PIIMaskingPanel: React.FC = () => {
   const getSensitivityColor = (sensitivity: string) => {
     switch (sensitivity) {
       case 'high': return 'bg-destructive/10 text-destructive border-destructive/20';
-      case 'medium': return 'bg-amber-500/10 text-amber-600 border-amber-500/20';
+      case 'medium': return 'bg-warning/10 text-warning border-warning/20';
       case 'low': return 'bg-chart-2/10 text-chart-2 border-chart-2/20';
       default: return '';
     }

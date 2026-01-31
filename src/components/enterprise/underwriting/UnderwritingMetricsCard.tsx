@@ -35,7 +35,7 @@ const TrendIndicator = ({ value }: { value: number }) => {
   const isPositive = value >= 0;
   return (
     <span className={`flex items-center gap-0.5 text-xs font-medium ${
-      isPositive ? 'text-emerald-600' : 'text-red-600'
+      isPositive ? 'text-success' : 'text-destructive'
     }`}>
       {isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
       {Math.abs(value)}%
@@ -48,9 +48,9 @@ export const UnderwritingMetricsCard: React.FC<UnderwritingMetricsCardProps> = (
   title = 'Underwriting Performance'
 }) => {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-5">
-      <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2">
-        <Activity className="w-4 h-4 text-blue-600" />
+    <div className="bg-card rounded-xl border border-border p-5">
+      <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Activity className="w-4 h-4 text-info" />
         {title}
       </h3>
       
@@ -66,7 +66,7 @@ export const UnderwritingMetricsCard: React.FC<UnderwritingMetricsCardProps> = (
               transition={{ delay: index * 0.1 }}
               className="relative overflow-hidden"
             >
-              <div className={`p-4 rounded-xl ${metric.bgColor} border border-slate-100`}>
+              <div className={`p-4 rounded-xl ${metric.bgColor} border border-border`}>
                 <div className="flex items-start justify-between mb-2">
                   <div className={`w-8 h-8 rounded-lg ${metric.color} flex items-center justify-center`}>
                     <Icon className="w-4 h-4 text-white" />
@@ -75,12 +75,12 @@ export const UnderwritingMetricsCard: React.FC<UnderwritingMetricsCardProps> = (
                 </div>
                 
                 <div className="mb-1">
-                  <span className="text-2xl font-bold text-slate-800">{metric.value}</span>
+                  <span className="text-2xl font-bold text-foreground">{metric.value}</span>
                 </div>
-                <p className="text-xs text-slate-500">{metric.label}</p>
-                
+                <p className="text-xs text-muted-foreground">{metric.label}</p>
+
                 {metric.changeLabel && (
-                  <p className="text-xs text-slate-400 mt-1">{metric.changeLabel}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{metric.changeLabel}</p>
                 )}
                 
                 {metric.sparkline && (
@@ -114,8 +114,8 @@ export const DEFAULT_UNDERWRITING_METRICS: MetricData[] = [
     change: 2.3,
     changeLabel: 'vs last month',
     icon: Target,
-    color: 'bg-emerald-500',
-    bgColor: 'bg-emerald-50',
+    color: 'bg-success',
+    bgColor: 'bg-success/10',
     sparkline: [{ value: 90 }, { value: 91 }, { value: 92 }, { value: 93 }, { value: 94 }, { value: 95 }],
   },
   {
@@ -124,8 +124,8 @@ export const DEFAULT_UNDERWRITING_METRICS: MetricData[] = [
     change: -15.2,
     changeLabel: 'faster than manual',
     icon: Clock,
-    color: 'bg-blue-500',
-    bgColor: 'bg-blue-50',
+    color: 'bg-info',
+    bgColor: 'bg-info/10',
     sparkline: [{ value: 8 }, { value: 7 }, { value: 6 }, { value: 5 }, { value: 4 }, { value: 4 }],
   },
   {
@@ -143,8 +143,8 @@ export const DEFAULT_UNDERWRITING_METRICS: MetricData[] = [
     change: -0.8,
     changeLabel: 'improving',
     icon: Users,
-    color: 'bg-amber-500',
-    bgColor: 'bg-amber-50',
+    color: 'bg-warning',
+    bgColor: 'bg-warning/10',
   },
 ];
 
@@ -154,31 +154,31 @@ export const DAILY_STATS_METRICS: MetricData[] = [
     label: 'Applications Received',
     change: 8.5,
     icon: BarChart3,
-    color: 'bg-slate-600',
-    bgColor: 'bg-slate-50',
+    color: 'bg-muted-foreground',
+    bgColor: 'bg-muted',
   },
   {
     value: '2,156',
     label: 'Approved',
     change: 12.3,
     icon: CheckCircle2,
-    color: 'bg-emerald-500',
-    bgColor: 'bg-emerald-50',
+    color: 'bg-success',
+    bgColor: 'bg-success/10',
   },
   {
     value: '534',
     label: 'In Review',
     change: -5.2,
     icon: AlertTriangle,
-    color: 'bg-amber-500',
-    bgColor: 'bg-amber-50',
+    color: 'bg-warning',
+    bgColor: 'bg-warning/10',
   },
   {
     value: '157',
     label: 'Declined',
     change: -2.1,
     icon: XCircle,
-    color: 'bg-red-500',
-    bgColor: 'bg-red-50',
+    color: 'bg-destructive',
+    bgColor: 'bg-destructive/10',
   },
 ];

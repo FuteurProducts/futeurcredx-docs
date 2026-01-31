@@ -31,8 +31,8 @@ export const PortfolioHealthCard: React.FC<PortfolioHealthCardProps> = ({
     <div className={`p-6 ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
-            <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+          <div className="p-2 bg-success/10 rounded-xl">
+            <ShieldCheck className="h-5 w-5 text-success" />
           </div>
           <h3 className="text-lg font-semibold text-foreground">Portfolio Health</h3>
         </div>

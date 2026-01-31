@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/dashboard/dashboard/DashboardLayout";
 import { MetricSection, CompactMetricCard } from "@/components/dashboard/dashboard/MetricSection";
 import { ConversionChart } from "@/components/dashboard/dashboard/ConversionChart";
@@ -11,11 +12,13 @@ import { ApiPlayground } from "@/components/dashboard/dashboard/ApiPlayground";
 import { DataFlowVisualization } from "@/components/dashboard/dashboard/DataFlowVisualization";
 import { WhiteLabelPreview } from "@/components/dashboard/dashboard/WhiteLabelPreview";
 import { ExecutiveSummary } from "@/components/dashboard/dashboard/ExecutiveSummary";
+import { LiveActivityTicker } from "@/components/ui/live-activity-ticker";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  TrendingUp, 
-  Users, 
-  CheckCircle, 
+import { MetricSkeleton, ChartSkeleton, CardSkeleton } from "@/components/ui/skeletons";
+import {
+  TrendingUp,
+  Users,
+  CheckCircle,
   AlertCircle,
   Clock,
   DollarSign,
@@ -77,20 +80,77 @@ const mockTrendData: TrendData[] = [
 ];
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="space-y-8">
+          {/* Header skeleton */}
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <div className="h-8 w-64 rounded-lg bg-muted animate-pulse" />
+              <div className="h-4 w-96 rounded bg-muted animate-pulse" />
+            </div>
+            <div className="h-14 w-48 rounded-lg bg-muted animate-pulse" />
+          </div>
+
+          {/* API Health Monitor skeleton */}
+          <CardSkeleton />
+
+          {/* Top KPI metrics skeleton */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <MetricSkeleton key={i} />
+            ))}
+          </div>
+
+          {/* Funnel metrics skeleton */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <MetricSkeleton key={i} />
+            ))}
+          </div>
+
+          {/* Chart skeleton */}
+          <ChartSkeleton />
+
+          {/* Additional metrics skeleton */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <MetricSkeleton key={i} />
+            ))}
+          </div>
+
+          {/* More cards skeleton */}
+          <div className="grid gap-4 md:grid-cols-2">
+            <CardSkeleton />
+            <CardSkeleton />
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
+
   return (
     <DashboardLayout>
       <div className="space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              FuteurCredX Partner Dashboard
+            <h1 className="text-display bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              LUMIQ AI Control Tower
             </h1>
             <p className="text-muted-foreground mt-1">
               Enterprise API Platform • Real-time Business Credit Intelligence
             </p>
           </div>
-          <div className="px-4 py-2 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-lg shadow-sm">
+          <div className="px-4 py-2 bg-card/90 backdrop-blur-sm border border-border/80 rounded-lg shadow-sm">
             <p className="text-xs text-muted-foreground">API Status</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="w-2 h-2 bg-success rounded-full pulse-glow" />
@@ -104,7 +164,7 @@ const Index = () => {
 
         {/* Tabs for organized content */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-sm">
+          <TabsList className="bg-card/90 backdrop-blur-sm border border-border/80 shadow-sm">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="intelligence">Intelligence</TabsTrigger>
             <TabsTrigger value="developer">Developer</TabsTrigger>
@@ -113,7 +173,7 @@ const Index = () => {
 
           <TabsContent value="overview" className="space-y-8">{/* Header */}
         <div>
-          <h2 className="text-2xl font-bold">Performance Overview</h2>
+          <h2 className="text-headline">Performance Overview</h2>
           <p className="text-muted-foreground mt-1">
             Comprehensive business credit performance and forecasting metrics
           </p>
@@ -330,6 +390,9 @@ const Index = () => {
 
         {/* Smart Alerts */}
         <SmartAlerts />
+
+        {/* Live Activity Ticker */}
+        <LiveActivityTicker />
           </TabsContent>
 
           <TabsContent value="intelligence" className="space-y-8">

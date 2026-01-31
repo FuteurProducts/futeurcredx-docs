@@ -64,8 +64,8 @@ const TYPE_CONFIG = {
 };
 
 const PRIORITY_CONFIG = {
-  'high': { bg: 'bg-red-500/10', text: 'text-red-500', label: 'High Priority' },
-  'medium': { bg: 'bg-amber-500/10', text: 'text-amber-500', label: 'Medium' },
+  'high': { bg: 'bg-destructive/10', text: 'text-destructive', label: 'High Priority' },
+  'medium': { bg: 'bg-warning/10', text: 'text-warning', label: 'Medium' },
   'low': { bg: 'bg-muted', text: 'text-muted-foreground', label: 'Low' },
 };
 
@@ -132,7 +132,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
             </div>
 
             <div className="text-right shrink-0">
-              <div className="text-lg font-bold text-emerald-500">
+              <div className="text-lg font-bold text-success">
                 +{formatCurrency(rec.estimatedRevenueImpact)}
               </div>
               <div className="text-xs text-muted-foreground">est. revenue</div>
@@ -158,7 +158,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
                   <ul className="space-y-1.5">
                     {rec.rationale.map((point, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
-                        <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
+                        <CheckCircle className="h-4 w-4 text-success shrink-0 mt-0.5" />
                         <span>{point}</span>
                       </li>
                     ))}
@@ -185,7 +185,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
 
                   <div className="p-3 bg-muted/50 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
-                      <AlertCircle className="h-4 w-4 text-amber-500" />
+                      <AlertCircle className="h-4 w-4 text-warning" />
                       <span className="text-xs text-muted-foreground">Risk-Adjusted</span>
                     </div>
                     <div className="flex items-baseline gap-1">
@@ -193,7 +193,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
                     </div>
                     <div className="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
                       <div 
-                        className="h-full bg-amber-500 rounded-full"
+                        className="h-full bg-warning rounded-full"
                         style={{ width: `${rec.riskAdjustedConfidence}%` }}
                       />
                     </div>
@@ -263,7 +263,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-amber-500" />
+          <Lightbulb className="h-5 w-5 text-warning" />
           <h3 className="text-sm font-semibold text-foreground">Next Best Actions</h3>
           <span className="px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded-full">
             {recommendations.length} active

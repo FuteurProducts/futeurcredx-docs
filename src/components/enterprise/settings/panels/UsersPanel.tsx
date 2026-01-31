@@ -18,8 +18,8 @@ interface UsersPanelProps {
 
 const StatusBadge: React.FC<{ status: PlatformUser['status'] }> = ({ status }) => {
   const config = {
-    active: { icon: CheckCircle, bg: 'bg-green-100', text: 'text-green-700' },
-    pending: { icon: Clock, bg: 'bg-amber-100', text: 'text-amber-700' },
+    active: { icon: CheckCircle, bg: 'bg-success/10', text: 'text-success' },
+    pending: { icon: Clock, bg: 'bg-warning/10', text: 'text-warning' },
     inactive: { icon: ShieldX, bg: 'bg-muted', text: 'text-muted-foreground' },
   };
   const { icon: Icon, bg, text } = config[status];
@@ -141,7 +141,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                 </td>
                 <td className="px-4 py-3">
                   {user.mfaEnabled ? (
-                    <ShieldCheck className="h-4 w-4 text-green-600" />
+                    <ShieldCheck className="h-4 w-4 text-success" />
                   ) : (
                     <Shield className="h-4 w-4 text-muted-foreground" />
                   )}

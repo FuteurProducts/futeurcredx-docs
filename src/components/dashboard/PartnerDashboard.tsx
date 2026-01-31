@@ -198,7 +198,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
       <div className="flex justify-center items-center p-12">
         <div className="flex items-center gap-3">
           <RefreshCw className="w-5 h-5 animate-spin text-blue-600" />
-          <span className="text-slate-600">Loading partner data...</span>
+          <span className="text-muted-foreground">Loading partner data...</span>
         </div>
       </div>
     );
@@ -209,17 +209,17 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
       {/* Header with refresh button */}
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Partner Dashboard</h2>
-          <p className="text-slate-600 mt-1">Monitor your businesses using the FuteurCred API</p>
+          <h2 className="text-headline text-foreground">Partner Dashboard</h2>
+          <p className="text-muted-foreground mt-1">Monitor your businesses using the LUMIQ AI API</p>
         </div>
         <div className="flex items-center gap-3">
           {lastUpdated && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-muted-foreground">
                 Last updated: {lastUpdated.toLocaleTimeString()}
               </span>
               {isDataFresh && (
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-success/10 text-success">
                   ✓ Fresh
                 </span>
               )}
@@ -242,7 +242,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+          className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
             <div className="p-3 bg-blue-50 rounded-xl">
@@ -250,11 +250,11 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
             </div>
             <div>
               <h3 className="font-black uppercase tracking-tight text-blue-900">Total Businesses</h3>
-              <p className="text-sm text-slate-600 font-medium">All time</p>
+              <p className="text-sm text-muted-foreground font-medium">All time</p>
             </div>
           </div>
           <div className="text-3xl font-black">{stats?.totalBusinesses}</div>
-          <div className="text-sm text-green-600 font-medium mt-1">
+          <div className="text-sm text-success font-medium mt-1">
             +{stats?.newBusinessesThisMonth} this month
           </div>
         </motion.div>
@@ -263,19 +263,19 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-sm border border-green-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+          className="bg-card/80 backdrop-blur-sm border border-success/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-green-50 rounded-xl">
-              <Users className="w-8 h-8 text-green-600" />
+            <div className="p-3 bg-success/10 rounded-xl">
+              <Users className="w-8 h-8 text-success" />
             </div>
             <div>
-              <h3 className="font-black uppercase tracking-tight text-green-900">Active Businesses</h3>
-              <p className="text-sm text-slate-600 font-medium">Last 30 days</p>
+              <h3 className="font-black uppercase tracking-tight text-success">Active Businesses</h3>
+              <p className="text-sm text-muted-foreground font-medium">Last 30 days</p>
             </div>
           </div>
           <div className="text-3xl font-black">{stats?.activeBusinesses}</div>
-          <div className="text-sm text-green-600 font-medium mt-1">
+          <div className="text-sm text-success font-medium mt-1">
             {Math.round((stats?.activeBusinesses || 0) / (stats?.totalBusinesses || 1) * 100)}% of total
           </div>
         </motion.div>
@@ -284,7 +284,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-white/80 backdrop-blur-sm border border-purple-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+          className="bg-card/80 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
             <div className="p-3 bg-purple-50 rounded-xl">
@@ -292,7 +292,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
             </div>
             <div>
               <h3 className="font-black uppercase tracking-tight text-purple-900">API Calls</h3>
-              <p className="text-sm text-slate-600 font-medium">This month</p>
+              <p className="text-sm text-muted-foreground font-medium">This month</p>
             </div>
           </div>
           <div className="text-3xl font-black">{stats?.totalCallsThisMonth.toLocaleString()}</div>
@@ -305,7 +305,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-white/80 backdrop-blur-sm border border-orange-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+          className="bg-card/80 backdrop-blur-sm border border-orange-500/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
             <div className="p-3 bg-orange-50 rounded-xl">
@@ -313,7 +313,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
             </div>
             <div>
               <h3 className="font-black uppercase tracking-tight text-orange-900">Revenue</h3>
-              <p className="text-sm text-slate-600 font-medium">This month</p>
+              <p className="text-sm text-muted-foreground font-medium">This month</p>
             </div>
           </div>
           <div className="text-3xl font-black">${stats?.revenue.toLocaleString()}</div>
@@ -328,16 +328,16 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl shadow-sm"
+        className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-2xl shadow-sm"
       >
-        <div className="px-6 py-4 border-b border-blue-100">
+        <div className="px-6 py-4 border-b border-primary/10">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Your Businesses</h2>
+            <h2 className="text-title text-foreground">Your Businesses</h2>
             <div className="flex items-center gap-2">
               <select
                 value={selectedTimeframe}
                 onChange={(e) => setSelectedTimeframe(e.target.value)}
-                className="px-3 py-1 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="px-3 py-1 text-sm border border-border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="7d">Last 7 days</option>
                 <option value="30d">Last 30 days</option>
@@ -348,25 +348,25 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-muted">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Business</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Industry</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Calls This Month</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Growth</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Used</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Business</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Industry</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Calls This Month</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Growth</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Last Used</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-border">
               {businesses.map((business, index) => (
                 <motion.tr
                   key={business.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 + index * 0.1 }}
-                  className="hover:bg-gray-50"
+                  className="hover:bg-muted"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -378,9 +378,9 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                         </div>
                       </div>
                       <div className="ml-4">
-                        <div className="font-medium text-gray-900">{business.name}</div>
-                        <div className="text-sm text-gray-500">{business.domain}</div>
-                        <div className="text-xs text-gray-400">{business.location}</div>
+                        <div className="font-medium text-foreground">{business.name}</div>
+                        <div className="text-sm text-muted-foreground">{business.domain}</div>
+                        <div className="text-xs text-muted-foreground">{business.location}</div>
                       </div>
                     </div>
                   </td>
@@ -389,28 +389,28 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                       {business.industry}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-foreground">
                     <div className="text-sm font-medium">{business.callsThisMonth.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">{business.apiKeys} API key{business.apiKeys !== 1 ? 's' : ''}</div>
+                    <div className="text-xs text-muted-foreground">{business.apiKeys} API key{business.apiKeys !== 1 ? 's' : ''}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className={`flex items-center text-sm font-medium ${
-                      business.growth >= 0 ? 'text-green-600' : 'text-red-600'
+                      business.growth >= 0 ? 'text-success' : 'text-destructive'
                     }`}>
                       <TrendingUp className={`w-4 h-4 mr-1 ${business.growth < 0 ? 'rotate-180' : ''}`} />
                       {business.growth >= 0 ? '+' : ''}{business.growth}%
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-muted-foreground">
                     <div className="text-sm">{formatDate(business.lastUsed)}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                       business.status === 'active' 
-                        ? 'bg-green-100 text-green-800'
+                        ? 'bg-success/10 text-success'
                         : business.status === 'trial'
-                        ? 'bg-white/20 text-white'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-card/20 text-white'
+                        : 'bg-muted text-muted-foreground'
                     }`}>
                       {business.status === 'active' && <CheckCircle className="w-3 h-3 mr-1" />}
                       {business.status === 'trial' && <AlertCircle className="w-3 h-3 mr-1" />}
@@ -435,20 +435,20 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-200"
+        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-primary/20"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-white rounded-xl shadow-sm">
+            <div className="p-3 bg-card rounded-xl shadow-sm">
               <BarChart3 className="w-8 h-8 text-blue-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Connect Your CRM</h3>
-              <p className="text-gray-600 mt-1">Sync business data with HubSpot, Salesforce, or your preferred CRM</p>
+              <h3 className="text-title text-foreground">Connect Your CRM</h3>
+              <p className="text-muted-foreground mt-1">Sync business data with HubSpot, Salesforce, or your preferred CRM</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors border border-blue-200">
+            <button className="px-4 py-2 bg-card text-blue-600 rounded-lg hover:bg-blue-50 transition-colors border border-primary/20">
               <ExternalLink className="w-4 h-4 mr-2 inline" />
               View Docs
             </button>
@@ -467,40 +467,40 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         transition={{ delay: 0.9 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-4"
       >
-        <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 bg-blue-50 rounded-lg">
               <Zap className="w-6 h-6 text-blue-600" />
             </div>
-            <h3 className="font-semibold text-gray-900">API Usage Analytics</h3>
+            <h3 className="font-semibold text-foreground">API Usage Analytics</h3>
           </div>
-          <p className="text-sm text-gray-600 mb-4">Deep dive into API usage patterns and performance metrics</p>
+          <p className="text-sm text-muted-foreground mb-4">Deep dive into API usage patterns and performance metrics</p>
           <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
             View Analytics →
           </button>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm border border-green-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-card/80 backdrop-blur-sm border border-success/20 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-green-50 rounded-lg">
-              <Shield className="w-6 h-6 text-green-600" />
+            <div className="p-2 bg-success/10 rounded-lg">
+              <Shield className="w-6 h-6 text-success" />
             </div>
-            <h3 className="font-semibold text-gray-900">Security Dashboard</h3>
+            <h3 className="font-semibold text-foreground">Security Dashboard</h3>
           </div>
-          <p className="text-sm text-gray-600 mb-4">Monitor API security, rate limits, and access patterns</p>
-          <button className="text-green-600 hover:text-green-700 text-sm font-medium">
+          <p className="text-sm text-muted-foreground mb-4">Monitor API security, rate limits, and access patterns</p>
+          <button className="text-success hover:text-success/80 text-sm font-medium">
             View Security →
           </button>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm border border-purple-200 rounded-2xl p-6 shadow-sm">
+        <div className="bg-card/80 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-3">
             <div className="p-2 bg-purple-50 rounded-lg">
               <Globe className="w-6 h-6 text-purple-600" />
             </div>
-            <h3 className="font-semibold text-gray-900">Global Usage</h3>
+            <h3 className="font-semibold text-foreground">Global Usage</h3>
           </div>
-          <p className="text-sm text-gray-600 mb-4">Track API usage across different regions and time zones</p>
+          <p className="text-sm text-muted-foreground mb-4">Track API usage across different regions and time zones</p>
           <button className="text-purple-600 hover:text-purple-700 text-sm font-medium">
             View Global →
           </button>

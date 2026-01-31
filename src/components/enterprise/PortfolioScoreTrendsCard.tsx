@@ -68,7 +68,7 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-title text-foreground">
               Portfolio Score Trends
             </h3>
             <p className="text-sm text-muted-foreground">
@@ -95,25 +95,25 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
 
       {/* Summary Stats */}
       <div className="grid grid-cols-4 gap-3 mb-6">
-        <div className="p-3 bg-emerald-500/10 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-emerald-600 mb-1">
+        <div className="p-3 bg-success/10 rounded-xl">
+          <div className="flex items-center gap-1 text-xs text-success mb-1">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
             Improved
           </div>
-          <div className="text-lg font-bold text-emerald-700">
+          <div className="text-lg font-bold text-success">
             {formatNumber(summary.totalImproved)}
           </div>
         </div>
-        <div className="p-3 bg-red-500/10 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-red-600 mb-1">
+        <div className="p-3 bg-destructive/10 rounded-xl">
+          <div className="flex items-center gap-1 text-xs text-destructive mb-1">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
             Declined
           </div>
-          <div className="text-lg font-bold text-red-700">
+          <div className="text-lg font-bold text-destructive">
             {formatNumber(summary.totalDeclined)}
           </div>
         </div>
@@ -125,7 +125,7 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
         </div>
         <div className="p-3 bg-blue-500/10 rounded-xl">
           <div className="text-xs text-blue-600 mb-1">Avg Change</div>
-          <div className={`text-lg font-bold ${summary.avgChange >= 0 ? "text-emerald-600" : "text-red-600"}`}>
+          <div className={`text-lg font-bold ${summary.avgChange >= 0 ? "text-success" : "text-destructive"}`}>
             {summary.avgChange >= 0 ? "+" : ""}{summary.avgChange} pts
           </div>
         </div>

@@ -29,9 +29,9 @@ export const ProductPenetrationTable: React.FC<ProductPenetrationTableProps> = (
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-lg">
-          <TrendingUp className="w-4 h-4 text-green-600" />
-          <span className="text-sm font-semibold text-green-700">{totalOpportunity}% total opportunity</span>
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-success/10 rounded-lg">
+          <TrendingUp className="w-4 h-4 text-success" />
+          <span className="text-sm font-semibold text-success">{totalOpportunity}% total opportunity</span>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export const ProductPenetrationTable: React.FC<ProductPenetrationTableProps> = (
                   </span>
                 </td>
                 <td className="py-4 text-center">
-                  <span className="inline-flex items-center justify-center w-12 h-8 bg-green-100 text-green-700 rounded-lg font-semibold text-sm">
+                  <span className="inline-flex items-center justify-center w-12 h-8 bg-success/10 text-success rounded-lg font-semibold text-sm">
                     {product.opportunity}%
                   </span>
                 </td>

@@ -35,9 +35,9 @@ const formatNumber = (num: number): string => {
 
 const getHeatColor = (value: number, max: number): string => {
   const intensity = Math.min(value / max, 1);
-  if (intensity < 0.2) return 'bg-emerald-100 text-emerald-800';
-  if (intensity < 0.4) return 'bg-emerald-200 text-emerald-900';
-  if (intensity < 0.6) return 'bg-amber-200 text-amber-900';
+  if (intensity < 0.2) return 'bg-success/10 text-success';
+  if (intensity < 0.4) return 'bg-success/20 text-success';
+  if (intensity < 0.6) return 'bg-warning/20 text-warning';
   if (intensity < 0.8) return 'bg-orange-300 text-orange-900';
   return 'bg-rose-400 text-rose-900';
 };
@@ -120,7 +120,7 @@ const HeatmapGrid: React.FC<{
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">30d Change:</span>
-                          <span className={`font-medium ${cell.change > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                          <span className={`font-medium ${cell.change > 0 ? 'text-rose-600' : 'text-success'}`}>
                             {cell.change > 0 ? '+' : ''}{cell.change}%
                           </span>
                         </div>
@@ -141,9 +141,9 @@ const HeatmapGrid: React.FC<{
       <div className="flex items-center justify-center gap-2 mt-4">
         <span className="text-xs text-muted-foreground">Risk Level:</span>
         <div className="flex items-center gap-1">
-          <div className="w-6 h-3 rounded bg-emerald-100" />
-          <div className="w-6 h-3 rounded bg-emerald-200" />
-          <div className="w-6 h-3 rounded bg-amber-200" />
+          <div className="w-6 h-3 rounded bg-success/10" />
+          <div className="w-6 h-3 rounded bg-success/20" />
+          <div className="w-6 h-3 rounded bg-warning/20" />
           <div className="w-6 h-3 rounded bg-orange-300" />
           <div className="w-6 h-3 rounded bg-rose-400" />
         </div>

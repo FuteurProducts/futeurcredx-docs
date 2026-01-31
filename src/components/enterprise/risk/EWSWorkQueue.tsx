@@ -57,8 +57,8 @@ const getSeverityStyle = (severity: string) => {
   switch (severity) {
     case 'critical': return { bg: 'bg-rose-50', border: 'border-l-rose-500', badge: 'bg-rose-500 text-white', icon: 'text-rose-600' };
     case 'high': return { bg: 'bg-orange-50', border: 'border-l-orange-500', badge: 'bg-orange-500 text-white', icon: 'text-orange-600' };
-    case 'medium': return { bg: 'bg-amber-50', border: 'border-l-amber-500', badge: 'bg-amber-500 text-white', icon: 'text-amber-600' };
-    default: return { bg: 'bg-blue-50', border: 'border-l-blue-500', badge: 'bg-blue-500 text-white', icon: 'text-blue-600' };
+    case 'medium': return { bg: 'bg-warning/10', border: 'border-l-warning', badge: 'bg-warning text-white', icon: 'text-warning' };
+    default: return { bg: 'bg-info/10', border: 'border-l-info', badge: 'bg-info text-white', icon: 'text-info' };
   }
 };
 
@@ -127,7 +127,7 @@ const QueueItemCard: React.FC<{
 
         {/* Risk Change */}
         <div className="text-center w-20">
-          <div className={`text-sm font-semibold ${item.riskChange > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+          <div className={`text-sm font-semibold ${item.riskChange > 0 ? 'text-rose-600' : 'text-success'}`}>
             {item.riskChange > 0 ? '+' : ''}{item.riskChange}%
           </div>
           <div className="text-xs text-muted-foreground">risk Δ</div>
@@ -135,8 +135,8 @@ const QueueItemCard: React.FC<{
 
         {/* SLA Timer */}
         <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg ${
-          item.slaBreached ? 'bg-rose-100 text-rose-700' : 
-          hoursLeft < 2 ? 'bg-amber-100 text-amber-700' : 'bg-muted text-foreground'
+          item.slaBreached ? 'bg-destructive/10 text-destructive' :
+          hoursLeft < 2 ? 'bg-warning/10 text-warning' : 'bg-muted text-foreground'
         }`}>
           <Clock className="w-4 h-4" />
           <span className="text-sm font-medium">
@@ -239,7 +239,7 @@ const QueueItemCard: React.FC<{
                 </button>
                 <button
                   onClick={() => onResolve?.('resolved')}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 text-white rounded-lg text-sm font-medium hover:bg-emerald-600"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-success text-white rounded-lg text-sm font-medium hover:bg-success/90"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   Resolve
@@ -302,7 +302,7 @@ export const EWSWorkQueue: React.FC<EWSWorkQueueProps> = ({
               {slaBreachedCount} SLA Breached
             </span>
           )}
-          <span className="px-3 py-1 bg-rose-100 text-rose-700 rounded-full text-sm font-semibold">
+          <span className="px-3 py-1 bg-destructive/10 text-destructive rounded-full text-sm font-semibold">
             {criticalCount} Critical
           </span>
           <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">

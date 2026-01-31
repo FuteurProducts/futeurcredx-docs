@@ -345,10 +345,10 @@ const Users = () => {
           <div className="-mx-3 space-y-2">
             {[1, 2, 3, 4, 5, 6].map(i => (
               <div key={i} className="flex items-center h-20 px-3 animate-pulse">
-                <div className="w-10 h-10 bg-gray-200 rounded-full mr-4" />
+                <div className="w-10 h-10 bg-muted rounded-full mr-4" />
                 <div className="flex-1">
-                  <div className="h-4 bg-gray-200 rounded w-32 mb-2" />
-                  <div className="h-3 bg-gray-200 rounded w-20" />
+                  <div className="h-4 bg-muted rounded w-32 mb-2" />
+                  <div className="h-3 bg-muted rounded w-20" />
                 </div>
               </div>
             ))}

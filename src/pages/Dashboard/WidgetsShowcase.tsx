@@ -147,7 +147,7 @@ const WidgetsShowcase = () => {
         </div>
 
         <Tabs defaultValue="credit" className="space-y-6">
-          <TabsList className="bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-sm">
+          <TabsList className="bg-card/90 backdrop-blur-sm border border-border/80 shadow-sm">
             <TabsTrigger value="credit">Credit Widgets</TabsTrigger>
             <TabsTrigger value="journey">Journey & Approval</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>

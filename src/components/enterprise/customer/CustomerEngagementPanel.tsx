@@ -56,8 +56,8 @@ const SIGNAL_CONFIG = {
 };
 
 const STATUS_CONFIG = {
-  'active': { label: 'Active', bg: 'bg-emerald-500/10', text: 'text-emerald-500' },
-  'approved': { label: 'Approved', bg: 'bg-amber-500/10', text: 'text-amber-500' },
+  'active': { label: 'Active', bg: 'bg-success/10', text: 'text-success' },
+  'approved': { label: 'Approved', bg: 'bg-warning/10', text: 'text-warning' },
   'not-held': { label: 'Not Held', bg: 'bg-muted', text: 'text-muted-foreground' },
 };
 
@@ -82,8 +82,8 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
 
   const getRHSStatusConfig = (status: string) => {
     switch (status) {
-      case 'growing': return { label: 'Growing', icon: TrendingUp, color: 'text-emerald-500' };
-      case 'declining': return { label: 'Declining', icon: TrendingDown, color: 'text-red-500' };
+      case 'growing': return { label: 'Growing', icon: TrendingUp, color: 'text-success' };
+      case 'declining': return { label: 'Declining', icon: TrendingDown, color: 'text-destructive' };
       default: return { label: 'Stable', icon: Activity, color: 'text-muted-foreground' };
     }
   };
@@ -116,8 +116,8 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
             <span className="text-lg text-muted-foreground">/100</span>
           </div>
           <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full ${
-            customer.rhsStatus === 'growing' ? 'bg-emerald-500/10' :
-            customer.rhsStatus === 'declining' ? 'bg-red-500/10' : 'bg-muted'
+            customer.rhsStatus === 'growing' ? 'bg-success/10' :
+            customer.rhsStatus === 'declining' ? 'bg-destructive/10' : 'bg-muted'
           }`}>
             <StatusIcon className={`h-4 w-4 ${statusConfig.color}`} />
             <span className={`text-sm font-medium ${statusConfig.color}`}>
@@ -169,8 +169,8 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
                 className="flex items-center gap-2 p-2 rounded-lg bg-muted/50"
               >
                 {driver.impact === 'positive' 
-                  ? <CheckCircle className="h-4 w-4 text-emerald-500" />
-                  : <AlertTriangle className="h-4 w-4 text-amber-500" />
+                  ? <CheckCircle className="h-4 w-4 text-success" />
+                  : <AlertTriangle className="h-4 w-4 text-warning" />
                 }
                 <span className="text-sm text-foreground">{driver.label}</span>
               </div>
@@ -261,12 +261,12 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
                 className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
               >
                 <div className={`p-2 rounded-lg ${
-                  event.impact === 'positive' ? 'bg-emerald-500/10' :
-                  event.impact === 'negative' ? 'bg-red-500/10' : 'bg-muted'
+                  event.impact === 'positive' ? 'bg-success/10' :
+                  event.impact === 'negative' ? 'bg-destructive/10' : 'bg-muted'
                 }`}>
                   <EventIcon className={`h-4 w-4 ${
-                    event.impact === 'positive' ? 'text-emerald-500' :
-                    event.impact === 'negative' ? 'text-red-500' : 'text-muted-foreground'
+                    event.impact === 'positive' ? 'text-success' :
+                    event.impact === 'negative' ? 'text-destructive' : 'text-muted-foreground'
                   }`} />
                 </div>
                 <div className="flex-1 min-w-0">

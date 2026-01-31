@@ -30,29 +30,29 @@ interface RecentActivityFeedProps {
 }
 
 const activityIcons: Record<string, { icon: React.ReactNode; bgColor: string }> = {
-  connection: { 
-    icon: <Link2 className="h-4 w-4 text-emerald-600" />, 
-    bgColor: "bg-emerald-100 dark:bg-emerald-900/30" 
+  connection: {
+    icon: <Link2 className="h-4 w-4 text-success" />,
+    bgColor: "bg-success/10"
   },
-  disconnection: { 
-    icon: <Link2Off className="h-4 w-4 text-red-600" />, 
-    bgColor: "bg-red-100 dark:bg-red-900/30" 
+  disconnection: {
+    icon: <Link2Off className="h-4 w-4 text-destructive" />,
+    bgColor: "bg-destructive/10"
   },
-  refresh: { 
-    icon: <RefreshCw className="h-4 w-4 text-blue-600" />, 
-    bgColor: "bg-blue-100 dark:bg-blue-900/30" 
+  refresh: {
+    icon: <RefreshCw className="h-4 w-4 text-info" />,
+    bgColor: "bg-info/10"
   },
-  alert: { 
-    icon: <ShieldAlert className="h-4 w-4 text-amber-600" />, 
-    bgColor: "bg-amber-100 dark:bg-amber-900/30" 
+  alert: {
+    icon: <ShieldAlert className="h-4 w-4 text-warning" />,
+    bgColor: "bg-warning/10"
   },
-  success: { 
-    icon: <CheckCircle2 className="h-4 w-4 text-emerald-600" />, 
-    bgColor: "bg-emerald-100 dark:bg-emerald-900/30" 
+  success: {
+    icon: <CheckCircle2 className="h-4 w-4 text-success" />,
+    bgColor: "bg-success/10"
   },
-  error: { 
-    icon: <AlertCircle className="h-4 w-4 text-red-600" />, 
-    bgColor: "bg-red-100 dark:bg-red-900/30" 
+  error: {
+    icon: <AlertCircle className="h-4 w-4 text-destructive" />,
+    bgColor: "bg-destructive/10"
   },
 };
 

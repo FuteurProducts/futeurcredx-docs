@@ -198,9 +198,9 @@ export const SSOPanel: React.FC = () => {
                 </div>
 
                 {ssoConfig.enforceSSO && (
-                  <div className="flex items-center justify-between p-3 bg-amber-500/10 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-warning/10 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4 text-amber-500" />
+                      <AlertTriangle className="h-4 w-4 text-warning" />
                       <div>
                         <Label>Allow Admin Bypass</Label>
                         <p className="text-xs text-muted-foreground">Super admins can still use password</p>

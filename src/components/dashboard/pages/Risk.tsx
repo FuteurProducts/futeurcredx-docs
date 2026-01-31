@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
 import {
   RiskGlobalControls,
   ExecutiveRiskSummary,
@@ -301,24 +302,30 @@ const stressImpacts: StressImpact[] = [
 // ============================================
 
 const Risk: React.FC = () => {
+  const { toast } = useToast();
+
   // State for global controls
   const [portfolioFilter, setPortfolioFilter] = useState<PortfolioFilter>(initialPortfolioFilter);
   const [timeWindow, setTimeWindow] = useState<'7d' | '30d' | '90d' | '12m'>('30d');
   const [riskLenses, setRiskLenses] = useState<RiskLens[]>(initialRiskLenses);
   const [selectedStressScenario, setSelectedStressScenario] = useState('moderate_recession');
 
+  // EWS queue state for interactive actions
+  const [queueItems, setQueueItems] = useState(ewsQueueItems);
+  const [ewsToggles, setEwsToggles] = useState(ewsIndicators);
+
   const handleRiskLensToggle = (lensId: string) => {
-    setRiskLenses(prev => prev.map(lens => 
+    setRiskLenses(prev => prev.map(lens =>
       lens.id === lensId ? { ...lens, active: !lens.active } : lens
     ));
   };
 
   const handleRefresh = () => {
-    console.log('Refreshing risk data...');
+    toast({ title: "Refreshing", description: "Risk data refresh initiated. Results will update momentarily." });
   };
 
   const handleExport = () => {
-    console.log('Exporting risk report...');
+    toast({ title: "Export started", description: "Risk Intelligence report is being generated as PDF." });
   };
 
   return (
@@ -329,8 +336,8 @@ const Risk: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h1 className="text-2xl font-semibold text-foreground">Risk Intelligence</h1>
-        <p className="text-muted-foreground mt-1">
+        <h1 className="text-display">Risk Intelligence</h1>
+        <p className="text-body text-muted-foreground mt-1">
           Portfolio risk monitoring and early warning system
         </p>
       </motion.div>
@@ -365,7 +372,9 @@ const Risk: React.FC = () => {
         >
           <RiskHeatmapMatrix
             heatmaps={heatmaps}
-            onCellClick={(cell, heatmapId) => console.log('Cell clicked:', cell, heatmapId)}
+            onCellClick={(cell) => {
+              toast({ title: "Segment detail", description: `${cell.row} × ${cell.column}: ${cell.count} accounts, ${cell.value}% delinquency rate.` });
+            }}
             className="shadow-lg rounded-2xl h-full"
           />
         </motion.div>
@@ -377,8 +386,13 @@ const Risk: React.FC = () => {
         >
           <ConcentrationPanel
             categories={concentrationCategories}
-            onSetLimit={(catId, itemId, limit) => console.log('Set limit:', catId, itemId, limit)}
-            onViewDetails={(catId, itemId) => console.log('View details:', catId, itemId)}
+            onSetLimit={(_catId, _itemId, limit) => {
+              toast({ title: "Limit updated", description: `Concentration limit set to $${(limit / 1000000).toFixed(1)}M.` });
+            }}
+            onViewDetails={(_catId, itemId) => {
+              const item = concentrationCategories.flatMap(c => c.items).find(i => i.id === itemId);
+              toast({ title: "Concentration detail", description: `Viewing ${item?.name || itemId} exposure breakdown.` });
+            }}
             className="shadow-lg rounded-2xl h-full"
           />
         </motion.div>
@@ -391,13 +405,29 @@ const Risk: React.FC = () => {
         transition={{ duration: 0.3, delay: 0.2 }}
       >
         <EWSWorkQueue
-          indicators={ewsIndicators}
-          queueItems={ewsQueueItems}
-          onAssign={(itemId, assignee) => console.log('Assign:', itemId, assignee)}
-          onAddNote={(itemId, note) => console.log('Note:', itemId, note)}
-          onResolve={(itemId, resolution) => console.log('Resolve:', itemId, resolution)}
-          onToggleIndicator={(indicatorId, enabled) => console.log('Toggle:', indicatorId, enabled)}
-          onViewEntity={(businessId) => console.log('View entity:', businessId)}
+          indicators={ewsToggles}
+          queueItems={queueItems}
+          onAssign={(itemId, assignee) => {
+            setQueueItems(prev => prev.map(i => i.id === itemId ? { ...i, notes: [...i.notes, { text: `Assigned to ${assignee}`, author: 'system', timestamp: new Date() }] } : i));
+            toast({ title: "Case assigned", description: `Case ${itemId} assigned to ${assignee}.` });
+          }}
+          onAddNote={(itemId, note) => {
+            setQueueItems(prev => prev.map(i => i.id === itemId ? { ...i, notes: [...i.notes, { text: note, author: 'current.user@bank.com', timestamp: new Date() }] } : i));
+            toast({ title: "Note added", description: "Case note saved successfully." });
+          }}
+          onResolve={(itemId, resolution) => {
+            setQueueItems(prev => prev.filter(i => i.id !== itemId));
+            toast({ title: "Case resolved", description: `Case ${itemId} resolved: ${resolution}.` });
+          }}
+          onToggleIndicator={(indicatorId, enabled) => {
+            setEwsToggles(prev => prev.map(i => i.id === indicatorId ? { ...i, enabled } : i));
+            const indicator = ewsIndicators.find(i => i.id === indicatorId);
+            toast({ title: enabled ? "Indicator enabled" : "Indicator disabled", description: `${indicator?.name || indicatorId} has been ${enabled ? 'activated' : 'deactivated'}.` });
+          }}
+          onViewEntity={(businessId) => {
+            const item = queueItems.find(i => i.businessId === businessId);
+            toast({ title: "Entity details", description: `Viewing ${item?.businessName || businessId}. Navigate to Customers tab for full dossier.` });
+          }}
           className="shadow-lg rounded-2xl"
         />
       </motion.div>

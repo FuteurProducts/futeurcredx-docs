@@ -28,17 +28,17 @@ interface ConnectionCatalogProps {
 const connectionTypeConfig: Record<ConnectionType, { label: string; icon: React.ElementType; color: string }> = {
   'open-banking': { label: 'Open Banking', icon: Building2, color: 'text-blue-600 bg-blue-100' },
   'aggregator': { label: 'Aggregator', icon: Database, color: 'text-purple-600 bg-purple-100' },
-  'accounting': { label: 'Accounting', icon: FileText, color: 'text-green-600 bg-green-100' },
+  'accounting': { label: 'Accounting', icon: FileText, color: 'text-success bg-success/10' },
   'bureau': { label: 'Credit Bureau', icon: CreditCard, color: 'text-orange-600 bg-orange-100' },
-  'internal': { label: 'Internal', icon: Zap, color: 'text-gray-600 bg-gray-100' },
+  'internal': { label: 'Internal', icon: Zap, color: 'text-muted-foreground bg-muted' },
 };
 
 const statusConfig: Record<ConnectionStatus, { label: string; color: string; bgColor: string; icon: React.ElementType }> = {
-  'connected': { label: 'Connected', color: 'text-green-700', bgColor: 'bg-green-100', icon: CheckCircle },
-  'needs-reauth': { label: 'Needs Re-auth', color: 'text-amber-700', bgColor: 'bg-amber-100', icon: RefreshCw },
-  'degraded': { label: 'Degraded', color: 'text-orange-700', bgColor: 'bg-orange-100', icon: AlertTriangle },
-  'down': { label: 'Down', color: 'text-red-700', bgColor: 'bg-red-100', icon: XCircle },
-  'pending': { label: 'Pending', color: 'text-gray-700', bgColor: 'bg-gray-100', icon: Clock },
+  'connected': { label: 'Connected', color: 'text-success', bgColor: 'bg-success/10', icon: CheckCircle },
+  'needs-reauth': { label: 'Needs Re-auth', color: 'text-warning', bgColor: 'bg-warning/10', icon: RefreshCw },
+  'degraded': { label: 'Degraded', color: 'text-warning', bgColor: 'bg-warning/10', icon: AlertTriangle },
+  'down': { label: 'Down', color: 'text-destructive', bgColor: 'bg-destructive/10', icon: XCircle },
+  'pending': { label: 'Pending', color: 'text-muted-foreground', bgColor: 'bg-muted', icon: Clock },
 };
 
 export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
@@ -66,7 +66,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
   return (
     <div className="space-y-6">
       {/* Search and Filters */}
-      <div className="bg-white rounded-2xl border border-border p-4">
+      <div className="bg-card rounded-2xl border border-border p-4">
         <div className="flex flex-wrap items-center gap-4">
           {/* Search */}
           <div className="relative flex-1 min-w-[240px]">
@@ -170,11 +170,11 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
       {(needsReauthQueue.length > 0 || degradedQueue.length > 0) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {needsReauthQueue.length > 0 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+            <div className="bg-warning/10 border border-warning/20 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
-                <RefreshCw className="w-4 h-4 text-amber-600" />
-                <span className="text-sm font-semibold text-amber-800">Needs Re-authentication</span>
-                <span className="ml-auto px-2 py-0.5 bg-amber-200 text-amber-800 rounded-full text-xs font-semibold">
+                <RefreshCw className="w-4 h-4 text-warning" />
+                <span className="text-sm font-semibold text-warning">Needs Re-authentication</span>
+                <span className="ml-auto px-2 py-0.5 bg-warning/20 text-warning rounded-full text-xs font-semibold">
                   {needsReauthQueue.length}
                 </span>
               </div>
@@ -183,7 +183,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
                   <button
                     key={conn.id}
                     onClick={() => onSelectConnection(conn)}
-                    className="w-full flex items-center gap-2 px-3 py-2 bg-white rounded-lg hover:bg-amber-100 transition-colors text-left"
+                    className="w-full flex items-center gap-2 px-3 py-2 bg-card rounded-lg hover:bg-warning/10 transition-colors text-left"
                   >
                     <span className="text-sm font-medium text-foreground">{conn.name}</span>
                     <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
@@ -194,11 +194,11 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
           )}
 
           {degradedQueue.length > 0 && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-4 h-4 text-red-600" />
-                <span className="text-sm font-semibold text-red-800">Degraded / Down</span>
-                <span className="ml-auto px-2 py-0.5 bg-red-200 text-red-800 rounded-full text-xs font-semibold">
+                <AlertTriangle className="w-4 h-4 text-destructive" />
+                <span className="text-sm font-semibold text-destructive">Degraded / Down</span>
+                <span className="ml-auto px-2 py-0.5 bg-destructive/20 text-destructive rounded-full text-xs font-semibold">
                   {degradedQueue.length}
                 </span>
               </div>
@@ -207,7 +207,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
                   <button
                     key={conn.id}
                     onClick={() => onSelectConnection(conn)}
-                    className="w-full flex items-center gap-2 px-3 py-2 bg-white rounded-lg hover:bg-red-100 transition-colors text-left"
+                    className="w-full flex items-center gap-2 px-3 py-2 bg-card rounded-lg hover:bg-destructive/10 transition-colors text-left"
                   >
                     <span className="text-sm font-medium text-foreground">{conn.name}</span>
                     <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto" />
@@ -234,7 +234,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
               onClick={() => onSelectConnection(connection)}
-              className={`bg-white rounded-2xl border p-5 text-left transition-all hover:shadow-lg hover:border-primary/30 ${
+              className={`bg-card rounded-2xl border p-5 text-left transition-all hover:shadow-lg hover:border-primary/30 ${
                 selectedConnectionId === connection.id ? 'border-primary ring-2 ring-primary/20' : 'border-border'
               }`}
             >
@@ -263,7 +263,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
                 </div>
                 <div className="bg-muted/50 rounded-lg p-2.5">
                   <span className="text-xs text-muted-foreground block">Error Rate</span>
-                  <span className={`text-sm font-semibold ${connection.errorRate24h > 1 ? 'text-red-600' : 'text-green-600'}`}>
+                  <span className={`text-sm font-semibold ${connection.errorRate24h > 1 ? 'text-destructive' : 'text-success'}`}>
                     {connection.errorRate24h.toFixed(2)}%
                   </span>
                 </div>
@@ -308,7 +308,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
       </div>
 
       {filteredConnections.length === 0 && (
-        <div className="bg-white rounded-2xl border border-border p-12 text-center">
+        <div className="bg-card rounded-2xl border border-border p-12 text-center">
           <Database className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="text-lg font-semibold text-foreground mb-2">No connections found</h3>
           <p className="text-sm text-muted-foreground">Try adjusting your filters or search query</p>

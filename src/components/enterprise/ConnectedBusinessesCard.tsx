@@ -41,9 +41,9 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
             {data.totalBusinesses.toLocaleString()}
           </span>
           <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-            isPositiveGrowth 
-              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" 
-              : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+            isPositiveGrowth
+              ? "bg-success/10 text-success"
+              : "bg-destructive/10 text-destructive"
           }`}>
             {isPositiveGrowth ? (
               <TrendingUp className="h-3 w-3" />
@@ -76,7 +76,7 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
           className="p-4 bg-muted/50 rounded-xl"
         >
           <div className="flex items-center gap-2 mb-2">
-            <Users className="h-4 w-4 text-emerald-500" />
+            <Users className="h-4 w-4 text-success" />
             <span className="text-xs text-muted-foreground">New MTD</span>
           </div>
           <span className="text-xl font-semibold text-foreground">
@@ -89,7 +89,7 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
           className="p-4 bg-muted/50 rounded-xl"
         >
           <div className="flex items-center gap-2 mb-2">
-            <AlertCircle className="h-4 w-4 text-amber-500" />
+            <AlertCircle className="h-4 w-4 text-warning" />
             <span className="text-xs text-muted-foreground">Disconnected</span>
           </div>
           <span className="text-xl font-semibold text-foreground">

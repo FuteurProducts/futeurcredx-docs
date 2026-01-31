@@ -34,10 +34,10 @@ export const PortfolioKPITiles: React.FC<PortfolioKPITilesProps> = ({ kpis, onDr
       {kpis.map((kpi, index) => {
         const TrendIcon = kpi.trendDirection === 'up' ? TrendingUp : kpi.trendDirection === 'down' ? TrendingDown : Minus;
         const trendColor = kpi.isPositiveTrend
-          ? 'text-green-600'
+          ? 'text-success'
           : kpi.trendDirection === 'stable'
           ? 'text-muted-foreground'
-          : 'text-red-600';
+          : 'text-destructive';
 
         return (
           <motion.div
@@ -45,7 +45,7 @@ export const PortfolioKPITiles: React.FC<PortfolioKPITilesProps> = ({ kpis, onDr
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05 }}
-            className="bg-white rounded-2xl border border-border p-4 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group"
+            className="bg-card rounded-2xl border border-border p-4 hover:shadow-md hover:border-primary/30 transition-all cursor-pointer group"
             onClick={() => onDrilldown?.(kpi.id)}
           >
             {/* Header */}

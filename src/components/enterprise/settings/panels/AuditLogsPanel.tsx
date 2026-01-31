@@ -22,10 +22,10 @@ const formatDate = (dateString: string): string => {
 };
 
 const actionColors: Record<string, string> = {
-  'user.created': 'bg-green-100 text-green-700',
-  'user.deleted': 'bg-red-100 text-red-700',
-  'api_key.created': 'bg-blue-100 text-blue-700',
-  'api_key.revoked': 'bg-amber-100 text-amber-700',
+  'user.created': 'bg-success/10 text-success',
+  'user.deleted': 'bg-destructive/10 text-destructive',
+  'api_key.created': 'bg-info/10 text-info',
+  'api_key.revoked': 'bg-warning/10 text-warning',
   'settings.updated': 'bg-purple-100 text-purple-700',
   'report.exported': 'bg-cyan-100 text-cyan-700',
   'customer.viewed': 'bg-muted text-muted-foreground',

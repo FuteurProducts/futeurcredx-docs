@@ -55,11 +55,11 @@ const MetricCards: React.FC<MetricCardsProps> = ({
     <div className="space-y-4">
       {/* Header with refresh button */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-black">API Usage Dashboard</h2>
+        <h2 className="text-headline text-foreground">API Usage Dashboard</h2>
         <div className="flex items-center gap-3">
           {lastUpdated && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-500">
+              <span className="text-sm text-muted-foreground">
                 Last updated: {lastUpdated.toLocaleTimeString()}
               </span>
             </div>
@@ -67,7 +67,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
           <button
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-lg hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-lg hover:bg-foreground/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <img src="/icons/loading-01.svg" alt="Refresh" className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} style={{ filter: 'brightness(0) invert(1)' }} />
             {isRefreshing ? 'Refreshing...' : 'Refresh'}
@@ -80,7 +80,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="p-3 bg-black/5 rounded-xl">
@@ -88,7 +88,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
           </div>
           <div>
             <h3 className="font-black uppercase tracking-tight text-black">API Keys</h3>
-            <p className="text-sm text-slate-600 font-medium">Total keys</p>
+            <p className="text-sm text-muted-foreground font-medium">Total keys</p>
           </div>
         </div>
         <div className="text-3xl font-black">{Array.isArray(apiKeys) ? apiKeys.length : 0}</div>
@@ -98,7 +98,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="p-3 bg-black/5 rounded-xl">
@@ -106,7 +106,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
           </div>
           <div>
             <h3 className="font-black uppercase tracking-tight text-black">Total API Calls</h3>
-            <p className="text-sm text-slate-600 font-medium">All time usage</p>
+            <p className="text-sm text-muted-foreground font-medium">All time usage</p>
           </div>
         </div>
         <div className="text-3xl font-black">{apiStats?.totalCalls || 0}</div>
@@ -116,7 +116,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="p-3 bg-black/5 rounded-xl">
@@ -124,12 +124,12 @@ const MetricCards: React.FC<MetricCardsProps> = ({
           </div>
           <div>
             <h3 className="font-black uppercase tracking-tight text-black">This Month</h3>
-            <p className="text-sm text-slate-600 font-medium">Current month calls</p>
+            <p className="text-sm text-muted-foreground font-medium">Current month calls</p>
           </div>
         </div>
         <div className="text-3xl font-black">{apiStats?.thisMonth || 0}</div>
         {apiStats?.growth !== undefined && (
-          <div className={`text-sm font-medium ${apiStats.growth >= 0 ? 'text-slate-700' : 'text-slate-500'}`}>
+          <div className={`text-sm font-medium ${apiStats.growth >= 0 ? 'text-foreground' : 'text-muted-foreground'}`}>
             {apiStats.growth >= 0 ? '+' : ''}{apiStats.growth.toFixed(1)}% vs last month
           </div>
         )}
@@ -139,7 +139,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
       >
         <div className="flex items-center gap-4 mb-4">
           <div className="p-3 bg-black/5 rounded-xl">
@@ -147,7 +147,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
           </div>
           <div>
             <h3 className="font-black uppercase tracking-tight text-black">Member Since</h3>
-            <p className="text-sm text-slate-600 font-medium">Account created</p>
+            <p className="text-sm text-muted-foreground font-medium">Account created</p>
           </div>
         </div>
         <div className="text-lg font-bold">{user?.createdAt ? formatDate(user.createdAt) : 'N/A'}</div>

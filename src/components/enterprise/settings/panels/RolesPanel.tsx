@@ -123,7 +123,7 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
                         className="p-1 rounded hover:bg-muted transition-colors"
                       >
                         {role.permissions[permission.id] ? (
-                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          <CheckCircle className="h-5 w-5 text-success" />
                         ) : (
                           <XCircle className="h-5 w-5 text-muted-foreground/30" />
                         )}

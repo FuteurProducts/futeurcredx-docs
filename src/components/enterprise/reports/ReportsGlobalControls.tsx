@@ -65,7 +65,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
             onClick={() => updateFilter('environment', 'sandbox')}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors ${
               filters.environment === 'sandbox'
-                ? 'bg-amber-100 text-amber-700'
+                ? 'bg-warning/10 text-warning'
                 : 'text-muted-foreground hover:text-foreground'
             }`}
           >
@@ -75,7 +75,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
             onClick={() => updateFilter('environment', 'production')}
             className={`px-3 py-1 text-xs font-medium rounded transition-colors ${
               filters.environment === 'production'
-                ? 'bg-green-100 text-green-700'
+                ? 'bg-success/10 text-success'
                 : 'text-muted-foreground hover:text-foreground'
             }`}
           >

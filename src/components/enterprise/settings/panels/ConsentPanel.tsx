@@ -112,10 +112,10 @@ export const ConsentPanel: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                      category.required ? 'bg-amber-500/10' : 'bg-primary/10'
+                      category.required ? 'bg-warning/10' : 'bg-primary/10'
                     }`}>
                       {category.required ? (
-                        <Shield className="h-5 w-5 text-amber-500" />
+                        <Shield className="h-5 w-5 text-warning" />
                       ) : (
                         <CheckCircle className="h-5 w-5 text-primary" />
                       )}
@@ -124,7 +124,7 @@ export const ConsentPanel: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <h4 className="font-medium">{category.name}</h4>
                         {category.required && (
-                          <Badge variant="outline" className="text-amber-600 border-amber-500/30">Required</Badge>
+                          <Badge variant="outline" className="text-warning border-warning/30">Required</Badge>
                         )}
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">{category.description}</p>

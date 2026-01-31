@@ -17,10 +17,10 @@ interface RiskDriversPanelProps {
 }
 
 const severityColors: Record<string, { bg: string; text: string; border: string }> = {
-  low: { bg: 'bg-green-50', text: 'text-green-700', border: 'border-green-200' },
-  medium: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
+  low: { bg: 'bg-success/10', text: 'text-success', border: 'border-success/20' },
+  medium: { bg: 'bg-warning/10', text: 'text-warning', border: 'border-warning/20' },
   high: { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
-  critical: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200' },
+  critical: { bg: 'bg-destructive/10', text: 'text-destructive', border: 'border-destructive/20' },
 };
 
 export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onViewClients }) => {
@@ -30,7 +30,7 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -66,7 +66,7 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                 className={`w-full p-4 flex items-center gap-4 ${colors.bg} hover:brightness-95 transition-all`}
               >
                 {/* Rank */}
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-sm">
+                <div className="w-8 h-8 rounded-full bg-card flex items-center justify-center font-bold text-sm">
                   {index + 1}
                 </div>
 
@@ -74,7 +74,7 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                 <div className="flex-1 text-left">
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-foreground">{driver.name}</span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${colors.text} bg-white`}>
+                    <span className={`px-2 py-0.5 rounded text-xs font-semibold ${colors.text} bg-card`}>
                       {driver.severity}
                     </span>
                   </div>
@@ -84,7 +84,7 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                       {driver.affectedClients.toLocaleString()} clients
                     </span>
                     <span className="flex items-center gap-1">
-                      <TrendIcon className={`w-3 h-3 ${driver.trend === 'increasing' ? 'text-red-500' : driver.trend === 'decreasing' ? 'text-green-500' : ''}`} />
+                      <TrendIcon className={`w-3 h-3 ${driver.trend === 'increasing' ? 'text-destructive' : driver.trend === 'decreasing' ? 'text-success' : ''}`} />
                       {driver.trend}
                     </span>
                   </div>
@@ -96,9 +96,9 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                     <span className="text-muted-foreground">Impact</span>
                     <span className="font-semibold">{driver.impact}%</span>
                   </div>
-                  <div className="h-2 bg-white rounded-full overflow-hidden">
+                  <div className="h-2 bg-card rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${driver.severity === 'critical' ? 'bg-red-500' : driver.severity === 'high' ? 'bg-orange-500' : 'bg-amber-500'}`}
+                      className={`h-full rounded-full ${driver.severity === 'critical' ? 'bg-destructive' : driver.severity === 'high' ? 'bg-orange-500' : 'bg-warning'}`}
                       style={{ width: `${driver.impact}%` }}
                     />
                   </div>
@@ -116,7 +116,7 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="p-4 bg-white border-t border-border">
+                    <div className="p-4 bg-card border-t border-border">
                       <p className="text-sm text-muted-foreground mb-4">{driver.description}</p>
                       <div className="flex gap-2">
                         <button

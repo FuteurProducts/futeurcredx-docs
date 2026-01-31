@@ -13,14 +13,14 @@ const getCellColor = (direction: 'upgrade' | 'downgrade' | 'stable', percent: nu
     return 'bg-muted';
   }
   if (direction === 'upgrade') {
-    if (percent > 15) return 'bg-green-200';
-    if (percent > 5) return 'bg-green-100';
-    return 'bg-green-50';
+    if (percent > 15) return 'bg-success/20';
+    if (percent > 5) return 'bg-success/10';
+    return 'bg-success/10';
   }
   // downgrade
-  if (percent > 10) return 'bg-red-200';
-  if (percent > 5) return 'bg-red-100';
-  return 'bg-red-50';
+  if (percent > 10) return 'bg-destructive/20';
+  if (percent > 5) return 'bg-destructive/10';
+  return 'bg-destructive/10';
 };
 
 export const ScoreMigrationMatrix: React.FC<ScoreMigrationMatrixProps> = ({ data }) => {
@@ -42,7 +42,7 @@ export const ScoreMigrationMatrix: React.FC<ScoreMigrationMatrixProps> = ({ data
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -97,11 +97,11 @@ export const ScoreMigrationMatrix: React.FC<ScoreMigrationMatrixProps> = ({ data
 
       {/* Summary */}
       <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-border">
-        <div className="flex items-center gap-3 p-3 bg-green-50 rounded-xl">
-          <TrendingUp className="w-5 h-5 text-green-600" />
+        <div className="flex items-center gap-3 p-3 bg-success/10 rounded-xl">
+          <TrendingUp className="w-5 h-5 text-success" />
           <div>
-            <div className="text-lg font-bold text-green-700">{data.summary.upgradedPercent}%</div>
-            <div className="text-xs text-green-600">Upgraded</div>
+            <div className="text-lg font-bold text-success">{data.summary.upgradedPercent}%</div>
+            <div className="text-xs text-success">Upgraded</div>
           </div>
         </div>
         <div className="flex items-center gap-3 p-3 bg-muted rounded-xl">
@@ -111,11 +111,11 @@ export const ScoreMigrationMatrix: React.FC<ScoreMigrationMatrixProps> = ({ data
             <div className="text-xs text-muted-foreground">Stable</div>
           </div>
         </div>
-        <div className="flex items-center gap-3 p-3 bg-red-50 rounded-xl">
-          <TrendingDown className="w-5 h-5 text-red-600" />
+        <div className="flex items-center gap-3 p-3 bg-destructive/10 rounded-xl">
+          <TrendingDown className="w-5 h-5 text-destructive" />
           <div>
-            <div className="text-lg font-bold text-red-700">{data.summary.downgradedPercent}%</div>
-            <div className="text-xs text-red-600">Downgraded</div>
+            <div className="text-lg font-bold text-destructive">{data.summary.downgradedPercent}%</div>
+            <div className="text-xs text-destructive">Downgraded</div>
           </div>
         </div>
       </div>

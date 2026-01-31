@@ -47,8 +47,8 @@ const formatNumber = (num: number): string => {
 const getBreachColor = (status: string): { bg: string; text: string; badge: string } => {
   switch (status) {
     case 'breach': return { bg: 'bg-rose-50', text: 'text-rose-700', badge: 'bg-rose-500 text-white' };
-    case 'warning': return { bg: 'bg-amber-50', text: 'text-amber-700', badge: 'bg-amber-500 text-white' };
-    default: return { bg: 'bg-emerald-50', text: 'text-emerald-700', badge: 'bg-emerald-500 text-white' };
+    case 'warning': return { bg: 'bg-warning/10', text: 'text-warning', badge: 'bg-warning text-white' };
+    default: return { bg: 'bg-success/10', text: 'text-success', badge: 'bg-success text-white' };
   }
 };
 
@@ -114,7 +114,7 @@ const ConcentrationTable: React.FC<{
                       <div 
                         className={`h-full rounded-full transition-all ${
                           item.utilizationPct >= 100 ? 'bg-rose-500' :
-                          item.utilizationPct >= 80 ? 'bg-amber-500' : 'bg-emerald-500'
+                          item.utilizationPct >= 80 ? 'bg-warning' : 'bg-success'
                         }`}
                         style={{ width: `${Math.min(item.utilizationPct, 100)}%` }}
                       />
@@ -131,13 +131,13 @@ const ConcentrationTable: React.FC<{
                 <td className="py-3 px-3">
                   <div className="flex flex-col items-center">
                     <div className={`flex items-center gap-1 text-xs font-medium ${
-                      item.trend > 0 ? 'text-rose-600' : item.trend < 0 ? 'text-emerald-600' : 'text-muted-foreground'
+                      item.trend > 0 ? 'text-rose-600' : item.trend < 0 ? 'text-success' : 'text-muted-foreground'
                     }`}>
                       {item.trend > 0 ? <TrendingUp className="w-3 h-3" /> : null}
                       {item.trend > 0 ? '+' : ''}{item.trend}%
                     </div>
                     {item.trendToBreachDays && item.breachStatus === 'warning' && (
-                      <span className="text-[10px] text-amber-600">~{item.trendToBreachDays}d to breach</span>
+                      <span className="text-[10px] text-warning">~{item.trendToBreachDays}d to breach</span>
                     )}
                   </div>
                 </td>
@@ -194,8 +194,8 @@ export const ConcentrationPanel: React.FC<ConcentrationPanelProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center">
-            <Target className="w-5 h-5 text-amber-600" />
+          <div className="w-10 h-10 bg-warning/10 rounded-xl flex items-center justify-center">
+            <Target className="w-5 h-5 text-warning" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">Concentration Risk</h3>
@@ -211,7 +211,7 @@ export const ConcentrationPanel: React.FC<ConcentrationPanelProps> = ({
             </span>
           )}
           {warningCount > 0 && (
-            <span className="px-3 py-1 bg-amber-500 text-white rounded-full text-sm font-semibold">
+            <span className="px-3 py-1 bg-warning text-white rounded-full text-sm font-semibold">
               {warningCount} Warning{warningCount > 1 ? 's' : ''}
             </span>
           )}
@@ -245,7 +245,7 @@ export const ConcentrationPanel: React.FC<ConcentrationPanelProps> = ({
               )}
               {catWarnings > 0 && catBreaches === 0 && (
                 <span className={`px-1.5 py-0.5 rounded-full text-xs ${
-                  activeCategory === category.id ? 'bg-white/20' : 'bg-amber-500 text-white'
+                  activeCategory === category.id ? 'bg-white/20' : 'bg-warning text-white'
                 }`}>
                   {catWarnings}
                 </span>
@@ -272,8 +272,8 @@ export const ConcentrationPanel: React.FC<ConcentrationPanelProps> = ({
                 <span className="text-muted-foreground">Utilization: </span>
                 <span className={`font-semibold ${
                   (currentCategory.totalExposure / currentCategory.totalLimit * 100) >= 80 
-                    ? 'text-amber-600' 
-                    : 'text-emerald-600'
+                    ? 'text-warning'
+                    : 'text-success'
                 }`}>
                   {((currentCategory.totalExposure / currentCategory.totalLimit) * 100).toFixed(1)}%
                 </span>

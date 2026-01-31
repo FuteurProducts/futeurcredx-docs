@@ -43,8 +43,8 @@ const formatNumber = (num: number): string => {
 const KPICard: React.FC<{ kpi: RiskKPI; index: number }> = ({ kpi, index }) => {
   const TrendIcon = kpi.trend === 'up' ? TrendingUp : TrendingDown;
   const trendColor = kpi.trendIsGood
-    ? kpi.trend === 'up' ? 'text-emerald-600' : 'text-rose-600'
-    : kpi.trend === 'up' ? 'text-rose-600' : 'text-emerald-600';
+    ? kpi.trend === 'up' ? 'text-success' : 'text-rose-600'
+    : kpi.trend === 'up' ? 'text-rose-600' : 'text-success';
 
   return (
     <motion.div
@@ -104,7 +104,7 @@ const TrendStrip: React.FC<{
         <div className="text-xs font-medium text-muted-foreground mb-1">{label}</div>
         <div className="flex items-center gap-2">
           <span className="text-lg font-semibold text-foreground">{formatNumber(latestValue)}</span>
-          <span className={`text-xs font-medium ${change >= 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+          <span className={`text-xs font-medium ${change >= 0 ? 'text-rose-600' : 'text-success'}`}>
             {change >= 0 ? '+' : ''}{change.toFixed(1)}%
           </span>
         </div>
@@ -174,7 +174,7 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
       <div className="bg-card border border-border rounded-xl p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-500" />
+            <AlertTriangle className="w-4 h-4 text-warning" />
             <span className="text-sm font-medium text-foreground">Top 3 Deterioration Drivers</span>
           </div>
           <span className="text-xs text-muted-foreground">Model explainability at portfolio level</span>
@@ -183,7 +183,7 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
         <div className="space-y-3">
           {deteriorationDrivers.slice(0, 3).map((driver, index) => (
             <div key={driver.driver} className="flex items-center gap-4 p-3 bg-muted/30 rounded-lg">
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 font-bold text-sm">
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-warning/10 text-warning font-bold text-sm">
                 #{index + 1}
               </div>
               <div className="flex-1 min-w-0">
@@ -195,7 +195,7 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
               <div className="text-right">
                 <div className="text-lg font-semibold text-foreground">{driver.impact}%</div>
                 <div className={`text-xs ${
-                  driver.trend === 'up' ? 'text-rose-600' : driver.trend === 'down' ? 'text-emerald-600' : 'text-muted-foreground'
+                  driver.trend === 'up' ? 'text-rose-600' : driver.trend === 'down' ? 'text-success' : 'text-muted-foreground'
                 }`}>
                   {driver.trend === 'up' ? '↑ Increasing' : driver.trend === 'down' ? '↓ Decreasing' : '→ Stable'}
                 </div>

@@ -44,8 +44,8 @@ const GEOGRAPHIES = [
 ];
 
 const CUSTOMER_SEGMENTS = [
-  { id: 'micro', label: 'Micro (<$500K Rev)', color: 'bg-blue-100 text-blue-700' },
-  { id: 'small', label: 'Small ($500K-$5M Rev)', color: 'bg-green-100 text-green-700' },
+  { id: 'micro', label: 'Micro (<$500K Rev)', color: 'bg-info/10 text-info' },
+  { id: 'small', label: 'Small ($500K-$5M Rev)', color: 'bg-success/10 text-success' },
   { id: 'mid-market', label: 'Mid-Market ($5M-$50M Rev)', color: 'bg-purple-100 text-purple-700' },
 ];
 
@@ -56,9 +56,9 @@ const RELATIONSHIP_STAGES = [
 ];
 
 const RISK_TIERS = [
-  { id: 'low', label: 'Low Risk', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
-  { id: 'medium', label: 'Medium Risk', color: 'bg-amber-100 text-amber-700 border-amber-200' },
-  { id: 'high', label: 'High Risk', color: 'bg-red-100 text-red-700 border-red-200' },
+  { id: 'low', label: 'Low Risk', color: 'bg-success/10 text-success border-success/20' },
+  { id: 'medium', label: 'Medium Risk', color: 'bg-warning/10 text-warning border-warning/20' },
+  { id: 'high', label: 'High Risk', color: 'bg-destructive/10 text-destructive border-destructive/20' },
 ];
 
 export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = ({
@@ -102,21 +102,21 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
     children: React.ReactNode;
     count?: number;
   }> = ({ title, sectionKey, children, count }) => (
-    <div className="border-b border-slate-100 last:border-0">
+    <div className="border-b border-border last:border-0">
       <button
         onClick={() => setExpandedSection(expandedSection === sectionKey ? null : sectionKey)}
-        className="w-full flex items-center justify-between p-3 hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center justify-between p-3 hover:bg-muted transition-colors"
       >
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-slate-700">{title}</span>
+          <span className="text-sm font-medium text-foreground">{title}</span>
           {count && count > 0 && (
-            <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">
+            <span className="px-1.5 py-0.5 bg-info/10 text-info text-xs rounded-full font-medium">
               {count}
             </span>
           )}
         </div>
-        <ChevronDown 
-          className={`w-4 h-4 text-slate-400 transition-transform ${
+        <ChevronDown
+          className={`w-4 h-4 text-muted-foreground transition-transform ${
             expandedSection === sectionKey ? 'rotate-180' : ''
           }`}
         />
@@ -135,15 +135,15 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
   );
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div className="bg-card rounded-xl border border-border overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-slate-100 bg-slate-50">
+      <div className="p-4 border-b border-border bg-muted">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-slate-600" />
-            <span className="font-semibold text-slate-800">Filters</span>
+            <Filter className="w-4 h-4 text-muted-foreground" />
+            <span className="font-semibold text-foreground">Filters</span>
             {activeFilterCount > 0 && (
-              <span className="px-2 py-0.5 bg-blue-600 text-white text-xs rounded-full">
+              <span className="px-2 py-0.5 bg-info text-white text-xs rounded-full">
                 {activeFilterCount}
               </span>
             )}
@@ -151,7 +151,7 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
           {activeFilterCount > 0 && (
             <button
               onClick={clearAllFilters}
-              className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+              className="text-xs text-info hover:text-info/80 font-medium flex items-center gap-1"
             >
               <X className="w-3 h-3" />
               Clear All
@@ -161,20 +161,20 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
         
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search applications..."
             value={filters.searchQuery}
             onChange={(e) => onFiltersChange({ ...filters, searchQuery: e.target.value })}
-            className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-info focus:border-transparent"
           />
         </div>
         
         {/* Results count */}
-        <div className="mt-3 text-xs text-slate-500">
-          Showing <span className="font-semibold text-slate-700">{filteredCount.toLocaleString()}</span> of{' '}
-          <span className="font-semibold text-slate-700">{totalApplications.toLocaleString()}</span> applications
+        <div className="mt-3 text-xs text-muted-foreground">
+          Showing <span className="font-semibold text-foreground">{filteredCount.toLocaleString()}</span> of{' '}
+          <span className="font-semibold text-foreground">{totalApplications.toLocaleString()}</span> applications
         </div>
       </div>
 
@@ -187,14 +187,14 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
         >
           <div className="space-y-1">
             {PRODUCT_TYPES.map(product => (
-              <label key={product} className="flex items-center gap-2 p-1.5 hover:bg-slate-50 rounded cursor-pointer">
+              <label key={product} className="flex items-center gap-2 p-1.5 hover:bg-muted rounded cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filters.productType.includes(product)}
                   onChange={() => toggleFilter('productType', product)}
-                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="w-4 h-4 rounded border-border text-info focus:ring-info"
                 />
-                <span className="text-sm text-slate-600">{product}</span>
+                <span className="text-sm text-muted-foreground">{product}</span>
               </label>
             ))}
           </div>
@@ -207,14 +207,14 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
         >
           <div className="space-y-1">
             {GEOGRAPHIES.map(geo => (
-              <label key={geo} className="flex items-center gap-2 p-1.5 hover:bg-slate-50 rounded cursor-pointer">
+              <label key={geo} className="flex items-center gap-2 p-1.5 hover:bg-muted rounded cursor-pointer">
                 <input
                   type="checkbox"
                   checked={filters.geography.includes(geo)}
                   onChange={() => toggleFilter('geography', geo)}
-                  className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                  className="w-4 h-4 rounded border-border text-info focus:ring-info"
                 />
-                <span className="text-sm text-slate-600">{geo}</span>
+                <span className="text-sm text-muted-foreground">{geo}</span>
               </label>
             ))}
           </div>
@@ -232,8 +232,8 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
                 onClick={() => toggleFilter('customerSegment', segment.id)}
                 className={`w-full flex items-center gap-2 p-2 rounded-lg border transition-all ${
                   filters.customerSegment.includes(segment.id)
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-slate-200 hover:border-slate-300'
+                    ? 'border-info bg-info/10'
+                    : 'border-border hover:border-border/80'
                 }`}
               >
                 <span className={`px-2 py-0.5 rounded text-xs font-medium ${segment.color}`}>
@@ -256,8 +256,8 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
                 onClick={() => toggleFilter('relationshipStage', stage.id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-sm transition-all ${
                   filters.relationshipStage.includes(stage.id)
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-slate-200 text-slate-600 hover:border-slate-300'
+                    ? 'border-info bg-info/10 text-info'
+                    : 'border-border text-muted-foreground hover:border-border/80'
                 }`}
               >
                 <span>{stage.icon}</span>
@@ -279,15 +279,15 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
                 onClick={() => toggleFilter('riskTier', tier.id)}
                 className={`w-full flex items-center justify-between p-2.5 rounded-lg border transition-all ${
                   filters.riskTier.includes(tier.id)
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-slate-200 hover:border-slate-300'
+                    ? 'border-info bg-info/10'
+                    : 'border-border hover:border-border/80'
                 }`}
               >
                 <span className={`px-2.5 py-1 rounded-md text-xs font-semibold border ${tier.color}`}>
                   {tier.label}
                 </span>
                 {filters.riskTier.includes(tier.id) && (
-                  <span className="text-blue-600">✓</span>
+                  <span className="text-info">✓</span>
                 )}
               </button>
             ))}

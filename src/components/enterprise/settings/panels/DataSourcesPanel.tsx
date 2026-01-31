@@ -23,9 +23,9 @@ const formatDate = (dateString: string | null): string => {
 const StatusIcon: React.FC<{ status: DataSource['status'] }> = ({ status }) => {
   switch (status) {
     case 'connected':
-      return <CheckCircle className="h-5 w-5 text-green-600" />;
+      return <CheckCircle className="h-5 w-5 text-success" />;
     case 'error':
-      return <AlertTriangle className="h-5 w-5 text-amber-600" />;
+      return <AlertTriangle className="h-5 w-5 text-warning" />;
     case 'disconnected':
       return <XCircle className="h-5 w-5 text-muted-foreground" />;
   }
@@ -78,7 +78,7 @@ export const DataSourcesPanel: React.FC<DataSourcesPanelProps> = ({
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">Error Rate</span>
-          <span className={`font-medium ${source.errorRate > 5 ? 'text-amber-600' : 'text-foreground'}`}>
+          <span className={`font-medium ${source.errorRate > 5 ? 'text-warning' : 'text-foreground'}`}>
             {source.errorRate.toFixed(1)}%
           </span>
         </div>

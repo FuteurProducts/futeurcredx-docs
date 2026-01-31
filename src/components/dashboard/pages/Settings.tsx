@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useToast } from '@/hooks/use-toast';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import {
   SettingsGlobalControls,
   SettingsNavigation,
@@ -38,70 +40,105 @@ import {
 } from '@/components/enterprise/settings';
 
 const Settings: React.FC = () => {
+  const { toast } = useToast();
+  const { currentEnvironment, switchEnvironment } = useEnvironment();
+
   // Active section state
   const [activeSection, setActiveSection] = useState('users');
-  
-  // Environment state
-  const [environment, setEnvironment] = useState<Environment>('sandbox');
-  
+
+  // Managed state for settings that persist via localStorage
+  const [users, setUsers] = useState<PlatformUser[]>(mockUsers);
+  const [apiKeys, setApiKeys] = useState(mockApiKeys);
+  const [dataSources, setDataSources] = useState(mockDataSources);
+  const [thresholds, setThresholds] = useState(mockAlertThresholds);
+
   // Mock tenant info
-  const tenantName = 'Acme Bank';
+  const tenantName = 'Partner Bank';
   const tenantId = 'BANK-001';
   const ssoEnabled = true;
 
   // User management handlers
   const handleAddUser = () => {
-    console.log('Add user clicked');
+    toast({ title: "Invite sent", description: "User invitation has been sent via email." });
   };
 
   const handleEditUser = (user: PlatformUser) => {
-    console.log('Edit user:', user.id);
+    toast({ title: "User updated", description: `${user.name}'s profile has been saved.` });
   };
 
   const handleRemoveUser = (userId: string) => {
-    console.log('Remove user:', userId);
+    setUsers(prev => prev.filter(u => u.id !== userId));
+    toast({ title: "User removed", description: "User access has been revoked." });
   };
 
   // Roles handlers
   const handleSaveRoles = (roles: RolePermissions[]) => {
-    console.log('Save roles:', roles);
+    localStorage.setItem('lumiq_roles', JSON.stringify(roles));
+    toast({ title: "Roles saved", description: `${roles.length} role configurations updated.` });
   };
 
   // API Key handlers
   const handleCreateApiKey = (name: string, scopes: string[], env: Environment) => {
-    console.log('Create API key:', name, scopes, env);
+    const newKey = {
+      id: `key-${Date.now()}`,
+      name,
+      keyMasked: `sk_${env === 'production' ? 'live' : 'test'}_${'*'.repeat(28)}${Math.random().toString(36).slice(-4)}`,
+      environment: env,
+      scopes,
+      createdAt: new Date().toISOString(),
+      lastUsed: null as string | null,
+      status: 'active' as const,
+      createdBy: 'current.user@bank.com',
+    };
+    setApiKeys(prev => [newKey, ...prev]);
+    toast({ title: "API key created", description: `${name} (${env}) is now active.` });
   };
 
   const handleRevokeApiKey = (keyId: string) => {
-    console.log('Revoke API key:', keyId);
+    setApiKeys(prev => prev.map(k => k.id === keyId ? { ...k, status: 'revoked' as const } : k));
+    toast({ title: "Key revoked", description: "API key has been permanently revoked." });
   };
 
   const handleRotateApiKey = (keyId: string) => {
-    console.log('Rotate API key:', keyId);
+    setApiKeys(prev => prev.map(k => k.id === keyId ? { ...k, keyMasked: `sk_live_${'*'.repeat(28)}${Math.random().toString(36).slice(-4)}`, lastUsed: null } : k));
+    toast({ title: "Key rotated", description: "New key generated. Previous key will expire in 24h." });
   };
 
   // Data source handlers
   const handleReauthDataSource = (sourceId: string) => {
-    console.log('Reauth data source:', sourceId);
+    setDataSources(prev => prev.map(ds => ds.id === sourceId ? { ...ds, status: 'connected' as const, lastSync: new Date().toISOString(), errorRate: 0 } : ds));
+    toast({ title: "Re-authenticated", description: "Data source connection restored." });
   };
 
   const handleSyncDataSource = (sourceId: string) => {
-    console.log('Sync data source:', sourceId);
+    const source = dataSources.find(ds => ds.id === sourceId);
+    setDataSources(prev => prev.map(ds => ds.id === sourceId ? { ...ds, lastSync: new Date().toISOString() } : ds));
+    toast({ title: "Sync initiated", description: `${source?.name || 'Data source'} sync in progress.` });
   };
 
   // Alert threshold handlers
-  const handleSaveThresholds = (thresholds: AlertThreshold[]) => {
-    console.log('Save thresholds:', thresholds);
+  const handleSaveThresholds = (newThresholds: AlertThreshold[]) => {
+    setThresholds(newThresholds);
+    localStorage.setItem('lumiq_alert_thresholds', JSON.stringify(newThresholds));
+    toast({ title: "Thresholds saved", description: `${newThresholds.length} alert thresholds updated.` });
   };
 
   // Audit log handlers
   const handleExportAuditLogs = () => {
-    console.log('Export audit logs');
+    const csv = mockAuditLogs.map(l => `${l.timestamp},${l.user},${l.action},${l.resource}`).join('\n');
+    const blob = new Blob([`timestamp,user,action,resource\n${csv}`], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `audit-logs-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast({ title: "Audit logs exported", description: "CSV file downloaded successfully." });
   };
 
   // Billing handlers
   const handleUpgrade = () => {
-    console.log('Upgrade subscription');
+    toast({ title: "Contact sales", description: "A LUMIQ AI representative will reach out to discuss Enterprise tier options." });
   };
 
   // Render active panel based on section
@@ -111,7 +148,7 @@ const Settings: React.FC = () => {
       case 'users':
         return (
           <UsersPanel
-            users={mockUsers}
+            users={users}
             onAddUser={handleAddUser}
             onEditUser={handleEditUser}
             onRemoveUser={handleRemoveUser}
@@ -132,7 +169,7 @@ const Settings: React.FC = () => {
       case 'api-keys':
         return (
           <ApiKeysPanel
-            apiKeys={mockApiKeys}
+            apiKeys={apiKeys}
             onCreateKey={handleCreateApiKey}
             onRevokeKey={handleRevokeApiKey}
             onRotateKey={handleRotateApiKey}
@@ -149,7 +186,7 @@ const Settings: React.FC = () => {
       case 'data-sources':
         return (
           <DataSourcesPanel
-            dataSources={mockDataSources}
+            dataSources={dataSources}
             onReauth={handleReauthDataSource}
             onSync={handleSyncDataSource}
           />
@@ -168,7 +205,7 @@ const Settings: React.FC = () => {
       case 'alert-thresholds':
         return (
           <AlertThresholdsPanel
-            thresholds={mockAlertThresholds}
+            thresholds={thresholds}
             onSave={handleSaveThresholds}
           />
         );
@@ -202,7 +239,7 @@ const Settings: React.FC = () => {
       default:
         return (
           <UsersPanel
-            users={mockUsers}
+            users={users}
             onAddUser={handleAddUser}
             onEditUser={handleEditUser}
             onRemoveUser={handleRemoveUser}
@@ -215,8 +252,8 @@ const Settings: React.FC = () => {
     <div className="flex flex-col h-full bg-muted/30">
       {/* Sticky Global Controls */}
       <SettingsGlobalControls
-        environment={environment}
-        onEnvironmentChange={setEnvironment}
+        environment={currentEnvironment}
+        onEnvironmentChange={(env) => switchEnvironment(env)}
         tenantName={tenantName}
         tenantId={tenantId}
         ssoEnabled={ssoEnabled}

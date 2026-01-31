@@ -29,11 +29,11 @@ interface ReportPreviewDrawerProps {
 const FormatIcon: React.FC<{ format: string }> = ({ format }) => {
   switch (format) {
     case 'pdf':
-      return <FileText className="h-5 w-5 text-red-500" />;
+      return <FileText className="h-5 w-5 text-destructive" />;
     case 'xlsx':
-      return <FileSpreadsheet className="h-5 w-5 text-green-600" />;
+      return <FileSpreadsheet className="h-5 w-5 text-success" />;
     case 'csv':
-      return <Table className="h-5 w-5 text-blue-500" />;
+      return <Table className="h-5 w-5 text-info" />;
     default:
       return <FileText className="h-5 w-5 text-muted-foreground" />;
   }
@@ -141,7 +141,7 @@ export const ReportPreviewDrawer: React.FC<ReportPreviewDrawerProps> = ({
                       key={idx}
                       className="flex items-center gap-2 p-2 bg-muted/50 rounded-md text-sm"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      <CheckCircle2 className="h-4 w-4 text-success" />
                       <span>{source}</span>
                     </div>
                   ))}
@@ -168,7 +168,7 @@ export const ReportPreviewDrawer: React.FC<ReportPreviewDrawerProps> = ({
                     <div className="flex items-center gap-2">
                       <div className="w-20 h-2 bg-muted rounded-full overflow-hidden">
                         <div 
-                          className="h-full bg-green-500 rounded-full" 
+                          className="h-full bg-success rounded-full" 
                           style={{ width: `${report.metadata.confidenceScore * 100}%` }}
                         />
                       </div>

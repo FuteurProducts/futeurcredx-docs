@@ -50,25 +50,35 @@ const RISK_CONFIG = {
   'high': { label: 'High Risk', color: 'hsl(var(--destructive))', icon: AlertTriangle },
 };
 
-// Demo data for unauthenticated mode
-const mockDemoCustomers: CustomerForPull[] = [
-  { id: 'demo-cust-1', businessName: 'Apex Construction LLC', hasScore: true, latestScore: 720, riskClass: 'low' },
-  { id: 'demo-cust-2', businessName: 'Metro Logistics Inc', hasScore: true, latestScore: 685, riskClass: 'medium' },
-  { id: 'demo-cust-3', businessName: 'Sunrise Healthcare Group', hasScore: true, latestScore: 745, riskClass: 'low' },
-  { id: 'demo-cust-4', businessName: 'TechVenture Solutions', hasScore: true, latestScore: 702, riskClass: 'low' },
-  { id: 'demo-cust-5', businessName: 'Green Valley Farms', hasScore: true, latestScore: 658, riskClass: 'medium' },
-  { id: 'demo-cust-6', businessName: 'Coastal Hospitality LLC', hasScore: false },
-  { id: 'demo-cust-7', businessName: 'Precision Manufacturing Co', hasScore: false },
-  { id: 'demo-cust-8', businessName: 'Urban Retail Partners', hasScore: false },
-];
+import { DEMO_BUSINESSES } from '@/data/demoData';
 
-const mockDemoScores: ScoreRecord[] = [
-  { id: 'score-1', smbEntityId: 'demo-cust-1', businessName: 'Apex Construction LLC', source: 'experian_biz', scoreType: 'intelliscore', score: 720, riskClass: 'low', factors: [{ code: 'PH01', description: 'Strong payment history', impact: 'positive' }, { code: 'UT02', description: 'Low credit utilization', impact: 'positive' }], pulledAt: '2025-01-20T10:30:00Z' },
-  { id: 'score-2', smbEntityId: 'demo-cust-2', businessName: 'Metro Logistics Inc', source: 'dnb', scoreType: 'paydex', score: 685, riskClass: 'medium', factors: [{ code: 'PH01', description: 'Good payment history', impact: 'positive' }, { code: 'AG01', description: 'Business age under 5 years', impact: 'negative' }], pulledAt: '2025-01-19T14:15:00Z' },
-  { id: 'score-3', smbEntityId: 'demo-cust-3', businessName: 'Sunrise Healthcare Group', source: 'experian_biz', scoreType: 'intelliscore', score: 745, riskClass: 'low', factors: [{ code: 'PH01', description: 'Excellent payment history', impact: 'positive' }, { code: 'TL01', description: 'Diverse trade lines', impact: 'positive' }], pulledAt: '2025-01-18T09:45:00Z' },
-  { id: 'score-4', smbEntityId: 'demo-cust-4', businessName: 'TechVenture Solutions', source: 'equifax_biz', scoreType: 'business_risk', score: 702, riskClass: 'low', factors: [{ code: 'CF01', description: 'Stable cash flow', impact: 'positive' }], pulledAt: '2025-01-17T16:20:00Z' },
-  { id: 'score-5', smbEntityId: 'demo-cust-5', businessName: 'Green Valley Farms', source: 'dnb', scoreType: 'paydex', score: 658, riskClass: 'medium', factors: [{ code: 'UT02', description: 'Moderate credit utilization', impact: 'neutral' }, { code: 'IND01', description: 'Seasonal industry volatility', impact: 'negative' }], pulledAt: '2025-01-16T11:00:00Z' },
-];
+// Demo customers derived from centralized business data
+const mockDemoCustomers: CustomerForPull[] = DEMO_BUSINESSES.map((biz, idx) => ({
+  id: biz.id,
+  businessName: biz.name,
+  hasScore: idx < 7,
+  latestScore: idx < 7 ? biz.lumiqScore * 10 : undefined,
+  riskClass: idx < 7 ? biz.riskTier : undefined,
+}));
+
+const SCORE_SOURCES = ['experian_biz', 'dnb', 'equifax_biz'] as const;
+const SCORE_TYPES = ['intelliscore', 'paydex', 'business_risk'] as const;
+
+const mockDemoScores: ScoreRecord[] = DEMO_BUSINESSES.filter((_, i) => i < 7).map((biz, idx) => ({
+  id: `score-${idx + 1}`,
+  smbEntityId: biz.id,
+  businessName: biz.name,
+  source: SCORE_SOURCES[idx % 3],
+  scoreType: SCORE_TYPES[idx % 3],
+  score: biz.lumiqScore * 10,
+  riskClass: biz.riskTier,
+  factors: [
+    { code: 'PH01', description: biz.riskTier === 'low' ? 'Strong payment history' : 'Moderate payment history', impact: biz.riskTier === 'low' ? 'positive' : 'neutral' },
+    { code: 'CF01', description: biz.scoreTrend === 'up' ? 'Improving cash flow' : biz.scoreTrend === 'down' ? 'Declining cash flow' : 'Stable cash flow', impact: biz.scoreTrend === 'down' ? 'negative' : 'positive' },
+    ...(biz.yearsInBusiness < 5 ? [{ code: 'AG01', description: 'Business age under 5 years', impact: 'negative' as const }] : []),
+  ],
+  pulledAt: new Date(Date.now() - idx * 24 * 60 * 60 * 1000).toISOString(),
+}));
 
 const ScoresBff: React.FC = () => {
   const { portfolioId, isLoading: portfolioLoading } = usePortfolio();

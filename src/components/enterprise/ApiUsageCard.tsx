@@ -32,8 +32,8 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
     <div className={`p-6 ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
-            <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          <div className="p-2 bg-info/10 rounded-xl">
+            <Activity className="h-5 w-5 text-info" />
           </div>
           <h3 className="text-lg font-semibold text-foreground">API Usage</h3>
         </div>
@@ -47,9 +47,9 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
             {formatNumber(data.totalRequests)}
           </span>
           <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-            data.requestsChange >= 0 
-              ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" 
-              : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+            data.requestsChange >= 0
+              ? "bg-success/10 text-success"
+              : "bg-destructive/10 text-destructive"
           }`}>
             <span>{data.requestsChange >= 0 ? "+" : ""}{data.requestsChange}%</span>
           </div>
@@ -69,8 +69,8 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
             animate={{ width: `${data.successRate}%` }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className={`h-full rounded-full ${
-              data.successRate >= 99 ? "bg-emerald-500" :
-              data.successRate >= 95 ? "bg-amber-500" : "bg-red-500"
+              data.successRate >= 99 ? "bg-success" :
+              data.successRate >= 95 ? "bg-warning" : "bg-destructive"
             }`}
           />
         </div>
@@ -88,7 +88,7 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
 
         <div className="p-3 bg-muted/50 rounded-xl">
           <div className="flex items-center gap-2 mb-1">
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />
+            <AlertTriangle className="h-3.5 w-3.5 text-warning" />
             <span className="text-xs text-muted-foreground">Errors</span>
           </div>
           <span className="text-lg font-semibold text-foreground">{formatNumber(data.errorCount)}</span>

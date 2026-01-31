@@ -11,18 +11,18 @@ interface KeyUsageStatsProps {
 const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false }) => {
   if (!keyStats || keyStats.length === 0) {
     return (
-      <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
+      <div className="bg-card/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2 bg-blue-50 rounded-lg">
             <BarChart3 className="w-5 h-5 text-blue-600" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900">API Key Usage</h3>
+          <h3 className="text-lg font-semibold text-foreground">API Key Usage</h3>
         </div>
         <div className="text-center py-8">
-          <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-            <Key className="w-8 h-8 text-gray-400" />
+          <div className="w-16 h-16 mx-auto mb-4 bg-muted rounded-full flex items-center justify-center">
+            <Key className="w-8 h-8 text-muted-foreground" />
           </div>
-          <p className="text-gray-500 text-sm">No API keys found or no usage data available.</p>
+          <p className="text-muted-foreground text-sm">No API keys found or no usage data available.</p>
         </div>
       </div>
     );
@@ -33,7 +33,7 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
   const mostUsedKey = keyStats.reduce((max, key) => key.callsUsed > max.callsUsed ? key : max, keyStats[0]);
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
+    <div className="bg-card/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
@@ -41,9 +41,9 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
             <BarChart3 className="w-5 h-5 text-blue-600" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">API Key Usage Statistics</h3>
-            <p className="text-sm text-gray-500">Real-time usage tracking across all keys</p>
-            <p className="text-xs text-gray-400 mt-1">💡 Deleted keys are preserved for historical usage tracking</p>
+            <h3 className="text-lg font-semibold text-foreground">API Key Usage Statistics</h3>
+            <p className="text-sm text-muted-foreground">Real-time usage tracking across all keys</p>
+            <p className="text-xs text-muted-foreground mt-1">💡 Deleted keys are preserved for historical usage tracking</p>
           </div>
         </div>
         {isLive && (
@@ -89,36 +89,36 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
       </div>
 
       {/* Enhanced Table */}
-      <div className="overflow-hidden rounded-xl border border-gray-200">
+      <div className="overflow-hidden rounded-xl border border-border">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-muted border-b border-border">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Key Name
                 </th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Environment
                 </th>
-                <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   API Calls
                 </th>
-                <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Last Used
                 </th>
-                <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <th className="px-6 py-4 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Status
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-card divide-y divide-border">
               {keyStats.map((key, index) => (
                 <motion.tr
                   key={key.keyId}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="hover:bg-gray-50 transition-colors"
+                  className="hover:bg-muted transition-colors"
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
@@ -126,8 +126,8 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                         <Key className="w-4 h-4 text-blue-600" />
                       </div>
                       <div>
-                        <div className="font-medium text-gray-900">{key.keyName}</div>
-                        <div className="text-sm text-gray-500">Key #{index + 1}</div>
+                        <div className="font-medium text-foreground">{key.keyName}</div>
+                        <div className="text-sm text-muted-foreground">Key #{index + 1}</div>
                       </div>
                     </div>
                   </td>
@@ -144,15 +144,15 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                   
                   <td className="px-6 py-4 text-center">
                     <div className="flex items-center justify-center gap-2">
-                      <Activity className="w-4 h-4 text-gray-400" />
-                      <span className="font-semibold text-gray-900">{key.callsUsed.toLocaleString()}</span>
+                      <Activity className="w-4 h-4 text-muted-foreground" />
+                      <span className="font-semibold text-foreground">{key.callsUsed.toLocaleString()}</span>
                     </div>
                   </td>
                   
                   <td className="px-6 py-4 text-center">
                     <div className="flex items-center justify-center gap-2">
-                      <Clock className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">
+                      <Clock className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
                         {key.lastUsed ? new Date(key.lastUsed).toLocaleDateString() : 'Never'}
                       </span>
                     </div>
@@ -167,8 +167,8 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                         </>
                       ) : (
                         <>
-                          <XCircle className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm font-medium text-gray-500">Deleted</span>
+                          <XCircle className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-sm font-medium text-muted-foreground">Deleted</span>
                         </>
                       )}
                     </div>

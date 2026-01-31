@@ -30,11 +30,11 @@ interface PortfolioAlertsCardProps {
 const getSeverityColors = (severity: string) => {
   switch (severity) {
     case "critical":
-      return { bg: "bg-red-500/10", text: "text-red-600", dot: "bg-red-500" };
+      return { bg: "bg-destructive/10", text: "text-destructive", dot: "bg-destructive" };
     case "warning":
-      return { bg: "bg-amber-500/10", text: "text-amber-600", dot: "bg-amber-500" };
+      return { bg: "bg-warning/10", text: "text-warning", dot: "bg-warning" };
     default:
-      return { bg: "bg-blue-500/10", text: "text-blue-600", dot: "bg-blue-500" };
+      return { bg: "bg-info/10", text: "text-info", dot: "bg-info" };
   }
 };
 
@@ -85,9 +85,9 @@ export const PortfolioAlertsCard: React.FC<PortfolioAlertsCardProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-red-500/10 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-destructive/10 rounded-xl flex items-center justify-center">
             <svg
-              className="w-5 h-5 text-red-600"
+              className="w-5 h-5 text-destructive"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -109,7 +109,7 @@ export const PortfolioAlertsCard: React.FC<PortfolioAlertsCardProps> = ({
             </p>
           </div>
         </div>
-        <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 rounded-full text-sm font-medium">
+        <span className="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">
           {activeRulesCount} Active Rules
         </span>
       </div>
@@ -168,7 +168,7 @@ export const PortfolioAlertsCard: React.FC<PortfolioAlertsCardProps> = ({
                 </div>
               </div>
               {rule.triggered24h > 0 && (
-                <span className="px-2 py-1 bg-amber-500/10 text-amber-600 rounded text-xs font-medium">
+                <span className="px-2 py-1 bg-warning/10 text-warning rounded text-xs font-medium">
                   {rule.triggered24h} triggered
                 </span>
               )}

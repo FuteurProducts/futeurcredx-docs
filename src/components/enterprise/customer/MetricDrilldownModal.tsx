@@ -281,9 +281,9 @@ export const MetricDrilldownModal: React.FC<MetricDrilldownModalProps> = ({
                       {data.insights.map((insight, idx) => (
                         <div key={idx} className="flex items-start gap-3 p-3 bg-card rounded-lg">
                           {insight.trend === 'up' ? (
-                            <TrendingUp className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                            <TrendingUp className="h-4 w-4 text-success mt-0.5 flex-shrink-0" />
                           ) : (
-                            <TrendingDown className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />
+                            <TrendingDown className="h-4 w-4 text-destructive mt-0.5 flex-shrink-0" />
                           )}
                           <span className="text-sm text-foreground">{insight.text}</span>
                         </div>
@@ -383,8 +383,8 @@ export const MetricDrilldownModal: React.FC<MetricDrilldownModalProps> = ({
                           </div>
                           <div className="flex items-center gap-2">
                             <span className={`text-sm font-semibold ${
-                              customer.rhs >= 70 ? 'text-emerald-500' : 
-                              customer.rhs >= 50 ? 'text-amber-500' : 'text-red-500'
+                              customer.rhs >= 70 ? 'text-success' :
+                              customer.rhs >= 50 ? 'text-warning' : 'text-destructive'
                             }`}>
                               {customer.rhs}
                             </span>

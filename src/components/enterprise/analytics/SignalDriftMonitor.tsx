@@ -9,9 +9,9 @@ interface SignalDriftMonitorProps {
 }
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; bg: string }> = {
-  healthy: { icon: CheckCircle, color: 'text-green-600', bg: 'bg-green-50' },
-  warning: { icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50' },
-  critical: { icon: XCircle, color: 'text-red-600', bg: 'bg-red-50' },
+  healthy: { icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
+  warning: { icon: AlertTriangle, color: 'text-warning', bg: 'bg-warning/10' },
+  critical: { icon: XCircle, color: 'text-destructive', bg: 'bg-destructive/10' },
 };
 
 export const SignalDriftMonitor: React.FC<SignalDriftMonitorProps> = ({ signals }) => {
@@ -23,7 +23,7 @@ export const SignalDriftMonitor: React.FC<SignalDriftMonitorProps> = ({ signals 
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -39,17 +39,17 @@ export const SignalDriftMonitor: React.FC<SignalDriftMonitorProps> = ({ signals 
 
         {/* Status Summary */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1 px-2 py-1 bg-green-50 rounded-lg">
-            <CheckCircle className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-semibold text-green-700">{healthyCount}</span>
+          <div className="flex items-center gap-1 px-2 py-1 bg-success/10 rounded-lg">
+            <CheckCircle className="w-4 h-4 text-success" />
+            <span className="text-sm font-semibold text-success">{healthyCount}</span>
           </div>
-          <div className="flex items-center gap-1 px-2 py-1 bg-amber-50 rounded-lg">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
-            <span className="text-sm font-semibold text-amber-700">{warningCount}</span>
+          <div className="flex items-center gap-1 px-2 py-1 bg-warning/10 rounded-lg">
+            <AlertTriangle className="w-4 h-4 text-warning" />
+            <span className="text-sm font-semibold text-warning">{warningCount}</span>
           </div>
-          <div className="flex items-center gap-1 px-2 py-1 bg-red-50 rounded-lg">
-            <XCircle className="w-4 h-4 text-red-600" />
-            <span className="text-sm font-semibold text-red-700">{criticalCount}</span>
+          <div className="flex items-center gap-1 px-2 py-1 bg-destructive/10 rounded-lg">
+            <XCircle className="w-4 h-4 text-destructive" />
+            <span className="text-sm font-semibold text-destructive">{criticalCount}</span>
           </div>
         </div>
       </div>
@@ -93,12 +93,12 @@ export const SignalDriftMonitor: React.FC<SignalDriftMonitorProps> = ({ signals 
                     </div>
                   </td>
                   <td className="py-4 text-center">
-                    <span className={`font-semibold ${signal.meanShift > 0.1 ? 'text-red-600' : signal.meanShift > 0.05 ? 'text-amber-600' : 'text-green-600'}`}>
+                    <span className={`font-semibold ${signal.meanShift > 0.1 ? 'text-destructive' : signal.meanShift > 0.05 ? 'text-warning' : 'text-success'}`}>
                       {(signal.meanShift * 100).toFixed(1)}%
                     </span>
                   </td>
                   <td className="py-4 text-center">
-                    <span className={`font-semibold ${signal.varianceShift > 0.15 ? 'text-red-600' : signal.varianceShift > 0.08 ? 'text-amber-600' : 'text-green-600'}`}>
+                    <span className={`font-semibold ${signal.varianceShift > 0.15 ? 'text-destructive' : signal.varianceShift > 0.08 ? 'text-warning' : 'text-success'}`}>
                       {(signal.varianceShift * 100).toFixed(1)}%
                     </span>
                   </td>
@@ -109,7 +109,7 @@ export const SignalDriftMonitor: React.FC<SignalDriftMonitorProps> = ({ signals 
                     </div>
                   </td>
                   <td className="py-4 text-center">
-                    <span className={`font-semibold ${signal.missingnessRate > 2 ? 'text-red-600' : signal.missingnessRate > 1 ? 'text-amber-600' : 'text-green-600'}`}>
+                    <span className={`font-semibold ${signal.missingnessRate > 2 ? 'text-destructive' : signal.missingnessRate > 1 ? 'text-warning' : 'text-success'}`}>
                       {signal.missingnessRate.toFixed(1)}%
                     </span>
                   </td>

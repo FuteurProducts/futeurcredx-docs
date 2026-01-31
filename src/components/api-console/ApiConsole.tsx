@@ -75,7 +75,7 @@ export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
       />
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="bg-white border border-border p-1 rounded-xl">
+        <TabsList className="bg-card border border-border p-1 rounded-xl">
           <TabsTrigger value="connections" className="flex items-center gap-2 data-[state=active]:bg-muted rounded-lg">
             <LayoutGrid className="w-4 h-4" />
             Connections
@@ -129,7 +129,7 @@ export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
 const ActivityLogPanel: React.FC = () => {
 
   return (
-    <div className="bg-white rounded-2xl border border-border overflow-hidden">
+    <div className="bg-card rounded-2xl border border-border overflow-hidden">
       <div className="p-4 border-b border-border flex items-center justify-between">
         <h3 className="text-lg font-semibold">Activity Log</h3>
         <span className="text-sm text-muted-foreground">Requests, webhooks, auth events (masked)</span>
@@ -161,7 +161,7 @@ const ActivityLogPanel: React.FC = () => {
                         : log.type === 'webhook'
                           ? 'bg-primary/10 text-primary'
                           : log.type === 'auth'
-                            ? 'bg-amber-100 text-amber-700'
+                            ? 'bg-warning/10 text-warning'
                             : 'bg-muted text-muted-foreground'
                     }`}
                   >
@@ -170,7 +170,7 @@ const ActivityLogPanel: React.FC = () => {
                 </td>
                 <td className="px-4 py-3 text-sm font-mono">{log.endpoint}</td>
                 <td className="px-4 py-3">
-                  <span className={`text-sm font-semibold ${log.statusCode < 300 ? 'text-green-600' : 'text-destructive'}`}>
+                  <span className={`text-sm font-semibold ${log.statusCode < 300 ? 'text-success' : 'text-destructive'}`}>
                     {log.statusCode}
                   </span>
                 </td>
@@ -210,7 +210,7 @@ const ApiPlaygroundPanel: React.FC = () => {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div className="bg-white rounded-2xl border border-border p-6">
+      <div className="bg-card rounded-2xl border border-border p-6">
         <h3 className="text-lg font-semibold mb-4">Request</h3>
         <select 
           value={selectedEndpoint}
@@ -235,7 +235,7 @@ const ApiPlaygroundPanel: React.FC = () => {
           {isRunning ? 'Running...' : 'Run Request'}
         </button>
       </div>
-      <div className="bg-white rounded-2xl border border-border p-6">
+      <div className="bg-card rounded-2xl border border-border p-6">
         <h3 className="text-lg font-semibold mb-4">Response</h3>
         <pre className="bg-muted p-4 rounded-xl text-xs overflow-auto h-72 font-mono">
           {response || '// Response will appear here'}
@@ -248,7 +248,7 @@ const ApiPlaygroundPanel: React.FC = () => {
 // API Keys Panel
 const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }) => {
   return (
-    <div className="bg-white rounded-2xl border border-border p-6">
+    <div className="bg-card rounded-2xl border border-border p-6">
       <h3 className="text-lg font-semibold mb-4">API Keys & OAuth Clients</h3>
       <p className="text-sm text-muted-foreground mb-6">Manage your API keys and OAuth client credentials for secure access.</p>
       
@@ -279,7 +279,7 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }
 const WebhooksPanel: React.FC = () => {
 
   return (
-    <div className="bg-white rounded-2xl border border-border p-6">
+    <div className="bg-card rounded-2xl border border-border p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-semibold">Webhook Endpoints</h3>
@@ -294,7 +294,7 @@ const WebhooksPanel: React.FC = () => {
         {mockWebhookConfigs.map((wh: any) => (
           <div key={wh.id} className="flex items-center justify-between p-4 bg-muted rounded-xl">
             <div className="flex items-center gap-4">
-              <div className={`w-2 h-2 rounded-full ${wh.deliveryMetrics?.failureRate > 1 ? 'bg-amber-500' : 'bg-green-500'}`} />
+              <div className={`w-2 h-2 rounded-full ${wh.deliveryMetrics?.failureRate > 1 ? 'bg-warning' : 'bg-success'}`} />
               <div>
                 <code className="text-sm font-mono">{wh.endpointUrl}</code>
                 <div className="text-xs text-muted-foreground mt-1">{wh.eventTypes.length} event types subscribed</div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, FileText, FileSpreadsheet, Table, ChevronDown, ChevronRight } from 'lucide-react';
 import type { ReportTemplate, ReportCategory } from './types';
 import { categoryLabels } from './mockData';
+import { EmptyState } from '@/components/ui/empty-state';
 
 interface ReportLibraryPanelProps {
   templates: ReportTemplate[];
@@ -17,11 +18,11 @@ const categoryOrder: ReportCategory[] = ['portfolio', 'underwriting', 'customer'
 const FormatIcon: React.FC<{ format: string }> = ({ format }) => {
   switch (format) {
     case 'pdf':
-      return <FileText className="h-4 w-4 text-red-500" />;
+      return <FileText className="h-4 w-4 text-destructive" />;
     case 'xlsx':
-      return <FileSpreadsheet className="h-4 w-4 text-green-600" />;
+      return <FileSpreadsheet className="h-4 w-4 text-success" />;
     case 'csv':
-      return <Table className="h-4 w-4 text-blue-500" />;
+      return <Table className="h-4 w-4 text-info" />;
     default:
       return <FileText className="h-4 w-4 text-muted-foreground" />;
   }
@@ -96,6 +97,13 @@ export const ReportLibraryPanel: React.FC<ReportLibraryPanelProps> = ({
 
       {/* Template List */}
       <div className="flex-1 overflow-y-auto p-2">
+        {filteredTemplates.length === 0 && searchQuery.trim() && (
+          <EmptyState
+            icon={FileText}
+            title="No reports found"
+            description="No reports match your current search. Try different keywords or create a new report."
+          />
+        )}
         {categoryOrder.map((category) => {
           const categoryTemplates = groupedTemplates[category];
           if (categoryTemplates.length === 0) return null;

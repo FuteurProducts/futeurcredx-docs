@@ -42,7 +42,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-border p-6">
+      <div className="bg-card rounded-2xl border border-border p-6">
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={onBack}
@@ -68,7 +68,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="bg-white border border-border p-1 rounded-xl flex-wrap">
+        <TabsList className="bg-card border border-border p-1 rounded-xl flex-wrap">
           <TabsTrigger value="overview" className="flex items-center gap-2 data-[state=active]:bg-muted rounded-lg">
             <Info className="w-4 h-4" />
             Overview
@@ -103,7 +103,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
         <TabsContent value="overview" className="mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Connection Info */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Connection Details</h3>
               <div className="space-y-4">
                 <InfoRow label="Connection ID" value={connection.id} copyable />
@@ -117,7 +117,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Data Categories */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Data Categories Enabled</h3>
               <div className="flex flex-wrap gap-2">
                 {connection.dataCategories.map((cat, i) => (
@@ -131,7 +131,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
               <div className="space-y-2">
                 {connection.scopesGranted.map((scope, i) => (
                   <div key={i} className="flex items-center gap-2 px-3 py-2 bg-muted rounded-lg">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
+                    <CheckCircle className="w-4 h-4 text-success" />
                     <code className="text-sm font-mono">{scope}</code>
                   </div>
                 ))}
@@ -139,7 +139,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Rate Limit Summary */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Rate Limit Usage</h3>
               <div className="mb-4">
                 <div className="flex justify-between mb-2">
@@ -149,8 +149,8 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                 <div className="h-3 bg-muted rounded-full overflow-hidden">
                   <div 
                     className={`h-full rounded-full transition-all ${
-                      connection.rateLimitUsage > 80 ? 'bg-destructive' : 
-                      connection.rateLimitUsage > 60 ? 'bg-amber-500' : 'bg-green-500'
+                      connection.rateLimitUsage > 80 ? 'bg-destructive' :
+                      connection.rateLimitUsage > 60 ? 'bg-warning' : 'bg-success'
                     }`}
                     style={{ width: `${connection.rateLimitUsage}%` }}
                   />
@@ -162,7 +162,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Quick Stats</h3>
               <div className="grid grid-cols-2 gap-4">
                 <StatCard label="Last Sync" value={connection.dataFreshness} />
@@ -178,10 +178,10 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
         <TabsContent value="consent" className="mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Consent Object */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Consent Object (FDX)</h3>
-                <span className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-semibold">Active</span>
+                <span className="px-2 py-1 bg-success/10 text-success rounded text-xs font-semibold">Active</span>
               </div>
               
               <div className="space-y-4">
@@ -204,8 +204,8 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
               <div className="mt-6 flex items-center gap-2">
                 {mockConsent.revocable ? (
                   <>
-                    <Unlock className="w-4 h-4 text-green-600" />
-                    <span className="text-sm text-green-700">User can revoke access</span>
+                    <Unlock className="w-4 h-4 text-success" />
+                    <span className="text-sm text-success">User can revoke access</span>
                   </>
                 ) : (
                   <>
@@ -217,28 +217,28 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Scopes */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Granted Scopes</h3>
               <div className="space-y-3">
                 {mockConsent.scopes.map((scope: ConsentScope) => (
-                  <div key={scope.id} className={`p-4 rounded-xl border ${scope.granted ? 'border-green-200 bg-green-50' : 'border-border bg-muted/30'}`}>
+                  <div key={scope.id} className={`p-4 rounded-xl border ${scope.granted ? 'border-success/20 bg-success/10' : 'border-border bg-muted/30'}`}>
                     <div className="flex items-center justify-between mb-2">
                       <code className="text-sm font-mono font-semibold">{scope.name}</code>
                       {scope.granted ? (
-                        <CheckCircle className="w-4 h-4 text-green-600" />
+                        <CheckCircle className="w-4 h-4 text-success" />
                       ) : (
                         <XCircle className="w-4 h-4 text-muted-foreground" />
                       )}
                     </div>
                     <p className="text-sm text-muted-foreground">{scope.description}</p>
-                    <span className="inline-block mt-2 px-2 py-0.5 bg-white rounded text-xs text-muted-foreground capitalize">{scope.category}</span>
+                    <span className="inline-block mt-2 px-2 py-0.5 bg-card rounded text-xs text-muted-foreground capitalize">{scope.category}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Token State */}
-            <div className="bg-white rounded-2xl border border-border p-6 lg:col-span-2">
+            <div className="bg-card rounded-2xl border border-border p-6 lg:col-span-2">
               <h3 className="text-lg font-semibold mb-4">Token State</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard label="Access Token Age" value="2.5 hours" />
@@ -263,7 +263,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
         <TabsContent value="coverage" className="mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Coverage Stats */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Portfolio Coverage</h3>
               <div className="text-center py-6">
                 <div className="text-5xl font-bold text-primary mb-2">{mockCoverageMetrics.coveragePercent}%</div>
@@ -280,7 +280,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Freshness Distribution */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Freshness Distribution</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -293,13 +293,13 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">p99</span>
-                  <span className="text-sm font-semibold text-amber-600">{mockCoverageMetrics.freshnessDistribution.p99} hours</span>
+                  <span className="text-sm font-semibold text-warning">{mockCoverageMetrics.freshnessDistribution.p99} hours</span>
                 </div>
               </div>
             </div>
 
             {/* Missing Fields */}
-            <div className="bg-white rounded-2xl border border-border p-6 lg:col-span-2">
+            <div className="bg-card rounded-2xl border border-border p-6 lg:col-span-2">
               <h3 className="text-lg font-semibold mb-4">Missing Fields Breakdown</h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -316,7 +316,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                         <td className="py-3 font-mono text-sm">{field.field}</td>
                         <td className="py-3 text-sm">{field.missingCount.toLocaleString()}</td>
                         <td className="py-3">
-                          <span className={`text-sm font-semibold ${field.missingPercent > 1 ? 'text-amber-600' : 'text-green-600'}`}>
+                          <span className={`text-sm font-semibold ${field.missingPercent > 1 ? 'text-warning' : 'text-success'}`}>
                             {field.missingPercent}%
                           </span>
                         </td>
@@ -333,28 +333,28 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
         <TabsContent value="health" className="mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Uptime */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Uptime</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">24 Hours</span>
-                  <span className={`text-lg font-bold ${mockHealthMetrics.uptime24h > 99.9 ? 'text-green-600' : 'text-amber-600'}`}>
+                  <span className={`text-lg font-bold ${mockHealthMetrics.uptime24h > 99.9 ? 'text-success' : 'text-warning'}`}>
                     {mockHealthMetrics.uptime24h}%
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">7 Days</span>
-                  <span className="text-lg font-bold text-green-600">{mockHealthMetrics.uptime7d}%</span>
+                  <span className="text-lg font-bold text-success">{mockHealthMetrics.uptime7d}%</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">30 Days</span>
-                  <span className="text-lg font-bold text-green-600">{mockHealthMetrics.uptime30d}%</span>
+                  <span className="text-lg font-bold text-success">{mockHealthMetrics.uptime30d}%</span>
                 </div>
               </div>
             </div>
 
             {/* Latency */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Latency</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -367,13 +367,13 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">p99</span>
-                  <span className="text-lg font-bold text-amber-600">{mockHealthMetrics.p99Latency}ms</span>
+                  <span className="text-lg font-bold text-warning">{mockHealthMetrics.p99Latency}ms</span>
                 </div>
               </div>
             </div>
 
             {/* Errors by Type */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Errors by Type</h3>
               <div className="space-y-3">
                 {mockHealthMetrics.errorsByType.map((err, i) => (
@@ -389,7 +389,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Requests by Endpoint */}
-            <div className="bg-white rounded-2xl border border-border p-6 lg:col-span-3">
+            <div className="bg-card rounded-2xl border border-border p-6 lg:col-span-3">
               <h3 className="text-lg font-semibold mb-4">Requests by Endpoint</h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -406,7 +406,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                         <td className="py-3 font-mono text-sm">{ep.endpoint}</td>
                         <td className="py-3 text-sm">{ep.count.toLocaleString()}</td>
                         <td className="py-3">
-                          <span className={`text-sm font-semibold ${ep.errorRate > 0.05 ? 'text-destructive' : 'text-green-600'}`}>
+                          <span className={`text-sm font-semibold ${ep.errorRate > 0.05 ? 'text-destructive' : 'text-success'}`}>
                             {ep.errorRate}%
                           </span>
                         </td>
@@ -424,7 +424,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Webhook Config */}
             {mockWebhookConfigs.slice(0, 1).map(config => (
-              <div key={config.id} className="bg-white rounded-2xl border border-border p-6">
+              <div key={config.id} className="bg-card rounded-2xl border border-border p-6">
                 <h3 className="text-lg font-semibold mb-4">Webhook Configuration</h3>
                 <div className="space-y-4">
                   <InfoRow label="Endpoint URL" value={config.endpointUrl} copyable />
@@ -441,8 +441,8 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                   <div className="flex items-center gap-2">
                     {config.mtlsEnabled ? (
                       <>
-                        <Lock className="w-4 h-4 text-green-600" />
-                        <span className="text-sm text-green-700">mTLS Enabled</span>
+                        <Lock className="w-4 h-4 text-success" />
+                        <span className="text-sm text-success">mTLS Enabled</span>
                       </>
                     ) : (
                       <>
@@ -474,7 +474,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             ))}
 
             {/* Delivery Metrics */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Delivery Metrics</h3>
               <div className="grid grid-cols-2 gap-4">
                 <StatCard label="p50 Delivery" value={`${mockWebhookConfigs[0]?.deliveryMetrics.p50DeliveryTime || 0}ms`} />
@@ -485,7 +485,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Recent Events */}
-            <div className="bg-white rounded-2xl border border-border p-6 lg:col-span-2">
+            <div className="bg-card rounded-2xl border border-border p-6 lg:col-span-2">
               <h3 className="text-lg font-semibold mb-4">Recent Webhook Events</h3>
               <div className="space-y-3">
                 {mockWebhookEvents.slice(0, 5).map(evt => (
@@ -499,7 +499,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                     </div>
                     <div className="text-right">
                       {evt.deliveryTime && <span className="text-sm">{evt.deliveryTime}ms</span>}
-                      {evt.retryCount > 0 && <span className="ml-2 text-xs text-amber-600">Retry #{evt.retryCount}</span>}
+                      {evt.retryCount > 0 && <span className="ml-2 text-xs text-warning">Retry #{evt.retryCount}</span>}
                     </div>
                   </div>
                 ))}
@@ -512,7 +512,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
         <TabsContent value="ratelimits" className="mt-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Quota Usage */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Quota Usage</h3>
               <div className="space-y-6">
                 <div>
@@ -534,7 +534,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                   </div>
                   <div className="h-3 bg-muted rounded-full overflow-hidden">
                     <div 
-                      className={`h-full rounded-full ${mockRateLimits.burstUsed > mockRateLimits.burstLimit * 0.8 ? 'bg-amber-500' : 'bg-green-500'}`}
+                      className={`h-full rounded-full ${mockRateLimits.burstUsed > mockRateLimits.burstLimit * 0.8 ? 'bg-warning' : 'bg-success'}`}
                       style={{ width: `${(mockRateLimits.burstUsed / mockRateLimits.burstLimit) * 100}%` }}
                     />
                   </div>
@@ -543,7 +543,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Per-Endpoint Limits */}
-            <div className="bg-white rounded-2xl border border-border p-6">
+            <div className="bg-card rounded-2xl border border-border p-6">
               <h3 className="text-lg font-semibold mb-4">Per-Endpoint Limits</h3>
               <div className="space-y-4">
                 {mockRateLimits.perEndpointLimits.map((ep, i) => (
@@ -554,7 +554,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                     </div>
                     <div className="h-2 bg-muted rounded-full overflow-hidden">
                       <div 
-                        className={`h-full rounded-full ${(ep.used / ep.limit) > 0.8 ? 'bg-amber-500' : 'bg-primary'}`}
+                        className={`h-full rounded-full ${(ep.used / ep.limit) > 0.8 ? 'bg-warning' : 'bg-primary'}`}
                         style={{ width: `${(ep.used / ep.limit) * 100}%` }}
                       />
                     </div>
@@ -564,7 +564,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
             </div>
 
             {/* Limit Exceeded Incidents */}
-            <div className="bg-white rounded-2xl border border-border p-6 lg:col-span-2">
+            <div className="bg-card rounded-2xl border border-border p-6 lg:col-span-2">
               <h3 className="text-lg font-semibold mb-4">Limit Exceeded Incidents</h3>
               {mockRateLimits.limitExceededIncidents.length > 0 ? (
                 <div className="space-y-3">
@@ -590,7 +590,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
 
         {/* Tab 7: Change Log */}
         <TabsContent value="changelog" className="mt-6">
-          <div className="bg-white rounded-2xl border border-border p-6">
+          <div className="bg-card rounded-2xl border border-border p-6">
             <h3 className="text-lg font-semibold mb-4">Configuration Change Log</h3>
             <div className="space-y-4">
               {mockChangeLogs.map(log => (
@@ -608,7 +608,7 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                       <div className="text-xs font-mono bg-muted p-2 rounded">
                         <span className="text-destructive line-through">{log.oldValue}</span>
                         <span className="mx-2">→</span>
-                        <span className="text-green-600">{log.newValue}</span>
+                        <span className="text-success">{log.newValue}</span>
                       </div>
                     )}
                   </div>
@@ -625,11 +625,11 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
 // Helper Components
 const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const config: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
-    'connected': { bg: 'bg-green-100', text: 'text-green-700', icon: CheckCircle },
-    'needs-reauth': { bg: 'bg-amber-100', text: 'text-amber-700', icon: RefreshCw },
-    'degraded': { bg: 'bg-orange-100', text: 'text-orange-700', icon: AlertTriangle },
-    'down': { bg: 'bg-red-100', text: 'text-red-700', icon: XCircle },
-    'pending': { bg: 'bg-gray-100', text: 'text-gray-700', icon: Clock },
+    'connected': { bg: 'bg-success/10', text: 'text-success', icon: CheckCircle },
+    'needs-reauth': { bg: 'bg-warning/10', text: 'text-warning', icon: RefreshCw },
+    'degraded': { bg: 'bg-warning/10', text: 'text-warning', icon: AlertTriangle },
+    'down': { bg: 'bg-destructive/10', text: 'text-destructive', icon: XCircle },
+    'pending': { bg: 'bg-muted', text: 'text-muted-foreground', icon: Clock },
   };
   const { bg, text, icon: Icon } = config[status] || config['pending'];
   return (
@@ -643,7 +643,7 @@ const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
 const ActionButton: React.FC<{ icon: React.ElementType; label: string; variant?: 'default' | 'warning' | 'danger' }> = ({ icon: Icon, label, variant = 'default' }) => {
   const variantClasses = {
     default: 'bg-muted hover:bg-muted/80 text-foreground',
-    warning: 'bg-amber-100 hover:bg-amber-200 text-amber-700',
+    warning: 'bg-warning/10 hover:bg-warning/20 text-warning',
     danger: 'bg-destructive/10 hover:bg-destructive/20 text-destructive',
   };
   return (
@@ -676,7 +676,7 @@ const InfoRow: React.FC<{ label: string; value: string; copyable?: boolean; badg
 );
 
 const StatCard: React.FC<{ label: string; value: string; variant?: 'default' | 'success' | 'danger' }> = ({ label, value, variant = 'default' }) => {
-  const valueColor = variant === 'success' ? 'text-green-600' : variant === 'danger' ? 'text-destructive' : 'text-foreground';
+  const valueColor = variant === 'success' ? 'text-success' : variant === 'danger' ? 'text-destructive' : 'text-foreground';
   return (
     <div className="bg-muted/50 rounded-xl p-4">
       <span className="text-xs text-muted-foreground block mb-1">{label}</span>
@@ -686,7 +686,7 @@ const StatCard: React.FC<{ label: string; value: string; variant?: 'default' | '
 };
 
 const StatusDot: React.FC<{ status: string }> = ({ status }) => {
-  const color = status === 'delivered' ? 'bg-green-500' : status === 'failed' ? 'bg-red-500' : 'bg-amber-500';
+  const color = status === 'delivered' ? 'bg-success' : status === 'failed' ? 'bg-destructive' : 'bg-warning';
   return <div className={`w-2 h-2 rounded-full ${color}`} />;
 };
 

@@ -67,8 +67,8 @@ export const DataFreshnessCard: React.FC<DataFreshnessCardProps> = ({
               fill="none"
               strokeLinecap="round"
               className={`${
-                freshnessPercentage >= 90 ? "text-emerald-500" :
-                freshnessPercentage >= 70 ? "text-amber-500" : "text-red-500"
+                freshnessPercentage >= 90 ? "text-success" :
+                freshnessPercentage >= 70 ? "text-warning" : "text-destructive"
               }`}
               initial={{ strokeDasharray: "0 251.2" }}
               animate={{ strokeDasharray: `${freshnessPercentage * 2.512} 251.2` }}
@@ -93,24 +93,24 @@ export const DataFreshnessCard: React.FC<DataFreshnessCardProps> = ({
 
       {/* Status Breakdown */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl text-center">
-          <CheckCircle2 className="h-5 w-5 text-emerald-500 mx-auto mb-1" />
+        <div className="p-3 bg-success/10 rounded-xl text-center">
+          <CheckCircle2 className="h-5 w-5 text-success mx-auto mb-1" />
           <span className="text-lg font-semibold text-foreground block">
             {data.freshCount.toLocaleString()}
           </span>
           <span className="text-xs text-muted-foreground">Fresh (&lt;24h)</span>
         </div>
 
-        <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-xl text-center">
-          <Clock className="h-5 w-5 text-amber-500 mx-auto mb-1" />
+        <div className="p-3 bg-warning/10 rounded-xl text-center">
+          <Clock className="h-5 w-5 text-warning mx-auto mb-1" />
           <span className="text-lg font-semibold text-foreground block">
             {data.staleCount.toLocaleString()}
           </span>
           <span className="text-xs text-muted-foreground">Stale (1-7d)</span>
         </div>
 
-        <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl text-center">
-          <AlertCircle className="h-5 w-5 text-red-500 mx-auto mb-1" />
+        <div className="p-3 bg-destructive/10 rounded-xl text-center">
+          <AlertCircle className="h-5 w-5 text-destructive mx-auto mb-1" />
           <span className="text-lg font-semibold text-foreground block">
             {data.criticalCount.toLocaleString()}
           </span>

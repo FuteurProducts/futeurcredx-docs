@@ -124,7 +124,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-white rounded-2xl p-6 shadow-lg border border-slate-200 ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -133,14 +133,14 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
             <Webhook className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-slate-900">Webhooks</h3>
-            <p className="text-sm text-slate-500">Configure event notifications</p>
+            <h3 className="text-lg font-semibold text-foreground">Webhooks</h3>
+            <p className="text-sm text-muted-foreground">Configure event notifications</p>
           </div>
         </div>
         
         <button
           onClick={() => setIsAdding(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-foreground text-background rounded-lg hover:bg-foreground/90 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Endpoint
@@ -152,13 +152,13 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
         <motion.div 
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
-          className="mb-6 p-4 bg-slate-50 rounded-xl border border-slate-200"
+          className="mb-6 p-4 bg-accent rounded-xl border border-border"
         >
-          <h4 className="font-semibold text-slate-800 mb-4">Add New Webhook</h4>
+          <h4 className="font-semibold text-foreground mb-4">Add New Webhook</h4>
           
           {/* URL input */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label className="block text-sm font-medium text-foreground mb-1">
               Endpoint URL
             </label>
             <input
@@ -166,13 +166,13 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
               placeholder="https://your-server.com/webhook"
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-ring outline-none"
             />
           </div>
           
           {/* Event selection */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-foreground mb-2">
               Events to Subscribe
             </label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
@@ -185,8 +185,8 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
                     onClick={() => toggleEvent(event.id)}
                     className={`p-3 rounded-lg border text-left transition-all ${
                       isSelected 
-                        ? 'border-blue-500 bg-blue-50' 
-                        : 'border-slate-200 hover:border-slate-300'
+                        ? 'border-ring bg-info/10'
+                        : 'border-border hover:border-border/80'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -194,9 +194,9 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
                         className="w-2 h-2 rounded-full"
                         style={{ backgroundColor: catConfig.color }}
                       />
-                      <span className="text-sm font-medium text-slate-800">{event.name}</span>
+                      <span className="text-sm font-medium text-foreground">{event.name}</span>
                     </div>
-                    <p className="text-xs text-slate-500">{event.description}</p>
+                    <p className="text-xs text-muted-foreground">{event.description}</p>
                   </button>
                 );
               })}
@@ -207,14 +207,14 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
           <div className="flex gap-2 justify-end">
             <button
               onClick={() => { setIsAdding(false); setNewUrl(''); setSelectedEvents(new Set()); }}
-              className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleAdd}
               disabled={!newUrl || selectedEvents.size === 0}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Add Webhook
             </button>
@@ -225,7 +225,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
       {/* Endpoints list */}
       <div className="space-y-4">
         {endpoints.length === 0 ? (
-          <div className="text-center py-12 text-slate-500">
+          <div className="text-center py-12 text-muted-foreground">
             <Webhook className="w-12 h-12 mx-auto mb-3 opacity-30" />
             <p className="font-medium">No webhooks configured</p>
             <p className="text-sm">Add an endpoint to receive event notifications</p>
@@ -238,26 +238,26 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               className={`p-4 rounded-xl border ${
-                endpoint.isActive ? 'border-slate-200' : 'border-slate-200 bg-slate-50 opacity-75'
+                endpoint.isActive ? 'border-border' : 'border-border bg-accent opacity-75'
               }`}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <code className="text-sm font-mono text-slate-800 bg-slate-100 px-2 py-0.5 rounded">
+                    <code className="text-sm font-mono text-foreground bg-muted px-2 py-0.5 rounded">
                       {endpoint.url}
                     </code>
                     {endpoint.isActive ? (
-                      <span className="flex items-center gap-1 text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                      <span className="flex items-center gap-1 text-xs text-success bg-success/10 px-2 py-0.5 rounded-full">
                         <CheckCircle className="w-3 h-3" /> Active
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+                      <span className="flex items-center gap-1 text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
                         <XCircle className="w-3 h-3" /> Inactive
                       </span>
                     )}
                     {endpoint.failureCount > 0 && (
-                      <span className="flex items-center gap-1 text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                      <span className="flex items-center gap-1 text-xs text-warning bg-warning/10 px-2 py-0.5 rounded-full">
                         <AlertTriangle className="w-3 h-3" /> {endpoint.failureCount} failures
                       </span>
                     )}
@@ -286,58 +286,58 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
                   <button
                     onClick={() => handleTest(endpoint.id)}
                     disabled={testingEndpoint === endpoint.id}
-                    className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                     title="Send test event"
                   >
                     {testingEndpoint === endpoint.id ? (
-                      <RefreshCw className="w-4 h-4 text-blue-500 animate-spin" />
+                      <RefreshCw className="w-4 h-4 text-info animate-spin" />
                     ) : (
-                      <Send className="w-4 h-4 text-slate-500" />
+                      <Send className="w-4 h-4 text-muted-foreground" />
                     )}
                   </button>
                   <button
                     onClick={() => onToggle?.(endpoint.id, !endpoint.isActive)}
-                    className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors"
                     title={endpoint.isActive ? 'Disable' : 'Enable'}
                   >
-                    <Settings className="w-4 h-4 text-slate-500" />
+                    <Settings className="w-4 h-4 text-muted-foreground" />
                   </button>
                   <button
                     onClick={() => onDelete?.(endpoint.id)}
-                    className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-2 hover:bg-destructive/10 rounded-lg transition-colors"
                     title="Delete"
                   >
-                    <Trash2 className="w-4 h-4 text-red-500" />
+                    <Trash2 className="w-4 h-4 text-destructive" />
                   </button>
                 </div>
               </div>
               
               {/* Secret key */}
-              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100">
-                <span className="text-xs text-slate-500">Secret:</span>
-                <code className="text-xs font-mono text-slate-600 bg-slate-100 px-2 py-1 rounded flex-1">
+              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-border">
+                <span className="text-xs text-muted-foreground">Secret:</span>
+                <code className="text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded flex-1">
                   {visibleSecrets.has(endpoint.id) ? endpoint.secretKey : '••••••••••••••••'}
                 </code>
                 <button
                   onClick={() => toggleSecret(endpoint.id)}
-                  className="p-1 hover:bg-slate-100 rounded"
+                  className="p-1 hover:bg-muted rounded"
                 >
                   {visibleSecrets.has(endpoint.id) ? (
-                    <EyeOff className="w-4 h-4 text-slate-400" />
+                    <EyeOff className="w-4 h-4 text-muted-foreground" />
                   ) : (
-                    <Eye className="w-4 h-4 text-slate-400" />
+                    <Eye className="w-4 h-4 text-muted-foreground" />
                   )}
                 </button>
                 <button
                   onClick={() => copySecret(endpoint.secretKey)}
-                  className="p-1 hover:bg-slate-100 rounded"
+                  className="p-1 hover:bg-muted rounded"
                 >
-                  <Copy className="w-4 h-4 text-slate-400" />
+                  <Copy className="w-4 h-4 text-muted-foreground" />
                 </button>
               </div>
               
               {/* Metadata */}
-              <div className="flex items-center gap-4 mt-2 text-xs text-slate-400">
+              <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                 <span>Created: {endpoint.createdAt}</span>
                 {endpoint.lastTriggered && (
                   <span className="flex items-center gap-1">

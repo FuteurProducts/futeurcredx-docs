@@ -70,8 +70,8 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
 
         <div className="bg-card rounded-lg border border-border p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <TrendingUp className="h-5 w-5 text-green-600" />
+            <div className="p-2 bg-success/10 rounded-lg">
+              <TrendingUp className="h-5 w-5 text-success" />
             </div>
             <span className="text-sm text-muted-foreground">Monthly Usage</span>
           </div>
@@ -85,8 +85,8 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
 
         <div className="bg-card rounded-lg border border-border p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-amber-100 rounded-lg">
-              <Calendar className="h-5 w-5 text-amber-600" />
+            <div className="p-2 bg-warning/10 rounded-lg">
+              <Calendar className="h-5 w-5 text-warning" />
             </div>
             <span className="text-sm text-muted-foreground">Next Invoice</span>
           </div>
@@ -109,7 +109,7 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
             animate={{ width: `${usagePercentage}%` }}
             transition={{ duration: 0.5 }}
             className={`h-full rounded-full ${
-              usagePercentage > 80 ? 'bg-amber-500' : 'bg-primary'
+              usagePercentage > 80 ? 'bg-warning' : 'bg-primary'
             }`}
           />
         </div>
@@ -129,19 +129,19 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
                 dataKey="day"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280' }}
+                tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
               />
               <YAxis
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fill: '#6b7280' }}
+                tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
                 tickFormatter={(value) => `${(value / 1000).toFixed(0)}K`}
               />
               <Tooltip
                 formatter={(value) => [`${(Number(value) / 1000).toFixed(0)}K calls`, 'API Calls']}
                 contentStyle={{
-                  backgroundColor: 'white',
-                  border: '1px solid #e5e7eb',
+                  backgroundColor: 'hsl(var(--card))',
+                  border: '1px solid hsl(var(--border))',
                   borderRadius: '8px',
                   fontSize: '12px',
                 }}

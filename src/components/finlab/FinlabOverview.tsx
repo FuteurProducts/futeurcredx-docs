@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
+import { useEnvironment } from "@/contexts/EnvironmentContext";
 
 // Import enterprise components for bank staff monitoring SMB customers
 import {
@@ -13,88 +15,92 @@ import {
   TopBusinessesTable,
 } from "@/components/enterprise";
 
-// Mock data for enterprise dashboard
+import {
+  PILOT_METRICS,
+  DEMO_BUSINESSES,
+  RECENT_ACTIVITIES,
+  WEBHOOK_EVENTS,
+  WEBHOOK_STATS,
+  SYSTEM_SERVICES,
+} from "@/data/demoData";
+
+// Derived data from centralized pilot metrics
 const connectedBusinessesData = {
-  totalBusinesses: 2847392,
-  activeConnections: 2712458,
-  newThisMonth: 23847,
+  totalBusinesses: PILOT_METRICS.totalBusinesses,
+  activeConnections: PILOT_METRICS.scoredBusinesses,
+  newThisMonth: 2840,
   monthlyGrowth: 8.4,
-  disconnectedCount: 12847,
-  pendingReconnect: 3291,
+  disconnectedCount: PILOT_METRICS.totalBusinesses - PILOT_METRICS.scoredBusinesses,
+  pendingReconnect: 1250,
 };
 
 const apiUsageData = {
-  totalRequests: 847293847,
+  totalRequests: PILOT_METRICS.totalApiCalls,
   requestsChange: 12.3,
-  successRate: 99.87,
-  avgLatency: 142,
-  errorCount: 1847,
+  successRate: PILOT_METRICS.successRate,
+  avgLatency: PILOT_METRICS.avgLatencyMs,
+  errorCount: PILOT_METRICS.errorCount,
   rateLimitHits: 23,
   peakHour: "2:00 PM EST",
-  dailyAvg: 28243128,
+  dailyAvg: PILOT_METRICS.dailyAvgCalls,
 };
 
 const portfolioHealthData = {
-  totalAssessed: 2712458,
+  totalAssessed: PILOT_METRICS.scoredBusinesses,
   segments: [
-    { name: "Low Risk", count: 1847293, percentage: 68, color: "#10b981" },
-    { name: "Medium Risk", count: 542371, percentage: 20, color: "#f59e0b" },
-    { name: "High Risk", count: 271246, percentage: 10, color: "#f97316" },
-    { name: "Critical", count: 51548, percentage: 2, color: "#ef4444" },
+    { name: "Low Risk", count: 25976, percentage: 68, color: "#10b981" },
+    { name: "Medium Risk", count: 7640, percentage: 20, color: "#f59e0b" },
+    { name: "High Risk", count: 3820, percentage: 10, color: "#f97316" },
+    { name: "Critical", count: 764, percentage: 2, color: "#ef4444" },
   ],
-  averageScore: 74,
+  averageScore: PILOT_METRICS.avgLumiqScore,
   lastUpdated: "2 min ago",
 };
 
 const dataFreshnessData = {
-  freshCount: 2441212,
-  staleCount: 203847,
-  criticalCount: 67399,
-  totalAccounts: 2712458,
+  freshCount: 34380,
+  staleCount: 2674,
+  criticalCount: 1146,
+  totalAccounts: PILOT_METRICS.scoredBusinesses,
   avgRefreshTime: "4.2 hours",
   lastBatchRefresh: "12 min ago",
   refreshRate: 94.7,
 };
 
-const recentActivities = [
-  { id: "1", type: "connection" as const, title: "New business connected", description: "OAuth flow completed successfully", businessName: "TechStart Inc.", timestamp: "2m ago" },
-  { id: "2", type: "refresh" as const, title: "Batch data refresh", description: "12,847 accounts updated", timestamp: "5m ago" },
-  { id: "3", type: "alert" as const, title: "High risk detected", description: "Business risk score dropped below threshold", businessName: "Retail Solutions LLC", timestamp: "12m ago" },
-  { id: "4", type: "success" as const, title: "Webhook delivered", description: "risk.score.updated event sent", timestamp: "15m ago" },
-  { id: "5", type: "disconnection" as const, title: "Connection expired", description: "Token refresh failed - reauth required", businessName: "Metro Services", timestamp: "23m ago" },
-];
-
-const webhookEvents = [
-  { id: "1", eventType: "business.connected", status: "delivered" as const, endpoint: "https://api.bank.com/webhooks", timestamp: "2m ago", responseTime: 89 },
-  { id: "2", eventType: "risk.score.updated", status: "delivered" as const, endpoint: "https://api.bank.com/webhooks", timestamp: "5m ago", responseTime: 124 },
-  { id: "3", eventType: "data.refreshed", status: "failed" as const, endpoint: "https://api.bank.com/webhooks", timestamp: "8m ago", retryCount: 2 },
-  { id: "4", eventType: "account.disconnected", status: "retrying" as const, endpoint: "https://api.bank.com/webhooks", timestamp: "12m ago", retryCount: 1 },
-];
-
-const webhookStats = {
-  totalSent: 847293,
-  deliveryRate: 99.2,
-  avgResponseTime: 112,
-  failedCount: 847,
-};
-
-const systemServices = [
-  { name: "Core API", status: "operational" as const, latency: 45, uptime: 99.99, lastCheck: "1m ago" },
-  { name: "Data Aggregation", status: "operational" as const, latency: 234, uptime: 99.95, lastCheck: "1m ago" },
-  { name: "Risk Engine", status: "operational" as const, latency: 89, uptime: 99.97, lastCheck: "1m ago" },
-  { name: "Webhook Delivery", status: "degraded" as const, latency: 312, uptime: 98.7, lastCheck: "1m ago" },
-  { name: "Authentication", status: "operational" as const, latency: 28, uptime: 99.99, lastCheck: "1m ago" },
-];
-
-const topBusinesses = [
-  { id: "1", name: "Acme Corporation", industry: "Manufacturing", lumiqScore: 87, scoreTrend: "up" as const, trendValue: 3, apiCalls: 284729, lastActivity: "2m ago", riskLevel: "low" as const },
-  { id: "2", name: "TechStart Inc.", industry: "Technology", lumiqScore: 92, scoreTrend: "up" as const, trendValue: 5, apiCalls: 198472, lastActivity: "5m ago", riskLevel: "low" as const },
-  { id: "3", name: "Retail Solutions LLC", industry: "Retail", lumiqScore: 54, scoreTrend: "down" as const, trendValue: 8, apiCalls: 156847, lastActivity: "8m ago", riskLevel: "high" as const },
-  { id: "4", name: "Metro Services", industry: "Services", lumiqScore: 71, scoreTrend: "stable" as const, trendValue: 0, apiCalls: 142938, lastActivity: "12m ago", riskLevel: "medium" as const },
-  { id: "5", name: "HealthPlus Medical", industry: "Healthcare", lumiqScore: 83, scoreTrend: "up" as const, trendValue: 2, apiCalls: 128374, lastActivity: "15m ago", riskLevel: "low" as const },
-];
+const topBusinesses = DEMO_BUSINESSES.slice(0, 5).map((biz, idx) => ({
+  id: biz.id,
+  name: biz.name,
+  industry: biz.industry,
+  lumiqScore: biz.lumiqScore,
+  scoreTrend: biz.scoreTrend,
+  trendValue: biz.trendValue,
+  apiCalls: [4820, 3650, 2940, 2180, 1870][idx],
+  lastActivity: ["2m ago", "5m ago", "12m ago", "18m ago", "25m ago"][idx],
+  riskLevel: biz.riskTier,
+}));
 
 export const FinlabOverview: React.FC = () => {
+  const { toast } = useToast();
+  const { currentEnvironment } = useEnvironment();
+  const [, setIsRefreshing] = useState(false);
+
+  const handleRefreshAll = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+      toast({ title: "Data refreshed", description: "All scores and bureau data have been refreshed." });
+    }, 1500);
+  };
+
+  const handleViewBusiness = (id: string) => {
+    const biz = DEMO_BUSINESSES.find(b => b.id === id);
+    toast({ title: "Business selected", description: `Viewing ${biz?.name || id} — navigate to Customers tab for full details.` });
+  };
+
+  const handleViewAllBusinesses = () => {
+    toast({ title: "View all businesses", description: "Navigate to the Customers tab for the full portfolio list." });
+  };
+
   return (
     <div className="space-y-6 md:space-y-8 w-full overflow-hidden">
       {/* Welcome Header */}
@@ -103,11 +109,19 @@ export const FinlabOverview: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <h1 className="text-xl md:text-2xl font-semibold text-foreground">
-          SMB Portfolio Overview
-        </h1>
-        <p className="text-muted-foreground mt-1 text-sm md:text-base">
-          Monitor your connected businesses and API performance via LumiqAI
+        <div className="flex items-center gap-3">
+          <h1 className="text-display">
+            SMB Portfolio Overview
+          </h1>
+          {currentEnvironment === 'sandbox' && (
+            <span className="px-2 py-0.5 text-overline rounded bg-warning/10 text-warning">SANDBOX</span>
+          )}
+          {currentEnvironment === 'production' && (
+            <span className="px-2 py-0.5 text-overline rounded bg-success/10 text-success">LIVE</span>
+          )}
+        </div>
+        <p className="text-body text-muted-foreground mt-1">
+          Monitor your connected businesses and API performance via LUMIQ AI
         </p>
       </motion.div>
 
@@ -160,7 +174,7 @@ export const FinlabOverview: React.FC = () => {
         >
           <DataFreshnessCard
             data={dataFreshnessData}
-            onRefreshAll={() => console.log("Refresh all")}
+            onRefreshAll={handleRefreshAll}
             className="shadow-lg bg-card rounded-2xl border border-border"
           />
         </motion.div>
@@ -172,8 +186,8 @@ export const FinlabOverview: React.FC = () => {
           className="min-w-0"
         >
           <RecentActivityFeed
-            activities={recentActivities}
-            onViewAll={() => console.log("View all activity")}
+            activities={RECENT_ACTIVITIES}
+            onViewAll={() => toast({ title: "Activity log", description: "Navigate to Audit Logs in Settings for the full activity stream." })}
             className="shadow-lg bg-card rounded-2xl border border-border"
           />
         </motion.div>
@@ -188,9 +202,9 @@ export const FinlabOverview: React.FC = () => {
           className="min-w-0"
         >
           <WebhookEventsCard
-            events={webhookEvents}
-            stats={webhookStats}
-            onViewLogs={() => console.log("View webhook logs")}
+            events={WEBHOOK_EVENTS}
+            stats={WEBHOOK_STATS}
+            onViewLogs={() => toast({ title: "Webhook logs", description: "Navigate to Partner Portal → Webhooks for full delivery logs." })}
             className="shadow-lg bg-card rounded-2xl border border-border"
           />
         </motion.div>
@@ -202,9 +216,11 @@ export const FinlabOverview: React.FC = () => {
           className="min-w-0"
         >
           <IntegrationHealthCard
-            services={systemServices}
-            overallUptime={99.84}
-            onRefresh={() => console.log("Refresh status")}
+            services={SYSTEM_SERVICES}
+            overallUptime={99.96}
+            onRefresh={() => {
+              toast({ title: "Status refreshed", description: "All service health checks updated." });
+            }}
             className="shadow-lg bg-card rounded-2xl border border-border"
           />
         </motion.div>
@@ -219,8 +235,8 @@ export const FinlabOverview: React.FC = () => {
       >
         <TopBusinessesTable
           businesses={topBusinesses}
-          onViewBusiness={(id) => console.log("View business", id)}
-          onViewAll={() => console.log("View all businesses")}
+          onViewBusiness={handleViewBusiness}
+          onViewAll={handleViewAllBusinesses}
           className="shadow-lg bg-card rounded-2xl border border-border"
         />
       </motion.div>

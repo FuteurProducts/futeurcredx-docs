@@ -50,8 +50,8 @@ const getSourceTypeIcon = (type: string) => {
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case 'connected': return { bg: 'bg-emerald-500', text: 'text-emerald-700', bgLight: 'bg-emerald-50' };
-    case 'degraded': return { bg: 'bg-amber-500', text: 'text-amber-700', bgLight: 'bg-amber-50' };
+    case 'connected': return { bg: 'bg-success', text: 'text-success', bgLight: 'bg-success/10' };
+    case 'degraded': return { bg: 'bg-warning', text: 'text-warning', bgLight: 'bg-warning/10' };
     case 'disconnected': return { bg: 'bg-rose-500', text: 'text-rose-700', bgLight: 'bg-rose-50' };
     default: return { bg: 'bg-muted-foreground', text: 'text-muted-foreground', bgLight: 'bg-muted' };
   }
@@ -103,19 +103,19 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
         {/* Source Status Summary */}
         <div className="flex items-center gap-4 p-4 bg-muted/30 rounded-xl">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-emerald-500" />
+            <div className="w-3 h-3 rounded-full bg-success" />
             <span className="text-sm font-medium">{connectedCount} Connected</span>
           </div>
           {degradedCount > 0 && (
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-amber-500" />
+              <div className="w-3 h-3 rounded-full bg-warning" />
               <span className="text-sm font-medium">{degradedCount} Degraded</span>
             </div>
           )}
           <div className="flex-1" />
           <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
-            reconciliationStatus === 'ok' ? 'bg-emerald-50 text-emerald-700' :
-            reconciliationStatus === 'warning' ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-700'
+            reconciliationStatus === 'ok' ? 'bg-success/10 text-success' :
+            reconciliationStatus === 'warning' ? 'bg-warning/10 text-warning' : 'bg-rose-50 text-rose-700'
           }`}>
             {reconciliationStatus === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
             <span className="text-xs font-medium">Reconciliation {reconciliationStatus.toUpperCase()}</span>
@@ -156,7 +156,7 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
                     <div className="text-xs text-muted-foreground">Median Age</div>
                   </div>
                   <div className="text-center">
-                    <div className={`text-sm font-semibold ${source.errorRate > 1 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                    <div className={`text-sm font-semibold ${source.errorRate > 1 ? 'text-rose-600' : 'text-success'}`}>
                       {source.errorRate}%
                     </div>
                     <div className="text-xs text-muted-foreground">Error Rate</div>
@@ -181,7 +181,7 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
               >
                 <div className={`w-2 h-8 rounded-full ${
                   field.impactLevel === 'high' ? 'bg-rose-500' :
-                  field.impactLevel === 'medium' ? 'bg-amber-500' : 'bg-blue-500'
+                  field.impactLevel === 'medium' ? 'bg-warning' : 'bg-info'
                 }`} />
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-sm text-foreground truncate">{field.field}</div>

@@ -82,7 +82,7 @@ export const RecentActivityCard = ({
               <div className="mr-auto pr-3 text-base font-semibold text-foreground truncate">
                 {item.title}
               </div>
-              <div className={`font-semibold ${item.price.startsWith('+') ? 'text-emerald-600' : 'text-foreground'}`}>
+              <div className={`font-semibold ${item.price.startsWith('+') ? 'text-success' : 'text-foreground'}`}>
                 {item.price}
               </div>
             </div>

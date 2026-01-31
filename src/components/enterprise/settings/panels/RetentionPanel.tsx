@@ -74,14 +74,14 @@ export const RetentionPanel: React.FC = () => {
       </div>
 
       {/* Auto-Delete Toggle */}
-      <Card className={autoDelete ? 'border-chart-2/30 bg-chart-2/5' : 'border-amber-500/30 bg-amber-500/5'}>
+      <Card className={autoDelete ? 'border-chart-2/30 bg-chart-2/5' : 'border-warning/30 bg-warning/5'}>
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               {autoDelete ? (
                 <Trash2 className="h-8 w-8 text-chart-2" />
               ) : (
-                <AlertTriangle className="h-8 w-8 text-amber-500" />
+                <AlertTriangle className="h-8 w-8 text-warning" />
               )}
               <div>
                 <h3 className="font-medium">
@@ -133,7 +133,7 @@ export const RetentionPanel: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <h3 className="font-medium">{policy.dataType}</h3>
                         {policy.complianceRequired && (
-                          <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">
+                          <Badge className="bg-warning/10 text-warning border-warning/20">
                             <Shield className="h-3 w-3 mr-1" />
                             Regulated
                           </Badge>

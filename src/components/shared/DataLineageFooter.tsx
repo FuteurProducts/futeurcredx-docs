@@ -41,9 +41,9 @@ export function DataLineageFooter({
     const date = new Date(timestamp);
     const diffHours = (Date.now() - date.getTime()) / 3600000;
 
-    if (diffHours < 1) return 'text-green-600';
+    if (diffHours < 1) return 'text-success';
     if (diffHours < 24) return 'text-yellow-600';
-    return 'text-red-600';
+    return 'text-destructive';
   };
 
   return (

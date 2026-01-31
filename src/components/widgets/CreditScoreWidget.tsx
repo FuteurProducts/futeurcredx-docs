@@ -99,13 +99,13 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className={`bg-white rounded-xl p-4 shadow-sm border border-slate-200 ${className}`}
+        className={`bg-card rounded-xl p-4 shadow-sm border border-border ${className}`}
       >
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-slate-500 font-medium">Credit Score</p>
+            <p className="text-xs text-muted-foreground font-medium">Credit Score</p>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold text-slate-900">{animatedScore}</span>
+              <span className="text-2xl font-bold text-foreground">{animatedScore}</span>
               <span 
                 className="text-sm font-semibold px-1.5 py-0.5 rounded"
                 style={{ backgroundColor: `${getGradeColor(data.grade)}20`, color: getGradeColor(data.grade) }}
@@ -115,7 +115,7 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
             </div>
           </div>
           {showTrend && (
-            <div className={`flex items-center gap-1 text-sm ${data.trend === 'up' ? 'text-green-600' : data.trend === 'down' ? 'text-red-600' : 'text-slate-500'}`}>
+            <div className={`flex items-center gap-1 text-sm ${data.trend === 'up' ? 'text-success' : data.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'}`}>
               {data.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : data.trend === 'down' ? <TrendingDown className="w-4 h-4" /> : null}
               <span>{data.trend === 'up' ? '+' : data.trend === 'down' ? '-' : ''}{data.trendValue}</span>
             </div>
@@ -130,13 +130,13 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`bg-white rounded-2xl p-5 shadow-sm border border-slate-200 ${className}`}
+        className={`bg-card rounded-2xl p-5 shadow-sm border border-border ${className}`}
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-slate-700">Credit Intelligence</h3>
+          <h3 className="text-sm font-semibold text-muted-foreground">Credit Intelligence</h3>
           {onRefresh && (
-            <button onClick={onRefresh} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
-              <RefreshCw className="w-4 h-4 text-slate-500" />
+            <button onClick={onRefresh} className="p-1.5 hover:bg-accent rounded-lg transition-colors">
+              <RefreshCw className="w-4 h-4 text-muted-foreground" />
             </button>
           )}
         </div>
@@ -144,7 +144,7 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
         <div className="flex items-center gap-6">
           {/* Score Display */}
           <div className="text-center">
-            <div className="text-4xl font-bold text-slate-900">{animatedScore}</div>
+            <div className="text-4xl font-bold text-foreground">{animatedScore}</div>
             <div 
               className="text-sm font-semibold mt-1 px-2 py-0.5 rounded-full inline-block"
               style={{ backgroundColor: `${category.color}15`, color: category.color }}
@@ -156,13 +156,13 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
           {/* Metrics */}
           <div className="flex-1 space-y-2">
             <div className="flex justify-between items-center text-sm">
-              <span className="text-slate-500">Grade</span>
+              <span className="text-muted-foreground">Grade</span>
               <span className="font-semibold" style={{ color: getGradeColor(data.grade) }}>{data.grade}</span>
             </div>
             {showTrend && (
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-500">Trend</span>
-                <span className={`font-semibold flex items-center gap-1 ${data.trend === 'up' ? 'text-green-600' : data.trend === 'down' ? 'text-red-600' : 'text-slate-600'}`}>
+                <span className="text-muted-foreground">Trend</span>
+                <span className={`font-semibold flex items-center gap-1 ${data.trend === 'up' ? 'text-success' : data.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'}`}>
                   {data.trend === 'up' ? <TrendingUp className="w-3 h-3" /> : data.trend === 'down' ? <TrendingDown className="w-3 h-3" /> : null}
                   {data.trend === 'up' ? '+' : data.trend === 'down' ? '-' : ''}{data.trendValue} pts
                 </span>
@@ -170,14 +170,14 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
             )}
             {showProducts && data.eligibleProducts !== undefined && (
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-500">Products</span>
-                <span className="font-semibold text-slate-900">{data.eligibleProducts} of {data.totalProducts || 5}</span>
+                <span className="text-muted-foreground">Products</span>
+                <span className="font-semibold text-foreground">{data.eligibleProducts} of {data.totalProducts || 5}</span>
               </div>
             )}
           </div>
         </div>
         
-        <p className="text-xs text-slate-400 mt-4">Updated: {data.lastUpdated}</p>
+        <p className="text-xs text-muted-foreground mt-4">Updated: {data.lastUpdated}</p>
       </motion.div>
     );
   }
@@ -187,22 +187,22 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-white rounded-2xl p-6 shadow-lg border border-slate-200 ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold text-slate-900">Credit Intelligence</h3>
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-          <span className="text-xs text-green-600 font-medium">Live</span>
+          <h3 className="text-lg font-semibold text-foreground">Credit Intelligence</h3>
+          <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
+          <span className="text-xs text-success font-medium">Live</span>
         </div>
         <div className="flex items-center gap-2">
-          <button className="p-2 hover:bg-slate-100 rounded-lg transition-colors group">
-            <Info className="w-4 h-4 text-slate-400 group-hover:text-slate-600" />
+          <button className="p-2 hover:bg-accent rounded-lg transition-colors group">
+            <Info className="w-4 h-4 text-muted-foreground group-hover:text-muted-foreground" />
           </button>
           {onRefresh && (
-            <button onClick={onRefresh} className="p-2 hover:bg-slate-100 rounded-lg transition-colors">
-              <RefreshCw className="w-4 h-4 text-slate-500" />
+            <button onClick={onRefresh} className="p-2 hover:bg-accent rounded-lg transition-colors">
+              <RefreshCw className="w-4 h-4 text-muted-foreground" />
             </button>
           )}
         </div>
@@ -237,8 +237,8 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
         
         {/* Score in center */}
         <div className="absolute left-1/2 bottom-4 -translate-x-1/2 text-center">
-          <div className="text-5xl font-bold text-slate-900">{animatedScore}</div>
-          <div className="text-sm text-slate-500">of {maxScore}</div>
+          <div className="text-5xl font-bold text-foreground">{animatedScore}</div>
+          <div className="text-sm text-muted-foreground">of {maxScore}</div>
         </div>
       </div>
 
@@ -254,15 +254,15 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="bg-slate-50 rounded-xl p-4">
-          <p className="text-xs text-slate-500 font-medium mb-1">Category</p>
+        <div className="bg-muted rounded-xl p-4">
+          <p className="text-xs text-muted-foreground font-medium mb-1">Category</p>
           <p className="text-lg font-semibold" style={{ color: category.color }}>{category.label}</p>
         </div>
         
         {showTrend && (
-          <div className="bg-slate-50 rounded-xl p-4">
-            <p className="text-xs text-slate-500 font-medium mb-1">Trend (30d)</p>
-            <div className={`flex items-center gap-1 text-lg font-semibold ${data.trend === 'up' ? 'text-green-600' : data.trend === 'down' ? 'text-red-600' : 'text-slate-600'}`}>
+          <div className="bg-muted rounded-xl p-4">
+            <p className="text-xs text-muted-foreground font-medium mb-1">Trend (30d)</p>
+            <div className={`flex items-center gap-1 text-lg font-semibold ${data.trend === 'up' ? 'text-success' : data.trend === 'down' ? 'text-destructive' : 'text-muted-foreground'}`}>
               {data.trend === 'up' ? <TrendingUp className="w-5 h-5" /> : data.trend === 'down' ? <TrendingDown className="w-5 h-5" /> : null}
               {data.trend === 'up' ? '+' : data.trend === 'down' ? '-' : ''}{data.trendValue} pts
             </div>
@@ -275,14 +275,14 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
         <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs text-slate-500 font-medium">Eligible Products</p>
-              <p className="text-2xl font-bold text-slate-900">{data.eligibleProducts} of {data.totalProducts || 5}</p>
+              <p className="text-xs text-muted-foreground font-medium">Eligible Products</p>
+              <p className="text-2xl font-bold text-foreground">{data.eligibleProducts} of {data.totalProducts || 5}</p>
             </div>
             <div className="flex gap-1">
               {Array.from({ length: data.totalProducts || 5 }).map((_, i) => (
                 <div 
                   key={i}
-                  className={`w-3 h-8 rounded-full ${i < (data.eligibleProducts || 0) ? 'bg-green-500' : 'bg-slate-200'}`}
+                  className={`w-3 h-8 rounded-full ${i < (data.eligibleProducts || 0) ? 'bg-success' : 'bg-muted'}`}
                 />
               ))}
             </div>
@@ -291,7 +291,7 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
       )}
 
       {/* Footer */}
-      <p className="text-xs text-slate-400 text-center mt-4">Last updated: {data.lastUpdated}</p>
+      <p className="text-xs text-muted-foreground text-center mt-4">Last updated: {data.lastUpdated}</p>
     </motion.div>
   );
 };

@@ -55,7 +55,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
   const systemStatus = getSystemStatus();
 
   return (
-    <div className="bg-white rounded-2xl border border-border p-4 mb-6">
+    <div className="bg-card rounded-2xl border border-border p-4 mb-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         {/* Left: Environment + Tenant + Portfolio */}
         <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
               onClick={() => onEnvironmentChange('sandbox')}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                 environment === 'sandbox'
-                  ? 'bg-white text-foreground shadow-sm'
+                  ? 'bg-card text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -75,7 +75,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
               onClick={() => onEnvironmentChange('production')}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                 environment === 'production'
-                  ? 'bg-white text-foreground shadow-sm'
+                  ? 'bg-card text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -105,7 +105,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    className="absolute top-full left-0 mt-2 z-50 w-56 bg-white rounded-xl border border-border shadow-lg overflow-hidden"
+                    className="absolute top-full left-0 mt-2 z-50 w-56 bg-card rounded-xl border border-border shadow-lg overflow-hidden"
                   >
                     {tenants.map(tenant => (
                       <button
@@ -144,7 +144,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
               onClick={() => onTimeRangeChange(range.id)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 timeRange === range.id
-                  ? 'bg-white text-foreground shadow-sm'
+                  ? 'bg-card text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -156,27 +156,27 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
 
         {/* Right: System Status */}
         <div className={`flex items-center gap-2 px-4 py-2 rounded-xl ${
-          systemStatus === 'operational' 
-            ? 'bg-green-50 text-green-700 border border-green-200' 
+          systemStatus === 'operational'
+            ? 'bg-success/10 text-success border border-success/20'
             : systemStatus === 'degraded'
-            ? 'bg-amber-50 text-amber-700 border border-amber-200'
-            : 'bg-red-50 text-red-700 border border-red-200'
+            ? 'bg-warning/10 text-warning border border-warning/20'
+            : 'bg-destructive/10 text-destructive border border-destructive/20'
         }`}>
           {systemStatus === 'operational' ? (
             <>
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
               <CheckCircle className="w-4 h-4" />
               <span className="text-sm font-semibold">All Systems Operational</span>
             </>
           ) : systemStatus === 'degraded' ? (
             <>
-              <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-warning animate-pulse" />
               <AlertTriangle className="w-4 h-4" />
               <span className="text-sm font-semibold">{activeIncidents.length} Active Incident{activeIncidents.length > 1 ? 's' : ''}</span>
             </>
           ) : (
             <>
-              <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
               <XCircle className="w-4 h-4" />
               <span className="text-sm font-semibold">{criticalIncidents.length} Critical Issue{criticalIncidents.length > 1 ? 's' : ''}</span>
             </>

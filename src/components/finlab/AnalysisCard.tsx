@@ -69,8 +69,8 @@ export const AnalysisCard = ({
               <div
                 className={`flex items-center mr-3 px-2 py-0.5 rounded-md text-sm font-semibold ${
                   percent >= 0
-                    ? "bg-emerald-100 text-emerald-600"
-                    : "bg-red-100 text-red-600"
+                    ? "bg-success/10 text-success"
+                    : "bg-destructive/10 text-destructive"
                 }`}
               >
                 {percent >= 0 ? (
@@ -87,11 +87,11 @@ export const AnalysisCard = ({
           {expense && (
             <div
               className={`text-base font-medium ${
-                percent < 0 ? "text-red-600" : "text-foreground"
+                percent < 0 ? "text-destructive" : "text-foreground"
               }`}
             >
               Expense increased by{" "}
-              <span className={percent < 0 ? "text-red-600 font-semibold" : "text-emerald-600 font-semibold"}>
+              <span className={percent < 0 ? "text-destructive font-semibold" : "text-success font-semibold"}>
                 {expense}
               </span>{" "}
               This Month

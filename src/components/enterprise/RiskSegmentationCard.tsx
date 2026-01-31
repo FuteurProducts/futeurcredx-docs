@@ -28,13 +28,13 @@ const getTrendIcon = (trend: string) => {
   switch (trend) {
     case "up":
       return (
-        <svg className="w-3 h-3 text-red-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+        <svg className="w-3 h-3 text-destructive" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
       );
     case "down":
       return (
-        <svg className="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+        <svg className="w-3 h-3 text-success" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       );
@@ -54,9 +54,9 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
   className = "",
 }) => {
   const getRiskScoreColor = (score: number) => {
-    if (score >= 80) return "text-emerald-600";
-    if (score >= 60) return "text-amber-600";
-    return "text-red-600";
+    if (score >= 80) return "text-success";
+    if (score >= 60) return "text-warning";
+    return "text-destructive";
   };
 
   return (
@@ -84,7 +84,7 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-title text-foreground">
               Risk Segmentation
             </h3>
             <p className="text-sm text-muted-foreground">
@@ -157,9 +157,9 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
                   <span
                     className={`text-xs ${
                       segment.trend === "up"
-                        ? "text-red-500"
+                        ? "text-destructive"
                         : segment.trend === "down"
-                        ? "text-emerald-500"
+                        ? "text-success"
                         : "text-muted-foreground"
                     }`}
                   >

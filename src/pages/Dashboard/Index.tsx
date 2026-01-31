@@ -25,40 +25,42 @@ import {
 } from "lucide-react";
 
 
-// Mock data - In production, this would come from your API
+import { PILOT_METRICS, CONVERSION_TREND_DATA } from "@/data/demoData";
+
+// Derived from centralized pilot metrics for consistency across pages
 const mockCounts = {
-  totalBusinesses: 25000,
-  businessesWithCredit: 18500,
-  applicationsStarted: 3200,
-  approved: 2400,
-  ineligible: 6500,
+  totalBusinesses: PILOT_METRICS.totalBusinesses,
+  businessesWithCredit: PILOT_METRICS.scoredBusinesses,
+  applicationsStarted: PILOT_METRICS.applicationsStarted,
+  approved: PILOT_METRICS.approved,
+  ineligible: PILOT_METRICS.ineligible,
 };
 
 const mockFunnelMetrics = {
-  applicationConversionRate: (mockCounts.applicationsStarted / mockCounts.businessesWithCredit) * 100,
-  approvalRate: (mockCounts.approved / mockCounts.applicationsStarted) * 100,
+  applicationConversionRate: PILOT_METRICS.applicationConversion,
+  approvalRate: PILOT_METRICS.approvalRate,
   ineligibleRatio: (mockCounts.ineligible / mockCounts.totalBusinesses) * 100,
-  creditActivationRate: (mockCounts.businessesWithCredit / mockCounts.totalBusinesses) * 100,
+  creditActivationRate: PILOT_METRICS.scoreCoverage,
 };
 
 const mockProductMetrics = {
-  avgTimeToApproval: 2.3,
-  avgCreditLimit: 125000,
+  avgTimeToApproval: PILOT_METRICS.avgTimeToApproval,
+  avgCreditLimit: PILOT_METRICS.avgPreQualLimit,
   applicationDropoffRate: 8.5,
   reApplicationRate: 12.3,
 };
 
 const mockRiskMetrics = {
-  delinquencyRate: 1.8,
-  defaultRate: 0.4,
-  portfolioUtilizationRate: 62.5,
+  delinquencyRate: PILOT_METRICS.delinquencyRate,
+  defaultRate: PILOT_METRICS.defaultRate,
+  portfolioUtilizationRate: PILOT_METRICS.portfolioUtilization,
 };
 
 const mockRevenueMetrics = {
-  arpb: 4250,
+  arpb: PILOT_METRICS.avgRevenuePerBusiness,
   revenuePerApprovedAccount: 8900,
-  momGrowthRate: 12.5,
-  qoqGrowthRate: 38.2,
+  momGrowthRate: PILOT_METRICS.momGrowth,
+  qoqGrowthRate: PILOT_METRICS.qoqGrowth,
 };
 
 const mockPredictiveMetrics = {
@@ -67,14 +69,7 @@ const mockPredictiveMetrics = {
   marketingQualifiedOpportunities: 4200,
 };
 
-const mockTrendData = [
-  { month: 'Jan', applications: 450, approved: 340, conversionRate: 16.2, approvalRate: 75.6 },
-  { month: 'Feb', applications: 520, approved: 385, conversionRate: 17.1, approvalRate: 74.0 },
-  { month: 'Mar', applications: 580, approved: 445, conversionRate: 17.8, approvalRate: 76.7 },
-  { month: 'Apr', applications: 615, approved: 468, conversionRate: 18.2, approvalRate: 76.1 },
-  { month: 'May', applications: 670, approved: 512, conversionRate: 18.9, approvalRate: 76.4 },
-  { month: 'Jun', applications: 725, approved: 558, conversionRate: 19.5, approvalRate: 77.0 },
-];
+const mockTrendData = CONVERSION_TREND_DATA;
 
 const Index = () => {
   return (
@@ -83,14 +78,14 @@ const Index = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              FuteurCredX Partner Dashboard
+            <h1 className="text-display bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              LUMIQ AI Control Tower
             </h1>
             <p className="text-muted-foreground mt-1">
               Enterprise API Platform • Real-time Business Credit Intelligence
             </p>
           </div>
-          <div className="px-4 py-2 bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-lg shadow-sm">
+          <div className="px-4 py-2 bg-card/90 backdrop-blur-sm border border-border/80 rounded-lg shadow-sm">
             <p className="text-xs text-muted-foreground">API Status</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="w-2 h-2 bg-success rounded-full pulse-glow" />
@@ -104,7 +99,7 @@ const Index = () => {
 
         {/* Tabs for organized content */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-sm">
+          <TabsList className="bg-card/90 backdrop-blur-sm border border-border/80 shadow-sm">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="intelligence">Intelligence</TabsTrigger>
             <TabsTrigger value="developer">Developer</TabsTrigger>

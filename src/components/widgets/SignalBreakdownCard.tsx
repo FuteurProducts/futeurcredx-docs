@@ -89,7 +89,7 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className={`bg-white rounded-xl p-4 shadow-sm border border-slate-200 ${className}`}
+        className={`bg-card rounded-xl p-4 shadow-sm border border-border ${className}`}
       >
         <div className="grid grid-cols-5 gap-2">
           {data.factors.slice(0, 5).map(factor => {
@@ -104,7 +104,7 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                     {factor.score}
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 truncate">{factor.name}</p>
+                <p className="text-xs text-muted-foreground truncate">{factor.name}</p>
               </div>
             );
           })}
@@ -118,11 +118,11 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`bg-white rounded-2xl p-5 shadow-sm border border-slate-200 ${className}`}
+        className={`bg-card rounded-2xl p-5 shadow-sm border border-border ${className}`}
       >
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-slate-700">Factor Subscores</h3>
-          <span className="text-xs text-slate-500">{data.factors.length} signals</span>
+          <h3 className="text-sm font-semibold text-foreground">Factor Subscores</h3>
+          <span className="text-xs text-muted-foreground">{data.factors.length} signals</span>
         </div>
 
         <div className="space-y-3">
@@ -132,10 +132,10 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
               <div key={factor.id}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-500">{categoryIcons[factor.category]}</span>
-                    <span className="text-sm font-medium text-slate-700">{factor.name}</span>
+                    <span className="text-muted-foreground">{categoryIcons[factor.category]}</span>
+                    <span className="text-sm font-medium text-foreground">{factor.name}</span>
                     {factor.isSubstituted && (
-                      <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">
+                      <span className="text-xs bg-warning/10 text-warning px-1.5 py-0.5 rounded">
                         Substituted
                       </span>
                     )}
@@ -144,8 +144,8 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                     {factor.score}
                   </span>
                 </div>
-                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div 
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${getScoreBarWidth(factor.score, factor.maxScore)}%` }}
                     transition={{ duration: 0.8, delay: 0.1 }}
@@ -163,10 +163,10 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
 
   // Full variant
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-white rounded-2xl p-6 shadow-lg border border-slate-200 ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -175,17 +175,17 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
             <TrendingUp className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-slate-900">Signal Breakdown</h3>
-            <p className="text-sm text-slate-500">Factor analysis for credit decision</p>
+            <h3 className="text-lg font-semibold text-foreground">Signal Breakdown</h3>
+            <p className="text-sm text-muted-foreground">Factor analysis for credit decision</p>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-3xl font-bold text-slate-900">{data.overallScore}</div>
+          <div className="text-3xl font-bold text-foreground">{data.overallScore}</div>
           <span className={`text-sm font-semibold px-2 py-0.5 rounded ${
-            data.overallGrade.startsWith('A') ? 'bg-green-100 text-green-700' :
+            data.overallGrade.startsWith('A') ? 'bg-success/10 text-success' :
             data.overallGrade.startsWith('B') ? 'bg-purple-100 text-purple-700' :
-            data.overallGrade.startsWith('C') ? 'bg-amber-100 text-amber-700' :
-            'bg-red-100 text-red-700'
+            data.overallGrade.startsWith('C') ? 'bg-warning/10 text-warning' :
+            'bg-destructive/10 text-destructive'
           }`}>
             {data.overallGrade}
           </span>
@@ -204,10 +204,10 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="border border-slate-200 rounded-xl overflow-hidden"
+              className="border border-border rounded-xl overflow-hidden"
             >
               <div 
-                className={`p-4 ${expandable ? 'cursor-pointer hover:bg-slate-50' : ''}`}
+                className={`p-4 ${expandable ? 'cursor-pointer hover:bg-accent' : ''}`}
                 onClick={() => expandable && toggleFactor(factor.id)}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -220,16 +220,16 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-slate-800">{factor.name}</span>
+                        <span className="font-semibold text-foreground">{factor.name}</span>
                         {factor.isSubstituted && (
-                          <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="text-xs bg-warning/10 text-warning px-2 py-0.5 rounded-full flex items-center gap-1">
                             <Info className="w-3 h-3" />
                             Substituted
                           </span>
                         )}
                       </div>
                       {factor.description && (
-                        <p className="text-xs text-slate-500">{factor.description}</p>
+                        <p className="text-xs text-muted-foreground">{factor.description}</p>
                       )}
                     </div>
                   </div>
@@ -239,20 +239,20 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                         {factor.score}
                       </span>
                       {factor.maxScore && (
-                        <span className="text-sm text-slate-400">/{factor.maxScore}</span>
+                        <span className="text-sm text-muted-foreground">/{factor.maxScore}</span>
                       )}
                     </div>
-                    {factor.status === 'strong' && <CheckCircle className="w-5 h-5 text-green-500" />}
-                    {factor.status === 'weak' && <AlertCircle className="w-5 h-5 text-red-500" />}
+                    {factor.status === 'strong' && <CheckCircle className="w-5 h-5 text-success" />}
+                    {factor.status === 'weak' && <AlertCircle className="w-5 h-5 text-destructive" />}
                     {expandable && (
-                      <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
                     )}
                   </div>
                 </div>
                 
                 {/* Progress bar */}
-                <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div 
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${getScoreBarWidth(factor.score, factor.maxScore)}%` }}
                     transition={{ duration: 0.8, delay: index * 0.1 }}
@@ -268,18 +268,18 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="border-t border-slate-100 bg-slate-50 p-4"
+                  className="border-t border-border bg-accent p-4"
                 >
                   <ul className="space-y-2">
                     {factor.details.map((detail, i) => (
-                      <li key={i} className="text-sm text-slate-600 flex items-start gap-2">
-                        <span className="w-1 h-1 bg-slate-400 rounded-full mt-2" />
+                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="w-1 h-1 bg-muted-foreground rounded-full mt-2" />
                         {detail}
                       </li>
                     ))}
                   </ul>
                   {factor.isSubstituted && factor.substitutedFrom && (
-                    <p className="text-xs text-amber-700 mt-3 p-2 bg-amber-50 rounded-lg">
+                    <p className="text-xs text-warning mt-3 p-2 bg-warning/10 rounded-lg">
                       <Info className="w-3 h-3 inline mr-1" />
                       Original data "{factor.substitutedFrom}" was unavailable
                     </p>
@@ -293,14 +293,14 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
 
       {/* Substitutions notice */}
       {data.substitutions && data.substitutions.length > 0 && (
-        <div className="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-200">
+        <div className="mt-6 p-4 bg-warning/10 rounded-xl border border-warning/20">
           <div className="flex items-center gap-2 mb-2">
-            <Info className="w-4 h-4 text-amber-600" />
-            <span className="text-sm font-semibold text-amber-700">Signal Substitutions</span>
+            <Info className="w-4 h-4 text-warning" />
+            <span className="text-sm font-semibold text-warning">Signal Substitutions</span>
           </div>
           <div className="space-y-1">
             {data.substitutions.map((sub, i) => (
-              <p key={i} className="text-sm text-amber-700">
+              <p key={i} className="text-sm text-warning">
                 <span className="line-through opacity-60">{sub.from}</span>
                 <span className="mx-2">→</span>
                 <span className="font-medium">{sub.to}</span>
@@ -311,7 +311,7 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
       )}
 
       {/* Footer */}
-      <p className="text-xs text-slate-400 text-center mt-4">
+      <p className="text-xs text-muted-foreground text-center mt-4">
         Last updated: {data.lastUpdated}
       </p>
     </motion.div>

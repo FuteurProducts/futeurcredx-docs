@@ -67,8 +67,8 @@ export const TotalBalanceCard = ({
           <div
             className={`flex items-center mr-3 px-2 py-0.5 rounded-md text-sm font-semibold ${
               percent >= 0
-                ? "bg-emerald-100 text-emerald-600"
-                : "bg-red-100 text-red-600"
+                ? "bg-success/10 text-success"
+                : "bg-destructive/10 text-destructive"
             }`}
           >
             {percent >= 0 ? (

@@ -23,7 +23,7 @@ export const ModelVersionsPanel: React.FC = () => {
       case 'active':
         return <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">Active</Badge>;
       case 'testing':
-        return <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">Testing</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Testing</Badge>;
       case 'deprecated':
         return <Badge variant="secondary">Deprecated</Badge>;
       default:
@@ -57,7 +57,7 @@ export const ModelVersionsPanel: React.FC = () => {
         </Card>
         <Card>
           <CardContent className="pt-6 text-center">
-            <div className="text-2xl font-bold text-amber-500">{models.filter(m => m.status === 'testing').length}</div>
+            <div className="text-2xl font-bold text-warning">{models.filter(m => m.status === 'testing').length}</div>
             <div className="text-xs text-muted-foreground">In Testing</div>
           </CardContent>
         </Card>
@@ -96,12 +96,12 @@ export const ModelVersionsPanel: React.FC = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
                       <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                        model.status === 'active' ? 'bg-chart-2/10' : 
-                        model.status === 'testing' ? 'bg-amber-500/10' : 'bg-muted'
+                        model.status === 'active' ? 'bg-chart-2/10' :
+                        model.status === 'testing' ? 'bg-warning/10' : 'bg-muted'
                       }`}>
                         <Cpu className={`h-6 w-6 ${
-                          model.status === 'active' ? 'text-chart-2' : 
-                          model.status === 'testing' ? 'text-amber-500' : 'text-muted-foreground'
+                          model.status === 'active' ? 'text-chart-2' :
+                          model.status === 'testing' ? 'text-warning' : 'text-muted-foreground'
                         }`} />
                       </div>
                       <div>

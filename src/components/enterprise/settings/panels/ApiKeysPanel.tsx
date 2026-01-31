@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Plus, X, Key, Copy, RefreshCw, Trash2, 
+import {
+  Plus, X, Key, Copy, RefreshCw, Trash2,
   CheckCircle, XCircle, Eye, EyeOff
 } from 'lucide-react';
 import type { ApiKey, Environment } from '../types';
+import { CopyButton } from '@/components/ui/copy-button';
+import { EmptyState } from '@/components/ui/empty-state';
 
 interface ApiKeysPanelProps {
   apiKeys: ApiKey[];
@@ -93,114 +95,121 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
 
       {/* Keys Table */}
       <div className="bg-card rounded-lg border border-border overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-muted/50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Name</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Key</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Environment</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Scopes</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Created</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Last Used</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Status</th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {apiKeys.map((key) => (
-              <tr key={key.id} className="hover:bg-muted/30 transition-colors">
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <Key className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm font-medium">{key.name}</span>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
-                      {revealedKeys.has(key.id) ? key.keyMasked.replace(/\*/g, 'x') : key.keyMasked}
-                    </code>
-                    <button
-                      onClick={() => toggleKeyVisibility(key.id)}
-                      className="p-1 hover:bg-muted rounded"
-                    >
-                      {revealedKeys.has(key.id) ? (
-                        <EyeOff className="h-3 w-3 text-muted-foreground" />
-                      ) : (
-                        <Eye className="h-3 w-3 text-muted-foreground" />
-                      )}
-                    </button>
-                    <button className="p-1 hover:bg-muted rounded">
-                      <Copy className="h-3 w-3 text-muted-foreground" />
-                    </button>
-                  </div>
-                </td>
-                <td className="px-4 py-3">
-                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                    key.environment === 'production' 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-amber-100 text-amber-700'
-                  }`}>
-                    {key.environment}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex flex-wrap gap-1">
-                    {key.scopes.slice(0, 2).map((scope) => (
-                      <span key={scope} className="text-xs bg-muted px-1.5 py-0.5 rounded">
-                        {scope}
-                      </span>
-                    ))}
-                    {key.scopes.length > 2 && (
-                      <span className="text-xs text-muted-foreground">+{key.scopes.length - 2}</span>
-                    )}
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">
-                  {formatDate(key.createdAt)}
-                </td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">
-                  {formatDate(key.lastUsed)}
-                </td>
-                <td className="px-4 py-3">
-                  {key.status === 'active' ? (
-                    <span className="inline-flex items-center gap-1 text-xs text-green-700">
-                      <CheckCircle className="h-3 w-3" />
-                      Active
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                      <XCircle className="h-3 w-3" />
-                      Revoked
-                    </span>
-                  )}
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-end gap-1">
-                    {key.status === 'active' && (
-                      <>
-                        <button
-                          onClick={() => onRotateKey(key.id)}
-                          className="p-1.5 hover:bg-muted rounded transition-colors"
-                          title="Rotate"
-                        >
-                          <RefreshCw className="h-4 w-4 text-muted-foreground" />
-                        </button>
-                        <button
-                          onClick={() => onRevokeKey(key.id)}
-                          className="p-1.5 hover:bg-destructive/10 rounded transition-colors"
-                          title="Revoke"
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </td>
+        {apiKeys.length === 0 ? (
+          <EmptyState
+            icon={Key}
+            title="No API keys yet"
+            description="Create your first API key to start integrating with the LUMIQ AI platform."
+            action={{ label: "Create API Key", onClick: () => setShowDrawer(true) }}
+          />
+        ) : (
+          <table className="w-full">
+            <thead className="bg-muted/50">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Name</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Key</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Environment</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Scopes</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Created</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Last Used</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Status</th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {apiKeys.map((key) => (
+                <tr key={key.id} className="hover:bg-muted/30 transition-colors">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <Key className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">{key.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
+                        {revealedKeys.has(key.id) ? key.keyMasked.replace(/\*/g, 'x') : key.keyMasked}
+                      </code>
+                      <button
+                        onClick={() => toggleKeyVisibility(key.id)}
+                        className="p-1 hover:bg-muted rounded"
+                      >
+                        {revealedKeys.has(key.id) ? (
+                          <EyeOff className="h-3 w-3 text-muted-foreground" />
+                        ) : (
+                          <Eye className="h-3 w-3 text-muted-foreground" />
+                        )}
+                      </button>
+                      <CopyButton value={key.keyMasked} />
+                    </div>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                      key.environment === 'production'
+                        ? 'bg-success/10 text-success'
+                        : 'bg-warning/10 text-warning'
+                    }`}>
+                      {key.environment}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex flex-wrap gap-1">
+                      {key.scopes.slice(0, 2).map((scope) => (
+                        <span key={scope} className="text-xs bg-muted px-1.5 py-0.5 rounded">
+                          {scope}
+                        </span>
+                      ))}
+                      {key.scopes.length > 2 && (
+                        <span className="text-xs text-muted-foreground">+{key.scopes.length - 2}</span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">
+                    {formatDate(key.createdAt)}
+                  </td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">
+                    {formatDate(key.lastUsed)}
+                  </td>
+                  <td className="px-4 py-3">
+                    {key.status === 'active' ? (
+                      <span className="inline-flex items-center gap-1 text-xs text-success">
+                        <CheckCircle className="h-3 w-3" />
+                        Active
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                        <XCircle className="h-3 w-3" />
+                        Revoked
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-1">
+                      {key.status === 'active' && (
+                        <>
+                          <button
+                            onClick={() => onRotateKey(key.id)}
+                            className="p-1.5 hover:bg-muted rounded transition-colors"
+                            title="Rotate"
+                          >
+                            <RefreshCw className="h-4 w-4 text-muted-foreground" />
+                          </button>
+                          <button
+                            onClick={() => onRevokeKey(key.id)}
+                            className="p-1.5 hover:bg-destructive/10 rounded transition-colors"
+                            title="Revoke"
+                          >
+                            <Trash2 className="h-4 w-4 text-destructive" />
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* Create Key Drawer */}
@@ -253,8 +262,8 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                         className={`flex-1 px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
                           newKeyEnv === env
                             ? env === 'production'
-                              ? 'bg-green-50 border-green-200 text-green-700'
-                              : 'bg-amber-50 border-amber-200 text-amber-700'
+                              ? 'bg-success/10 border-success/20 text-success'
+                              : 'bg-warning/10 border-warning/20 text-warning'
                             : 'bg-background border-border text-muted-foreground hover:border-primary/50'
                         }`}
                       >

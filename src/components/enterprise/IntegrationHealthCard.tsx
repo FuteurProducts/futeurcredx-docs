@@ -18,28 +18,28 @@ interface IntegrationHealthCardProps {
 }
 
 const statusConfig: Record<string, { label: string; color: string; bg: string; icon: React.ReactNode }> = {
-  operational: { 
-    label: "Operational", 
-    color: "text-emerald-600", 
-    bg: "bg-emerald-500",
+  operational: {
+    label: "Operational",
+    color: "text-success",
+    bg: "bg-success",
     icon: <CheckCircle2 className="h-4 w-4" />
   },
-  degraded: { 
-    label: "Degraded", 
-    color: "text-amber-600", 
-    bg: "bg-amber-500",
+  degraded: {
+    label: "Degraded",
+    color: "text-warning",
+    bg: "bg-warning",
     icon: <AlertCircle className="h-4 w-4" />
   },
-  outage: { 
-    label: "Outage", 
-    color: "text-red-600", 
-    bg: "bg-red-500",
+  outage: {
+    label: "Outage",
+    color: "text-destructive",
+    bg: "bg-destructive",
     icon: <AlertCircle className="h-4 w-4" />
   },
-  maintenance: { 
-    label: "Maintenance", 
-    color: "text-blue-600", 
-    bg: "bg-blue-500",
+  maintenance: {
+    label: "Maintenance",
+    color: "text-info",
+    bg: "bg-info",
     icon: <Clock className="h-4 w-4" />
   },
 };
@@ -81,8 +81,8 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm text-muted-foreground">30-day Uptime</span>
           <span className={`text-xl font-bold ${
-            overallUptime >= 99.9 ? "text-emerald-600" :
-            overallUptime >= 99 ? "text-amber-600" : "text-red-600"
+            overallUptime >= 99.9 ? "text-success" :
+            overallUptime >= 99 ? "text-warning" : "text-destructive"
           }`}>
             {overallUptime.toFixed(2)}%
           </span>
@@ -93,8 +93,8 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
             animate={{ width: `${overallUptime}%` }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             className={`h-full rounded-full ${
-              overallUptime >= 99.9 ? "bg-emerald-500" :
-              overallUptime >= 99 ? "bg-amber-500" : "bg-red-500"
+              overallUptime >= 99.9 ? "bg-success" :
+              overallUptime >= 99 ? "bg-warning" : "bg-destructive"
             }`}
           />
         </div>

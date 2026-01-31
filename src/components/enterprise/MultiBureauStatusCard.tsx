@@ -21,11 +21,11 @@ interface MultiBureauStatusCardProps {
 const getStatusColor = (status: string) => {
   switch (status) {
     case "connected":
-      return { bg: "bg-emerald-500/10", text: "text-emerald-600", dot: "bg-emerald-500" };
+      return { bg: "bg-success/10", text: "text-success", dot: "bg-success" };
     case "degraded":
-      return { bg: "bg-amber-500/10", text: "text-amber-600", dot: "bg-amber-500" };
+      return { bg: "bg-warning/10", text: "text-warning", dot: "bg-warning" };
     case "disconnected":
-      return { bg: "bg-red-500/10", text: "text-red-600", dot: "bg-red-500" };
+      return { bg: "bg-destructive/10", text: "text-destructive", dot: "bg-destructive" };
     default:
       return { bg: "bg-muted", text: "text-muted-foreground", dot: "bg-muted-foreground" };
   }
@@ -79,7 +79,7 @@ export const MultiBureauStatusCard: React.FC<MultiBureauStatusCardProps> = ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-emerald-500/10 text-emerald-600 rounded-full text-sm font-medium">
+          <span className="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">
             {connectedCount}/{bureaus.length} Connected
           </span>
         </div>

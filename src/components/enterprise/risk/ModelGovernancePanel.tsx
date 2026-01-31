@@ -39,8 +39,8 @@ export interface ModelGovernancePanelProps {
 
 const getStatusStyle = (status: string) => {
   switch (status) {
-    case 'ok': return { bg: 'bg-emerald-50', text: 'text-emerald-700', badge: 'bg-emerald-500', icon: CheckCircle2 };
-    case 'warning': return { bg: 'bg-amber-50', text: 'text-amber-700', badge: 'bg-amber-500', icon: AlertTriangle };
+    case 'ok': return { bg: 'bg-success/10', text: 'text-success', badge: 'bg-success', icon: CheckCircle2 };
+    case 'warning': return { bg: 'bg-warning/10', text: 'text-warning', badge: 'bg-warning', icon: AlertTriangle };
     case 'breach': return { bg: 'bg-rose-50', text: 'text-rose-700', badge: 'bg-rose-500', icon: AlertTriangle };
     default: return { bg: 'bg-muted', text: 'text-foreground', badge: 'bg-muted-foreground', icon: CheckCircle2 };
   }
@@ -116,7 +116,7 @@ export const ModelGovernancePanel: React.FC<ModelGovernancePanelProps> = ({
                     </div>
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Next Validation:</span>
-                      <span className={`font-medium ${model.status === 'warning' ? 'text-amber-600' : ''}`}>
+                      <span className={`font-medium ${model.status === 'warning' ? 'text-warning' : ''}`}>
                         {model.nextValidationDue}
                       </span>
                     </div>
@@ -195,7 +195,7 @@ export const ModelGovernancePanel: React.FC<ModelGovernancePanelProps> = ({
                       <td className="py-2 px-3 text-right text-muted-foreground">{metric.expected}%</td>
                       <td className="py-2 px-3 text-right font-medium">{metric.actual}%</td>
                       <td className={`py-2 px-3 text-right font-medium ${
-                        metric.variance > 0 ? 'text-rose-600' : 'text-emerald-600'
+                        metric.variance > 0 ? 'text-rose-600' : 'text-success'
                       }`}>
                         {metric.variance > 0 ? '+' : ''}{metric.variance}%
                       </td>

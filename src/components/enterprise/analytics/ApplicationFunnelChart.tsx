@@ -13,17 +13,17 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
   const selected = data.find((d) => d.product === selectedProduct) || data[0];
 
   const stages = [
-    { key: 'preQualified', label: 'Pre-qualified', icon: FileText, color: 'bg-blue-500' },
+    { key: 'preQualified', label: 'Pre-qualified', icon: FileText, color: 'bg-info' },
     { key: 'applied', label: 'Applied', icon: FileText, color: 'bg-cyan-500' },
-    { key: 'approved', label: 'Approved', icon: CheckCircle, color: 'bg-green-500' },
-    { key: 'funded', label: 'Funded', icon: DollarSign, color: 'bg-emerald-600' },
+    { key: 'approved', label: 'Approved', icon: CheckCircle, color: 'bg-success' },
+    { key: 'funded', label: 'Funded', icon: DollarSign, color: 'bg-success' },
   ];
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

@@ -9,11 +9,11 @@ interface FeatureImportanceChartProps {
 }
 
 const categoryColors: Record<string, string> = {
-  'Financial Health': 'bg-blue-500',
+  'Financial Health': 'bg-info',
   'Credit Behavior': 'bg-purple-500',
   'External Data': 'bg-cyan-500',
   'Market Factors': 'bg-orange-500',
-  'Business Profile': 'bg-green-500',
+  'Business Profile': 'bg-success',
 };
 
 export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ features }) => {
@@ -23,7 +23,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -43,7 +43,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
       <div className="space-y-4">
         {sortedFeatures.map((feature, index) => {
           const TrendIcon = feature.trend === 'increasing' ? TrendingUp : feature.trend === 'decreasing' ? TrendingDown : Minus;
-          const barColor = categoryColors[feature.category] || 'bg-gray-500';
+          const barColor = categoryColors[feature.category] || 'bg-muted-foreground';
 
           return (
             <motion.div
@@ -63,7 +63,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
                 <div className="flex items-center gap-2">
                   <TrendIcon
                     className={`w-4 h-4 ${
-                      feature.trend === 'increasing' ? 'text-orange-500' : feature.trend === 'decreasing' ? 'text-green-500' : 'text-muted-foreground'
+                      feature.trend === 'increasing' ? 'text-orange-500' : feature.trend === 'decreasing' ? 'text-success' : 'text-muted-foreground'
                     }`}
                   />
                   <span className="font-bold text-foreground">{feature.importance}%</span>

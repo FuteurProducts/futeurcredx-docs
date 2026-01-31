@@ -18,25 +18,25 @@ import { ExecutiveSummary } from '@/components/dashboard/dashboard/ExecutiveSumm
 
 const OverviewTab: React.FC = () => {
   const gettingStartedSteps = [
-    { text: 'Account Created', subtext: 'Welcome to FuteurCredX!', completed: true },
+    { text: 'Account Created', subtext: 'Welcome to LUMIQ AI!', completed: true },
     { text: 'API Key Generated', subtext: 'Ready to make API calls', completed: true },
     { text: 'Make Your First API Call', subtext: 'Test the API with your key', completed: false },
   ];
 
-  // Mock data (same as Index page)
+  // Derived from centralized pilot metrics for consistency
   const mockCounts = {
-    totalBusinesses: 25000,
-    businessesWithCredit: 18500,
-    applicationsStarted: 3200,
-    approved: 2400,
-    ineligible: 6500,
+    totalBusinesses: 47500,
+    businessesWithCredit: 38200,
+    applicationsStarted: 3100,
+    approved: 2340,
+    ineligible: 9300,
   };
 
   const mockFunnelMetrics = {
-    applicationConversionRate: (mockCounts.applicationsStarted / mockCounts.businessesWithCredit) * 100,
-    approvalRate: (mockCounts.approved / mockCounts.applicationsStarted) * 100,
+    applicationConversionRate: 25.0,
+    approvalRate: 75.5,
     ineligibleRatio: (mockCounts.ineligible / mockCounts.totalBusinesses) * 100,
-    creditActivationRate: (mockCounts.businessesWithCredit / mockCounts.totalBusinesses) * 100,
+    creditActivationRate: 80.4,
   };
 
   const mockProductMetrics = {
@@ -66,12 +66,10 @@ const OverviewTab: React.FC = () => {
   };
 
   const mockTrendData = [
-    { month: 'Jan', applications: 450, approved: 340, conversionRate: 16.2, approvalRate: 75.6 },
-    { month: 'Feb', applications: 520, approved: 385, conversionRate: 17.1, approvalRate: 74.0 },
-    { month: 'Mar', applications: 580, approved: 445, conversionRate: 17.8, approvalRate: 76.7 },
-    { month: 'Apr', applications: 615, approved: 468, conversionRate: 18.2, approvalRate: 76.1 },
-    { month: 'May', applications: 670, approved: 512, conversionRate: 18.9, approvalRate: 76.4 },
-    { month: 'Jun', applications: 725, approved: 558, conversionRate: 19.5, approvalRate: 77.0 },
+    { month: 'Oct', applications: 520, approved: 385, conversionRate: 17.1, approvalRate: 74.0 },
+    { month: 'Nov', applications: 680, approved: 512, conversionRate: 19.5, approvalRate: 75.3 },
+    { month: 'Dec', applications: 870, approved: 668, conversionRate: 22.8, approvalRate: 76.8 },
+    { month: 'Jan', applications: 1030, approved: 775, conversionRate: 25.0, approvalRate: 75.2 },
   ];
 
   return (
@@ -84,74 +82,74 @@ const OverviewTab: React.FC = () => {
       {/* Top Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
         {/* Quick Actions */}
-        <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-base font-black uppercase tracking-wider text-black flex items-center gap-2 mb-4">
+        <div className="bg-card/90 backdrop-blur-sm border border-border/80 rounded-2xl p-6 shadow-sm">
+        <h3 className="text-base font-black uppercase tracking-wider text-foreground flex items-center gap-2 mb-4">
           <img src="/icons/file-02.svg" alt="Code" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
           Quick Actions
         </h3>
         <div className="space-y-4">
-          <div className="block p-4 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer">
+          <div className="block p-4 bg-muted hover:bg-accent rounded-xl transition-colors cursor-pointer">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-black/5 rounded-lg">
+              <div className="p-3 bg-foreground/5 rounded-lg">
                 <img src="/icons/file-02.svg" alt="Code" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
               </div>
               <div>
-                <p className="font-bold text-slate-800">API Testing</p>
-                <p className="text-sm text-slate-500">Test APIs with your generated tokens</p>
+                <p className="font-bold text-foreground">API Testing</p>
+                <p className="text-sm text-muted-foreground">Test APIs with your generated tokens</p>
               </div>
             </div>
           </div>
-          <Link to="/docs" className="block p-4 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors">
+          <Link to="/docs" className="block p-4 bg-muted hover:bg-accent rounded-xl transition-colors">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-black/5 rounded-lg">
+                    <div className="p-3 bg-foreground/5 rounded-lg">
                         <img src="/icons/file-02.svg" alt="Document" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
                     </div>
                     <div>
-                        <p className="font-bold text-slate-800">API Documentation</p>
-                        <p className="text-sm text-slate-500">View examples and guides</p>
+                        <p className="font-bold text-foreground">API Documentation</p>
+                        <p className="text-sm text-muted-foreground">View examples and guides</p>
                     </div>
                 </div>
                 <img src="/icons/chevron-right.svg" alt="External" className="w-4 h-4" style={{ filter: 'brightness(0) opacity(0.5)' }} />
             </div>
           </Link>
-          <div className="p-4 bg-slate-50 rounded-xl">
+          <div className="p-4 bg-muted rounded-xl">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-black/5 rounded-lg">
+                    <div className="p-3 bg-foreground/5 rounded-lg">
                         <img src="/icons/disc-02.svg" alt="Chart" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
                     </div>
                     <div>
-                        <p className="font-bold text-slate-800">Usage Analytics</p>
-                        <p className="text-sm text-slate-500">Detailed usage insights</p>
+                        <p className="font-bold text-foreground">Usage Analytics</p>
+                        <p className="text-sm text-muted-foreground">Detailed usage insights</p>
                     </div>
                 </div>
-                <span className="text-xs font-bold uppercase text-slate-400 bg-slate-200 px-2 py-1 rounded-full">Coming Soon</span>
+                <span className="text-xs font-bold uppercase text-muted-foreground bg-muted px-2 py-1 rounded-full">Coming Soon</span>
             </div>
           </div>
         </div>
         </div>
       {/* Getting Started */}
-        <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-base font-black uppercase tracking-wider text-black flex items-center gap-2 mb-4">
+        <div className="bg-card/90 backdrop-blur-sm border border-border/80 rounded-2xl p-6 shadow-sm">
+        <h3 className="text-base font-black uppercase tracking-wider text-foreground flex items-center gap-2 mb-4">
           <img src="/icons/plus-square.svg" alt="Rocket" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
           Getting Started
         </h3>
         <div className="space-y-3">
           {gettingStartedSteps.map((step, index) => (
-            <div key={index} className={`p-4 rounded-xl flex items-center gap-4 ${step.completed ? 'bg-black/5' : 'bg-slate-50'}`}>
+            <div key={index} className={`p-4 rounded-xl flex items-center gap-4 ${step.completed ? 'bg-foreground/5' : 'bg-muted'}`}>
               {step.completed ? (
-                <div className="w-9 h-9 flex items-center justify-center bg-black text-white rounded-full flex-shrink-0">
+                <div className="w-9 h-9 flex items-center justify-center bg-foreground text-background rounded-full flex-shrink-0">
                   <img src="/icons/check.svg" alt="Check" className="w-5 h-5" />
                 </div>
               ) : (
-                <div className="w-9 h-9 flex items-center justify-center bg-slate-200 text-slate-500 font-bold rounded-full flex-shrink-0">
+                <div className="w-9 h-9 flex items-center justify-center bg-muted text-muted-foreground font-bold rounded-full flex-shrink-0">
                   {index + 1}
                 </div>
               )}
               <div>
-                <p className={`font-bold ${step.completed ? 'text-black' : 'text-slate-800'}`}>{step.text}</p>
-                <p className="text-sm text-slate-500">{step.subtext}</p>
+                <p className={`font-bold ${step.completed ? 'text-foreground' : 'text-foreground'}`}>{step.text}</p>
+                <p className="text-sm text-muted-foreground">{step.subtext}</p>
               </div>
             </div>
           ))}
@@ -160,24 +158,24 @@ const OverviewTab: React.FC = () => {
       </div>
 
       {/* Live API Health with Support Actions */}
-      <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
+      <div className="bg-card/90 backdrop-blur-sm border border-border/80 rounded-2xl p-6 shadow-sm">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-base font-black uppercase tracking-wider text-black flex items-center gap-2">
+          <h3 className="text-base font-black uppercase tracking-wider text-foreground flex items-center gap-2">
             <img src="/icons/disc-02.svg" alt="Chart" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
             API Health
           </h3>
           <div className="flex flex-wrap gap-2">
-            <Button className="bg-black hover:bg-slate-800 h-8 py-0 text-white" onClick={() => window.open('/docs#support', '_self')}>Chat</Button>
-            <Button variant="outline" className="h-8 py-0 border-slate-300 text-black hover:bg-slate-50" onClick={() => window.open('/docs#troubleshooting', '_self')}>Troubleshoot</Button>
-            <Button className="bg-slate-700 hover:bg-slate-800 h-8 py-0 text-white" onClick={() => window.open('/contact-us', '_self')}>SOS</Button>
+            <Button className="bg-foreground hover:bg-foreground/90 h-8 py-0 text-background" onClick={() => window.open('/docs#support', '_self')}>Chat</Button>
+            <Button variant="outline" className="h-8 py-0 border-border text-foreground hover:bg-accent" onClick={() => window.open('/docs#troubleshooting', '_self')}>Troubleshoot</Button>
+            <Button className="bg-muted-foreground hover:bg-muted-foreground/90 h-8 py-0 text-background" onClick={() => window.open('/contact-us', '_self')}>SOS</Button>
           </div>
         </div>
         <ApiHealthMonitor />
       </div>
 
       {/* Performance */}
-      <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-base font-black uppercase tracking-wider text-black flex items-center gap-2 mb-4">
+      <div className="bg-card/90 backdrop-blur-sm border border-border/80 rounded-2xl p-6 shadow-sm">
+        <h3 className="text-base font-black uppercase tracking-wider text-foreground flex items-center gap-2 mb-4">
           <img src="/icons/disc-02.svg" alt="Chart" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />
           Performance Overview
         </h3>

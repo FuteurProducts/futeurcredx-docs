@@ -74,11 +74,11 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 h-10 px-4 bg-[#F4F4F4] hover:bg-[#EFEFEF] border border-[#EFEFEF] rounded-xl text-[0.875rem] font-semibold text-[#1A1D1F] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:ring-offset-1"
+        className="flex items-center gap-2 h-10 px-4 bg-muted hover:bg-[#EFEFEF] border border-border rounded-xl text-[0.875rem] font-semibold text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:ring-offset-1"
       >
         <span>{value.title}</span>
         <svg 
-          className={`w-4 h-4 text-[#6F767E] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none" 
           stroke="currentColor" 
           strokeWidth={2} 
@@ -96,7 +96,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
             onClick={() => setIsOpen(false)}
           />
           {/* Dropdown Menu */}
-          <div className="absolute right-0 top-full mt-2 z-50 min-w-[140px] py-2 bg-white rounded-xl shadow-lg border border-[#EFEFEF] overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 z-50 min-w-[140px] py-2 bg-white rounded-xl shadow-lg border border-border overflow-hidden">
             {options.map((opt) => (
               <button
                 key={opt.id}
@@ -107,7 +107,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
                 className={`w-full px-4 py-2.5 text-left text-[0.875rem] font-medium transition-colors ${
                   opt.id === value.id 
                     ? 'bg-[#0C68E9] text-white' 
-                    : 'text-[#1A1D1F] hover:bg-[#F4F4F4]'
+                    : 'text-foreground hover:bg-muted'
                 }`}
               >
                 {opt.title}
@@ -154,18 +154,18 @@ export const NCard: React.FC<NCardProps> = ({
       {(title || rightContent || options || seeAllUrl) && (
         <div className="relative z-2 flex justify-between items-center min-h-[2.5rem] mb-4">
           {title && (
-            <div className="flex items-center text-[1.125rem] md:text-[1.125rem] font-semibold text-[#1A1D1F]">
+            <div className="flex items-center text-[1.125rem] md:text-[1.125rem] font-semibold text-foreground">
               <div className={`truncate ${options ? "md:max-w-[33vw]" : ""}`}>
                 {title}
               </div>
               {arrowTitle && (
-                <svg className="w-5 h-5 ml-2 text-[#1A1D1F]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-5 h-5 ml-2 text-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               )}
               {tooltip && (
                 <div className="ml-2 w-5 h-5 flex items-center justify-center rounded-full bg-[#F4F4F4] cursor-help">
-                  <svg className="w-3 h-3 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="w-3 h-3 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -494,8 +494,8 @@ export const GreedIndex: React.FC = () => {
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute left-1/2 bottom-0 -translate-x-1/2 text-center">
-            <div className="text-[3rem] md:text-[2.5rem] font-semibold text-[#1A1D1F]">82</div>
-            <div className="text-[1.125rem] text-[#6F767E]">
+            <div className="text-[3rem] md:text-[2.5rem] font-semibold text-foreground">82</div>
+            <div className="text-[1.125rem] text-muted-foreground">
               Greed
             </div>
           </div>
@@ -846,11 +846,11 @@ interface ApiUsageOverviewProps {
 const ApiUsageTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 bg-white border border-[#EFEFEF] rounded-xl shadow-lg">
-        <div className="mb-0.5 text-[0.75rem] text-[#6F767E]">
+      <div className="p-4 bg-white border border-border rounded-xl shadow-lg">
+        <div className="mb-0.5 text-[0.75rem] text-muted-foreground">
           {label}
         </div>
-        <div className="text-[1.5rem] font-semibold text-[#1A1D1F]">
+        <div className="text-[1.5rem] font-semibold text-foreground">
           {payload[0].value.toLocaleString()}
         </div>
       </div>
@@ -894,16 +894,16 @@ export const ApiUsageOverview: React.FC<ApiUsageOverviewProps> = ({
     >
       {isLoading ? (
         <div className="animate-pulse">
-          <div className="h-12 bg-gray-200 rounded w-48 mb-2"></div>
-          <div className="h-40 bg-gray-200 rounded"></div>
+          <div className="h-12 bg-muted rounded w-48 mb-2"></div>
+          <div className="h-40 bg-muted rounded"></div>
         </div>
       ) : (
         <>
           <div className="flex items-end md:mt-4">
-            <span className="text-[3rem] md:text-[2rem] font-semibold text-[#1A1D1F]">
+            <span className="text-[3rem] md:text-[2rem] font-semibold text-foreground">
               {totalCalls.toLocaleString()}
             </span>
-            <span className={`ml-3 text-[1.125rem] font-semibold flex items-center gap-1 ${growthPercent > 0 ? 'text-[#32AE60]' : 'text-[#F04D1A]'}`}>
+            <span className={`ml-3 text-[1.125rem] font-semibold flex items-center gap-1 ${growthPercent > 0 ? 'text-success' : 'text-destructive'}`}>
               <svg 
                 className={`w-3.5 h-3.5 ${growthPercent < 0 ? 'rotate-180' : ''}`}
                 fill="currentColor" 
@@ -1009,19 +1009,19 @@ export const ApiKeysList: React.FC<ApiKeysListProps> = ({
         <div className="space-y-4 pt-4">
           {[1, 2, 3].map(i => (
             <div key={i} className="animate-pulse flex items-center gap-4">
-              <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+              <div className="w-10 h-10 bg-muted rounded-full"></div>
               <div className="flex-1">
-                <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-muted rounded w-24 mb-2"></div>
+                <div className="h-3 bg-muted rounded w-16"></div>
               </div>
-              <div className="h-4 bg-gray-200 rounded w-16"></div>
+              <div className="h-4 bg-muted rounded w-16"></div>
             </div>
           ))}
         </div>
       ) : apiKeys.length === 0 ? (
-        <div className="pt-6 text-center text-[#6F767E]">
+        <div className="pt-6 text-center text-muted-foreground">
           <p className="text-[0.9375rem]">No API keys yet</p>
-          <button 
+          <button
             onClick={onManageKeys}
             className="mt-3 px-4 py-2 bg-[#0C68E9] text-white rounded-xl font-semibold text-[0.875rem]"
           >
@@ -1033,7 +1033,7 @@ export const ApiKeysList: React.FC<ApiKeysListProps> = ({
           {apiKeys.slice(0, 5).map((key) => (
             <div
               key={key.id}
-              className="flex items-center h-16 px-3 rounded-2xl border border-transparent transition-colors hover:border-[#EFEFEF] cursor-pointer"
+              className="flex items-center h-16 px-3 rounded-2xl border border-transparent transition-colors hover:border-border cursor-pointer"
             >
               <div className="flex justify-center items-center w-10 h-10 mr-4 rounded-xl bg-[#D8F0FF]">
                 <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -1041,18 +1041,18 @@ export const ApiKeysList: React.FC<ApiKeysListProps> = ({
                 </svg>
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[0.9375rem] font-semibold text-[#1A1D1F] truncate">
+                <div className="text-[0.9375rem] font-semibold text-foreground truncate">
                   {key.name}
                 </div>
-                <div className="text-[0.8125rem] text-[#6F767E]">
+                <div className="text-[0.8125rem] text-muted-foreground">
                   {key.environment || 'development'}
                 </div>
               </div>
               <div className="text-right ml-3">
-                <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+                <div className="text-[0.9375rem] font-semibold text-foreground">
                   {(key.callsUsed || key.usageCount || 0).toLocaleString()} calls
                 </div>
-                <div className="text-[0.8125rem] text-[#6F767E]">
+                <div className="text-[0.8125rem] text-muted-foreground">
                   {formatDate(key.lastUsed || key.lastUsedAt)}
                 </div>
               </div>
@@ -1162,7 +1162,7 @@ export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, p
           
           {/* Center display - animated counter */}
           <div className="absolute left-1/2 bottom-0 -translate-x-1/2 text-center">
-            <div className="text-[3rem] md:text-[2.5rem] font-semibold text-[#1A1D1F]">
+            <div className="text-[3rem] md:text-[2.5rem] font-semibold text-foreground">
               {animatedPercentage}
             </div>
             <div className="text-[1.125rem] font-semibold" style={{ color: status.color }}>
@@ -1172,21 +1172,21 @@ export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, p
         </div>
         
         {/* Stats below gauge */}
-        <div className="mt-2 pt-4 border-t border-[#EFEFEF]">
+        <div className="mt-2 pt-4 border-t border-border">
           <div className="flex justify-between items-center">
             <div>
-              <div className="text-[0.8125rem] text-[#6F767E]">API Calls Used</div>
-              <div className="text-[1.5rem] font-semibold text-[#1A1D1F]">{used.toLocaleString()}</div>
+              <div className="text-[0.8125rem] text-muted-foreground">API Calls Used</div>
+              <div className="text-[1.5rem] font-semibold text-foreground">{used.toLocaleString()}</div>
             </div>
             <div className="text-center">
-              <div className="text-[0.8125rem] text-[#6F767E]">Remaining</div>
-              <div className="text-[1.5rem] font-semibold" style={{ color: remaining > 0 ? '#32AE60' : '#F04D1A' }}>
+              <div className="text-[0.8125rem] text-muted-foreground">Remaining</div>
+              <div className={`text-[1.5rem] font-semibold ${remaining > 0 ? 'text-success' : 'text-destructive'}`}>
                 {remaining > 0 ? remaining.toLocaleString() : '0'}
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[0.8125rem] text-[#6F767E]">Monthly Limit</div>
-              <div className="text-[1.5rem] font-semibold text-[#1A1D1F]">{limit.toLocaleString()}</div>
+              <div className="text-[0.8125rem] text-muted-foreground">Monthly Limit</div>
+              <div className="text-[1.5rem] font-semibold text-foreground">{limit.toLocaleString()}</div>
             </div>
           </div>
           <div className="mt-4 text-center">
@@ -1215,14 +1215,14 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ stats }) => {
     <NCard title="Quick Stats">
       <div className="grid grid-cols-2 gap-4 pt-2">
         {stats.map((stat, index) => (
-          <div key={index} className="p-4 bg-[#F4F4F4] rounded-xl">
-            <div className="text-[0.8125rem] text-[#6F767E] mb-1">{stat.label}</div>
+          <div key={index} className="p-4 bg-muted rounded-xl">
+            <div className="text-[0.8125rem] text-muted-foreground mb-1">{stat.label}</div>
             <div className="flex items-end gap-2">
-              <span className="text-[1.5rem] font-semibold text-[#1A1D1F]">
+              <span className="text-[1.5rem] font-semibold text-foreground">
                 {typeof stat.value === 'number' ? stat.value.toLocaleString() : stat.value}
               </span>
               {stat.change !== undefined && (
-                <span className={`text-[0.8125rem] font-semibold ${stat.change >= 0 ? 'text-[#32AE60]' : 'text-[#F04D1A]'}`}>
+                <span className={`text-[0.8125rem] font-semibold ${stat.change >= 0 ? 'text-success' : 'text-destructive'}`}>
                   {stat.change >= 0 ? '+' : ''}{stat.change}%
                 </span>
               )}
@@ -1249,10 +1249,10 @@ interface RecentApiActivityProps {
 export const RecentApiActivity: React.FC<RecentApiActivityProps> = ({ activities, isLoading }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'success': return 'bg-[#DFF9E8] text-[#32AE60]';
-      case 'error': return 'bg-[#FDE6D7] text-[#F04D1A]';
-      case 'pending': return 'bg-[#FEE6C7] text-[#FBA94B]';
-      default: return 'bg-[#EFEFEF] text-[#6F767E]';
+      case 'success': return 'bg-success/10 text-success';
+      case 'error': return 'bg-destructive/10 text-destructive';
+      case 'pending': return 'bg-warning/10 text-warning';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -1271,16 +1271,16 @@ export const RecentApiActivity: React.FC<RecentApiActivityProps> = ({ activities
         <div className="space-y-3 pt-4">
           {[1, 2, 3, 4].map(i => (
             <div key={i} className="animate-pulse flex items-center gap-3">
-              <div className="w-10 h-10 bg-gray-200 rounded-xl"></div>
+              <div className="w-10 h-10 bg-muted rounded-xl"></div>
               <div className="flex-1">
-                <div className="h-4 bg-gray-200 rounded w-32 mb-1"></div>
-                <div className="h-3 bg-gray-200 rounded w-20"></div>
+                <div className="h-4 bg-muted rounded w-32 mb-1"></div>
+                <div className="h-3 bg-muted rounded w-20"></div>
               </div>
             </div>
           ))}
         </div>
       ) : activities.length === 0 ? (
-        <div className="pt-6 text-center text-[#6F767E]">
+        <div className="pt-6 text-center text-muted-foreground">
           <p className="text-[0.9375rem]">No recent activity</p>
         </div>
       ) : (
@@ -1303,15 +1303,15 @@ export const RecentApiActivity: React.FC<RecentApiActivityProps> = ({ activities
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[0.9375rem] font-semibold text-[#1A1D1F] truncate">
+                <div className="text-[0.9375rem] font-semibold text-foreground truncate">
                   {activity.endpoint}
                 </div>
-                <div className="text-[0.8125rem] text-[#6F767E]">
+                <div className="text-[0.8125rem] text-muted-foreground">
                   {formatTime(activity.timestamp)}
                 </div>
               </div>
               {activity.responseTime && (
-                <div className="text-[0.8125rem] text-[#6F767E] ml-2">
+                <div className="text-[0.8125rem] text-muted-foreground ml-2">
                   {activity.responseTime}ms
                 </div>
               )}
@@ -1388,19 +1388,19 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ title, value, change, color, sparklineData }) => {
   const colorMap = {
     cyan: { bg: 'bg-cyan-50', line: '#06B6D4' },
-    green: { bg: 'bg-green-50', line: '#22C55E' },
+    green: { bg: 'bg-success/10', line: '#22C55E' },
     purple: { bg: 'bg-purple-50', line: '#A855F7' },
     yellow: { bg: 'bg-yellow-50', line: '#EAB308' },
-    emerald: { bg: 'bg-emerald-50', line: '#10B981' },
+    emerald: { bg: 'bg-success/10', line: '#10B981' },
   };
   
   const sparkData = sparklineData || Array.from({ length: 12 }, () => Math.random() * 100);
   
   return (
     <div className={`${colorMap[color].bg} rounded-2xl p-5 relative overflow-hidden`}>
-      <div className="text-[0.875rem] text-[#6F767E] mb-2">{title}</div>
-      <div className="text-[2rem] font-semibold text-[#1A1D1F] mb-1">{value}</div>
-      <div className={`flex items-center gap-1 text-[0.8125rem] font-medium ${change >= 0 ? 'text-[#32AE60]' : 'text-[#F04D1A]'}`}>
+      <div className="text-[0.875rem] text-muted-foreground mb-2">{title}</div>
+      <div className="text-[2rem] font-semibold text-foreground mb-1">{value}</div>
+      <div className={`flex items-center gap-1 text-[0.8125rem] font-medium ${change >= 0 ? 'text-success' : 'text-destructive'}`}>
         <svg className={`w-3 h-3 ${change < 0 ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 24 24">
           <path d="M7 14l5-5 5 5H7z" />
         </svg>
@@ -1435,27 +1435,27 @@ export const CreditIntelligenceDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-[1.5rem] font-semibold text-[#1A1D1F]">Credit Intelligence Dashboard</h2>
-          <p className="text-[#6F767E] text-[0.9375rem]">Real-time API performance, conversion metrics, and revenue analytics</p>
+          <h2 className="text-[1.5rem] font-semibold text-foreground">Credit Intelligence Dashboard</h2>
+          <p className="text-muted-foreground text-[0.9375rem]">Real-time API performance, conversion metrics, and revenue analytics</p>
         </div>
         <div className="flex items-center gap-4">
           {/* Live Counter */}
           <div className="text-right">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-[#32AE60] animate-pulse" />
-              <span className="text-[0.8125rem] text-[#6F767E]">Live Scoring Counter</span>
+              <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
+              <span className="text-[0.8125rem] text-muted-foreground">Live Scoring Counter</span>
             </div>
-            <div className="text-[1.5rem] font-semibold text-[#1A1D1F]">{animatedCount}</div>
-            <div className="text-[0.75rem] text-[#6F767E]">applications scored today</div>
+            <div className="text-[1.5rem] font-semibold text-foreground">{animatedCount}</div>
+            <div className="text-[0.75rem] text-muted-foreground">applications scored today</div>
           </div>
           {/* Time Range Toggle */}
-          <div className="flex bg-[#F4F4F4] rounded-xl p-1">
+          <div className="flex bg-muted rounded-xl p-1">
             {(['7d', '30d', '90d'] as const).map((range) => (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
                 className={`px-4 py-2 rounded-lg text-[0.875rem] font-medium transition-colors ${
-                  timeRange === range ? 'bg-white text-[#1A1D1F] shadow-sm' : 'text-[#6F767E] hover:text-[#1A1D1F]'
+                  timeRange === range ? 'bg-white text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {range === '7d' ? 'Last 7 Days' : range === '30d' ? 'Last 30 Days' : 'Last 90 Days'}
@@ -1496,16 +1496,16 @@ export const ConversionLiftChart: React.FC = () => {
           <svg className="w-5 h-5 text-[#32AE60]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
           </svg>
-          <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Conversion Lift Over Time</h3>
+          <h3 className="text-[1.125rem] font-semibold text-foreground">Conversion Lift Over Time</h3>
         </div>
-        <p className="text-[0.8125rem] text-[#6F767E]">Comparing conversion rates with and without LUMIQ AI integration</p>
+        <p className="text-[0.8125rem] text-muted-foreground">Comparing conversion rates with and without LUMIQ AI integration</p>
       </div>
       
       {/* Legend */}
       <div className="flex items-center gap-6 mb-4">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-[#9CA3AF]" />
-          <span className="text-[0.8125rem] text-[#6F767E]">Without LUMIQ AI</span>
+          <span className="text-[0.8125rem] text-muted-foreground">Without LUMIQ AI</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-[#32AE60]" />
@@ -1566,21 +1566,21 @@ export const ConversionLiftChart: React.FC = () => {
       </div>
       
       {/* Stats Footer */}
-      <div className="flex justify-between items-center pt-4 mt-4 border-t border-[#EFEFEF]">
+      <div className="flex justify-between items-center pt-4 mt-4 border-t border-border">
         <div className="text-center">
-          <div className="text-[0.75rem] text-[#6F767E]">Baseline Avg</div>
-          <div className="text-[1.5rem] font-semibold text-[#1A1D1F]">12.5%</div>
+          <div className="text-[0.75rem] text-muted-foreground">Baseline Avg</div>
+          <div className="text-[1.5rem] font-semibold text-foreground">12.5%</div>
         </div>
         <div className="text-center">
-          <div className="text-[0.75rem] text-[#6F767E]">With LUMIQ AI Avg</div>
-          <div className="text-[1.5rem] font-semibold text-[#32AE60]">17.3%</div>
+          <div className="text-[0.75rem] text-muted-foreground">With LUMIQ AI Avg</div>
+          <div className="text-[1.5rem] font-semibold text-success">17.3%</div>
         </div>
         <div className="text-center">
-          <div className="text-[0.75rem] text-[#6F767E]">Peak Conversion</div>
-          <div className="text-[1.5rem] font-semibold text-[#32AE60]">21.8%</div>
+          <div className="text-[0.75rem] text-muted-foreground">Peak Conversion</div>
+          <div className="text-[1.5rem] font-semibold text-success">21.8%</div>
         </div>
         <div className="text-center">
-          <div className="text-[0.75rem] text-[#6F767E]">Avg Lift</div>
+          <div className="text-[0.75rem] text-muted-foreground">Avg Lift</div>
           <div className="text-[1.5rem] font-semibold text-[#0C68E9]">+38.4%</div>
         </div>
       </div>
@@ -1598,11 +1598,11 @@ export const LatencyDistributionChart: React.FC = () => {
             <svg className="w-5 h-5 text-[#FBA94B]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Processing Latency Distribution</h3>
+            <h3 className="text-[1.125rem] font-semibold text-foreground">Processing Latency Distribution</h3>
           </div>
-          <p className="text-[0.8125rem] text-[#6F767E]">Response time percentiles (ms)</p>
+          <p className="text-[0.8125rem] text-muted-foreground">Response time percentiles (ms)</p>
         </div>
-        <div className="px-4 py-1.5 bg-[#DFF9E8] text-[#32AE60] rounded-full text-[0.875rem] font-medium border border-[#32AE60]/20">
+        <div className="px-4 py-1.5 bg-success/10 text-success rounded-full text-[0.875rem] font-medium border border-success/20">
           p95 &lt; 200ms
         </div>
       </div>
@@ -1644,12 +1644,12 @@ export const LatencyDistributionChart: React.FC = () => {
       </div>
       
       {/* Stats Footer */}
-      <div className="flex justify-between items-center pt-4 mt-4 border-t border-[#EFEFEF]">
+      <div className="flex justify-between items-center pt-4 mt-4 border-t border-border">
         {latencyDistributionData.map((item) => (
           <div key={item.percentile} className="text-center">
-            <div className="text-[0.75rem] text-[#6F767E]">{item.percentile}</div>
-            <div className="text-[1.25rem] font-semibold text-[#1A1D1F]">
-              {item.value}<span className="text-[0.875rem] font-normal text-[#6F767E]">ms</span>
+            <div className="text-[0.75rem] text-muted-foreground">{item.percentile}</div>
+            <div className="text-[1.25rem] font-semibold text-foreground">
+              {item.value}<span className="text-[0.875rem] font-normal text-muted-foreground">ms</span>
             </div>
           </div>
         ))}
@@ -1668,11 +1668,11 @@ export const RevenueImpactChart: React.FC = () => {
             <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Revenue Impact</h3>
+            <h3 className="text-[1.125rem] font-semibold text-foreground">Revenue Impact</h3>
           </div>
-          <p className="text-[0.8125rem] text-[#6F767E]">Daily revenue from API-driven approvals</p>
+          <p className="text-[0.8125rem] text-muted-foreground">Daily revenue from API-driven approvals</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-1.5 bg-[#DFF9E8] text-[#32AE60] rounded-full text-[0.875rem] font-medium border border-[#32AE60]/20">
+        <div className="flex items-center gap-2 px-4 py-1.5 bg-success/10 text-success rounded-full text-[0.875rem] font-medium border border-success/20">
           <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
           </svg>
@@ -1730,11 +1730,11 @@ export const ApprovalRateTrendChart: React.FC = () => {
             <svg className="w-5 h-5 text-[#32AE60]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Approval Rate Trend</h3>
+            <h3 className="text-[1.125rem] font-semibold text-foreground">Approval Rate Trend</h3>
           </div>
-          <p className="text-[0.8125rem] text-[#6F767E]">Monthly approval rates and volumes</p>
+          <p className="text-[0.8125rem] text-muted-foreground">Monthly approval rates and volumes</p>
         </div>
-        <div className="px-4 py-1.5 bg-[#DFF9E8] text-[#32AE60] rounded-full text-[0.875rem] font-medium border border-[#32AE60]/20">
+        <div className="px-4 py-1.5 bg-success/10 text-success rounded-full text-[0.875rem] font-medium border border-success/20">
           75% avg rate
         </div>
       </div>
@@ -1784,7 +1784,7 @@ export const ApprovalRateTrendChart: React.FC = () => {
       <div className="flex items-center justify-center gap-6 pt-4 mt-2">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded bg-[#E5E7EB]" />
-          <span className="text-[0.8125rem] text-[#6F767E]">Applications</span>
+          <span className="text-[0.8125rem] text-muted-foreground">Applications</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded bg-[#32AE60]" />

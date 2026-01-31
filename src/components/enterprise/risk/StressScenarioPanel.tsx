@@ -51,9 +51,9 @@ const formatCurrency = (num: number): string => {
 
 const getSeverityColor = (severity: string) => {
   switch (severity) {
-    case 'mild': return 'bg-blue-100 text-blue-700';
-    case 'moderate': return 'bg-amber-100 text-amber-700';
-    case 'severe': return 'bg-rose-100 text-rose-700';
+    case 'mild': return 'bg-info/10 text-info';
+    case 'moderate': return 'bg-warning/10 text-warning';
+    case 'severe': return 'bg-destructive/10 text-destructive';
     default: return 'bg-muted text-foreground';
   }
 };
@@ -189,7 +189,7 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
                     <td className="py-2 px-3 text-right text-muted-foreground">{migration.currentPct}%</td>
                     <td className="py-2 px-3 text-right font-medium">{migration.stressedPct}%</td>
                     <td className={`py-2 px-3 text-right font-medium ${
-                      migration.delta > 0 ? 'text-rose-600' : 'text-emerald-600'
+                      migration.delta > 0 ? 'text-rose-600' : 'text-success'
                     }`}>
                       {migration.delta > 0 ? '+' : ''}{migration.delta}%
                     </td>
@@ -211,7 +211,7 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
               <div key={impact.metric} className="p-3 bg-muted/30 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-foreground">{impact.metric}</span>
-                  <span className={`text-sm font-bold ${impact.change > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+                  <span className={`text-sm font-bold ${impact.change > 0 ? 'text-rose-600' : 'text-success'}`}>
                     {impact.change > 0 ? '+' : ''}{impact.change}{impact.unit}
                   </span>
                 </div>

@@ -179,10 +179,10 @@ const BusinessSignup: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           className="text-center"
         >
-          <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+          <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
           <h1 className="text-3xl font-black mb-2">Welcome to FUTEURCREDX!</h1>
-          <p className="text-gray-400 mb-4">Your business profile has been created successfully.</p>
-          <p className="text-sm text-gray-500">Redirecting to dashboard...</p>
+          <p className="text-muted-foreground mb-4">Your business profile has been created successfully.</p>
+          <p className="text-sm text-muted-foreground">Redirecting to dashboard...</p>
         </motion.div>
       </div>
     )
@@ -201,7 +201,7 @@ const BusinessSignup: React.FC = () => {
             <h1 className="text-4xl font-black uppercase tracking-tight mb-4">
               Complete Your Business Profile
             </h1>
-            <p className="text-gray-400 text-lg">
+            <p className="text-muted-foreground text-lg">
               Welcome {user?.firstName}! Let's set up your business information to complete your FUTEURCREDX account.
             </p>
           </div>
@@ -213,7 +213,7 @@ const BusinessSignup: React.FC = () => {
             className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8"
           >
             {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+              <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-xl text-destructive text-sm">
                 {error}
               </div>
             )}
@@ -392,7 +392,7 @@ const BusinessSignup: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting || !formData.businessName || !formData.streetAddress || !formData.city || !formData.state || !formData.zipCode}
-                className="w-full px-6 py-4 bg-white text-black rounded-xl hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-black uppercase tracking-wide"
+                className="w-full px-6 py-4 bg-card text-foreground rounded-xl hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-black uppercase tracking-wide"
               >
                 {isSubmitting ? (
                   <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />

@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
+import {
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
   Clock,
   Building2,
   TrendingUp,
   TrendingDown,
   MoreHorizontal,
-  ChevronRight
+  ChevronRight,
+  ChevronUp,
+  ChevronDown
 } from 'lucide-react';
 
 export interface PipelineApplication {
@@ -38,7 +40,21 @@ interface ApplicationPipelineViewProps {
   onSelectAll: () => void;
   onViewDetails: (app: PipelineApplication) => void;
   viewMode: 'table' | 'cards';
+  applicationStatuses?: Record<string, string>;
 }
+
+const getStatusBadge = (status: string) => {
+  switch (status) {
+    case 'approved':
+      return { label: 'Approved', color: 'bg-success/15 text-success border border-success/30' };
+    case 'declined':
+      return { label: 'Declined', color: 'bg-destructive/15 text-destructive border border-destructive/30' };
+    case 'under_review':
+      return { label: 'Under Review', color: 'bg-warning/15 text-warning border border-warning/30' };
+    default:
+      return null;
+  }
+};
 
 const formatCurrency = (amount: number) => {
   if (amount >= 1000000) return `$${(amount / 1000000).toFixed(1)}M`;
@@ -48,42 +64,46 @@ const formatCurrency = (amount: number) => {
 
 const getSegmentConfig = (segment: PipelineApplication['customerSegment']) => {
   switch (segment) {
-    case 'micro': return { label: 'Micro', color: 'bg-blue-100 text-blue-700' };
-    case 'small': return { label: 'Small', color: 'bg-green-100 text-green-700' };
+    case 'micro': return { label: 'Micro', color: 'bg-info/10 text-info' };
+    case 'small': return { label: 'Small', color: 'bg-success/10 text-success' };
     case 'mid-market': return { label: 'Mid-Market', color: 'bg-purple-100 text-purple-700' };
   }
 };
 
 const getRiskConfig = (tier: PipelineApplication['riskTier']) => {
   switch (tier) {
-    case 'low': return { label: 'Low', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' };
-    case 'medium': return { label: 'Medium', color: 'bg-amber-100 text-amber-700 border-amber-200' };
-    case 'high': return { label: 'High', color: 'bg-red-100 text-red-700 border-red-200' };
+    case 'low': return { label: 'Low', color: 'bg-success/10 text-success border-success/20' };
+    case 'medium': return { label: 'Medium', color: 'bg-warning/10 text-warning border-warning/20' };
+    case 'high': return { label: 'High', color: 'bg-destructive/10 text-destructive border-destructive/20' };
   }
 };
 
 const getRecommendationConfig = (rec: PipelineApplication['aiRecommendation']) => {
   switch (rec) {
-    case 'approve': return { 
-      icon: CheckCircle2, 
-      label: 'Approve', 
-      color: 'text-emerald-600',
-      bg: 'bg-emerald-50 border-emerald-200'
+    case 'approve': return {
+      icon: CheckCircle2,
+      label: 'Approve',
+      color: 'text-success',
+      bg: 'bg-success/10 border-success/20'
     };
-    case 'review': return { 
-      icon: AlertTriangle, 
-      label: 'Review', 
-      color: 'text-amber-600',
-      bg: 'bg-amber-50 border-amber-200'
+    case 'review': return {
+      icon: AlertTriangle,
+      label: 'Review',
+      color: 'text-warning',
+      bg: 'bg-warning/10 border-warning/20'
     };
-    case 'decline': return { 
-      icon: XCircle, 
-      label: 'Decline', 
-      color: 'text-red-600',
-      bg: 'bg-red-50 border-red-200'
+    case 'decline': return {
+      icon: XCircle,
+      label: 'Decline',
+      color: 'text-destructive',
+      bg: 'bg-destructive/10 border-destructive/20'
     };
   }
 };
+
+const RISK_ORDER: Record<string, number> = { low: 0, medium: 1, high: 2 };
+const REC_ORDER: Record<string, number> = { approve: 0, review: 1, decline: 2 };
+const SEGMENT_ORDER: Record<string, number> = { micro: 0, small: 1, 'mid-market': 2 };
 
 export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = ({
   applications,
@@ -92,27 +112,99 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
   onSelectAll,
   onViewDetails,
   viewMode,
+  applicationStatuses = {},
 }) => {
+  const [sortField, setSortField] = useState<string>('compositeScore');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
+  };
+
+  const sortedApplications = useMemo(() => {
+    const sorted = [...applications];
+    sorted.sort((a, b) => {
+      let comparison = 0;
+      if (sortField === 'riskTier') {
+        comparison = (RISK_ORDER[a.riskTier] ?? 0) - (RISK_ORDER[b.riskTier] ?? 0);
+      } else if (sortField === 'aiRecommendation') {
+        comparison = (REC_ORDER[a.aiRecommendation] ?? 0) - (REC_ORDER[b.aiRecommendation] ?? 0);
+      } else if (sortField === 'customerSegment') {
+        comparison = (SEGMENT_ORDER[a.customerSegment] ?? 0) - (SEGMENT_ORDER[b.customerSegment] ?? 0);
+      } else {
+        const fieldA = a[sortField as keyof PipelineApplication];
+        const fieldB = b[sortField as keyof PipelineApplication];
+        if (fieldA == null && fieldB == null) return 0;
+        if (fieldA == null) return 1;
+        if (fieldB == null) return -1;
+        if (typeof fieldA === 'number' && typeof fieldB === 'number') {
+          comparison = fieldA - fieldB;
+        } else {
+          comparison = String(fieldA).localeCompare(String(fieldB));
+        }
+      }
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+    return sorted;
+  }, [applications, sortField, sortDirection]);
+
+  const SortHeader = ({ field, label }: { field: string; label: string }) => (
+    <th
+      className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-colors select-none"
+      onClick={() => handleSort(field)}
+    >
+      <div className="flex items-center gap-1">
+        <span>{label}</span>
+        {sortField === field && (
+          sortDirection === 'asc'
+            ? <ChevronUp className="h-3 w-3" />
+            : <ChevronDown className="h-3 w-3" />
+        )}
+      </div>
+    </th>
+  );
+
   if (viewMode === 'cards') {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {applications.map((app, index) => {
+        {sortedApplications.map((app, index) => {
           const segment = getSegmentConfig(app.customerSegment);
           const risk = getRiskConfig(app.riskTier);
           const rec = getRecommendationConfig(app.aiRecommendation);
           const isSelected = selectedIds.includes(app.id);
-          
+          const appStatus = applicationStatuses[app.id];
+          const statusBadge = appStatus ? getStatusBadge(appStatus) : null;
+          const isActioned = appStatus === 'approved' || appStatus === 'declined';
+
           return (
             <motion.div
               key={app.id}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: isActioned ? 0.6 : 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              className={`bg-white rounded-xl border-2 p-4 cursor-pointer transition-all hover:shadow-md ${
-                isSelected ? 'border-blue-500 bg-blue-50/30' : 'border-slate-200'
-              }`}
+              className={`bg-card rounded-xl border-2 p-4 cursor-pointer transition-all hover:shadow-md ${
+                isActioned ? 'pointer-events-auto' :
+                isSelected ? 'border-info bg-info/5' : 'border-border'
+              } ${isActioned ? 'border-border' : ''}`}
               onClick={() => onViewDetails(app)}
             >
+              {/* Status Badge */}
+              {statusBadge && (
+                <div className="mb-2">
+                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${statusBadge.color}`}>
+                    {appStatus === 'approved' && <CheckCircle2 className="w-3 h-3" />}
+                    {appStatus === 'declined' && <XCircle className="w-3 h-3" />}
+                    {appStatus === 'under_review' && <AlertTriangle className="w-3 h-3" />}
+                    {statusBadge.label}
+                  </span>
+                </div>
+              )}
+
               {/* Header */}
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
@@ -123,25 +215,25 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
                       e.stopPropagation();
                       onSelect(app.id);
                     }}
-                    className="w-4 h-4 rounded border-slate-300 text-blue-600"
+                    className="w-4 h-4 rounded border-border text-info"
                   />
                   <div>
-                    <h3 className="font-semibold text-slate-800 text-sm">{app.companyName}</h3>
-                    <p className="text-xs text-slate-500">{app.appId}</p>
+                    <h3 className="font-semibold text-foreground text-sm">{app.companyName}</h3>
+                    <p className="text-xs text-muted-foreground">{app.appId}</p>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={(e) => e.stopPropagation()}
-                  className="p-1 hover:bg-slate-100 rounded"
+                  className="p-1 hover:bg-accent rounded"
                 >
-                  <MoreHorizontal className="w-4 h-4 text-slate-400" />
+                  <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
                 </button>
               </div>
 
               {/* Amount & Product */}
               <div className="mb-3">
-                <div className="text-xl font-bold text-slate-800">{formatCurrency(app.amount)}</div>
-                <div className="text-xs text-slate-500">{app.productType}</div>
+                <div className="text-xl font-bold text-foreground">{formatCurrency(app.amount)}</div>
+                <div className="text-xs text-muted-foreground">{app.productType}</div>
               </div>
 
               {/* Tags */}
@@ -152,7 +244,7 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
                 <span className={`px-2 py-0.5 rounded text-xs font-medium border ${risk.color}`}>
                   {risk.label} Risk
                 </span>
-                <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">
+                <span className="px-2 py-0.5 bg-accent text-muted-foreground rounded text-xs">
                   {app.geography}
                 </span>
               </div>
@@ -163,17 +255,17 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
                   <rec.icon className={`w-4 h-4 ${rec.color}`} />
                   <span className={`text-sm font-medium ${rec.color}`}>AI: {rec.label}</span>
                 </div>
-                <span className="text-sm font-semibold text-slate-700">{app.confidence}%</span>
+                <span className="text-sm font-semibold text-foreground">{app.confidence}%</span>
               </div>
 
               {/* Footer */}
-              <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   {app.submittedAt}
                 </div>
                 <div className="flex items-center gap-1">
-                  Score: <span className="font-semibold text-slate-700">{app.compositeScore}</span>
+                  Score: <span className="font-semibold text-foreground">{app.compositeScore}</span>
                 </div>
               </div>
             </motion.div>
@@ -185,58 +277,50 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
 
   // Table View
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div className="bg-card rounded-xl border border-border overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full">
-          <thead className="bg-slate-50 border-b border-slate-200">
+          <thead className="bg-muted border-b border-border">
             <tr>
               <th className="w-12 px-4 py-3">
                 <input
                   type="checkbox"
-                  checked={selectedIds.length === applications.length && applications.length > 0}
+                  checked={selectedIds.length === sortedApplications.length && sortedApplications.length > 0}
                   onChange={onSelectAll}
-                  className="w-4 h-4 rounded border-slate-300 text-blue-600"
+                  className="w-4 h-4 rounded border-border text-info"
                 />
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Application
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Amount / Product
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Segment
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Risk
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                AI Decision
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Score
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
-                Geography
+              <SortHeader field="companyName" label="Application" />
+              <SortHeader field="amount" label="Amount / Product" />
+              <SortHeader field="customerSegment" label="Segment" />
+              <SortHeader field="riskTier" label="Risk" />
+              <SortHeader field="aiRecommendation" label="AI Decision" />
+              <SortHeader field="compositeScore" label="Score" />
+              <SortHeader field="geography" label="Geography" />
+              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Status
               </th>
               <th className="w-12 px-4 py-3"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
-            {applications.map((app, index) => {
+          <tbody className="divide-y divide-border">
+            {sortedApplications.map((app, index) => {
               const segment = getSegmentConfig(app.customerSegment);
               const risk = getRiskConfig(app.riskTier);
               const rec = getRecommendationConfig(app.aiRecommendation);
               const isSelected = selectedIds.includes(app.id);
-              
+              const appStatus = applicationStatuses[app.id];
+              const statusBadge = appStatus ? getStatusBadge(appStatus) : null;
+              const isActioned = appStatus === 'approved' || appStatus === 'declined';
+
               return (
                 <motion.tr
                   key={app.id}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  animate={{ opacity: isActioned ? 0.5 : 1 }}
                   transition={{ delay: index * 0.02 }}
-                  className={`hover:bg-slate-50 cursor-pointer transition-colors ${
-                    isSelected ? 'bg-blue-50/50' : ''
+                  className={`hover:bg-muted cursor-pointer transition-colors ${
+                    isSelected ? 'bg-info/5' : ''
                   }`}
                   onClick={() => onViewDetails(app)}
                 >
@@ -245,23 +329,23 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => onSelect(app.id)}
-                      className="w-4 h-4 rounded border-slate-300 text-blue-600"
+                      className="w-4 h-4 rounded border-border text-info"
                     />
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center">
-                        <Building2 className="w-4 h-4 text-slate-600" />
+                      <div className="w-9 h-9 rounded-lg bg-accent flex items-center justify-center">
+                        <Building2 className="w-4 h-4 text-muted-foreground" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-800 text-sm">{app.companyName}</p>
-                        <p className="text-xs text-slate-500">{app.appId}</p>
+                        <p className="font-medium text-foreground text-sm">{app.companyName}</p>
+                        <p className="text-xs text-muted-foreground">{app.appId}</p>
                       </div>
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="font-semibold text-slate-800">{formatCurrency(app.amount)}</div>
-                    <div className="text-xs text-slate-500">{app.productType}</div>
+                    <div className="font-semibold text-foreground">{formatCurrency(app.amount)}</div>
+                    <div className="text-xs text-muted-foreground">{app.productType}</div>
                   </td>
                   <td className="px-4 py-3">
                     <span className={`px-2 py-1 rounded text-xs font-medium ${segment.color}`}>
@@ -277,31 +361,43 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
                     <div className="flex items-center gap-2">
                       <rec.icon className={`w-4 h-4 ${rec.color}`} />
                       <span className={`text-sm font-medium ${rec.color}`}>{rec.label}</span>
-                      <span className="text-xs text-slate-500">({app.confidence}%)</span>
+                      <span className="text-xs text-muted-foreground">({app.confidence}%)</span>
                     </div>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <span className="font-semibold text-slate-800">{app.compositeScore}</span>
+                      <span className="font-semibold text-foreground">{app.compositeScore}</span>
                       {app.compositeScore >= 700 ? (
-                        <TrendingUp className="w-3 h-3 text-emerald-500" />
+                        <TrendingUp className="w-3 h-3 text-success" />
                       ) : app.compositeScore < 600 ? (
-                        <TrendingDown className="w-3 h-3 text-red-500" />
+                        <TrendingDown className="w-3 h-3 text-destructive" />
                       ) : null}
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-sm text-slate-600">
+                  <td className="px-4 py-3 text-sm text-muted-foreground">
                     {app.geography}
                   </td>
                   <td className="px-4 py-3">
-                    <button 
+                    {statusBadge ? (
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${statusBadge.color}`}>
+                        {appStatus === 'approved' && <CheckCircle2 className="w-3 h-3" />}
+                        {appStatus === 'declined' && <XCircle className="w-3 h-3" />}
+                        {appStatus === 'under_review' && <AlertTriangle className="w-3 h-3" />}
+                        {statusBadge.label}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-muted-foreground">Pending</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <button
                       onClick={(e) => {
                         e.stopPropagation();
                         onViewDetails(app);
                       }}
-                      className="p-1.5 hover:bg-slate-100 rounded transition-colors"
+                      className="p-1.5 hover:bg-accent rounded transition-colors"
                     >
-                      <ChevronRight className="w-4 h-4 text-slate-400" />
+                      <ChevronRight className="w-4 h-4 text-muted-foreground" />
                     </button>
                   </td>
                 </motion.tr>

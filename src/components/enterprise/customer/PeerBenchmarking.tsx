@@ -183,8 +183,8 @@ export const PeerBenchmarking: React.FC<PeerBenchmarkingProps> = ({
                   <div className="text-right">
                     <div className="flex items-center gap-1">
                       {isAboveAvg 
-                        ? <TrendingUp className="h-3 w-3 text-emerald-500" />
-                        : <TrendingDown className="h-3 w-3 text-red-500" />
+                        ? <TrendingUp className="h-3 w-3 text-success" />
+                        : <TrendingDown className="h-3 w-3 text-destructive" />
                       }
                       <span className="text-lg font-bold" style={{ color: percentileColor }}>
                         {config?.format(metric.yourValue)}

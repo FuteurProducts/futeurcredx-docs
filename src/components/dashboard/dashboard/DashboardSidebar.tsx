@@ -1,4 +1,4 @@
-import { LayoutDashboard, BarChart3, Users, Settings, FileText, TrendingUp } from "lucide-react";
+import { LayoutDashboard, BarChart3, Users, Settings, FileText, TrendingUp, FlaskConical, Radio } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -11,6 +11,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useEnvironment } from "@/contexts/EnvironmentContext";
 
 const menuItems = [
   { title: "Overview", url: "/dashboard?tab=overview", icon: LayoutDashboard },
@@ -23,10 +24,11 @@ const menuItems = [
 
 export function DashboardSidebar() {
   const { open } = useSidebar();
+  const { currentEnvironment } = useEnvironment();
 
   return (
-    <Sidebar className={open ? "w-64" : "w-16"} collapsible="icon">
-      <SidebarContent>
+    <Sidebar className={open ? "w-64" : "w-16"} collapsible="icon" role="navigation">
+      <SidebarContent className="flex flex-col h-full">
         <div className="p-4 border-b border-border">
           {open ? (
             <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
@@ -39,7 +41,7 @@ export function DashboardSidebar() {
           )}
         </div>
 
-        <SidebarGroup className="mt-4">
+        <SidebarGroup className="mt-4 flex-1">
           <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -66,6 +68,21 @@ export function DashboardSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {/* Environment indicator at bottom */}
+        <div className="p-3 border-t border-border">
+          {currentEnvironment === 'sandbox' ? (
+            <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-warning/10 text-warning ${open ? '' : 'justify-center'}`}>
+              <FlaskConical className="w-4 h-4 shrink-0" />
+              {open && <span className="text-xs font-semibold uppercase tracking-wide">Sandbox</span>}
+            </div>
+          ) : (
+            <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-success/10 text-success ${open ? '' : 'justify-center'}`}>
+              <Radio className="w-4 h-4 shrink-0" />
+              {open && <span className="text-xs font-semibold uppercase tracking-wide">Production</span>}
+            </div>
+          )}
+        </div>
       </SidebarContent>
     </Sidebar>
   );

@@ -5,8 +5,8 @@ import { Badge } from '@/components/ui/badge';
 const flowSteps = [
   { icon: Building2, label: 'SMB Customer', color: 'text-blue-500', bgColor: 'bg-blue-500/10' },
   { icon: Database, label: 'Experian Data', color: 'text-purple-500', bgColor: 'bg-purple-500/10' },
-  { icon: Sparkles, label: 'FuteurCredX API', color: 'text-pink-500', bgColor: 'bg-pink-500/10' },
-  { icon: Building2, label: 'Your Bank App', color: 'text-green-500', bgColor: 'bg-green-500/10' },
+  { icon: Sparkles, label: 'LUMIQ AI API', color: 'text-pink-500', bgColor: 'bg-pink-500/10' },
+  { icon: Building2, label: 'Your Bank App', color: 'text-success', bgColor: 'bg-success/10' },
 ];
 
 export function DataFlowVisualization() {
