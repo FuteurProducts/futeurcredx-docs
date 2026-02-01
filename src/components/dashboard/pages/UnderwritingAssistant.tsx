@@ -447,9 +447,9 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
   const warningCount = triggers.filter(t => t.status === 'warning').length;
 
   return (
-    <div className="bg-white rounded-2xl border border-[#EFEFEF]">
+    <div className="bg-card rounded-2xl border border-border">
       {/* Header with filter tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-6 border-b border-[#EFEFEF]">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-6 border-b border-border">
         <div className="flex items-center gap-2">
           {filters.map((f) => (
             <button
@@ -457,8 +457,8 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
               onClick={() => setFilter(f.id as any)}
               className={`px-4 py-2 rounded-xl text-[0.875rem] font-medium transition-all ${
                 filter === f.id
-                  ? 'bg-white border-2 border-[#0C68E9] text-[#0C68E9]'
-                  : 'text-[#6F767E] hover:bg-[#F4F4F4]'
+                  ? 'bg-card border-2 border-primary text-primary'
+                  : 'text-muted-foreground hover:bg-muted'
               }`}
             >
               {f.label}
@@ -493,7 +493,7 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
           return (
             <div
               key={trigger.id}
-              className={`flex items-center gap-4 p-4 rounded-xl border-l-4 ${config.borderColor} bg-[#F9FAFB] hover:bg-[#F4F4F4] transition-colors`}
+              className={`flex items-center gap-4 p-4 rounded-xl border-l-4 ${config.borderColor} bg-muted/50 hover:bg-muted transition-colors`}
             >
               <div className={`w-12 h-12 rounded-full ${config.iconBg} flex items-center justify-center shrink-0`}>
                 {trigger.status === 'passed' && <Icon type="check" className={`w-6 h-6 ${config.iconColor}`} />}
@@ -507,8 +507,8 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
                     INFO
                   </span>
                 </div>
-                <h4 className="text-[1rem] font-semibold text-[#1A1D1F] mb-0.5">{trigger.name}</h4>
-                <p className="text-[0.875rem] text-[#6F767E]">{trigger.description}</p>
+                <h4 className="text-[1rem] font-semibold text-foreground mb-0.5">{trigger.name}</h4>
+                <p className="text-[0.875rem] text-muted-foreground">{trigger.description}</p>
               </div>
               
               <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${
@@ -525,8 +525,8 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
 
         {filteredTriggers.length === 0 && (
           <div className="text-center py-12">
-            <Icon type="document" className="w-12 h-12 text-[#6F767E] mx-auto mb-3" />
-            <p className="text-[#6F767E]">No rules found for this category</p>
+            <Icon type="document" className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+            <p className="text-muted-foreground">No rules found for this category</p>
           </div>
         )}
       </div>
@@ -591,7 +591,7 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
         
         {/* Score in center */}
         <div className="absolute left-1/2 bottom-0 -translate-x-1/2 text-center">
-          <div className="text-[2rem] font-bold text-[#1A1D1F]">{animatedScore}</div>
+          <div className="text-[2rem] font-bold text-foreground">{animatedScore}</div>
         </div>
       </div>
       
@@ -632,19 +632,19 @@ const UnderwritingAssistant: React.FC = () => {
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-[1.75rem] font-bold text-[#1A1D1F]">Underwriting Assistant</h1>
-          <p className="text-[#6F767E] text-[0.9375rem]">AI-powered decisioning with real-time risk assessment</p>
+          <h1 className="text-[1.75rem] font-bold text-foreground">Underwriting Assistant</h1>
+          <p className="text-muted-foreground text-[0.9375rem]">AI-powered decisioning with real-time risk assessment</p>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-[#EFEFEF] rounded-xl">
+        <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-xl">
           <div className="w-2 h-2 rounded-full bg-[#32AE60] animate-pulse" />
-          <span className="text-[0.875rem] font-medium text-[#1A1D1F]">AI Engine Active</span>
+          <span className="text-[0.875rem] font-medium text-foreground">AI Engine Active</span>
         </div>
       </div>
 
       {/* Stats Row */}
       <div className="grid grid-cols-6 gap-4 lg:grid-cols-3 md:grid-cols-2">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-white rounded-2xl p-5 border border-[#EFEFEF]">
+          <div key={stat.label} className="bg-card rounded-2xl p-5 border border-border">
             <div className="flex justify-center mb-3">
               <div 
                 className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -654,8 +654,8 @@ const UnderwritingAssistant: React.FC = () => {
               </div>
             </div>
             <div className="text-center">
-              <div className="text-[1.5rem] font-bold text-[#1A1D1F]">{stat.value}</div>
-              <div className="text-[0.8125rem] text-[#6F767E]">{stat.label}</div>
+              <div className="text-[1.5rem] font-bold text-foreground">{stat.value}</div>
+              <div className="text-[0.8125rem] text-muted-foreground">{stat.label}</div>
             </div>
           </div>
         ))}
@@ -664,14 +664,14 @@ const UnderwritingAssistant: React.FC = () => {
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row lg:gap-6">
         {/* Application Queue - Left Sidebar */}
-        <div className="w-full lg:w-[340px] lg:shrink-0 bg-white rounded-2xl p-5 border border-[#EFEFEF] mb-6 lg:mb-0">
+        <div className="w-full lg:w-[340px] lg:shrink-0 bg-card rounded-2xl p-5 border border-border mb-6 lg:mb-0">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-              <Icon type="document" className="w-4 h-4 text-[#1A1D1F]" />
+            <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+              <Icon type="document" className="w-4 h-4 text-foreground" />
             </div>
-            <h2 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Application Queue</h2>
+            <h2 className="text-[1.125rem] font-semibold text-foreground">Application Queue</h2>
           </div>
-          <p className="text-[0.875rem] text-[#6F767E] mb-4">{applications.length} pending review</p>
+          <p className="text-[0.875rem] text-muted-foreground mb-4">{applications.length} pending review</p>
           
           <div className="space-y-2">
             {applications.map((app) => {
@@ -684,12 +684,12 @@ const UnderwritingAssistant: React.FC = () => {
                   onClick={() => setSelectedApp(app)}
                   className={`p-4 rounded-xl cursor-pointer transition-all ${
                     isSelected 
-                      ? 'bg-[#F4F4F4] border-2 border-[#0C68E9]' 
-                      : 'hover:bg-[#F4F4F4] border border-transparent'
+                      ? 'bg-muted border-2 border-primary' 
+                      : 'hover:bg-muted border border-transparent'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[0.75rem] text-[#6F767E] font-mono">{app.appId}</span>
+                    <span className="text-[0.75rem] text-muted-foreground font-mono">{app.appId}</span>
                     <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${badge.bg} ${badge.text}`}>
                       {app.status === 'approve' && <Icon type="check" className="w-3 h-3" />}
                       {app.status === 'review' && <Icon type="warning" className="w-3 h-3" />}
@@ -697,10 +697,10 @@ const UnderwritingAssistant: React.FC = () => {
                       {badge.label}
                     </div>
                   </div>
-                  <div className="font-semibold text-[#1A1D1F] mb-1">{app.companyName}</div>
+                  <div className="font-semibold text-foreground mb-1">{app.companyName}</div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[0.875rem] text-[#6F767E]">{formatCurrency(app.amount)}</span>
-                    <span className="text-[0.875rem] text-[#6F767E]">% {app.confidence}%</span>
+                    <span className="text-[0.875rem] text-muted-foreground">{formatCurrency(app.amount)}</span>
+                    <span className="text-[0.875rem] text-muted-foreground">% {app.confidence}%</span>
                   </div>
                   {app.tags && app.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-2">
@@ -710,7 +710,7 @@ const UnderwritingAssistant: React.FC = () => {
                         </span>
                       ))}
                       {app.tags.length > 2 && (
-                        <span className="px-2 py-0.5 bg-[#F4F4F4] text-[#6F767E] rounded text-[0.6875rem] font-medium">
+                        <span className="px-2 py-0.5 bg-muted text-muted-foreground rounded text-[0.6875rem] font-medium">
                           +{app.tags.length - 2}
                         </span>
                       )}
@@ -725,7 +725,7 @@ const UnderwritingAssistant: React.FC = () => {
         {/* Application Detail - Right Panel */}
         <div className="flex-1 space-y-6">
           {/* Application Header */}
-          <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+          <div className="bg-card rounded-2xl p-6 border border-border">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-[#DFF9E8] rounded-xl flex items-center justify-center">
@@ -733,12 +733,12 @@ const UnderwritingAssistant: React.FC = () => {
                 </div>
                 <div>
                   <div className="flex items-center gap-3">
-                    <h3 className="text-[1.25rem] font-semibold text-[#1A1D1F]">{selectedApp.companyName}</h3>
+                    <h3 className="text-[1.25rem] font-semibold text-foreground">{selectedApp.companyName}</h3>
                     <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${getStatusBadge(selectedApp.status).bg} ${getStatusBadge(selectedApp.status).text}`}>
                       AI: {getStatusBadge(selectedApp.status).label}
                     </span>
                   </div>
-                  <div className="text-[0.875rem] text-[#6F767E]">
+                  <div className="text-[0.875rem] text-muted-foreground">
                     {selectedApp.productType} • {formatCurrency(selectedApp.amount)} • {selectedApp.appId}
                   </div>
                 </div>
@@ -751,9 +751,9 @@ const UnderwritingAssistant: React.FC = () => {
                     </div>
                     <span className="text-[1.5rem] font-bold text-[#32AE60]">{selectedApp.confidence}%</span>
                   </div>
-                  <div className="text-[0.75rem] text-[#6F767E]">Confidence</div>
+                  <div className="text-[0.75rem] text-muted-foreground">Confidence</div>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#EFEFEF] rounded-xl text-[0.875rem] font-medium text-[#1A1D1F] hover:bg-[#F4F4F4] transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2 border border-border rounded-xl text-[0.875rem] font-medium text-foreground hover:bg-muted transition-colors">
                   <Icon type="x" className="w-4 h-4" />
                   Decline
                 </button>
@@ -765,7 +765,7 @@ const UnderwritingAssistant: React.FC = () => {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-1 p-1 bg-[#F4F4F4] rounded-xl w-fit">
+            <div className="flex gap-1 p-1 bg-muted rounded-xl w-fit">
               {[
                 { id: 'overview', label: 'Overview' },
                 { id: 'profile', label: 'Applicant Profile' },
@@ -777,8 +777,8 @@ const UnderwritingAssistant: React.FC = () => {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`px-4 py-2 rounded-lg text-[0.875rem] font-medium transition-colors ${
                     activeTab === tab.id 
-                      ? 'bg-white text-[#1A1D1F] shadow-sm' 
-                      : 'text-[#6F767E] hover:text-[#1A1D1F]'
+                      ? 'bg-card text-foreground shadow-sm' 
+                      : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {tab.label}
@@ -791,49 +791,49 @@ const UnderwritingAssistant: React.FC = () => {
           {activeTab === 'overview' && (
             <>
               {/* Score and Stats */}
-              <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+              <div className="bg-card rounded-2xl p-6 border border-border">
                 <div className="flex flex-wrap items-center gap-6 lg:gap-0">
                   {/* Credit Score Gauge */}
-                  <div className="w-full lg:w-1/3 flex flex-col items-center py-4 lg:border-r border-[#EFEFEF]">
+                  <div className="w-full lg:w-1/3 flex flex-col items-center py-4 lg:border-r border-border">
                     <CreditScoreGauge score={selectedApp.compositeScore} grade={selectedApp.grade} />
-                    <div className="mt-3 text-[0.8125rem] text-[#6F767E]">Composite Score</div>
+                    <div className="mt-3 text-[0.8125rem] text-muted-foreground">Composite Score</div>
                   </div>
 
                   {/* Stats Grid */}
                   <div className="flex-1 grid grid-cols-4 gap-4 lg:pl-6 md:grid-cols-2">
                     <div className="text-center">
-                      <div className="text-[1.5rem] font-bold text-[#1A1D1F]">{selectedApp.ownerFico}</div>
+                      <div className="text-[1.5rem] font-bold text-foreground">{selectedApp.ownerFico}</div>
                       <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-medium bg-[#DFF9E8] text-[#32AE60] border border-[#32AE60]/20">
                         {selectedApp.ownerFico >= 720 ? 'Excellent' : selectedApp.ownerFico >= 680 ? 'Good' : 'Fair'}
                       </div>
-                      <div className="mt-1 text-[0.75rem] text-[#6F767E]">Owner FICO</div>
+                      <div className="mt-1 text-[0.75rem] text-muted-foreground">Owner FICO</div>
                     </div>
-                    <div className="text-center border-l border-[#EFEFEF] pl-4">
-                      <div className="text-[1.5rem] font-bold text-[#1A1D1F]">{selectedApp.bankingHealth}</div>
-                      <div className="w-16 h-1 bg-[#EFEFEF] rounded-full mx-auto mt-1 mb-1">
+                    <div className="text-center border-l border-border pl-4">
+                      <div className="text-[1.5rem] font-bold text-foreground">{selectedApp.bankingHealth}</div>
+                      <div className="w-16 h-1 bg-muted rounded-full mx-auto mt-1 mb-1">
                         <div 
-                          className="h-full bg-[#1A1D1F] rounded-full" 
+                          className="h-full bg-foreground rounded-full" 
                           style={{ width: `${selectedApp.bankingHealth}%` }}
                         />
                       </div>
-                      <div className="text-[0.75rem] text-[#6F767E]">Banking Health</div>
+                      <div className="text-[0.75rem] text-muted-foreground">Banking Health</div>
                     </div>
-                    <div className="text-center border-l border-[#EFEFEF] pl-4">
+                    <div className="text-center border-l border-border pl-4">
                       <div className="flex items-center justify-center gap-1 mb-1">
                         <Icon type="check" className="w-4 h-4 text-[#32AE60]" />
                         <span className="text-[1rem] font-semibold text-[#32AE60]">{selectedApp.kybStatus}</span>
                       </div>
-                      <div className="text-[0.75rem] text-[#6F767E]">KYB Verified</div>
+                      <div className="text-[0.75rem] text-muted-foreground">KYB Verified</div>
                     </div>
-                    <div className="text-center border-l border-[#EFEFEF] pl-4">
+                    <div className="text-center border-l border-border pl-4">
                       <div className="text-[1.5rem] font-bold text-[#32AE60]">{selectedApp.identityMatch}%</div>
-                      <div className="text-[0.75rem] text-[#6F767E]">Identity Match</div>
+                      <div className="text-[0.75rem] text-muted-foreground">Identity Match</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Footer */}
-                <div className="flex justify-between items-center pt-4 mt-4 border-t border-[#EFEFEF] text-[0.8125rem] text-[#6F767E]">
+                <div className="flex justify-between items-center pt-4 mt-4 border-t border-border text-[0.8125rem] text-muted-foreground">
                   <div className="flex items-center gap-1">
                     <Icon type="trendUp" className="w-4 h-4" />
                     Data sources matched: 8/9
@@ -846,13 +846,13 @@ const UnderwritingAssistant: React.FC = () => {
               </div>
 
               {/* Why This Score */}
-              <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+              <div className="bg-card rounded-2xl p-6 border border-border">
                 <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="info" className="w-4 h-4 text-[#1A1D1F]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="info" className="w-4 h-4 text-foreground" />
                     </div>
-                    <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Why this score?</h3>
+                    <h3 className="text-[1.125rem] font-semibold text-foreground">Why this score?</h3>
                   </div>
                   <span className={`px-4 py-1.5 rounded-full text-[0.875rem] font-semibold ${
                     selectedApp.status === 'approve' ? 'bg-[#DFF9E8] text-[#32AE60]' :
@@ -863,7 +863,7 @@ const UnderwritingAssistant: React.FC = () => {
                   </span>
                 </div>
 
-                <p className="text-[0.9375rem] text-[#1A1D1F] mb-6">{selectedApp.summary}</p>
+                <p className="text-[0.9375rem] text-foreground mb-6">{selectedApp.summary}</p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Positive Drivers */}
@@ -875,14 +875,14 @@ const UnderwritingAssistant: React.FC = () => {
                     {selectedApp.positiveDrivers.length > 0 ? (
                       <ul className="space-y-2">
                         {selectedApp.positiveDrivers.map((driver, i) => (
-                          <li key={i} className="flex items-start gap-2 text-[0.875rem] text-[#1A1D1F]">
+                          <li key={i} className="flex items-start gap-2 text-[0.875rem] text-foreground">
                             <span className="text-[#32AE60] mt-1">•</span>
                             {driver}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-[0.875rem] text-[#6F767E] italic">No positive factors identified</p>
+                      <p className="text-[0.875rem] text-muted-foreground italic">No positive factors identified</p>
                     )}
                   </div>
 
@@ -895,14 +895,14 @@ const UnderwritingAssistant: React.FC = () => {
                     {selectedApp.riskDrivers.length > 0 ? (
                       <ul className="space-y-2">
                         {selectedApp.riskDrivers.map((driver, i) => (
-                          <li key={i} className="flex items-start gap-2 text-[0.875rem] text-[#1A1D1F]">
+                          <li key={i} className="flex items-start gap-2 text-[0.875rem] text-foreground">
                             <span className="text-[#F04D1A] mt-1">•</span>
                             {driver}
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-[0.875rem] text-[#6F767E] italic">No risk factors identified</p>
+                      <p className="text-[0.875rem] text-muted-foreground italic">No risk factors identified</p>
                     )}
                   </div>
                 </div>
@@ -916,12 +916,12 @@ const UnderwritingAssistant: React.FC = () => {
               {/* Business & Contact Info */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Business Information */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+                <div className="bg-card rounded-2xl p-6 border border-border">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="building" className="w-4 h-4 text-[#1A1D1F]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="building" className="w-4 h-4 text-foreground" />
                     </div>
-                    <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Business Information</h3>
+                    <h3 className="text-[1rem] font-semibold text-foreground">Business Information</h3>
                   </div>
                   <div className="space-y-4">
                     {[
@@ -932,46 +932,46 @@ const UnderwritingAssistant: React.FC = () => {
                       { label: 'NAICS Code', value: selectedApp.naicsCode },
                       { label: 'Established', value: `${selectedApp.established} (${selectedApp.yearsInBusiness} years)` },
                     ].map((item) => (
-                      <div key={item.label} className="flex justify-between items-center py-2 border-b border-[#EFEFEF] last:border-0">
-                        <span className="text-[0.875rem] text-[#6F767E]">{item.label}</span>
-                        <span className="text-[0.875rem] font-semibold text-[#1A1D1F]">{item.value}</span>
+                      <div key={item.label} className="flex justify-between items-center py-2 border-b border-border last:border-0">
+                        <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
+                        <span className="text-[0.875rem] font-semibold text-foreground">{item.value}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Contact Information */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+                <div className="bg-card rounded-2xl p-6 border border-border">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="info" className="w-4 h-4 text-[#1A1D1F]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="info" className="w-4 h-4 text-foreground" />
                     </div>
-                    <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Contact Information</h3>
+                    <h3 className="text-[1rem] font-semibold text-foreground">Contact Information</h3>
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-[#F4F4F4] rounded flex items-center justify-center shrink-0 mt-0.5">
-                        <Icon type="building" className="w-3.5 h-3.5 text-[#6F767E]" />
+                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center shrink-0 mt-0.5">
+                        <Icon type="building" className="w-3.5 h-3.5 text-muted-foreground" />
                       </div>
-                      <span className="text-[0.875rem] text-[#1A1D1F]">{selectedApp.address}</span>
+                      <span className="text-[0.875rem] text-foreground">{selectedApp.address}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-[#F4F4F4] rounded flex items-center justify-center">
-                        <Icon type="info" className="w-3.5 h-3.5 text-[#6F767E]" />
+                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
+                        <Icon type="info" className="w-3.5 h-3.5 text-muted-foreground" />
                       </div>
-                      <span className="text-[0.875rem] text-[#1A1D1F]">{selectedApp.phone}</span>
+                      <span className="text-[0.875rem] text-foreground">{selectedApp.phone}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-[#F4F4F4] rounded flex items-center justify-center">
-                        <Icon type="info" className="w-3.5 h-3.5 text-[#6F767E]" />
+                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
+                        <Icon type="info" className="w-3.5 h-3.5 text-muted-foreground" />
                       </div>
-                      <span className="text-[0.875rem] text-[#1A1D1F]">{selectedApp.email}</span>
+                      <span className="text-[0.875rem] text-foreground">{selectedApp.email}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-[#F4F4F4] rounded flex items-center justify-center">
-                        <Icon type="trendUp" className="w-3.5 h-3.5 text-[#6F767E]" />
+                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
+                        <Icon type="trendUp" className="w-3.5 h-3.5 text-muted-foreground" />
                       </div>
-                      <a href={`https://${selectedApp.website}`} target="_blank" rel="noopener noreferrer" className="text-[0.875rem] text-[#0C68E9] hover:underline">
+                      <a href={`https://${selectedApp.website}`} target="_blank" rel="noopener noreferrer" className="text-[0.875rem] text-primary hover:underline">
                         {selectedApp.website}
                       </a>
                     </div>
@@ -980,20 +980,20 @@ const UnderwritingAssistant: React.FC = () => {
               </div>
 
               {/* Owner Information */}
-              <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+              <div className="bg-card rounded-2xl p-6 border border-border">
                 <div className="flex items-center gap-2 mb-5">
-                  <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                    <Icon type="users" className="w-4 h-4 text-[#1A1D1F]" />
+                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                    <Icon type="users" className="w-4 h-4 text-foreground" />
                   </div>
-                  <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Owner Information</h3>
+                  <h3 className="text-[1rem] font-semibold text-foreground">Owner Information</h3>
                 </div>
                 <div className="grid grid-cols-4 gap-6 md:grid-cols-2">
-                  <div className="text-center p-4 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[1.25rem] font-bold text-[#1A1D1F] mb-1">{selectedApp.ownerName}</div>
-                    <div className="text-[0.8125rem] text-[#6F767E]">Primary Owner</div>
+                  <div className="text-center p-4 bg-muted rounded-xl">
+                    <div className="text-[1.25rem] font-bold text-foreground mb-1">{selectedApp.ownerName}</div>
+                    <div className="text-[0.8125rem] text-muted-foreground">Primary Owner</div>
                   </div>
-                  <div className="text-center p-4 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[1.5rem] font-bold text-[#1A1D1F] mb-1">{selectedApp.ownerFico}</div>
+                  <div className="text-center p-4 bg-muted rounded-xl">
+                    <div className="text-[1.5rem] font-bold text-foreground mb-1">{selectedApp.ownerFico}</div>
                     <span className={`inline-block px-2 py-0.5 rounded-full text-[0.75rem] font-medium mb-1 ${
                       selectedApp.ownerFico >= 720 ? 'bg-[#DFF9E8] text-[#32AE60]' :
                       selectedApp.ownerFico >= 680 ? 'bg-[#FEF3CD] text-[#FBA94B]' :
@@ -1001,18 +1001,18 @@ const UnderwritingAssistant: React.FC = () => {
                     }`}>
                       {selectedApp.ownerFico >= 720 ? 'Excellent' : selectedApp.ownerFico >= 680 ? 'Good' : 'Fair'}
                     </span>
-                    <div className="text-[0.8125rem] text-[#6F767E]">Personal FICO</div>
+                    <div className="text-[0.8125rem] text-muted-foreground">Personal FICO</div>
                   </div>
-                  <div className="text-center p-4 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[1.5rem] font-bold text-[#1A1D1F] mb-1">{selectedApp.ownership}%</div>
-                    <div className="text-[0.8125rem] text-[#6F767E]">Ownership</div>
+                  <div className="text-center p-4 bg-muted rounded-xl">
+                    <div className="text-[1.5rem] font-bold text-foreground mb-1">{selectedApp.ownership}%</div>
+                    <div className="text-[0.8125rem] text-muted-foreground">Ownership</div>
                   </div>
-                  <div className="text-center p-4 bg-[#F4F4F4] rounded-xl">
+                  <div className="text-center p-4 bg-muted rounded-xl">
                     <div className="flex items-center justify-center gap-1 mb-1">
                       <Icon type="check" className="w-5 h-5 text-[#32AE60]" />
                       <span className="text-[1rem] font-bold text-[#32AE60]">Verified</span>
                     </div>
-                    <div className="text-[0.8125rem] text-[#6F767E]">Identity Check</div>
+                    <div className="text-[0.8125rem] text-muted-foreground">Identity Check</div>
                   </div>
                 </div>
               </div>
@@ -1025,8 +1025,8 @@ const UnderwritingAssistant: React.FC = () => {
               {/* Subscores, Banking Health, Tradelines */}
               <div className="grid grid-cols-3 gap-6 lg:grid-cols-1">
                 {/* Subscores */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
-                  <h3 className="text-[1rem] font-semibold text-[#1A1D1F] mb-5">Subscores</h3>
+                <div className="bg-card rounded-2xl p-6 border border-border">
+                  <h3 className="text-[1rem] font-semibold text-foreground mb-5">Subscores</h3>
                   <div className="space-y-4">
                     {[
                       { label: 'Tradelines', score: selectedApp.subscores.tradelines },
@@ -1036,12 +1036,12 @@ const UnderwritingAssistant: React.FC = () => {
                     ].map((item) => (
                       <div key={item.label}>
                         <div className="flex justify-between items-center mb-1.5">
-                          <span className="text-[0.875rem] text-[#1A1D1F]">{item.label}</span>
-                          <span className="text-[0.875rem] font-semibold text-[#1A1D1F]">{item.score}/100</span>
+                          <span className="text-[0.875rem] text-foreground">{item.label}</span>
+                          <span className="text-[0.875rem] font-semibold text-foreground">{item.score}/100</span>
                         </div>
-                        <div className="h-2 bg-[#F4F4F4] rounded-full overflow-hidden">
+                        <div className="h-2 bg-muted rounded-full overflow-hidden">
                           <div 
-                            className="h-full bg-[#0C68E9] rounded-full transition-all duration-500" 
+                            className="h-full bg-primary rounded-full transition-all duration-500" 
                             style={{ width: `${item.score}%` }}
                           />
                         </div>
@@ -1051,12 +1051,12 @@ const UnderwritingAssistant: React.FC = () => {
                 </div>
 
                 {/* Banking Health */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+                <div className="bg-card rounded-2xl p-6 border border-border">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="building" className="w-4 h-4 text-[#0C68E9]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="building" className="w-4 h-4 text-primary" />
                     </div>
-                    <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Banking Health</h3>
+                    <h3 className="text-[1rem] font-semibold text-foreground">Banking Health</h3>
                   </div>
                   <div className="space-y-3">
                     {[
@@ -1068,7 +1068,7 @@ const UnderwritingAssistant: React.FC = () => {
                       { label: 'Cash Runway', value: `${selectedApp.banking.cashRunway} months` },
                     ].map((item) => (
                       <div key={item.label} className="flex justify-between items-center py-1.5">
-                        <span className="text-[0.875rem] text-[#6F767E]">{item.label}</span>
+                        <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
                         {item.isBadge ? (
                           <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
                             item.value === 'Stable' ? 'bg-[#DFF9E8] text-[#32AE60] border border-[#32AE60]/20' :
@@ -1079,7 +1079,7 @@ const UnderwritingAssistant: React.FC = () => {
                           </span>
                         ) : (
                           <span className={`text-[0.875rem] font-semibold ${
-                            item.isNumber && Number(item.value) > 0 ? 'text-[#F04D1A]' : 'text-[#1A1D1F]'
+                            item.isNumber && Number(item.value) > 0 ? 'text-[#F04D1A]' : 'text-foreground'
                           }`}>
                             {item.isNumber && Number(item.value) === 0 ? <span className="text-[#32AE60]">0</span> : item.value}
                           </span>
@@ -1090,12 +1090,12 @@ const UnderwritingAssistant: React.FC = () => {
                 </div>
 
                 {/* Tradelines & Payments */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+                <div className="bg-card rounded-2xl p-6 border border-border">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="document" className="w-4 h-4 text-[#0C68E9]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="document" className="w-4 h-4 text-primary" />
                     </div>
-                    <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Tradelines & Payments</h3>
+                    <h3 className="text-[1rem] font-semibold text-foreground">Tradelines & Payments</h3>
                   </div>
                   <div className="space-y-3">
                     {[
@@ -1105,8 +1105,8 @@ const UnderwritingAssistant: React.FC = () => {
                       { label: 'DBT Average', value: `${selectedApp.tradelines.dbtAverage} days`, isGreen: selectedApp.tradelines.dbtAverage <= 15 },
                     ].map((item) => (
                       <div key={item.label} className="flex justify-between items-center py-1.5">
-                        <span className="text-[0.875rem] text-[#6F767E]">{item.label}</span>
-                        <span className={`text-[0.875rem] font-semibold ${item.isGreen ? 'text-[#32AE60]' : 'text-[#1A1D1F]'}`}>
+                        <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
+                        <span className={`text-[0.875rem] font-semibold ${item.isGreen ? 'text-[#32AE60]' : 'text-foreground'}`}>
                           {item.value}
                         </span>
                       </div>
@@ -1118,44 +1118,44 @@ const UnderwritingAssistant: React.FC = () => {
               {/* Public Records & Identity */}
               <div className="grid grid-cols-2 gap-6 lg:grid-cols-1">
                 {/* Public Records & Liens */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+                <div className="bg-card rounded-2xl p-6 border border-border">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="shield" className="w-4 h-4 text-[#0C68E9]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="shield" className="w-4 h-4 text-primary" />
                     </div>
-                    <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Public Records & Liens</h3>
+                    <h3 className="text-[1rem] font-semibold text-foreground">Public Records & Liens</h3>
                   </div>
                   <div className="grid grid-cols-4 gap-4 md:grid-cols-2">
-                    <div className="text-center p-3 bg-[#F4F4F4] rounded-xl">
-                      <div className="text-[1.25rem] font-bold text-[#1A1D1F] mb-1">{selectedApp.publicRecords.uccFilings}</div>
-                      <div className="text-[0.75rem] text-[#6F767E]">UCC Filings</div>
+                    <div className="text-center p-3 bg-muted rounded-xl">
+                      <div className="text-[1.25rem] font-bold text-foreground mb-1">{selectedApp.publicRecords.uccFilings}</div>
+                      <div className="text-[0.75rem] text-muted-foreground">UCC Filings</div>
                     </div>
                     {[
                       { label: 'Liens', value: selectedApp.publicRecords.liens },
                       { label: 'Judgments', value: selectedApp.publicRecords.judgments },
                       { label: 'Bankruptcies', value: selectedApp.publicRecords.bankruptcies },
                     ].map((item) => (
-                      <div key={item.label} className="text-center p-3 bg-[#F4F4F4] rounded-xl">
+                      <div key={item.label} className="text-center p-3 bg-muted rounded-xl">
                         <div className="flex justify-center mb-1">
                           <Icon type="check" className={`w-5 h-5 ${item.value ? 'text-[#F04D1A]' : 'text-[#32AE60]'}`} />
                         </div>
-                        <div className="text-[0.75rem] text-[#6F767E]">{item.label}</div>
+                        <div className="text-[0.75rem] text-muted-foreground">{item.label}</div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Identity & KYB */}
-                <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+                <div className="bg-card rounded-2xl p-6 border border-border">
                   <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <Icon type="fingerprint" className="w-4 h-4 text-[#0C68E9]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <Icon type="fingerprint" className="w-4 h-4 text-primary" />
                     </div>
-                    <h3 className="text-[1rem] font-semibold text-[#1A1D1F]">Identity & KYB</h3>
+                    <h3 className="text-[1rem] font-semibold text-foreground">Identity & KYB</h3>
                   </div>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center py-1.5">
-                      <span className="text-[0.875rem] text-[#6F767E]">Registry</span>
+                      <span className="text-[0.875rem] text-muted-foreground">Registry</span>
                       <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
                         selectedApp.kyb.registry === 'Verified' ? 'bg-[#DFF9E8] text-[#32AE60]' :
                         selectedApp.kyb.registry === 'Pending' ? 'bg-[#FEF3CD] text-[#FBA94B]' :
@@ -1165,11 +1165,11 @@ const UnderwritingAssistant: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-1.5">
-                      <span className="text-[0.875rem] text-[#6F767E]">EIN</span>
+                      <span className="text-[0.875rem] text-muted-foreground">EIN</span>
                       <Icon type="check" className={`w-5 h-5 ${selectedApp.kyb.ein ? 'text-[#32AE60]' : 'text-[#F04D1A]'}`} />
                     </div>
                     <div className="flex justify-between items-center py-1.5">
-                      <span className="text-[0.875rem] text-[#6F767E]">Address Stability</span>
+                      <span className="text-[0.875rem] text-muted-foreground">Address Stability</span>
                       <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
                         selectedApp.kyb.addressStability === 'High' ? 'bg-[#DFF9E8] text-[#32AE60]' :
                         selectedApp.kyb.addressStability === 'Medium' ? 'bg-[#FEF3CD] text-[#FBA94B]' :

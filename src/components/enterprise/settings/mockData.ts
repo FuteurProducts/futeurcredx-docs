@@ -19,7 +19,7 @@ export const mockUsers: PlatformUser[] = [
   {
     id: 'usr-001',
     name: 'John Administrator',
-    email: 'john.admin@bank.com',
+    email: 'john.admin@partnerbank.com',
     role: 'admin',
     status: 'active',
     lastLogin: '2024-01-15T14:30:00Z',
@@ -32,7 +32,7 @@ export const mockUsers: PlatformUser[] = [
   {
     id: 'usr-002',
     name: 'Sarah Developer',
-    email: 'sarah.dev@bank.com',
+    email: 'sarah.dev@partnerbank.com',
     role: 'developer',
     status: 'active',
     lastLogin: '2024-01-15T12:00:00Z',
@@ -45,7 +45,7 @@ export const mockUsers: PlatformUser[] = [
   {
     id: 'usr-003',
     name: 'Mike Risk Analyst',
-    email: 'mike.risk@bank.com',
+    email: 'mike.risk@partnerbank.com',
     role: 'risk',
     status: 'active',
     lastLogin: '2024-01-14T16:45:00Z',
@@ -58,7 +58,7 @@ export const mockUsers: PlatformUser[] = [
   {
     id: 'usr-004',
     name: 'Lisa Relationship Manager',
-    email: 'lisa.rm@bank.com',
+    email: 'lisa.rm@partnerbank.com',
     role: 'rm',
     status: 'active',
     lastLogin: '2024-01-15T09:00:00Z',
@@ -71,7 +71,7 @@ export const mockUsers: PlatformUser[] = [
   {
     id: 'usr-005',
     name: 'Tom Analyst',
-    email: 'tom.analyst@bank.com',
+    email: 'tom.analyst@partnerbank.com',
     role: 'readonly',
     status: 'pending',
     lastLogin: null,
@@ -177,7 +177,7 @@ export const mockApiKeys: ApiKey[] = [
     createdAt: '2024-01-01T00:00:00Z',
     lastUsed: '2024-01-15T14:30:00Z',
     status: 'active',
-    createdBy: 'john.admin@bank.com',
+    createdBy: 'john.admin@partnerbank.com',
   },
   {
     id: 'key-002',
@@ -188,7 +188,7 @@ export const mockApiKeys: ApiKey[] = [
     createdAt: '2024-01-05T00:00:00Z',
     lastUsed: '2024-01-15T10:00:00Z',
     status: 'active',
-    createdBy: 'sarah.dev@bank.com',
+    createdBy: 'sarah.dev@partnerbank.com',
   },
   {
     id: 'key-003',
@@ -199,7 +199,7 @@ export const mockApiKeys: ApiKey[] = [
     createdAt: '2023-06-01T00:00:00Z',
     lastUsed: '2023-12-01T00:00:00Z',
     status: 'revoked',
-    createdBy: 'john.admin@bank.com',
+    createdBy: 'john.admin@partnerbank.com',
   },
 ];
 
@@ -225,9 +225,9 @@ export const mockOAuthClients: OAuthClient[] = [
 ];
 
 export const mockIpAllowlist: IpAllowlistEntry[] = [
-  { id: 'ip-001', ipOrCidr: '192.168.1.0/24', addedBy: 'john.admin@bank.com', addedOn: '2024-01-01T00:00:00Z', description: 'Corporate HQ' },
-  { id: 'ip-002', ipOrCidr: '10.0.0.0/8', addedBy: 'john.admin@bank.com', addedOn: '2024-01-01T00:00:00Z', description: 'Internal VPN' },
-  { id: 'ip-003', ipOrCidr: '203.0.113.50', addedBy: 'sarah.dev@bank.com', addedOn: '2024-01-10T00:00:00Z', description: 'Dev Office' },
+  { id: 'ip-001', ipOrCidr: '192.168.1.0/24', addedBy: 'john.admin@partnerbank.com', addedOn: '2024-01-01T00:00:00Z', description: 'Corporate HQ' },
+  { id: 'ip-002', ipOrCidr: '10.0.0.0/8', addedBy: 'john.admin@partnerbank.com', addedOn: '2024-01-01T00:00:00Z', description: 'Internal VPN' },
+  { id: 'ip-003', ipOrCidr: '203.0.113.50', addedBy: 'sarah.dev@partnerbank.com', addedOn: '2024-01-10T00:00:00Z', description: 'Dev Office' },
 ];
 
 export const mockDataSources: DataSource[] = [
@@ -241,8 +241,8 @@ export const mockDataSources: DataSource[] = [
 ];
 
 export const mockModelVersions: ModelVersion[] = [
-  { id: 'model-001', name: 'LumiqAI Score Engine', version: 'v3.2.1', status: 'active', validatedOn: '2024-01-10T00:00:00Z', notes: 'Production model with improved cash flow features' },
-  { id: 'model-002', name: 'LumiqAI Score Engine', version: 'v3.1.0', status: 'deprecated', validatedOn: '2023-11-15T00:00:00Z', notes: 'Previous stable version' },
+  { id: 'model-001', name: 'LUMIQ AI Score Engine', version: 'v3.2.1', status: 'active', validatedOn: '2024-01-10T00:00:00Z', notes: 'Production model with improved cash flow features' },
+  { id: 'model-002', name: 'LUMIQ AI Score Engine', version: 'v3.1.0', status: 'deprecated', validatedOn: '2023-11-15T00:00:00Z', notes: 'Previous stable version' },
   { id: 'model-003', name: 'Early Warning System', version: 'v2.0.0', status: 'active', validatedOn: '2024-01-05T00:00:00Z', notes: 'Enhanced deterioration detection' },
   { id: 'model-004', name: 'Cross-sell Propensity', version: 'v1.5.0', status: 'testing', validatedOn: '2024-01-12T00:00:00Z', notes: 'A/B testing in progress' },
 ];
@@ -255,12 +255,12 @@ export const mockAlertThresholds: AlertThreshold[] = [
 ];
 
 export const mockAuditLogs: AuditLogEntry[] = [
-  { id: 'log-001', user: 'john.admin@bank.com', action: 'user.created', resource: 'tom.analyst@bank.com', timestamp: '2024-01-15T14:30:00Z', ip: '192.168.1.100' },
-  { id: 'log-002', user: 'sarah.dev@bank.com', action: 'api_key.created', resource: 'Sandbox Test Key', timestamp: '2024-01-15T12:00:00Z', ip: '192.168.1.105' },
-  { id: 'log-003', user: 'john.admin@bank.com', action: 'settings.updated', resource: 'alert_thresholds', timestamp: '2024-01-14T16:45:00Z', ip: '192.168.1.100' },
-  { id: 'log-004', user: 'mike.risk@bank.com', action: 'report.exported', resource: 'Portfolio Risk Summary', timestamp: '2024-01-14T15:30:00Z', ip: '192.168.1.110' },
-  { id: 'log-005', user: 'lisa.rm@bank.com', action: 'customer.viewed', resource: 'Business ID: BIZ-12345', timestamp: '2024-01-14T14:00:00Z', ip: '192.168.1.115' },
-  { id: 'log-006', user: 'john.admin@bank.com', action: 'role.updated', resource: 'Risk Analyst', timestamp: '2024-01-13T10:00:00Z', ip: '192.168.1.100' },
+  { id: 'log-001', user: 'john.admin@partnerbank.com', action: 'user.created', resource: 'tom.analyst@partnerbank.com', timestamp: '2024-01-15T14:30:00Z', ip: '192.168.1.100' },
+  { id: 'log-002', user: 'sarah.dev@partnerbank.com', action: 'api_key.created', resource: 'Sandbox Test Key', timestamp: '2024-01-15T12:00:00Z', ip: '192.168.1.105' },
+  { id: 'log-003', user: 'john.admin@partnerbank.com', action: 'settings.updated', resource: 'alert_thresholds', timestamp: '2024-01-14T16:45:00Z', ip: '192.168.1.100' },
+  { id: 'log-004', user: 'mike.risk@partnerbank.com', action: 'report.exported', resource: 'Portfolio Risk Summary', timestamp: '2024-01-14T15:30:00Z', ip: '192.168.1.110' },
+  { id: 'log-005', user: 'lisa.rm@partnerbank.com', action: 'customer.viewed', resource: 'Business ID: BIZ-12345', timestamp: '2024-01-14T14:00:00Z', ip: '192.168.1.115' },
+  { id: 'log-006', user: 'john.admin@partnerbank.com', action: 'role.updated', resource: 'Risk Analyst', timestamp: '2024-01-13T10:00:00Z', ip: '192.168.1.100' },
 ];
 
 export const mockBillingInfo: BillingInfo = {

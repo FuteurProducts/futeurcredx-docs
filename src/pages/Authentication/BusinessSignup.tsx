@@ -3,6 +3,7 @@ import { useUser, useAuth } from '@/contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Building2, MapPin, Users, ArrowRight, CheckCircle } from 'lucide-react'
+import { logger } from '@/utils/logger'
 
 const BusinessSignup: React.FC = () => {
   const { user } = useUser()
@@ -126,7 +127,7 @@ const BusinessSignup: React.FC = () => {
         
         // If 401 and we haven't retried yet, try with a fresh token
         if (response.status === 401 && retryCount === 0) {
-          console.log('Token expired, retrying with fresh token...')
+          logger.warn('Token expired, retrying with fresh token...')
           const freshToken = await getToken()
           if (freshToken) {
             return makeApiCall(freshToken, 1)
@@ -145,7 +146,7 @@ const BusinessSignup: React.FC = () => {
         }, 2000)
       } else {
         const errorData = await response.text()
-        console.error('Backend user creation failed:', response.status, errorData)
+        logger.error('Backend user creation failed:', response.status, errorData)
         
         // Check if user already exists
         if (response.status === 400 && errorData.includes('already exists')) {
@@ -164,7 +165,7 @@ const BusinessSignup: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Error creating business profile:', error)
+      logger.error('Error creating business profile:', error)
       setError('Network error. Please try again.')
     } finally {
       setIsSubmitting(false)
@@ -180,7 +181,7 @@ const BusinessSignup: React.FC = () => {
           className="text-center"
         >
           <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
-          <h1 className="text-3xl font-black mb-2">Welcome to FUTEURCREDX!</h1>
+          <h1 className="text-3xl font-black mb-2">Welcome to LUMIQ AI!</h1>
           <p className="text-muted-foreground mb-4">Your business profile has been created successfully.</p>
           <p className="text-sm text-muted-foreground">Redirecting to dashboard...</p>
         </motion.div>
@@ -202,7 +203,7 @@ const BusinessSignup: React.FC = () => {
               Complete Your Business Profile
             </h1>
             <p className="text-muted-foreground text-lg">
-              Welcome {user?.firstName}! Let's set up your business information to complete your FUTEURCREDX account.
+              Welcome {user?.firstName}! Let's set up your business information to complete your LUMIQ AI account.
             </p>
           </div>
 

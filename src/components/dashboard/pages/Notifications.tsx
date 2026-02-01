@@ -60,12 +60,12 @@ const ToggleSwitch: React.FC<{
     <button
       type="button"
       onClick={() => onChange(!enabled)}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:ring-offset-2 ${
-        enabled ? 'bg-[#0C68E9]' : 'bg-[#EFEFEF]'
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+        enabled ? 'bg-primary' : 'bg-muted'
       }`}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+        className={`inline-block h-4 w-4 transform rounded-full bg-card transition-transform ${
           enabled ? 'translate-x-6' : 'translate-x-1'
         }`}
       />
@@ -86,7 +86,7 @@ const Dropdown: React.FC<{
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-4 py-2.5 text-[0.875rem] font-medium text-[#1A1D1F] bg-white border border-[#EFEFEF] rounded-xl hover:border-[#0C68E9] transition-colors"
+        className="flex items-center justify-between w-full px-4 py-2.5 text-[0.875rem] font-medium text-foreground bg-card border border-border rounded-xl hover:border-primary transition-colors"
       >
         <span>{options.find(opt => opt.value === value)?.label || value}</span>
         <Icon name="chevron-down" className="w-4 h-4 ml-2" />
@@ -94,7 +94,7 @@ const Dropdown: React.FC<{
       {isOpen && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute z-20 w-full mt-1 bg-white border border-[#EFEFEF] rounded-xl shadow-lg overflow-hidden">
+          <div className="absolute z-20 w-full mt-1 bg-card border border-border rounded-xl shadow-lg overflow-hidden">
             {options.map((option) => (
               <button
                 key={option.value}
@@ -103,8 +103,8 @@ const Dropdown: React.FC<{
                   onChange(option.value);
                   setIsOpen(false);
                 }}
-                className={`w-full px-4 py-2.5 text-left text-[0.875rem] hover:bg-[#F4F4F4] transition-colors ${
-                  value === option.value ? 'bg-[#F4F4F4] text-[#0C68E9]' : 'text-[#1A1D1F]'
+                className={`w-full px-4 py-2.5 text-left text-[0.875rem] hover:bg-muted transition-colors ${
+                  value === option.value ? 'bg-muted text-primary' : 'text-foreground'
                 }`}
               >
                 {option.label}
@@ -194,39 +194,39 @@ const Notifications: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl p-6 lg:p-8 border border-[#EFEFEF]">
+      <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-[#F4F4F4] flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
             <Icon name="bell" className="w-5 h-5" />
           </div>
-          <h1 className="text-2xl font-semibold text-[#1A1D1F]">Notification Preferences</h1>
+          <h1 className="text-2xl font-semibold text-foreground">Notification Preferences</h1>
         </div>
-        <p className="text-[0.9375rem] text-[#6F767E] ml-[52px]">
+        <p className="text-[0.9375rem] text-muted-foreground ml-[52px]">
           Configure how and when you receive alerts and updates
         </p>
       </div>
 
       {/* Notification Channels Header */}
-      <div className="bg-white rounded-2xl p-6 lg:p-8 border border-[#EFEFEF]">
+      <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
         <div className="grid grid-cols-5 gap-4 items-center">
           <div className="col-span-2">
-            <span className="text-[0.875rem] font-medium text-[#6F767E]">Notification Type</span>
+            <span className="text-[0.875rem] font-medium text-muted-foreground">Notification Type</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <Icon name="mail" className="w-4 h-4" />
-            <span className="text-[0.875rem] font-medium text-[#6F767E]">Email</span>
+            <span className="text-[0.875rem] font-medium text-muted-foreground">Email</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <Icon name="phone" className="w-4 h-4" />
-            <span className="text-[0.875rem] font-medium text-[#6F767E]">SMS</span>
+            <span className="text-[0.875rem] font-medium text-muted-foreground">SMS</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <Icon name="slack" className="w-4 h-4" />
-            <span className="text-[0.875rem] font-medium text-[#6F767E]">Slack</span>
+            <span className="text-[0.875rem] font-medium text-muted-foreground">Slack</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <Icon name="clock" className="w-4 h-4" />
-            <span className="text-[0.875rem] font-medium text-[#6F767E]">Frequency</span>
+            <span className="text-[0.875rem] font-medium text-muted-foreground">Frequency</span>
           </div>
         </div>
       </div>
@@ -239,15 +239,15 @@ const Notifications: React.FC = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="bg-white rounded-2xl p-6 lg:p-8 border border-[#EFEFEF]"
+            className="bg-card rounded-2xl p-6 lg:p-8 border border-border"
           >
             <div className="grid grid-cols-5 gap-4 items-center">
               {/* Notification Type */}
               <div className="col-span-2">
-                <h3 className="text-[1rem] font-semibold text-[#1A1D1F] mb-1">
+                <h3 className="text-[1rem] font-semibold text-foreground mb-1">
                   {setting.title}
                 </h3>
-                <p className="text-[0.875rem] text-[#6F767E]">
+                <p className="text-[0.875rem] text-muted-foreground">
                   {setting.description}
                 </p>
               </div>
@@ -292,26 +292,26 @@ const Notifications: React.FC = () => {
       </div>
 
       {/* Integration Status */}
-      <div className="bg-white rounded-2xl p-6 lg:p-8 border border-[#EFEFEF]">
-        <h2 className="text-[1.125rem] font-semibold text-[#1A1D1F] mb-4">Integration Status</h2>
+      <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
+        <h2 className="text-[1.125rem] font-semibold text-foreground mb-4">Integration Status</h2>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <div className="w-6 h-6 rounded-full bg-[#32AE60] flex items-center justify-center">
               <Icon name="check" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
-            <span className="text-[0.9375rem] text-[#1A1D1F]">Email verified</span>
+            <span className="text-[0.9375rem] text-foreground">Email verified</span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-6 h-6 rounded-full bg-[#32AE60] flex items-center justify-center">
               <Icon name="check" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
-            <span className="text-[0.9375rem] text-[#1A1D1F]">SMS enabled</span>
+            <span className="text-[0.9375rem] text-foreground">SMS enabled</span>
           </div>
           <div className="flex items-center gap-3">
             <div className="w-6 h-6 rounded-full bg-[#32AE60] flex items-center justify-center">
               <Icon name="check" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
-            <span className="text-[0.9375rem] text-[#1A1D1F]">Slack connected</span>
+            <span className="text-[0.9375rem] text-foreground">Slack connected</span>
           </div>
         </div>
       </div>

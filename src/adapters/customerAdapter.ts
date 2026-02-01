@@ -5,6 +5,9 @@
 
 import type { SmbEntity } from '@/services/bff/types';
 import type { CustomerEntity } from '@/components/enterprise/customer';
+import type { EnrichedBusiness } from '@/data/demoData';
+import { getEnrichedBusiness } from '@/data/demoData';
+import { deterministicValue } from '@/utils/deterministicHash';
 
 // Industry mapping from NAICS codes
 const NAICS_TO_INDUSTRY: Record<string, string> = {
@@ -44,12 +47,24 @@ function getRegion(state?: string): string {
   return regions[state || ''] || 'Other';
 }
 
+// Map enriched relationship stage to CustomerEntity relationship stage
+const STAGE_MAP: Record<EnrichedBusiness['relationshipStage'], CustomerEntity['relationshipStage']> = {
+  'prospect': 'prospect',
+  'onboarding': 'new',
+  'active': 'growing',
+  'expansion': 'mature',
+};
+
+function mapRelationshipStage(enrichedStage?: EnrichedBusiness['relationshipStage']): CustomerEntity['relationshipStage'] | undefined {
+  return enrichedStage ? STAGE_MAP[enrichedStage] : undefined;
+}
+
 // Relationship stage placeholder (would come from additional data)
 function getRelationshipStage(createdAt?: string): 'prospect' | 'new' | 'growing' | 'mature' | 'at-risk' {
   // For MVP: derive from entity age or metadata
   const created = createdAt ? new Date(createdAt) : new Date();
   const daysSinceCreation = Math.floor((Date.now() - created.getTime()) / (1000 * 60 * 60 * 24));
-  
+
   if (daysSinceCreation < 30) return 'new';
   if (daysSinceCreation < 180) return 'growing';
   return 'mature';
@@ -71,16 +86,16 @@ export function adaptSmbEntityToCustomer(entity: SmbEntity): CustomerEntity {
     segment: getSegment(entity.annualRevenue),
     region: getRegion(entity.state),
     branch: entity.city ? `${entity.city} Branch` : 'Main Branch',
-    rhs: 65 + Math.floor(Math.random() * 30), // Placeholder RHS (would come from relationship data)
-    rhsChange: Math.floor(Math.random() * 10) - 3, // Placeholder
-    primaryProduct: 'Checking', // Would come from products data
+    rhs: getEnrichedBusiness(entity.id)?.rhs ?? deterministicValue(entity.id + '_rhs', 65, 94),
+    rhsChange: getEnrichedBusiness(entity.id)?.rhsChange ?? deterministicValue(entity.id + '_rhsc', -3, 6),
+    primaryProduct: getEnrichedBusiness(entity.id)?.products[0]?.name ?? 'Checking',
     riskTier: getRiskTier(entity.riskTier),
-    relationshipStage: getRelationshipStage(entity.createdAt),
+    relationshipStage: mapRelationshipStage(getEnrichedBusiness(entity.id)?.relationshipStage) ?? getRelationshipStage(entity.createdAt),
     lastActivity: entity.updatedAt || new Date().toISOString().split('T')[0],
-    assignedRM: undefined, // Would come from assignment data
-    totalExposure: entity.annualRevenue ? entity.annualRevenue * 0.15 : 0,
-    depositBalance: entity.annualRevenue ? entity.annualRevenue * 0.12 : 0,
-    productCount: 2 + Math.floor(Math.random() * 4), // Placeholder
+    assignedRM: getEnrichedBusiness(entity.id)?.assignedRM,
+    totalExposure: getEnrichedBusiness(entity.id)?.totalExposure ?? (entity.annualRevenue ? entity.annualRevenue * 0.15 : 0),
+    depositBalance: getEnrichedBusiness(entity.id)?.depositBalance ?? (entity.annualRevenue ? entity.annualRevenue * 0.12 : 0),
+    productCount: getEnrichedBusiness(entity.id)?.products.length ?? deterministicValue(entity.id + '_pc', 2, 5),
   };
 }
 
@@ -128,16 +143,16 @@ export function adaptBffCustomerList(customers: BffCustomerListItem[]): Customer
       segment: getSegment(c.annualRevenue),
       region: getRegion(c.addressState),
       branch: c.addressCity ? `${c.addressCity} Branch` : 'Main Branch',
-      rhs: 65 + Math.floor(Math.random() * 30),
-      rhsChange: Math.floor(Math.random() * 10) - 3,
-      primaryProduct: 'Checking',
+      rhs: getEnrichedBusiness(c.id)?.rhs ?? deterministicValue(c.id + '_rhs', 65, 94),
+      rhsChange: getEnrichedBusiness(c.id)?.rhsChange ?? deterministicValue(c.id + '_rhsc', -3, 6),
+      primaryProduct: getEnrichedBusiness(c.id)?.products[0]?.name ?? 'Checking',
       riskTier: getRiskTier(c.riskClass, c.latestScore),
-      relationshipStage: 'growing',
+      relationshipStage: mapRelationshipStage(getEnrichedBusiness(c.id)?.relationshipStage) ?? 'growing',
       lastActivity: c.lastScorePull || c.createdAt || new Date().toISOString().split('T')[0],
-      assignedRM: undefined,
-      totalExposure: c.annualRevenue ? c.annualRevenue * 0.15 : 0,
-      depositBalance: c.annualRevenue ? c.annualRevenue * 0.12 : 0,
-      productCount: 2 + Math.floor(Math.random() * 4),
+      assignedRM: getEnrichedBusiness(c.id)?.assignedRM,
+      totalExposure: getEnrichedBusiness(c.id)?.totalExposure ?? (c.annualRevenue ? c.annualRevenue * 0.15 : 0),
+      depositBalance: getEnrichedBusiness(c.id)?.depositBalance ?? (c.annualRevenue ? c.annualRevenue * 0.12 : 0),
+      productCount: getEnrichedBusiness(c.id)?.products.length ?? deterministicValue(c.id + '_pc', 2, 5),
     };
   });
 }

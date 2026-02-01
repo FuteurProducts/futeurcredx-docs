@@ -64,12 +64,12 @@ const endpoints: ApiEndpoint[] = [
 
 const getMethodColor = (method: HttpMethod) => {
   switch (method) {
-    case "GET": return "text-[#0C68E9] bg-[#D8F0FF]"
-    case "POST": return "text-[#32AE60] bg-[#DFF9E8]"
+    case "GET": return "text-primary bg-primary/10"
+    case "POST": return "text-emerald-500 bg-[#DFF9E8]"
     case "PUT": return "text-[#FBA94B] bg-[#FEE6C7]"
     case "DELETE": return "text-[#F04D1A] bg-[#FDE6D7]"
     case "PATCH": return "text-[#B981DA] bg-[#F5EDFA]"
-    default: return "text-[#6F767E] bg-[#EFEFEF]"
+    default: return "text-muted-foreground bg-muted"
   }
 }
 
@@ -231,27 +231,27 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-[#0C68E9] text-xl">{">"}_</span>
-          <h2 className="text-[1.5rem] font-semibold text-[#1A1D1F]">Interactive API Tester</h2>
+          <span className="text-primary text-xl">{">"}_</span>
+          <h2 className="text-[1.5rem] font-semibold text-foreground">Interactive API Tester</h2>
         </div>
-        <p className="text-[0.9375rem] text-[#6F767E]">Test API endpoints with live requests and inspect real responses</p>
+        <p className="text-[0.9375rem] text-muted-foreground">Test API endpoints with live requests and inspect real responses</p>
       </div>
 
       {/* Side by Side Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left: Request Panel */}
-        <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+        <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center gap-2 mb-6">
-            <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
             </svg>
-            <h3 className="text-[1.25rem] font-semibold text-[#1A1D1F]">Request</h3>
+            <h3 className="text-[1.25rem] font-semibold text-foreground">Request</h3>
           </div>
 
           {/* Endpoint Selector */}
           <div className="space-y-4">
             <div>
-              <label className="block text-[0.8125rem] font-semibold text-[#1A1D1F] mb-2">Endpoint</label>
+              <label className="block text-[0.8125rem] font-semibold text-foreground mb-2">Endpoint</label>
               <div className="relative">
                 <select
                   value={selectedEndpoint.path}
@@ -264,7 +264,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       setRequestBody('')
                     }
                   }}
-                  className="w-full h-12 px-4 pr-10 bg-white border border-[#EFEFEF] rounded-xl text-[#1A1D1F] text-[0.9375rem] font-medium focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:border-transparent appearance-none cursor-pointer"
+                  className="w-full h-12 px-4 pr-10 bg-card border border-border rounded-xl text-foreground text-[0.9375rem] font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer"
                 >
                   {endpoints.map((ep) => (
                     <option key={ep.path} value={ep.path}>
@@ -273,7 +273,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                   ))}
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -281,29 +281,29 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             </div>
 
             {/* Method + Path Display */}
-            <div className="flex items-center gap-3 p-3 bg-[#F4F4F4] rounded-xl">
+            <div className="flex items-center gap-3 p-3 bg-muted rounded-xl">
               <span className={`px-2 py-1 rounded-lg text-[0.75rem] font-bold ${getMethodColor(selectedEndpoint.method)}`}>
                 {selectedEndpoint.method}
               </span>
-              <code className="text-[0.875rem] text-[#1A1D1F] font-mono break-all">{getFullPath()}</code>
+              <code className="text-[0.875rem] text-foreground font-mono break-all">{getFullPath()}</code>
             </div>
 
             {/* Description */}
-            <p className="text-[0.8125rem] text-[#6F767E]">{selectedEndpoint.description}</p>
+            <p className="text-[0.8125rem] text-muted-foreground">{selectedEndpoint.description}</p>
 
             {/* API Key Section */}
             {selectedEndpoint.protected && (
               <div className="space-y-3">
-                <label className="block text-[0.8125rem] font-semibold text-[#1A1D1F]">API Key</label>
+                <label className="block text-[0.8125rem] font-semibold text-foreground">API Key</label>
                 
                 {/* Toggle between modes */}
-                <div className="flex gap-2 p-1 bg-[#F4F4F4] rounded-xl">
+                <div className="flex gap-2 p-1 bg-muted rounded-xl">
                   <button
                     onClick={() => setKeyInputMode('select')}
                     className={`flex-1 py-2 px-4 rounded-lg text-[0.8125rem] font-semibold transition-all ${
                       keyInputMode === 'select' 
-                        ? 'bg-white text-[#1A1D1F] shadow-sm' 
-                        : 'text-[#6F767E] hover:text-[#1A1D1F]'
+                        ? 'bg-card text-foreground shadow-sm' 
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     Choose from saved
@@ -312,8 +312,8 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     onClick={() => setKeyInputMode('manual')}
                     className={`flex-1 py-2 px-4 rounded-lg text-[0.8125rem] font-semibold transition-all ${
                       keyInputMode === 'manual' 
-                        ? 'bg-white text-[#1A1D1F] shadow-sm' 
-                        : 'text-[#6F767E] hover:text-[#1A1D1F]'
+                        ? 'bg-card text-foreground shadow-sm' 
+                        : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
                     Enter manually
@@ -325,7 +325,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     <select
                       value={selectedApiKey}
                       onChange={(e) => setSelectedApiKey(e.target.value)}
-                      className="w-full h-12 px-4 bg-white border border-[#EFEFEF] rounded-xl text-[#1A1D1F] text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:border-transparent appearance-none cursor-pointer"
+                      className="w-full h-12 px-4 bg-card border border-border rounded-xl text-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer"
                     >
                       <option value="">Select an API key...</option>
                       {apiKeys.map((key: any) => (
@@ -335,7 +335,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       ))}
                     </select>
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                      <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
                     </div>
@@ -350,11 +350,11 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       value={manualApiKey}
                       onChange={(e) => setManualApiKey(e.target.value)}
                       placeholder="Paste your API key here..."
-                      className="w-full h-12 px-4 pr-12 bg-white border border-[#EFEFEF] rounded-xl text-[#1A1D1F] placeholder-[#A7ACB0] font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:border-transparent"
+                      className="w-full h-12 px-4 pr-12 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
                     <button
                       onClick={() => setShowManualKey(!showManualKey)}
-                      className="absolute inset-y-0 right-0 flex items-center pr-4 text-[#6F767E] hover:text-[#1A1D1F]"
+                      className="absolute inset-y-0 right-0 flex items-center pr-4 text-muted-foreground hover:text-foreground"
                     >
                       {showManualKey ? (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -375,11 +375,11 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             {/* Request Headers Toggle */}
             <button 
               onClick={() => setShowHeaders(!showHeaders)}
-              className="flex items-center gap-2 text-[0.875rem] font-semibold text-[#6F767E] hover:text-[#1A1D1F] transition-colors"
+              className="flex items-center gap-2 text-[0.875rem] font-semibold text-muted-foreground hover:text-foreground transition-colors"
             >
-              <span className="text-[#0C68E9]">{"<>"}</span>
+              <span className="text-primary">{"<>"}</span>
               Request Headers
-              <span className="px-2 py-0.5 bg-[#EFEFEF] rounded-md text-[0.75rem]">{activeKey ? '2' : '1'} headers</span>
+              <span className="px-2 py-0.5 bg-muted rounded-md text-[0.75rem]">{activeKey ? '2' : '1'} headers</span>
               <svg className={`w-4 h-4 transition-transform ${showHeaders ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
@@ -393,15 +393,15 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-                  <div className="space-y-2 p-3 bg-[#1A1D1F] rounded-xl text-[0.8125rem] font-mono">
+                  <div className="space-y-2 p-3 bg-zinc-900 dark:bg-zinc-950 rounded-xl text-[0.8125rem] font-mono">
                     <div className="flex justify-between">
-                      <span className="text-[#6F767E]">Content-Type:</span>
-                      <span className="text-[#32AE60]">application/json</span>
+                      <span className="text-muted-foreground">Content-Type:</span>
+                      <span className="text-emerald-500">application/json</span>
                     </div>
                     {activeKey && (
                       <div className="flex justify-between">
-                        <span className="text-[#6F767E]">X-API-Key:</span>
-                        <span className="text-[#32AE60]">••••••••{activeKey.slice(-8)}</span>
+                        <span className="text-muted-foreground">X-API-Key:</span>
+                        <span className="text-emerald-500">••••••••{activeKey.slice(-8)}</span>
                       </div>
                     )}
                   </div>
@@ -412,7 +412,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
               {/* Parameters */}
             {selectedEndpoint.parameters && selectedEndpoint.parameters.length > 0 && (
                 <div>
-                <label className="block text-[0.8125rem] font-semibold text-[#1A1D1F] mb-2">Parameters</label>
+                <label className="block text-[0.8125rem] font-semibold text-foreground mb-2">Parameters</label>
                 {selectedEndpoint.parameters.map((param) => (
                   <div key={param.name} className="mb-2">
                         <input
@@ -420,9 +420,9 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                           value={paramValues[param.name] || ''}
                       onChange={(e) => setParamValues(prev => ({ ...prev, [param.name]: e.target.value }))}
                       placeholder={`${param.name} (${param.type})`}
-                      className="w-full h-12 px-4 bg-white border border-[#EFEFEF] rounded-xl text-[#1A1D1F] placeholder-[#A7ACB0] text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:border-transparent"
+                      className="w-full h-12 px-4 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     />
-                    <p className="mt-1 text-[0.75rem] text-[#6F767E]">{param.description}</p>
+                    <p className="mt-1 text-[0.75rem] text-muted-foreground">{param.description}</p>
                       </div>
                     ))}
                 </div>
@@ -431,13 +431,13 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
               {/* Request Body */}
             {selectedEndpoint.method !== 'GET' && (
                 <div>
-                <label className="block text-[0.8125rem] font-semibold text-[#1A1D1F] mb-2">Request Body</label>
+                <label className="block text-[0.8125rem] font-semibold text-foreground mb-2">Request Body</label>
                   <textarea
                   value={requestBody || (selectedEndpoint.defaultBody ? JSON.stringify(selectedEndpoint.defaultBody, null, 2) : '')}
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                   rows={5}
-                  className="w-full p-4 bg-[#1A1D1F] border border-[#272B30] rounded-xl text-[#32AE60] placeholder-[#6F767E] font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:border-transparent resize-none"
+                  className="w-full p-4 bg-zinc-900 dark:bg-zinc-950 border border-zinc-800 rounded-xl text-emerald-500 placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   />
                 </div>
               )}
@@ -446,7 +446,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
               <button
                 onClick={handleSendRequest}
               disabled={loading || (selectedEndpoint.protected && !activeKey)}
-              className="w-full h-14 flex items-center justify-center gap-2 bg-[#0C68E9] text-white rounded-xl font-bold text-[0.9375rem] hover:bg-[#0B5ED7] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full h-14 flex items-center justify-center gap-2 bg-primary text-white rounded-xl font-bold text-[0.9375rem] hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 {loading ? (
                 <>
@@ -469,40 +469,40 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
         </div>
 
         {/* Right: Response Panel - Terminal Style */}
-        <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+        <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
-              <span className="text-[#6F767E] text-xl">{">_"}</span>
-              <h3 className="text-[1.25rem] font-semibold text-[#1A1D1F]">Response</h3>
+              <span className="text-muted-foreground text-xl">{">_"}</span>
+              <h3 className="text-[1.25rem] font-semibold text-foreground">Response</h3>
             </div>
             {responseStatus !== null && (
               <div className="flex items-center gap-3">
                 <span className={`px-3 py-1 rounded-lg text-[0.75rem] font-bold ${
                         responseStatus >= 200 && responseStatus < 300 
-                    ? 'bg-[#DFF9E8] text-[#32AE60]' 
+                    ? 'bg-[#DFF9E8] text-emerald-500' 
                     : 'bg-[#FDE6D7] text-[#F04D1A]'
                       }`}>
                   {responseStatus === 0 ? 'Error' : responseStatus}
                       </span>
                 {responseTime && (
-                  <span className="text-[0.75rem] text-[#6F767E]">{responseTime}ms</span>
+                  <span className="text-[0.75rem] text-muted-foreground">{responseTime}ms</span>
                 )}
               </div>
             )}
           </div>
 
           {/* Terminal */}
-          <div className="bg-[#1A1D1F] rounded-xl min-h-[400px] overflow-hidden">
+          <div className="bg-zinc-900 dark:bg-zinc-950 rounded-xl min-h-[400px] overflow-hidden">
             {/* Terminal Header */}
             <div className="flex items-center gap-2 px-4 py-3 bg-[#272B30] border-b border-[#33383F]">
               <div className="w-3 h-3 rounded-full bg-[#F04D1A]"></div>
               <div className="w-3 h-3 rounded-full bg-[#FBA94B]"></div>
               <div className="w-3 h-3 rounded-full bg-[#32AE60]"></div>
-              <span className="ml-3 text-[0.75rem] text-[#6F767E]">response.json</span>
+              <span className="ml-3 text-[0.75rem] text-muted-foreground">response.json</span>
               {response && (
                 <button
                   onClick={() => navigator.clipboard.writeText(JSON.stringify(response, null, 2))}
-                  className="ml-auto text-[0.75rem] text-[#6F767E] hover:text-white transition-colors flex items-center gap-1"
+                  className="ml-auto text-[0.75rem] text-muted-foreground hover:text-white transition-colors flex items-center gap-1"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -516,7 +516,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             {/* Terminal Content */}
             <div className="p-4 font-mono text-[0.8125rem] leading-relaxed max-h-[350px] overflow-auto">
                     {loading ? (
-                <div className="flex items-center gap-2 text-[#32AE60]">
+                <div className="flex items-center gap-2 text-emerald-500">
                   <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
@@ -524,12 +524,12 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       </div>
               ) : response ? (
                 <pre className={`whitespace-pre-wrap ${
-                  response.error ? 'text-[#F04D1A]' : 'text-[#32AE60]'
+                  response.error ? 'text-[#F04D1A]' : 'text-emerald-500'
                 }`}>
                         {JSON.stringify(response, null, 2)}
                       </pre>
               ) : (
-                <div className="flex flex-col items-center justify-center h-[300px] text-[#6F767E]">
+                <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground">
                   <svg className="w-16 h-16 mb-4 opacity-30" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>

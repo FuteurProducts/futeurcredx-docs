@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/utils/logger';
 
 interface UseSessionTimeoutOptions {
   warningMinutes?: number;  // Minutes before timeout to show warning (default 5)
@@ -52,7 +53,7 @@ export function useSessionTimeout(
         resetTimer();
       }
     } catch (err) {
-      console.error('Failed to extend session:', err);
+      logger.error('Failed to extend session:', err);
     }
   }, [resetTimer]);
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Download, Copy, Check, Code, Terminal, 
+import {
+  Download, Copy, Check, Code, Terminal,
   ExternalLink, Book, Zap, Package, FileCode
 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 // ============================================
 // TYPES
@@ -44,7 +45,7 @@ const score = await lumiq.getScore({
 });
 
 console.log(score.lumiq_score); // 742`,
-    docsUrl: 'https://docs.futeurcredx.com/sdk/javascript',
+    docsUrl: 'https://docs.lumiq.ai/sdk/javascript',
   },
   {
     id: 'python',
@@ -62,7 +63,7 @@ score = lumiq.get_score(
 )
 
 print(score.lumiq_score)  # 742`,
-    docsUrl: 'https://docs.futeurcredx.com/sdk/python',
+    docsUrl: 'https://docs.lumiq.ai/sdk/python',
   },
   {
     id: 'react',
@@ -83,14 +84,14 @@ function App() {
     />
   );
 }`,
-    docsUrl: 'https://docs.futeurcredx.com/sdk/react',
+    docsUrl: 'https://docs.lumiq.ai/sdk/react',
   },
   {
     id: 'curl',
     name: 'REST API / cURL',
     icon: '🌐',
     installCommand: '# No installation needed',
-    quickStart: `curl -X GET "https://api.futeurcredx.com/v1/credit-score" \\
+    quickStart: `curl -X GET "https://api.lumiq.ai/v1/credit-score" \\
   -H "Authorization: Bearer your_api_key" \\
   -H "Content-Type: application/json" \\
   -d '{"business_id": "biz_123"}'
@@ -102,7 +103,7 @@ function App() {
 #   "factors": [...],
 #   "recommendations": [...]
 # }`,
-    docsUrl: 'https://docs.futeurcredx.com/api-reference',
+    docsUrl: 'https://docs.lumiq.ai/api-reference',
   },
 ];
 
@@ -118,6 +119,14 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
   const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
   const [copiedCommand, setCopiedCommand] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState(false);
+  const { toast } = useToast();
+
+  const handleExternalLink = () => {
+    toast({
+      title: 'Documentation portal available during pilot engagement',
+      description: 'Contact your account representative for access.',
+    });
+  };
 
   const copyToClipboard = (text: string, type: 'command' | 'code') => {
     navigator.clipboard.writeText(text);
@@ -218,38 +227,41 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
 
       {/* Quick links */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <a
-          href={selectedLanguage.docsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors"
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={handleExternalLink}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
+          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
         >
           <Book className="w-4 h-4 text-info" />
           <span className="text-sm font-medium text-foreground">Documentation</span>
-          <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-        </a>
-        
-        <a
-          href="https://docs.futeurcredx.com/api-reference"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors"
+          <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
+        </div>
+
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={handleExternalLink}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
+          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
         >
           <FileCode className="w-4 h-4 text-purple-600" />
           <span className="text-sm font-medium text-foreground">API Reference</span>
-          <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-        </a>
-        
-        <a
-          href="https://docs.futeurcredx.com/changelog"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors"
+          <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
+        </div>
+
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={handleExternalLink}
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
+          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
         >
           <Zap className="w-4 h-4 text-warning" />
           <span className="text-sm font-medium text-foreground">Changelog</span>
-          <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-        </a>
+          <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
+        </div>
         
         <button
           onClick={() => onDownload?.(selectedLanguage.id)}
@@ -267,14 +279,12 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
             <h4 className="font-medium text-foreground">Need help integrating?</h4>
             <p className="text-sm text-muted-foreground">Our team can help you get started</p>
           </div>
-          <a
-            href="https://enterprise.futeurcredx.com/contact-us"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={handleExternalLink}
             className="px-4 py-2 bg-foreground text-background rounded-lg hover:bg-foreground/90 transition-colors text-sm font-medium"
           >
             Contact Support
-          </a>
+          </button>
         </div>
       </div>
     </motion.div>

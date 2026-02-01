@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List, Filter, CheckCircle2, XCircle, AlertTriangle, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -15,104 +15,96 @@ import {
   DEFAULT_UNDERWRITING_METRICS,
   DAILY_STATS_METRICS,
 } from '@/components/enterprise/underwriting';
+import { usePortfolio } from '@/contexts/PortfolioContext';
+import { applicationsService, customersService } from '@/services/bff';
+import { adaptApplicationsToPipeline } from '@/adapters/applicationAdapter';
+import { withFallback } from '@/utils/withFallback';
 
-import { DEMO_BUSINESSES } from '@/data/demoData';
+import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
+import { demoDataStore } from '@/data/demoDataStore';
 
-// Pipeline applications derived from centralized business data
-const MOCK_APPLICATIONS: PipelineApplication[] = [
-  {
-    id: '1',
-    appId: 'APP-2025-001',
-    companyName: DEMO_BUSINESSES[0].name,
-    amount: DEMO_BUSINESSES[0].applicationAmount || 250000,
-    productType: DEMO_BUSINESSES[0].productType || 'Business Line of Credit',
-    customerSegment: DEMO_BUSINESSES[0].segment,
-    riskTier: DEMO_BUSINESSES[0].riskTier,
-    aiRecommendation: 'approve',
-    confidence: 92,
-    geography: 'Southwest',
-    industry: DEMO_BUSINESSES[0].industry,
-    yearsInBusiness: DEMO_BUSINESSES[0].yearsInBusiness,
-    compositeScore: DEMO_BUSINESSES[0].lumiqScore * 10,
-    submittedAt: '2h ago',
-    tags: [],
-  },
-  {
-    id: '2',
-    appId: 'APP-2025-002',
-    companyName: DEMO_BUSINESSES[4].name,
-    amount: DEMO_BUSINESSES[4].applicationAmount || 75000,
-    productType: DEMO_BUSINESSES[4].productType || 'Term Loan',
-    customerSegment: DEMO_BUSINESSES[4].segment,
-    riskTier: DEMO_BUSINESSES[4].riskTier,
-    aiRecommendation: 'review',
-    confidence: 67,
-    geography: 'West',
-    industry: DEMO_BUSINESSES[4].industry,
-    yearsInBusiness: DEMO_BUSINESSES[4].yearsInBusiness,
-    compositeScore: DEMO_BUSINESSES[4].lumiqScore * 10,
-    submittedAt: '4h ago',
-    tags: ['Seasonal revenue'],
-  },
-  {
-    id: '3',
-    appId: 'APP-2025-003',
-    companyName: DEMO_BUSINESSES[1].name,
-    amount: DEMO_BUSINESSES[1].applicationAmount || 500000,
-    productType: DEMO_BUSINESSES[1].productType || 'Working Capital',
-    customerSegment: DEMO_BUSINESSES[1].segment,
-    riskTier: 'low',
-    aiRecommendation: 'approve',
-    confidence: 95,
-    geography: 'South',
-    industry: DEMO_BUSINESSES[1].industry,
-    yearsInBusiness: DEMO_BUSINESSES[1].yearsInBusiness,
-    compositeScore: DEMO_BUSINESSES[1].lumiqScore * 10 + 75,
-    submittedAt: '1h ago',
-    tags: [],
-  },
-  {
-    id: '4',
-    appId: 'APP-2025-004',
-    companyName: DEMO_BUSINESSES[5].name,
-    amount: 120000,
-    productType: 'Business Line of Credit',
-    customerSegment: DEMO_BUSINESSES[5].segment,
-    riskTier: DEMO_BUSINESSES[5].riskTier,
-    aiRecommendation: 'decline',
-    confidence: 88,
-    geography: 'Southeast',
-    industry: DEMO_BUSINESSES[5].industry,
-    yearsInBusiness: DEMO_BUSINESSES[5].yearsInBusiness,
-    compositeScore: DEMO_BUSINESSES[5].lumiqScore * 10,
-    submittedAt: '6h ago',
-    tags: ['Score declining', 'High utilization'],
-  },
-  {
-    id: '5',
-    appId: 'APP-2025-005',
-    companyName: DEMO_BUSINESSES[2].name,
-    amount: DEMO_BUSINESSES[2].applicationAmount || 350000,
-    productType: DEMO_BUSINESSES[2].productType || 'Equipment Financing',
-    customerSegment: DEMO_BUSINESSES[2].segment,
-    riskTier: DEMO_BUSINESSES[2].riskTier,
-    aiRecommendation: 'approve',
-    confidence: 89,
-    geography: 'Southwest',
-    industry: DEMO_BUSINESSES[2].industry,
-    yearsInBusiness: DEMO_BUSINESSES[2].yearsInBusiness,
-    compositeScore: DEMO_BUSINESSES[2].lumiqScore * 10 + 10,
-    submittedAt: '3h ago',
-    tags: [],
-  },
-];
+// Derive fallback applications from enriched demo data
+function buildFallbackApplications(): PipelineApplication[] {
+  const apps = demoDataStore.getApplications();
+  const regionMap: Record<string, string> = { TX: 'Southwest', CA: 'West', AZ: 'West', FL: 'Southeast', IL: 'Midwest', MI: 'Midwest', WA: 'West' };
+
+  return apps.map(app => {
+    const biz = DEMO_BUSINESSES.find(b => b.id === app.businessId);
+    return {
+      id: app.id,
+      appId: app.appId,
+      companyName: app.businessName,
+      amount: app.amount,
+      productType: app.productType,
+      customerSegment: biz?.segment || 'small',
+      riskTier: app.riskTier,
+      aiRecommendation: app.aiRecommendation || 'review',
+      confidence: app.confidence || 75,
+      geography: biz?.state ? (regionMap[biz.state] || 'National') : 'National',
+      industry: biz?.industry || 'General',
+      yearsInBusiness: biz?.yearsInBusiness || 5,
+      compositeScore: app.compositeScore,
+      submittedAt: formatRelativeTime(app.submittedAt),
+      tags: app.riskTier === 'high' ? ['Score declining', 'High utilization'] :
+            app.riskTier === 'medium' ? ['Seasonal revenue'] : [],
+    };
+  });
+}
+
+function formatRelativeTime(isoDate: string): string {
+  const diffMs = Date.now() - new Date(isoDate).getTime();
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  if (diffHours < 1) return 'Just now';
+  if (diffHours < 24) return `${diffHours}h ago`;
+  const diffDays = Math.floor(diffHours / 24);
+  return `${diffDays}d ago`;
+}
 
 const UnderwritingAssistant: React.FC = () => {
+  const { portfolioId } = usePortfolio();
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedApp, setSelectedApp] = useState<PipelineApplication | null>(null);
-  const [applications, setApplications] = useState(MOCK_APPLICATIONS);
+  const [applications, setApplications] = useState(() => buildFallbackApplications());
   const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>({});
+  const [isLoadingApps, setIsLoadingApps] = useState(false);
+
+  // Fetch applications from BFF
+  const fetchApplications = useCallback(async () => {
+    if (!portfolioId) return;
+    setIsLoadingApps(true);
+    try {
+      const { data: response, source } = await withFallback(
+        async () => {
+          const [appsRes, custsRes] = await Promise.all([
+            applicationsService.list(portfolioId),
+            customersService.list(portfolioId, { pageSize: 100 }),
+          ]);
+          // Build business name map
+          const nameMap: Record<string, string> = {};
+          const entities = custsRes.data as unknown as Array<{ id: string; legalName?: string; business_name?: string }>;
+          entities.forEach(e => { nameMap[e.id] = e.legalName || e.business_name || ''; });
+          return { apps: appsRes.data, nameMap };
+        },
+        { apps: [], nameMap: {} },
+        'Applications Pipeline'
+      );
+      if (source === 'live' && response.apps.length > 0) {
+        const adapted = adaptApplicationsToPipeline(response.apps as any, response.nameMap);
+        setApplications(adapted);
+      } else if (source === 'fallback') {
+        setApplications(buildFallbackApplications());
+      }
+    } catch {
+      setApplications(buildFallbackApplications());
+    } finally {
+      setIsLoadingApps(false);
+    }
+  }, [portfolioId]);
+
+  useEffect(() => {
+    fetchApplications();
+  }, [fetchApplications]);
   const [showFilters, setShowFilters] = useState(true);
   const [filters, setFilters] = useState<FilterState>({
     productType: [],
@@ -124,15 +116,27 @@ const UnderwritingAssistant: React.FC = () => {
     searchQuery: '',
   });
 
-  // --- Action Handlers ---
-  const handleApprove = (appId: string) => {
+  // --- Action Handlers (persist to BFF when available) ---
+  const handleApprove = async (appId: string) => {
     setApplicationStatuses(prev => ({ ...prev, [appId]: 'approved' }));
+    demoDataStore.updateApplicationStatus(appId, 'approved');
     toast.success('Application approved successfully');
+    if (portfolioId) {
+      try {
+        await applicationsService.updateStatus(portfolioId, appId, 'approved', { decision: 'approved', decidedAt: new Date().toISOString() });
+      } catch { /* UI already updated optimistically, demo store persists */ }
+    }
   };
 
-  const handleDecline = (appId: string) => {
+  const handleDecline = async (appId: string) => {
     setApplicationStatuses(prev => ({ ...prev, [appId]: 'declined' }));
+    demoDataStore.updateApplicationStatus(appId, 'declined');
     toast.error('Application declined');
+    if (portfolioId) {
+      try {
+        await applicationsService.updateStatus(portfolioId, appId, 'declined', { decision: 'declined', decidedAt: new Date().toISOString() });
+      } catch { /* UI already updated optimistically, demo store persists */ }
+    }
   };
 
   const handleRequestReview = (appId: string) => {
@@ -143,7 +147,10 @@ const UnderwritingAssistant: React.FC = () => {
   const handleBulkApprove = () => {
     const count = selectedIds.length;
     const newStatuses: Record<string, string> = {};
-    selectedIds.forEach(id => { newStatuses[id] = 'approved'; });
+    selectedIds.forEach(id => {
+      newStatuses[id] = 'approved';
+      demoDataStore.updateApplicationStatus(id, 'approved');
+    });
     setApplicationStatuses(prev => ({ ...prev, ...newStatuses }));
     toast.success(`${count} application${count !== 1 ? 's' : ''} approved`);
     setSelectedIds([]);
@@ -152,7 +159,10 @@ const UnderwritingAssistant: React.FC = () => {
   const handleBulkDecline = () => {
     const count = selectedIds.length;
     const newStatuses: Record<string, string> = {};
-    selectedIds.forEach(id => { newStatuses[id] = 'declined'; });
+    selectedIds.forEach(id => {
+      newStatuses[id] = 'declined';
+      demoDataStore.updateApplicationStatus(id, 'declined');
+    });
     setApplicationStatuses(prev => ({ ...prev, ...newStatuses }));
     toast.error(`${count} application${count !== 1 ? 's' : ''} declined`);
     setSelectedIds([]);
@@ -286,7 +296,7 @@ const UnderwritingAssistant: React.FC = () => {
             <button
               onClick={() => setShowFilters(!showFilters)}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
-                showFilters ? 'bg-blue-50 border-blue-200 text-blue-700' : 'border-border text-muted-foreground hover:bg-accent'
+                showFilters ? 'bg-primary/10 border-primary text-primary' : 'border-border text-muted-foreground hover:bg-accent'
               }`}
             >
               <Filter className="w-4 h-4" />
@@ -332,7 +342,7 @@ const UnderwritingAssistant: React.FC = () => {
               toast.success('Pipeline data downloaded as CSV');
             }}
             onRefresh={() => {
-              setApplications(MOCK_APPLICATIONS);
+              setApplications(buildFallbackApplications());
               setApplicationStatuses({});
               setSelectedIds([]);
               toast.success('Application pipeline reloaded');
@@ -429,38 +439,52 @@ const UnderwritingAssistant: React.FC = () => {
       </div>
 
       {/* Detail Panel */}
-      {selectedApp && (
-        <AIDecisioningPanel
-          companyName={selectedApp.companyName}
-          appId={selectedApp.appId}
-          amount={selectedApp.amount}
-          productType={selectedApp.productType}
-          compositeScore={selectedApp.compositeScore}
-          grade={selectedApp.compositeScore >= 750 ? 'A' : selectedApp.compositeScore >= 700 ? 'B+' : selectedApp.compositeScore >= 650 ? 'B' : 'C'}
-          aiRecommendation={selectedApp.aiRecommendation}
-          confidence={selectedApp.confidence}
-          signals={[
-            { name: 'Tradelines', score: 82, weight: 25, status: 'pass', details: '23 active vendors' },
-            { name: 'Payments', score: 91, weight: 30, status: 'pass', details: '98.5% on-time' },
-            { name: 'Banking Health', score: 85, weight: 25, status: 'pass', details: 'Stable deposits' },
-            { name: 'Identity', score: 98, weight: 20, status: 'pass', details: 'KYB verified' },
-          ]}
-          positiveFactors={['Strong payment history', '7+ years in business', 'Verified identity']}
-          riskFactors={selectedApp.riskTier === 'high' ? ['Recent delinquency', 'Low cash reserves'] : []}
-          summary="AI analysis indicates strong creditworthiness based on consistent payment patterns and verified business identity."
-          onApprove={() => {
-            handleApprove(selectedApp.id);
-            setSelectedApp(null);
-          }}
-          onDecline={() => {
-            handleDecline(selectedApp.id);
-            setSelectedApp(null);
-          }}
-          onRequestInfo={() => {
-            handleRequestReview(selectedApp.id);
-          }}
-        />
-      )}
+      {selectedApp && (() => {
+        // Look up enriched business for per-app AI signals (via demo app's businessId for reliability)
+        const demoApp = demoDataStore.getApplications().find(a => a.id === selectedApp.id);
+        const enriched = demoApp ? getEnrichedBusiness(demoApp.businessId) : undefined;
+        const aiSignals = enriched?.aiSignals;
+
+        const signals = aiSignals ? [
+          { name: 'Tradelines', score: aiSignals.tradelines.score, weight: 25, status: aiSignals.tradelines.status, details: `${aiSignals.tradelines.score >= 80 ? 'Strong' : aiSignals.tradelines.score >= 60 ? 'Adequate' : 'Limited'} trade references` },
+          { name: 'Payments', score: aiSignals.payments.score, weight: 30, status: aiSignals.payments.status, details: `${aiSignals.payments.score >= 80 ? '98%+ on-time' : aiSignals.payments.score >= 60 ? 'Mostly on-time' : 'Payment delays noted'}` },
+          { name: 'Banking Health', score: aiSignals.bankingHealth.score, weight: 25, status: aiSignals.bankingHealth.status, details: `${aiSignals.bankingHealth.score >= 70 ? 'Stable deposits' : aiSignals.bankingHealth.score >= 50 ? 'Moderate activity' : 'Low reserves'}` },
+          { name: 'Identity', score: aiSignals.identity.score, weight: 20, status: aiSignals.identity.status, details: 'KYB verified' },
+        ] : [
+          { name: 'Tradelines', score: 82, weight: 25, status: 'pass' as const, details: '23 active vendors' },
+          { name: 'Payments', score: 91, weight: 30, status: 'pass' as const, details: '98.5% on-time' },
+          { name: 'Banking Health', score: 85, weight: 25, status: 'pass' as const, details: 'Stable deposits' },
+          { name: 'Identity', score: 98, weight: 20, status: 'pass' as const, details: 'KYB verified' },
+        ];
+
+        return (
+          <AIDecisioningPanel
+            companyName={selectedApp.companyName}
+            appId={selectedApp.appId}
+            amount={selectedApp.amount}
+            productType={selectedApp.productType}
+            compositeScore={selectedApp.compositeScore}
+            grade={selectedApp.compositeScore >= 750 ? 'A' : selectedApp.compositeScore >= 700 ? 'B+' : selectedApp.compositeScore >= 650 ? 'B' : 'C'}
+            aiRecommendation={selectedApp.aiRecommendation}
+            confidence={selectedApp.confidence}
+            signals={signals}
+            positiveFactors={aiSignals?.positiveFactors || ['Strong payment history', '7+ years in business', 'Verified identity']}
+            riskFactors={aiSignals?.riskFactors || (selectedApp.riskTier === 'high' ? ['Recent delinquency', 'Low cash reserves'] : [])}
+            summary={aiSignals?.summary || 'AI analysis indicates strong creditworthiness based on consistent payment patterns and verified business identity.'}
+            onApprove={() => {
+              handleApprove(selectedApp.id);
+              setSelectedApp(null);
+            }}
+            onDecline={() => {
+              handleDecline(selectedApp.id);
+              setSelectedApp(null);
+            }}
+            onRequestInfo={() => {
+              handleRequestReview(selectedApp.id);
+            }}
+          />
+        );
+      })()}
     </div>
   );
 };

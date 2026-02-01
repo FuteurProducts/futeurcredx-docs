@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ConnectedEnvironmentToggle } from "@/components/widgets";
+import { useUser } from "@/contexts/AuthContext";
 
 interface DashboardHeaderProps {
   showMenu?: boolean;
@@ -30,6 +31,7 @@ const defaultMenu = [
 
 export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
   const { theme, resolvedTheme, setTheme } = useTheme();
+  const { user } = useUser();
 
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-10">
@@ -109,7 +111,7 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
                   <User className="w-4 h-4" />
                 </AvatarFallback>
               </Avatar>
-              <span className="text-sm font-medium hidden md:inline">John Doe</span>
+              <span className="text-sm font-medium hidden md:inline">{user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'User'}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56 bg-popover z-50">

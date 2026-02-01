@@ -7,6 +7,7 @@ import { Component, ReactNode } from 'react';
 import { AlertTriangle, Lock, Briefcase, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { BffError } from '@/services/bff';
+import { logger } from '@/utils/logger';
 
 interface BffErrorBoundaryProps {
   children: ReactNode;
@@ -29,7 +30,7 @@ export class BffErrorBoundary extends Component<BffErrorBoundaryProps, BffErrorB
   }
 
   componentDidCatch(error: Error) {
-    console.error('BffErrorBoundary caught error:', error);
+    logger.error('BffErrorBoundary caught error:', error);
   }
 
   handleRetry = () => {

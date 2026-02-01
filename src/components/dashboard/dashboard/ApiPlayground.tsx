@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 
-const exampleRequest = `curl -X POST https://api.futeurcredx.com/v2/credit-journey \\
+const exampleRequest = `curl -X POST https://api.lumiq.ai/v2/credit-journey \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -38,7 +38,7 @@ const languages = [
     code: `import requests
 
 response = requests.post(
-    'https://api.futeurcredx.com/v2/credit-journey',
+    'https://api.lumiq.ai/v2/credit-journey',
     headers={
         'Authorization': 'Bearer YOUR_API_KEY',
         'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ print(response.json())`
     code: `const axios = require('axios');
 
 const response = await axios.post(
-  'https://api.futeurcredx.com/v2/credit-journey',
+  'https://api.lumiq.ai/v2/credit-journey',
   {
     business_id: 'BIZ_12345',
     include_score: true,
@@ -103,7 +103,10 @@ export function ApiPlayground() {
               <Code2 className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-xl font-bold">Interactive API Playground</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-bold">Interactive API Playground</h2>
+                <Badge variant="outline" className="text-xs bg-amber-500/10 text-amber-600 border-amber-500/30">Sandbox Mode</Badge>
+              </div>
               <p className="text-sm text-muted-foreground">Test endpoints in real-time</p>
             </div>
           </div>
@@ -196,6 +199,9 @@ export function ApiPlayground() {
                 {exampleResponse}
               </code>
             </pre>
+            <p className="text-xs text-muted-foreground italic mt-2">
+              Simulated response — connect your API key for live data
+            </p>
           </div>
         )}
       </Card>

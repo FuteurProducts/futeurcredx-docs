@@ -43,7 +43,7 @@ export const IpAllowlistPanel: React.FC = () => {
       id: `ip-${Date.now()}`,
       ipOrCidr: newIp,
       description: newDescription || 'No description',
-      addedBy: 'current.user@bank.com',
+      addedBy: 'analyst@partnerbank.com',
       addedOn: new Date().toISOString(),
     };
 

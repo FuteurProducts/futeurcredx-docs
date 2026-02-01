@@ -18,6 +18,7 @@ import type { WebhookEndpoint, WebhookEvent } from "@/components/widgets/Webhook
 import type { Environment, EnvironmentConfig } from "@/components/widgets/SandboxEnvironmentToggle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { logger } from "@/utils/logger";
 
 // Mock data for CreditScoreWidget
 const mockCreditScoreData: CreditScoreData = {
@@ -275,7 +276,7 @@ const WidgetsShowcase = () => {
                 onAdd={handleAddWebhook}
                 onDelete={(id) => setWebhookEndpoints(webhookEndpoints.filter(e => e.id !== id))}
                 onToggle={(id, active) => setWebhookEndpoints(webhookEndpoints.map(e => e.id === id ? { ...e, isActive: active } : e))}
-                onTest={(id) => console.log('Testing webhook:', id)}
+                onTest={(id) => logger.info('Testing webhook:', id)}
               />
             </div>
           </TabsContent>

@@ -222,7 +222,7 @@ const ApiPlaygroundPanel: React.FC = () => {
           <option value="/v2/transactions">GET /v2/transactions</option>
         </select>
         <pre className="bg-foreground text-background p-4 rounded-xl text-xs overflow-auto h-48 font-mono">
-{`curl -X POST "https://api.futeurcredx.com${selectedEndpoint}" \\
+{`curl -X POST "https://api.lumiq.ai${selectedEndpoint}" \\
   -H "Authorization: Bearer sk_live_xxx" \\
   -H "Content-Type: application/json" \\
   -d '{"business_id": "biz_xyz789"}'`}

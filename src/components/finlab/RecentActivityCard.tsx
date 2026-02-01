@@ -61,7 +61,7 @@ export const RecentActivityCard = ({
     className={className}
     title="Recent Activity"
     tooltip="Your latest transactions"
-    onSeeMore={onSeeMore || (() => console.log("See more"))}
+    onSeeMore={onSeeMore || (() => { /* no-op placeholder */ })}
   >
     <div className="-mt-2">
       {items.slice(0, viewItems).map((item) => (

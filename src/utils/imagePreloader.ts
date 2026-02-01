@@ -79,13 +79,13 @@ export class ImagePreloader {
 
 // Critical images that should be preloaded immediately (essential logos and hero backgrounds)
 export const CRITICAL_IMAGES = [
-  '/futeur.png',
-  '/logos/futeur.png',
+  '/lumiqlogo.png',
+  '/lumiq.png',
   '/53.jpg', // Main hero background
   '/60.jpg', // Fintech page background
   '/about-bg.jpg', // About page background
   '/contact-hero.jpg', // Contact page background
-  '/cover.jpg', // FuteurCredPlus background
+  '/cover.jpg', // Cover background
   '/Dark-Experian.png', // Frequently used logo
   '/Dark-Equifax.png', // Frequently used logo
   '/lumiq.png' // LUMIQ logo
@@ -98,7 +98,6 @@ export const HERO_IMAGES = [
 
 // All other images that can be preloaded with lower priority
 export const SECONDARY_IMAGES = [
-  '/futeursecure.png',
   '/business-logos/grainger.svg',
   '/business-logos/office-depot.svg',
   '/business-logos/staples.svg',

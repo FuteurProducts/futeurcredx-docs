@@ -1,30 +1,41 @@
+import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useUser } from './contexts/AuthContext'
 import { PortfolioProvider } from './contexts/PortfolioContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
-import Login from './pages/Authentication/Login'
-import Register from './pages/Authentication/Register'
-import BusinessSignup from './pages/Authentication/BusinessSignup'
-import Dashboard from './pages/Dashboard/Dashboard'
-
-import Index from './pages/Dashboard/Index'
-import Analytics from './pages/Dashboard/Analytics'
-import Users from './pages/Dashboard/Users'
-import Products from './pages/Dashboard/Products'
-import Reports from './pages/Dashboard/Reports'
-import Risk from './pages/Dashboard/Risk'
-import CreditIntelligence from './pages/Dashboard/CreditIntelligence'
-import Customer from './pages/Dashboard/Customer'
-import Settings from './pages/Dashboard/Settings'
-import Notifications from './pages/Dashboard/Notifications'
-import UnderwritingAssistant from './pages/Dashboard/UnderwritingAssistant'
-import ApiTesting from './pages/Dashboard/ApiTesting'
-import WidgetsShowcase from './pages/Dashboard/WidgetsShowcase'
-import NotFound from './pages/Dashboard/NotFound'
 import { Toaster } from 'react-hot-toast'
 
+// Lazy-loaded page components
+const Login = React.lazy(() => import('./pages/Authentication/Login'))
+const Register = React.lazy(() => import('./pages/Authentication/Register'))
+const BusinessSignup = React.lazy(() => import('./pages/Authentication/BusinessSignup'))
+const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
+const Index = React.lazy(() => import('./pages/Dashboard/Index'))
+const Analytics = React.lazy(() => import('./pages/Dashboard/Analytics'))
+const Users = React.lazy(() => import('./pages/Dashboard/Users'))
+const Products = React.lazy(() => import('./pages/Dashboard/Products'))
+const Reports = React.lazy(() => import('./pages/Dashboard/Reports'))
+const Risk = React.lazy(() => import('./pages/Dashboard/Risk'))
+const CreditIntelligence = React.lazy(() => import('./pages/Dashboard/CreditIntelligence'))
+const Customer = React.lazy(() => import('./pages/Dashboard/Customer'))
+const Settings = React.lazy(() => import('./pages/Dashboard/Settings'))
+const Notifications = React.lazy(() => import('./pages/Dashboard/Notifications'))
+const UnderwritingAssistant = React.lazy(() => import('./pages/Dashboard/UnderwritingAssistant'))
+const ApiTesting = React.lazy(() => import('./pages/Dashboard/ApiTesting'))
+const WidgetsShowcase = React.lazy(() => import('./pages/Dashboard/WidgetsShowcase'))
+const NotFound = React.lazy(() => import('./pages/Dashboard/NotFound'))
+
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-screen bg-background">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary border-t-transparent mx-auto"></div>
+      <p className="mt-3 text-sm text-muted-foreground">Loading...</p>
+    </div>
+  </div>
+);
+
 // DEV MODE: Bypass authentication for frontend development
-const DEV_BYPASS_AUTH = true; // Set to false to re-enable auth
+const DEV_BYPASS_AUTH = false; // Set to true to bypass auth for local dev
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isSignedIn, isLoaded } = useUser()
@@ -58,6 +69,7 @@ function App() {
     <BrowserRouter>
       <PortfolioProvider>
         <Toaster position="top-right" />
+        <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -155,6 +167,7 @@ function App() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </PortfolioProvider>
     </BrowserRouter>
     </ThemeProvider>

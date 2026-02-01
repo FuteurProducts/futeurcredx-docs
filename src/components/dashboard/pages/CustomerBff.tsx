@@ -23,10 +23,12 @@ import { PortfolioSelector } from '@/components/shared';
 import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-import { DEMO_BUSINESSES } from '@/data/demoData';
+import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
+import { withFallback } from '@/utils/withFallback';
+import { logger } from '@/utils/logger';
 
-// Demo customers derived from centralized business data
-const mockDemoCustomers: BffCustomerListItem[] = DEMO_BUSINESSES.map((biz, idx) => ({
+// Fallback demo customers derived from centralized business data
+const FALLBACK_CUSTOMERS: BffCustomerListItem[] = DEMO_BUSINESSES.map((biz, idx) => ({
   id: biz.id,
   businessName: biz.name,
   naicsCode: biz.naicsCode,
@@ -121,35 +123,39 @@ const CustomerBff: React.FC = () => {
     setError(null);
 
     try {
-      const response = await customersService.list(portfolioId, {
-        search: searchQuery || undefined,
-        page: currentPage,
-        pageSize,
-      });
+      const { data: response, source } = await withFallback(
+        () => customersService.list(portfolioId, {
+          search: searchQuery || undefined,
+          page: currentPage,
+          pageSize,
+        }),
+        { data: FALLBACK_CUSTOMERS, meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } },
+        'Customer List'
+      );
 
       // Adapt BFF response to UI format
       const bffCustomers = response.data as unknown as BffCustomerListItem[];
       const adaptedCustomers = adaptBffCustomerList(bffCustomers);
-      
+
       setCustomers(adaptedCustomers);
       setTotalCount(response.pagination?.total || adaptedCustomers.length);
       setLastUpdated(response.meta?.lastUpdated || new Date().toISOString());
 
-      // Emit audit event
-      emitFilterApplied('customer_list', {
-        portfolioId,
-        search: searchQuery,
-        page: currentPage,
-        resultCount: adaptedCustomers.length,
-      });
+      if (source === 'live') {
+        emitFilterApplied('customer_list', {
+          portfolioId,
+          search: searchQuery,
+          page: currentPage,
+          resultCount: adaptedCustomers.length,
+        });
+      }
     } catch (err) {
-      console.log('BFF unavailable, using demo data');
-      // Fallback to demo data when not authenticated
-      const adaptedCustomers = adaptBffCustomerList(mockDemoCustomers);
+      logger.info('[CustomerBff] BFF unavailable, using fallback data');
+      const adaptedCustomers = adaptBffCustomerList(FALLBACK_CUSTOMERS);
       setCustomers(adaptedCustomers);
-      setTotalCount(mockDemoCustomers.length);
+      setTotalCount(FALLBACK_CUSTOMERS.length);
       setLastUpdated(new Date().toISOString());
-      setError(null); // Clear error since we have demo data
+      setError(null);
     } finally {
       setIsLoading(false);
     }
@@ -233,73 +239,117 @@ const CustomerBff: React.FC = () => {
 
   const totalClients = customers.length;
 
-  // Build engagement panel data for selected customer
-  const engagementData = selectedCustomer ? {
-    id: selectedCustomer.id,
-    businessName: selectedCustomer.businessName,
-    rhs: selectedCustomer.rhs,
-    rhsStatus: selectedCustomer.rhsChange > 0 ? 'growing' as const : selectedCustomer.rhsChange < 0 ? 'declining' as const : 'stable' as const,
-    rhsTrendData: [
-      { month: 'Jul', value: selectedCustomer.rhs - 15 },
-      { month: 'Aug', value: selectedCustomer.rhs - 12 },
-      { month: 'Sep', value: selectedCustomer.rhs - 8 },
-      { month: 'Oct', value: selectedCustomer.rhs - 5 },
-      { month: 'Nov', value: selectedCustomer.rhs - 2 },
-      { month: 'Dec', value: selectedCustomer.rhs },
-    ],
-    topDrivers: [
-      { label: 'Cash flow stability', impact: 'positive' as const },
-      { label: 'Deposit growth', impact: 'positive' as const },
-      { label: 'Credit utilization', impact: selectedCustomer.rhs > 60 ? 'positive' as const : 'negative' as const },
-    ],
-    products: [
+  // Build engagement panel data for selected customer (enriched data preferred)
+  const engagementData = selectedCustomer ? (() => {
+    const enriched = getEnrichedBusiness(selectedCustomer.id);
+    const trendData = enriched?.rhsTrendData
+      ? ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, i) => ({
+          month,
+          value: enriched.rhsTrendData[i] ?? selectedCustomer.rhs,
+        }))
+      : [
+          { month: 'Aug', value: selectedCustomer.rhs - 12 },
+          { month: 'Sep', value: selectedCustomer.rhs - 8 },
+          { month: 'Oct', value: selectedCustomer.rhs - 5 },
+          { month: 'Nov', value: selectedCustomer.rhs - 2 },
+          { month: 'Dec', value: selectedCustomer.rhs },
+        ];
+
+    const products = enriched?.products.map(p => ({
+      product: p.name,
+      status: (p.status === 'active' ? 'active' : p.status === 'pending' ? 'active' : 'not-held') as 'active' | 'not-held',
+      signal: (p.status === 'active' ? 'healthy' : p.status === 'closed' ? 'at-risk' : 'opportunity') as 'healthy' | 'opportunity' | 'at-risk',
+    })) ?? [
       { product: 'Checking', status: 'active' as const, signal: 'healthy' as const },
       { product: 'Credit Score', status: 'not-held' as const, signal: 'opportunity' as const },
-    ],
-    timeline: [],
-  } : null;
+    ];
 
-  // Build dossier data
-  const dossierData = dossierCustomer ? {
-    id: dossierCustomer.id,
-    businessName: dossierCustomer.businessName,
-    legalName: dossierCustomer.businessName + ' Inc.',
-    dba: dossierCustomer.businessName,
-    industry: dossierCustomer.industry,
-    naicsCode: dossierCustomer.naicsCode,
-    segment: dossierCustomer.segment,
-    region: dossierCustomer.region,
-    address: dossierCustomer.branch,
-    phone: '(555) 123-4567',
-    email: 'info@' + dossierCustomer.businessName.toLowerCase().replace(/\s+/g, '') + '.com',
-    website: 'www.' + dossierCustomer.businessName.toLowerCase().replace(/\s+/g, '') + '.com',
-    yearsInBusiness: 5,
-    employeeCount: 25,
-    annualRevenue: dossierCustomer.totalExposure * 8,
-    assignedRM: {
-      name: dossierCustomer.assignedRM || 'Unassigned',
-      email: 'rm@bank.com',
-      phone: '(555) 987-6543',
-    },
-    rhs: dossierCustomer.rhs,
-    rhsStatus: dossierCustomer.rhsChange > 0 ? 'growing' as const : dossierCustomer.rhsChange < 0 ? 'declining' as const : 'stable' as const,
-    rhsTrendData: [
-      { month: 'Jul', value: dossierCustomer.rhs - 15 },
-      { month: 'Aug', value: dossierCustomer.rhs - 12 },
-      { month: 'Sep', value: dossierCustomer.rhs - 8 },
-      { month: 'Oct', value: dossierCustomer.rhs - 5 },
-      { month: 'Nov', value: dossierCustomer.rhs - 2 },
-      { month: 'Dec', value: dossierCustomer.rhs },
-    ],
-    riskTier: dossierCustomer.riskTier,
-    creditScore: 0, // No score yet - use 0 as placeholder
-    relationshipStage: dossierCustomer.relationshipStage,
-    totalExposure: dossierCustomer.totalExposure,
-    totalDeposits: dossierCustomer.depositBalance,
-    products: [],
-    recentNotes: [],
-    auditLog: [],
-  } : null;
+    const topDrivers = enriched?.aiSignals
+      ? [
+          { label: enriched.aiSignals.positiveFactors[0] || 'Cash flow stability', impact: 'positive' as const },
+          { label: enriched.aiSignals.positiveFactors[1] || 'Deposit growth', impact: 'positive' as const },
+          ...(enriched.aiSignals.riskFactors.length > 0
+            ? [{ label: enriched.aiSignals.riskFactors[0], impact: 'negative' as const }]
+            : [{ label: 'Credit utilization', impact: (selectedCustomer.rhs > 60 ? 'positive' : 'negative') as 'positive' | 'negative' }]),
+        ]
+      : [
+          { label: 'Cash flow stability', impact: 'positive' as const },
+          { label: 'Deposit growth', impact: 'positive' as const },
+          { label: 'Credit utilization', impact: (selectedCustomer.rhs > 60 ? 'positive' : 'negative') as 'positive' | 'negative' },
+        ];
+
+    return {
+      id: selectedCustomer.id,
+      businessName: selectedCustomer.businessName,
+      rhs: selectedCustomer.rhs,
+      rhsStatus: selectedCustomer.rhsChange > 0 ? 'growing' as const : selectedCustomer.rhsChange < 0 ? 'declining' as const : 'stable' as const,
+      rhsTrendData: trendData,
+      topDrivers,
+      products,
+      timeline: [],
+    };
+  })() : null;
+
+  // Build dossier data (enriched data preferred)
+  const dossierData = dossierCustomer ? (() => {
+    const enriched = getEnrichedBusiness(dossierCustomer.id);
+    const baseBiz = DEMO_BUSINESSES.find(b => b.id === dossierCustomer.id);
+
+    const trendData = enriched?.rhsTrendData
+      ? ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, i) => ({
+          month,
+          value: enriched.rhsTrendData[i] ?? dossierCustomer.rhs,
+        }))
+      : [
+          { month: 'Aug', value: dossierCustomer.rhs - 12 },
+          { month: 'Sep', value: dossierCustomer.rhs - 8 },
+          { month: 'Oct', value: dossierCustomer.rhs - 5 },
+          { month: 'Nov', value: dossierCustomer.rhs - 2 },
+          { month: 'Dec', value: dossierCustomer.rhs },
+        ];
+
+    const products = enriched?.products.map(p => ({
+      name: p.name,
+      type: p.type,
+      status: p.status as 'active' | 'pending' | 'closed',
+      balance: p.balance,
+      limit: p.limit,
+    })) ?? [];
+
+    return {
+      id: dossierCustomer.id,
+      businessName: dossierCustomer.businessName,
+      legalName: baseBiz?.legalName || dossierCustomer.businessName,
+      dba: baseBiz?.name || dossierCustomer.businessName,
+      industry: dossierCustomer.industry,
+      naicsCode: dossierCustomer.naicsCode,
+      segment: dossierCustomer.segment,
+      region: dossierCustomer.region,
+      address: baseBiz ? `${baseBiz.city}, ${baseBiz.state}` : dossierCustomer.branch,
+      phone: enriched?.phone || 'On file',
+      email: enriched?.email || 'On file',
+      website: enriched?.website || 'On file',
+      yearsInBusiness: baseBiz?.yearsInBusiness || 5,
+      employeeCount: baseBiz?.employeeCount || 25,
+      annualRevenue: baseBiz?.annualRevenue || dossierCustomer.totalExposure * 8,
+      assignedRM: {
+        name: enriched?.assignedRM || dossierCustomer.assignedRM || 'Unassigned',
+        email: `${(enriched?.assignedRM || 'rm').toLowerCase().replace(/\s+/g, '.')}@partnerbank.com`,
+        phone: '(800) 555-0100',
+      },
+      rhs: dossierCustomer.rhs,
+      rhsStatus: dossierCustomer.rhsChange > 0 ? 'growing' as const : dossierCustomer.rhsChange < 0 ? 'declining' as const : 'stable' as const,
+      rhsTrendData: trendData,
+      riskTier: dossierCustomer.riskTier,
+      creditScore: enriched?.creditScores[0]?.score || (baseBiz ? baseBiz.lumiqScore * 10 : 0),
+      relationshipStage: dossierCustomer.relationshipStage,
+      totalExposure: dossierCustomer.totalExposure,
+      totalDeposits: dossierCustomer.depositBalance,
+      products,
+      recentNotes: [],
+      auditLog: [],
+    };
+  })() : null;
 
   // Loading state
   if (portfolioLoading) {

@@ -17,14 +17,14 @@ import type {
 export const mockPortfolioKPIs: PortfolioKPI[] = [
   {
     id: 'avg-score',
-    label: 'Avg LumiqAI Score',
+    label: 'Avg LUMIQ AI Score',
     value: 72.4,
     format: 'score',
     trend: 3.2,
     trendDirection: 'up',
     isPositiveTrend: true,
     tooltip: 'Exposure-weighted average score across portfolio',
-    dataSource: 'LumiqAI Score Engine',
+    dataSource: 'LUMIQ AI Score Engine',
     lastUpdated: '2 mins ago',
   },
   {
@@ -36,7 +36,7 @@ export const mockPortfolioKPIs: PortfolioKPI[] = [
     trendDirection: 'up',
     isPositiveTrend: true,
     tooltip: 'Average score change over last 90 days',
-    dataSource: 'LumiqAI Score Engine',
+    dataSource: 'LUMIQ AI Score Engine',
     lastUpdated: '2 mins ago',
   },
   {

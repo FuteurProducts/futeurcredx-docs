@@ -110,7 +110,7 @@ export const PortfolioHealthCard: React.FC<PortfolioHealthCardProps> = ({
       {/* Average Score Footer */}
       <div className="mt-6 pt-4 border-t border-border">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">Avg. LumiqAI Score</span>
+          <span className="text-sm text-muted-foreground">Avg. LUMIQ AI Score</span>
           <div className="flex items-center gap-2">
             <span className="text-xl font-bold text-foreground">{data.averageScore}</span>
             <span className="text-xs text-muted-foreground">/ 100</span>

@@ -5,6 +5,7 @@ import { Eye, EyeOff, ArrowRight } from "lucide-react"
 import loginIllustration from "../../assets/dashboard-assets/login.png"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { logger } from "@/utils/logger"
 
 const Register: React.FC = () => {
   const { user, isSignedIn, isLoaded } = useUser()
@@ -47,7 +48,7 @@ const Register: React.FC = () => {
       await signUp(email, password)
       navigate("/dashboard", { replace: true })
     } catch (err: any) {
-      console.error("Sign up error:", err)
+      logger.error("Sign up error:", err)
       setError(err?.message || "An error occurred. Please try again.")
     } finally {
       setIsLoading(false)
@@ -57,7 +58,7 @@ const Register: React.FC = () => {
   return (
     <div className="min-h-screen bg-card flex">
       {/* Left Side - Illustration */}
-      <div className="hidden lg:flex w-1/2 relative bg-[#F4F4F4] items-center justify-center p-12">
+      <div className="hidden lg:flex w-1/2 relative bg-muted items-center justify-center p-12">
         <div className="w-full max-w-lg">
           <img 
             src={loginIllustration} 
@@ -234,7 +235,7 @@ const Register: React.FC = () => {
           {/* Footer */}
           <div className="text-center mt-8">
             <p className="text-muted-foreground text-xs sm:text-sm">
-              © 2025 FUTEURCREDX API. All Rights Reserved.
+              © 2026 LUMIQ AI. All Rights Reserved.
             </p>
           </div>
         </div>

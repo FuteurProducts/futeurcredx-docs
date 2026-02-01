@@ -7,6 +7,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { Portfolio } from '@/services/bff/types';
+import { logger } from '@/utils/logger';
 
 interface PortfolioContextValue {
   // Current selected portfolio
@@ -92,7 +93,7 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
         setPortfolioIdState(mappedPortfolios[0].id);
       }
     } catch (err) {
-      console.error('Failed to fetch portfolios:', err);
+      logger.error('[PortfolioContext] Failed to fetch portfolios:', err);
       setError(err instanceof Error ? err.message : 'Failed to load portfolios');
       
       // Fallback to demo portfolio

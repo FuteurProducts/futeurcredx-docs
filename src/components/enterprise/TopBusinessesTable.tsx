@@ -115,7 +115,7 @@ export const TopBusinessesTable: React.FC<TopBusinessesTableProps> = ({
             <tr className="border-b border-border">
               <SortHeader field="name" label="Business" align="left" />
               <SortHeader field="lumiqScore" label="Score" align="center" />
-              <SortHeader field="apiCalls" label="API Calls" align="center" />
+              <SortHeader field="apiCalls" label="Usage" align="center" />
               <SortHeader field="riskLevel" label="Risk" align="center" />
               <SortHeader field="lastActivity" label="Last Activity" align="right" />
               <th className="w-10"></th>

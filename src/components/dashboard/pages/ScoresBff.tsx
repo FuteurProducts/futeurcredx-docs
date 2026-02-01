@@ -50,10 +50,13 @@ const RISK_CONFIG = {
   'high': { label: 'High Risk', color: 'hsl(var(--destructive))', icon: AlertTriangle },
 };
 
-import { DEMO_BUSINESSES } from '@/data/demoData';
+import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
+import { withFallback } from '@/utils/withFallback';
+import { demoDataStore } from '@/data/demoDataStore';
+import { logger } from '@/utils/logger';
 
-// Demo customers derived from centralized business data
-const mockDemoCustomers: CustomerForPull[] = DEMO_BUSINESSES.map((biz, idx) => ({
+// Fallback customers derived from centralized business data
+const FALLBACK_CUSTOMERS: CustomerForPull[] = DEMO_BUSINESSES.map((biz, idx) => ({
   id: biz.id,
   businessName: biz.name,
   hasScore: idx < 7,
@@ -64,7 +67,7 @@ const mockDemoCustomers: CustomerForPull[] = DEMO_BUSINESSES.map((biz, idx) => (
 const SCORE_SOURCES = ['experian_biz', 'dnb', 'equifax_biz'] as const;
 const SCORE_TYPES = ['intelliscore', 'paydex', 'business_risk'] as const;
 
-const mockDemoScores: ScoreRecord[] = DEMO_BUSINESSES.filter((_, i) => i < 7).map((biz, idx) => ({
+const FALLBACK_SCORES: ScoreRecord[] = DEMO_BUSINESSES.filter((_, i) => i < 7).map((biz, idx) => ({
   id: `score-${idx + 1}`,
   smbEntityId: biz.id,
   businessName: biz.name,
@@ -100,15 +103,20 @@ const ScoresBff: React.FC = () => {
     setError(null);
 
     try {
-      const response = await scoresService.list(portfolioId, { pageSize: 100 });
-      setScores(response.data as unknown as ScoreRecord[]);
+      const { data: response, source } = await withFallback(
+        () => scoresService.list(portfolioId, { pageSize: 100 }),
+        { data: FALLBACK_SCORES as any, meta: { requestId: 'fallback' } },
+        'Score List'
+      );
+      const scoreData = response.data as unknown as ScoreRecord[];
+      setScores(scoreData);
       setLastUpdated(response.meta?.lastUpdated || new Date().toISOString());
-
-      emitScoreViewed(portfolioId, 'portfolio_list');
+      if (source === 'live') {
+        emitScoreViewed(portfolioId, 'portfolio_list');
+      }
     } catch (err) {
-      console.log('BFF unavailable, using demo scores');
-      // Fallback to demo data when not authenticated
-      setScores(mockDemoScores);
+      logger.info('[ScoresBff] BFF unavailable, using fallback scores');
+      setScores(FALLBACK_SCORES);
       setLastUpdated(new Date().toISOString());
       setError(null);
     } finally {
@@ -136,9 +144,8 @@ const ScoresBff: React.FC = () => {
       }));
       setCustomers(customerList);
     } catch (err) {
-      console.log('BFF unavailable, using demo customers');
-      // Fallback to demo data
-      setCustomers(mockDemoCustomers);
+      logger.info('[ScoresBff] BFF unavailable, using fallback customers');
+      setCustomers(FALLBACK_CUSTOMERS);
     }
   }, [portfolioId]);
 
@@ -150,27 +157,59 @@ const ScoresBff: React.FC = () => {
     }
   }, [portfolioId, fetchScores, fetchCustomers]);
 
-  // Pull scores for a customer
-  const handlePullScores = async (customerId: string, _businessName: string) => {
+  // Pull scores for a customer (falls back to demo store when BFF unavailable)
+  const handlePullScores = async (customerId: string, businessName: string) => {
     if (!portfolioId) return;
 
     setIsPulling(customerId);
     setError(null);
 
     try {
-      // The BFF expects a single source, but we simulate multiple by calling twice
-      await scoresService.pull(portfolioId, {
-        smbEntityId: customerId,
-        source: 'experian_biz',
-      });
+      const demoScore = demoDataStore.simulateScorePull(customerId);
+
+      const { source } = await withFallback(
+        () => scoresService.pull(portfolioId, {
+          smbEntityId: customerId,
+          source: 'experian_biz',
+        }),
+        demoScore,
+        'Score Pull'
+      );
 
       emitApplyClicked(customerId, 'score_pull');
 
-      // Refresh data
-      await fetchScores();
-      await fetchCustomers();
+      if (source === 'live') {
+        // Refresh from BFF
+        await fetchScores();
+        await fetchCustomers();
+      } else {
+        // Update local state from demo store
+        const enriched = getEnrichedBusiness(customerId);
+        const newScore: ScoreRecord = {
+          id: `score-demo-${Date.now()}`,
+          smbEntityId: customerId,
+          businessName,
+          source: demoScore.source,
+          scoreType: demoScore.source === 'dun_bradstreet' ? 'paydex' : demoScore.source === 'equifax_biz' ? 'business_risk' : 'intelliscore',
+          score: demoScore.score,
+          riskClass: demoScore.riskClass,
+          factors: demoScore.factors.map((desc, i) => ({
+            code: `F${String(i + 1).padStart(2, '0')}`,
+            description: desc,
+            impact: demoScore.riskClass === 'low' ? 'positive' : demoScore.riskClass === 'moderate' ? 'neutral' : 'negative',
+          })),
+          pulledAt: demoScore.pulledAt,
+        };
+
+        setScores(prev => [newScore, ...prev.filter(s => s.smbEntityId !== customerId)]);
+        setCustomers(prev => prev.map(c =>
+          c.id === customerId
+            ? { ...c, hasScore: true, latestScore: demoScore.score, riskClass: demoScore.riskClass }
+            : c
+        ));
+      }
     } catch (err) {
-      console.error('Failed to pull scores:', err);
+      logger.error('[ScoresBff] Failed to pull scores:', err);
       setError(err instanceof Error ? err.message : 'Failed to pull credit scores');
     } finally {
       setIsPulling(null);

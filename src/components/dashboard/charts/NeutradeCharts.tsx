@@ -43,7 +43,7 @@ type ApiStatsType = {
 export type { ApiStatsType };
 
 // ============================================
-// NEUTRADE CARD WRAPPER
+// CARD WRAPPER
 // ============================================
 
 interface NCardProps {
@@ -317,7 +317,7 @@ export const BalanceChart: React.FC = () => {
 const topTokensData = [
   {
     id: "0",
-    icon: "/futeur.png",
+    icon: "/lumiqlogo.png",
     currencyFull: "Ripple",
     currencyShort: "XRP",
     price: "$0.4831",
@@ -339,7 +339,7 @@ const topTokensData = [
   },
   {
     id: "1",
-    icon: "/futeur.png",
+    icon: "/lumiqlogo.png",
     currencyFull: "Ethereum",
     currencyShort: "ETH",
     price: "$2,968.31",
@@ -361,7 +361,7 @@ const topTokensData = [
   },
   {
     id: "2",
-    icon: "/futeur.png",
+    icon: "/lumiqlogo.png",
     currencyFull: "Solana",
     currencyShort: "SOL",
     price: "$132.38",
@@ -447,7 +447,7 @@ export const TopTokens: React.FC = () => {
 };
 
 // ============================================
-// GREED INDEX (Pie Chart) - Exactly like neutrade
+// GREED INDEX (Pie Chart)
 // ============================================
 
 const greedData = [
@@ -766,7 +766,7 @@ export const BestToBuy: React.FC = () => {
         <div className="flex items-center">
           <div className="mr-2">
             <img
-              src="/futeur.png"
+              src="/lumiqlogo.png"
               alt="Ethereum"
               className="w-6 h-6 rounded-full"
             />
@@ -809,7 +809,7 @@ export const BestToBuy: React.FC = () => {
         <div className="flex items-center mb-8 text-[0.8125rem] text-[var(--n-secondary)] md:mb-6">
           <div className="mr-3">
             <img
-              src="/futeur.png"
+              src="/lumiqlogo.png"
               alt="Method"
               className="w-6 h-6 rounded-full"
             />
@@ -1099,7 +1099,7 @@ const useCountUp = (end: number, duration: number = 1500) => {
   return count;
 };
 
-// Static data outside component - exactly like neutrade GreedIndex
+// Static data outside component
 const usageGaugeData = [
   { name: "Red", value: 400 },
   { name: "Yellow", value: 250 },
@@ -1134,7 +1134,7 @@ export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, p
     >
       <div className="md:-mx-2">
         <div className="relative w-80 h-40 mt-14 mx-auto lg:my-8 md:mt-6 md:mb-2">
-          {/* Gauge - Exactly like neutrade GreedIndex */}
+          {/* Gauge */}
           <ResponsiveContainer width="100%" height="100%">
             <PieChart width={800} height={400}>
               <Pie

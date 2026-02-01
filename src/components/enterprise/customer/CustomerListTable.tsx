@@ -208,8 +208,8 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
                   Segment: c.segment,
                   Region: c.region,
                   Branch: c.branch,
-                  RHS: c.rhs,
-                  'RHS Change': c.rhsChange,
+                  'Health Score': c.rhs,
+                  'Health Score Change': c.rhsChange,
                   'Primary Product': c.primaryProduct,
                   'Risk Tier': c.riskTier,
                   'Relationship Stage': c.relationshipStage,
@@ -240,7 +240,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
               {selectedIds.length} selected
             </span>
             <button className="px-3 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
-              Assign RM
+              Assign Relationship Manager
             </button>
             <button className="px-3 py-1.5 text-xs font-medium bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors">
               Add to Campaign
@@ -269,7 +269,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
               <SortHeader field="industry" label="Industry" />
               <SortHeader field="segment" label="Segment" />
               <SortHeader field="region" label="Region" />
-              <SortHeader field="rhs" label="RHS" />
+              <SortHeader field="rhs" label="Health Score" />
               <SortHeader field="primaryProduct" label="Primary Product" />
               <SortHeader field="riskTier" label="Risk" />
               <SortHeader field="relationshipStage" label="Stage" />

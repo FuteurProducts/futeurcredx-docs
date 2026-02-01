@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import type { User as SupabaseUser, Session } from '@supabase/supabase-js';
 
 interface User {
   id: string;
@@ -23,51 +25,75 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+function mapSupabaseUser(su: SupabaseUser | null): User | null {
+  if (!su) return null;
+  const meta = su.user_metadata || {};
+  return {
+    id: su.id,
+    email: su.email || '',
+    firstName: meta.first_name || meta.firstName || su.email?.split('@')[0] || 'User',
+    lastName: meta.last_name || meta.lastName || '',
+    fullName: meta.full_name || meta.fullName || su.email?.split('@')[0] || 'User',
+    username: su.email?.split('@')[0] || '',
+    imageUrl: meta.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${su.email}`,
+    emailAddresses: su.email ? [{ emailAddress: su.email }] : [],
+  };
+}
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
+  // Initialize from existing session and listen for auth changes
   useEffect(() => {
-    const loadUser = () => {
-      const storedUser = localStorage.getItem('mockUser');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-        setIsSignedIn(true);
-      }
+    // Get current session on mount
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(mapSupabaseUser(session?.user ?? null));
+      setIsSignedIn(!!session);
       setIsLoaded(true);
+    });
+
+    // Listen for auth state changes (login, logout, token refresh)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(mapSupabaseUser(session?.user ?? null));
+        setIsSignedIn(!!session);
+        setIsLoaded(true);
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
     };
-    loadUser();
   }, []);
 
-  const signIn = async (email: string, _password: string) => {
-    const mockUser: User = {
-      id: 'mock-user-id',
-      email,
-      firstName: 'Demo',
-      lastName: 'User',
-      fullName: 'Demo User',
-      username: 'demouser',
-      imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Demo',
-      emailAddresses: [{ emailAddress: email }],
-    };
-    localStorage.setItem('mockUser', JSON.stringify(mockUser));
-    setUser(mockUser);
-    setIsSignedIn(true);
+  const signIn = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      throw new Error(error.message);
+    }
+    // State update handled by onAuthStateChange listener
   };
 
   const signUp = async (email: string, password: string) => {
-    await signIn(email, password);
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      throw new Error(error.message);
+    }
   };
 
   const signOut = async () => {
-    localStorage.removeItem('mockUser');
-    setUser(null);
-    setIsSignedIn(false);
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      throw new Error(error.message);
+    }
+    // State update handled by onAuthStateChange listener
   };
 
-  const getToken = async () => {
-    return 'mock-token-for-ui-testing';
+  const getToken = async (): Promise<string | null> => {
+    const { data: { session } } = await supabase.auth.getSession();
+    return session?.access_token ?? null;
   };
 
   return (
@@ -99,4 +125,3 @@ export const useUser = () => {
   const { user, isSignedIn, isLoaded } = useAuth();
   return { user, isSignedIn, isLoaded };
 };
-

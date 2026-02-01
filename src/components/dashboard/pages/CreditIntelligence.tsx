@@ -211,7 +211,7 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
         
         {/* Score in center */}
         <div className="absolute left-1/2 bottom-0 -translate-x-1/2 text-center">
-          <div className="text-[3rem] font-semibold text-[#1A1D1F]">{animatedScore}</div>
+          <div className="text-[3rem] font-semibold text-foreground">{animatedScore}</div>
         </div>
       </div>
       
@@ -243,7 +243,7 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ label, value, color = 'default', badge, badgeColor = 'green' }) => {
   const valueColorClass = {
-    default: 'text-[#1A1D1F]',
+    default: 'text-foreground',
     success: 'text-[#32AE60]',
     warning: 'text-[#FBA94B]',
     danger: 'text-[#F04D1A]',
@@ -251,14 +251,14 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, color = 'default', ba
   
   const badgeColorClass = {
     green: 'bg-[#32AE60] text-white',
-    blue: 'bg-[#0C68E9] text-white',
+    blue: 'bg-primary text-white',
     yellow: 'bg-[#FBA94B] text-white',
     red: 'bg-[#F04D1A] text-white',
   }[badgeColor];
   
   return (
-    <div className="bg-white rounded-2xl p-5 border border-[#EFEFEF]">
-      <div className="text-[0.875rem] text-[#6F767E] mb-2">{label}</div>
+    <div className="bg-card rounded-2xl p-5 border border-border">
+      <div className="text-[0.875rem] text-muted-foreground mb-2">{label}</div>
       <div className="flex items-center gap-3">
         <span className={`text-[1.5rem] font-semibold ${valueColorClass}`}>{value}</span>
         {badge && (
@@ -285,7 +285,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ enabled, onChange }) => {
     <button
       onClick={() => onChange?.(!enabled)}
       className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${
-        enabled ? 'bg-[#0C68E9]' : 'bg-[#EFEFEF]'
+        enabled ? 'bg-primary' : 'bg-muted'
       }`}
     >
       <span
@@ -314,14 +314,14 @@ const VolatilityMeter: React.FC<VolatilityMeterProps> = ({ value, status }) => {
   };
   
   return (
-    <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+    <div className="bg-card rounded-2xl p-6 border border-border">
       <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-          <svg className="w-5 h-5 text-[#1A1D1F]" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+        <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+          <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Deposit Volatility Meter</h3>
+        <h3 className="text-[1.125rem] font-semibold text-foreground">Deposit Volatility Meter</h3>
       </div>
       
       <div className="flex items-center gap-6">
@@ -331,7 +331,7 @@ const VolatilityMeter: React.FC<VolatilityMeterProps> = ({ value, status }) => {
             <span className="text-[#FBA94B]">Moderate</span>
             <span className="text-[#F04D1A]">Volatile</span>
           </div>
-          <div className="relative h-4 rounded-full overflow-hidden bg-[#F4F4F4]">
+          <div className="relative h-4 rounded-full overflow-hidden bg-muted">
             <div className="absolute inset-0 bg-gradient-to-r from-[#32AE60] via-[#FBA94B] to-[#F04D1A]" />
             <div 
               className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-lg transition-all duration-500"
@@ -349,7 +349,7 @@ const VolatilityMeter: React.FC<VolatilityMeterProps> = ({ value, status }) => {
           >
             {status}
           </div>
-          <div className="text-[0.8125rem] text-[#6F767E]">Low variance detected</div>
+          <div className="text-[0.8125rem] text-muted-foreground">Low variance detected</div>
         </div>
       </div>
     </div>
@@ -373,25 +373,25 @@ const CreditIntelligence: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+      <div className="bg-card rounded-2xl p-6 border border-border">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-[1.5rem] font-semibold text-[#1A1D1F]">Credit Intelligence</h1>
-            <p className="text-[#6F767E] text-[0.9375rem]">Comprehensive business credit analysis and fundability assessment</p>
+            <h1 className="text-[1.5rem] font-semibold text-foreground">Credit Intelligence</h1>
+            <p className="text-muted-foreground text-[0.9375rem]">Comprehensive business credit analysis and fundability assessment</p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 px-4 py-2 bg-[#F4F4F4] rounded-xl">
-              <div className="w-8 h-8 bg-[#1A1D1F] rounded-lg flex items-center justify-center">
+            <div className="flex items-center gap-3 px-4 py-2 bg-muted rounded-xl">
+              <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center">
                 <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
               </div>
               <div>
-                <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">TechFlow Solutions Inc.</div>
-                <div className="text-[0.75rem] text-[#6F767E]">Software & Technology</div>
+                <div className="text-[0.9375rem] font-semibold text-foreground">TechFlow Solutions Inc.</div>
+                <div className="text-[0.75rem] text-muted-foreground">Software & Technology</div>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-[0.8125rem] text-[#6F767E]">
+            <div className="flex items-center gap-2 text-[0.8125rem] text-muted-foreground">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
@@ -404,29 +404,29 @@ const CreditIntelligence: React.FC = () => {
       {/* Score Card + Why This Score */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Score Card */}
-        <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+        <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 bg-[#0C68E9]/10 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h2 className="text-[1.125rem] font-semibold text-[#1A1D1F]">LumiqAI Composite Fundability Score</h2>
+            <h2 className="text-[1.125rem] font-semibold text-foreground">LUMIQ AI Composite Fundability Score</h2>
           </div>
           
           <CreditScoreGauge score={742} grade="A" />
           
           {/* Factor Subscores */}
           <div className="mt-8">
-            <div className="text-center text-[0.875rem] text-[#6F767E] mb-4">Factor Subscores</div>
+            <div className="text-center text-[0.875rem] text-muted-foreground mb-4">Factor Subscores</div>
             <div className="space-y-3">
               {factorSubscores.map((factor) => (
-                <div key={factor.name} className="flex items-center justify-between py-3 border-b border-[#EFEFEF] last:border-0">
+                <div key={factor.name} className="flex items-center justify-between py-3 border-b border-border last:border-0">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                      <FactorIcon type={factor.iconType} className="w-4 h-4 text-[#1A1D1F]" />
+                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                      <FactorIcon type={factor.iconType} className="w-4 h-4 text-foreground" />
                     </div>
-                    <span className="text-[0.9375rem] font-medium text-[#1A1D1F]">{factor.name}</span>
+                    <span className="text-[0.9375rem] font-medium text-foreground">{factor.name}</span>
                     {factor.substituted && (
                       <span className="px-2 py-0.5 bg-[#FBA94B]/10 text-[#FBA94B] rounded text-[0.75rem] font-medium">
                         Substituted
@@ -444,36 +444,36 @@ const CreditIntelligence: React.FC = () => {
           </div>
           
           {/* Additional Info */}
-          <div className="mt-6 pt-6 border-t border-[#EFEFEF] space-y-3">
+          <div className="mt-6 pt-6 border-t border-border space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-[0.9375rem] text-[#6F767E]">Owner FICO</span>
+              <span className="text-[0.9375rem] text-muted-foreground">Owner FICO</span>
               <div className="flex items-center gap-2">
-                <span className="text-[1rem] font-semibold text-[#1A1D1F]">758</span>
+                <span className="text-[1rem] font-semibold text-foreground">758</span>
                 <span className="px-2 py-0.5 border border-[#32AE60] text-[#32AE60] rounded-full text-[0.75rem] font-medium">
                   Excellent
                 </span>
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[0.9375rem] text-[#6F767E]">KYB Status</span>
+              <span className="text-[0.9375rem] text-muted-foreground">KYB Status</span>
               <span className="px-3 py-1 bg-[#32AE60] text-white rounded-full text-[0.75rem] font-medium">
                 Pass
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[0.9375rem] text-[#6F767E]">Banking Data</span>
-              <span className="text-[0.9375rem] text-[#1A1D1F]">Updated 1h ago</span>
+              <span className="text-[0.9375rem] text-muted-foreground">Banking Data</span>
+              <span className="text-[0.9375rem] text-foreground">Updated 1h ago</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-[0.9375rem] text-[#6F767E]">Confidence</span>
-              <span className="px-3 py-1 bg-[#0C68E9] text-white rounded-full text-[0.75rem] font-medium">
+              <span className="text-[0.9375rem] text-muted-foreground">Confidence</span>
+              <span className="px-3 py-1 bg-primary text-white rounded-full text-[0.75rem] font-medium">
                 94%
               </span>
             </div>
           </div>
           
           {/* Footer */}
-          <div className="mt-6 pt-4 border-t border-[#EFEFEF] flex justify-between text-[0.8125rem] text-[#6F767E]">
+          <div className="mt-6 pt-4 border-t border-border flex justify-between text-[0.8125rem] text-muted-foreground">
             <div className="flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -490,14 +490,14 @@ const CreditIntelligence: React.FC = () => {
         </div>
 
         {/* Why This Score */}
-        <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+        <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center gap-2 mb-2">
-            <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h2 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Why This Score?</h2>
+            <h2 className="text-[1.125rem] font-semibold text-foreground">Why This Score?</h2>
           </div>
-          <p className="text-[0.875rem] text-[#6F767E] mb-6">Detailed breakdown of factors influencing the fundability assessment</p>
+          <p className="text-[0.875rem] text-muted-foreground mb-6">Detailed breakdown of factors influencing the fundability assessment</p>
           
           {/* Positive Drivers */}
           <div className="mb-6">
@@ -513,7 +513,7 @@ const CreditIntelligence: React.FC = () => {
                   <svg className="w-5 h-5 text-[#32AE60] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-[0.875rem] text-[#1A1D1F]">{driver}</span>
+                  <span className="text-[0.875rem] text-foreground">{driver}</span>
                 </div>
               ))}
             </div>
@@ -533,7 +533,7 @@ const CreditIntelligence: React.FC = () => {
                   <svg className="w-5 h-5 text-[#FBA94B] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
-                  <span className="text-[0.875rem] text-[#1A1D1F]">{driver}</span>
+                  <span className="text-[0.875rem] text-foreground">{driver}</span>
                 </div>
               ))}
             </div>
@@ -542,20 +542,20 @@ const CreditIntelligence: React.FC = () => {
           {/* Substitutions Applied */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
-              <svg className="w-4 h-4 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              <span className="text-[0.9375rem] font-semibold text-[#0C68E9]">Substitutions Applied</span>
+              <span className="text-[0.9375rem] font-semibold text-primary">Substitutions Applied</span>
             </div>
             <div className="space-y-2">
               {substitutions.map((sub, i) => (
-                <div key={i} className="flex items-center gap-2 p-3 bg-[#F4F4F4] rounded-xl">
-                  <svg className="w-4 h-4 text-[#6F767E] shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <div key={i} className="flex items-center gap-2 p-3 bg-muted rounded-xl">
+                  <svg className="w-4 h-4 text-muted-foreground shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
                   </svg>
-                  <span className="text-[0.875rem] text-[#6F767E]">{sub.from}</span>
-                  <span className="text-[#6F767E]">→</span>
-                  <span className="text-[0.875rem] text-[#1A1D1F]">{sub.to}</span>
+                  <span className="text-[0.875rem] text-muted-foreground">{sub.from}</span>
+                  <span className="text-muted-foreground">→</span>
+                  <span className="text-[0.875rem] text-foreground">{sub.to}</span>
                 </div>
               ))}
             </div>
@@ -570,13 +570,13 @@ const CreditIntelligence: React.FC = () => {
                 </svg>
               </div>
               <div>
-                <div className="text-[0.8125rem] text-[#6F767E]">AI Recommendation</div>
+                <div className="text-[0.8125rem] text-muted-foreground">AI Recommendation</div>
                 <div className="text-[1.25rem] font-semibold text-[#32AE60]">Approve</div>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[0.8125rem] text-[#6F767E]">Decision Confidence</div>
-              <div className="text-[1.5rem] font-bold text-[#1A1D1F]">94%</div>
+              <div className="text-[0.8125rem] text-muted-foreground">Decision Confidence</div>
+              <div className="text-[1.5rem] font-bold text-foreground">94%</div>
             </div>
           </div>
         </div>
@@ -600,12 +600,12 @@ const CreditIntelligence: React.FC = () => {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Balance Trend */}
-        <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+        <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center gap-2 mb-6">
-            <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Balance Trend (90 Days)</h3>
+            <h3 className="text-[1.125rem] font-semibold text-foreground">Balance Trend (90 Days)</h3>
           </div>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -653,12 +653,12 @@ const CreditIntelligence: React.FC = () => {
         </div>
 
         {/* ACH Returns */}
-        <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+        <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center gap-2 mb-6">
             <svg className="w-5 h-5 text-[#FBA94B]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F]">ACH Returns Timeline (12 Weeks)</h3>
+            <h3 className="text-[1.125rem] font-semibold text-foreground">ACH Returns Timeline (12 Weeks)</h3>
           </div>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -701,22 +701,22 @@ const CreditIntelligence: React.FC = () => {
       <VolatilityMeter value={25} status="Stable" />
 
       {/* Credit Monitoring Alerts */}
-      <div className="bg-white rounded-2xl p-6 border border-[#EFEFEF]">
+      <div className="bg-card rounded-2xl p-6 border border-border">
         <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
             <div>
-              <h2 className="text-[1.125rem] font-semibold text-[#1A1D1F]">Credit Monitoring Alerts</h2>
-              <p className="text-[0.875rem] text-[#6F767E]">Configure thresholds and notification preferences for credit events</p>
+              <h2 className="text-[1.125rem] font-semibold text-foreground">Credit Monitoring Alerts</h2>
+              <p className="text-[0.875rem] text-muted-foreground">Configure thresholds and notification preferences for credit events</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <span className="px-4 py-1.5 border border-[#32AE60] text-[#32AE60] rounded-full text-[0.875rem] font-medium">
               8 Active Rules
             </span>
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#1A1D1F] text-white rounded-xl text-[0.875rem] font-medium hover:bg-[#272B30] transition-colors">
+            <button className="flex items-center gap-2 px-4 py-2 bg-foreground text-white rounded-xl text-[0.875rem] font-medium hover:bg-foreground/90 transition-colors">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
@@ -726,11 +726,11 @@ const CreditIntelligence: React.FC = () => {
         </div>
         
         {/* Tabs */}
-        <div className="flex gap-1 p-1 bg-[#F4F4F4] rounded-xl w-fit mb-6">
+        <div className="flex gap-1 p-1 bg-muted rounded-xl w-fit mb-6">
           <button
             onClick={() => setAlertTab('rules')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[0.875rem] font-medium transition-colors ${
-              alertTab === 'rules' ? 'bg-white text-[#1A1D1F] shadow-sm' : 'text-[#6F767E] hover:text-[#1A1D1F]'
+              alertTab === 'rules' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -742,7 +742,7 @@ const CreditIntelligence: React.FC = () => {
           <button
             onClick={() => setAlertTab('history')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-[0.875rem] font-medium transition-colors ${
-              alertTab === 'history' ? 'bg-white text-[#1A1D1F] shadow-sm' : 'text-[#6F767E] hover:text-[#1A1D1F]'
+              alertTab === 'history' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -758,58 +758,58 @@ const CreditIntelligence: React.FC = () => {
             {alertRules.map((category) => (
               <div key={category.category}>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 bg-[#F4F4F4] rounded-lg flex items-center justify-center">
-                    <FactorIcon type={category.iconType} className="w-4 h-4 text-[#1A1D1F]" />
+                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
+                    <FactorIcon type={category.iconType} className="w-4 h-4 text-foreground" />
                   </div>
-                  <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{category.category}</span>
-                  <span className="px-2 py-0.5 bg-[#F4F4F4] text-[#6F767E] rounded text-[0.75rem] font-medium">
+                  <span className="text-[0.9375rem] font-semibold text-foreground">{category.category}</span>
+                  <span className="px-2 py-0.5 bg-muted text-muted-foreground rounded text-[0.75rem] font-medium">
                     {category.rules.length} rules
                   </span>
                 </div>
                 <div className="space-y-2">
                   {category.rules.map((rule) => (
-                    <div key={rule.id} className="flex items-center gap-4 p-4 bg-[#F4F4F4] rounded-xl">
+                    <div key={rule.id} className="flex items-center gap-4 p-4 bg-muted rounded-xl">
                       <ToggleSwitch 
                         enabled={alertStates[rule.id]} 
                         onChange={() => toggleAlert(rule.id)} 
                       />
-                      <div className="w-10 h-10 bg-[#0C68E9]/10 rounded-xl flex items-center justify-center">
-                        <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                        <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{rule.name}</div>
-                        <div className="text-[0.8125rem] text-[#6F767E]">{rule.description}</div>
+                        <div className="text-[0.9375rem] font-semibold text-foreground">{rule.name}</div>
+                        <div className="text-[0.8125rem] text-muted-foreground">{rule.description}</div>
                         {rule.lastTriggered && (
-                          <div className="text-[0.75rem] text-[#6F767E] mt-1">Last triggered: {rule.lastTriggered}</div>
+                          <div className="text-[0.75rem] text-muted-foreground mt-1">Last triggered: {rule.lastTriggered}</div>
                         )}
                       </div>
                       {rule.threshold && (
                         <div className="flex items-center gap-2">
-                          <span className="text-[0.8125rem] text-[#6F767E]">Threshold:</span>
+                          <span className="text-[0.8125rem] text-muted-foreground">Threshold:</span>
                           <input 
                             type="range" 
                             min="5" 
                             max="50" 
                             defaultValue={rule.threshold}
-                            className="w-24 accent-[#0C68E9]"
+                            className="w-24 accent-primary"
                           />
-                          <span className="text-[0.875rem] font-medium text-[#1A1D1F] w-12">{rule.threshold} pts</span>
+                          <span className="text-[0.875rem] font-medium text-foreground w-12">{rule.threshold} pts</span>
                         </div>
                       )}
                       <div className="flex items-center gap-2">
-                        <button className="w-8 h-8 bg-[#0C68E9] rounded-lg flex items-center justify-center text-white">
+                        <button className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
                         </button>
-                        <button className="w-8 h-8 bg-[#0C68E9] rounded-lg flex items-center justify-center text-white">
+                        <button className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                           </svg>
                         </button>
-                        <button className="w-8 h-8 bg-[#0C68E9] rounded-lg flex items-center justify-center text-white">
+                        <button className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                           </svg>
@@ -830,7 +830,7 @@ const CreditIntelligence: React.FC = () => {
         
         {/* Alert History */}
         {alertTab === 'history' && (
-          <div className="text-center py-12 text-[#6F767E]">
+          <div className="text-center py-12 text-muted-foreground">
             <svg className="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>

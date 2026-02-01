@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line } from 'recharts';
 import dashboardService from '@/services/dashboardService';
+import { logger } from '@/utils/logger';
 
 // ============================================
 // TYPES
@@ -126,18 +127,18 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ value, onChange, option
         onClick={() => setIsOpen(!isOpen)}
         className={`
           flex items-center justify-between gap-2 h-10 px-4 min-w-[160px]
-          bg-white border border-[#EFEFEF] rounded-xl
-          text-[0.875rem] font-medium text-[#1A1D1F]
-          hover:bg-[#F4F4F4] transition-all duration-200
-          focus:outline-none focus:ring-2 focus:ring-[#0C68E9]/20 focus:border-[#0C68E9]
-          ${isOpen ? 'ring-2 ring-[#0C68E9]/20 border-[#0C68E9]' : ''}
+          bg-card border border-border rounded-xl
+          text-[0.875rem] font-medium text-foreground
+          hover:bg-muted transition-all duration-200
+          focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
+          ${isOpen ? 'ring-2 ring-primary/20 border-primary' : ''}
         `}
       >
-        <span className={selectedOption?.value === 'all' ? 'text-[#6F767E]' : 'text-[#1A1D1F]'}>
+        <span className={selectedOption?.value === 'all' ? 'text-muted-foreground' : 'text-foreground'}>
           {selectedOption?.label || placeholder}
         </span>
         <svg 
-          className={`w-4 h-4 text-[#6F767E] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none" 
           stroke="currentColor" 
           strokeWidth={2} 
@@ -148,7 +149,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ value, onChange, option
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 min-w-full w-max bg-white border border-[#EFEFEF] rounded-xl shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full left-0 mt-2 min-w-full w-max bg-card border border-border rounded-xl shadow-lg z-50 overflow-hidden">
           {options.map((option) => (
             <button
               key={option.value}
@@ -161,8 +162,8 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ value, onChange, option
                 w-full px-4 py-2.5 text-left text-[0.875rem] font-medium
                 transition-colors duration-150
                 ${value === option.value 
-                  ? 'bg-[#0C68E9] text-white' 
-                  : 'text-[#1A1D1F] hover:bg-[#F4F4F4]'
+                  ? 'bg-primary text-white' 
+                  : 'text-foreground hover:bg-muted'
                 }
               `}
             >
@@ -236,7 +237,7 @@ const Users = () => {
           });
         }
       } catch (err) {
-        console.error('Error fetching data:', err);
+        logger.error('Error fetching data:', err);
     } finally {
       setIsLoading(false);
     }
@@ -272,14 +273,14 @@ const Users = () => {
     return (
     <div className="flex flex-col lg:flex-row lg:items-start lg:gap-6">
       {/* LEFT: Users List (like Prices) */}
-      <div className="card flex-1 min-w-0 bg-white rounded-2xl p-4 sm:p-6">
-        <div className="mb-4 sm:mb-6 text-[1.125rem] font-semibold text-[#1A1D1F]">
+      <div className="card flex-1 min-w-0 bg-card rounded-2xl p-4 sm:p-6">
+        <div className="mb-4 sm:mb-6 text-[1.125rem] font-semibold text-foreground">
           Users
         </div>
 
         {/* Search Bar */}
         <div className="relative mb-4">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -287,7 +288,7 @@ const Users = () => {
             placeholder="Search by name, city, or state..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-12 pl-12 pr-4 bg-[#F4F4F4] border border-[#EFEFEF] rounded-xl text-[0.9375rem] text-[#1A1D1F] placeholder-[#9A9FA5] focus:outline-none focus:ring-2 focus:ring-[#0C68E9]"
+            className="w-full h-12 pl-12 pr-4 bg-muted border border-border rounded-xl text-[0.9375rem] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
@@ -331,7 +332,7 @@ const Users = () => {
                 setHasAppsFilter('all');
                 setHasRecsFilter('all');
               }}
-              className="h-10 px-4 bg-[#1A1D1F] text-white rounded-xl text-[0.875rem] font-medium hover:bg-[#2A2D2F] transition-colors flex items-center gap-2"
+              className="h-10 px-4 bg-foreground text-white rounded-xl text-[0.875rem] font-medium hover:bg-foreground/90 transition-colors flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -354,7 +355,7 @@ const Users = () => {
             ))}
           </div>
         ) : businesses.length === 0 ? (
-          <div className="text-center py-12 text-[#6F767E]">
+          <div className="text-center py-12 text-muted-foreground">
             <p className="text-[1rem]">No users found matching your criteria</p>
             <button
               onClick={() => {
@@ -363,7 +364,7 @@ const Users = () => {
                 setHasAppsFilter('all');
                 setHasRecsFilter('all');
               }}
-              className="mt-4 h-10 px-6 bg-[#0C68E9] text-white rounded-xl text-[0.875rem] font-semibold hover:bg-blue-600 transition-colors"
+              className="mt-4 h-10 px-6 bg-primary text-white rounded-xl text-[0.875rem] font-semibold hover:bg-blue-600 transition-colors"
             >
               Clear Filters
             </button>
@@ -381,20 +382,20 @@ const Users = () => {
                 <div
                   key={business.id}
                   onClick={() => setSelectedBusiness(business)}
-                  className="flex justify-between items-center h-20 px-3 rounded-2xl border border-transparent transition-all hover:border-[#EFEFEF] hover:shadow-[0_0_0.875rem_-0.25rem_rgba(0,0,0,0.05),0_2rem_3rem_-0.5rem_rgba(0,0,0,0.05)] cursor-pointer md:h-18 md:px-2"
+                  className="flex justify-between items-center h-20 px-3 rounded-2xl border border-transparent transition-all hover:border-border hover:shadow-[0_0_0.875rem_-0.25rem_rgba(0,0,0,0.05),0_2rem_3rem_-0.5rem_rgba(0,0,0,0.05)] cursor-pointer md:h-18 md:px-2"
                 >
                   {/* Avatar & Name - Full width for name */}
                   <div className="flex items-center flex-1 min-w-0 mr-4">
                     <div className="mr-4 shrink-0">
-                      <div className="w-10 h-10 rounded-full bg-[#1A1D1F] flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-foreground flex items-center justify-center">
                         <span className="text-white font-semibold text-sm">{getInitials(business.name)}</span>
                       </div>
                     </div>
                     <div className="min-w-0">
-                      <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+                      <div className="text-[0.9375rem] font-semibold text-foreground">
                         {business.name}
                       </div>
-                      <div className="text-[0.75rem] text-[#6F767E] opacity-75">
+                      <div className="text-[0.75rem] text-muted-foreground opacity-75">
                         {business.legalStruct || business.city || 'Business'}
                       </div>
                     </div>
@@ -405,7 +406,7 @@ const Users = () => {
                     <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[0.8125rem] font-semibold ${
                       appCount > 0 
                         ? 'bg-[#DFF9E8] text-[#32AE60]' 
-                        : 'bg-[#F4F4F4] text-[#6F767E]'
+                        : 'bg-muted text-muted-foreground'
                     }`}>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -419,7 +420,7 @@ const Users = () => {
                     {business.score?.score ? (
                       <span>{business.score.score}</span>
                     ) : (
-                      <span className="text-[#6F767E]">
+                      <span className="text-muted-foreground">
                         {business.yearFounded ? `${new Date().getFullYear() - business.yearFounded}y` : '—'}
                       </span>
                   )}
@@ -447,7 +448,7 @@ const Users = () => {
 
                   {/* View Button */}
                   <div className="shrink-0">
-                    <button className="h-10 px-4 bg-[#F4F4F4] text-[#1A1D1F] text-[0.875rem] font-semibold rounded-lg hover:bg-[#EFEFEF] transition-colors">
+                    <button className="h-10 px-4 bg-muted text-foreground text-[0.875rem] font-semibold rounded-lg hover:bg-muted transition-colors">
                       View
                     </button>
               </div>
@@ -459,20 +460,20 @@ const Users = () => {
 
         {/* Results count */}
         {!isLoading && businesses.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-[#EFEFEF] text-[0.875rem] text-[#6F767E]">
+          <div className="mt-4 pt-4 border-t border-border text-[0.875rem] text-muted-foreground">
             Showing {businesses.length} users
           </div>
         )}
               </div>
 
       {/* RIGHT: Business Overview (like Available Balance) */}
-      <div className="card-sidebar w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0 bg-white rounded-2xl p-4 sm:p-6">
-        <div className="mb-4 sm:mb-6 text-[1.125rem] font-semibold text-[#1A1D1F]">
+      <div className="card-sidebar w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0 bg-card rounded-2xl p-4 sm:p-6">
+        <div className="mb-4 sm:mb-6 text-[1.125rem] font-semibold text-foreground">
           Business Overview
         </div>
 
         {/* Total Businesses */}
-        <div className="text-[2.5rem] font-semibold text-[#1A1D1F]">
+        <div className="text-[2.5rem] font-semibold text-foreground">
           {animatedTotalBusinesses.toLocaleString()}
         </div>
         <div className="flex items-center gap-1 text-[#32AE60] text-[0.875rem] font-semibold mb-6">
@@ -510,10 +511,10 @@ const Users = () => {
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-            <div className="text-[1.25rem] font-semibold text-[#1A1D1F]">
+            <div className="text-[1.25rem] font-semibold text-foreground">
               {stats?.businessesWithApplications || 0}
             </div>
-            <div className="text-[0.75rem] text-[#6F767E]">Active</div>
+            <div className="text-[0.75rem] text-muted-foreground">Active</div>
                 </div>
               </div>
 
@@ -521,7 +522,7 @@ const Users = () => {
         <div className="flex flex-wrap justify-center mt-6 gap-3">
           {pieData.map((item, index) => (
             <div
-              className="flex items-center text-[0.75rem] font-medium text-[#6F767E]"
+              className="flex items-center text-[0.75rem] font-medium text-muted-foreground"
               key={index}
             >
               <div
@@ -534,29 +535,29 @@ const Users = () => {
         </div>
 
         {/* Stats Summary */}
-        <div className="mt-6 pt-6 border-t border-[#EFEFEF] space-y-3">
+        <div className="mt-6 pt-6 border-t border-border space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-[0.875rem] text-[#6F767E]">With Applications</span>
-            <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+            <span className="text-[0.875rem] text-muted-foreground">With Applications</span>
+            <span className="text-[0.9375rem] font-semibold text-foreground">
               {stats?.businessesWithApplications || 0}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[0.875rem] text-[#6F767E]">With Score</span>
-            <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+            <span className="text-[0.875rem] text-muted-foreground">With Score</span>
+            <span className="text-[0.9375rem] font-semibold text-foreground">
               {businesses.filter(b => b.score).length}
             </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-[0.875rem] text-[#6F767E]">With Recommendations</span>
-            <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+            <span className="text-[0.875rem] text-muted-foreground">With Recommendations</span>
+            <span className="text-[0.9375rem] font-semibold text-foreground">
               {businesses.filter(b => b.recommendation).length}
             </span>
           </div>
         </div>
 
         {/* View All Button */}
-        <button className="w-full h-12 mt-6 bg-[#F4F4F4] text-[#1A1D1F] rounded-xl font-semibold text-[0.9375rem] hover:bg-[#EFEFEF] transition-colors">
+        <button className="w-full h-12 mt-6 bg-muted text-foreground rounded-xl font-semibold text-[0.9375rem] hover:bg-muted transition-colors">
           View all users
         </button>
       </div>
@@ -565,11 +566,11 @@ const Users = () => {
       {selectedBusiness && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedBusiness(null)} />
-          <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
+          <div className="relative bg-card rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
             {/* Close Button */}
             <button
               onClick={() => setSelectedBusiness(null)}
-              className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-[#F4F4F4] flex items-center justify-center hover:bg-[#EFEFEF]"
+              className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -578,12 +579,12 @@ const Users = () => {
 
             {/* Header */}
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-[#1A1D1F] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-foreground flex items-center justify-center">
                 <span className="text-white font-bold text-xl">{getInitials(selectedBusiness.name)}</span>
               </div>
               <div>
-                <h2 className="text-[1.5rem] font-semibold text-[#1A1D1F]">{selectedBusiness.name}</h2>
-                <p className="text-[#6F767E]">
+                <h2 className="text-[1.5rem] font-semibold text-foreground">{selectedBusiness.name}</h2>
+                <p className="text-muted-foreground">
                   {[selectedBusiness.city, selectedBusiness.state].filter(Boolean).join(', ') || selectedBusiness.legalStruct}
                 </p>
               </div>
@@ -591,8 +592,8 @@ const Users = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="p-4 bg-[#F4F4F4] rounded-xl">
-                <div className="text-[0.8125rem] text-[#6F767E] mb-1">Credit Score</div>
+              <div className="p-4 bg-muted rounded-xl">
+                <div className="text-[0.8125rem] text-muted-foreground mb-1">Credit Score</div>
                 <div className="text-[1.5rem] font-semibold" style={{ color: getScoreColor(selectedBusiness.score?.score) }}>
                   {selectedBusiness.score?.score || '—'}
                 </div>
@@ -603,9 +604,9 @@ const Users = () => {
                   {selectedBusiness.applications?.length || 0}
                 </div>
               </div>
-              <div className="p-4 bg-[#F4F4F4] rounded-xl">
-                <div className="text-[0.8125rem] text-[#6F767E] mb-1">Recommendations</div>
-                <div className="text-[1.5rem] font-semibold text-[#1A1D1F]">
+              <div className="p-4 bg-muted rounded-xl">
+                <div className="text-[0.8125rem] text-muted-foreground mb-1">Recommendations</div>
+                <div className="text-[1.5rem] font-semibold text-foreground">
                   {selectedBusiness.recommendation?.recommendations?.length || 0}
                 </div>
                             </div>
@@ -613,30 +614,30 @@ const Users = () => {
 
             {/* Business Info */}
             <div className="mb-6">
-              <h3 className="text-[1rem] font-semibold text-[#1A1D1F] mb-3">Business Info</h3>
+              <h3 className="text-[1rem] font-semibold text-foreground mb-3">Business Info</h3>
               <div className="grid grid-cols-2 gap-3">
                 {selectedBusiness.legalStruct && (
-                  <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[0.75rem] text-[#6F767E]">Structure</div>
-                    <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{selectedBusiness.legalStruct}</div>
+                  <div className="p-3 bg-muted rounded-xl">
+                    <div className="text-[0.75rem] text-muted-foreground">Structure</div>
+                    <div className="text-[0.9375rem] font-semibold text-foreground">{selectedBusiness.legalStruct}</div>
                   </div>
                 )}
                 {selectedBusiness.yearFounded && (
-                  <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[0.75rem] text-[#6F767E]">Founded</div>
-                    <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{selectedBusiness.yearFounded}</div>
+                  <div className="p-3 bg-muted rounded-xl">
+                    <div className="text-[0.75rem] text-muted-foreground">Founded</div>
+                    <div className="text-[0.9375rem] font-semibold text-foreground">{selectedBusiness.yearFounded}</div>
                         </div>
                 )}
                 {selectedBusiness.empCount && (
-                  <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[0.75rem] text-[#6F767E]">Employees</div>
-                    <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{selectedBusiness.empCount}</div>
+                  <div className="p-3 bg-muted rounded-xl">
+                    <div className="text-[0.75rem] text-muted-foreground">Employees</div>
+                    <div className="text-[0.9375rem] font-semibold text-foreground">{selectedBusiness.empCount}</div>
                         </div>
                       )}
                 {selectedBusiness.score?.type && (
-                  <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                    <div className="text-[0.75rem] text-[#6F767E]">Score Type</div>
-                    <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{selectedBusiness.score.type}</div>
+                  <div className="p-3 bg-muted rounded-xl">
+                    <div className="text-[0.75rem] text-muted-foreground">Score Type</div>
+                    <div className="text-[0.9375rem] font-semibold text-foreground">{selectedBusiness.score.type}</div>
                         </div>
                       )}
                     </div>
@@ -645,15 +646,15 @@ const Users = () => {
             {/* Applications */}
             {selectedBusiness.applications && selectedBusiness.applications.length > 0 && (
               <div className="mb-6">
-                <h3 className="text-[1rem] font-semibold text-[#1A1D1F] mb-3">
+                <h3 className="text-[1rem] font-semibold text-foreground mb-3">
                   Applications ({selectedBusiness.applications.length})
                 </h3>
                 <div className="space-y-2">
                   {selectedBusiness.applications.map((app, idx) => (
-                    <div key={idx} className="flex items-center justify-between p-3 bg-[#F4F4F4] rounded-xl">
+                    <div key={idx} className="flex items-center justify-between p-3 bg-muted rounded-xl">
                     <div>
-                        <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{app.cardName}</div>
-                        <div className="text-[0.75rem] text-[#6F767E]">
+                        <div className="text-[0.9375rem] font-semibold text-foreground">{app.cardName}</div>
+                        <div className="text-[0.75rem] text-muted-foreground">
                           {new Date(app.createdAt).toLocaleDateString()}
                         </div>
                       </div>
@@ -662,7 +663,7 @@ const Users = () => {
                           ? 'bg-[#DFF9E8] text-[#32AE60]'
                           : app.status === 'PENDING' || app.status === 'pending'
                           ? 'bg-[#FEE6C7] text-[#FBA94B]'
-                          : 'bg-[#F4F4F4] text-[#6F767E]'
+                          : 'bg-muted text-muted-foreground'
                       }`}>
                         {app.status}
                       </span>
@@ -675,17 +676,17 @@ const Users = () => {
             {/* Recommendations */}
             {selectedBusiness.recommendation && selectedBusiness.recommendation.recommendations.length > 0 && (
                   <div>
-                <h3 className="text-[1rem] font-semibold text-[#1A1D1F] mb-3">Card Recommendations</h3>
+                <h3 className="text-[1rem] font-semibold text-foreground mb-3">Card Recommendations</h3>
                 <div className="space-y-2">
                   {selectedBusiness.recommendation.recommendations.map((rec, idx) => (
-                    <div key={idx} className="p-4 bg-[#F4F4F4] rounded-xl">
+                    <div key={idx} className="p-4 bg-muted rounded-xl">
                                 <div className="flex items-center justify-between mb-2">
-                        <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">{rec.cardName}</div>
-                        <span className="px-3 py-1 bg-[#D8F0FF] text-[#0C68E9] rounded-lg text-[0.75rem] font-semibold">
+                        <div className="text-[0.9375rem] font-semibold text-foreground">{rec.cardName}</div>
+                        <span className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-[0.75rem] font-semibold">
                           {(rec.fitScore * 100).toFixed(0)}% fit
                         </span>
                                 </div>
-                      <p className="text-[0.8125rem] text-[#6F767E]">{rec.reason}</p>
+                      <p className="text-[0.8125rem] text-muted-foreground">{rec.reason}</p>
                               </div>
                             ))}
                 </div>

@@ -43,14 +43,6 @@ const MetricCards: React.FC<MetricCardsProps> = ({
   lastUpdated, 
   onRefresh 
 }) => {
-  // Debug logging for MetricCards
-  console.log('=== METRIC CARDS RENDER ===');
-  console.log('API Stats received:', apiStats);
-  console.log('Total Calls:', apiStats?.totalCalls);
-  console.log('This Month:', apiStats?.thisMonth);
-  console.log('Key Stats:', apiStats?.keyStats);
-  console.log('===========================');
-
   return (
     <div className="space-y-4">
       {/* Header with refresh button */}

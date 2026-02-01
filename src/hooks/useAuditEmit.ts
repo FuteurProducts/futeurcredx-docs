@@ -7,6 +7,7 @@
 import { useCallback } from 'react';
 import { auditService, type ClientAuditEventType } from '@/services/bff';
 import { usePortfolio } from '@/contexts/PortfolioContext';
+import { logger } from '@/utils/logger';
 
 interface AuditEmitOptions {
   resourceType: string;
@@ -36,7 +37,7 @@ export function useAuditEmit() {
         );
       } catch (error) {
         // Audit failures should not break the UI
-        console.warn('Failed to emit audit event:', eventType, error);
+        logger.warn('[useAuditEmit] Failed to emit audit event:', eventType, error);
       }
     },
     [portfolioId]

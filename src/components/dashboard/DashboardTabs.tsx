@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Neutrade-style Icon component
+// Icon component
 const Icon = ({ name, className = "", active = false }: { name: string; className?: string; active?: boolean }) => {
   const iconMap: Record<string, string> = {
     'overview': '/icons/disc-02.svg',

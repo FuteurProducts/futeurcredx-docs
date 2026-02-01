@@ -119,7 +119,7 @@ const colorClasses = {
   blue: {
     bg: "bg-[#E8F4FF]",
     border: "border-[#A0D4FF]",
-    iconBg: "bg-[#0C68E9]",
+    iconBg: "bg-primary",
   },
 };
 
@@ -182,7 +182,7 @@ const Products = () => {
   return (
     <div className="flex flex-col lg:flex-row lg:items-start lg:gap-6">
       {/* LEFT SIDE - Main Content (like NeuraAI left panel) */}
-      <div className="card flex-1 min-w-0 bg-white rounded-2xl p-4 sm:p-6">
+      <div className="card flex-1 min-w-0 bg-card rounded-2xl p-4 sm:p-6">
         {/* Mode Selector */}
         <div className="flex items-center mb-6">
           <div className="relative">
@@ -192,13 +192,13 @@ const Products = () => {
                 const selected = modes.find(m => m.id === e.target.value);
                 if (selected) setMode(selected);
               }}
-              className="h-10 pl-4 pr-10 bg-white border border-[#EFEFEF] rounded-xl text-[0.9375rem] font-semibold text-[#1A1D1F] appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#0C68E9]"
+              className="h-10 pl-4 pr-10 bg-card border border-border rounded-xl text-[0.9375rem] font-semibold text-foreground appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
             >
               {modes.map(m => (
                 <option key={m.id} value={m.id}>{m.title}</option>
               ))}
             </select>
-            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6F767E] pointer-events-none" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
@@ -206,10 +206,10 @@ const Products = () => {
 
         {/* Greeting */}
         <div className="mb-10">
-          <h1 className="text-[2.5rem] md:text-[1.75rem] font-semibold text-[#1A1D1F] leading-tight">
+          <h1 className="text-[2.5rem] md:text-[1.75rem] font-semibold text-foreground leading-tight">
             Hello {firstName},
           </h1>
-          <h2 className="text-[2.5rem] md:text-[1.75rem] font-semibold text-[#6F767E] leading-tight">
+          <h2 className="text-[2.5rem] md:text-[1.75rem] font-semibold text-muted-foreground leading-tight">
             How can I help you today?
           </h2>
         </div>
@@ -224,13 +224,13 @@ const Products = () => {
               key={product.id}
               onClick={() => setSelectedProduct(product)}
               className={`group flex flex-col shrink-0 w-64 p-6 rounded-2xl border-2 text-left transition-all hover:scale-[1.02] hover:shadow-lg ${colorClasses[product.color].bg} ${colorClasses[product.color].border} ${
-                selectedProduct?.id === product.id ? 'ring-2 ring-[#0C68E9] ring-offset-2' : ''
+                selectedProduct?.id === product.id ? 'ring-2 ring-primary ring-offset-2' : ''
               }`}
             >
-              <h3 className="text-[1.125rem] font-semibold text-[#1A1D1F] mb-2">
+              <h3 className="text-[1.125rem] font-semibold text-foreground mb-2">
                 {product.title}
               </h3>
-              <p className="text-[0.875rem] text-[#6F767E] mb-auto line-clamp-3 min-h-[4rem]">
+              <p className="text-[0.875rem] text-muted-foreground mb-auto line-clamp-3 min-h-[4rem]">
                 {product.description}
               </p>
               <div className={`mt-4 w-10 h-10 rounded-xl flex items-center justify-center ${colorClasses[product.color].iconBg} transition-transform group-hover:scale-110`}>
@@ -242,65 +242,65 @@ const Products = () => {
 
         {/* Product Details (when selected) */}
         {selectedProduct && (
-          <div className="mt-6 pt-6 border-t border-[#EFEFEF]">
+          <div className="mt-6 pt-6 border-t border-border">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClasses[selectedProduct.color].iconBg}`}>
                   <ProductIcon name={selectedProduct.icon} className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-[1.25rem] font-semibold text-[#1A1D1F]">{selectedProduct.title}</h3>
-                  <p className="text-[0.875rem] text-[#6F767E]">{selectedProduct.details.apiEndpoint}</p>
+                  <h3 className="text-[1.25rem] font-semibold text-foreground">{selectedProduct.title}</h3>
+                  <p className="text-[0.875rem] text-muted-foreground">{selectedProduct.details.apiEndpoint}</p>
                 </div>
               </div>
               <button 
                 onClick={() => setSelectedProduct(null)}
-                className="w-10 h-10 rounded-xl bg-[#F4F4F4] flex items-center justify-center hover:bg-[#EFEFEF]"
+                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted"
               >
-                <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             
-            <p className="text-[0.9375rem] text-[#6F767E] mb-6">{selectedProduct.description}</p>
+            <p className="text-[0.9375rem] text-muted-foreground mb-6">{selectedProduct.description}</p>
             
             {/* Features */}
             <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-1">
               {selectedProduct.details.features.map((feature, i) => (
-                <div key={i} className="flex items-center gap-3 p-3 bg-[#F4F4F4] rounded-xl">
+                <div key={i} className="flex items-center gap-3 p-3 bg-muted rounded-xl">
                   <div className="w-5 h-5 rounded-full bg-[#32AE60] flex items-center justify-center shrink-0">
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <span className="text-[0.8125rem] text-[#1A1D1F]">{feature}</span>
+                  <span className="text-[0.8125rem] text-foreground">{feature}</span>
                 </div>
               ))}
             </div>
             
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-3 mb-6 md:grid-cols-1">
-              <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                <div className="text-[0.6875rem] text-[#6F767E] mb-1">Rate Limit</div>
-                <div className="text-[0.875rem] font-semibold text-[#1A1D1F]">{selectedProduct.details.rateLimit}</div>
+              <div className="p-3 bg-muted rounded-xl">
+                <div className="text-[0.6875rem] text-muted-foreground mb-1">Rate Limit</div>
+                <div className="text-[0.875rem] font-semibold text-foreground">{selectedProduct.details.rateLimit}</div>
               </div>
-              <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                <div className="text-[0.6875rem] text-[#6F767E] mb-1">Response</div>
-                <div className="text-[0.875rem] font-semibold text-[#1A1D1F]">{selectedProduct.details.responseTime}</div>
+              <div className="p-3 bg-muted rounded-xl">
+                <div className="text-[0.6875rem] text-muted-foreground mb-1">Response</div>
+                <div className="text-[0.875rem] font-semibold text-foreground">{selectedProduct.details.responseTime}</div>
               </div>
-              <div className="p-3 bg-[#F4F4F4] rounded-xl">
-                <div className="text-[0.6875rem] text-[#6F767E] mb-1">Pricing</div>
-                <div className="text-[0.875rem] font-semibold text-[#1A1D1F]">{selectedProduct.details.pricing}</div>
+              <div className="p-3 bg-muted rounded-xl">
+                <div className="text-[0.6875rem] text-muted-foreground mb-1">Pricing</div>
+                <div className="text-[0.875rem] font-semibold text-foreground">{selectedProduct.details.pricing}</div>
               </div>
             </div>
             
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <button className="flex-1 h-11 bg-[#1A1D1F] text-white rounded-xl font-semibold text-[0.875rem] hover:bg-[#272B30] transition-colors">
+              <button className="flex-1 h-11 bg-foreground text-white rounded-xl font-semibold text-[0.875rem] hover:bg-foreground/90 transition-colors">
                 Try in Sandbox
               </button>
-              <button className="flex-1 h-11 bg-[#F4F4F4] text-[#1A1D1F] rounded-xl font-semibold text-[0.875rem] hover:bg-[#EFEFEF] transition-colors">
+              <button className="flex-1 h-11 bg-muted text-foreground rounded-xl font-semibold text-[0.875rem] hover:bg-muted transition-colors">
                 View Documentation
               </button>
             </div>
@@ -309,10 +309,10 @@ const Products = () => {
       </div>
 
       {/* RIGHT SIDE - Sidebar (like NeuraAI right panel) */}
-      <div className="card-sidebar w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0 bg-white rounded-2xl p-4 sm:p-6">
+      <div className="card-sidebar w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0 bg-card rounded-2xl p-4 sm:p-6">
         {/* Search */}
         <div className="relative mb-6">
-          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -320,7 +320,7 @@ const Products = () => {
             placeholder="Search for product"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 pl-12 pr-4 bg-[#F4F4F4] border border-[#EFEFEF] rounded-xl text-[0.9375rem] text-[#1A1D1F] placeholder-[#9A9FA5] focus:outline-none focus:ring-2 focus:ring-[#0C68E9]"
+            className="w-full h-12 pl-12 pr-4 bg-muted border border-border rounded-xl text-[0.9375rem] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
@@ -330,15 +330,15 @@ const Products = () => {
             <button
               key={product.id}
               onClick={() => setSelectedProduct(product)}
-              className={`w-full flex items-start p-4 rounded-xl text-left transition-all hover:bg-[#F4F4F4] ${
-                selectedProduct?.id === product.id ? 'bg-[#F4F4F4] border border-[#EFEFEF]' : ''
+              className={`w-full flex items-start p-4 rounded-xl text-left transition-all hover:bg-muted ${
+                selectedProduct?.id === product.id ? 'bg-muted border border-border' : ''
               }`}
             >
               <div className="flex-1 min-w-0">
-                <div className="text-[0.9375rem] font-semibold text-[#1A1D1F] mb-1">
+                <div className="text-[0.9375rem] font-semibold text-foreground mb-1">
                   {product.title}
                 </div>
-                <div className="text-[0.8125rem] text-[#6F767E] line-clamp-2">
+                <div className="text-[0.8125rem] text-muted-foreground line-clamp-2">
                   {product.description}
                 </div>
               </div>
@@ -357,29 +357,29 @@ const Products = () => {
         </div>
 
         {/* Divider */}
-        <div className="h-px bg-[#EFEFEF] my-6" />
+        <div className="h-px bg-border my-6" />
 
         {/* Quick Links */}
         <div className="space-y-2">
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-[#F4F4F4] transition-colors">
-            <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+            <div className="text-[0.9375rem] font-semibold text-foreground">
               What's the best API for credit scores?
             </div>
           </button>
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-[#F4F4F4] transition-colors">
-            <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+            <div className="text-[0.9375rem] font-semibold text-foreground">
               How do I integrate the Credit API?
             </div>
           </button>
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-[#F4F4F4] transition-colors">
-            <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+            <div className="text-[0.9375rem] font-semibold text-foreground">
               Can you explain the pricing model?
             </div>
           </button>
         </div>
 
         {/* Browse All Button */}
-        <button className="w-full h-12 mt-6 bg-[#1A1D1F] text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-[#272B30] transition-colors">
+        <button className="w-full h-12 mt-6 bg-foreground text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-foreground/90 transition-colors">
           Browse All Products
         </button>
       </div>

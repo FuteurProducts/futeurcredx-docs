@@ -1,9 +1,17 @@
 // Enterprise Reports Page - Bank-grade reporting infrastructure
 // Uses modular components from src/components/enterprise/reports/
+// Wired to BFF reportsService with graceful fallback to mock data
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { usePortfolio } from '@/contexts/PortfolioContext';
+import { reportsService } from '@/services/bff';
+import { withFallback } from '@/utils/withFallback';
+import { useReportPolling } from '@/hooks/useReportPolling';
+import { logger } from '@/utils/logger';
+import { PILOT_CONFIG } from '@/data/demoData';
+import type { ReportJob } from '@/services/bff/types';
 import {
   ReportsGlobalControls,
   ReportLibraryPanel,
@@ -21,8 +29,49 @@ import {
   type ReportBlock,
 } from '@/components/enterprise/reports';
 
+// ---------- Adapter: BFF ReportJob → UI GeneratedReport ----------
+function adaptReportJobToGenerated(job: ReportJob): GeneratedReport {
+  const statusMap: Record<string, GeneratedReport['status']> = {
+    queued: 'pending',
+    processing: 'processing',
+    completed: 'ready',
+    failed: 'failed',
+  };
+
+  const typeLabel = (job.reportType || 'custom')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
+  const params = (job.parameters ?? {}) as Record<string, unknown>;
+
+  return {
+    id: job.id,
+    templateId: job.reportType,
+    name: (params.name as string) || typeLabel,
+    format: (params.format as GeneratedReport['format']) || 'pdf',
+    scope: params.product
+      ? `${params.product} — ${params.segment ?? 'All'} — ${params.geography ?? 'National'}`
+      : 'All — All — National',
+    period: (params.timeWindow as string) || '30d',
+    status: statusMap[job.status] ?? job.status as GeneratedReport['status'],
+    generatedAt: job.completedAt || job.createdAt,
+    generatedBy: 'system',
+    fileSize: undefined as unknown as string,
+    downloadUrl: job.artifactUrl || '#',
+    metadata: {
+      dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed'],
+      lastDataRefresh: job.completedAt || job.createdAt,
+      transformationSummary: 'Aggregated by segment',
+      tenantId: PILOT_CONFIG.bankId,
+      confidenceScore: 0.95,
+      recordCount: 0,
+    },
+  };
+}
+
 const Reports: React.FC = () => {
   const { toast } = useToast();
+  const { portfolioId } = usePortfolio();
 
   // View state: library or custom builder
   const [activeView, setActiveView] = useState<'library' | 'custom'>('library');
@@ -40,8 +89,8 @@ const Reports: React.FC = () => {
   // Selected template for configuration
   const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(null);
 
-  // Reports history
-  const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>(mockGeneratedReports);
+  // Reports history — initialised empty; populated from BFF or fallback
+  const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>([]);
 
   // Preview drawer state
   const [previewReport, setPreviewReport] = useState<GeneratedReport | null>(null);
@@ -50,13 +99,96 @@ const Reports: React.FC = () => {
   // Generating state
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // ---------- Fetch report history from BFF (with fallback) ----------
+  const fetchReportHistory = useCallback(async () => {
+    if (!portfolioId) return;
+    const result = await withFallback(
+      () =>
+        reportsService
+          .list(portfolioId)
+          .then((r) => (r.data || []).map(adaptReportJobToGenerated)),
+      mockGeneratedReports,
+      'Report History',
+    );
+    setGeneratedReports(result.data);
+  }, [portfolioId]);
+
+  // Re-fetch whenever the active portfolio changes
+  useEffect(() => {
+    fetchReportHistory();
+  }, [fetchReportHistory]);
+
+  // ---------- Polling hook for async report generation ----------
+  const { startPolling, isPolling } = useReportPolling({
+    onComplete: (completedJob) => {
+      const adapted = adaptReportJobToGenerated(completedJob);
+      setGeneratedReports((prev) => {
+        // Replace the in-progress placeholder, or prepend
+        const idx = prev.findIndex((r) => r.id === adapted.id);
+        if (idx >= 0) {
+          const updated = [...prev];
+          updated[idx] = adapted;
+          return updated;
+        }
+        return [adapted, ...prev];
+      });
+      setIsGenerating(false);
+      setPreviewReport(adapted);
+      setIsPreviewOpen(true);
+      toast({
+        title: 'Report ready',
+        description: `${adapted.name} has been generated and is ready for download.`,
+      });
+    },
+    onError: (errorMsg) => {
+      setIsGenerating(false);
+      toast({
+        title: 'Report failed',
+        description: errorMsg,
+        variant: 'destructive',
+      });
+    },
+  });
+
   const handleTemplateSelect = (template: ReportTemplate) => {
     setSelectedTemplate(template);
   };
 
-  const handleGenerateReport = (config: ReportConfig) => {
+  const handleGenerateReport = async (config: ReportConfig) => {
     setIsGenerating(true);
-    toast({ title: "Generating report", description: `${config.name} is being compiled...` });
+    toast({ title: 'Generating report', description: `${config.name} is being compiled...` });
+
+    // Attempt BFF-based async generation
+    if (portfolioId) {
+      try {
+        const response = await reportsService.create(portfolioId, {
+          reportType: config.templateId as ReportJob['reportType'],
+          parameters: {
+            name: config.name,
+            format: config.format,
+            product: config.filters.product,
+            segment: config.filters.segment,
+            geography: config.filters.geography,
+            timeWindow: config.filters.timeWindow,
+          },
+        });
+
+        const job = response.data;
+        if (job?.id) {
+          // Add an in-progress placeholder to the history immediately
+          const placeholder = adaptReportJobToGenerated(job);
+          setGeneratedReports((prev) => [placeholder, ...prev]);
+
+          // Begin polling — onComplete / onError callbacks handle the rest
+          startPolling(job.id);
+          return;
+        }
+      } catch (err) {
+        logger.warn('[Reports] BFF create failed, falling back to mock generation', err);
+      }
+    }
+
+    // ---------- Fallback: mock local generation ----------
     setTimeout(() => {
       const newReport: GeneratedReport = {
         id: `rpt-${Date.now()}`,
@@ -67,14 +199,14 @@ const Reports: React.FC = () => {
         period: config.filters.timeWindow,
         status: 'ready',
         generatedAt: new Date().toISOString(),
-        generatedBy: 'current.user@bank.com',
+        generatedBy: 'analyst@partnerbank.com',
         fileSize: config.format === 'csv' ? '456 KB' : config.format === 'xlsx' ? '1.1 MB' : '2.4 MB',
         downloadUrl: '#',
         metadata: {
-          dataSources: ['LumiqAI Score Engine', 'Bureau Data Feed'],
+          dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed'],
           lastDataRefresh: new Date().toISOString(),
           transformationSummary: 'Aggregated by segment',
-          tenantId: 'BANK-001',
+          tenantId: PILOT_CONFIG.bankId,
           confidenceScore: 0.95,
           recordCount: 12345,
         },
@@ -83,7 +215,7 @@ const Reports: React.FC = () => {
       setIsGenerating(false);
       setPreviewReport(newReport);
       setIsPreviewOpen(true);
-      toast({ title: "Report ready", description: `${config.name} has been generated and is ready for download.` });
+      toast({ title: 'Report ready', description: `${config.name} has been generated and is ready for download.` });
     }, 2000);
   };
 
@@ -92,8 +224,22 @@ const Reports: React.FC = () => {
     setIsPreviewOpen(true);
   };
 
-  const handleDownloadReport = (report: GeneratedReport) => {
-    // Generate a real downloadable file with sample data
+  const handleDownloadReport = async (report: GeneratedReport) => {
+    // Attempt BFF signed-URL download first
+    if (portfolioId && report.downloadUrl && report.downloadUrl !== '#') {
+      try {
+        const res = await reportsService.download(portfolioId, report.id);
+        if (res.data?.url) {
+          window.open(res.data.url, '_blank');
+          toast({ title: 'Download started', description: `${report.name} is downloading.` });
+          return;
+        }
+      } catch (err) {
+        logger.warn('[Reports] BFF download failed, using local fallback', err);
+      }
+    }
+
+    // ---------- Fallback: generate a local sample file ----------
     const sampleData = `Report: ${report.name}\nGenerated: ${report.generatedAt}\nScope: ${report.scope}\nPeriod: ${report.period}\n\nBusiness ID,Business Name,LumiqAI Score,Risk Tier,Pre-Qualified,Product\nBIZ-001,Stellar Dynamics LLC,78,Low,Yes,Business Line of Credit\nBIZ-002,Metro Logistics Corp,71,Medium,Yes,Working Capital\nBIZ-003,Apex Construction Group,82,Low,Yes,Equipment Financing\nBIZ-004,Sunrise Healthcare Partners,85,Low,No,-\nBIZ-005,GreenLeaf Organics,65,Medium,Yes,Term Loan\nBIZ-006,Coastal Hospitality Group,58,High,No,-\nBIZ-007,Precision Manufacturing Co,76,Low,No,-\nBIZ-008,TechVenture Solutions,88,Low,Yes,Business Credit Card\nBIZ-009,Urban Retail Partners,62,Medium,No,-\nBIZ-010,Pacific Marine Services,73,Medium,No,-\n`;
     const mimeType = report.format === 'csv' ? 'text/csv' : 'text/plain';
     const ext = report.format === 'csv' ? 'csv' : report.format === 'xlsx' ? 'csv' : 'txt';
@@ -104,7 +250,7 @@ const Reports: React.FC = () => {
     a.download = `${report.name.replace(/\s+/g, '-').toLowerCase()}.${ext}`;
     a.click();
     URL.revokeObjectURL(url);
-    toast({ title: "Download started", description: `${report.name} is downloading.` });
+    toast({ title: 'Download started', description: `${report.name} is downloading.` });
   };
 
   const handleClosePreview = () => {
@@ -112,8 +258,9 @@ const Reports: React.FC = () => {
     setPreviewReport(null);
   };
 
-  const handleRefreshHistory = () => {
-    toast({ title: "History refreshed", description: "Report history is up to date." });
+  const handleRefreshHistory = async () => {
+    await fetchReportHistory();
+    toast({ title: 'History refreshed', description: 'Report history is up to date.' });
   };
 
   const handleRunCustomReport = (blocks: ReportBlock[]) => {

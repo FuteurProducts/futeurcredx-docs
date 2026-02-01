@@ -1,11 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { logger } from "@/utils/logger";
 
 const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+    logger.warn("404: User attempted to access non-existent route:", location.pathname);
   }, [location.pathname]);
 
   return (
@@ -22,15 +23,15 @@ const NotFound = () => {
 
         {/* Text Content */}
         <div className="text-center md:text-left">
-          <div className="mb-4 text-[3rem] md:text-[4rem] font-semibold text-[#1A1D1F] leading-none">
+          <div className="mb-4 text-[3rem] md:text-[4rem] font-semibold text-foreground leading-none">
             Oops!
           </div>
-          <div className="mb-8 text-[1rem] md:text-[1.25rem] text-[#6F767E]">
+          <div className="mb-8 text-[1rem] md:text-[1.25rem] text-muted-foreground">
             We couldn't find the page you were looking for
           </div>
           <Link 
             to="/dashboard"
-            className="inline-flex items-center gap-3 h-12 px-6 bg-[#0C68E9] text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-blue-600 transition-colors"
+            className="inline-flex items-center gap-3 h-12 px-6 bg-primary text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-blue-600 transition-colors"
           >
             <svg 
               className="w-5 h-5" 

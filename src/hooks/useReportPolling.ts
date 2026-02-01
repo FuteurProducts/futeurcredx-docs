@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { reportsService } from '@/services/bff';
 import type { ReportJob, ReportStatus } from '@/services/bff/types';
 import { usePortfolio } from '@/contexts/PortfolioContext';
+import { logger } from '@/utils/logger';
 
 interface UseReportPollingOptions {
   pollInterval?: number; // ms between polls (default 3000)
@@ -82,7 +83,7 @@ export function useReportPolling(
         });
       }
     } catch (err) {
-      console.error('Report poll error:', err);
+      logger.error('[useReportPolling] Poll error:', err);
       setAttempts(prev => prev + 1);
     }
   }, [portfolioId, maxAttempts, onComplete, onError, stopPolling]);

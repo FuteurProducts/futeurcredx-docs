@@ -116,7 +116,12 @@ async function request<T>(
     throw errorBody as BffError;
   }
 
-  return response.json();
+  const body = await response.json();
+  // Edge functions wrap responses in { success, data, meta } — unwrap to match BFF types
+  if ('success' in body && body.success === true) {
+    return { data: body.data, meta: body.meta, ...(body.pagination ? { pagination: body.pagination } : {}) } as T;
+  }
+  return body as T;
 }
 
 // Typed request methods

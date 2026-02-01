@@ -2,10 +2,11 @@ import { FileText, Download, Mail, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { logger } from '@/utils/logger';
 
 export function ExecutiveSummary() {
   const handleExport = (format: string) => {
-    console.log(`Exporting as ${format}`);
+    logger.info(`Exporting as ${format}`);
     // In production, this would trigger actual export
   };
 

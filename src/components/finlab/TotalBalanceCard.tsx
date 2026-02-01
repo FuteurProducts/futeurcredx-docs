@@ -83,11 +83,11 @@ export const TotalBalanceCard = ({
       )}
 
       <div className="flex gap-4 mt-4">
-        <Button className="flex-1 bg-[#1A1D1F] hover:bg-[#2A2D2F] text-white rounded-xl h-11">
+        <Button className="flex-1 bg-foreground hover:bg-foreground/90 text-white rounded-xl h-11">
           <Send className="w-4 h-4 mr-2" />
           Transfer
         </Button>
-        <Button variant="outline" className="flex-1 border-2 border-[#1A1D1F] text-[#1A1D1F] hover:bg-[#1A1D1F] hover:text-white rounded-xl h-11">
+        <Button variant="outline" className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white rounded-xl h-11">
           <Download className="w-4 h-4 mr-2" />
           Receive
         </Button>

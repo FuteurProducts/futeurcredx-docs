@@ -205,7 +205,7 @@ export const AIDecisioningPanel: React.FC<AIDecisioningPanelProps> = ({
                   Grade {grade}
                 </span>
               </div>
-              <p className="text-xs text-muted-foreground mt-1">LumiqAI Composite Score</p>
+              <p className="text-xs text-muted-foreground mt-1">LUMIQ AI Composite Score</p>
             </div>
 
             {/* AI Recommendation */}

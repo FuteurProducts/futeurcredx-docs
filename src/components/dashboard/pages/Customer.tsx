@@ -305,8 +305,8 @@ const Customer: React.FC = () => {
     setDossierCustomer(null);
   };
 
-  const handleDrilldown = (metric: string) => {
-    console.log('Drilldown to:', metric);
+  const handleDrilldown = (_metric: string) => {
+    // Placeholder for future drilldown navigation
   };
 
   const handleStageClick = (stageId: string) => {
@@ -316,20 +316,20 @@ const Customer: React.FC = () => {
     }));
   };
 
-  const handleAssignTask = (recommendation: any, assignee: string) => {
-    console.log('Assign task:', recommendation, assignee);
+  const handleAssignTask = (_recommendation: any, _assignee: string) => {
+    // Placeholder for future task assignment
   };
 
-  const handleDismissRecommendation = (id: string) => {
-    console.log('Dismiss recommendation:', id);
+  const handleDismissRecommendation = (_id: string) => {
+    // Placeholder for future recommendation dismissal
   };
 
   const handleViewPeerList = () => {
-    console.log('View peer list');
+    // Placeholder for future peer list view
   };
 
-  const handleAddNote = (note: string) => {
-    console.log('Add note:', note);
+  const handleAddNote = (_note: string) => {
+    // Placeholder for future note addition
   };
 
   // Filter customers based on current filters
@@ -419,7 +419,7 @@ const Customer: React.FC = () => {
     annualRevenue: dossierCustomer.totalExposure * 8,
     assignedRM: {
       name: dossierCustomer.assignedRM || 'Unassigned',
-      email: (dossierCustomer.assignedRM || 'rm').toLowerCase().replace(/\s+/g, '.') + '@bank.com',
+      email: (dossierCustomer.assignedRM || 'rm').toLowerCase().replace(/\s+/g, '.') + '@partnerbank.com',
       phone: '(555) 987-6543',
     },
     rhs: dossierCustomer.rhs,

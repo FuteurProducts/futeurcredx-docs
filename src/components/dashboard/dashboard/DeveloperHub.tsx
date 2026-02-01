@@ -2,6 +2,7 @@ import { Code, Book, Download, ExternalLink, Sparkles, Terminal } from 'lucide-r
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useToast } from '@/hooks/use-toast';
 
 const sdks = [
   { name: 'Node.js SDK', version: 'v2.4.1', downloads: '12.5K', icon: '🟢' },
@@ -11,13 +12,22 @@ const sdks = [
 ];
 
 const quickLinks = [
-  { title: 'API Reference', desc: 'Complete endpoint documentation', icon: Book, url: 'https://docs.futeurcredx.com/' },
-  { title: 'Quickstart Guide', desc: 'Get started in 5 minutes', icon: Sparkles, url: 'https://docs.futeurcredx.com/' },
-  { title: 'Code Examples', desc: 'Production-ready samples', icon: Code, url: 'https://docs.futeurcredx.com/' },
-  { title: 'Changelog', desc: 'Latest updates & features', icon: Terminal, url: 'https://docs.futeurcredx.com/' },
+  { title: 'API Reference', desc: 'Complete endpoint documentation', icon: Book },
+  { title: 'Quickstart Guide', desc: 'Get started in 5 minutes', icon: Sparkles },
+  { title: 'Code Examples', desc: 'Production-ready samples', icon: Code },
+  { title: 'Changelog', desc: 'Latest updates & features', icon: Terminal },
 ];
 
 export function DeveloperHub() {
+  const { toast } = useToast();
+
+  const handleLinkClick = () => {
+    toast({
+      title: 'Documentation portal available during pilot engagement',
+      description: 'Contact your account representative for access.',
+    });
+  };
+
   return (
     <div className="space-y-4 animate-fade-in" style={{ animationDelay: '400ms' }}>
       <div className="flex items-center gap-3">
@@ -68,12 +78,13 @@ export function DeveloperHub() {
           </div>
           <div className="space-y-2">
             {quickLinks.map((link, i) => (
-              <a
+              <div
                 key={link.title}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-background/50 hover:border-primary/50 border border-transparent transition-all group animate-fade-in"
+                role="button"
+                tabIndex={0}
+                onClick={handleLinkClick}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleLinkClick(); }}
+                className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-background/50 hover:border-primary/50 border border-transparent transition-all group animate-fade-in cursor-pointer"
                 style={{ animationDelay: `${600 + i * 100}ms` }}
               >
                 <div className="flex items-center gap-3">
@@ -83,8 +94,8 @@ export function DeveloperHub() {
                     <p className="text-xs text-muted-foreground">{link.desc}</p>
                   </div>
                 </div>
-                <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-              </a>
+                <ExternalLink className="w-4 h-4 text-muted-foreground/40" />
+              </div>
             ))}
           </div>
         </Card>

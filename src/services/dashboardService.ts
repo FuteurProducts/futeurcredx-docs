@@ -4,6 +4,7 @@
  */
 
 import apiService from './api';
+import { logger } from '@/utils/logger';
 
 export interface ApiKey {
   id: string;
@@ -116,7 +117,7 @@ class DashboardService {
       return response.data;
     } catch (error: any) {
       // Return default stats on error
-      console.error('Failed to fetch API stats:', error);
+      logger.error('Failed to fetch API stats:', error);
       return {
         totalCalls: 0,
         monthlyLimit: 10000,
@@ -262,7 +263,7 @@ class DashboardService {
         limit: response.data.metadata?.totalDocsInPage,
       };
     } catch (error: any) {
-      console.error('Failed to fetch business insights:', error);
+      logger.error('Failed to fetch business insights:', error);
       throw this.handleApiKeyError(error);
     }
   }
@@ -277,7 +278,7 @@ class DashboardService {
       // Return the nested data property if it exists, otherwise return the full response
       return response.data?.data || response.data;
     } catch (error: any) {
-      console.error('Failed to fetch application stats:', error);
+      logger.error('Failed to fetch application stats:', error);
       throw this.handleApiKeyError(error);
     }
   }
@@ -290,7 +291,7 @@ class DashboardService {
       const response = await apiService.get<{ data: any[] }>(`/api/v1/recommendations/${businessId}/applications`);
       return response.data.data || [];
     } catch (error: any) {
-      console.error('Failed to fetch business applications:', error);
+      logger.error('Failed to fetch business applications:', error);
       throw this.handleApiKeyError(error);
     }
   }

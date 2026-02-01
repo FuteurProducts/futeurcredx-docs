@@ -34,7 +34,7 @@ export const PocketPlansCard = ({
     className={className}
     title="My Pocket Plans"
     tooltip="Your savings goals"
-    onSeeMore={onSeeMore || (() => console.log("See more"))}
+    onSeeMore={onSeeMore || (() => { /* no-op placeholder */ })}
   >
     <div
       className={`flex flex-wrap mt-2 -mx-2 ${

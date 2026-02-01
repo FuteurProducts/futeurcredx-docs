@@ -14,9 +14,9 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
   const isLocalhost = currentHostname === 'localhost' || currentHostname === '127.0.0.1';
   
   // Check if we're on one of our known domains
-  const isInstitutionsDomain = currentHostname.includes('institutions.futeurcredx.com');
-  const isPlatformDomain = currentHostname.includes('platform.futeurcredx.com');
-  const isDocsDomain = currentHostname.includes('docs.futeurcredx.com');
+  const isInstitutionsDomain = currentHostname.includes('institutions.lumiq.ai');
+  const isPlatformDomain = currentHostname.includes('platform.lumiq.ai');
+  const isDocsDomain = currentHostname.includes('docs.lumiq.ai');
   
   // For local development
   if (isLocalhost) {
@@ -32,18 +32,18 @@ export const getCrossDomainUrl = (path: string, targetDomain?: string): string =
   // For main navigation paths, always go back to the main domain
   const mainDomainPaths = ['/', '/business', '/enterprise', '/lumiq-build', '/credit-journey', '/faq', '/docs', '/login', '/register', '/dashboard'];
   if (mainDomainPaths.includes(path) && (isInstitutionsDomain || isPlatformDomain || isDocsDomain)) {
-    return `https://futeurcredx.com${path}`;
+    return `https://lumiq.ai${path}`;
   }
   
   // Otherwise, preserve the current domain for subdomain-specific paths
   if (isInstitutionsDomain) {
-    return `https://institutions.futeurcredx.com${path}`;
+    return `https://institutions.lumiq.ai${path}`;
   } else if (isPlatformDomain) {
-    return `https://platform.futeurcredx.com${path}`;
+    return `https://platform.lumiq.ai${path}`;
   } else if (isDocsDomain) {
-    return `https://docs.futeurcredx.com${path}`;
+    return `https://docs.lumiq.ai${path}`;
   }
   
   // Fallback to main domain
-  return `https://futeurcredx.com${path}`;
+  return `https://lumiq.ai${path}`;
 };

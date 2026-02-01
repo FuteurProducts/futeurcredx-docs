@@ -3,9 +3,11 @@
  * Bank-grade risk monitoring following SR 11-7 and FFIEC standards
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { usePortfolio } from '@/contexts/PortfolioContext';
+import { getRiskSummary, getEWSAlerts, acknowledgeAlert } from '@/services/riskDataService';
 import {
   RiskGlobalControls,
   ExecutiveRiskSummary,
@@ -303,6 +305,7 @@ const stressImpacts: StressImpact[] = [
 
 const Risk: React.FC = () => {
   const { toast } = useToast();
+  const { portfolioId } = usePortfolio();
 
   // State for global controls
   const [portfolioFilter, setPortfolioFilter] = useState<PortfolioFilter>(initialPortfolioFilter);
@@ -313,6 +316,57 @@ const Risk: React.FC = () => {
   // EWS queue state for interactive actions
   const [queueItems, setQueueItems] = useState(ewsQueueItems);
   const [ewsToggles, setEwsToggles] = useState(ewsIndicators);
+  const [liveRiskKPIs, setLiveRiskKPIs] = useState(riskKPIs);
+
+  // Fetch live risk data
+  const fetchRiskData = useCallback(async () => {
+    if (!portfolioId) return;
+    try {
+      const [summaryResult, ewsResult] = await Promise.all([
+        getRiskSummary(portfolioId),
+        getEWSAlerts(portfolioId),
+      ]);
+
+      if (summaryResult.source === 'live' && summaryResult.data.data) {
+        const summary = summaryResult.data.data;
+        // Update the first KPI (portfolio risk score) from live data
+        setLiveRiskKPIs(prev => prev.map(kpi =>
+          kpi.id === 'portfolio_risk_score'
+            ? { ...kpi, value: summary.avgRiskScore, change: summary.avgRiskScore - 736, changeLabel: `from 736 last month` }
+            : kpi
+        ));
+      }
+
+      if (ewsResult.source === 'live' && ewsResult.data.data.length > 0) {
+        const alerts = ewsResult.data.data;
+        const mappedQueue: EWSQueueItem[] = alerts.map((alert, idx) => ({
+          id: alert.id,
+          severity: alert.severity === 'critical' ? 'critical' : 'high',
+          businessId: alert.smbEntityId,
+          businessName: alert.message?.split(' ')[0] || `Business ${idx + 1}`,
+          primaryDriver: alert.alertType.replace(/_/g, ' '),
+          driverType: alert.alertType.includes('score') ? 'credit' : alert.alertType.includes('cash') ? 'cashflow' : 'payment',
+          signals: [alert.message || ''],
+          recommendedAction: 'Review and take action',
+          exposure: 100000 + idx * 50000,
+          riskScore: 50 - idx * 10,
+          riskChange: -(10 + idx * 5),
+          slaTimer: `${2 + idx * 2}h remaining`,
+          slaDue: new Date(Date.now() + (2 + idx * 2) * 60 * 60 * 1000),
+          slaBreached: false,
+          createdAt: new Date(alert.triggeredAt),
+          notes: [],
+        }));
+        setQueueItems(mappedQueue);
+      }
+    } catch {
+      // Keep fallback data
+    }
+  }, [portfolioId]);
+
+  useEffect(() => {
+    fetchRiskData();
+  }, [fetchRiskData]);
 
   const handleRiskLensToggle = (lensId: string) => {
     setRiskLenses(prev => prev.map(lens =>
@@ -357,7 +411,7 @@ const Risk: React.FC = () => {
 
       {/* Executive Risk Summary */}
       <ExecutiveRiskSummary
-        kpis={riskKPIs}
+        kpis={liveRiskKPIs}
         deteriorationDrivers={deteriorationDrivers}
         trendData={trendData}
         className="shadow-lg rounded-2xl"
@@ -412,12 +466,15 @@ const Risk: React.FC = () => {
             toast({ title: "Case assigned", description: `Case ${itemId} assigned to ${assignee}.` });
           }}
           onAddNote={(itemId, note) => {
-            setQueueItems(prev => prev.map(i => i.id === itemId ? { ...i, notes: [...i.notes, { text: note, author: 'current.user@bank.com', timestamp: new Date() }] } : i));
+            setQueueItems(prev => prev.map(i => i.id === itemId ? { ...i, notes: [...i.notes, { text: note, author: 'analyst@partnerbank.com', timestamp: new Date() }] } : i));
             toast({ title: "Note added", description: "Case note saved successfully." });
           }}
-          onResolve={(itemId, resolution) => {
+          onResolve={async (itemId, resolution) => {
             setQueueItems(prev => prev.filter(i => i.id !== itemId));
             toast({ title: "Case resolved", description: `Case ${itemId} resolved: ${resolution}.` });
+            if (portfolioId) {
+              try { await acknowledgeAlert(portfolioId, itemId, resolution); } catch { /* optimistic UI */ }
+            }
           }}
           onToggleIndicator={(indicatorId, enabled) => {
             setEwsToggles(prev => prev.map(i => i.id === indicatorId ? { ...i, enabled } : i));

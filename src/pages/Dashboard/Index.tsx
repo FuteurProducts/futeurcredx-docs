@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from "react";
 import { DashboardLayout } from "@/components/dashboard/dashboard/DashboardLayout";
 import { MetricSection, CompactMetricCard } from "@/components/dashboard/dashboard/MetricSection";
 import { ConversionChart } from "@/components/dashboard/dashboard/ConversionChart";
@@ -11,11 +12,12 @@ import { ApiPlayground } from "@/components/dashboard/dashboard/ApiPlayground";
 import { DataFlowVisualization } from "@/components/dashboard/dashboard/DataFlowVisualization";
 import { WhiteLabelPreview } from "@/components/dashboard/dashboard/WhiteLabelPreview";
 import { ExecutiveSummary } from "@/components/dashboard/dashboard/ExecutiveSummary";
+import { MetricSkeleton, ChartSkeleton, CardSkeleton } from "@/components/ui/skeletons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  TrendingUp, 
-  Users, 
-  CheckCircle, 
+import {
+  TrendingUp,
+  Users,
+  CheckCircle,
   AlertCircle,
   Clock,
   DollarSign,
@@ -23,12 +25,15 @@ import {
   Target,
   Zap
 } from "lucide-react";
-
+import { usePortfolio } from "@/contexts/PortfolioContext";
+import { getDashboardKPIs, getConversionTrend } from "@/services/dashboardMetrics";
+import type { DashboardKPIs, TrendDataPoint } from "@/services/dashboardMetrics";
+import { DataSourceBadge } from "@/components/shared/DataSourceBadge";
 
 import { PILOT_METRICS, CONVERSION_TREND_DATA } from "@/data/demoData";
 
-// Derived from centralized pilot metrics for consistency across pages
-const mockCounts = {
+// Fallback values derived from centralized pilot metrics
+const FALLBACK_COUNTS = {
   totalBusinesses: PILOT_METRICS.totalBusinesses,
   businessesWithCredit: PILOT_METRICS.scoredBusinesses,
   applicationsStarted: PILOT_METRICS.applicationsStarted,
@@ -36,42 +41,111 @@ const mockCounts = {
   ineligible: PILOT_METRICS.ineligible,
 };
 
-const mockFunnelMetrics = {
+const FALLBACK_FUNNEL = {
   applicationConversionRate: PILOT_METRICS.applicationConversion,
   approvalRate: PILOT_METRICS.approvalRate,
-  ineligibleRatio: (mockCounts.ineligible / mockCounts.totalBusinesses) * 100,
+  ineligibleRatio: (FALLBACK_COUNTS.ineligible / FALLBACK_COUNTS.totalBusinesses) * 100,
   creditActivationRate: PILOT_METRICS.scoreCoverage,
 };
 
-const mockProductMetrics = {
+const FALLBACK_PRODUCT = {
   avgTimeToApproval: PILOT_METRICS.avgTimeToApproval,
   avgCreditLimit: PILOT_METRICS.avgPreQualLimit,
   applicationDropoffRate: 8.5,
   reApplicationRate: 12.3,
 };
 
-const mockRiskMetrics = {
+const FALLBACK_RISK = {
   delinquencyRate: PILOT_METRICS.delinquencyRate,
   defaultRate: PILOT_METRICS.defaultRate,
   portfolioUtilizationRate: PILOT_METRICS.portfolioUtilization,
 };
 
-const mockRevenueMetrics = {
+const FALLBACK_REVENUE = {
   arpb: PILOT_METRICS.avgRevenuePerBusiness,
   revenuePerApprovedAccount: 8900,
   momGrowthRate: PILOT_METRICS.momGrowth,
   qoqGrowthRate: PILOT_METRICS.qoqGrowth,
 };
 
-const mockPredictiveMetrics = {
+const FALLBACK_PREDICTIVE = {
   projectedApprovalVolume6m: 15800,
   projectedConversionLift: 8.5,
   marketingQualifiedOpportunities: 4200,
 };
 
-const mockTrendData = CONVERSION_TREND_DATA;
-
 const Index = () => {
+  const { portfolioId } = usePortfolio();
+  const [isLoading, setIsLoading] = useState(true);
+  const [mockCounts, setMockCounts] = useState(FALLBACK_COUNTS);
+  const [mockFunnelMetrics, setMockFunnelMetrics] = useState(FALLBACK_FUNNEL);
+  const [mockProductMetrics] = useState(FALLBACK_PRODUCT);
+  const [mockRiskMetrics, setMockRiskMetrics] = useState(FALLBACK_RISK);
+  const [mockRevenueMetrics] = useState(FALLBACK_REVENUE);
+  const [mockPredictiveMetrics] = useState(FALLBACK_PREDICTIVE);
+  const [mockTrendData, setMockTrendData] = useState(CONVERSION_TREND_DATA);
+  const [dataSource, setDataSource] = useState<'live' | 'fallback' | 'demo'>('demo');
+
+  const loadKPIs = useCallback(async () => {
+    if (!portfolioId) { setIsLoading(false); return; }
+    setIsLoading(true);
+    try {
+      const [kpiResult, trendResult] = await Promise.all([
+        getDashboardKPIs(portfolioId),
+        getConversionTrend(portfolioId),
+      ]);
+
+      setDataSource(kpiResult.source === 'live' ? 'live' : 'demo');
+
+      if (kpiResult.source === 'live') {
+        const k = kpiResult.data;
+        setMockCounts({
+          totalBusinesses: k.totalBusinesses,
+          businessesWithCredit: k.scoredBusinesses,
+          applicationsStarted: k.applicationsStarted,
+          approved: k.approved,
+          ineligible: k.ineligible,
+        });
+        setMockFunnelMetrics({
+          applicationConversionRate: k.applicationConversion,
+          approvalRate: k.approvalRate,
+          ineligibleRatio: k.totalBusinesses > 0 ? (k.ineligible / k.totalBusinesses) * 100 : 0,
+          creditActivationRate: k.scoreCoverage,
+        });
+        setMockRiskMetrics({
+          delinquencyRate: k.delinquencyRate,
+          defaultRate: PILOT_METRICS.defaultRate,
+          portfolioUtilizationRate: PILOT_METRICS.portfolioUtilization,
+        });
+      }
+      if (trendResult.source === 'live' && trendResult.data.length > 0) {
+        setMockTrendData(trendResult.data as any);
+      }
+    } catch { /* keep fallbacks */ }
+    setIsLoading(false);
+  }, [portfolioId]);
+
+  useEffect(() => { loadKPIs(); }, [loadKPIs]);
+
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="space-y-8">
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <div className="h-8 w-64 rounded-lg bg-muted animate-pulse" />
+              <div className="h-4 w-96 rounded bg-muted animate-pulse" />
+            </div>
+          </div>
+          <CardSkeleton />
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+            {Array.from({ length: 5 }).map((_, i) => (<MetricSkeleton key={i} />))}
+          </div>
+          <ChartSkeleton />
+        </div>
+      </DashboardLayout>
+    );
+  }
   return (
     <DashboardLayout>
       <div className="space-y-8">
@@ -85,11 +159,14 @@ const Index = () => {
               Enterprise API Platform • Real-time Business Credit Intelligence
             </p>
           </div>
-          <div className="px-4 py-2 bg-card/90 backdrop-blur-sm border border-border/80 rounded-lg shadow-sm">
-            <p className="text-xs text-muted-foreground">API Status</p>
-            <div className="flex items-center gap-2 mt-1">
-              <div className="w-2 h-2 bg-success rounded-full pulse-glow" />
-              <span className="text-sm font-semibold">All Systems Operational</span>
+          <div className="flex items-center gap-3">
+            <DataSourceBadge source={dataSource} />
+            <div className="px-4 py-2 bg-card/90 backdrop-blur-sm border border-border/80 rounded-lg shadow-sm">
+              <p className="text-xs text-muted-foreground">API Status</p>
+              <div className="flex items-center gap-2 mt-1">
+                <div className="w-2 h-2 bg-success rounded-full pulse-glow" />
+                <span className="text-sm font-semibold">All Systems Operational</span>
+              </div>
             </div>
           </div>
         </div>

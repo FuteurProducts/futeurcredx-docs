@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { useEnvironment } from "@/contexts/EnvironmentContext";
+import { usePortfolio } from "@/contexts/PortfolioContext";
+import { getDashboardKPIs } from "@/services/dashboardMetrics";
+import { logger } from "@/utils/logger";
+import { getEnrichedBusiness } from "@/data/demoData";
 
 // Import enterprise components for bank staff monitoring SMB customers
 import {
@@ -24,8 +28,8 @@ import {
   SYSTEM_SERVICES,
 } from "@/data/demoData";
 
-// Derived data from centralized pilot metrics
-const connectedBusinessesData = {
+// Fallback data derived from centralized pilot metrics (used when live data is unavailable)
+const FALLBACK_connectedBusinessesData = {
   totalBusinesses: PILOT_METRICS.totalBusinesses,
   activeConnections: PILOT_METRICS.scoredBusinesses,
   newThisMonth: 2840,
@@ -34,7 +38,7 @@ const connectedBusinessesData = {
   pendingReconnect: 1250,
 };
 
-const apiUsageData = {
+const FALLBACK_apiUsageData = {
   totalRequests: PILOT_METRICS.totalApiCalls,
   requestsChange: 12.3,
   successRate: PILOT_METRICS.successRate,
@@ -45,7 +49,7 @@ const apiUsageData = {
   dailyAvg: PILOT_METRICS.dailyAvgCalls,
 };
 
-const portfolioHealthData = {
+const FALLBACK_portfolioHealthData = {
   totalAssessed: PILOT_METRICS.scoredBusinesses,
   segments: [
     { name: "Low Risk", count: 25976, percentage: 68, color: "#10b981" },
@@ -57,7 +61,7 @@ const portfolioHealthData = {
   lastUpdated: "2 min ago",
 };
 
-const dataFreshnessData = {
+const FALLBACK_dataFreshnessData = {
   freshCount: 34380,
   staleCount: 2674,
   criticalCount: 1146,
@@ -67,29 +71,87 @@ const dataFreshnessData = {
   refreshRate: 94.7,
 };
 
-const topBusinesses = DEMO_BUSINESSES.slice(0, 5).map((biz, idx) => ({
-  id: biz.id,
-  name: biz.name,
-  industry: biz.industry,
-  lumiqScore: biz.lumiqScore,
-  scoreTrend: biz.scoreTrend,
-  trendValue: biz.trendValue,
-  apiCalls: [4820, 3650, 2940, 2180, 1870][idx],
-  lastActivity: ["2m ago", "5m ago", "12m ago", "18m ago", "25m ago"][idx],
-  riskLevel: biz.riskTier,
-}));
+const topBusinesses = DEMO_BUSINESSES.slice(0, 5).map((biz, idx) => {
+  const enriched = getEnrichedBusiness(biz.id);
+  return {
+    id: biz.id,
+    name: biz.name,
+    industry: biz.industry,
+    lumiqScore: biz.lumiqScore,
+    scoreTrend: biz.scoreTrend,
+    trendValue: biz.trendValue,
+    apiCalls: [4820, 3650, 2940, 2180, 1870][idx],
+    lastActivity: enriched?.activityHistory[0]?.date
+      ? `${Math.max(1, Math.floor((Date.now() - new Date(enriched.activityHistory[0].date).getTime()) / (1000 * 60 * 60 * 24)))}d ago`
+      : ["2m ago", "5m ago", "12m ago", "18m ago", "25m ago"][idx],
+    riskLevel: biz.riskTier,
+  };
+});
 
 export const FinlabOverview: React.FC = () => {
   const { toast } = useToast();
   const { currentEnvironment } = useEnvironment();
+  const { portfolioId } = usePortfolio();
   const [, setIsRefreshing] = useState(false);
 
-  const handleRefreshAll = () => {
+  // State for card data, initialized to static fallback values
+  const [connectedBusinessesData, setConnectedBusinessesData] = useState(FALLBACK_connectedBusinessesData);
+  const [apiUsageData, setApiUsageData] = useState(FALLBACK_apiUsageData);
+  const [portfolioHealthData, setPortfolioHealthData] = useState(FALLBACK_portfolioHealthData);
+  const [dataFreshnessData, setDataFreshnessData] = useState(FALLBACK_dataFreshnessData);
+
+  // Fetch live KPIs and map them onto card data shapes
+  const loadLiveData = useCallback(async () => {
+    if (!portfolioId) return;
+
+    try {
+      const result = await getDashboardKPIs(portfolioId);
+      const kpis = result.data;
+
+      if (result.source === 'live') {
+        setConnectedBusinessesData(prev => ({
+          ...prev,
+          totalBusinesses: kpis.totalBusinesses,
+          activeConnections: kpis.scoredBusinesses,
+          disconnectedCount: kpis.totalBusinesses - kpis.scoredBusinesses,
+        }));
+
+        setApiUsageData(prev => ({
+          ...prev,
+          totalRequests: kpis.totalApiCalls,
+          dailyAvg: kpis.dailyAvgCalls,
+        }));
+
+        setPortfolioHealthData(prev => ({
+          ...prev,
+          totalAssessed: kpis.scoredBusinesses,
+          averageScore: kpis.avgLumiqScore,
+          lastUpdated: "just now",
+        }));
+
+        setDataFreshnessData(prev => ({
+          ...prev,
+          totalAccounts: kpis.scoredBusinesses,
+        }));
+      }
+    } catch (err) {
+      logger.warn('[FinlabOverview] Failed to load live data, keeping fallback', err);
+    }
+  }, [portfolioId]);
+
+  // Reload live data when the selected portfolio changes
+  useEffect(() => {
+    loadLiveData();
+  }, [loadLiveData]);
+
+  const handleRefreshAll = async () => {
     setIsRefreshing(true);
-    setTimeout(() => {
-      setIsRefreshing(false);
+    try {
+      await loadLiveData();
       toast({ title: "Data refreshed", description: "All scores and bureau data have been refreshed." });
-    }, 1500);
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   const handleViewBusiness = (id: string) => {

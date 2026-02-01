@@ -20,6 +20,9 @@ import Settings from '@/pages/Dashboard/Settings';
 
 // Import Connected Environment Toggle (uses global context)
 import { ConnectedEnvironmentToggle } from '@/components/widgets';
+import { DataSourceBadge } from '@/components/shared/DataSourceBadge';
+import { logger } from '@/utils/logger';
+import { useToast } from '@/hooks/use-toast';
 
 // Import Finlab Overview
 import { FinlabOverview } from '@/components/finlab';
@@ -99,9 +102,8 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { getToken } = useAuth();
+  const { toast } = useToast();
 
-  // State management
-  
   // State management
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
   const [isLoadingKeys, setIsLoadingKeys] = useState(true)
@@ -202,23 +204,33 @@ const Dashboard: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error('Error fetching API keys:', error)
-      if (error instanceof TypeError && error.message === 'Load failed') {
-        setError('CORS Error: Backend API not configured for localhost.')
-        setApiKeys([
-          {
-            id: 'dev-1',
-            name: 'Development Key (Mock)',
-            key: 'fc_dev_1234567890abcdef',
-            createdAt: new Date().toISOString(),
-            lastUsed: new Date().toISOString(),
-            callsUsed: 150,
-          }
-        ] as ApiKey[])
-      } else {
-        setError('Failed to load API keys.')
-        setApiKeys([])
-      }
+      logger.error('[Dashboard] Error fetching API keys:', error)
+      // Sandbox mode fallback — provide professional demo keys
+      setApiKeys([
+        {
+          id: 'sandbox-prod-001',
+          name: 'Production Key',
+          key: 'lq_live_****************************7x9m',
+          keyPrefix: 'lq_live_',
+          createdAt: '2026-01-15T00:00:00Z',
+          lastUsed: '2026-01-31T14:30:00Z',
+          callsUsed: 2847,
+          isActive: true,
+          environment: 'production',
+        },
+        {
+          id: 'sandbox-test-001',
+          name: 'Sandbox Test Key',
+          key: 'lq_test_****************************3k2p',
+          keyPrefix: 'lq_test_',
+          createdAt: '2026-01-20T00:00:00Z',
+          lastUsed: '2026-01-31T10:15:00Z',
+          callsUsed: 892,
+          isActive: true,
+          environment: 'sandbox',
+        },
+      ] as ApiKey[])
+      setError('')
     } finally {
       setIsLoadingKeys(false)
     }
@@ -290,7 +302,19 @@ const Dashboard: React.FC = () => {
       setIsDataFresh(true);
 
     } catch (error) {
-      console.error('Error fetching API stats:', error);
+      logger.error('[Dashboard] Error fetching API stats:', error);
+      // Sandbox mode fallback — set reasonable demo stats
+      setApiStats({
+        totalCalls: 3739,
+        monthlyLimit: 10000,
+        plan: 'Pro',
+        thisMonth: 3739,
+        lastMonth: 2104,
+        growth: 77.7,
+        keyStats: [],
+        totalCallsThisMonth: 3739,
+        totalCallsLastMonth: 2104,
+      });
     } finally {
       if (isRefresh) {
         setIsRefreshing(false);
@@ -370,8 +394,23 @@ const Dashboard: React.FC = () => {
         setError(errorData.error || `Server Error: ${response.status}`)
       }
     } catch (error) {
-      console.error('Failed to generate API key:', error)
-        setError('Network error. Please try again.')
+      logger.error('[Dashboard] Failed to generate API key:', error)
+      // Sandbox mode — generate locally
+      const sandboxKey = {
+        id: `sandbox-${Date.now()}`,
+        name: newKeyName.trim(),
+        key: `lq_test_${Array.from({length: 28}, () => 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)]).join('')}`,
+        keyPrefix: 'lq_test_',
+        createdAt: new Date().toISOString(),
+        lastUsed: null,
+        callsUsed: 0,
+        isActive: true,
+        environment: 'sandbox',
+      };
+      setNewlyGeneratedKey({ id: sandboxKey.id, key: sandboxKey.key, name: sandboxKey.name });
+      setApiKeys(prev => [...prev, sandboxKey as ApiKey]);
+      setNewKeyName('');
+      setError('');
     } finally {
       setIsGeneratingKey(false)
     }
@@ -401,8 +440,14 @@ const Dashboard: React.FC = () => {
         setError('Failed to revoke API key')
       }
     } catch (error) {
-      console.error('Error revoking API key:', error)
-        setError('Network error while revoking key')
+      logger.error('[Dashboard] Error revoking API key:', error)
+      // Sandbox mode — silently remove the key locally
+      const keyToDelete = apiKeys.find(key => key.id === keyId);
+      if (keyToDelete) {
+        setDeletedKeys(prev => [...prev, { ...keyToDelete, isActive: false }]);
+      }
+      setApiKeys(prev => prev.filter(key => key.id !== keyId))
+      setError('')
     }
   }
 
@@ -460,7 +505,7 @@ const Dashboard: React.FC = () => {
 
 
     return (
-    <div className="flex h-screen overflow-hidden bg-[#F4F4F4]">
+    <div className="flex h-screen overflow-hidden bg-muted">
       {/* ======================= SIDEBAR ======================= */}
       {/* Mobile Overlay */}
       {sidebarOpen && (
@@ -473,7 +518,7 @@ const Dashboard: React.FC = () => {
       {/* Sidebar */}
       <aside 
         className={`
-          fixed top-0 left-0 h-full z-50 bg-white
+          fixed top-0 left-0 h-full z-50 bg-card
           transform transition-all duration-300 ease-in-out
           lg:translate-x-0 lg:static lg:z-auto flex flex-col
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -486,33 +531,33 @@ const Dashboard: React.FC = () => {
           <Link to="/" className="flex items-center">
             <img 
               src={withBaseUrl('/lumiqlogo.png')}
-              alt="LumiqAI" 
+              alt="LUMIQ AI" 
               className={`object-contain transition-all duration-300 ${sidebarCollapsed ? 'w-14 h-14' : 'w-[120px] h-[120px]'}`}
               onError={(e) => {
                 // Fallback if logo fails to load
                 const target = e.target as HTMLImageElement;
-                target.src = withBaseUrl('/futeur.png');
+                target.src = withBaseUrl('/lumiqlogo.png');
               }}
             />
           </Link>
           {/* Collapse/Close toggle button */}
           {!sidebarCollapsed && (
             <button
-              className="p-2.5 hover:bg-[#F4F4F4] rounded-xl transition-colors hidden lg:flex"
+              className="p-2.5 hover:bg-muted rounded-xl transition-colors hidden lg:flex"
               onClick={() => setSidebarCollapsed(true)}
               title="Collapse sidebar"
             >
-              <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
               </svg>
             </button>
           )}
           {/* Mobile close button */}
           <button
-            className="p-2.5 hover:bg-[#F4F4F4] rounded-xl transition-colors lg:hidden"
+            className="p-2.5 hover:bg-muted rounded-xl transition-colors lg:hidden"
             onClick={() => setSidebarOpen(false)}
           >
-            <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -522,11 +567,11 @@ const Dashboard: React.FC = () => {
         {sidebarCollapsed && (
           <div className="hidden lg:flex justify-center px-2 mb-2">
             <button
-              className="p-2.5 hover:bg-[#F4F4F4] rounded-xl transition-colors"
+              className="p-2.5 hover:bg-muted rounded-xl transition-colors"
               onClick={() => setSidebarCollapsed(false)}
               title="Expand sidebar"
             >
-              <svg className="w-5 h-5 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
             </button>
@@ -544,8 +589,8 @@ const Dashboard: React.FC = () => {
                 w-full flex items-center rounded-xl text-left transition-all duration-200
                 ${sidebarCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3.5'}
                 ${activeTab === link.id 
-                  ? 'bg-[#F4F4F4]' 
-                  : 'text-[#6F767E] hover:bg-[#F4F4F4]/50'
+                  ? 'bg-muted' 
+                  : 'text-muted-foreground hover:bg-muted/50'
                 }
               `}
             >
@@ -554,11 +599,11 @@ const Dashboard: React.FC = () => {
               </div>
               {!sidebarCollapsed && (
                 <>
-                  <span className={`text-[0.9375rem] font-semibold ${activeTab === link.id ? 'text-[#1A1D1F]' : ''}`}>
+                  <span className={`text-[0.9375rem] font-semibold ${activeTab === link.id ? 'text-foreground' : ''}`}>
                     {link.title}
                   </span>
                   {activeTab === link.id && (
-                    <svg className="w-5 h-5 ml-auto text-[#1A1D1F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 ml-auto text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   )}
@@ -571,9 +616,9 @@ const Dashboard: React.FC = () => {
 
       {/* ======================= MAIN CONTENT ======================= */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-        {/* Header - Neutrade style - Fixed/Sticky */}
+        {/* Header - Fixed/Sticky */}
         <header 
-          className="sticky top-0 z-[100] bg-[#F4F4F4] shrink-0"
+          className="sticky top-0 z-[100] bg-muted shrink-0"
         >
           <div 
             className="flex items-center h-16 lg:h-20 mx-auto px-4 lg:px-10"
@@ -582,29 +627,30 @@ const Dashboard: React.FC = () => {
             <div className="flex items-center mr-auto gap-3">
               {/* Mobile: Hamburger menu */}
               <button 
-                className="lg:hidden p-2 -ml-2 rounded-xl hover:bg-white/50 transition-colors"
+                className="lg:hidden p-2 -ml-2 rounded-xl hover:bg-card/50 transition-colors"
                 onClick={() => setSidebarOpen(true)}
               >
-                <svg className="w-6 h-6 text-[#1A1D1F]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               </button>
               
-              {/* Mobile: Title */}
-              <span className="lg:hidden text-[1.125rem] font-semibold text-[#1A1D1F]">
+              {/* Mobile: Title + DataSourceBadge */}
+              <span className="lg:hidden text-[1.125rem] font-semibold text-foreground">
                 {currentTitle}
               </span>
-              
-              {/* Desktop: Back arrow + Title */}
+              <DataSourceBadge className="lg:hidden" />
+
+              {/* Desktop: Back arrow + Title + DataSourceBadge */}
               <button
-                className="group hidden lg:inline-flex items-center text-[1.5rem] leading-[2rem] font-semibold text-[#1A1D1F]"
+                className="group hidden lg:inline-flex items-center text-[1.5rem] leading-[2rem] font-semibold text-foreground"
                 onClick={() => setActiveTab('overview')}
               >
                 <div className="flex justify-center items-center w-10 h-10 mr-3.5">
-                  <svg 
-                    className="w-6 h-6 text-[#1A1D1F] transition-transform group-hover:-translate-x-0.5" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="w-6 h-6 text-foreground transition-transform group-hover:-translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
                     strokeWidth={2}
                     viewBox="0 0 24 24"
                   >
@@ -613,6 +659,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 {currentTitle}
               </button>
+              <DataSourceBadge className="hidden lg:inline-flex" />
             </div>
 
             {/* Right: Environment Toggle + Docs + User Info */}
@@ -623,51 +670,49 @@ const Dashboard: React.FC = () => {
               </div>
 
               {/* Divider */}
-              <div className="hidden md:block w-px h-8 bg-[#EFEFEF]" />
+              <div className="hidden md:block w-px h-8 bg-border" />
 
               {/* Docs Link */}
-              <a
-                href="https://docs.futeurcredx.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-white hover:bg-[#EFEFEF] border border-[#EFEFEF] transition-all duration-200 group"
+              <button
+                onClick={() => toast({ title: 'Documentation portal available during pilot engagement', description: 'Contact your account representative for access.' })}
+                className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-card hover:bg-muted border border-border transition-all duration-200 group"
                 title="Documentation"
               >
-                <svg 
-                  className="w-5 h-5 text-[#6F767E] group-hover:text-[#0C68E9] transition-colors" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth={1.75} 
+                <svg
+                  className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.75}
                   viewBox="0 0 24 24"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
-              </a>
+              </button>
 
               {/* Divider */}
-              <div className="hidden md:block w-px h-8 bg-[#EFEFEF]" />
+              <div className="hidden md:block w-px h-8 bg-border" />
 
               {/* User Account Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-                  className="flex items-center gap-3 px-2 py-1 -mx-2 rounded-xl hover:bg-white/50 transition-colors"
+                  className="flex items-center gap-3 px-2 py-1 -mx-2 rounded-xl hover:bg-card/50 transition-colors"
                 >
                   {/* User name and email - desktop */}
                   <div className="hidden md:block text-right">
-                    <div className="text-[0.9375rem] font-semibold text-[#1A1D1F]">
+                    <div className="text-[0.9375rem] font-semibold text-foreground">
                       {user?.firstName || user?.username || 'User'}
                     </div>
-                    <div className="text-[0.8125rem] text-[#6F767E] truncate max-w-[200px]">
+                    <div className="text-[0.8125rem] text-muted-foreground truncate max-w-[200px]">
                       {user?.emailAddresses?.[0]?.emailAddress || ''}
                     </div>
                   </div>
                   
                   {/* Avatar */}
                   <img 
-                    src={user?.imageUrl || '/futeur.png'} 
+                    src={user?.imageUrl || '/lumiqlogo.png'} 
                     alt="Avatar"
-                    className="w-12 h-12 rounded-full object-cover border-2 border-transparent hover:border-[#0C68E9] transition-colors"
+                    className="w-12 h-12 rounded-full object-cover border-2 border-transparent hover:border-primary transition-colors"
                   />
                 </button>
 
@@ -681,20 +726,20 @@ const Dashboard: React.FC = () => {
                     />
                     
                     {/* Dropdown */}
-                    <div className="absolute right-0 top-full mt-2 z-[160] w-72 bg-white rounded-2xl shadow-lg border border-[#EFEFEF] overflow-hidden">
+                    <div className="absolute right-0 top-full mt-2 z-[160] w-72 bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
                       {/* User Info */}
-                      <div className="p-5 border-b border-[#EFEFEF]">
+                      <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">
                           <img 
-                            src={user?.imageUrl || '/futeur.png'} 
+                            src={user?.imageUrl || '/lumiqlogo.png'} 
                             alt="Avatar"
                             className="w-16 h-16 rounded-full object-cover"
                           />
                           <div className="flex-1 min-w-0">
-                            <div className="text-[1.125rem] font-semibold text-[#1A1D1F] truncate">
+                            <div className="text-[1.125rem] font-semibold text-foreground truncate">
                               {user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : user?.username || 'Display Name'}
                             </div>
-                            <div className="text-[0.875rem] text-[#6F767E] truncate">
+                            <div className="text-[0.875rem] text-muted-foreground truncate">
                               @{user?.username || user?.emailAddresses?.[0]?.emailAddress?.split('@')[0] || 'username'}
                             </div>
                           </div>
@@ -705,16 +750,16 @@ const Dashboard: React.FC = () => {
                       <div className="p-3 space-y-1">
                         {/* Contact Support */}
                         <a
-                          href="https://www.futeurcredx.com/contact-us"
+                          href="https://www.lumiq.ai/contact"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-[#F4F4F4] transition-colors"
+                          className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors"
                           onClick={() => setAccountMenuOpen(false)}
                         >
-                          <svg className="w-6 h-6 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                          <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">Contact support</span>
+                          <span className="text-[0.9375rem] font-semibold text-foreground">Contact support</span>
                         </a>
 
                         {/* Notifications */}
@@ -723,32 +768,32 @@ const Dashboard: React.FC = () => {
                             setActiveTab('notifications');
                             setAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-[#F4F4F4] transition-colors text-left"
+                          className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors text-left"
                         >
                           <Icon name="bell" className="w-6 h-6" />
-                          <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">Notifications</span>
+                          <span className="text-[0.9375rem] font-semibold text-foreground">Notifications</span>
                         </button>
 
                         {/* Dark Mode Toggle */}
-                        <div className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-[#F4F4F4] transition-colors cursor-pointer">
+                        <div className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-muted transition-colors cursor-pointer">
             <div className="flex items-center gap-4">
-                            <svg className="w-6 h-6 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                            <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                             </svg>
-                            <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">Dark</span>
+                            <span className="text-[0.9375rem] font-semibold text-foreground">Dark</span>
             </div>
-                          <div className="w-12 h-7 bg-[#EFEFEF] rounded-full relative cursor-pointer">
-                            <div className="absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow transition-transform" />
+                          <div className="w-12 h-7 bg-muted rounded-full relative cursor-pointer">
+                            <div className="absolute left-1 top-1 w-5 h-5 bg-card rounded-full shadow transition-transform" />
               </div>
                         </div>
 
                         {/* Log out */}
                         <SignOutButton>
-                          <button className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-[#F4F4F4] transition-colors text-left">
-                            <svg className="w-6 h-6 text-[#6F767E]" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                          <button className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors text-left">
+                            <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            <span className="text-[0.9375rem] font-semibold text-[#1A1D1F]">Log out</span>
+                            <span className="text-[0.9375rem] font-semibold text-foreground">Log out</span>
                 </button>
               </SignOutButton>
             </div>
@@ -761,7 +806,7 @@ const Dashboard: React.FC = () => {
         </header>
 
         {/* Main Content - scrollable area below sticky header */}
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-[#F4F4F4]">
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-muted">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}

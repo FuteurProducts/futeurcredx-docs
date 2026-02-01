@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { usePortfolio } from '@/contexts/PortfolioContext';
+import { scoresService } from '@/services/bff';
+import { getDashboardKPIs } from '@/services/dashboardMetrics';
+import { withFallback } from '@/utils/withFallback';
 import {
   AnalyticsGlobalControls,
   PortfolioKPITiles,
@@ -22,7 +26,7 @@ import {
   mockFeatureImportance,
   mockSignalDrift,
 } from '@/components/enterprise/analytics';
-import type { AnalyticsFilters } from '@/components/enterprise/analytics/types';
+import type { AnalyticsFilters, PortfolioKPI, ScoreBucket } from '@/components/enterprise/analytics/types';
 
 // ============================================
 // MAIN COMPONENT
@@ -30,6 +34,79 @@ import type { AnalyticsFilters } from '@/components/enterprise/analytics/types';
 
 const Analytics: React.FC = () => {
   const { toast } = useToast();
+  const { portfolioId } = usePortfolio();
+
+  // Live data state — initialised from mocks, replaced when BFF responds
+  const [portfolioKPIs, setPortfolioKPIs] = useState<PortfolioKPI[]>(mockPortfolioKPIs);
+  const [scoreDistribution, setScoreDistribution] = useState<ScoreBucket[]>(mockScoreDistribution);
+
+  /**
+   * Fetch live KPIs and score distribution from BFF, falling back to mock data.
+   */
+  const fetchAnalyticsData = useCallback(async () => {
+    if (!portfolioId) return;
+
+    // --- Portfolio KPIs ---
+    const kpiResult = await getDashboardKPIs(portfolioId);
+    if (kpiResult.source === 'live') {
+      const live = kpiResult.data;
+      // Merge live values into the mock template so labels/tooltips/format are preserved
+      setPortfolioKPIs(prev =>
+        prev.map(kpi => {
+          switch (kpi.id) {
+            case 'avg-score':
+              return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LUMIQ AI Score Engine' };
+            case 'deteriorating-clients':
+              return { ...kpi, value: live.delinquencyRate, lastUpdated: 'just now', dataSource: 'Risk Analytics Engine' };
+            case 'improving-clients':
+              return {
+                ...kpi,
+                value: live.scoreCoverage > 0 ? Math.round(live.preQualRate * 10) / 10 : kpi.value,
+                lastUpdated: 'just now',
+                dataSource: 'Risk Analytics Engine',
+              };
+            case 'score-momentum':
+              return {
+                ...kpi,
+                value: live.momGrowth,
+                lastUpdated: 'just now',
+                dataSource: 'Risk Analytics Engine',
+              };
+            default:
+              return kpi;
+          }
+        }),
+      );
+    }
+
+    // --- Score Distribution ---
+    const distResult = await withFallback(
+      () => scoresService.getDistribution(portfolioId!, 'internal').then(r => r.data),
+      { ranges: [] as { min: number; max: number; count: number }[] },
+      'Score Distribution',
+    );
+
+    if (distResult.source === 'live' && distResult.data.ranges.length > 0) {
+      const totalCount = distResult.data.ranges.reduce((sum, r) => sum + r.count, 0);
+      const liveBuckets: ScoreBucket[] = distResult.data.ranges.map(r => ({
+        range: `${r.min}\u2013${r.max}`,
+        min: r.min,
+        max: r.max,
+        count: r.count,
+        percent: totalCount > 0 ? Math.round((r.count / totalCount) * 1000) / 10 : 0,
+        // Estimate exposure proportionally (use mock total as baseline)
+        exposure: totalCount > 0
+          ? Math.round((r.count / totalCount) * 2_000_000_000)
+          : 0,
+      }));
+      setScoreDistribution(liveBuckets);
+    }
+  }, [portfolioId]);
+
+  // Re-fetch whenever the selected portfolio changes
+  useEffect(() => {
+    fetchAnalyticsData();
+  }, [fetchAnalyticsData]);
 
   // State - aligned with AnalyticsFilters type
   const [filters, setFilters] = useState<AnalyticsFilters>({
@@ -50,7 +127,7 @@ const Analytics: React.FC = () => {
   };
 
   const handleKPIDrilldown = (kpiId: string) => {
-    const kpi = mockPortfolioKPIs.find(k => k.id === kpiId);
+    const kpi = portfolioKPIs.find(k => k.id === kpiId);
     toast({ title: "KPI detail", description: `${kpi?.label || kpiId}: ${kpi?.value}${kpi?.format === 'percent' ? '%' : ''} — Source: ${kpi?.dataSource || 'Portfolio Analytics'}` });
   };
 
@@ -93,7 +170,7 @@ const Analytics: React.FC = () => {
       {/* KPI Tiles */}
       <motion.div variants={itemVariants}>
         <PortfolioKPITiles
-          kpis={mockPortfolioKPIs}
+          kpis={portfolioKPIs}
           onDrilldown={handleKPIDrilldown}
         />
       </motion.div>
@@ -102,7 +179,7 @@ const Analytics: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <motion.div variants={itemVariants}>
           <ScoreDistributionChart
-            data={mockScoreDistribution}
+            data={scoreDistribution}
             title="Portfolio Score Distribution"
           />
         </motion.div>
@@ -124,7 +201,7 @@ const Analytics: React.FC = () => {
       {/* KPI Tiles - Risk focused */}
       <motion.div variants={itemVariants}>
         <PortfolioKPITiles
-          kpis={mockPortfolioKPIs.filter(k => 
+          kpis={portfolioKPIs.filter(k =>
             ['deteriorating-clients', 'volatility-index', 'risk-index'].includes(k.id)
           )}
           onDrilldown={handleKPIDrilldown}
@@ -147,7 +224,7 @@ const Analytics: React.FC = () => {
       {/* Score Distribution */}
       <motion.div variants={itemVariants}>
         <ScoreDistributionChart
-          data={mockScoreDistribution}
+          data={scoreDistribution}
           title="Risk Score Distribution"
         />
       </motion.div>
@@ -178,7 +255,7 @@ const Analytics: React.FC = () => {
       {/* KPI Subset for Growth */}
       <motion.div variants={itemVariants}>
         <PortfolioKPITiles
-          kpis={mockPortfolioKPIs.filter(k => 
+          kpis={portfolioKPIs.filter(k =>
             ['improving-clients', 'score-momentum'].includes(k.id)
           )}
           onDrilldown={handleKPIDrilldown}
@@ -272,10 +349,10 @@ const Analytics: React.FC = () => {
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-primary" />
-            Data Sources: LumiqAI Score Engine, Portfolio Analytics, Risk Engine
+            Data Sources: LUMIQ AI Score Engine, Portfolio Analytics, Risk Engine
           </span>
           <span>|</span>
-          <span>Last Updated: 2 mins ago</span>
+          <span>Last Updated: {new Date().toLocaleTimeString()}</span>
           <span>|</span>
           <span>Coverage: 98.2%</span>
         </div>

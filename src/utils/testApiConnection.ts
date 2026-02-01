@@ -4,6 +4,7 @@
  */
 
 import apiService from '../services/api'
+import { logger } from '@/utils/logger'
 
 export const testApiConnection = async (): Promise<{
   success: boolean;
@@ -12,13 +13,13 @@ export const testApiConnection = async (): Promise<{
   error?: string;
 }> => {
   try {
-    console.log('🔍 Testing API connection to https://futeur.app...')
+    logger.info('Testing API connection to https://api.lumiq.ai...')
     
     // Test the main API endpoint
     const response = await apiService.get('/api/v1')
     
-    console.log('✅ API connection successful!')
-    console.log('Response:', response.data)
+    logger.info('API connection successful!')
+    logger.info('Response:', response.data)
     
     return {
       success: true,
@@ -26,7 +27,7 @@ export const testApiConnection = async (): Promise<{
       data: response.data
     }
   } catch (error: any) {
-    console.error('❌ API connection failed:', error)
+    logger.error('API connection failed:', error)
     
     return {
       success: false,
@@ -41,9 +42,9 @@ export const testApiFromConsole = async () => {
   const result = await testApiConnection()
   
   if (result.success) {
-    console.log('🎉 API Test Result:', result)
+    logger.info('API Test Result:', result)
   } else {
-    console.error('💥 API Test Failed:', result)
+    logger.error('API Test Failed:', result)
   }
   
   return result
