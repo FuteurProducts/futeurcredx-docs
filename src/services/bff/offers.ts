@@ -5,6 +5,7 @@
 
 import bffClient, { BffResponse, BffListResponse } from './client';
 import type { PrequalOffer, GenerateOfferRequest, OfferStatus } from './types';
+import { normalizeOffer } from './normalizers';
 
 export interface OfferFilters {
   smbEntityId?: string;
@@ -28,7 +29,7 @@ export const offersService = {
     portfolioId: string,
     params?: OfferListParams
   ): Promise<BffListResponse<PrequalOffer>> => {
-    return bffClient.get<BffListResponse<PrequalOffer>>('/offers', {
+    const response = await bffClient.get<BffListResponse<PrequalOffer>>('/offers', {
       portfolioId,
       params: {
         smbEntityId: params?.smbEntityId,
@@ -40,6 +41,12 @@ export const offersService = {
         pageSize: params?.pageSize,
       },
     });
+
+    // Normalize each offer through the normalizer layer
+    return {
+      ...response,
+      data: response.data.map((o) => normalizeOffer(o as unknown as Record<string, unknown>)),
+    };
   },
 
   /**
@@ -49,10 +56,15 @@ export const offersService = {
     portfolioId: string,
     offerId: string
   ): Promise<BffResponse<PrequalOffer>> => {
-    return bffClient.get<BffResponse<PrequalOffer>>(
+    const response = await bffClient.get<BffResponse<PrequalOffer>>(
       `/offers/${offerId}`,
       { portfolioId }
     );
+
+    return {
+      ...response,
+      data: normalizeOffer(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
@@ -62,10 +74,15 @@ export const offersService = {
     portfolioId: string,
     request: GenerateOfferRequest
   ): Promise<BffResponse<PrequalOffer>> => {
-    return bffClient.post<BffResponse<PrequalOffer>>('/offers', {
+    const response = await bffClient.post<BffResponse<PrequalOffer>>('/offers', {
       portfolioId,
       body: request,
     });
+
+    return {
+      ...response,
+      data: normalizeOffer(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
@@ -89,10 +106,15 @@ export const offersService = {
     offerId: string,
     reason?: string
   ): Promise<BffResponse<PrequalOffer>> => {
-    return bffClient.post<BffResponse<PrequalOffer>>(
+    const response = await bffClient.post<BffResponse<PrequalOffer>>(
       `/offers/${offerId}/decline`,
       { portfolioId, body: { reason } }
     );
+
+    return {
+      ...response,
+      data: normalizeOffer(response.data as unknown as Record<string, unknown>),
+    };
   },
 };
 

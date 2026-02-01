@@ -5,6 +5,7 @@
 
 import bffClient, { BffResponse, BffListResponse } from './client';
 import type { Application, SubmitApplicationRequest, ApplicationStatus } from './types';
+import { normalizeApplication, mapAppStatusToApi } from './normalizers';
 
 export interface ApplicationFilters {
   smbEntityId?: string;
@@ -30,7 +31,7 @@ export const applicationsService = {
     portfolioId: string,
     params?: ApplicationListParams
   ): Promise<BffListResponse<Application>> => {
-    return bffClient.get<BffListResponse<Application>>('/applications', {
+    const response = await bffClient.get<BffListResponse<Application>>('/applications', {
       portfolioId,
       params: {
         smbEntityId: params?.smbEntityId,
@@ -44,6 +45,12 @@ export const applicationsService = {
         sortDirection: params?.sortDirection,
       },
     });
+
+    // Normalize each application through the normalizer layer
+    return {
+      ...response,
+      data: response.data.map((a) => normalizeApplication(a as unknown as Record<string, unknown>)),
+    };
   },
 
   /**
@@ -53,10 +60,15 @@ export const applicationsService = {
     portfolioId: string,
     applicationId: string
   ): Promise<BffResponse<Application>> => {
-    return bffClient.get<BffResponse<Application>>(
+    const response = await bffClient.get<BffResponse<Application>>(
       `/applications/${applicationId}`,
       { portfolioId }
     );
+
+    return {
+      ...response,
+      data: normalizeApplication(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
@@ -66,14 +78,20 @@ export const applicationsService = {
     portfolioId: string,
     request: SubmitApplicationRequest
   ): Promise<BffResponse<Application>> => {
-    return bffClient.post<BffResponse<Application>>('/applications', {
+    const response = await bffClient.post<BffResponse<Application>>('/applications', {
       portfolioId,
       body: request,
     });
+
+    return {
+      ...response,
+      data: normalizeApplication(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
    * Update application status (for underwriters)
+   * Uses PATCH per API contract (PATCH /applications/:id)
    */
   updateStatus: async (
     portfolioId: string,
@@ -81,13 +99,21 @@ export const applicationsService = {
     status: ApplicationStatus,
     decisionData?: Record<string, unknown>
   ): Promise<BffResponse<Application>> => {
-    return bffClient.patch<BffResponse<Application>>(
+    // Map Dashboard status to API status
+    const apiStatus = mapAppStatusToApi(status);
+
+    const response = await bffClient.patch<BffResponse<Application>>(
       `/applications/${applicationId}`,
       {
         portfolioId,
-        body: { status, decisionData },
+        body: { status: apiStatus, decisionData },
       }
     );
+
+    return {
+      ...response,
+      data: normalizeApplication(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**

@@ -5,6 +5,7 @@
 
 import bffClient, { BffResponse, BffListResponse } from './client';
 import type { AuditEvent } from './types';
+import { normalizeAuditEvent } from './normalizers';
 
 export interface AuditFilters {
   action?: string;
@@ -39,7 +40,7 @@ export const auditService = {
     portfolioId: string,
     params?: AuditListParams
   ): Promise<BffListResponse<AuditEvent>> => {
-    return bffClient.get<BffListResponse<AuditEvent>>('/audit-events', {
+    const response = await bffClient.get<BffListResponse<AuditEvent>>('/audit-events', {
       portfolioId,
       params: {
         action: params?.action,
@@ -52,6 +53,12 @@ export const auditService = {
         pageSize: params?.pageSize,
       },
     });
+
+    // Normalize each audit event
+    return {
+      ...response,
+      data: response.data.map((e) => normalizeAuditEvent(e as unknown as Record<string, unknown>)),
+    };
   },
 
   /**

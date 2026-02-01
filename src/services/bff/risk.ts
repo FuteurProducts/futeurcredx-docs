@@ -5,6 +5,7 @@
 
 import bffClient, { BffResponse, BffListResponse } from './client';
 import type { RiskSummary, EWSAlert, RiskAggregate } from './types';
+import { normalizeRiskSummary, normalizeEWSAlert, normalizeRiskAggregate } from './normalizers';
 
 export interface EWSFilters {
   severity?: 'info' | 'warning' | 'critical';
@@ -29,9 +30,14 @@ export const riskService = {
   getSummary: async (
     portfolioId: string
   ): Promise<BffResponse<RiskSummary>> => {
-    return bffClient.get<BffResponse<RiskSummary>>('/risk/summary', {
+    const response = await bffClient.get<BffResponse<RiskSummary>>('/risk/summary', {
       portfolioId,
     });
+
+    return {
+      ...response,
+      data: normalizeRiskSummary(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
@@ -41,7 +47,7 @@ export const riskService = {
     portfolioId: string,
     params?: EWSListParams
   ): Promise<BffListResponse<EWSAlert>> => {
-    return bffClient.get<BffListResponse<EWSAlert>>('/risk/ews', {
+    const response = await bffClient.get<BffListResponse<EWSAlert>>('/risk/ews', {
       portfolioId,
       params: {
         severity: params?.severity,
@@ -51,6 +57,12 @@ export const riskService = {
         pageSize: params?.pageSize,
       },
     });
+
+    // Normalize each alert through the normalizer layer
+    return {
+      ...response,
+      data: response.data.map((a) => normalizeEWSAlert(a as unknown as Record<string, unknown>)),
+    };
   },
 
   /**
@@ -61,10 +73,15 @@ export const riskService = {
     alertId: string,
     notes?: string
   ): Promise<BffResponse<EWSAlert>> => {
-    return bffClient.post<BffResponse<EWSAlert>>(
+    const response = await bffClient.post<BffResponse<EWSAlert>>(
       `/risk/ews/${alertId}/acknowledge`,
       { portfolioId, body: { notes } }
     );
+
+    return {
+      ...response,
+      data: normalizeEWSAlert(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
@@ -74,10 +91,17 @@ export const riskService = {
     portfolioId: string,
     params: AggregateParams
   ): Promise<BffResponse<RiskAggregate[]>> => {
-    return bffClient.get<BffResponse<RiskAggregate[]>>('/risk/aggregates', {
+    const response = await bffClient.get<BffResponse<RiskAggregate[]>>('/risk/aggregates', {
       portfolioId,
       params: { dimension: params.dimension },
     });
+
+    return {
+      ...response,
+      data: Array.isArray(response.data)
+        ? response.data.map((a) => normalizeRiskAggregate(a as unknown as Record<string, unknown>))
+        : [],
+    };
   },
 
   /**
@@ -103,6 +127,18 @@ export const riskService = {
     columnLabels: string[];
   }>> => {
     return bffClient.get('/risk/heatmap', { portfolioId });
+  },
+
+  /**
+   * Get analytics funnel data
+   */
+  getFunnel: async (
+    portfolioId: string
+  ): Promise<BffResponse<{
+    stages: { name: string; count: number; conversionRate: number }[];
+    overall: { totalBusinesses: number; totalFunded: number; overallConversion: number };
+  }>> => {
+    return bffClient.get('/analytics/funnel', { portfolioId });
   },
 };
 

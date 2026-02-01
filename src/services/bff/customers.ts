@@ -5,6 +5,7 @@
 
 import bffClient, { BffResponse, BffListResponse } from './client';
 import type { SmbEntity, CustomerDossier } from './types';
+import { normalizeCustomer, normalizeCustomerDossier } from './normalizers';
 
 export interface CustomerFilters {
   search?: string;
@@ -31,7 +32,7 @@ export const customersService = {
     portfolioId: string,
     params?: CustomerListParams
   ): Promise<BffListResponse<SmbEntity>> => {
-    return bffClient.get<BffListResponse<SmbEntity>>('/customers', {
+    const response = await bffClient.get<BffListResponse<SmbEntity>>('/customers', {
       portfolioId,
       params: {
         search: params?.search,
@@ -46,6 +47,12 @@ export const customersService = {
         sortDirection: params?.sortDirection,
       },
     });
+
+    // Normalize each customer through the normalizer layer
+    return {
+      ...response,
+      data: response.data.map((c) => normalizeCustomer(c as unknown as Record<string, unknown>)),
+    };
   },
 
   /**
@@ -56,10 +63,16 @@ export const customersService = {
     portfolioId: string,
     customerId: string
   ): Promise<BffResponse<CustomerDossier>> => {
-    return bffClient.get<BffResponse<CustomerDossier>>(
+    const response = await bffClient.get<BffResponse<CustomerDossier>>(
       `/customers/${customerId}`,
       { portfolioId }
     );
+
+    // Normalize the dossier and all nested entities
+    return {
+      ...response,
+      data: normalizeCustomerDossier(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**

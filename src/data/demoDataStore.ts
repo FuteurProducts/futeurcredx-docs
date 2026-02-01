@@ -107,6 +107,22 @@ function updateApplicationStatus(appId: string, newStatus: DemoApplication['stat
   notify();
 }
 
+function clearApplicationStatus(appId: string) {
+  delete overrides.applicationStatuses[appId];
+  saveToStorage();
+  notify();
+}
+
+function clearAllApplicationStatuses() {
+  overrides.applicationStatuses = {};
+  saveToStorage();
+  notify();
+}
+
+function getApplicationStatusOverrides(): Record<string, DemoApplication['status']> {
+  return { ...overrides.applicationStatuses };
+}
+
 function simulateScorePull(bizId: string): DemoCreditScore {
   const biz = getEnrichedBusiness(bizId);
   const baseBiz = DEMO_BUSINESSES.find(b => b.id === bizId);
@@ -165,6 +181,9 @@ export const demoDataStore = {
   getBusinessById,
   getApplications,
   updateApplicationStatus,
+  clearApplicationStatus,
+  clearAllApplicationStatuses,
+  getApplicationStatusOverrides,
   simulateScorePull,
   reset,
   subscribe,

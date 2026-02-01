@@ -1,10 +1,10 @@
 /**
  * BFF API Client
- * Base client for all Backend-for-Frontend edge function calls
- * Handles auth, tenant isolation, and standardized response envelopes
+ * Base client for all Backend-for-Frontend API calls
+ * Handles auth (Clerk JWT), tenant isolation, and standardized response envelopes
  */
 
-import { supabase } from '@/integrations/supabase/client';
+import { computeHasMore } from './normalizers';
 
 // Standard BFF response envelope
 export interface BffResponseMeta {
@@ -45,10 +45,23 @@ export interface BffRequestOptions {
   body?: unknown;
 }
 
-// Get current session token
+// Clerk token getter — injected from AuthContext
+let _getToken: (() => Promise<string | null>) | null = null;
+
+/**
+ * Set the auth token getter (called once from AuthContext initialization)
+ */
+export function setAuthTokenGetter(getter: () => Promise<string | null>) {
+  _getToken = getter;
+}
+
+// Get current session token via Clerk
 async function getAuthToken(): Promise<string | null> {
-  const { data: { session } } = await supabase.auth.getSession();
-  return session?.access_token ?? null;
+  if (_getToken) {
+    return _getToken();
+  }
+  // Fallback: try to import Clerk's useAuth if available in window context
+  return null;
 }
 
 // Build query string from params
@@ -66,7 +79,7 @@ async function request<T>(
   options?: Partial<BffRequestOptions>
 ): Promise<T> {
   const token = await getAuthToken();
-  
+
   if (!token) {
     throw {
       error: {
@@ -77,9 +90,13 @@ async function request<T>(
     } as BffError;
   }
 
-  // Build URL with portfolioId as mandatory query param for most endpoints
-  const baseUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1`;
-  let url = `${baseUrl}${endpoint}`;
+  // Build URL — use VITE_API_URL for the new NestJS API, fallback to Supabase
+  const baseUrl = import.meta.env.VITE_API_URL
+    || `${import.meta.env.VITE_SUPABASE_URL}/functions/v1`;
+
+  // Prefix endpoints with /dashboard for the new API
+  const prefix = import.meta.env.VITE_API_URL ? '/dashboard' : '';
+  let url = `${baseUrl}${prefix}${endpoint}`;
 
   const queryParams: Record<string, string | number | boolean | undefined> = {
     ...options?.params,
@@ -117,10 +134,27 @@ async function request<T>(
   }
 
   const body = await response.json();
-  // Edge functions wrap responses in { success, data, meta } — unwrap to match BFF types
+
+  // Edge functions / NestJS API wraps responses in { success, data, meta } — unwrap to match BFF types
   if ('success' in body && body.success === true) {
-    return { data: body.data, meta: body.meta, ...(body.pagination ? { pagination: body.pagination } : {}) } as T;
+    const result: Record<string, unknown> = { data: body.data, meta: body.meta || {} };
+
+    // Normalize pagination — compute hasMore if missing
+    if (body.pagination) {
+      result.pagination = {
+        ...body.pagination,
+        hasMore: computeHasMore(body.pagination),
+      };
+    }
+
+    return result as T;
   }
+
+  // If response already has pagination, ensure hasMore is computed
+  if ('pagination' in body && body.pagination) {
+    body.pagination.hasMore = computeHasMore(body.pagination);
+  }
+
   return body as T;
 }
 

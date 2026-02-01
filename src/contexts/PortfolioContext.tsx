@@ -5,20 +5,22 @@
  */
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import type { Portfolio } from '@/services/bff/types';
+import { useAuth } from '@/contexts/AuthContext';
+import bffClient, { BffResponse } from '@/services/bff/client';
+import { normalizePortfolio } from '@/services/bff/normalizers';
 import { logger } from '@/utils/logger';
 
 interface PortfolioContextValue {
   // Current selected portfolio
   portfolioId: string | null;
   portfolio: Portfolio | null;
-  
+
   // All accessible portfolios
   portfolios: Portfolio[];
   isLoading: boolean;
   error: string | null;
-  
+
   // Actions
   setPortfolioId: (id: string) => void;
   refreshPortfolios: () => Promise<void>;
@@ -30,11 +32,21 @@ interface PortfolioProviderProps {
   children: ReactNode;
 }
 
+const DEMO_PORTFOLIO: Portfolio = {
+  id: 'demo-portfolio-001',
+  tenantId: 'demo-tenant',
+  name: 'Demo Portfolio',
+  description: 'Development demo portfolio',
+  productTypes: ['LOC', 'Term Loan', 'SBA'],
+  createdAt: new Date().toISOString(),
+};
+
 export function PortfolioProvider({ children }: PortfolioProviderProps) {
   const [portfolioId, setPortfolioIdState] = useState<string | null>(null);
   const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { isSignedIn, isLoaded } = useAuth();
 
   // Fetch accessible portfolios for current user
   const refreshPortfolios = useCallback(async () => {
@@ -42,49 +54,20 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
     setError(null);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
+      if (!isSignedIn) {
         // Not authenticated - use demo portfolio for dev
-        const demoPortfolio: Portfolio = {
-          id: 'demo-portfolio-001',
-          tenantId: 'demo-tenant',
-          name: 'Demo Portfolio',
-          description: 'Development demo portfolio',
-          productTypes: ['LOC', 'Term Loan', 'SBA'],
-          createdAt: new Date().toISOString(),
-        };
-        setPortfolios([demoPortfolio]);
-        setPortfolioIdState(demoPortfolio.id);
+        setPortfolios([DEMO_PORTFOLIO]);
+        setPortfolioIdState(DEMO_PORTFOLIO.id);
         setIsLoading(false);
         return;
       }
 
-      // Fetch portfolios the user has access to
-      const { data, error: fetchError } = await supabase
-        .from('portfolios')
-        .select(`
-          id,
-          tenant_id,
-          name,
-          code,
-          config,
-          created_at
-        `)
-        .order('name');
+      // Fetch portfolios from API via BFF client
+      const response = await bffClient.get<BffResponse<Portfolio[]>>('/portfolios');
 
-      if (fetchError) {
-        throw fetchError;
-      }
-
-      const mappedPortfolios: Portfolio[] = (data || []).map(p => ({
-        id: p.id,
-        tenantId: p.tenant_id,
-        name: p.name,
-        description: p.code,
-        productTypes: (p.config as { productTypes?: string[] })?.productTypes,
-        createdAt: p.created_at ?? '',
-      }));
+      const mappedPortfolios: Portfolio[] = Array.isArray(response.data)
+        ? response.data.map((p: unknown) => normalizePortfolio(p as Record<string, unknown>))
+        : [];
 
       setPortfolios(mappedPortfolios);
 
@@ -95,27 +78,21 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
     } catch (err) {
       logger.error('[PortfolioContext] Failed to fetch portfolios:', err);
       setError(err instanceof Error ? err.message : 'Failed to load portfolios');
-      
+
       // Fallback to demo portfolio
-      const demoPortfolio: Portfolio = {
-        id: 'demo-portfolio-001',
-        tenantId: 'demo-tenant',
-        name: 'Demo Portfolio',
-        description: 'Development demo portfolio',
-        productTypes: ['LOC', 'Term Loan', 'SBA'],
-        createdAt: new Date().toISOString(),
-      };
-      setPortfolios([demoPortfolio]);
-      setPortfolioIdState(demoPortfolio.id);
+      setPortfolios([DEMO_PORTFOLIO]);
+      setPortfolioIdState(DEMO_PORTFOLIO.id);
     } finally {
       setIsLoading(false);
     }
-  }, [portfolioId]);
+  }, [isSignedIn, portfolioId]);
 
-  // Load portfolios on mount
+  // Load portfolios when auth state is ready
   useEffect(() => {
-    refreshPortfolios();
-  }, [refreshPortfolios]);
+    if (isLoaded) {
+      refreshPortfolios();
+    }
+  }, [isLoaded, refreshPortfolios]);
 
   // Persist selected portfolio to localStorage
   useEffect(() => {
@@ -169,10 +146,10 @@ export function usePortfolio(): PortfolioContextValue {
  */
 export function useRequiredPortfolio(): string {
   const { portfolioId, isLoading } = usePortfolio();
-  
+
   if (!isLoading && !portfolioId) {
     throw new Error('No portfolio selected. Please select a portfolio to continue.');
   }
-  
+
   return portfolioId!;
 }

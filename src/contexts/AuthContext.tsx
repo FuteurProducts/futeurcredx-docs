@@ -1,6 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import type { User as SupabaseUser, Session } from '@supabase/supabase-js';
+import React, { createContext, useContext, useEffect } from 'react';
+import {
+  useAuth as useClerkAuth,
+  useUser as useClerkUser,
+  useClerk,
+  SignedIn,
+  SignedOut,
+} from '@clerk/clerk-react';
+import { setAuthTokenGetter } from '@/services/bff/client';
 
 interface User {
   id: string;
@@ -25,82 +31,60 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-function mapSupabaseUser(su: SupabaseUser | null): User | null {
-  if (!su) return null;
-  const meta = su.user_metadata || {};
+function mapClerkUser(clerkUser: ReturnType<typeof useClerkUser>['user']): User | null {
+  if (!clerkUser) return null;
   return {
-    id: su.id,
-    email: su.email || '',
-    firstName: meta.first_name || meta.firstName || su.email?.split('@')[0] || 'User',
-    lastName: meta.last_name || meta.lastName || '',
-    fullName: meta.full_name || meta.fullName || su.email?.split('@')[0] || 'User',
-    username: su.email?.split('@')[0] || '',
-    imageUrl: meta.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${su.email}`,
-    emailAddresses: su.email ? [{ emailAddress: su.email }] : [],
+    id: clerkUser.id,
+    email: clerkUser.primaryEmailAddress?.emailAddress || '',
+    firstName: clerkUser.firstName || undefined,
+    lastName: clerkUser.lastName || undefined,
+    fullName: clerkUser.fullName || undefined,
+    username: clerkUser.username || clerkUser.primaryEmailAddress?.emailAddress?.split('@')[0] || undefined,
+    imageUrl: clerkUser.imageUrl || undefined,
+    emailAddresses: clerkUser.emailAddresses?.map(e => ({ emailAddress: e.emailAddress })) || [],
   };
 }
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const { isSignedIn, isLoaded, getToken: clerkGetToken } = useClerkAuth();
+  const { user: clerkUser } = useClerkUser();
+  const clerk = useClerk();
 
-  // Initialize from existing session and listen for auth changes
-  useEffect(() => {
-    // Get current session on mount
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(mapSupabaseUser(session?.user ?? null));
-      setIsSignedIn(!!session);
-      setIsLoaded(true);
-    });
+  const user = mapClerkUser(clerkUser || null);
 
-    // Listen for auth state changes (login, logout, token refresh)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setUser(mapSupabaseUser(session?.user ?? null));
-        setIsSignedIn(!!session);
-        setIsLoaded(true);
-      }
-    );
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      throw new Error(error.message);
-    }
-    // State update handled by onAuthStateChange listener
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const signIn = async (_email: string, _password: string) => {
+    // Clerk handles sign-in via its own UI components (SignIn, RedirectToSignIn)
+    clerk.redirectToSignIn();
   };
 
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      throw new Error(error.message);
-    }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const signUp = async (_email: string, _password: string) => {
+    clerk.redirectToSignUp();
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      throw new Error(error.message);
-    }
-    // State update handled by onAuthStateChange listener
+    await clerk.signOut();
   };
 
   const getToken = async (): Promise<string | null> => {
-    const { data: { session } } = await supabase.auth.getSession();
-    return session?.access_token ?? null;
+    try {
+      return await clerkGetToken();
+    } catch {
+      return null;
+    }
   };
+
+  // Inject token getter into BFF client so it can authenticate requests
+  useEffect(() => {
+    setAuthTokenGetter(getToken);
+  }, [clerkGetToken]);
 
   return (
     <AuthContext.Provider
       value={{
-        isSignedIn,
-        isLoaded,
+        isSignedIn: !!isSignedIn,
+        isLoaded: !!isLoaded,
         user,
         signIn,
         signUp,
@@ -125,3 +109,6 @@ export const useUser = () => {
   const { user, isSignedIn, isLoaded } = useAuth();
   return { user, isSignedIn, isLoaded };
 };
+
+// Re-export Clerk components for convenience
+export { SignedIn, SignedOut };

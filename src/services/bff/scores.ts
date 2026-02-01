@@ -5,6 +5,7 @@
 
 import bffClient, { BffResponse, BffListResponse } from './client';
 import type { CreditScore, ScorePullRequest, ScorePullResponse, ScoreSource } from './types';
+import { normalizeScore, mapScoreSourceToApi } from './normalizers';
 
 export interface ScoreFilters {
   smbEntityId?: string;
@@ -28,11 +29,11 @@ export const scoresService = {
     portfolioId: string,
     params?: ScoreListParams
   ): Promise<BffListResponse<CreditScore>> => {
-    return bffClient.get<BffListResponse<CreditScore>>('/scores', {
+    const response = await bffClient.get<BffListResponse<CreditScore>>('/scores', {
       portfolioId,
       params: {
         smbEntityId: params?.smbEntityId,
-        source: params?.source,
+        source: params?.source ? mapScoreSourceToApi(params.source) : undefined,
         minScore: params?.minScore,
         maxScore: params?.maxScore,
         riskClass: params?.riskClass,
@@ -40,6 +41,12 @@ export const scoresService = {
         pageSize: params?.pageSize,
       },
     });
+
+    // Normalize each score through the normalizer layer
+    return {
+      ...response,
+      data: response.data.map((s) => normalizeScore(s as unknown as Record<string, unknown>)),
+    };
   },
 
   /**
@@ -49,10 +56,15 @@ export const scoresService = {
     portfolioId: string,
     scoreId: string
   ): Promise<BffResponse<CreditScore>> => {
-    return bffClient.get<BffResponse<CreditScore>>(
+    const response = await bffClient.get<BffResponse<CreditScore>>(
       `/scores/${scoreId}`,
       { portfolioId }
     );
+
+    return {
+      ...response,
+      data: normalizeScore(response.data as unknown as Record<string, unknown>),
+    };
   },
 
   /**
@@ -63,10 +75,23 @@ export const scoresService = {
     portfolioId: string,
     request: ScorePullRequest
   ): Promise<BffResponse<ScorePullResponse>> => {
-    return bffClient.post<BffResponse<ScorePullResponse>>('/scores/pull', {
+    // Map Dashboard source enum to API enum before sending
+    const apiRequest = {
+      ...request,
+      source: mapScoreSourceToApi(request.source),
+    };
+
+    const response = await bffClient.post<BffResponse<ScorePullResponse>>('/scores/pull', {
       portfolioId,
-      body: request,
+      body: apiRequest,
     });
+
+    // Normalize the returned score
+    if (response.data?.score) {
+      response.data.score = normalizeScore(response.data.score as unknown as Record<string, unknown>);
+    }
+
+    return response;
   },
 
   /**
@@ -78,7 +103,7 @@ export const scoresService = {
   ): Promise<BffResponse<{ ranges: { min: number; max: number; count: number }[] }>> => {
     return bffClient.get('/scores/distribution', {
       portfolioId,
-      params: { source },
+      params: { source: source ? mapScoreSourceToApi(source) : undefined },
     });
   },
 

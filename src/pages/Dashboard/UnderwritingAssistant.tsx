@@ -66,7 +66,9 @@ const UnderwritingAssistant: React.FC = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedApp, setSelectedApp] = useState<PipelineApplication | null>(null);
   const [applications, setApplications] = useState(() => buildFallbackApplications());
-  const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>({});
+  const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>(
+    () => demoDataStore.getApplicationStatusOverrides()
+  );
   const [isLoadingApps, setIsLoadingApps] = useState(false);
 
   // Fetch applications from BFF
@@ -183,6 +185,7 @@ const UnderwritingAssistant: React.FC = () => {
       delete next[appId];
       return next;
     });
+    demoDataStore.clearApplicationStatus(appId);
     toast.success('Action undone');
   };
 
@@ -342,6 +345,7 @@ const UnderwritingAssistant: React.FC = () => {
               toast.success('Pipeline data downloaded as CSV');
             }}
             onRefresh={() => {
+              demoDataStore.clearAllApplicationStatuses();
               setApplications(buildFallbackApplications());
               setApplicationStatuses({});
               setSelectedIds([]);
@@ -378,6 +382,7 @@ const UnderwritingAssistant: React.FC = () => {
                   <button
                     onClick={() => {
                       setApplicationStatuses({});
+                      demoDataStore.clearAllApplicationStatuses();
                       toast.success('All actions cleared');
                     }}
                     className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
