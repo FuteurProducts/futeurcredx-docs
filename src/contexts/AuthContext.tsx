@@ -31,6 +31,41 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+/** Returns true when a real Clerk key is set (not empty and not the placeholder). */
+export function isClerkConfigured(publishableKey: string | undefined): boolean {
+  return Boolean(
+    publishableKey &&
+    publishableKey !== 'pk_test_placeholder' &&
+    publishableKey !== 'pk_test_your_key_here'
+  );
+}
+
+const FALLBACK_VALUE: AuthContextType = {
+  isSignedIn: false,
+  isLoaded: true,
+  user: null,
+  signIn: async () => {
+    console.warn('[Lumiq] Clerk is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in .env to enable sign-in.');
+  },
+  signUp: async () => {
+    console.warn('[Lumiq] Clerk is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in .env to enable sign-up.');
+  },
+  signOut: async () => {},
+  getToken: async () => null,
+};
+
+/** Use when Clerk is not configured: provides same context with no-auth state so the app still runs. */
+export const FallbackAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useEffect(() => {
+    setAuthTokenGetter(FALLBACK_VALUE.getToken);
+  }, []);
+  return (
+    <AuthContext.Provider value={FALLBACK_VALUE}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
 function mapClerkUser(clerkUser: ReturnType<typeof useClerkUser>['user']): User | null {
   if (!clerkUser) return null;
   return {

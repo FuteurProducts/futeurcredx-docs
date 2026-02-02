@@ -1,0 +1,1 @@
+import{t as e}from"./createLucideIcon-BS--TKdq.js";var t=e(`chevron-right`,[[`path`,{d:`m9 18 6-6-6-6`,key:`mthhwq`}]]),n=e(`clock`,[[`path`,{d:`M12 6v6l4 2`,key:`mmk7yg`}],[`circle`,{cx:`12`,cy:`12`,r:`10`,key:`1mglay`}]]);export{t as n,n as t};
