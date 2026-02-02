@@ -1,1 +1,0 @@
-import{a as e}from"./index-BEByy6bH.js";async function t(t,n,r){try{return{data:await t(),source:`live`}}catch(t){return e.warn(`[withFallback] ${r}: BFF unavailable, using fallback data`,t),{data:n,source:`fallback`}}}export{t};
