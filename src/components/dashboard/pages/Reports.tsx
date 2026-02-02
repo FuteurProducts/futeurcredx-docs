@@ -119,7 +119,7 @@ const Reports: React.FC = () => {
   }, [fetchReportHistory]);
 
   // ---------- Polling hook for async report generation ----------
-  const { startPolling, isPolling } = useReportPolling({
+  const { startPolling } = useReportPolling({
     onComplete: (completedJob) => {
       const adapted = adaptReportJobToGenerated(completedJob);
       setGeneratedReports((prev) => {

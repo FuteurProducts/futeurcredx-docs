@@ -27,7 +27,6 @@ import {
 } from "lucide-react";
 import { usePortfolio } from "@/contexts/PortfolioContext";
 import { getDashboardKPIs, getConversionTrend } from "@/services/dashboardMetrics";
-import type { DashboardKPIs, TrendDataPoint } from "@/services/dashboardMetrics";
 import { DataSourceBadge } from "@/components/shared/DataSourceBadge";
 
 import { PILOT_METRICS, CONVERSION_TREND_DATA } from "@/data/demoData";

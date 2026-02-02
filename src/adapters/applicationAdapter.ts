@@ -5,7 +5,7 @@
 
 import type { Application } from '@/services/bff/types';
 import type { PipelineApplication } from '@/components/enterprise/underwriting';
-import { getEnrichedBusiness, getBusinessApplications, DEMO_BUSINESSES } from '@/data/demoData';
+import { getBusinessApplications, DEMO_BUSINESSES } from '@/data/demoData';
 import { deterministicValue } from '@/utils/deterministicHash';
 
 // Cache enriched applications to avoid O(n²) in batch transforms

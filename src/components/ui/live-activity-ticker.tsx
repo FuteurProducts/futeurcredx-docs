@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, TrendingUp, Shield, UserCheck, AlertTriangle, CheckCircle } from 'lucide-react';
+import { TrendingUp, Shield, UserCheck, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const BUSINESSES = [
   'Stellar Dynamics LLC', 'Metro Logistics Corp', 'Apex Construction Group',

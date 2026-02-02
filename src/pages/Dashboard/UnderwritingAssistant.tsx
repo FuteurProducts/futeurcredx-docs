@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LayoutGrid, List, Filter, CheckCircle2, XCircle, AlertTriangle, RotateCcw } from 'lucide-react';
+import { LayoutGrid, List, Filter, CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {
   ApplicationQueueFilters,
@@ -69,7 +69,7 @@ const UnderwritingAssistant: React.FC = () => {
   const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>(
     () => demoDataStore.getApplicationStatusOverrides()
   );
-  const [isLoadingApps, setIsLoadingApps] = useState(false);
+  const [, setIsLoadingApps] = useState(false);
 
   // Fetch applications from BFF
   const fetchApplications = useCallback(async () => {

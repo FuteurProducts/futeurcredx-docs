@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Plus, X, Key, Copy, RefreshCw, Trash2,
+  Plus, X, Key, RefreshCw, Trash2,
   CheckCircle, XCircle, Eye, EyeOff
 } from 'lucide-react';
 import type { ApiKey, Environment } from '../types';

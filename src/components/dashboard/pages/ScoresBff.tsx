@@ -6,6 +6,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { scoresService, customersService } from '@/services/bff';
+import type { BffResponse } from '@/services/bff/client';
+import type { ScorePullResponse } from '@/services/bff/types';
 import { useAuditEmit } from '@/hooks/useAuditEmit';
 import { PortfolioSelector } from '@/components/shared';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -50,7 +52,7 @@ const RISK_CONFIG = {
   'high': { label: 'High Risk', color: 'hsl(var(--destructive))', icon: AlertTriangle },
 };
 
-import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
+import { DEMO_BUSINESSES } from '@/data/demoData';
 import { withFallback } from '@/utils/withFallback';
 import { demoDataStore } from '@/data/demoDataStore';
 import { logger } from '@/utils/logger';
@@ -166,13 +168,34 @@ const ScoresBff: React.FC = () => {
 
     try {
       const demoScore = demoDataStore.simulateScorePull(customerId);
+      const fallbackResponse: BffResponse<ScorePullResponse> = {
+        data: {
+          score: {
+            id: `demo-${customerId}-${Date.now()}`,
+            smbEntityId: customerId,
+            source: demoScore.source,
+            scoreType: demoScore.source === 'dun_bradstreet' ? 'paydex' : demoScore.source === 'equifax_biz' ? 'business_risk' : 'intelliscore',
+            score: demoScore.score,
+            riskClass: demoScore.riskClass,
+            factors: demoScore.factors.map((desc, i) => ({
+              code: `F${String(i + 1).padStart(2, '0')}`,
+              description: desc,
+              impact: demoScore.riskClass === 'low' ? 'positive' : demoScore.riskClass === 'moderate' ? 'neutral' : 'negative',
+            })),
+            pulledAt: demoScore.pulledAt,
+            createdAt: new Date().toISOString(),
+          },
+          lineageId: `lineage-demo-${Date.now()}`,
+        },
+        meta: { requestId: `req-demo-${Date.now()}`, portfolioId: portfolioId ?? undefined },
+      };
 
       const { source } = await withFallback(
         () => scoresService.pull(portfolioId, {
           smbEntityId: customerId,
           source: 'experian_biz',
         }),
-        demoScore,
+        fallbackResponse,
         'Score Pull'
       );
 
@@ -184,7 +207,6 @@ const ScoresBff: React.FC = () => {
         await fetchCustomers();
       } else {
         // Update local state from demo store
-        const enriched = getEnrichedBusiness(customerId);
         const newScore: ScoreRecord = {
           id: `score-demo-${Date.now()}`,
           smbEntityId: customerId,

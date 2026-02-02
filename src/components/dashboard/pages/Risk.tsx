@@ -345,7 +345,7 @@ const Risk: React.FC = () => {
           businessId: alert.smbEntityId,
           businessName: alert.message?.split(' ')[0] || `Business ${idx + 1}`,
           primaryDriver: alert.alertType.replace(/_/g, ' '),
-          driverType: alert.alertType.includes('score') ? 'credit' : alert.alertType.includes('cash') ? 'cashflow' : 'payment',
+          driverType: alert.alertType.includes('score') ? 'bureau' : alert.alertType.includes('cash') ? 'cashflow' : 'payment',
           signals: [alert.message || ''],
           recommendedAction: 'Review and take action',
           exposure: 100000 + idx * 50000,

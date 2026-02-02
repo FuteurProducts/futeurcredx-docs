@@ -6,6 +6,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { customersService } from '@/services/bff';
+import type { BffListResponse } from '@/services/bff/client';
+import type { SmbEntity } from '@/services/bff/types';
 import { useAuditEmit } from '@/hooks/useAuditEmit';
 import { adaptBffCustomerList, type BffCustomerListItem } from '@/adapters/customerAdapter';
 import {
@@ -129,7 +131,7 @@ const CustomerBff: React.FC = () => {
           page: currentPage,
           pageSize,
         }),
-        { data: FALLBACK_CUSTOMERS, meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } },
+        { data: FALLBACK_CUSTOMERS as unknown as SmbEntity[], meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } } as BffListResponse<SmbEntity>,
         'Customer List'
       );
 
@@ -258,7 +260,7 @@ const CustomerBff: React.FC = () => {
     const products = enriched?.products.map(p => ({
       product: p.name,
       status: (p.status === 'active' ? 'active' : p.status === 'pending' ? 'active' : 'not-held') as 'active' | 'not-held',
-      signal: (p.status === 'active' ? 'healthy' : p.status === 'closed' ? 'at-risk' : 'opportunity') as 'healthy' | 'opportunity' | 'at-risk',
+      signal: (p.status === 'active' ? 'healthy' : p.status === 'closed' ? 'high-spend' : 'opportunity') as 'healthy' | 'growing' | 'underutilized' | 'high-spend' | 'opportunity',
     })) ?? [
       { product: 'Checking', status: 'active' as const, signal: 'healthy' as const },
       { product: 'Credit Score', status: 'not-held' as const, signal: 'opportunity' as const },
@@ -311,7 +313,7 @@ const CustomerBff: React.FC = () => {
     const products = enriched?.products.map(p => ({
       name: p.name,
       type: p.type,
-      status: p.status as 'active' | 'pending' | 'closed',
+      status: (p.status === 'active' ? 'active' : p.status === 'pending' ? 'approved' : 'not-held') as 'active' | 'approved' | 'not-held',
       balance: p.balance,
       limit: p.limit,
     })) ?? [];
