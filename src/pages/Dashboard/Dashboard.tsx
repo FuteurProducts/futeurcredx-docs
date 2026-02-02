@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useUser, useAuth } from '@/contexts/AuthContext'
@@ -108,6 +108,21 @@ const Dashboard: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [accountMenuOpen, setAccountMenuOpen] = useState(false)
+
+  // Track previous environment to detect sandbox entry
+  const prevEnvironmentRef = useRef<string>(currentEnvironment);
+
+  // Auto-navigate to API Console when entering sandbox mode
+  useEffect(() => {
+    const prevEnv = prevEnvironmentRef.current;
+    if (currentEnvironment === 'sandbox' && prevEnv === 'production') {
+      _setActiveTab('api-keys');
+      const params = new URLSearchParams(location.search);
+      params.set('tab', 'api-keys');
+      navigate(`/dashboard?${params.toString()}`, { replace: true });
+    }
+    prevEnvironmentRef.current = currentEnvironment;
+  }, [currentEnvironment]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Keep state and URL in sync
   const setActiveTab = (tab: string) => {

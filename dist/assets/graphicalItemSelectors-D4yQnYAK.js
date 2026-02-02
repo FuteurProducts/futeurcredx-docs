@@ -1,1 +1,0 @@
-import{f as e}from"./CategoricalChart-j-Jkqxn-.js";function t(e,t){return e.graphicalItems.cartesianItems.find(e=>e.id===t)?.xAxisId??0}function n(e,t){return e.graphicalItems.cartesianItems.find(e=>e.id===t)?.yAxisId??0}export{n,t};

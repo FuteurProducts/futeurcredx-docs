@@ -1,10 +1,10 @@
 // Main API Console Component - Enterprise-grade API Connections management
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  LayoutGrid, 
-  Activity, 
-  Terminal, 
+import {
+  LayoutGrid,
+  Activity,
+  Terminal,
   Key,
   Webhook,
 } from 'lucide-react';
@@ -12,8 +12,9 @@ import {
 import { ApiConsoleHeader } from './ApiConsoleHeader';
 import { ConnectionDetail } from './ConnectionDetail';
 import { ConnectionCatalog } from './ConnectionCatalog';
-import type { Environment, Connection } from './types';
+import type { Connection } from './types';
 import { mockConnections, mockIncidents, mockActivityLogs, mockWebhookConfigs } from './data/mockData';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 
 interface ApiConsoleProps {
   apiKeys?: any[];
@@ -32,10 +33,10 @@ interface ApiConsoleProps {
 }
 
 export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
-  const [environment, setEnvironment] = useState<Environment>('production');
+  const { currentEnvironment, switchEnvironment } = useEnvironment();
   const [timeRange, setTimeRange] = useState('24h');
   const [selectedConnection, setSelectedConnection] = useState<Connection | null>(null);
-  const [activeTab, setActiveTab] = useState('connections');
+  const [activeTab, setActiveTab] = useState(currentEnvironment === 'sandbox' ? 'playground' : 'connections');
 
   const handleSelectConnection = (connection: Connection) => {
     setSelectedConnection(connection);
@@ -50,15 +51,15 @@ export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
     return (
       <div className="space-y-6">
         <ApiConsoleHeader
-          environment={environment}
-          onEnvironmentChange={setEnvironment}
+          currentEnvironment={currentEnvironment}
+          switchEnvironment={switchEnvironment}
           incidents={mockIncidents}
           timeRange={timeRange}
           onTimeRangeChange={setTimeRange}
         />
-        <ConnectionDetail 
-          connection={selectedConnection} 
-          onBack={handleBackFromDetail} 
+        <ConnectionDetail
+          connection={selectedConnection}
+          onBack={handleBackFromDetail}
         />
       </div>
     );
@@ -67,8 +68,8 @@ export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
   return (
     <div className="space-y-6">
       <ApiConsoleHeader
-        environment={environment}
-        onEnvironmentChange={setEnvironment}
+        currentEnvironment={currentEnvironment}
+        switchEnvironment={switchEnvironment}
         incidents={mockIncidents}
         timeRange={timeRange}
         onTimeRangeChange={setTimeRange}
@@ -186,46 +187,151 @@ const ActivityLogPanel: React.FC = () => {
   );
 };
 
+// Endpoint definitions for the API Playground
+const playgroundEndpoints = [
+  { id: 'credit-score', method: 'POST', path: '/v1/credit/score', label: 'POST /v1/credit/score - Pull credit score' },
+  { id: 'credit-report', method: 'POST', path: '/v1/credit/report', label: 'POST /v1/credit/report - Pull credit report' },
+  { id: 'business-details', method: 'GET', path: '/v1/businesses/:id', label: 'GET /v1/businesses/:id - Get business details' },
+  { id: 'prequal-check', method: 'POST', path: '/v1/prequal/check', label: 'POST /v1/prequal/check - Run pre-qualification' },
+  { id: 'portfolio-health', method: 'GET', path: '/v1/portfolio/health', label: 'GET /v1/portfolio/health - Portfolio health summary' },
+] as const;
+
+// Realistic demo responses per endpoint
+const endpointResponses: Record<string, object> = {
+  'credit-score': {
+    status: 'success',
+    data: {
+      business_id: 'biz_test_8f2k9x',
+      business_name: 'Riverside Bakery LLC',
+      scores: [
+        { source: 'experian_biz', score: 72, range: [1, 100], grade: 'B+' },
+        { source: 'fico_sbss', score: 185, range: [0, 300], grade: 'Good' },
+      ],
+      risk_tier: 'low',
+      lumiq_score: 74,
+      pulled_at: '2026-02-02T18:30:00Z',
+    },
+  },
+  'credit-report': {
+    status: 'success',
+    data: {
+      business_id: 'biz_test_8f2k9x',
+      report_id: 'rpt_test_3m7nq2',
+      trade_lines: 12,
+      derogatory_marks: 0,
+      oldest_account: '2019-03-15',
+      utilization: 0.34,
+      payment_history: { on_time: 142, late_30: 1, late_60: 0, late_90: 0 },
+      public_records: [],
+      generated_at: '2026-02-02T18:30:00Z',
+    },
+  },
+  'business-details': {
+    status: 'success',
+    data: {
+      id: 'biz_test_8f2k9x',
+      legal_name: 'Riverside Bakery LLC',
+      dba: 'Riverside Bakery',
+      ein: '**-***4521',
+      industry: 'Food Services',
+      naics_code: '722515',
+      annual_revenue: 1250000,
+      employee_count: 18,
+      years_in_business: 7,
+      state: 'CA',
+      lumiq_score: 74,
+      relationship_stage: 'active',
+    },
+  },
+  'prequal-check': {
+    status: 'success',
+    data: {
+      business_id: 'biz_test_8f2k9x',
+      prequal_id: 'pq_test_9k4mv7',
+      qualified: true,
+      max_amount: 150000,
+      term_months: 36,
+      estimated_rate: '7.5% - 9.2%',
+      product_type: 'term_loan',
+      valid_until: '2026-03-02T00:00:00Z',
+      factors: [
+        { factor: 'Strong payment history', impact: 'positive' },
+        { factor: 'Low utilization', impact: 'positive' },
+        { factor: 'Limited time in business', impact: 'neutral' },
+      ],
+    },
+  },
+  'portfolio-health': {
+    status: 'success',
+    data: {
+      portfolio_id: 'pf_test_main',
+      total_businesses: 247,
+      scored_businesses: 238,
+      risk_distribution: { low: 168, moderate: 52, elevated: 15, high: 3 },
+      avg_lumiq_score: 68,
+      delinquency_rate: 0.023,
+      approval_rate: 0.72,
+      last_updated: '2026-02-02T18:00:00Z',
+    },
+  },
+};
+
 // API Playground Panel
 const ApiPlaygroundPanel: React.FC = () => {
-  const [selectedEndpoint, setSelectedEndpoint] = useState('/v2/credit-journey');
+  const { currentEnvironment } = useEnvironment();
+  const [selectedEndpointId, setSelectedEndpointId] = useState<string>('credit-score');
   const [response, setResponse] = useState<string | null>(null);
+  const [responseTime, setResponseTime] = useState<number | null>(null);
   const [isRunning, setIsRunning] = useState(false);
+
+  const selectedEndpoint = playgroundEndpoints.find(e => e.id === selectedEndpointId) || playgroundEndpoints[0];
+  const apiKeyPrefix = currentEnvironment === 'sandbox' ? 'lq_test_xxx' : 'lq_live_xxx';
+  const baseUrl = currentEnvironment === 'sandbox' ? 'https://sandbox.lumiqai.com' : 'https://api.lumiqai.com';
+
+  const buildCurlExample = () => {
+    const ep = selectedEndpoint;
+    const resolvedPath = ep.path.replace(':id', 'biz_test_8f2k9x');
+    if (ep.method === 'GET') {
+      return `curl -X GET "${baseUrl}${resolvedPath}" \\
+  -H "Authorization: Bearer ${apiKeyPrefix}" \\
+  -H "Content-Type: application/json"`;
+    }
+    return `curl -X ${ep.method} "${baseUrl}${resolvedPath}" \\
+  -H "Authorization: Bearer ${apiKeyPrefix}" \\
+  -H "Content-Type: application/json" \\
+  -d '{"business_id": "biz_test_8f2k9x"}'`;
+  };
 
   const handleRun = () => {
     setIsRunning(true);
+    const simulatedTime = Math.floor(Math.random() * 171) + 80; // 80-250ms
     setTimeout(() => {
-      setResponse(JSON.stringify({
-        status: "success",
-        data: {
-          journey_id: "cj_abc123",
-          business_id: "biz_xyz789",
-          credit_score: 720,
-          risk_tier: "low"
-        }
-      }, null, 2));
+      const data = endpointResponses[selectedEndpointId];
+      setResponse(JSON.stringify(data, null, 2));
+      setResponseTime(simulatedTime);
       setIsRunning(false);
-    }, 1000);
+    }, 300);
   };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div className="bg-card rounded-2xl border border-border p-6">
         <h3 className="text-lg font-semibold mb-4">Request</h3>
-        <select 
-          value={selectedEndpoint}
-          onChange={(e) => setSelectedEndpoint(e.target.value)}
+        <select
+          value={selectedEndpointId}
+          onChange={(e) => {
+            setSelectedEndpointId(e.target.value);
+            setResponse(null);
+            setResponseTime(null);
+          }}
           className="w-full h-10 px-3 bg-muted rounded-lg mb-4 text-sm"
         >
-          <option value="/v2/credit-journey">POST /v2/credit-journey</option>
-          <option value="/v2/accounts">GET /v2/accounts</option>
-          <option value="/v2/transactions">GET /v2/transactions</option>
+          {playgroundEndpoints.map(ep => (
+            <option key={ep.id} value={ep.id}>{ep.label}</option>
+          ))}
         </select>
         <pre className="bg-foreground text-background p-4 rounded-xl text-xs overflow-auto h-48 font-mono">
-{`curl -X POST "https://api.lumiq.ai${selectedEndpoint}" \\
-  -H "Authorization: Bearer sk_live_xxx" \\
-  -H "Content-Type: application/json" \\
-  -d '{"business_id": "biz_xyz789"}'`}
+{buildCurlExample()}
         </pre>
         <button
           onClick={handleRun}
@@ -236,7 +342,22 @@ const ApiPlaygroundPanel: React.FC = () => {
         </button>
       </div>
       <div className="bg-card rounded-2xl border border-border p-6">
-        <h3 className="text-lg font-semibold mb-4">Response</h3>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <h3 className="text-lg font-semibold">Response</h3>
+            {currentEnvironment === 'sandbox' && response && (
+              <span className="px-2 py-0.5 rounded text-xs font-semibold bg-amber-500/15 text-amber-600 border border-amber-500/25">
+                Sandbox
+              </span>
+            )}
+          </div>
+          {response && responseTime !== null && (
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <span className="px-2 py-1 rounded bg-success/10 text-success font-semibold">200 OK</span>
+              <span>{responseTime}ms</span>
+            </div>
+          )}
+        </div>
         <pre className="bg-muted p-4 rounded-xl text-xs overflow-auto h-72 font-mono">
           {response || '// Response will appear here'}
         </pre>
@@ -247,18 +368,31 @@ const ApiPlaygroundPanel: React.FC = () => {
 
 // API Keys Panel
 const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }) => {
+  const { currentEnvironment } = useEnvironment();
+
+  const filteredKeys = apiKeys.filter((key: any) => {
+    // Match by environment field
+    if (key.environment === currentEnvironment) return true;
+    // Fallback: match by key prefix
+    if (currentEnvironment === 'sandbox' && key.keyPrefix?.startsWith('lq_test_')) return true;
+    if (currentEnvironment === 'production' && (key.keyPrefix?.startsWith('lq_live_') || key.keyPrefix?.startsWith('lq_prod_'))) return true;
+    return false;
+  });
+
+  const envLabel = currentEnvironment === 'sandbox' ? 'sandbox' : 'production';
+
   return (
     <div className="bg-card rounded-2xl border border-border p-6">
       <h3 className="text-lg font-semibold mb-4">API Keys & OAuth Clients</h3>
       <p className="text-sm text-muted-foreground mb-6">Manage your API keys and OAuth client credentials for secure access.</p>
-      
+
       {isLoadingKeys ? (
         <div className="flex items-center justify-center py-12">
           <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
         <div className="space-y-3">
-          {apiKeys.length > 0 ? apiKeys.map((key: any) => (
+          {filteredKeys.length > 0 ? filteredKeys.map((key: any) => (
             <div key={key.id} className="flex items-center justify-between p-4 bg-muted rounded-xl">
               <div>
                 <span className="font-medium">{key.name}</span>
@@ -269,6 +403,9 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }
           )) : (
             <p className="text-center py-8 text-muted-foreground">No API keys yet. Generate one above.</p>
           )}
+          <p className="text-xs text-muted-foreground text-center pt-2">
+            Showing {envLabel} keys. Switch environment to see other keys.
+          </p>
         </div>
       )}
     </div>
@@ -302,7 +439,7 @@ const WebhooksPanel: React.FC = () => {
             </div>
             <div className="text-right">
               <span className="text-sm font-semibold text-foreground">
-                {typeof wh.deliveryMetrics?.failureRate === 'number' ? `${(100 - wh.deliveryMetrics.failureRate).toFixed(1)}%` : '—'}
+                {typeof wh.deliveryMetrics?.failureRate === 'number' ? `${(100 - wh.deliveryMetrics.failureRate).toFixed(1)}%` : '--'}
               </span>
               <div className="text-xs text-muted-foreground">delivery success</div>
             </div>

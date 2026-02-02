@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import toast from 'react-hot-toast';
+import React, { createContext, useContext, useState, useCallback, useRef, useEffect, ReactNode } from 'react';
 
 // ============================================
 // TYPES
@@ -20,6 +19,8 @@ interface EnvironmentContextType {
   switchEnvironment: (env: Environment) => Promise<void>;
   isSwitching: boolean;
   getApiBaseUrl: () => string;
+  onSwitchCallback?: (env: Environment) => void;
+  setOnSwitchCallback: (cb: ((env: Environment) => void) | undefined) => void;
 }
 
 // ============================================
@@ -50,64 +51,50 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode }> = ({ childre
     const saved = localStorage.getItem('lumiq-environment');
     return (saved === 'production' ? 'production' : 'sandbox') as Environment;
   });
-  
+
   const [isSwitching, setIsSwitching] = useState(false);
   const [sandboxConfig, setSandboxConfig] = useState<EnvironmentConfig>(defaultSandboxConfig);
   const [productionConfig, setProductionConfig] = useState<EnvironmentConfig>(defaultProductionConfig);
 
+  // Callback ref for environment change listeners
+  const onSwitchCallbackRef = useRef<((env: Environment) => void) | undefined>(undefined);
+
+  const setOnSwitchCallback = useCallback((cb: ((env: Environment) => void) | undefined) => {
+    onSwitchCallbackRef.current = cb;
+  }, []);
+
+  // Set document title on initial load based on persisted environment
+  useEffect(() => {
+    document.title = currentEnvironment === 'sandbox'
+      ? '[SANDBOX] LUMIQ AI Dashboard'
+      : 'LUMIQ AI Dashboard';
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const switchEnvironment = useCallback(async (env: Environment) => {
     if (env === currentEnvironment) return;
-    
+
     setIsSwitching(true);
-    
-    // Update the config status to syncing
+
+    // Update environment immediately
+    setCurrentEnvironment(env);
+    localStorage.setItem('lumiq-environment', env);
+
+    // Update document title
+    document.title = env === 'sandbox'
+      ? '[SANDBOX] LUMIQ AI Dashboard'
+      : 'LUMIQ AI Dashboard';
+
+    // Update config status
     if (env === 'sandbox') {
-      setSandboxConfig(prev => ({ ...prev, status: 'syncing' }));
+      setSandboxConfig(prev => ({ ...prev, status: 'active', lastSync: new Date().toISOString().split('T')[0] }));
     } else {
-      setProductionConfig(prev => ({ ...prev, status: 'syncing' }));
+      setProductionConfig(prev => ({ ...prev, status: 'active', lastSync: new Date().toISOString().split('T')[0] }));
     }
 
-    try {
-      // Simulate API sync/validation (in production, this would validate credentials)
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Update environment
-      setCurrentEnvironment(env);
-      localStorage.setItem('lumiq-environment', env);
-      
-      // Update config status
-      if (env === 'sandbox') {
-        setSandboxConfig(prev => ({ 
-          ...prev, 
-          status: 'active',
-          lastSync: new Date().toISOString().split('T')[0]
-        }));
-        toast.success('Switched to Sandbox environment', {
-          icon: '🧪',
-          duration: 3000,
-        });
-      } else {
-        setProductionConfig(prev => ({ 
-          ...prev, 
-          status: 'active',
-          lastSync: new Date().toISOString().split('T')[0]
-        }));
-        toast.success('Switched to Production environment', {
-          icon: '🚀',
-          duration: 3000,
-        });
-      }
-    } catch (error) {
-      // Handle error
-      if (env === 'sandbox') {
-        setSandboxConfig(prev => ({ ...prev, status: 'error' }));
-      } else {
-        setProductionConfig(prev => ({ ...prev, status: 'error' }));
-      }
-      toast.error('Failed to switch environment');
-    } finally {
-      setIsSwitching(false);
-    }
+    // Notify listeners
+    onSwitchCallbackRef.current?.(env);
+
+    setIsSwitching(false);
   }, [currentEnvironment]);
 
   const getApiBaseUrl = useCallback(() => {
@@ -125,6 +112,8 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode }> = ({ childre
         switchEnvironment,
         isSwitching,
         getApiBaseUrl,
+        onSwitchCallback: onSwitchCallbackRef.current,
+        setOnSwitchCallback,
       }}
     >
       {children}

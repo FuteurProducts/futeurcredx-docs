@@ -13,8 +13,8 @@ import {
 import type { Environment, IncidentAlert } from './types';
 
 interface ApiConsoleHeaderProps {
-  environment: Environment;
-  onEnvironmentChange: (env: Environment) => void;
+  currentEnvironment: Environment;
+  switchEnvironment: (env: Environment) => void;
   incidents: IncidentAlert[];
   timeRange: string;
   onTimeRangeChange: (range: string) => void;
@@ -34,8 +34,8 @@ const tenants = [
 ];
 
 export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
-  environment,
-  onEnvironmentChange,
+  currentEnvironment: environment,
+  switchEnvironment: onEnvironmentChange,
   incidents,
   timeRange,
   onTimeRangeChange,
