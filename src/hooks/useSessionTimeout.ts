@@ -4,7 +4,6 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { logger } from '@/utils/logger';
 
 interface UseSessionTimeoutOptions {
@@ -33,7 +32,7 @@ export function useSessionTimeout(
 
   const [isWarning, setIsWarning] = useState(false);
   const [minutesRemaining, setMinutesRemaining] = useState(timeoutMinutes);
-  
+
   const lastActivityRef = useRef<number>(Date.now());
   const warningShownRef = useRef(false);
 
@@ -45,13 +44,11 @@ export function useSessionTimeout(
     setMinutesRemaining(timeoutMinutes);
   }, [timeoutMinutes]);
 
-  // Extend session by refreshing auth
+  // Extend session — Clerk handles token refresh automatically,
+  // so we just reset the activity timer
   const extendSession = useCallback(async () => {
     try {
-      const { error } = await supabase.auth.refreshSession();
-      if (!error) {
-        resetTimer();
-      }
+      resetTimer();
     } catch (err) {
       logger.error('Failed to extend session:', err);
     }
@@ -60,7 +57,7 @@ export function useSessionTimeout(
   // Track user activity
   useEffect(() => {
     const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart'];
-    
+
     const handleActivity = () => {
       resetTimer();
     };
@@ -81,7 +78,7 @@ export function useSessionTimeout(
     const checkInterval = setInterval(() => {
       const elapsed = (Date.now() - lastActivityRef.current) / 1000 / 60; // minutes
       const remaining = Math.max(0, timeoutMinutes - elapsed);
-      
+
       setMinutesRemaining(Math.ceil(remaining));
 
       // Show warning
