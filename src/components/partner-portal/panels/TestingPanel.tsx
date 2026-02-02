@@ -3,11 +3,11 @@
  * Sandbox/production environments, UAT certification flow, test data management
  */
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   FlaskConical, CheckCircle, XCircle, Clock, Play, RotateCcw,
-  FileCheck, ChevronRight, Download, Clipboard
+  FileCheck, ChevronRight, Download, Clipboard, Check
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,11 +18,190 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { useToast } from '@/hooks/use-toast';
 import { mockIntegrationTests, mockCertificationChecklists } from '../mockData';
 
+/** Trigger a file download from in-memory content */
+function downloadFile(content: string, filename: string, mimeType: string) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/** Generate a Postman v2.1 collection for the Lumiq product API endpoints */
+function generatePostmanCollection(): string {
+  const collection = {
+    info: {
+      name: 'Lumiq AI - Product API (Sandbox)',
+      description: 'Sandbox Postman collection for Lumiq AI product API endpoints. Generated from the Partner Portal.',
+      schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json',
+    },
+    auth: {
+      type: 'apikey',
+      apikey: [
+        { key: 'key', value: 'Authorization', type: 'string' },
+        { key: 'value', value: 'Bearer lq_test_sandbox123456789', type: 'string' },
+        { key: 'in', value: 'header', type: 'string' },
+      ],
+    },
+    variable: [
+      { key: 'baseUrl', value: 'https://sandbox.api.lumiq.ai', type: 'string' },
+    ],
+    item: [
+      {
+        name: 'Credit Score',
+        request: {
+          method: 'POST',
+          header: [{ key: 'Content-Type', value: 'application/json' }],
+          url: { raw: '{{baseUrl}}/v1/credit/score', host: ['{{baseUrl}}'], path: ['v1', 'credit', 'score'] },
+          body: { mode: 'raw', raw: JSON.stringify({ smbEntityId: 'ent-123', source: 'experian_biz' }, null, 2) },
+        },
+      },
+      {
+        name: 'Credit Report',
+        request: {
+          method: 'POST',
+          header: [{ key: 'Content-Type', value: 'application/json' }],
+          url: { raw: '{{baseUrl}}/v1/credit/report', host: ['{{baseUrl}}'], path: ['v1', 'credit', 'report'] },
+          body: { mode: 'raw', raw: JSON.stringify({ smbEntityId: 'ent-123', reportType: 'full' }, null, 2) },
+        },
+      },
+      {
+        name: 'Experian Extended Score',
+        request: {
+          method: 'POST',
+          header: [{ key: 'Content-Type', value: 'application/json' }],
+          url: { raw: '{{baseUrl}}/v1/experian/ext/score', host: ['{{baseUrl}}'], path: ['v1', 'experian', 'ext', 'score'] },
+          body: { mode: 'raw', raw: JSON.stringify({ smbEntityId: 'ent-123' }, null, 2) },
+        },
+      },
+      {
+        name: 'Credit Journey',
+        request: {
+          method: 'GET',
+          header: [],
+          url: { raw: '{{baseUrl}}/v1/credit/journey?smbEntityId=ent-123', host: ['{{baseUrl}}'], path: ['v1', 'credit', 'journey'], query: [{ key: 'smbEntityId', value: 'ent-123' }] },
+        },
+      },
+    ],
+  };
+  return JSON.stringify(collection, null, 2);
+}
+
+/** Generate a minimal OpenAPI 3.0 spec for the Lumiq product API endpoints */
+function generateOpenApiSpec(): string {
+  const spec = {
+    openapi: '3.0.3',
+    info: {
+      title: 'Lumiq AI Product API',
+      description: 'Sandbox OpenAPI specification for the Lumiq AI product API. Generated from the Partner Portal.',
+      version: '1.0.0',
+      contact: { name: 'Lumiq AI Support', email: 'support@lumiq.ai' },
+    },
+    servers: [
+      { url: 'https://sandbox.api.lumiq.ai', description: 'Sandbox' },
+      { url: 'https://api.lumiq.ai', description: 'Production' },
+    ],
+    security: [{ BearerAuth: [] }],
+    paths: {
+      '/v1/credit/score': {
+        post: {
+          summary: 'Request a credit score pull',
+          operationId: 'pullCreditScore',
+          tags: ['Credit'],
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { type: 'object', properties: { smbEntityId: { type: 'string' }, source: { type: 'string', enum: ['experian_biz', 'dnb', 'equifax'] } }, required: ['smbEntityId'] } } },
+          },
+          responses: { '202': { description: 'Score pull initiated' }, '400': { description: 'Invalid request' }, '401': { description: 'Unauthorized' } },
+        },
+      },
+      '/v1/credit/report': {
+        post: {
+          summary: 'Request a full credit report',
+          operationId: 'pullCreditReport',
+          tags: ['Credit'],
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { type: 'object', properties: { smbEntityId: { type: 'string' }, reportType: { type: 'string', enum: ['full', 'summary'] } }, required: ['smbEntityId'] } } },
+          },
+          responses: { '202': { description: 'Report generation initiated' }, '400': { description: 'Invalid request' }, '401': { description: 'Unauthorized' } },
+        },
+      },
+      '/v1/experian/ext/score': {
+        post: {
+          summary: 'Request an Experian extended score',
+          operationId: 'pullExperianExtScore',
+          tags: ['Experian'],
+          requestBody: {
+            required: true,
+            content: { 'application/json': { schema: { type: 'object', properties: { smbEntityId: { type: 'string' } }, required: ['smbEntityId'] } } },
+          },
+          responses: { '202': { description: 'Score pull initiated' }, '401': { description: 'Unauthorized' } },
+        },
+      },
+      '/v1/credit/journey': {
+        get: {
+          summary: 'Retrieve credit journey for an entity',
+          operationId: 'getCreditJourney',
+          tags: ['Credit'],
+          parameters: [{ name: 'smbEntityId', in: 'query', required: true, schema: { type: 'string' } }],
+          responses: { '200': { description: 'Credit journey data' }, '404': { description: 'Entity not found' }, '401': { description: 'Unauthorized' } },
+        },
+      },
+    },
+    components: {
+      securitySchemes: {
+        BearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'API Key' },
+      },
+    },
+  };
+  return JSON.stringify(spec, null, 2);
+}
+
 export const TestingPanel: React.FC = () => {
   const { toast } = useToast();
   const [tests, setTests] = useState(mockIntegrationTests);
   const [runningTests, setRunningTests] = useState<Set<string>>(new Set());
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set(['Security Requirements']));
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const handleCopyToClipboard = useCallback(async (text: string, fieldId: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(fieldId);
+      toast({ title: 'Copied!', description: 'Copied to clipboard' });
+      setTimeout(() => setCopiedField(null), 2000);
+    } catch {
+      // Fallback for older browsers or non-HTTPS contexts
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      setCopiedField(fieldId);
+      toast({ title: 'Copied!', description: 'Copied to clipboard' });
+      setTimeout(() => setCopiedField(null), 2000);
+    }
+  }, [toast]);
+
+  const handleDownloadPostman = useCallback(() => {
+    const content = generatePostmanCollection();
+    downloadFile(content, 'lumiq-sandbox-postman-collection.json', 'application/json');
+    toast({ title: 'Download Started', description: 'Postman collection downloaded' });
+  }, [toast]);
+
+  const handleDownloadOpenApi = useCallback(() => {
+    const content = generateOpenApiSpec();
+    downloadFile(content, 'lumiq-sandbox-openapi-spec.json', 'application/json');
+    toast({ title: 'Download Started', description: 'OpenAPI spec downloaded' });
+  }, [toast]);
 
   const handleRunTest = async (testId: string) => {
     setRunningTests(new Set([...runningTests, testId]));
@@ -43,7 +222,7 @@ export const TestingPanel: React.FC = () => {
     }));
     
     setRunningTests(new Set([...runningTests].filter(id => id !== testId)));
-    toast({ title: 'Test Complete', description: 'Test execution finished' });
+    toast({ title: 'Test Complete', description: 'Simulated test execution finished' });
   };
 
   const handleRunAllTests = async () => {
@@ -67,7 +246,7 @@ export const TestingPanel: React.FC = () => {
       setRunningTests(prev => new Set([...prev].filter(id => id !== testId)));
     }
     
-    toast({ title: 'All Tests Complete', description: 'Test suite execution finished' });
+    toast({ title: 'All Tests Complete', description: 'Simulated test suite execution finished' });
   };
 
   const getStatusIcon = (status: string, isRunning: boolean) => {
@@ -210,6 +389,11 @@ export const TestingPanel: React.FC = () => {
                             </div>
                           )}
                           {getStatusBadge(isRunning ? 'in_progress' : test.status)}
+                          {(test.status === 'passed' || test.status === 'failed') && test.lastRunAt && (
+                            <Badge variant="outline" className="text-xs text-muted-foreground border-muted-foreground/30">
+                              Simulated
+                            </Badge>
+                          )}
                           <Button
                             size="sm"
                             variant="ghost"
@@ -341,8 +525,17 @@ export const TestingPanel: React.FC = () => {
                       <code className="text-sm font-mono bg-background px-2 py-1 rounded">
                         lq_test_sandbox123456789
                       </code>
-                      <Button size="icon" variant="ghost" className="h-8 w-8">
-                        <Clipboard className="h-4 w-4" />
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        onClick={() => handleCopyToClipboard('lq_test_sandbox123456789', 'sandbox-api-key')}
+                      >
+                        {copiedField === 'sandbox-api-key' ? (
+                          <Check className="h-4 w-4 text-chart-2" />
+                        ) : (
+                          <Clipboard className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -352,8 +545,17 @@ export const TestingPanel: React.FC = () => {
                       <code className="text-sm font-mono bg-background px-2 py-1 rounded">
                         portfolio-sandbox-001
                       </code>
-                      <Button size="icon" variant="ghost" className="h-8 w-8">
-                        <Clipboard className="h-4 w-4" />
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        onClick={() => handleCopyToClipboard('portfolio-sandbox-001', 'sandbox-portfolio-id')}
+                      >
+                        {copiedField === 'sandbox-portfolio-id' ? (
+                          <Check className="h-4 w-4 text-chart-2" />
+                        ) : (
+                          <Clipboard className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -362,11 +564,11 @@ export const TestingPanel: React.FC = () => {
 
               {/* Download Options */}
               <div className="flex gap-2">
-                <Button variant="outline">
+                <Button variant="outline" onClick={handleDownloadPostman}>
                   <Download className="h-4 w-4 mr-2" />
                   Download Postman Collection
                 </Button>
-                <Button variant="outline">
+                <Button variant="outline" onClick={handleDownloadOpenApi}>
                   <Download className="h-4 w-4 mr-2" />
                   Download OpenAPI Spec
                 </Button>

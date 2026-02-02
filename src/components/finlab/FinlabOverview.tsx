@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import { useEnvironment } from "@/contexts/EnvironmentContext";
@@ -90,6 +91,7 @@ const topBusinesses = DEMO_BUSINESSES.slice(0, 5).map((biz, idx) => {
 
 export const FinlabOverview: React.FC = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { currentEnvironment } = useEnvironment();
   const { portfolioId } = usePortfolio();
   const [, setIsRefreshing] = useState(false);
@@ -156,11 +158,13 @@ export const FinlabOverview: React.FC = () => {
 
   const handleViewBusiness = (id: string) => {
     const biz = DEMO_BUSINESSES.find(b => b.id === id);
-    toast({ title: "Business selected", description: `Viewing ${biz?.name || id} — navigate to Customers tab for full details.` });
+    toast({ title: "Business selected", description: `Viewing ${biz?.name || id} in Customers.` });
+    navigate('/dashboard?tab=customer');
   };
 
   const handleViewAllBusinesses = () => {
-    toast({ title: "View all businesses", description: "Navigate to the Customers tab for the full portfolio list." });
+    toast({ title: "View all businesses", description: "Opening full portfolio list." });
+    navigate('/dashboard?tab=customer');
   };
 
   return (
@@ -249,7 +253,10 @@ export const FinlabOverview: React.FC = () => {
         >
           <RecentActivityFeed
             activities={RECENT_ACTIVITIES}
-            onViewAll={() => toast({ title: "Activity log", description: "Navigate to Audit Logs in Settings for the full activity stream." })}
+            onViewAll={() => {
+              toast({ title: "Activity log", description: "Opening Audit Logs in Settings." });
+              navigate('/dashboard?tab=settings');
+            }}
             className="shadow-lg bg-card rounded-2xl border border-border"
           />
         </motion.div>
@@ -266,7 +273,10 @@ export const FinlabOverview: React.FC = () => {
           <WebhookEventsCard
             events={WEBHOOK_EVENTS}
             stats={WEBHOOK_STATS}
-            onViewLogs={() => toast({ title: "Webhook logs", description: "Navigate to Partner Portal → Webhooks for full delivery logs." })}
+            onViewLogs={() => {
+              toast({ title: "Webhook logs", description: "Opening Partner Portal webhook logs." });
+              navigate('/dashboard?tab=partner-portal');
+            }}
             className="shadow-lg bg-card rounded-2xl border border-border"
           />
         </motion.div>

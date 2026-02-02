@@ -4,6 +4,12 @@ import { motion } from 'framer-motion'
 import { useUser, useAuth } from '@/contexts/AuthContext'
 import SignOutButton from '@/components/SignOutButton'
 import { ApiConsole } from '@/components/api-console';
+import {
+  Home, Lightbulb, FileText, Eye, Briefcase,
+  KeyRound, Link2, TrendingUp, Package, Building2,
+  BarChart3, SlidersHorizontal, Bell,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 import type { ApiStats, ApiKey } from '@/types';
 import Analytics from '@/pages/Dashboard/Analytics';
@@ -23,6 +29,8 @@ import { ConnectedEnvironmentToggle } from '@/components/widgets';
 import { DataSourceBadge } from '@/components/shared/DataSourceBadge';
 import { logger } from '@/utils/logger';
 import { useToast } from '@/hooks/use-toast';
+import { useTheme } from '@/contexts/ThemeContext';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 
 // Import Finlab Overview
 import { FinlabOverview } from '@/components/finlab';
@@ -39,37 +47,6 @@ const withBaseUrl = (rawSrc: string) => {
   return rawSrc;
 };
 
-// Simple Icon component
-const Icon = ({ name, className = "" }: { name: string; className?: string }) => {
-  const iconMap: Record<string, string> = {
-    'arrow-left': '/icons/chevron-right.svg',
-    'arrow-right': '/icons/chevron-right.svg',
-    'search': '/icons/search-md.svg',
-    'bell': '/icons/recording-01.svg',
-    'menu': '/icons/sliders-04.svg',
-    'home': '/icons/home-smile.svg',
-    'key': '/icons/lock-03.svg',
-    'chart': '/icons/disc-02.svg',
-    'users': '/icons/building-01.svg',
-    'file': '/icons/file-02.svg',
-    'close': '/icons/plus-square.svg',
-    'shield': '/icons/check.svg',
-  };
-
-  const rawSrc = name.startsWith('/') ? name : (iconMap[name] || '/icons/file-02.svg');
-  const src = withBaseUrl(rawSrc);
-  const shouldApplyFilter = !rawSrc.startsWith('/icons-black/');
-
-  return (
-    <img
-      src={src}
-      alt={name}
-      className={`w-5 h-5 ${className}`}
-      style={shouldApplyFilter ? { filter: 'brightness(0) opacity(0.7)' } : undefined}
-    />
-  );
-};
-
 interface ApiKeyStats {
   keyId: string;
   keyName: string;
@@ -79,20 +56,20 @@ interface ApiKeyStats {
   environment: string;
 }
 
-// Navigation items
-const navigation = [
-  { id: 'overview', title: 'Dashboard', icon: 'home' },
-  { id: 'credit-intel', title: 'Credit Intelligence', icon: '/icons-black/idea.svg' },
-  { id: 'underwriting', title: 'Underwriting', icon: '/icons-black/document.svg' },
-  { id: 'risk', title: 'Risk', icon: '/icons-black/Binoculars.svg' },
-  { id: 'customer', title: 'Customer', icon: '/icons-black/Briefcase.svg' },
-  { id: 'api-keys', title: 'API Console', icon: 'key' },
-  { id: 'partner-portal', title: 'Partner Portal', icon: '/icons-black/connection.svg' },
-  { id: 'analytics', title: 'Analytics', icon: '/icons-black/growth.svg' },
-  { id: 'products', title: 'Products', icon: 'file' },
-  { id: 'users', title: 'Users', icon: 'users' },
-  { id: 'reports', title: 'Reports', icon: '/icons-black/presentations.svg' },
-  { id: 'settings', title: 'Settings', icon: '/icons/sliders-04.svg' },
+// Navigation items — Lucide React icon components
+const navigation: { id: string; title: string; icon: LucideIcon }[] = [
+  { id: 'overview', title: 'Dashboard', icon: Home },
+  { id: 'credit-intel', title: 'Credit Intelligence', icon: Lightbulb },
+  { id: 'underwriting', title: 'Underwriting', icon: FileText },
+  { id: 'risk', title: 'Risk', icon: Eye },
+  { id: 'customer', title: 'Customer', icon: Briefcase },
+  { id: 'api-keys', title: 'API Console', icon: KeyRound },
+  { id: 'partner-portal', title: 'Partner Portal', icon: Link2 },
+  { id: 'analytics', title: 'Analytics', icon: TrendingUp },
+  { id: 'products', title: 'Products', icon: Package },
+  { id: 'users', title: 'Users', icon: Building2 },
+  { id: 'reports', title: 'Reports', icon: BarChart3 },
+  { id: 'settings', title: 'Settings', icon: SlidersHorizontal },
 ];
 
 
@@ -103,6 +80,8 @@ const Dashboard: React.FC = () => {
   const { user } = useUser();
   const { getToken } = useAuth();
   const { toast } = useToast();
+  const { resolvedTheme, setTheme } = useTheme();
+  const { currentEnvironment, switchEnvironment } = useEnvironment();
 
   // State management
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
@@ -595,7 +574,7 @@ const Dashboard: React.FC = () => {
               `}
             >
               <div className={`w-6 h-6 flex items-center justify-center shrink-0 ${activeTab === link.id ? '' : 'opacity-75'}`}>
-                <Icon name={link.icon} />
+                <link.icon className="w-5 h-5" />
               </div>
               {!sidebarCollapsed && (
                 <>
@@ -616,8 +595,24 @@ const Dashboard: React.FC = () => {
 
       {/* ======================= MAIN CONTENT ======================= */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        {/* Sandbox Environment Banner */}
+        {currentEnvironment === 'sandbox' && (
+          <div className="sticky top-0 z-[110] bg-amber-500 text-white px-4 py-1.5 flex items-center justify-center gap-2 text-sm font-medium shrink-0">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <span>SANDBOX MODE — Test data only. API calls are not billed.</span>
+            <button
+              onClick={() => switchEnvironment('production')}
+              className="ml-2 underline underline-offset-2 hover:opacity-80 transition-opacity text-sm font-semibold"
+            >
+              Switch to Production
+            </button>
+          </div>
+        )}
+
         {/* Header - Fixed/Sticky */}
-        <header 
+        <header
           className="sticky top-0 z-[100] bg-muted shrink-0"
         >
           <div 
@@ -770,21 +765,35 @@ const Dashboard: React.FC = () => {
                           }}
                           className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors text-left"
                         >
-                          <Icon name="bell" className="w-6 h-6" />
+                          <Bell className="w-6 h-6 text-muted-foreground" />
                           <span className="text-[0.9375rem] font-semibold text-foreground">Notifications</span>
                         </button>
 
                         {/* Dark Mode Toggle */}
-                        <div className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-muted transition-colors cursor-pointer">
-            <div className="flex items-center gap-4">
-                            <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                            </svg>
-                            <span className="text-[0.9375rem] font-semibold text-foreground">Dark</span>
-            </div>
-                          <div className="w-12 h-7 bg-muted rounded-full relative cursor-pointer">
-                            <div className="absolute left-1 top-1 w-5 h-5 bg-card rounded-full shadow transition-transform" />
-              </div>
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+                          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'); }}
+                          className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-muted transition-colors cursor-pointer"
+                        >
+                          <div className="flex items-center gap-4">
+                            {resolvedTheme === 'dark' ? (
+                              <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                              </svg>
+                            ) : (
+                              <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            )}
+                            <span className="text-[0.9375rem] font-semibold text-foreground">
+                              {resolvedTheme === 'dark' ? 'Dark' : 'Light'}
+                            </span>
+                          </div>
+                          <div className={`w-12 h-7 rounded-full relative cursor-pointer transition-colors ${resolvedTheme === 'dark' ? 'bg-primary' : 'bg-muted'}`}>
+                            <div className={`absolute left-1 top-1 w-5 h-5 bg-card rounded-full shadow transition-transform ${resolvedTheme === 'dark' ? 'translate-x-5' : 'translate-x-0'}`} />
+                          </div>
                         </div>
 
                         {/* Log out */}

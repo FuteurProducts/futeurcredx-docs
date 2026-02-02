@@ -112,10 +112,12 @@ export const WebhooksPanel: React.FC = () => {
     toast({ title: 'Webhook Deleted', description: 'The webhook endpoint has been removed' });
   };
 
+  const [expandedDeliveryId, setExpandedDeliveryId] = useState<string | null>(null);
+
   const handleTestWebhook = (webhook: WebhookEndpoint) => {
     toast({
       title: 'Test Event Sent',
-      description: `A test event was sent to ${webhook.url}`,
+      description: `Simulated in sandbox mode -- no HTTP request was made to ${webhook.url}`,
     });
   };
 
@@ -368,39 +370,62 @@ export const WebhooksPanel: React.FC = () => {
             <CardContent className="pt-6">
               <div className="space-y-3">
                 {deliveries.map((delivery) => (
-                  <div key={delivery.id} className="p-4 rounded-lg bg-muted/50 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      {getDeliveryStatusIcon(delivery.status)}
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline">{delivery.eventType}</Badge>
-                          <span className="text-sm text-muted-foreground">
-                            {new Date(delivery.createdAt).toLocaleString()}
-                          </span>
-                        </div>
-                        <div className="text-sm text-muted-foreground mt-1">
-                          {delivery.status === 'delivered' ? (
-                            <span className="text-chart-2">
-                              Delivered in {delivery.latencyMs}ms (HTTP {delivery.responseCode})
+                  <div key={delivery.id} className="rounded-lg bg-muted/50 overflow-hidden">
+                    <div className="p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        {getDeliveryStatusIcon(delivery.status)}
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline">{delivery.eventType}</Badge>
+                            <span className="text-sm text-muted-foreground">
+                              {new Date(delivery.createdAt).toLocaleString()}
                             </span>
-                          ) : delivery.status === 'failed' ? (
-                            <span className="text-destructive">
-                              Failed after {delivery.attempts} attempts (HTTP {delivery.responseCode})
-                            </span>
-                          ) : delivery.status === 'retrying' ? (
-                            <span className="text-yellow-500">
-                              Retrying... Attempt {delivery.attempts}/{5}
-                            </span>
-                          ) : (
-                            <span>Pending</span>
-                          )}
+                          </div>
+                          <div className="text-sm text-muted-foreground mt-1">
+                            {delivery.status === 'delivered' ? (
+                              <span className="text-chart-2">
+                                Delivered in {delivery.latencyMs}ms (HTTP {delivery.responseCode})
+                              </span>
+                            ) : delivery.status === 'failed' ? (
+                              <span className="text-destructive">
+                                Failed after {delivery.attempts} attempts (HTTP {delivery.responseCode})
+                              </span>
+                            ) : delivery.status === 'retrying' ? (
+                              <span className="text-yellow-500">
+                                Retrying... Attempt {delivery.attempts}/{5}
+                              </span>
+                            ) : (
+                              <span>Pending</span>
+                            )}
+                          </div>
                         </div>
                       </div>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => setExpandedDeliveryId(
+                          expandedDeliveryId === delivery.id ? null : delivery.id
+                        )}
+                      >
+                        <Code className="h-4 w-4 mr-2" />
+                        {expandedDeliveryId === delivery.id ? 'Hide Payload' : 'View Payload'}
+                      </Button>
                     </div>
-                    <Button size="sm" variant="ghost">
-                      <Code className="h-4 w-4 mr-2" />
-                      View Payload
-                    </Button>
+                    {expandedDeliveryId === delivery.id && (
+                      <div className="px-4 pb-4">
+                        <pre className="p-3 bg-background rounded-lg text-xs font-mono overflow-x-auto border">
+                          {JSON.stringify(delivery.payload, null, 2)}
+                        </pre>
+                        {delivery.responseBody && (
+                          <div className="mt-2">
+                            <span className="text-xs text-muted-foreground font-medium">Response:</span>
+                            <pre className="mt-1 p-3 bg-background rounded-lg text-xs font-mono overflow-x-auto border">
+                              {delivery.responseBody}
+                            </pre>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

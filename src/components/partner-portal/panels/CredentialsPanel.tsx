@@ -3,11 +3,11 @@
  * Full API key lifecycle: generation, scoping, IP whitelisting, mTLS, rotation
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Key, Copy, Eye, EyeOff, Plus, Trash2, Shield, Clock, RefreshCw,
-  Lock, Globe, Calendar, Settings
+  Lock, Globe, Calendar, Settings, Info
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -35,12 +35,44 @@ const AVAILABLE_SCOPES = [
   { id: 'webhooks:manage', label: 'Manage Webhooks', category: 'Webhooks' },
 ];
 
+const CREDENTIALS_STORAGE_KEY = 'lumiqai-sandbox-credentials';
+
+function loadCredentialsFromStorage(): ApiCredential[] | null {
+  try {
+    const stored = localStorage.getItem(CREDENTIALS_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored) as ApiCredential[];
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch {
+    // Corrupted storage; fall through to default
+  }
+  return null;
+}
+
+function saveCredentialsToStorage(credentials: ApiCredential[]) {
+  try {
+    localStorage.setItem(CREDENTIALS_STORAGE_KEY, JSON.stringify(credentials));
+  } catch {
+    // Storage full or unavailable; fail silently
+  }
+}
+
 export const CredentialsPanel: React.FC = () => {
   const { toast } = useToast();
-  const [credentials, setCredentials] = useState<ApiCredential[]>(mockCredentials);
+  const [credentials, setCredentials] = useState<ApiCredential[]>(
+    () => loadCredentialsFromStorage() ?? mockCredentials
+  );
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [revealedKeys, setRevealedKeys] = useState<Set<string>>(new Set());
   const [, setSelectedCredential] = useState<ApiCredential | null>(null);
+
+  // Persist credentials to localStorage whenever they change
+  useEffect(() => {
+    saveCredentialsToStorage(credentials);
+  }, [credentials]);
   
   // Create form state
   const [newKeyName, setNewKeyName] = useState('');
@@ -52,13 +84,14 @@ export const CredentialsPanel: React.FC = () => {
   const [rotationDays, setRotationDays] = useState(90);
   const [expirationDays, setExpirationDays] = useState<number | null>(null);
 
-  const handleCreateCredential = () => {
+  const handleCreateCredential = useCallback(() => {
     if (!newKeyName.trim()) {
       toast({ title: 'Error', description: 'Please enter a credential name', variant: 'destructive' });
       return;
     }
 
-    const prefix = newKeyEnv === 'production' ? 'lq_prod_' : 'lq_test_';
+    // All client-generated keys use lq_test_ prefix to make it clear they are sandbox-only
+    const prefix = newKeyEnv === 'production' ? 'lq_test_prod_' : 'lq_test_';
     const randomPart = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     const fullKey = prefix + randomPart;
     const maskedKey = prefix + '****' + randomPart.slice(-4);
@@ -90,12 +123,12 @@ export const CredentialsPanel: React.FC = () => {
     setCredentials([newCredential, ...credentials]);
     setRevealedKeys(new Set([newCredential.id]));
     resetForm();
-    
-    toast({ 
-      title: 'Credential Created', 
-      description: 'Copy your key now - it won\'t be shown again!' 
+
+    toast({
+      title: 'Sandbox Test Credential Created',
+      description: 'This is a sandbox test key (lq_test_ prefix). Copy it now -- it will be masked on next page load.'
     });
-  };
+  }, [newKeyName, newKeyEnv, newKeyAuthMethod, selectedScopes, ipWhitelist, expirationDays, enableRotation, rotationDays, credentials, toast]);
 
   const resetForm = () => {
     setNewKeyName('');
@@ -361,6 +394,16 @@ export const CredentialsPanel: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Sandbox Notice */}
+      <div className="flex items-start gap-3 p-3 rounded-lg bg-chart-4/5 border border-chart-4/20">
+        <Info className="h-4 w-4 text-chart-4 mt-0.5 shrink-0" />
+        <p className="text-sm text-muted-foreground">
+          <span className="font-medium text-chart-4">Sandbox Mode</span> -- All credentials generated here are client-side test keys with the{' '}
+          <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono">lq_test_</code> prefix.
+          They are persisted in your browser's local storage and are not valid for production API calls.
+        </p>
+      </div>
 
       {/* Credentials List */}
       <Tabs defaultValue="all" className="space-y-4">

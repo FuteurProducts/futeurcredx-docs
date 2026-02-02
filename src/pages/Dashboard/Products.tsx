@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/AuthContext';
 
 // ============================================
@@ -99,26 +100,26 @@ const products: Product[] = [
   },
 ];
 
-// Color classes for cards
+// Color classes for cards — semantic tokens for dark mode + white-label theming
 const colorClasses = {
   yellow: {
-    bg: "bg-[#FFF8E7]",
-    border: "border-[#FFE4A0]",
-    iconBg: "bg-[#FBA94B]",
+    bg: "bg-warning/10",
+    border: "border-warning/30",
+    iconBg: "bg-warning",
   },
   purple: {
-    bg: "bg-[#F5EDFA]",
-    border: "border-[#D4B8E8]",
-    iconBg: "bg-[#B981DA]",
+    bg: "bg-purple-500/10 dark:bg-purple-400/10",
+    border: "border-purple-300/50 dark:border-purple-500/30",
+    iconBg: "bg-purple-500 dark:bg-purple-400",
   },
   green: {
-    bg: "bg-[#E8F9EE]",
-    border: "border-[#A8E6C1]",
-    iconBg: "bg-[#32AE60]",
+    bg: "bg-success/10",
+    border: "border-success/30",
+    iconBg: "bg-success",
   },
   blue: {
-    bg: "bg-[#E8F4FF]",
-    border: "border-[#A0D4FF]",
+    bg: "bg-primary/10",
+    border: "border-primary/30",
     iconBg: "bg-primary",
   },
 };
@@ -161,6 +162,7 @@ const ProductIcon = ({ name, className = "" }: { name: string; className?: strin
 
 const Products = () => {
   const { user } = useUser();
+  const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [mode, setMode] = useState({ id: "0", title: "Expert mode" });
   const [searchQuery, setSearchQuery] = useState("");
@@ -269,7 +271,7 @@ const Products = () => {
             <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-1">
               {selectedProduct.details.features.map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 p-3 bg-muted rounded-xl">
-                  <div className="w-5 h-5 rounded-full bg-[#32AE60] flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-success flex items-center justify-center shrink-0">
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
@@ -297,10 +299,16 @@ const Products = () => {
             
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <button className="flex-1 h-11 bg-foreground text-white rounded-xl font-semibold text-[0.875rem] hover:bg-foreground/90 transition-colors">
+              <button
+                onClick={() => navigate('/dashboard?tab=api-keys')}
+                className="flex-1 h-11 bg-foreground text-white rounded-xl font-semibold text-[0.875rem] hover:bg-foreground/90 transition-colors"
+              >
                 Try in Sandbox
               </button>
-              <button className="flex-1 h-11 bg-muted text-foreground rounded-xl font-semibold text-[0.875rem] hover:bg-muted transition-colors">
+              <button
+                onClick={() => window.open('https://docs.lumiq.ai', '_blank')}
+                className="flex-1 h-11 bg-muted text-foreground rounded-xl font-semibold text-[0.875rem] hover:bg-muted transition-colors"
+              >
                 View Documentation
               </button>
             </div>
@@ -361,17 +369,26 @@ const Products = () => {
 
         {/* Quick Links */}
         <div className="space-y-2">
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+          <button
+            onClick={() => setSelectedProduct(products.find(p => p.id === 'credit-score') || null)}
+            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
+          >
             <div className="text-[0.9375rem] font-semibold text-foreground">
               What's the best API for credit scores?
             </div>
           </button>
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+          <button
+            onClick={() => setSelectedProduct(products.find(p => p.id === 'credit-score') || null)}
+            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
+          >
             <div className="text-[0.9375rem] font-semibold text-foreground">
               How do I integrate the Credit API?
             </div>
           </button>
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+          <button
+            onClick={() => setSelectedProduct(products.find(p => p.id === 'credit-report') || null)}
+            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
+          >
             <div className="text-[0.9375rem] font-semibold text-foreground">
               Can you explain the pricing model?
             </div>
@@ -379,7 +396,13 @@ const Products = () => {
         </div>
 
         {/* Browse All Button */}
-        <button className="w-full h-12 mt-6 bg-foreground text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-foreground/90 transition-colors">
+        <button
+          onClick={() => {
+            setSearchQuery('');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="w-full h-12 mt-6 bg-foreground text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-foreground/90 transition-colors"
+        >
           Browse All Products
         </button>
       </div>
