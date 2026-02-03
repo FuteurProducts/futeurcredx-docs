@@ -8,11 +8,12 @@ interface FeatureImportanceChartProps {
   features: FeatureImportance[];
 }
 
+// Use design system semantic colors
 const categoryColors: Record<string, string> = {
   'Financial Health': 'bg-info',
   'Credit Behavior': 'bg-purple-500',
   'External Data': 'bg-cyan-500',
-  'Market Factors': 'bg-orange-500',
+  'Market Factors': 'bg-warning',
   'Business Profile': 'bg-success',
 };
 

@@ -35,6 +35,9 @@ import { useEnvironment } from '@/contexts/EnvironmentContext';
 // Import Finlab Overview
 import { FinlabOverview } from '@/components/finlab';
 
+// Import Command Palette
+import { CommandPalette } from '@/components/command-palette';
+
 const withBaseUrl = (rawSrc: string) => {
   // For public assets, ensure they work in both dev and production
   if (rawSrc.startsWith('/')) {
@@ -500,6 +503,8 @@ const Dashboard: React.FC = () => {
 
     return (
     <div className="flex h-screen overflow-hidden bg-muted">
+      {/* Command Palette - Global keyboard shortcut Cmd/Ctrl+K */}
+      <CommandPalette onNavigate={setActiveTab} />
       {/* ======================= SIDEBAR ======================= */}
       {/* Mobile Overlay */}
       {sidebarOpen && (
@@ -677,6 +682,19 @@ const Dashboard: React.FC = () => {
               {/* Sandbox/Production Toggle */}
               <div className="relative z-[200] pointer-events-auto">
                 <ConnectedEnvironmentToggle variant="minimal" />
+              </div>
+
+              {/* Command Palette Keyboard Hint */}
+              <div
+                className="hidden md:flex items-center gap-1 text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors px-2 py-1 rounded-lg hover:bg-card/50"
+                onClick={() => {
+                  // Dispatch keyboard event to open command palette
+                  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+                }}
+                title="Open command palette"
+              >
+                <kbd className="bg-muted px-1.5 py-0.5 rounded text-[10px] font-medium border border-border">Cmd</kbd>
+                <kbd className="bg-muted px-1.5 py-0.5 rounded text-[10px] font-medium border border-border">K</kbd>
               </div>
 
               {/* Divider */}

@@ -11,8 +11,11 @@ import {
   MoreHorizontal,
   ChevronRight,
   ChevronUp,
-  ChevronDown
+  ChevronDown,
+  FileText
 } from 'lucide-react';
+import { ApplicationTableSkeleton, SkeletonCard } from '@/components/ui/skeletons';
+import { EmptyState } from '@/components/ui/empty-state';
 
 export interface PipelineApplication {
   id: string;
@@ -41,6 +44,11 @@ interface ApplicationPipelineViewProps {
   onViewDetails: (app: PipelineApplication) => void;
   viewMode: 'table' | 'cards';
   applicationStatuses?: Record<string, string>;
+  isLoading?: boolean;
+  emptyStateAction?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
 const getStatusBadge = (status: string) => {
@@ -113,6 +121,8 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
   onViewDetails,
   viewMode,
   applicationStatuses = {},
+  isLoading = false,
+  emptyStateAction,
 }) => {
   const [sortField, setSortField] = useState<string>('compositeScore');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
@@ -168,6 +178,35 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
       </div>
     </th>
   );
+
+  // Loading state
+  if (isLoading) {
+    if (viewMode === 'cards') {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} className="h-[280px]" />
+          ))}
+        </div>
+      );
+    }
+    return <ApplicationTableSkeleton rows={5} />;
+  }
+
+  // Empty state
+  if (sortedApplications.length === 0) {
+    return (
+      <EmptyState
+        icon={FileText}
+        title="No applications found"
+        description="There are no applications matching your current filters. Try adjusting the filter criteria or wait for new applications."
+        action={emptyStateAction}
+        variant="card"
+        size="md"
+        className="min-h-[300px]"
+      />
+    );
+  }
 
   if (viewMode === 'cards') {
     return (

@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  AreaChart, Area, BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
+import {
+  AreaChart, Area, BarChart, Bar, Line, PieChart, Pie, Cell,
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, ComposedChart
 } from 'recharts';
+import { cn } from '@/lib/utils';
+import {
+  ChartContainer,
+  TimePeriodSelector,
+  StatChange,
+  type TimePeriod,
+} from '@/components/ui/chart-utils';
 
 // Types for real API data
 interface ApiKey {
@@ -217,14 +224,15 @@ const durationOptions = [
   { id: "2", title: "Year" },
 ];
 
+// Professional tooltip with design system colors
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-5 md:p-3 bg-[var(--n-surface-1)] border border-[var(--n-stroke)] rounded-xl shadow-lg">
-        <div className="mb-0.5 text-[0.75rem] text-[var(--n-secondary)] opacity-75">
+      <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
+        <div className="mb-1 text-xs font-medium text-muted-foreground">
           {label}
         </div>
-        <div className="text-[1.5rem] md:text-[1.25rem] font-semibold text-[var(--n-primary)]">
+        <div className="text-xl font-semibold text-foreground">
           ${payload[0].value.toLocaleString()}
         </div>
       </div>
@@ -235,7 +243,15 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export const BalanceChart: React.FC = () => {
   const [time, setTime] = useState(durationOptions[0]);
-  const isDarkMode = false; // You can add theme detection here
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('1M');
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Simulate loading on period change
+  const handlePeriodChange = (period: TimePeriod) => {
+    setIsLoading(true);
+    setTimePeriod(period);
+    setTimeout(() => setIsLoading(false), 500);
+  };
 
   return (
     <NCard
@@ -245,67 +261,79 @@ export const BalanceChart: React.FC = () => {
       setOption={setTime}
       options={durationOptions}
     >
-      <div className="flex items-end md:mt-4">
-        <span className="text-[3rem] md:text-[2rem] font-semibold text-[var(--n-primary)]">
-          $3,200.80
-        </span>
-        <span className="ml-1 text-[1.125rem] font-semibold text-[var(--n-green)]">
-          +85.66%
-        </span>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-end">
+          <span className="text-[3rem] md:text-[2rem] font-semibold text-foreground">
+            $3,200.80
+          </span>
+          <StatChange value={85.66} className="ml-3 mb-2" />
+        </div>
+        <TimePeriodSelector
+          value={timePeriod}
+          onChange={handlePeriodChange}
+          periods={['7D', '1M', '3M', '1Y']}
+        />
       </div>
-      <div className="h-[14rem] -mb-2">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            width={730}
-            height={250}
-            data={chartBalanceData}
-            margin={{ top: 0, right: 6, left: 6, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#9CC5FF" stopOpacity={0.13} />
-                <stop offset="95%" stopColor="#B9D6FF" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis
-              dataKey="name"
-              tickLine={false}
-              stroke={isDarkMode ? "#272B30" : "#EFEFEF"}
-              tick={{
-                fontSize: 12,
-                fontWeight: "500",
-                opacity: 0.75,
-                fill: "#6F767E",
-              }}
-              dy={4}
-            />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{
-                stroke: isDarkMode ? "#272B30" : "#EFEFEF",
-                strokeWidth: 1,
-                fill: "transparent",
-              }}
-              wrapperStyle={{ outline: "none" }}
-            />
-            <Area
-              type="monotone"
-              dataKey="price"
-              stroke="#0C68E9"
-              fillOpacity={1}
-              fill="url(#balanceGradient)"
-              isAnimationActive={true}
-              animationDuration={1500}
-              animationEasing="ease-out"
-              activeDot={{
-                r: 6,
-                stroke: isDarkMode ? "#1A1D1F" : "#FCFCFC",
-                strokeWidth: 3,
-              }}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+      <ChartContainer isLoading={isLoading} height="14rem">
+        <div className="h-[14rem] -mb-2">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={chartBalanceData}
+              margin={{ top: 10, right: 6, left: 6, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="hsl(var(--border))"
+                opacity={0.5}
+                vertical={false}
+              />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                axisLine={false}
+                tick={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  fill: 'hsl(var(--muted-foreground))',
+                }}
+                dy={4}
+              />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{
+                  stroke: 'hsl(var(--border))',
+                  strokeWidth: 1,
+                  fill: 'transparent',
+                }}
+                wrapperStyle={{ outline: 'none' }}
+              />
+              <Area
+                type="monotone"
+                dataKey="price"
+                stroke="hsl(var(--primary))"
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#balanceGradient)"
+                isAnimationActive={true}
+                animationDuration={1200}
+                animationEasing="ease-out"
+                activeDot={{
+                  r: 6,
+                  stroke: 'hsl(var(--background))',
+                  strokeWidth: 3,
+                  fill: 'hsl(var(--primary))',
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </ChartContainer>
     </NCard>
   );
 };
@@ -395,7 +423,7 @@ export const TopTokens: React.FC = () => {
         {topTokensData.map((item) => (
           <div
             key={item.id}
-            className="flex items-center h-20 px-3 rounded-2xl border border-transparent transition-colors hover:border-[var(--n-stroke)] md:px-2 cursor-pointer"
+            className="flex items-center h-20 px-3 rounded-2xl border border-transparent transition-all duration-200 hover:border-border hover:bg-muted/30 md:px-2 cursor-pointer"
           >
             <div className="mr-5 md:mr-2">
               <img
@@ -405,37 +433,52 @@ export const TopTokens: React.FC = () => {
               />
             </div>
             <div className="min-w-[6rem]">
-              <div className="text-[0.9375rem] font-semibold text-[var(--n-primary)]">
+              <div className="text-[0.9375rem] font-semibold text-foreground">
                 {item.currencyFull}
               </div>
-              <div className="text-[0.8125rem] text-[var(--n-secondary)] opacity-75">
+              <div className="text-[0.8125rem] text-muted-foreground">
                 {item.currencyShort}
               </div>
             </div>
             <div className="w-18 h-9 mx-auto md:w-16 flex-1">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                  width={300}
-                  height={100}
+                <AreaChart
                   data={item.itemsCharts}
                   margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 >
-                  <Line
-                    type="linear"
+                  <defs>
+                    <linearGradient id={`tokenGradient-${item.id}`} x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor={item.percent > 0 ? 'hsl(var(--success))' : 'hsl(var(--destructive))'}
+                        stopOpacity={0.2}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor={item.percent > 0 ? 'hsl(var(--success))' : 'hsl(var(--destructive))'}
+                        stopOpacity={0}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    type="monotone"
                     dataKey="price"
-                    dot={false}
-                    stroke={item.percent > 0 ? "#32AE60" : "#F04D1A"}
+                    stroke={item.percent > 0 ? 'hsl(var(--success))' : 'hsl(var(--destructive))'}
                     strokeWidth={2}
+                    fill={`url(#tokenGradient-${item.id})`}
                     isAnimationActive={true}
-                    animationDuration={1500}
+                    animationDuration={1200}
                     animationEasing="ease-out"
                   />
-                </LineChart>
+                </AreaChart>
               </ResponsiveContainer>
             </div>
             <div className="min-w-[5.5rem] -mb-1.5 text-right">
-              <div className="text-[0.9375rem] font-semibold text-[var(--n-primary)]">{item.price}</div>
-              <div className={`text-[0.8125rem] font-semibold ${item.percent > 0 ? 'text-[var(--n-green)]' : 'text-[var(--n-red)]'}`}>
+              <div className="text-[0.9375rem] font-semibold text-foreground">{item.price}</div>
+              <div className={cn(
+                'text-[0.8125rem] font-semibold',
+                item.percent > 0 ? 'text-success' : 'text-destructive'
+              )}>
                 {item.percent > 0 ? '+' : ''}{item.percent}%
               </div>
             </div>
@@ -640,11 +683,11 @@ const balanceDurationOptions = [
 const BarTooltip = ({ active, payload, label: _label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-5 md:p-3 bg-[var(--n-surface-1)] border border-[var(--n-stroke)] rounded-xl shadow-lg">
-        <div className="flex mb-0.5 text-[0.75rem] text-[var(--n-secondary)] opacity-75">
+      <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
+        <div className="mb-1 text-xs font-medium text-muted-foreground">
           28 Feb 2024
         </div>
-        <div className="text-[1.5rem] md:text-[1.25rem] font-semibold text-[var(--n-primary)]">
+        <div className="text-xl font-semibold text-foreground">
           ${payload[0].value.toLocaleString()}
         </div>
       </div>
@@ -655,7 +698,14 @@ const BarTooltip = ({ active, payload, label: _label }: any) => {
 
 export const TotalBalanceChart: React.FC = () => {
   const [time, setTime] = useState(balanceDurationOptions[0]);
-  const isDarkMode = false;
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('7D');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handlePeriodChange = (period: TimePeriod) => {
+    setIsLoading(true);
+    setTimePeriod(period);
+    setTimeout(() => setIsLoading(false), 500);
+  };
 
   return (
     <NCard
@@ -665,57 +715,70 @@ export const TotalBalanceChart: React.FC = () => {
       setOption={setTime}
       options={balanceDurationOptions}
     >
-      <div className="flex items-end mt-0.5 md:mt-2">
-        <span className="text-[3rem] md:text-[2rem] font-semibold text-[var(--n-primary)]">
-          $3,200.80
-        </span>
-        <span className="ml-1 text-[1.125rem] font-semibold text-[var(--n-green)]">
-          +85.66%
-        </span>
+      <div className="flex items-center justify-between mt-0.5 md:mt-2">
+        <div className="flex items-end">
+          <span className="text-[3rem] md:text-[2rem] font-semibold text-foreground">
+            $3,200.80
+          </span>
+          <StatChange value={85.66} className="ml-3 mb-2" />
+        </div>
+        <TimePeriodSelector
+          value={timePeriod}
+          onChange={handlePeriodChange}
+          periods={['7D', '1M', '3M']}
+        />
       </div>
-      <div className="h-[17.5rem] mt-12 -mb-6 md:mt-4 md:-mb-2">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            width={150}
-            height={40}
-            data={chartTotalBalanceData}
-            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-            barSize={64}
-          >
-            <CartesianGrid
-              horizontal={false}
-              stroke={isDarkMode ? "#272B30" : "#EFEFEF"}
-            />
-            <XAxis
-              dataKey="name"
-              tickLine={false}
-              stroke={isDarkMode ? "#272B30" : "#EFEFEF"}
-              tick={{
-                fontSize: 12,
-                fontWeight: "500",
-                opacity: 0.75,
-                fill: "#6F767E",
-              }}
-              dy={4}
-            />
-            <Tooltip
-              content={<BarTooltip />}
-              cursor={{
-                fill: isDarkMode ? "#222628" : "#F6F6F6",
-              }}
-              wrapperStyle={{ outline: "none" }}
-            />
-            <Bar dataKey="price" fill="#B5E4CA" radius={2} isAnimationActive={true} animationDuration={1500} animationEasing="ease-out">
-              {chartTotalBalanceData.map((_entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={index > 2 ? "#B5E4CA" : "#0C68E9"}
-                />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <ChartContainer isLoading={isLoading} height="17.5rem">
+        <div className="h-[17.5rem] mt-8 -mb-6 md:mt-4 md:-mb-2">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={chartTotalBalanceData}
+              margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+              barSize={64}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="hsl(var(--border))"
+                opacity={0.5}
+                horizontal={false}
+              />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                axisLine={false}
+                tick={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  fill: 'hsl(var(--muted-foreground))',
+                }}
+                dy={4}
+              />
+              <Tooltip
+                content={<BarTooltip />}
+                cursor={{
+                  fill: 'hsl(var(--muted))',
+                  opacity: 0.5,
+                }}
+                wrapperStyle={{ outline: 'none' }}
+              />
+              <Bar
+                dataKey="price"
+                radius={[6, 6, 0, 0]}
+                isAnimationActive={true}
+                animationDuration={1200}
+                animationEasing="ease-out"
+              >
+                {chartTotalBalanceData.map((_entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={index > 2 ? 'hsl(var(--success) / 0.4)' : 'hsl(var(--primary))'}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </ChartContainer>
     </NCard>
   );
 };
@@ -735,32 +798,24 @@ const chartBestToBuyData = [
 ];
 
 export const BestToBuy: React.FC = () => {
-  const Icon = ({ name, className = "" }: { name: string; className?: string }) => {
-    const iconMap: Record<string, string> = {
-      'refresh': '/icons/loading-01.svg',
-    };
-    return (
-      <img 
-        src={iconMap[name] || '/icons/file-02.svg'} 
-        alt={name}
-        className={`w-5 h-5 ${className}`}
-        style={{ filter: 'brightness(0) opacity(0.6)' }}
-      />
-    );
-  };
+  const RefreshIcon = () => (
+    <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+    </svg>
+  );
 
   return (
     <NCard
       className="card-sidebar"
       title="Best to buy"
       rightContent={
-        <button className="group w-9 h-9 border-2 border-[var(--n-stroke)] rounded-xl transition-colors hover:bg-[var(--n-stroke)]">
-          <Icon name="refresh" />
+        <button className="group w-9 h-9 flex items-center justify-center border-2 border-border rounded-xl transition-all duration-200 hover:bg-muted hover:border-muted-foreground/20">
+          <RefreshIcon />
         </button>
       }
     >
       <div className="pt-6">
-        <div className="mb-3 text-[2rem] font-semibold text-[var(--n-primary)]">
+        <div className="mb-3 text-[2rem] font-semibold text-foreground">
           $3,326.18
         </div>
         <div className="flex items-center">
@@ -771,42 +826,38 @@ export const BestToBuy: React.FC = () => {
               className="w-6 h-6 rounded-full"
             />
           </div>
-          <div className="text-[0.9375rem] font-semibold text-[var(--n-primary)]">
-            Ethereum <span className="text-[var(--n-tertiary)]">ETH</span>
+          <div className="text-[0.9375rem] font-semibold text-foreground">
+            Ethereum <span className="text-muted-foreground">ETH</span>
           </div>
-          <span className="ml-2 text-[0.8125rem] font-semibold text-[var(--n-green)]">
-            +12.32%
-          </span>
+          <StatChange value={12.32} className="ml-2 text-sm" />
         </div>
         <div className="h-[9.5rem] my-2 -mx-6 md:-mx-4">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
-              width={730}
-              height={250}
               data={chartBestToBuyData}
               margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
             >
               <defs>
                 <linearGradient id="bestToBuyGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#32AE60" stopOpacity={0.15} />
-                  <stop offset="95%" stopColor="#32AE60" stopOpacity={0} />
+                  <stop offset="5%" stopColor="hsl(var(--success))" stopOpacity={0.2} />
+                  <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <Area
-                type="linear"
+                type="monotone"
                 dataKey="price"
-                stroke="#32AE60"
+                stroke="hsl(var(--success))"
                 strokeWidth={2}
                 fillOpacity={1}
                 fill="url(#bestToBuyGradient)"
                 isAnimationActive={true}
-                animationDuration={1500}
+                animationDuration={1200}
                 animationEasing="ease-out"
               />
             </AreaChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex items-center mb-8 text-[0.8125rem] text-[var(--n-secondary)] md:mb-6">
+        <div className="flex items-center mb-8 text-sm text-muted-foreground md:mb-6">
           <div className="mr-3">
             <img
               src="/lumiqlogo.png"
@@ -817,10 +868,10 @@ export const BestToBuy: React.FC = () => {
           Method: LSTM, Accuracy: 87%
         </div>
         <div className="flex space-x-2">
-          <button className="btn-secondary flex-1 px-2 h-12 bg-[var(--n-brand)] text-white rounded-full font-semibold hover:bg-blue-600 transition-colors">
+          <button className="btn-secondary flex-1 px-2 h-12 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-colors">
             Smart trade
           </button>
-          <button className="btn-gray flex-1 px-2 h-12 bg-[var(--n-surface-2)] text-[var(--n-primary)] rounded-full font-semibold hover:bg-[var(--n-stroke)] transition-colors">
+          <button className="btn-gray flex-1 px-2 h-12 bg-muted text-foreground rounded-full font-semibold hover:bg-muted/80 transition-colors">
             Set Alert
           </button>
         </div>
@@ -846,12 +897,12 @@ interface ApiUsageOverviewProps {
 const ApiUsageTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="p-4 bg-white border border-border rounded-xl shadow-lg">
-        <div className="mb-0.5 text-[0.75rem] text-muted-foreground">
+      <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
+        <div className="mb-1 text-xs font-medium text-muted-foreground">
           {label}
         </div>
-        <div className="text-[1.5rem] font-semibold text-foreground">
-          {payload[0].value.toLocaleString()}
+        <div className="text-xl font-semibold text-foreground">
+          {payload[0].value.toLocaleString()} calls
         </div>
       </div>
     );
@@ -859,20 +910,20 @@ const ApiUsageTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export const ApiUsageOverview: React.FC<ApiUsageOverviewProps> = ({ 
-  totalCalls, 
+export const ApiUsageOverview: React.FC<ApiUsageOverviewProps> = ({
+  totalCalls,
   growth,
   isLoading,
   monthlyData
 }) => {
   const [time, setTime] = useState({ id: "0", title: "All time" });
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('1M');
   const timeOptions = [
     { id: "0", title: "All time" },
     { id: "1", title: "This month" },
     { id: "2", title: "This year" },
   ];
 
-  // Default monthly data if not provided
   const chartData = monthlyData || [
     { name: "Oct", calls: Math.round(totalCalls * 0.4) },
     { name: "Nov", calls: Math.round(totalCalls * 0.6) },
@@ -882,7 +933,7 @@ export const ApiUsageOverview: React.FC<ApiUsageOverviewProps> = ({
     { name: "Mar", calls: totalCalls },
   ];
 
-  const growthPercent = growth || 85.66; // Default growth percentage
+  const growthPercent = growth || 85.66;
 
   return (
     <NCard
@@ -892,82 +943,79 @@ export const ApiUsageOverview: React.FC<ApiUsageOverviewProps> = ({
       setOption={setTime}
       options={timeOptions}
     >
-      {isLoading ? (
-        <div className="animate-pulse">
-          <div className="h-12 bg-muted rounded w-48 mb-2"></div>
-          <div className="h-40 bg-muted rounded"></div>
-        </div>
-      ) : (
-        <>
-          <div className="flex items-end md:mt-4">
+      <ChartContainer isLoading={isLoading} height="18rem">
+        <div className="flex items-center justify-between md:mt-4 mb-2">
+          <div className="flex items-end">
             <span className="text-[3rem] md:text-[2rem] font-semibold text-foreground">
               {totalCalls.toLocaleString()}
             </span>
-            <span className={`ml-3 text-[1.125rem] font-semibold flex items-center gap-1 ${growthPercent > 0 ? 'text-success' : 'text-destructive'}`}>
-              <svg 
-                className={`w-3.5 h-3.5 ${growthPercent < 0 ? 'rotate-180' : ''}`}
-                fill="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 4l8 8h-6v8h-4v-8H4l8-8z" />
-              </svg>
-              {Math.abs(growthPercent)}%
-            </span>
+            <StatChange value={growthPercent} className="ml-3 mb-2" />
           </div>
-          <div className="h-[14rem] -mb-2 mt-4">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
-                data={chartData}
-                margin={{ top: 0, right: 6, left: 6, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient id="apiUsageGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#9CC5FF" stopOpacity={0.13} />
-                    <stop offset="95%" stopColor="#B9D6FF" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis
-                  dataKey="name"
-                  tickLine={false}
-                  stroke="#EFEFEF"
-                  tick={{
-                    fontSize: 12,
-                    fontWeight: "500",
-                    opacity: 0.75,
-                    fill: "#6F767E",
-                  }}
-                  dy={4}
-                />
-                <Tooltip
-                  content={<ApiUsageTooltip />}
-                  cursor={{
-                    stroke: "#EFEFEF",
-                    strokeWidth: 1,
-                    fill: "transparent",
-                  }}
-                  wrapperStyle={{ outline: "none" }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="calls"
-                  stroke="#0C68E9"
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#apiUsageGradient)"
-                  isAnimationActive={true}
-                  animationDuration={1500}
-                  animationEasing="ease-out"
-                  activeDot={{
-                    r: 6,
-                    stroke: "#FCFCFC",
-                    strokeWidth: 3,
-                  }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </>
-      )}
+          <TimePeriodSelector
+            value={timePeriod}
+            onChange={setTimePeriod}
+            periods={['7D', '1M', '3M', '1Y']}
+          />
+        </div>
+        <div className="h-[14rem] -mb-2 mt-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart
+              data={chartData}
+              margin={{ top: 10, right: 6, left: 6, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="apiUsageGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="hsl(var(--border))"
+                opacity={0.5}
+                vertical={false}
+              />
+              <XAxis
+                dataKey="name"
+                tickLine={false}
+                axisLine={false}
+                tick={{
+                  fontSize: 12,
+                  fontWeight: 500,
+                  fill: 'hsl(var(--muted-foreground))',
+                }}
+                dy={4}
+              />
+              <Tooltip
+                content={<ApiUsageTooltip />}
+                cursor={{
+                  stroke: 'hsl(var(--border))',
+                  strokeWidth: 1,
+                  fill: 'transparent',
+                }}
+                wrapperStyle={{ outline: 'none' }}
+              />
+              <Area
+                type="monotone"
+                dataKey="calls"
+                stroke="hsl(var(--primary))"
+                strokeWidth={2}
+                fillOpacity={1}
+                fill="url(#apiUsageGradient)"
+                isAnimationActive={true}
+                animationDuration={1200}
+                animationEasing="ease-out"
+                activeDot={{
+                  r: 6,
+                  stroke: 'hsl(var(--background))',
+                  strokeWidth: 3,
+                  fill: 'hsl(var(--primary))',
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      </ChartContainer>
     </NCard>
   );
 };
@@ -1479,11 +1527,13 @@ export const CreditIntelligenceDashboard: React.FC = () => {
 
 // Conversion Lift Over Time Chart
 export const ConversionLiftChart: React.FC = () => {
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('1M');
+
   return (
-    <NCard 
+    <NCard
       className="flex-1"
       rightContent={
-        <div className="flex items-center gap-2 px-4 py-2 bg-[#32AE60] text-white rounded-full text-[0.875rem] font-semibold">
+        <div className="flex items-center gap-2 px-4 py-2 bg-success text-success-foreground rounded-full text-sm font-semibold">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
           </svg>
@@ -1491,97 +1541,114 @@ export const ConversionLiftChart: React.FC = () => {
         </div>
       }
     >
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-1">
-          <svg className="w-5 h-5 text-[#32AE60]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
-          <h3 className="text-[1.125rem] font-semibold text-foreground">Conversion Lift Over Time</h3>
+      <div className="flex items-start justify-between mb-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <svg className="w-5 h-5 text-success" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+            <h3 className="text-lg font-semibold text-foreground">Conversion Lift Over Time</h3>
+          </div>
+          <p className="text-sm text-muted-foreground">Comparing conversion rates with and without LUMIQ AI integration</p>
         </div>
-        <p className="text-[0.8125rem] text-muted-foreground">Comparing conversion rates with and without LUMIQ AI integration</p>
+        <TimePeriodSelector
+          value={timePeriod}
+          onChange={setTimePeriod}
+          periods={['7D', '1M', '3M']}
+        />
       </div>
-      
+
       {/* Legend */}
       <div className="flex items-center gap-6 mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#9CA3AF]" />
-          <span className="text-[0.8125rem] text-muted-foreground">Without LUMIQ AI</span>
+          <div className="w-3 h-3 rounded-full bg-muted-foreground" />
+          <span className="text-sm text-muted-foreground">Without LUMIQ AI</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-[#32AE60]" />
-          <span className="text-[0.8125rem] font-medium text-[#32AE60]">With LUMIQ AI</span>
+          <div className="w-3 h-3 rounded-full bg-success" />
+          <span className="text-sm font-medium text-success">With LUMIQ AI</span>
         </div>
       </div>
-      
+
       {/* Chart */}
       <div className="h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={conversionLiftData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorWith" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#32AE60" stopOpacity={0.3}/>
-                <stop offset="95%" stopColor="#32AE60" stopOpacity={0.05}/>
+                <stop offset="5%" stopColor="hsl(var(--success))" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="hsl(var(--success))" stopOpacity={0.05}/>
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" vertical={false} />
-            <XAxis 
-              dataKey="date" 
+            <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.5} vertical={false} />
+            <XAxis
+              dataKey="date"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6F767E' }}
+              tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                border: '1px solid #EFEFEF', 
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            <Tooltip
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                return (
+                  <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
+                    <div className="mb-2 text-xs font-medium text-muted-foreground">{label}</div>
+                    {payload.map((entry: any) => (
+                      <div key={entry.dataKey} className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                          <span className="text-sm text-muted-foreground">
+                            {entry.dataKey === 'with' ? 'With LUMIQ AI' : 'Without LUMIQ AI'}
+                          </span>
+                        </div>
+                        <span className="text-sm font-semibold text-foreground">{entry.value?.toFixed(1)}%</span>
+                      </div>
+                    ))}
+                  </div>
+                );
               }}
-              formatter={(value, name) => [
-                value !== undefined ? `${Number(value).toFixed(1)}%` : '-',
-                name === 'with' ? 'With LUMIQ AI' : 'Without LUMIQ AI'
-              ]}
+              wrapperStyle={{ outline: 'none' }}
             />
-            <Area 
-              type="monotone" 
-              dataKey="without" 
-              stroke="#9CA3AF" 
+            <Area
+              type="monotone"
+              dataKey="without"
+              stroke="hsl(var(--muted-foreground))"
               strokeDasharray="5 5"
               fill="transparent"
               strokeWidth={2}
               isAnimationActive={true}
-              animationDuration={1500}
+              animationDuration={1200}
             />
-            <Area 
-              type="monotone" 
-              dataKey="with" 
-              stroke="#32AE60" 
+            <Area
+              type="monotone"
+              dataKey="with"
+              stroke="hsl(var(--success))"
               fill="url(#colorWith)"
               strokeWidth={2}
               isAnimationActive={true}
-              animationDuration={1500}
+              animationDuration={1200}
             />
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      
+
       {/* Stats Footer */}
       <div className="flex justify-between items-center pt-4 mt-4 border-t border-border">
         <div className="text-center">
-          <div className="text-[0.75rem] text-muted-foreground">Baseline Avg</div>
-          <div className="text-[1.5rem] font-semibold text-foreground">12.5%</div>
+          <div className="text-xs text-muted-foreground">Baseline Avg</div>
+          <div className="text-2xl font-semibold text-foreground">12.5%</div>
         </div>
         <div className="text-center">
-          <div className="text-[0.75rem] text-muted-foreground">With LUMIQ AI Avg</div>
-          <div className="text-[1.5rem] font-semibold text-success">17.3%</div>
+          <div className="text-xs text-muted-foreground">With LUMIQ AI Avg</div>
+          <div className="text-2xl font-semibold text-success">17.3%</div>
         </div>
         <div className="text-center">
-          <div className="text-[0.75rem] text-muted-foreground">Peak Conversion</div>
-          <div className="text-[1.5rem] font-semibold text-success">21.8%</div>
+          <div className="text-xs text-muted-foreground">Peak Conversion</div>
+          <div className="text-2xl font-semibold text-success">21.8%</div>
         </div>
         <div className="text-center">
-          <div className="text-[0.75rem] text-muted-foreground">Avg Lift</div>
-          <div className="text-[1.5rem] font-semibold text-[#0C68E9]">+38.4%</div>
+          <div className="text-xs text-muted-foreground">Avg Lift</div>
+          <div className="text-2xl font-semibold text-primary">+38.4%</div>
         </div>
       </div>
     </NCard>

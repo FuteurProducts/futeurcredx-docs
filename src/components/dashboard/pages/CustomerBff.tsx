@@ -22,8 +22,10 @@ import {
   type CustomerEntity,
 } from '@/components/enterprise/customer';
 import { PortfolioSelector } from '@/components/shared';
-import { Loader2, AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircle, RefreshCw, Users, UserX, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { CustomerTableSkeleton, SkeletonCard, SkeletonPanel, MetricSkeleton } from '@/components/ui/skeletons';
+import { EmptyState } from '@/components/ui/empty-state';
 
 import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
 import { withFallback } from '@/utils/withFallback';
@@ -353,12 +355,45 @@ const CustomerBff: React.FC = () => {
     };
   })() : null;
 
-  // Loading state
+  // Loading state - Full page skeleton
   if (portfolioLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-2 text-muted-foreground">Loading portfolio...</span>
+      <div className="space-y-6">
+        {/* Header skeleton */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="h-10 w-40 bg-muted animate-pulse rounded-lg" />
+            <div className="h-4 w-32 bg-muted animate-pulse rounded" />
+          </div>
+          <div className="h-9 w-24 bg-muted animate-pulse rounded-lg" />
+        </div>
+
+        {/* Lifecycle skeleton */}
+        <div className="flex gap-4">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="flex-1 h-20 bg-muted/50 animate-pulse rounded-xl" />
+          ))}
+        </div>
+
+        {/* Summary skeleton */}
+        <div className="grid grid-cols-4 gap-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <MetricSkeleton key={i} />
+          ))}
+        </div>
+
+        {/* Main content skeleton */}
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 xl:col-span-5">
+            <CustomerTableSkeleton rows={6} />
+          </div>
+          <div className="col-span-12 xl:col-span-4">
+            <SkeletonCard className="h-[400px]" />
+          </div>
+          <div className="col-span-12 xl:col-span-3">
+            <SkeletonPanel contentRows={3} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -366,11 +401,14 @@ const CustomerBff: React.FC = () => {
   // No portfolio selected
   if (!portfolioId) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 gap-4">
-        <AlertCircle className="h-12 w-12 text-muted-foreground" />
-        <p className="text-muted-foreground">Select a portfolio to view customers</p>
-        <PortfolioSelector />
-      </div>
+      <EmptyState
+        icon={Building2}
+        title="No portfolio selected"
+        description="Select a portfolio to view and manage your customer relationships"
+        variant="card"
+        size="lg"
+        className="min-h-[400px]"
+      />
     );
   }
 
@@ -426,14 +464,25 @@ const CustomerBff: React.FC = () => {
         {/* Left: Customer List Table */}
         <div className="col-span-12 xl:col-span-5">
           {isLoading && customers.length === 0 ? (
-            <div className="bg-card border border-border rounded-xl p-8 flex items-center justify-center">
-              <Loader2 className="h-6 w-6 animate-spin text-primary" />
-              <span className="ml-2 text-muted-foreground">Loading customers...</span>
-            </div>
+            <CustomerTableSkeleton rows={6} />
           ) : customers.length === 0 ? (
-            <div className="bg-card border border-border rounded-xl p-8 text-center">
-              <p className="text-muted-foreground">No customers found in this portfolio</p>
-            </div>
+            <EmptyState
+              icon={searchQuery ? UserX : Users}
+              title={searchQuery ? 'No customers match your search' : 'No customers found'}
+              description={
+                searchQuery
+                  ? `No results for "${searchQuery}". Try adjusting your search terms.`
+                  : 'Add your first customer or adjust filters to see results.'
+              }
+              action={
+                searchQuery
+                  ? { label: 'Clear search', onClick: () => setSearchQuery(''), variant: 'outline' }
+                  : undefined
+              }
+              variant="card"
+              size="sm"
+              className="min-h-[300px]"
+            />
           ) : (
             <CustomerListTable
               customers={customers}
@@ -459,11 +508,14 @@ const CustomerBff: React.FC = () => {
           {engagementData ? (
             <CustomerEngagementPanel customer={engagementData} />
           ) : (
-            <div className="bg-card border border-border rounded-xl p-6 h-full flex items-center justify-center">
-              <p className="text-sm text-muted-foreground text-center">
-                Select a customer to view engagement details
-              </p>
-            </div>
+            <EmptyState
+              icon={Users}
+              title="Select a customer"
+              description="Click on a customer from the list to view their engagement details and relationship health"
+              variant="card"
+              size="sm"
+              className="h-full min-h-[300px]"
+            />
           )}
         </div>
 

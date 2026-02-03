@@ -37,6 +37,7 @@ import {
   type MigrationMatrix,
   type StressImpact,
 } from '@/components/enterprise/risk';
+import { RiskDashboardSkeleton } from '@/components/ui/skeletons';
 
 // ============================================
 // MOCK DATA FOR ENTERPRISE RISK COMPONENTS
@@ -305,7 +306,7 @@ const stressImpacts: StressImpact[] = [
 
 const Risk: React.FC = () => {
   const { toast } = useToast();
-  const { portfolioId } = usePortfolio();
+  const { portfolioId, isLoading: portfolioLoading } = usePortfolio();
 
   // State for global controls
   const [portfolioFilter, setPortfolioFilter] = useState<PortfolioFilter>(initialPortfolioFilter);
@@ -317,10 +318,12 @@ const Risk: React.FC = () => {
   const [queueItems, setQueueItems] = useState(ewsQueueItems);
   const [ewsToggles, setEwsToggles] = useState(ewsIndicators);
   const [liveRiskKPIs, setLiveRiskKPIs] = useState(riskKPIs);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch live risk data
   const fetchRiskData = useCallback(async () => {
     if (!portfolioId) return;
+    setIsLoading(true);
     try {
       const [summaryResult, ewsResult] = await Promise.all([
         getRiskSummary(portfolioId),
@@ -361,6 +364,8 @@ const Risk: React.FC = () => {
       }
     } catch {
       // Keep fallback data
+    } finally {
+      setIsLoading(false);
     }
   }, [portfolioId]);
 
@@ -381,6 +386,11 @@ const Risk: React.FC = () => {
   const handleExport = () => {
     toast({ title: "Export started", description: "Risk Intelligence report is being generated as PDF." });
   };
+
+  // Show loading skeleton while fetching initial data
+  if (portfolioLoading || (isLoading && liveRiskKPIs === riskKPIs)) {
+    return <RiskDashboardSkeleton />;
+  }
 
   return (
     <div className="space-y-6 pb-8">
