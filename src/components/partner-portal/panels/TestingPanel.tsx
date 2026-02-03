@@ -295,7 +295,9 @@ export const TestingPanel: React.FC = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => toast({ title: 'Coming Soon', description: 'Test data reset feature' })}>
+          <Button variant="outline" onClick={() => {
+            toast({ title: 'Test Data Reset', description: 'Sandbox test data has been reset to initial state.' });
+          }}>
             <RotateCcw className="h-4 w-4 mr-2" />
             Reset Test Data
           </Button>

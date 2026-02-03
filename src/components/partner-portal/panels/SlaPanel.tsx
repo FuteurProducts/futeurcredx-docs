@@ -107,7 +107,7 @@ export const SlaPanel: React.FC = () => {
               Status Page
             </a>
           </Button>
-          <Button onClick={() => toast({ title: 'Coming Soon', description: 'Support ticket creation' })}>
+          <Button onClick={() => toast({ title: 'Create Support Ticket', description: 'For production support, email support@lumiq.ai or call the 24/7 hotline.' })}>
             <Plus className="h-4 w-4 mr-2" />
             New Ticket
           </Button>

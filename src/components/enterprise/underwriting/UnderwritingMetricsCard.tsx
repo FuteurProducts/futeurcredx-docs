@@ -84,14 +84,14 @@ export const UnderwritingMetricsCard: React.FC<UnderwritingMetricsCardProps> = (
                 )}
                 
                 {metric.sparkline && (
-                  <div className="absolute bottom-0 left-0 right-0 h-10 opacity-30">
+                  <div className="absolute bottom-0 left-0 right-0 h-10 opacity-30 overflow-hidden">
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={metric.sparkline}>
                         <Area
                           type="monotone"
                           dataKey="value"
                           stroke="transparent"
-                          fill="#3b82f6"
+                          fill="hsl(var(--info))"
                         />
                       </AreaChart>
                     </ResponsiveContainer>
@@ -134,8 +134,8 @@ export const DEFAULT_UNDERWRITING_METRICS: MetricData[] = [
     change: 12.5,
     changeLabel: 'vs yesterday',
     icon: Zap,
-    color: 'bg-purple-500',
-    bgColor: 'bg-purple-50',
+    color: 'bg-accent-foreground',
+    bgColor: 'bg-accent',
   },
   {
     value: '6.3%',

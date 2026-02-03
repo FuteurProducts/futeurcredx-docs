@@ -260,9 +260,20 @@ const UnderwritingAssistant: React.FC = () => {
       {/* Portfolio Segments */}
       <div>
         <h2 className="text-sm font-semibold text-foreground mb-3">Portfolio Segments</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 overflow-hidden">
           {PORTFOLIO_SEGMENTS.map(segment => (
-            <PortfolioSegmentCard key={segment.id} segment={segment} />
+            <PortfolioSegmentCard
+              key={segment.id}
+              segment={segment}
+              onClick={() => {
+                // Filter applications by segment and show toast
+                setFilters(prev => ({
+                  ...prev,
+                  customerSegment: [segment.id],
+                }));
+                toast.success(`Filtered to ${segment.name} segment`);
+              }}
+            />
           ))}
         </div>
       </div>
