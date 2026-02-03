@@ -2,7 +2,7 @@ import { Code, Book, Download, ExternalLink, Sparkles, Terminal } from 'lucide-r
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 const sdks = [
   { name: 'Node.js SDK', version: 'v2.4.1', downloads: '12.5K', icon: '🟢' },
@@ -19,11 +19,8 @@ const quickLinks = [
 ];
 
 export function DeveloperHub() {
-  const { toast } = useToast();
-
   const handleLinkClick = () => {
-    toast({
-      title: 'Documentation portal available during pilot engagement',
+    toast.info('Documentation portal available during pilot engagement', {
       description: 'Contact your account representative for access.',
     });
   };
@@ -111,7 +108,7 @@ export function DeveloperHub() {
           <div className="flex items-center gap-4">
             <Badge variant="default" className="font-code">v2.1.0</Badge>
             <Badge variant="outline">Stable</Badge>
-            <Button size="sm" variant="outline" className="font-code">
+            <Button size="sm" variant="outline" className="font-code" onClick={() => toast.info('Changelog available during pilot engagement')}>
               <Terminal className="w-3 h-3 mr-2" />
               View Changelog
             </Button>

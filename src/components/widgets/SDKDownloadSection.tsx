@@ -246,7 +246,7 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
           className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
         >
-          <FileCode className="w-4 h-4 text-purple-600" />
+          <FileCode className="w-4 h-4 text-[var(--primary-04)]" />
           <span className="text-sm font-medium text-foreground">API Reference</span>
           <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
         </div>

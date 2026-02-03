@@ -1,4 +1,5 @@
 import { ChevronDown, Car, Gamepad2, PiggyBank, Gift } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import FinlabCard from "./FinlabCard";
 
 interface PlanItem {
@@ -63,7 +64,10 @@ export const PocketPlansCard = ({
     
     {more && (
       <div className="mt-10 text-center">
-        <button className="inline-flex items-center font-medium text-muted-foreground hover:text-foreground transition-colors">
+        <button
+          className="inline-flex items-center font-medium text-muted-foreground hover:text-foreground transition-colors"
+          onClick={() => toast({ title: "Load more", description: "Additional pocket plans coming soon" })}
+        >
           Load more <ChevronDown className="w-4 h-4 ml-1.5" />
         </button>
       </div>

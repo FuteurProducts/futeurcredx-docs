@@ -71,7 +71,7 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({
           <div className="p-2 bg-primary/10 rounded-xl">
             <Clock className="h-5 w-5 text-primary" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground">Recent Activity</h3>
+          <h3 className="text-h6 font-semibold text-foreground">Recent Activity</h3>
         </div>
         {onViewAll && (
           <button
@@ -103,10 +103,10 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="text-sm font-medium text-foreground truncate">
+                    <p className="text-body-2 font-medium text-foreground truncate">
                       {activity.title}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-0.5">
+                    <p className="text-caption text-muted-foreground mt-0.5">
                       {activity.description}
                     </p>
                     {activity.businessName && (
@@ -128,7 +128,7 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({
       {activities.length === 0 && (
         <div className="text-center py-8">
           <Clock className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-          <p className="text-sm text-muted-foreground">No recent activity</p>
+          <p className="text-body-2 text-muted-foreground">No recent activity</p>
         </div>
       )}
     </div>

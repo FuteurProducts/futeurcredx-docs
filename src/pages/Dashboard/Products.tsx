@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 
 // ============================================
 // PRODUCTS DATA (like Chase Business Cards)
@@ -108,9 +109,9 @@ const colorClasses = {
     iconBg: "bg-warning",
   },
   purple: {
-    bg: "bg-purple-500/10 dark:bg-purple-400/10",
-    border: "border-purple-300/50 dark:border-purple-500/30",
-    iconBg: "bg-purple-500 dark:bg-purple-400",
+    bg: "bg-[var(--primary-04)]/10",
+    border: "border-[var(--primary-04)]/30",
+    iconBg: "bg-[var(--primary-04)]",
   },
   green: {
     bg: "bg-success/10",
@@ -299,18 +300,19 @@ const Products = () => {
             
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <button
+              <Button
                 onClick={() => navigate('/dashboard?tab=api-keys')}
-                className="flex-1 h-11 bg-foreground text-white rounded-xl font-semibold text-[0.875rem] hover:bg-foreground/90 transition-colors"
+                className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
               >
                 Try in Sandbox
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="outline"
                 onClick={() => window.open('https://docs.lumiq.ai', '_blank')}
-                className="flex-1 h-11 bg-muted text-foreground rounded-xl font-semibold text-[0.875rem] hover:bg-muted transition-colors"
+                className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
               >
                 View Documentation
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -396,15 +398,15 @@ const Products = () => {
         </div>
 
         {/* Browse All Button */}
-        <button
+        <Button
           onClick={() => {
             setSearchQuery('');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="w-full h-12 mt-6 bg-foreground text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-foreground/90 transition-colors"
+          className="w-full h-12 mt-6 rounded-xl font-semibold text-[0.9375rem]"
         >
           Browse All Products
-        </button>
+        </Button>
       </div>
     </div>
   );

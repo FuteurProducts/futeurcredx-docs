@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* Existing HSL-based tokens */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -48,9 +49,62 @@
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.03);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.03);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.03);
+
+    /* ================================================
+       Core 2 Design Tokens
+       ================================================ */
+
+    /* Shade Scale */
+    --shade-01: #141414;
+    --shade-02: #101010;
+    --shade-03: #191919;
+    --shade-04: #222222;
+    --shade-05: #4c4c4c;
+    --shade-06: #727272;
+    --shade-07: #7b7b7b;
+    --shade-08: #e2e2e2;
+    --shade-09: #f1f1f1;
+    --shade-10: #fdfdfd;
+
+    /* Primary Colors */
+    --primary-01: #2a85ff;
+    --primary-02: #00a656;
+    --primary-03: #ff381c;
+    --primary-04: #7f5fff;
+    --primary-05: #ff9d34;
+
+    /* Secondary/Pastel Colors */
+    --secondary-01: #ffbc99;
+    --secondary-02: #cabdff;
+    --secondary-03: #b1e5fc;
+    --secondary-04: #b5e4ca;
+    --secondary-05: #ffd88d;
+
+    /* Semantic Backgrounds */
+    --b-surface1: var(--shade-09);
+    --b-surface2: var(--shade-10);
+    --b-surface3: rgba(241, 241, 241, 0.5);
+    --b-highlight: #f9f9f9;
+    --b-depth: #f9f9f9;
+
+    /* Semantic Text */
+    --t-primary: var(--shade-02);
+    --t-secondary: var(--shade-06);
+    --t-tertiary: var(--shade-07);
+
+    /* Semantic Strokes */
+    --s-border: var(--shade-10);
+    --s-subtle: rgba(123, 123, 123, 0.1);
+    --s-stroke2: var(--shade-08);
+
+    /* Shadows */
+    --shadow-widget: 0px 5px 1.5px -4px rgba(8, 8, 8, 0.09), 0px 6px 4px -4px rgba(8, 8, 8, 0.05);
+    --shadow-depth: 0px 2.15px 0.5px -2px rgba(0, 0, 0, 0.25), 0px 24px 24px -16px rgba(8, 8, 8, 0.04), 0px 6px 13px 0px rgba(8, 8, 8, 0.03), 0px 6px 4px -4px rgba(8, 8, 8, 0.05), 0px 5px 1.5px -4px rgba(8, 8, 8, 0.09);
+    --shadow-dropdown: 0px 0px 10px 0px rgba(0, 0, 0, 0.05), 0px 24px 24px -16px rgba(8, 8, 8, 0.04), 0px 6px 13px 0px rgba(8, 8, 8, 0.03);
   }
 
   .dark {
+    /* Existing dark mode HSL tokens */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
@@ -94,6 +148,28 @@
     --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.15), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+    /* ================================================
+       Core 2 Dark Mode Overrides
+       ================================================ */
+
+    /* Dark mode overrides */
+    --b-surface1: var(--shade-02);
+    --b-surface2: var(--shade-03);
+    --b-surface3: rgba(16, 16, 16, 0.5);
+    --b-highlight: var(--shade-04);
+    --b-depth: #1d1d1d;
+
+    --t-primary: var(--shade-09);
+    --t-secondary: var(--shade-07);
+    --t-tertiary: var(--shade-06);
+
+    --s-border: #272727;
+    --s-subtle: #1e1e1e;
+    --s-stroke2: #282828;
+
+    /* Dark mode shadows with inset glow */
+    --shadow-widget: 0px 5px 1.5px -4px rgba(8, 8, 8, 0.5), 0px 6px 4px -4px rgba(8, 8, 8, 0.05), inset 0 0 0 1.5px rgba(229, 229, 229, 0.04);
   }
 }
 
@@ -112,6 +188,31 @@
   .glass-card {
     @apply bg-card/80 backdrop-blur-sm border border-border/80;
     box-shadow: var(--shadow-xs);
+  }
+
+  /* Core 2 Utility Classes */
+  .card {
+    @apply mb-3 p-3 rounded-3xl bg-card shadow-[var(--shadow-widget)];
+  }
+
+  .label {
+    @apply inline-flex items-center h-7 px-2 rounded-lg text-sm font-semibold;
+  }
+
+  .label-green {
+    @apply border border-[#00A656]/15 bg-[#00A656]/5 text-[#00A656];
+  }
+
+  .label-red {
+    @apply border border-[#FF381C]/15 bg-[#FF381C]/5 text-[#FF381C];
+  }
+
+  .label-yellow {
+    @apply border border-[#EF9D0E]/15 bg-[#EF9D0E]/5 text-[#EF9D0E];
+  }
+
+  .label-purple {
+    @apply border border-[#7F5FFF]/15 bg-[#7F5FFF]/5 text-[#7F5FFF];
   }
 }
 
@@ -141,4 +242,3 @@
 .animate-pulse-subtle {
   animation: pulse-subtle 2s ease-in-out infinite;
 }
-

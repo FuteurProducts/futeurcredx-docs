@@ -62,7 +62,7 @@ const gaugeData = [
   { name: "Excellent", value: 150 },
 ];
 
-const GAUGE_COLORS = ["#EF4444", "#F59E0B", "#8B5CF6", "#10B981"];
+const GAUGE_COLORS = ["var(--primary-03)", "var(--primary-05)", "var(--primary-04)", "var(--primary-02)"];
 
 // ============================================
 // CREDIT SCORE WIDGET
@@ -79,17 +79,17 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
   const maxScore = data.maxScore || 850;
   
   const getGradeColor = (grade: string) => {
-    if (grade === 'A' || grade === 'A+') return '#10B981';
-    if (grade === 'B' || grade === 'B+') return '#8B5CF6';
-    if (grade === 'C' || grade === 'C+') return '#F59E0B';
-    return '#EF4444';
+    if (grade === 'A' || grade === 'A+') return 'var(--primary-02)';
+    if (grade === 'B' || grade === 'B+') return 'var(--primary-04)';
+    if (grade === 'C' || grade === 'C+') return 'var(--primary-05)';
+    return 'var(--primary-03)';
   };
 
   const getScoreCategory = (score: number) => {
-    if (score >= 750) return { label: 'Excellent', color: '#10B981' };
-    if (score >= 650) return { label: 'Good', color: '#8B5CF6' };
-    if (score >= 550) return { label: 'Fair', color: '#F59E0B' };
-    return { label: 'Poor', color: '#EF4444' };
+    if (score >= 750) return { label: 'Excellent', color: 'var(--primary-02)' };
+    if (score >= 650) return { label: 'Good', color: 'var(--primary-04)' };
+    if (score >= 550) return { label: 'Fair', color: 'var(--primary-05)' };
+    return { label: 'Poor', color: 'var(--primary-03)' };
   };
 
   const category = getScoreCategory(data.score);
@@ -220,7 +220,7 @@ export const CreditScoreWidget: React.FC<CreditScoreWidgetProps> = ({
               endAngle={0}
               innerRadius={80}
               outerRadius={110}
-              fill="#8884d8"
+              fill="hsl(var(--primary))"
               paddingAngle={2}
               dataKey="value"
               stroke="transparent"

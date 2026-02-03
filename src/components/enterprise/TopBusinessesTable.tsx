@@ -25,7 +25,7 @@ interface TopBusinessesTableProps {
 const riskColors: Record<string, { text: string; bg: string }> = {
   low: { text: "text-success", bg: "bg-success/10" },
   medium: { text: "text-warning", bg: "bg-warning/10" },
-  high: { text: "text-orange-700 dark:text-orange-400", bg: "bg-orange-100 dark:bg-orange-900/30" },
+  high: { text: "text-warning", bg: "bg-warning/10" },
   critical: { text: "text-destructive", bg: "bg-destructive/10" },
 };
 

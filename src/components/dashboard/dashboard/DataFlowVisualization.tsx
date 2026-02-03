@@ -3,9 +3,9 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 const flowSteps = [
-  { icon: Building2, label: 'SMB Customer', color: 'text-blue-500', bgColor: 'bg-blue-500/10' },
-  { icon: Database, label: 'Experian Data', color: 'text-purple-500', bgColor: 'bg-purple-500/10' },
-  { icon: Sparkles, label: 'LUMIQ AI API', color: 'text-pink-500', bgColor: 'bg-pink-500/10' },
+  { icon: Building2, label: 'SMB Customer', color: 'text-info', bgColor: 'bg-info/10' },
+  { icon: Database, label: 'Experian Data', color: 'text-[var(--primary-04)]', bgColor: 'bg-[var(--primary-04)]/10' },
+  { icon: Sparkles, label: 'LUMIQ AI API', color: 'text-[var(--primary-03)]', bgColor: 'bg-[var(--primary-03)]/10' },
   { icon: Building2, label: 'Your Bank App', color: 'text-success', bgColor: 'bg-success/10' },
 ];
 
@@ -70,7 +70,7 @@ export function DataFlowVisualization() {
               <p className="text-xs text-muted-foreground">Data Accuracy</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-purple-500">2.4M</p>
+              <p className="text-2xl font-bold text-[var(--primary-04)]">2.4M</p>
               <p className="text-xs text-muted-foreground">Requests/Day</p>
             </div>
           </div>

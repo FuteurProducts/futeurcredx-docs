@@ -101,15 +101,15 @@ export const PortfolioAlertsCard: React.FC<PortfolioAlertsCardProps> = ({
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-h6 font-semibold text-foreground">
               Portfolio Alerts
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-body-2 text-muted-foreground">
               Monitor score & risk changes at scale
             </p>
           </div>
         </div>
-        <span className="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">
+        <span className="px-3 py-1 bg-success/10 text-success rounded-full text-body-2 font-medium">
           {activeRulesCount} Active Rules
         </span>
       </div>
@@ -203,8 +203,8 @@ export const PortfolioAlertsCard: React.FC<PortfolioAlertsCardProps> = ({
                       {alert.timestamp}
                     </span>
                   </div>
-                  <p className="text-sm text-foreground">{alert.message}</p>
-                  <div className="mt-2 text-xs text-muted-foreground">
+                  <p className="text-body-2 text-foreground">{alert.message}</p>
+                  <div className="mt-2 text-caption text-muted-foreground">
                     Affected: {alert.businessCount.toLocaleString()} businesses
                   </div>
                 </div>

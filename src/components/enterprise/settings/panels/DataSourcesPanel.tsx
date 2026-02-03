@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  CheckCircle, XCircle, AlertTriangle, RefreshCw, 
+import {
+  CheckCircle, XCircle, AlertTriangle, RefreshCw,
   Database, CreditCard, FileText
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { DataSource } from '../types';
 
 interface DataSourcesPanelProps {
@@ -86,20 +87,21 @@ export const DataSourcesPanel: React.FC<DataSourcesPanelProps> = ({
 
       <div className="flex gap-2">
         {source.status === 'disconnected' || source.status === 'error' ? (
-          <button
+          <Button
+            className="flex-1"
             onClick={() => onReauth(source.id)}
-            className="flex-1 px-3 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
           >
             {source.status === 'disconnected' ? 'Connect' : 'Re-authenticate'}
-          </button>
+          </Button>
         ) : (
-          <button
+          <Button
+            variant="outline"
+            className="flex-1"
             onClick={() => onSync(source.id)}
-            className="flex-1 flex items-center justify-center gap-2 px-3 py-2 border border-border text-sm font-medium rounded-md hover:bg-muted transition-colors"
           >
             <RefreshCw className="h-4 w-4" />
             Sync Now
-          </button>
+          </Button>
         )}
       </div>
     </motion.div>

@@ -54,11 +54,11 @@ const timeWindows: { id: TimeWindow; label: string }[] = [
 ];
 
 const analysisModes: { id: AnalysisMode; label: string; icon: React.ElementType; color: string }[] = [
-  { id: 'performance', label: 'Performance', icon: TrendingUp, color: 'bg-blue-500' },
-  { id: 'risk', label: 'Risk', icon: Shield, color: 'bg-orange-500' },
-  { id: 'growth', label: 'Growth', icon: Rocket, color: 'bg-green-500' },
-  { id: 'conversion', label: 'Conversion', icon: Target, color: 'bg-purple-500' },
-  { id: 'signals', label: 'Signals', icon: Activity, color: 'bg-cyan-500' },
+  { id: 'performance', label: 'Performance', icon: TrendingUp, color: 'bg-info' },
+  { id: 'risk', label: 'Risk', icon: Shield, color: 'bg-warning' },
+  { id: 'growth', label: 'Growth', icon: Rocket, color: 'bg-success' },
+  { id: 'conversion', label: 'Conversion', icon: Target, color: 'bg-[hsl(var(--primary-04))]' },
+  { id: 'signals', label: 'Signals', icon: Activity, color: 'bg-primary' },
 ];
 
 export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = ({
@@ -72,7 +72,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-border p-5 space-y-4">
+    <div className="bg-card rounded-2xl border border-border p-5 space-y-4">
       {/* Analysis Mode Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2">
         {analysisModes.map((mode) => {
@@ -173,7 +173,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
               onClick={() => updateFilter('timeWindow', tw.id)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 filters.timeWindow === tw.id
-                  ? 'bg-white text-foreground shadow-sm'
+                  ? 'bg-card text-foreground shadow-sm'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >

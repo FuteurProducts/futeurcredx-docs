@@ -17,6 +17,7 @@ import {
   Clock
 } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { toast } from 'sonner';
 
 interface ProductStatus {
   product: string;
@@ -246,7 +247,10 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
             <Activity className="h-4 w-4 text-primary" />
             <h3 className="text-sm font-semibold text-foreground">Engagement Timeline</h3>
           </div>
-          <button className="text-xs text-primary hover:text-primary/80 flex items-center gap-1">
+          <button
+            onClick={() => toast.info('Full engagement history coming soon')}
+            className="text-xs text-primary hover:text-primary/80 flex items-center gap-1"
+          >
             View all <ChevronRight className="h-3 w-3" />
           </button>
         </div>

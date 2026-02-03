@@ -28,10 +28,10 @@ interface ExpenseCategoryCardProps {
 }
 
 const defaultItems: ExpenseItem[] = [
-  { name: "Subscribed", value: 1400.54, color: "#83BF6E" },
-  { name: "Taxes", value: 1120.0, color: "#FF6A55" },
-  { name: "Taxes 2", value: 850.11, color: "#8E59FF" },
-  { name: "Others", value: 650.09, color: "#4D81E7" },
+  { name: "Subscribed", value: 1400.54, color: "var(--primary-02)" },
+  { name: "Taxes", value: 1120.0, color: "var(--primary-03)" },
+  { name: "Taxes 2", value: 850.11, color: "var(--primary-04)" },
+  { name: "Others", value: 650.09, color: "var(--primary-01)" },
 ];
 
 export const ExpenseCategoryCard = ({
@@ -90,7 +90,7 @@ export const ExpenseCategoryCard = ({
           </ResponsiveContainer>
           
           {/* Center label */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-[115px] h-[115px] rounded-full bg-white shadow-lg pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-[115px] h-[115px] rounded-full bg-card shadow-widget pointer-events-none">
             <div className="text-2xl font-bold text-foreground">100%</div>
             <div className="text-xs font-medium text-muted-foreground">Data Recorded</div>
           </div>

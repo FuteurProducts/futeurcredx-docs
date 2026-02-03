@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { 
+import {
   PieChart, Pie, Cell,
   ResponsiveContainer
 } from 'recharts';
+import { toast } from '@/components/dashboard/ui/sonner';
+import { Button } from '@/components/ui/button';
 
 // ============================================
 // COUNT UP ANIMATION HOOK
@@ -393,12 +395,12 @@ const applications: Application[] = [
 ];
 
 const stats = [
-  { label: 'Approved Today', value: 47, icon: 'check', color: '#32AE60' },
-  { label: 'In Review', value: 12, icon: 'warning', color: '#FBA94B' },
-  { label: 'Declined Today', value: 8, icon: 'x', color: '#F04D1A' },
-  { label: 'Avg Processing', value: '4.2 mins', icon: 'clock', color: '#6F767E' },
-  { label: 'AI Accuracy', value: '94.7%', icon: 'brain', color: '#0C68E9' },
-  { label: 'Human Override', value: '6.3%', icon: 'users', color: '#6F767E' },
+  { label: 'Approved Today', value: 47, icon: 'check', color: 'var(--primary-02)' },
+  { label: 'In Review', value: 12, icon: 'warning', color: 'var(--primary-05)' },
+  { label: 'Declined Today', value: 8, icon: 'x', color: 'var(--primary-03)' },
+  { label: 'Avg Processing', value: '4.2 mins', icon: 'clock', color: 'var(--muted-foreground)' },
+  { label: 'AI Accuracy', value: '94.7%', icon: 'brain', color: 'var(--primary-01)' },
+  { label: 'Human Override', value: '6.3%', icon: 'users', color: 'var(--muted-foreground)' },
 ];
 
 // ============================================
@@ -434,11 +436,11 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
   const getStatusConfig = (status: RuleTrigger['status']) => {
     switch (status) {
       case 'passed':
-        return { bg: 'bg-[#DFF9E8]', iconBg: 'bg-[#32AE60]/10', iconColor: 'text-[#32AE60]', borderColor: 'border-l-[#32AE60]', label: 'Passed' };
+        return { bg: 'bg-primary-02/10', iconBg: 'bg-primary-02/10', iconColor: 'text-primary-02', borderColor: 'border-l-primary-02', label: 'Passed' };
       case 'failed':
-        return { bg: 'bg-[#FDE6D7]', iconBg: 'bg-[#F04D1A]/10', iconColor: 'text-[#F04D1A]', borderColor: 'border-l-[#F04D1A]', label: 'Failed' };
+        return { bg: 'bg-primary-03/10', iconBg: 'bg-primary-03/10', iconColor: 'text-primary-03', borderColor: 'border-l-primary-03', label: 'Failed' };
       case 'warning':
-        return { bg: 'bg-[#FEF3CD]', iconBg: 'bg-[#FBA94B]/10', iconColor: 'text-[#FBA94B]', borderColor: 'border-l-[#FBA94B]', label: 'Warning' };
+        return { bg: 'bg-primary-05/10', iconBg: 'bg-primary-05/10', iconColor: 'text-primary-05', borderColor: 'border-l-primary-05', label: 'Warning' };
     }
   };
 
@@ -467,18 +469,18 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
         </div>
         
         <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1 text-[0.8125rem] text-[#32AE60]">
+          <span className="flex items-center gap-1 text-[0.8125rem] text-primary-02">
             <Icon type="check" className="w-4 h-4" />
             {passedCount} Passed
           </span>
           {warningCount > 0 && (
-            <span className="flex items-center gap-1 text-[0.8125rem] text-[#FBA94B]">
+            <span className="flex items-center gap-1 text-[0.8125rem] text-primary-05">
               <Icon type="warning" className="w-4 h-4" />
               {warningCount} Warning
             </span>
           )}
           {failedCount > 0 && (
-            <span className="flex items-center gap-1 text-[0.8125rem] text-[#F04D1A]">
+            <span className="flex items-center gap-1 text-[0.8125rem] text-primary-03">
               <Icon type="x" className="w-4 h-4" />
               {failedCount} Failed
             </span>
@@ -503,7 +505,7 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
               
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="px-2 py-0.5 bg-[#32AE60]/10 text-[#32AE60] rounded text-[0.6875rem] font-semibold uppercase">
+                  <span className="px-2 py-0.5 bg-primary-02/10 text-primary-02 rounded text-[0.6875rem] font-semibold uppercase">
                     INFO
                   </span>
                 </div>
@@ -512,9 +514,9 @@ const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
               </div>
               
               <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${
-                trigger.status === 'passed' ? 'border-[#32AE60] text-[#32AE60]' :
-                trigger.status === 'failed' ? 'border-[#F04D1A] text-[#F04D1A]' :
-                'border-[#FBA94B] text-[#FBA94B]'
+                trigger.status === 'passed' ? 'border-primary-02 text-primary-02' :
+                trigger.status === 'failed' ? 'border-primary-03 text-primary-03' :
+                'border-primary-05 text-primary-05'
               }`}>
                 <Icon type="check" className="w-4 h-4" />
                 <span className="text-[0.875rem] font-medium">{config.label}</span>
@@ -545,7 +547,7 @@ const scoreGaugeData = [
   { name: "Green", value: 300 },
 ];
 
-const SCORE_GAUGE_COLORS = ["#F04D1A", "#FBA94B", "#B981DA", "#32AE60"];
+const SCORE_GAUGE_COLORS = ["var(--primary-03)", "var(--primary-05)", "var(--primary-04)", "var(--primary-02)"];
 
 interface CreditScoreGaugeProps {
   score: number;
@@ -556,10 +558,10 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
   const animatedScore = useCountUp(score, 1500);
   
   const getGradeColor = (g: string) => {
-    if (g.startsWith('A')) return '#32AE60';
-    if (g.startsWith('B')) return '#32AE60';
-    if (g.startsWith('C')) return '#FBA94B';
-    return '#F04D1A';
+    if (g.startsWith('A')) return 'var(--primary-02)';
+    if (g.startsWith('B')) return 'var(--primary-02)';
+    if (g.startsWith('C')) return 'var(--primary-05)';
+    return 'var(--primary-03)';
   };
   
   return (
@@ -616,9 +618,9 @@ const UnderwritingAssistant: React.FC = () => {
 
   const getStatusBadge = (status: Application['status']) => {
     const config = {
-      approve: { bg: 'bg-[#DFF9E8]', text: 'text-[#32AE60]', label: 'Approve' },
-      review: { bg: 'bg-[#FEF3CD]', text: 'text-[#FBA94B]', label: 'Review' },
-      decline: { bg: 'bg-[#FDE6D7]', text: 'text-[#F04D1A]', label: 'Decline' },
+      approve: { bg: 'bg-primary-02/10', text: 'text-primary-02', label: 'Approve' },
+      review: { bg: 'bg-primary-05/10', text: 'text-primary-05', label: 'Review' },
+      decline: { bg: 'bg-primary-03/10', text: 'text-primary-03', label: 'Decline' },
     };
     return config[status];
   };
@@ -636,7 +638,7 @@ const UnderwritingAssistant: React.FC = () => {
           <p className="text-muted-foreground text-[0.9375rem]">AI-powered decisioning with real-time risk assessment</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-xl">
-          <div className="w-2 h-2 rounded-full bg-[#32AE60] animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-primary-02 animate-pulse" />
           <span className="text-[0.875rem] font-medium text-foreground">AI Engine Active</span>
         </div>
       </div>
@@ -705,7 +707,7 @@ const UnderwritingAssistant: React.FC = () => {
                   {app.tags && app.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-2">
                       {app.tags.slice(0, 2).map((tag) => (
-                        <span key={tag} className="px-2 py-0.5 bg-[#FBA94B]/10 text-[#FBA94B] rounded text-[0.6875rem] font-medium">
+                        <span key={tag} className="px-2 py-0.5 bg-primary-05/10 text-primary-05 rounded text-[0.6875rem] font-medium">
                           {tag}
                         </span>
                       ))}
@@ -728,8 +730,8 @@ const UnderwritingAssistant: React.FC = () => {
           <div className="bg-card rounded-2xl p-6 border border-border">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[#DFF9E8] rounded-xl flex items-center justify-center">
-                  <Icon type="check" className="w-6 h-6 text-[#32AE60]" />
+                <div className="w-12 h-12 bg-primary-02/10 rounded-xl flex items-center justify-center">
+                  <Icon type="check" className="w-6 h-6 text-primary-02" />
                 </div>
                 <div>
                   <div className="flex items-center gap-3">
@@ -746,21 +748,36 @@ const UnderwritingAssistant: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="text-center px-4">
                   <div className="flex items-center gap-1">
-                    <div className="w-5 h-5 bg-[#32AE60]/10 rounded-full flex items-center justify-center">
-                      <Icon type="shield" className="w-3 h-3 text-[#32AE60]" />
+                    <div className="w-5 h-5 bg-primary-02/10 rounded-full flex items-center justify-center">
+                      <Icon type="shield" className="w-3 h-3 text-primary-02" />
                     </div>
-                    <span className="text-[1.5rem] font-bold text-[#32AE60]">{selectedApp.confidence}%</span>
+                    <span className="text-[1.5rem] font-bold text-primary-02">{selectedApp.confidence}%</span>
                   </div>
                   <div className="text-[0.75rem] text-muted-foreground">Confidence</div>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 border border-border rounded-xl text-[0.875rem] font-medium text-foreground hover:bg-muted transition-colors">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    toast.error('Application declined', {
+                      description: `${selectedApp.companyName} - ${selectedApp.appId}`,
+                    });
+                  }}
+                  className="gap-2 rounded-xl"
+                >
                   <Icon type="x" className="w-4 h-4" />
                   Decline
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-[#32AE60] text-white rounded-xl text-[0.875rem] font-medium hover:bg-[#2A9D53] transition-colors">
+                </Button>
+                <Button
+                  onClick={() => {
+                    toast.success('Application approved successfully', {
+                      description: `${selectedApp.companyName} - ${selectedApp.appId}`,
+                    });
+                  }}
+                  className="gap-2 rounded-xl bg-primary-02 hover:bg-primary-02/90"
+                >
                   <Icon type="check" className="w-4 h-4" />
                   Approve
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -803,7 +820,7 @@ const UnderwritingAssistant: React.FC = () => {
                   <div className="flex-1 grid grid-cols-4 gap-4 lg:pl-6 md:grid-cols-2">
                     <div className="text-center">
                       <div className="text-[1.5rem] font-bold text-foreground">{selectedApp.ownerFico}</div>
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-medium bg-[#DFF9E8] text-[#32AE60] border border-[#32AE60]/20">
+                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-medium bg-primary-02/10 text-primary-02 border border-primary-02/20">
                         {selectedApp.ownerFico >= 720 ? 'Excellent' : selectedApp.ownerFico >= 680 ? 'Good' : 'Fair'}
                       </div>
                       <div className="mt-1 text-[0.75rem] text-muted-foreground">Owner FICO</div>
@@ -820,13 +837,13 @@ const UnderwritingAssistant: React.FC = () => {
                     </div>
                     <div className="text-center border-l border-border pl-4">
                       <div className="flex items-center justify-center gap-1 mb-1">
-                        <Icon type="check" className="w-4 h-4 text-[#32AE60]" />
-                        <span className="text-[1rem] font-semibold text-[#32AE60]">{selectedApp.kybStatus}</span>
+                        <Icon type="check" className="w-4 h-4 text-primary-02" />
+                        <span className="text-[1rem] font-semibold text-primary-02">{selectedApp.kybStatus}</span>
                       </div>
                       <div className="text-[0.75rem] text-muted-foreground">KYB Verified</div>
                     </div>
                     <div className="text-center border-l border-border pl-4">
-                      <div className="text-[1.5rem] font-bold text-[#32AE60]">{selectedApp.identityMatch}%</div>
+                      <div className="text-[1.5rem] font-bold text-primary-02">{selectedApp.identityMatch}%</div>
                       <div className="text-[0.75rem] text-muted-foreground">Identity Match</div>
                     </div>
                   </div>
@@ -855,9 +872,9 @@ const UnderwritingAssistant: React.FC = () => {
                     <h3 className="text-[1.125rem] font-semibold text-foreground">Why this score?</h3>
                   </div>
                   <span className={`px-4 py-1.5 rounded-full text-[0.875rem] font-semibold ${
-                    selectedApp.status === 'approve' ? 'bg-[#DFF9E8] text-[#32AE60]' :
-                    selectedApp.status === 'review' ? 'bg-[#FEF3CD] text-[#FBA94B]' :
-                    'bg-[#FDE6D7] text-[#F04D1A]'
+                    selectedApp.status === 'approve' ? 'bg-primary-02/10 text-primary-02' :
+                    selectedApp.status === 'review' ? 'bg-primary-05/10 text-primary-05' :
+                    'bg-primary-03/10 text-primary-03'
                   }`}>
                     AI Recommendation: {getStatusBadge(selectedApp.status).label.toUpperCase()}
                   </span>
@@ -869,14 +886,14 @@ const UnderwritingAssistant: React.FC = () => {
                   {/* Positive Drivers */}
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <Icon type="check" className="w-4 h-4 text-[#32AE60]" />
-                      <span className="text-[0.9375rem] font-semibold text-[#32AE60]">Positive Drivers</span>
+                      <Icon type="check" className="w-4 h-4 text-primary-02" />
+                      <span className="text-[0.9375rem] font-semibold text-primary-02">Positive Drivers</span>
                     </div>
                     {selectedApp.positiveDrivers.length > 0 ? (
                       <ul className="space-y-2">
                         {selectedApp.positiveDrivers.map((driver, i) => (
                           <li key={i} className="flex items-start gap-2 text-[0.875rem] text-foreground">
-                            <span className="text-[#32AE60] mt-1">•</span>
+                            <span className="text-primary-02 mt-1">•</span>
                             {driver}
                           </li>
                         ))}
@@ -889,14 +906,14 @@ const UnderwritingAssistant: React.FC = () => {
                   {/* Risk Drivers */}
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <Icon type="warning" className="w-4 h-4 text-[#F04D1A]" />
-                      <span className="text-[0.9375rem] font-semibold text-[#F04D1A]">Risk Drivers</span>
+                      <Icon type="warning" className="w-4 h-4 text-primary-03" />
+                      <span className="text-[0.9375rem] font-semibold text-primary-03">Risk Drivers</span>
                     </div>
                     {selectedApp.riskDrivers.length > 0 ? (
                       <ul className="space-y-2">
                         {selectedApp.riskDrivers.map((driver, i) => (
                           <li key={i} className="flex items-start gap-2 text-[0.875rem] text-foreground">
-                            <span className="text-[#F04D1A] mt-1">•</span>
+                            <span className="text-primary-03 mt-1">•</span>
                             {driver}
                           </li>
                         ))}
@@ -995,9 +1012,9 @@ const UnderwritingAssistant: React.FC = () => {
                   <div className="text-center p-4 bg-muted rounded-xl">
                     <div className="text-[1.5rem] font-bold text-foreground mb-1">{selectedApp.ownerFico}</div>
                     <span className={`inline-block px-2 py-0.5 rounded-full text-[0.75rem] font-medium mb-1 ${
-                      selectedApp.ownerFico >= 720 ? 'bg-[#DFF9E8] text-[#32AE60]' :
-                      selectedApp.ownerFico >= 680 ? 'bg-[#FEF3CD] text-[#FBA94B]' :
-                      'bg-[#FDE6D7] text-[#F04D1A]'
+                      selectedApp.ownerFico >= 720 ? 'bg-primary-02/10 text-primary-02' :
+                      selectedApp.ownerFico >= 680 ? 'bg-primary-05/10 text-primary-05' :
+                      'bg-primary-03/10 text-primary-03'
                     }`}>
                       {selectedApp.ownerFico >= 720 ? 'Excellent' : selectedApp.ownerFico >= 680 ? 'Good' : 'Fair'}
                     </span>
@@ -1009,8 +1026,8 @@ const UnderwritingAssistant: React.FC = () => {
                   </div>
                   <div className="text-center p-4 bg-muted rounded-xl">
                     <div className="flex items-center justify-center gap-1 mb-1">
-                      <Icon type="check" className="w-5 h-5 text-[#32AE60]" />
-                      <span className="text-[1rem] font-bold text-[#32AE60]">Verified</span>
+                      <Icon type="check" className="w-5 h-5 text-primary-02" />
+                      <span className="text-[1rem] font-bold text-primary-02">Verified</span>
                     </div>
                     <div className="text-[0.8125rem] text-muted-foreground">Identity Check</div>
                   </div>
@@ -1071,17 +1088,17 @@ const UnderwritingAssistant: React.FC = () => {
                         <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
                         {item.isBadge ? (
                           <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
-                            item.value === 'Stable' ? 'bg-[#DFF9E8] text-[#32AE60] border border-[#32AE60]/20' :
-                            item.value === 'Moderate' ? 'bg-[#FEF3CD] text-[#FBA94B] border border-[#FBA94B]/20' :
-                            'bg-[#FDE6D7] text-[#F04D1A] border border-[#F04D1A]/20'
+                            item.value === 'Stable' ? 'bg-primary-02/10 text-primary-02 border border-primary-02/20' :
+                            item.value === 'Moderate' ? 'bg-primary-05/10 text-primary-05 border border-primary-05/20' :
+                            'bg-primary-03/10 text-primary-03 border border-primary-03/20'
                           }`}>
                             {item.value}
                           </span>
                         ) : (
                           <span className={`text-[0.875rem] font-semibold ${
-                            item.isNumber && Number(item.value) > 0 ? 'text-[#F04D1A]' : 'text-foreground'
+                            item.isNumber && Number(item.value) > 0 ? 'text-primary-03' : 'text-foreground'
                           }`}>
-                            {item.isNumber && Number(item.value) === 0 ? <span className="text-[#32AE60]">0</span> : item.value}
+                            {item.isNumber && Number(item.value) === 0 ? <span className="text-primary-02">0</span> : item.value}
                           </span>
                         )}
                       </div>
@@ -1106,7 +1123,7 @@ const UnderwritingAssistant: React.FC = () => {
                     ].map((item) => (
                       <div key={item.label} className="flex justify-between items-center py-1.5">
                         <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
-                        <span className={`text-[0.875rem] font-semibold ${item.isGreen ? 'text-[#32AE60]' : 'text-foreground'}`}>
+                        <span className={`text-[0.875rem] font-semibold ${item.isGreen ? 'text-primary-02' : 'text-foreground'}`}>
                           {item.value}
                         </span>
                       </div>
@@ -1137,7 +1154,7 @@ const UnderwritingAssistant: React.FC = () => {
                     ].map((item) => (
                       <div key={item.label} className="text-center p-3 bg-muted rounded-xl">
                         <div className="flex justify-center mb-1">
-                          <Icon type="check" className={`w-5 h-5 ${item.value ? 'text-[#F04D1A]' : 'text-[#32AE60]'}`} />
+                          <Icon type="check" className={`w-5 h-5 ${item.value ? 'text-primary-03' : 'text-primary-02'}`} />
                         </div>
                         <div className="text-[0.75rem] text-muted-foreground">{item.label}</div>
                       </div>
@@ -1157,23 +1174,23 @@ const UnderwritingAssistant: React.FC = () => {
                     <div className="flex justify-between items-center py-1.5">
                       <span className="text-[0.875rem] text-muted-foreground">Registry</span>
                       <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
-                        selectedApp.kyb.registry === 'Verified' ? 'bg-[#DFF9E8] text-[#32AE60]' :
-                        selectedApp.kyb.registry === 'Pending' ? 'bg-[#FEF3CD] text-[#FBA94B]' :
-                        'bg-[#FDE6D7] text-[#F04D1A]'
+                        selectedApp.kyb.registry === 'Verified' ? 'bg-primary-02/10 text-primary-02' :
+                        selectedApp.kyb.registry === 'Pending' ? 'bg-primary-05/10 text-primary-05' :
+                        'bg-primary-03/10 text-primary-03'
                       }`}>
                         {selectedApp.kyb.registry}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-1.5">
                       <span className="text-[0.875rem] text-muted-foreground">EIN</span>
-                      <Icon type="check" className={`w-5 h-5 ${selectedApp.kyb.ein ? 'text-[#32AE60]' : 'text-[#F04D1A]'}`} />
+                      <Icon type="check" className={`w-5 h-5 ${selectedApp.kyb.ein ? 'text-primary-02' : 'text-primary-03'}`} />
                     </div>
                     <div className="flex justify-between items-center py-1.5">
                       <span className="text-[0.875rem] text-muted-foreground">Address Stability</span>
                       <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
-                        selectedApp.kyb.addressStability === 'High' ? 'bg-[#DFF9E8] text-[#32AE60]' :
-                        selectedApp.kyb.addressStability === 'Medium' ? 'bg-[#FEF3CD] text-[#FBA94B]' :
-                        'bg-[#FDE6D7] text-[#F04D1A]'
+                        selectedApp.kyb.addressStability === 'High' ? 'bg-primary-02/10 text-primary-02' :
+                        selectedApp.kyb.addressStability === 'Medium' ? 'bg-primary-05/10 text-primary-05' :
+                        'bg-primary-03/10 text-primary-03'
                       }`}>
                         {selectedApp.kyb.addressStability}
                       </span>

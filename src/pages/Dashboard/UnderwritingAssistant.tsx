@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List, Filter, CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { Button } from '@/components/ui/button';
 import {
   ApplicationQueueFilters,
   FilterState,
@@ -307,29 +308,31 @@ const UnderwritingAssistant: React.FC = () => {
         <div className="flex-1 min-w-0 space-y-4">
           {/* Toolbar */}
           <div className="flex items-center justify-between gap-4">
-            <button
+            <Button
+              variant={showFilters ? 'default' : 'outline'}
+              size="sm"
               onClick={() => setShowFilters(!showFilters)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-medium transition-colors ${
-                showFilters ? 'bg-primary/10 border-primary text-primary' : 'border-border text-muted-foreground hover:bg-accent'
-              }`}
+              className="gap-2"
             >
               <Filter className="w-4 h-4" />
               Filters
-            </button>
-            
+            </Button>
+
             <div className="flex items-center gap-2">
-              <button
+              <Button
+                variant={viewMode === 'table' ? 'secondary' : 'ghost'}
+                size="icon"
                 onClick={() => setViewMode('table')}
-                className={`p-2 rounded-lg transition-colors ${viewMode === 'table' ? 'bg-muted' : 'hover:bg-accent'}`}
               >
                 <List className="w-4 h-4" />
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={viewMode === 'cards' ? 'secondary' : 'ghost'}
+                size="icon"
                 onClick={() => setViewMode('cards')}
-                className={`p-2 rounded-lg transition-colors ${viewMode === 'cards' ? 'bg-muted' : 'hover:bg-accent'}`}
               >
                 <LayoutGrid className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -390,17 +393,19 @@ const UnderwritingAssistant: React.FC = () => {
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
                     Recently Actioned ({actionedApplications.length})
                   </h3>
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => {
                       setApplicationStatuses({});
                       demoDataStore.clearAllApplicationStatuses();
                       toast.success('All actions cleared');
                     }}
-                    className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    className="gap-1.5 text-xs text-muted-foreground hover:text-foreground"
                   >
                     <RotateCcw className="w-3 h-3" />
                     Clear all
-                  </button>
+                  </Button>
                 </div>
                 <div className="bg-card rounded-xl border border-border overflow-hidden">
                   <div className="divide-y divide-border">

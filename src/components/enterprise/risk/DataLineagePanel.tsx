@@ -52,7 +52,7 @@ const getStatusColor = (status: string) => {
   switch (status) {
     case 'connected': return { bg: 'bg-success', text: 'text-success', bgLight: 'bg-success/10' };
     case 'degraded': return { bg: 'bg-warning', text: 'text-warning', bgLight: 'bg-warning/10' };
-    case 'disconnected': return { bg: 'bg-rose-500', text: 'text-rose-700', bgLight: 'bg-rose-50' };
+    case 'disconnected': return { bg: 'bg-destructive', text: 'text-destructive', bgLight: 'bg-destructive/10' };
     default: return { bg: 'bg-muted-foreground', text: 'text-muted-foreground', bgLight: 'bg-muted' };
   }
 };
@@ -115,7 +115,7 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
           <div className="flex-1" />
           <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${
             reconciliationStatus === 'ok' ? 'bg-success/10 text-success' :
-            reconciliationStatus === 'warning' ? 'bg-warning/10 text-warning' : 'bg-rose-50 text-rose-700'
+            reconciliationStatus === 'warning' ? 'bg-warning/10 text-warning' : 'bg-destructive/10 text-destructive'
           }`}>
             {reconciliationStatus === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
             <span className="text-xs font-medium">Reconciliation {reconciliationStatus.toUpperCase()}</span>
@@ -156,7 +156,7 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
                     <div className="text-xs text-muted-foreground">Median Age</div>
                   </div>
                   <div className="text-center">
-                    <div className={`text-sm font-semibold ${source.errorRate > 1 ? 'text-rose-600' : 'text-success'}`}>
+                    <div className={`text-sm font-semibold ${source.errorRate > 1 ? 'text-destructive' : 'text-success'}`}>
                       {source.errorRate}%
                     </div>
                     <div className="text-xs text-muted-foreground">Error Rate</div>
@@ -180,7 +180,7 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
                 className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg"
               >
                 <div className={`w-2 h-8 rounded-full ${
-                  field.impactLevel === 'high' ? 'bg-rose-500' :
+                  field.impactLevel === 'high' ? 'bg-destructive' :
                   field.impactLevel === 'medium' ? 'bg-warning' : 'bg-info'
                 }`} />
                 <div className="flex-1 min-w-0">
@@ -191,7 +191,7 @@ export const DataLineagePanel: React.FC<DataLineagePanelProps> = ({
                 </div>
                 <div className="text-right">
                   <div className={`text-sm font-semibold ${
-                    field.missingPct > 20 ? 'text-rose-600' : 'text-foreground'
+                    field.missingPct > 20 ? 'text-destructive' : 'text-foreground'
                   }`}>
                     {field.missingPct}%
                   </div>

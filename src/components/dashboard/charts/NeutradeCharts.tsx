@@ -10,6 +10,7 @@ import {
   StatChange,
   type TimePeriod,
 } from '@/components/ui/chart-utils';
+import { toast } from '@/hooks/use-toast';
 
 // Types for real API data
 interface ApiKey {
@@ -81,7 +82,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 h-10 px-4 bg-muted hover:bg-[#EFEFEF] border border-border rounded-xl text-[0.875rem] font-semibold text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#0C68E9] focus:ring-offset-1"
+        className="flex items-center gap-2 h-10 px-4 bg-muted hover:bg-[var(--shade-09)] border border-border rounded-xl text-[0.875rem] font-semibold text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--primary-01)] focus:ring-offset-1"
       >
         <span>{value.title}</span>
         <svg 
@@ -112,8 +113,8 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
                   setIsOpen(false);
                 }}
                 className={`w-full px-4 py-2.5 text-left text-[0.875rem] font-medium transition-colors ${
-                  opt.id === value.id 
-                    ? 'bg-[#0C68E9] text-white' 
+                  opt.id === value.id
+                    ? 'bg-[var(--primary-01)] text-white'
                     : 'text-foreground hover:bg-muted'
                 }`}
               >
@@ -171,7 +172,7 @@ export const NCard: React.FC<NCardProps> = ({
                 </svg>
               )}
               {tooltip && (
-                <div className="ml-2 w-5 h-5 flex items-center justify-center rounded-full bg-[#F4F4F4] cursor-help">
+                <div className="ml-2 w-5 h-5 flex items-center justify-center rounded-full bg-muted cursor-help">
                   <svg className="w-3 h-3 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -189,7 +190,7 @@ export const NCard: React.FC<NCardProps> = ({
           {seeAllUrl && (
             <a
               href={seeAllUrl}
-              className="shrink-0 group inline-flex items-center text-[0.875rem] font-semibold text-[#0C68E9] hover:text-blue-700 transition-colors"
+              className="shrink-0 group inline-flex items-center text-[0.875rem] font-semibold text-[var(--primary-01)] hover:text-info transition-colors"
             >
               See all
               <svg className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -500,7 +501,7 @@ const greedData = [
   { name: "Green", value: 300 },
 ];
 
-const GREED_COLORS = ["#F04D1A", "#FBA94B", "#B981DA", "#32AE60"];
+const GREED_COLORS = ["var(--primary-03)", "var(--primary-05)", "var(--primary-04)", "var(--primary-02)"];
 
 export const GreedIndex: React.FC = () => {
   return (
@@ -522,7 +523,7 @@ export const GreedIndex: React.FC = () => {
                 endAngle={0}
                 innerRadius={128}
                 outerRadius={160}
-                fill="#8884d8"
+                fill="var(--primary-04)"
                 paddingAngle={1}
                 dataKey="value"
                 stroke="transparent"
@@ -868,11 +869,21 @@ export const BestToBuy: React.FC = () => {
           Method: LSTM, Accuracy: 87%
         </div>
         <div className="flex space-x-2">
-          <button className="btn-secondary flex-1 px-2 h-12 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-colors">
-            Smart trade
+          <button
+            className="btn-secondary flex-1 px-2 h-12 bg-primary text-primary-foreground rounded-full font-semibold hover:bg-primary/90 transition-colors"
+            onClick={() => {
+              toast({ title: 'Withdraw', description: 'Withdraw initiated - Demo mode' });
+            }}
+          >
+            Withdraw
           </button>
-          <button className="btn-gray flex-1 px-2 h-12 bg-muted text-foreground rounded-full font-semibold hover:bg-muted/80 transition-colors">
-            Set Alert
+          <button
+            className="btn-gray flex-1 px-2 h-12 bg-muted text-foreground rounded-full font-semibold hover:bg-muted/80 transition-colors"
+            onClick={() => {
+              toast({ title: 'Deposit', description: 'Deposit initiated - Demo mode' });
+            }}
+          >
+            Deposit
           </button>
         </div>
       </div>
@@ -1045,9 +1056,9 @@ export const ApiKeysList: React.FC<ApiKeysListProps> = ({
       tooltip="Your active API keys"
       seeAllUrl="#"
       rightContent={
-        <button 
+        <button
           onClick={onManageKeys}
-          className="text-[0.875rem] font-semibold text-[#0C68E9] hover:text-blue-600"
+          className="text-[0.875rem] font-semibold text-[var(--primary-01)] hover:text-info"
         >
           Manage
         </button>
@@ -1071,7 +1082,7 @@ export const ApiKeysList: React.FC<ApiKeysListProps> = ({
           <p className="text-[0.9375rem]">No API keys yet</p>
           <button
             onClick={onManageKeys}
-            className="mt-3 px-4 py-2 bg-[#0C68E9] text-white rounded-xl font-semibold text-[0.875rem]"
+            className="mt-3 px-4 py-2 bg-[var(--primary-01)] text-white rounded-xl font-semibold text-[0.875rem]"
           >
             Create API Key
           </button>
@@ -1083,8 +1094,8 @@ export const ApiKeysList: React.FC<ApiKeysListProps> = ({
               key={key.id}
               className="flex items-center h-16 px-3 rounded-2xl border border-transparent transition-colors hover:border-border cursor-pointer"
             >
-              <div className="flex justify-center items-center w-10 h-10 mr-4 rounded-xl bg-[#D8F0FF]">
-                <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <div className="flex justify-center items-center w-10 h-10 mr-4 rounded-xl bg-[var(--primary-01)]/10">
+                <svg className="w-5 h-5 text-[var(--primary-01)]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                 </svg>
               </div>
@@ -1155,7 +1166,7 @@ const usageGaugeData = [
   { name: "Green", value: 300 },
 ];
 
-const USAGE_GAUGE_COLORS = ["#F04D1A", "#FBA94B", "#B981DA", "#32AE60"];
+const USAGE_GAUGE_COLORS = ["var(--primary-03)", "var(--primary-05)", "var(--primary-04)", "var(--primary-02)"];
 
 export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, plan }) => {
   const percentage = limit > 0 ? Math.min(Math.round((used / limit) * 100), 100) : 0;
@@ -1166,10 +1177,10 @@ export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, p
   
   // Get status text and color based on percentage
   const getStatus = () => {
-    if (percentage >= 90) return { text: 'Critical', color: '#F04D1A' };
-    if (percentage >= 70) return { text: 'High', color: '#FBA94B' };
-    if (percentage >= 40) return { text: 'Moderate', color: '#B981DA' };
-    return { text: 'Low', color: '#32AE60' };
+    if (percentage >= 90) return { text: 'Critical', color: 'var(--primary-03)' };
+    if (percentage >= 70) return { text: 'High', color: 'var(--primary-05)' };
+    if (percentage >= 40) return { text: 'Moderate', color: 'var(--primary-04)' };
+    return { text: 'Low', color: 'var(--primary-02)' };
   };
 
   const status = getStatus();
@@ -1193,7 +1204,7 @@ export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, p
                 endAngle={0}
                 innerRadius={128}
                 outerRadius={160}
-                fill="#8884d8"
+                fill="var(--primary-04)"
                 paddingAngle={1}
                 dataKey="value"
                 stroke="transparent"
@@ -1238,7 +1249,7 @@ export const UsageLimitGauge: React.FC<UsageLimitGaugeProps> = ({ used, limit, p
             </div>
           </div>
           <div className="mt-4 text-center">
-            <span className="inline-flex items-center px-4 py-1.5 bg-[#D8F0FF] text-[#0C68E9] rounded-full text-[0.875rem] font-semibold">
+            <span className="inline-flex items-center px-4 py-1.5 bg-[var(--primary-01)]/10 text-[var(--primary-01)] rounded-full text-[0.875rem] font-semibold">
               {plan} Plan
             </span>
           </div>
@@ -1435,11 +1446,11 @@ interface StatCardProps {
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, change, color, sparklineData }) => {
   const colorMap = {
-    cyan: { bg: 'bg-cyan-50', line: '#06B6D4' },
-    green: { bg: 'bg-success/10', line: '#22C55E' },
-    purple: { bg: 'bg-purple-50', line: '#A855F7' },
-    yellow: { bg: 'bg-yellow-50', line: '#EAB308' },
-    emerald: { bg: 'bg-success/10', line: '#10B981' },
+    cyan: { bg: 'bg-[var(--primary-01)]/10', line: 'var(--primary-01)' },
+    green: { bg: 'bg-[var(--primary-02)]/10', line: 'var(--primary-02)' },
+    purple: { bg: 'bg-[var(--primary-04)]/10', line: 'var(--primary-04)' },
+    yellow: { bg: 'bg-[var(--primary-05)]/10', line: 'var(--primary-05)' },
+    emerald: { bg: 'bg-[var(--primary-02)]/10', line: 'var(--primary-02)' },
   };
   
   const sparkData = sparklineData || Array.from({ length: 12 }, () => Math.random() * 100);
@@ -1662,7 +1673,7 @@ export const LatencyDistributionChart: React.FC = () => {
       <div className="flex items-start justify-between mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <svg className="w-5 h-5 text-[#FBA94B]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-[var(--primary-05)]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
             <h3 className="text-[1.125rem] font-semibold text-foreground">Processing Latency Distribution</h3>
@@ -1682,26 +1693,26 @@ export const LatencyDistributionChart: React.FC = () => {
             layout="vertical" 
             margin={{ top: 0, right: 20, left: 50, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" horizontal={false} />
-            <XAxis 
-              type="number" 
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--shade-09)" horizontal={false} />
+            <XAxis
+              type="number"
               domain={[0, 300]}
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6F767E' }}
+              tick={{ fontSize: 12, fill: 'var(--shade-06)' }}
               tickFormatter={(v) => `${v}ms`}
             />
-            <YAxis 
+            <YAxis
               type="category"
               dataKey="percentile"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6F767E' }}
+              tick={{ fontSize: 12, fill: 'var(--shade-06)' }}
               width={50}
             />
-            <Bar 
-              dataKey="value" 
-              fill="#FBA94B" 
+            <Bar
+              dataKey="value"
+              fill="var(--primary-05)"
               radius={[0, 4, 4, 0]}
               isAnimationActive={true}
               animationDuration={1500}
@@ -1732,7 +1743,7 @@ export const RevenueImpactChart: React.FC = () => {
       <div className="flex items-start justify-between mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <svg className="w-5 h-5 text-[#0C68E9]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-[var(--primary-01)]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <h3 className="text-[1.125rem] font-semibold text-foreground">Revenue Impact</h3>
@@ -1753,29 +1764,34 @@ export const RevenueImpactChart: React.FC = () => {
           <BarChart data={revenueImpactData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0C68E9" />
-                <stop offset="100%" stopColor="#32AE60" />
+                <stop offset="0%" stopColor="var(--primary-01)" />
+                <stop offset="100%" stopColor="var(--primary-02)" />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" vertical={false} />
-            <XAxis 
-              dataKey="date" 
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--shade-09)" vertical={false} />
+            <XAxis
+              dataKey="date"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 11, fill: '#6F767E' }}
+              tick={{ fontSize: 11, fill: 'var(--shade-06)' }}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                border: '1px solid #EFEFEF', 
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            <Tooltip
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                return (
+                  <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
+                    <div className="mb-1 text-xs font-medium text-muted-foreground">{label}</div>
+                    <div className="text-xl font-semibold text-foreground">
+                      ${payload[0].value !== undefined ? (Number(payload[0].value) / 1000).toFixed(0) : '-'}K
+                    </div>
+                  </div>
+                );
               }}
-              formatter={(value) => [value !== undefined ? `$${(Number(value) / 1000).toFixed(0)}K` : '-', 'Revenue']}
+              wrapperStyle={{ outline: 'none' }}
             />
-            <Bar 
-              dataKey="value" 
-              fill="#0C68E9" 
+            <Bar
+              dataKey="value"
+              fill="var(--primary-01)"
               radius={[4, 4, 0, 0]}
               isAnimationActive={true}
               animationDuration={1500}
@@ -1794,7 +1810,7 @@ export const ApprovalRateTrendChart: React.FC = () => {
       <div className="flex items-start justify-between mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <svg className="w-5 h-5 text-[#32AE60]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-[var(--primary-02)]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <h3 className="text-[1.125rem] font-semibold text-foreground">Approval Rate Trend</h3>
@@ -1810,39 +1826,50 @@ export const ApprovalRateTrendChart: React.FC = () => {
       <div className="h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={approvalRateTrendData} margin={{ top: 10, right: 50, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" vertical={false} />
-            <XAxis 
-              dataKey="month" 
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--shade-09)" vertical={false} />
+            <XAxis
+              dataKey="month"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6F767E' }}
+              tick={{ fontSize: 12, fill: 'var(--shade-06)' }}
             />
-            <YAxis 
+            <YAxis
               yAxisId="left"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#6F767E' }}
+              tick={{ fontSize: 12, fill: 'var(--shade-06)' }}
             />
-            <YAxis 
+            <YAxis
               yAxisId="right"
               orientation="right"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: '#A855F7' }}
+              tick={{ fontSize: 12, fill: 'var(--primary-04)' }}
               tickFormatter={(v) => `${v}%`}
               domain={[0, 100]}
             />
-            <Tooltip 
-              contentStyle={{ 
-                backgroundColor: 'white', 
-                border: '1px solid #EFEFEF', 
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            <Tooltip
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                return (
+                  <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
+                    <div className="mb-2 text-xs font-medium text-muted-foreground">{label}</div>
+                    {payload.map((entry: any, index: number) => (
+                      <div key={index} className="flex items-center justify-between gap-4">
+                        <span className="text-sm text-muted-foreground">{entry.name}</span>
+                        <span className="text-sm font-semibold text-foreground">
+                          {entry.name === 'Approval Rate %' ? `${entry.value}%` : entry.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                );
               }}
+              wrapperStyle={{ outline: 'none' }}
             />
-            <Bar dataKey="applications" fill="#E5E7EB" radius={[4, 4, 0, 0]} name="Applications" yAxisId="left" isAnimationActive={true} animationDuration={1500} />
-            <Bar dataKey="approved" fill="#32AE60" radius={[4, 4, 0, 0]} name="Approved" yAxisId="left" isAnimationActive={true} animationDuration={1500} />
-            <Line type="monotone" dataKey="rate" stroke="#A855F7" strokeWidth={2} dot={{ fill: '#A855F7', r: 4 }} name="Approval Rate %" yAxisId="right" isAnimationActive={true} animationDuration={1500} />
+            <Bar dataKey="applications" fill="var(--shade-09)" radius={[4, 4, 0, 0]} name="Applications" yAxisId="left" isAnimationActive={true} animationDuration={1500} />
+            <Bar dataKey="approved" fill="var(--primary-02)" radius={[4, 4, 0, 0]} name="Approved" yAxisId="left" isAnimationActive={true} animationDuration={1500} />
+            <Line type="monotone" dataKey="rate" stroke="var(--primary-04)" strokeWidth={2} dot={{ fill: 'var(--primary-04)', r: 4 }} name="Approval Rate %" yAxisId="right" isAnimationActive={true} animationDuration={1500} />
           </ComposedChart>
         </ResponsiveContainer>
       </div>
@@ -1850,16 +1877,16 @@ export const ApprovalRateTrendChart: React.FC = () => {
       {/* Legend */}
       <div className="flex items-center justify-center gap-6 pt-4 mt-2">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-[#E5E7EB]" />
+          <div className="w-3 h-3 rounded bg-[var(--shade-09)]" />
           <span className="text-[0.8125rem] text-muted-foreground">Applications</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded bg-[#32AE60]" />
-          <span className="text-[0.8125rem] text-[#32AE60]">Approved</span>
+          <div className="w-3 h-3 rounded bg-[var(--primary-02)]" />
+          <span className="text-[0.8125rem] text-[var(--primary-02)]">Approved</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-0.5 bg-[#A855F7]" />
-          <span className="text-[0.8125rem] text-[#A855F7]">Approval Rate %</span>
+          <div className="w-3 h-0.5 bg-[var(--primary-04)]" />
+          <span className="text-[0.8125rem] text-[var(--primary-04)]">Approval Rate %</span>
         </div>
       </div>
     </NCard>

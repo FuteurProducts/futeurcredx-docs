@@ -28,11 +28,11 @@ interface ScoreDistributionCardProps {
 }
 
 const getBarColor = (range: string): string => {
-  if (range.includes("800") || range.includes("750")) return "#10b981";
-  if (range.includes("700") || range.includes("650")) return "#22c55e";
-  if (range.includes("600") || range.includes("550")) return "#f59e0b";
-  if (range.includes("500") || range.includes("450")) return "#f97316";
-  return "#ef4444";
+  if (range.includes("800") || range.includes("750")) return "hsl(var(--success))";
+  if (range.includes("700") || range.includes("650")) return "hsl(var(--success))";
+  if (range.includes("600") || range.includes("550")) return "hsl(var(--warning))";
+  if (range.includes("500") || range.includes("450")) return "hsl(var(--warning))";
+  return "hsl(var(--destructive))";
 };
 
 export const ScoreDistributionCard: React.FC<ScoreDistributionCardProps> = ({
@@ -70,10 +70,10 @@ export const ScoreDistributionCard: React.FC<ScoreDistributionCardProps> = ({
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-h6 font-semibold text-foreground">
               Portfolio Score Distribution
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-body-2 text-muted-foreground">
               LUMIQ AI scores across {formatNumber(data.totalScored)} businesses
             </p>
           </div>
@@ -86,26 +86,26 @@ export const ScoreDistributionCard: React.FC<ScoreDistributionCardProps> = ({
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">
+          <div className="text-caption text-muted-foreground mb-1">
             Total Scored
           </div>
-          <div className="text-xl font-bold text-foreground">
+          <div className="text-h5 font-bold text-foreground">
             {formatNumber(data.totalScored)}
           </div>
         </div>
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">
+          <div className="text-caption text-muted-foreground mb-1">
             Average Score
           </div>
-          <div className="text-xl font-bold text-foreground">
+          <div className="text-h5 font-bold text-foreground">
             {data.averageScore}
           </div>
         </div>
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">
+          <div className="text-caption text-muted-foreground mb-1">
             Median Score
           </div>
-          <div className="text-xl font-bold text-foreground">
+          <div className="text-h5 font-bold text-foreground">
             {data.medianScore}
           </div>
         </div>

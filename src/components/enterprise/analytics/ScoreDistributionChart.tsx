@@ -21,11 +21,11 @@ interface ScoreDistributionChartProps {
   isLoading?: boolean;
 }
 
-// Use design system colors via HSL variables where possible
+// Use design system colors via HSL variables
 const bucketColors: Record<string, string> = {
   '0-50': 'hsl(var(--destructive))',
   '51-65': 'hsl(var(--warning))',
-  '66-75': 'hsl(38, 92%, 50%)',
+  '66-75': 'hsl(var(--warning))',
   '76-85': 'hsl(var(--success))',
   '86-100': 'hsl(var(--info))',
 };

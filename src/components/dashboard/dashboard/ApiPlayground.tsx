@@ -4,6 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
 
 const exampleRequest = `curl -X POST https://api.lumiq.ai/v2/credit-journey \\
   -H "Authorization: Bearer YOUR_API_KEY" \\
@@ -83,14 +84,17 @@ export function ApiPlayground() {
   const handleCopy = (code: string) => {
     navigator.clipboard.writeText(code);
     setCopied(true);
+    toast.success('Code copied to clipboard');
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleRun = () => {
     setIsRunning(true);
+    toast.info('Sending API request...');
     setTimeout(() => {
       setIsRunning(false);
       setShowResponse(true);
+      toast.success('API request completed successfully');
     }, 1500);
   };
 

@@ -54,9 +54,9 @@ export const MultiBureauStatusCard: React.FC<MultiBureauStatusCardProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-violet-500/10 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-primary-04/10 rounded-xl flex items-center justify-center">
             <svg
-              className="w-5 h-5 text-violet-600"
+              className="w-5 h-5 text-primary-04"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -70,16 +70,16 @@ export const MultiBureauStatusCard: React.FC<MultiBureauStatusCardProps> = ({
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-h6 font-semibold text-foreground">
               Multi-Bureau Integration
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-body-2 text-muted-foreground">
               Credit data source connectivity
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">
+          <span className="px-3 py-1 bg-success/10 text-success rounded-full text-body-2 font-medium">
             {connectedCount}/{bureaus.length} Connected
           </span>
         </div>
@@ -88,14 +88,14 @@ export const MultiBureauStatusCard: React.FC<MultiBureauStatusCardProps> = ({
       {/* Summary Stats */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">Total Records</div>
-          <div className="text-xl font-bold text-foreground">
+          <div className="text-caption text-muted-foreground mb-1">Total Records</div>
+          <div className="text-h5 font-bold text-foreground">
             {formatNumber(totalRecords)}
           </div>
         </div>
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">Data Coverage</div>
-          <div className="text-xl font-bold text-foreground">
+          <div className="text-caption text-muted-foreground mb-1">Data Coverage</div>
+          <div className="text-h5 font-bold text-foreground">
             {overallCoverage}%
           </div>
         </div>

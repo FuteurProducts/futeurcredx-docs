@@ -24,9 +24,9 @@ export const SlaPanel: React.FC = () => {
       case 'operational':
         return <CheckCircle className="h-5 w-5 text-chart-2" />;
       case 'degraded':
-        return <AlertTriangle className="h-5 w-5 text-yellow-500" />;
+        return <AlertTriangle className="h-5 w-5 text-warning" />;
       case 'partial_outage':
-        return <AlertTriangle className="h-5 w-5 text-orange-500" />;
+        return <AlertTriangle className="h-5 w-5 text-warning" />;
       case 'major_outage':
         return <XCircle className="h-5 w-5 text-destructive" />;
       default:
@@ -49,9 +49,9 @@ export const SlaPanel: React.FC = () => {
       case 'critical':
         return <Badge variant="destructive">Critical</Badge>;
       case 'major':
-        return <Badge className="bg-orange-500/10 text-orange-600 border-orange-500/20">Major</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Major</Badge>;
       default:
-        return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Minor</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Minor</Badge>;
     }
   };
 
@@ -60,9 +60,9 @@ export const SlaPanel: React.FC = () => {
       case 'urgent':
         return <Badge variant="destructive">Urgent</Badge>;
       case 'high':
-        return <Badge className="bg-orange-500/10 text-orange-600 border-orange-500/20">High</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">High</Badge>;
       case 'medium':
-        return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Medium</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Medium</Badge>;
       default:
         return <Badge variant="secondary">Low</Badge>;
     }
@@ -129,7 +129,7 @@ export const SlaPanel: React.FC = () => {
             </div>
             <div className="text-right">
               <p className={`text-3xl font-bold ${
-                mockSlaMetrics.uptimePercentage >= mockSlaMetrics.targetUptime ? 'text-chart-2' : 'text-yellow-500'
+                mockSlaMetrics.uptimePercentage >= mockSlaMetrics.targetUptime ? 'text-chart-2' : 'text-warning'
               }`}>
                 {mockSlaMetrics.uptimePercentage}%
               </p>
@@ -155,7 +155,7 @@ export const SlaPanel: React.FC = () => {
                 <span className="text-muted-foreground">Operational</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-yellow-500 rounded" />
+                <div className="w-3 h-3 bg-warning rounded" />
                 <span className="text-muted-foreground">Degraded</span>
               </div>
               <div className="flex items-center gap-2">
@@ -172,7 +172,7 @@ export const SlaPanel: React.FC = () => {
                 key={i}
                 className={`flex-1 h-8 rounded-sm ${
                   status === 'operational' ? 'bg-chart-2' :
-                  status === 'degraded' ? 'bg-yellow-500' :
+                  status === 'degraded' ? 'bg-warning' :
                   'bg-destructive'
                 }`}
                 title={`Day ${90 - i}: ${status}`}
@@ -220,7 +220,7 @@ export const SlaPanel: React.FC = () => {
                 <p className="text-2xl font-bold">{mockIncidents.length}</p>
                 <p className="text-xs text-muted-foreground">All resolved</p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-yellow-500 opacity-20" />
+              <AlertTriangle className="h-8 w-8 text-warning opacity-20" />
             </div>
           </CardContent>
         </Card>

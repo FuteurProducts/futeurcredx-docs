@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff, ArrowUpRight, ArrowDownRight, Send, Download } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 import FinlabCard from "./FinlabCard";
 import {
   Select,
@@ -83,11 +84,22 @@ export const TotalBalanceCard = ({
       )}
 
       <div className="flex gap-4 mt-4">
-        <Button className="flex-1 bg-foreground hover:bg-foreground/90 text-white rounded-xl h-11">
+        <Button
+          className="flex-1 bg-foreground hover:bg-foreground/90 text-white rounded-xl h-11"
+          onClick={() => {
+            toast({ title: 'Transfer', description: 'Transfer functionality coming soon' });
+          }}
+        >
           <Send className="w-4 h-4 mr-2" />
           Transfer
         </Button>
-        <Button variant="outline" className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white rounded-xl h-11">
+        <Button
+          variant="outline"
+          className="flex-1 border-2 border-foreground text-foreground hover:bg-foreground hover:text-white rounded-xl h-11"
+          onClick={() => {
+            toast({ title: 'Receive', description: 'Receive functionality coming soon' });
+          }}
+        >
           <Download className="w-4 h-4 mr-2" />
           Receive
         </Button>

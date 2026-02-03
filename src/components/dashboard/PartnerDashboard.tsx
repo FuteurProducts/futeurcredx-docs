@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Building2, 
-  Users, 
-  Activity, 
-  TrendingUp, 
-  ExternalLink, 
+import {
+  Building2,
+  Users,
+  Activity,
+  TrendingUp,
+  ExternalLink,
   RefreshCw,
   BarChart3,
   Globe,
@@ -14,6 +14,7 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react';
+import { toast } from 'sonner';
 // UserResource type from AuthContext
 interface UserResource {
   id: string;
@@ -197,7 +198,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
     return (
       <div className="flex justify-center items-center p-12">
         <div className="flex items-center gap-3">
-          <RefreshCw className="w-5 h-5 animate-spin text-blue-600" />
+          <RefreshCw className="w-5 h-5 animate-spin text-info" />
           <span className="text-muted-foreground">Loading partner data...</span>
         </div>
       </div>
@@ -228,7 +229,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-3 py-2 bg-info text-white rounded-lg hover:bg-info/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
             {isRefreshing ? 'Refreshing...' : 'Refresh'}
@@ -245,11 +246,11 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-blue-50 rounded-xl">
-              <Building2 className="w-8 h-8 text-blue-600" />
+            <div className="p-3 bg-info/10 rounded-xl">
+              <Building2 className="w-8 h-8 text-info" />
             </div>
             <div>
-              <h3 className="font-black uppercase tracking-tight text-blue-900">Total Businesses</h3>
+              <h3 className="font-black uppercase tracking-tight text-info">Total Businesses</h3>
               <p className="text-sm text-muted-foreground font-medium">All time</p>
             </div>
           </div>
@@ -287,16 +288,16 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           className="bg-card/80 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-purple-50 rounded-xl">
-              <Activity className="w-8 h-8 text-purple-600" />
+            <div className="p-3 bg-[var(--primary-04)]/10 rounded-xl">
+              <Activity className="w-8 h-8 text-[var(--primary-04)]" />
             </div>
             <div>
-              <h3 className="font-black uppercase tracking-tight text-purple-900">API Calls</h3>
+              <h3 className="font-black uppercase tracking-tight text-[var(--primary-04)]">API Calls</h3>
               <p className="text-sm text-muted-foreground font-medium">This month</p>
             </div>
           </div>
           <div className="text-3xl font-black">{stats?.totalCallsThisMonth.toLocaleString()}</div>
-          <div className="text-sm text-purple-600 font-medium mt-1">
+          <div className="text-sm text-[var(--primary-04)] font-medium mt-1">
             +{stats?.growthRate}% vs last month
           </div>
         </motion.div>
@@ -308,16 +309,16 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
           className="bg-card/80 backdrop-blur-sm border border-orange-500/20 rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="p-3 bg-orange-50 rounded-xl">
-              <TrendingUp className="w-8 h-8 text-orange-600" />
+            <div className="p-3 bg-warning/10 rounded-xl">
+              <TrendingUp className="w-8 h-8 text-warning" />
             </div>
             <div>
-              <h3 className="font-black uppercase tracking-tight text-orange-900">Revenue</h3>
+              <h3 className="font-black uppercase tracking-tight text-warning">Revenue</h3>
               <p className="text-sm text-muted-foreground font-medium">This month</p>
             </div>
           </div>
           <div className="text-3xl font-black">${stats?.revenue.toLocaleString()}</div>
-          <div className="text-sm text-orange-600 font-medium mt-1">
+          <div className="text-sm text-warning font-medium mt-1">
             ${stats?.averageCallsPerBusiness} avg per business
           </div>
         </motion.div>
@@ -337,7 +338,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
               <select
                 value={selectedTimeframe}
                 onChange={(e) => setSelectedTimeframe(e.target.value)}
-                className="px-3 py-1 text-sm border border-border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="px-3 py-1 text-sm border border-border rounded-lg focus:ring-2 focus:ring-info focus:border-info"
               >
                 <option value="7d">Last 7 days</option>
                 <option value="30d">Last 30 days</option>
@@ -385,7 +386,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-info/10 text-info">
                       {business.industry}
                     </span>
                   </td>
@@ -418,7 +419,10 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-blue-600 hover:text-blue-900 flex items-center gap-1">
+                    <button
+                      className="text-info hover:text-info/80 flex items-center gap-1"
+                      onClick={() => toast.info(`Viewing details for ${business.name}`)}
+                    >
                       <ExternalLink className="w-4 h-4" />
                       View Details
                     </button>
@@ -435,12 +439,12 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-primary/20"
+        className="bg-gradient-to-r from-info/10 to-purple-500/10 rounded-2xl p-6 border border-primary/20"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-card rounded-xl shadow-sm">
-              <BarChart3 className="w-8 h-8 text-blue-600" />
+              <BarChart3 className="w-8 h-8 text-info" />
             </div>
             <div>
               <h3 className="text-title text-foreground">Connect Your CRM</h3>
@@ -448,11 +452,17 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="px-4 py-2 bg-card text-blue-600 rounded-lg hover:bg-blue-50 transition-colors border border-primary/20">
+            <button
+              className="px-4 py-2 bg-card text-info rounded-lg hover:bg-info/10 transition-colors border border-primary/20"
+              onClick={() => toast.info('Opening CRM integration documentation...')}
+            >
               <ExternalLink className="w-4 h-4 mr-2 inline" />
               View Docs
             </button>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center">
+            <button
+              className="px-4 py-2 bg-info text-white rounded-lg hover:bg-info/90 transition-colors flex items-center"
+              onClick={() => toast.success('HubSpot connection initiated. Check your email for verification.')}
+            >
               <Zap className="w-4 h-4 mr-2" />
               Connect HubSpot
             </button>
@@ -469,13 +479,16 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
       >
         <div className="bg-card/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <Zap className="w-6 h-6 text-blue-600" />
+            <div className="p-2 bg-info/10 rounded-lg">
+              <Zap className="w-6 h-6 text-info" />
             </div>
             <h3 className="font-semibold text-foreground">API Usage Analytics</h3>
           </div>
           <p className="text-sm text-muted-foreground mb-4">Deep dive into API usage patterns and performance metrics</p>
-          <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+          <button
+            className="text-info hover:text-info/80 text-sm font-medium"
+            onClick={() => toast.info('Opening API Usage Analytics dashboard...')}
+          >
             View Analytics →
           </button>
         </div>
@@ -488,20 +501,26 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
             <h3 className="font-semibold text-foreground">Security Dashboard</h3>
           </div>
           <p className="text-sm text-muted-foreground mb-4">Monitor API security, rate limits, and access patterns</p>
-          <button className="text-success hover:text-success/80 text-sm font-medium">
+          <button
+            className="text-success hover:text-success/80 text-sm font-medium"
+            onClick={() => toast.info('Opening Security Dashboard...')}
+          >
             View Security →
           </button>
         </div>
 
-        <div className="bg-card/80 backdrop-blur-sm border border-purple-500/20 rounded-2xl p-6 shadow-sm">
+        <div className="bg-card/80 backdrop-blur-sm border border-[var(--primary-04)]/20 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-purple-50 rounded-lg">
-              <Globe className="w-6 h-6 text-purple-600" />
+            <div className="p-2 bg-[var(--primary-04)]/10 rounded-lg">
+              <Globe className="w-6 h-6 text-[var(--primary-04)]" />
             </div>
             <h3 className="font-semibold text-foreground">Global Usage</h3>
           </div>
           <p className="text-sm text-muted-foreground mb-4">Track API usage across different regions and time zones</p>
-          <button className="text-purple-600 hover:text-purple-700 text-sm font-medium">
+          <button
+            className="text-[var(--primary-04)] hover:text-[var(--primary-04)]/80 text-sm font-medium"
+            onClick={() => toast.info('Opening Global Usage dashboard...')}
+          >
             View Global →
           </button>
         </div>

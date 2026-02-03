@@ -82,8 +82,8 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-rose-500/10 rounded-xl flex items-center justify-center">
-            <TrendingDown className="w-5 h-5 text-rose-600" />
+          <div className="w-10 h-10 bg-destructive/10 rounded-xl flex items-center justify-center">
+            <TrendingDown className="w-5 h-5 text-destructive" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">Stress & Scenario Analysis</h3>
@@ -127,7 +127,7 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
               </div>
               <div>
                 <div className="text-muted-foreground">Revenue Decline</div>
-                <div className="font-semibold text-rose-600">-{selectedScenario.assumptions.revenueDecline}%</div>
+                <div className="font-semibold text-destructive">-{selectedScenario.assumptions.revenueDecline}%</div>
               </div>
               <div>
                 <div className="text-muted-foreground">Unemployment Δ</div>
@@ -147,10 +147,10 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
             <div className="text-xs text-muted-foreground mb-1">Expected Loss (Baseline)</div>
             <div className="text-2xl font-bold text-foreground">{formatCurrency(expectedLossBaseline)}</div>
           </div>
-          <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
-            <div className="text-xs text-rose-600 mb-1">Expected Loss (Stressed)</div>
-            <div className="text-2xl font-bold text-rose-700">{formatCurrency(expectedLossStressed)}</div>
-            <div className="flex items-center gap-1 mt-1 text-sm text-rose-600">
+          <div className="p-4 bg-destructive/10 rounded-xl border border-destructive/20">
+            <div className="text-xs text-destructive mb-1">Expected Loss (Stressed)</div>
+            <div className="text-2xl font-bold text-destructive">{formatCurrency(expectedLossStressed)}</div>
+            <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
               <TrendingDown className="w-4 h-4" />
               <span>+{formatCurrency(lossIncrease)} ({lossIncreasePct}%)</span>
             </div>
@@ -182,14 +182,14 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
                         <ChevronRight className="w-4 h-4 text-muted-foreground" />
                         <span className={`font-medium ${
                           migration.toTier === 'High' || migration.toTier === 'Watch' || migration.toTier === 'Default'
-                            ? 'text-rose-600' : ''
+                            ? 'text-destructive' : ''
                         }`}>{migration.toTier}</span>
                       </div>
                     </td>
                     <td className="py-2 px-3 text-right text-muted-foreground">{migration.currentPct}%</td>
                     <td className="py-2 px-3 text-right font-medium">{migration.stressedPct}%</td>
                     <td className={`py-2 px-3 text-right font-medium ${
-                      migration.delta > 0 ? 'text-rose-600' : 'text-success'
+                      migration.delta > 0 ? 'text-destructive' : 'text-success'
                     }`}>
                       {migration.delta > 0 ? '+' : ''}{migration.delta}%
                     </td>
@@ -211,7 +211,7 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
               <div key={impact.metric} className="p-3 bg-muted/30 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-foreground">{impact.metric}</span>
-                  <span className={`text-sm font-bold ${impact.change > 0 ? 'text-rose-600' : 'text-success'}`}>
+                  <span className={`text-sm font-bold ${impact.change > 0 ? 'text-destructive' : 'text-success'}`}>
                     {impact.change > 0 ? '+' : ''}{impact.change}{impact.unit}
                   </span>
                 </div>

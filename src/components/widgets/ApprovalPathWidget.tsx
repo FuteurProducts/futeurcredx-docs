@@ -58,7 +58,7 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
       case 'completed':
         return <Check className="w-4 h-4 text-success" />;
       case 'in_progress':
-        return <Clock className="w-4 h-4 text-blue-600 animate-pulse" />;
+        return <Clock className="w-4 h-4 text-info animate-pulse" />;
       case 'blocked':
         return <AlertTriangle className="w-4 h-4 text-destructive" />;
       default:
@@ -71,7 +71,7 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
       case 'completed':
         return 'bg-success/10 border-success/20';
       case 'in_progress':
-        return 'bg-blue-50 border-blue-200';
+        return 'bg-info/10 border-info/20';
       case 'blocked':
         return 'bg-destructive/10 border-destructive/20';
       default:
@@ -81,8 +81,8 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
 
   const getImpactBadge = (impact: UnlockAction['impact']) => {
     const styles = {
-      high: 'bg-purple-100 text-purple-700',
-      medium: 'bg-blue-100 text-blue-700',
+      high: 'bg-[var(--primary-04)]/10 text-[var(--primary-04)]',
+      medium: 'bg-info/10 text-info',
       low: 'bg-accent text-muted-foreground',
     };
     return styles[impact];
@@ -124,9 +124,9 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
 
         {/* Next action */}
         {data.actions.find(a => a.status === 'in_progress' || a.status === 'pending') && (
-          <div className="bg-blue-50 rounded-lg p-3 flex items-center justify-between">
+          <div className="bg-info/10 rounded-lg p-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-blue-600" />
+              <Zap className="w-4 h-4 text-info" />
               <span className="text-sm font-medium text-foreground">
                 {data.actions.find(a => a.status === 'in_progress')?.title || 
                  data.actions.find(a => a.status === 'pending')?.title}
@@ -186,7 +186,7 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
       <div className="flex items-center justify-between mb-6">
         <div>
           <div className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-purple-500" />
+            <Target className="w-5 h-5 text-[var(--primary-04)]" />
             <h3 className="text-lg font-semibold text-foreground">Unlock Path</h3>
           </div>
           <p className="text-sm text-muted-foreground mt-1">
@@ -202,7 +202,7 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
                 cx="40"
                 cy="40"
                 r="35"
-                stroke="#e2e8f0"
+                stroke="hsl(var(--border))"
                 strokeWidth="6"
                 fill="none"
               />
@@ -220,8 +220,8 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
               />
               <defs>
                 <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#8b5cf6" />
+                  <stop offset="0%" stopColor="var(--primary-01)" />
+                  <stop offset="100%" stopColor="var(--primary-04)" />
                 </linearGradient>
               </defs>
             </svg>

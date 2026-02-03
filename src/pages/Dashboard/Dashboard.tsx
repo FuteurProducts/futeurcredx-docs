@@ -702,7 +702,7 @@ const Dashboard: React.FC = () => {
 
               {/* Docs Link */}
               <button
-                onClick={() => toast({ title: 'Documentation portal available during pilot engagement', description: 'Contact your account representative for access.' })}
+                onClick={() => toast({ title: 'Documentation portal available at docs.lumiq.ai', description: 'Access API references, guides, and integration examples.' })}
                 className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-card hover:bg-muted border border-border transition-all duration-200 group"
                 title="Documentation"
               >

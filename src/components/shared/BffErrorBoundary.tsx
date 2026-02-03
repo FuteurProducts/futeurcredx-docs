@@ -77,9 +77,9 @@ export function BffErrorDisplay({ error, onRetry, className }: BffErrorDisplayPr
           icon: Briefcase,
           title: 'Portfolio Required',
           description: 'Please select a portfolio to view this data.',
-          color: 'text-yellow-600',
-          bgColor: 'bg-yellow-50',
-          borderColor: 'border-yellow-200',
+          color: 'text-warning',
+          bgColor: 'bg-warning/10',
+          borderColor: 'border-warning/20',
         };
       case 'FORBIDDEN':
         return {

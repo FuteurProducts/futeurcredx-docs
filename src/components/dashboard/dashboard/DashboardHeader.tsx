@@ -1,4 +1,5 @@
 import { Bell, Search, User, LayoutDashboard, BarChart3, Users, FileText, TrendingUp, Settings, Sun, Moon, Monitor } from "lucide-react";
+import { toast } from "sonner";
 import { useTheme } from "@/contexts/ThemeContext";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -98,7 +99,15 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button variant="ghost" size="icon" className="relative" aria-label="Notifications">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative"
+          aria-label="Notifications"
+          onClick={() => {
+            toast.info('You have 3 new notifications');
+          }}
+        >
           <Bell className="w-5 h-5" />
           <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
         </Button>

@@ -296,19 +296,19 @@ const Notifications: React.FC = () => {
         <h2 className="text-[1.125rem] font-semibold text-foreground mb-4">Integration Status</h2>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-[#32AE60] flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
               <Icon name="check" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
             <span className="text-[0.9375rem] text-foreground">Email verified</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-[#32AE60] flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
               <Icon name="check" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
             <span className="text-[0.9375rem] text-foreground">SMS enabled</span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-full bg-[#32AE60] flex items-center justify-center">
+            <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
               <Icon name="check" className="w-3 h-3" style={{ filter: 'brightness(0) invert(1)' }} />
             </div>
             <span className="text-[0.9375rem] text-foreground">Slack connected</span>

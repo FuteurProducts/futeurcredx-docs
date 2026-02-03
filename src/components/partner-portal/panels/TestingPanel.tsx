@@ -254,7 +254,7 @@ export const TestingPanel: React.FC = () => {
     switch (status) {
       case 'passed': return <CheckCircle className="h-4 w-4 text-chart-2" />;
       case 'failed': return <XCircle className="h-4 w-4 text-destructive" />;
-      case 'in_progress': return <Clock className="h-4 w-4 text-yellow-500" />;
+      case 'in_progress': return <Clock className="h-4 w-4 text-warning" />;
       default: return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
   };
@@ -263,7 +263,7 @@ export const TestingPanel: React.FC = () => {
     switch (status) {
       case 'passed': return <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">Passed</Badge>;
       case 'failed': return <Badge variant="destructive">Failed</Badge>;
-      case 'in_progress': return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Running</Badge>;
+      case 'in_progress': return <Badge className="bg-warning/10 text-warning border-warning/20">Running</Badge>;
       default: return <Badge variant="secondary">Not Run</Badge>;
     }
   };

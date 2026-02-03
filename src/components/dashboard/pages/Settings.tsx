@@ -11,6 +11,7 @@ import type { ApiKey as BffApiKey, AuditEvent as BffAuditEvent } from '@/service
 import { withFallback } from '@/utils/withFallback';
 import { demoDataStore } from '@/data/demoDataStore';
 import { PILOT_CONFIG } from '@/data/demoData';
+import { Button } from '@/components/ui/button';
 import {
   SettingsGlobalControls,
   SettingsNavigation,
@@ -382,16 +383,18 @@ const Settings: React.FC = () => {
                   Reset all demo data (approvals, score pulls, etc.) to initial state
                 </p>
               </div>
-              <button
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => {
                   demoDataStore.reset();
                   toast({ title: 'Demo Reset', description: 'All demo session data has been cleared. Refreshing...' });
                   setTimeout(() => window.location.reload(), 800);
                 }}
-                className="px-3 py-1.5 text-xs font-medium text-destructive hover:text-destructive/80 border border-destructive/20 hover:border-destructive/40 rounded-lg transition-colors"
+                className="text-destructive hover:text-destructive/80 border-destructive/20 hover:border-destructive/40"
               >
                 Reset Demo
-              </button>
+              </Button>
             </div>
           </div>
         </div>

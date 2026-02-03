@@ -74,7 +74,7 @@ const getSegmentConfig = (segment: PipelineApplication['customerSegment']) => {
   switch (segment) {
     case 'micro': return { label: 'Micro', color: 'bg-info/10 text-info' };
     case 'small': return { label: 'Small', color: 'bg-success/10 text-success' };
-    case 'mid-market': return { label: 'Mid-Market', color: 'bg-purple-100 text-purple-700' };
+    case 'mid-market': return { label: 'Mid-Market', color: 'bg-[var(--primary-04)]/10 text-[var(--primary-04)]' };
   }
 };
 

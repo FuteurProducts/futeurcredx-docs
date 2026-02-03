@@ -106,17 +106,17 @@ export const DataSourceHealthCard: React.FC<DataSourceHealthCardProps> = ({
             </svg>
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-h6 font-semibold text-foreground">
               Data Source Health
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-body-2 text-muted-foreground">
               {sources.length} active sources
             </p>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xs text-muted-foreground">Overall Health</div>
-          <div className={`text-2xl font-bold ${getHealthColor(overallHealth)}`}>
+          <div className="text-caption text-muted-foreground">Overall Health</div>
+          <div className={`text-h4 font-bold ${getHealthColor(overallHealth)}`}>
             {overallHealth}%
           </div>
         </div>
@@ -125,14 +125,14 @@ export const DataSourceHealthCard: React.FC<DataSourceHealthCardProps> = ({
       {/* Summary */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">Total Records</div>
-          <div className="text-xl font-bold text-foreground">
+          <div className="text-caption text-muted-foreground mb-1">Total Records</div>
+          <div className="text-h5 font-bold text-foreground">
             {formatNumber(totalRecords)}
           </div>
         </div>
         <div className="p-3 bg-muted/50 rounded-xl">
-          <div className="text-xs text-muted-foreground mb-1">Active Sources</div>
-          <div className="text-xl font-bold text-foreground">{sources.length}</div>
+          <div className="text-caption text-muted-foreground mb-1">Active Sources</div>
+          <div className="text-h5 font-bold text-foreground">{sources.length}</div>
         </div>
       </div>
 

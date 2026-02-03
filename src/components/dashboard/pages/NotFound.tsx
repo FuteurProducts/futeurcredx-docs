@@ -31,7 +31,7 @@ const NotFound = () => {
           </div>
           <Link 
             to="/dashboard"
-            className="inline-flex items-center gap-3 h-12 px-6 bg-primary text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-blue-600 transition-colors"
+            className="inline-flex items-center gap-3 h-12 px-6 bg-primary text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-primary/90 transition-colors"
           >
             <svg 
               className="w-5 h-5" 

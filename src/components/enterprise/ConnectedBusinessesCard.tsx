@@ -29,7 +29,7 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
           <div className="p-2 bg-primary/10 rounded-xl">
             <Building2 className="h-5 w-5 text-primary" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground">Connected Businesses</h3>
+          <h3 className="text-h6 font-semibold text-foreground">Connected Businesses</h3>
         </div>
         <span className="text-xs text-muted-foreground">Real-time</span>
       </div>
@@ -53,7 +53,7 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
             <span>{Math.abs(data.monthlyGrowth)}%</span>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground mt-1">SMB accounts connected via API</p>
+        <p className="text-body-2 text-muted-foreground mt-1">SMB accounts connected via API</p>
       </div>
 
       {/* Stats Grid */}
@@ -66,46 +66,46 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
             <LinkIcon className="h-4 w-4 text-primary" />
             <span className="text-xs text-muted-foreground">Active</span>
           </div>
-          <span className="text-xl font-semibold text-foreground">
+          <span className="text-h5 font-semibold text-foreground">
             {data.activeConnections.toLocaleString()}
           </span>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           whileHover={{ scale: 1.02 }}
           className="p-4 bg-muted/50 rounded-xl"
         >
           <div className="flex items-center gap-2 mb-2">
             <Users className="h-4 w-4 text-success" />
-            <span className="text-xs text-muted-foreground">New MTD</span>
+            <span className="text-caption text-muted-foreground">New MTD</span>
           </div>
-          <span className="text-xl font-semibold text-foreground">
+          <span className="text-h5 font-semibold text-foreground">
             +{data.newThisMonth.toLocaleString()}
           </span>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           whileHover={{ scale: 1.02 }}
           className="p-4 bg-muted/50 rounded-xl"
         >
           <div className="flex items-center gap-2 mb-2">
             <AlertCircle className="h-4 w-4 text-warning" />
-            <span className="text-xs text-muted-foreground">Disconnected</span>
+            <span className="text-caption text-muted-foreground">Disconnected</span>
           </div>
-          <span className="text-xl font-semibold text-foreground">
+          <span className="text-h5 font-semibold text-foreground">
             {data.disconnectedCount.toLocaleString()}
           </span>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           whileHover={{ scale: 1.02 }}
           className="p-4 bg-muted/50 rounded-xl"
         >
           <div className="flex items-center gap-2 mb-2">
-            <LinkIcon className="h-4 w-4 text-orange-500" />
-            <span className="text-xs text-muted-foreground">Pending</span>
+            <LinkIcon className="h-4 w-4 text-warning" />
+            <span className="text-caption text-muted-foreground">Pending</span>
           </div>
-          <span className="text-xl font-semibold text-foreground">
+          <span className="text-h5 font-semibold text-foreground">
             {data.pendingReconnect.toLocaleString()}
           </span>
         </motion.div>

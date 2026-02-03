@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Save, Bell, Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { AlertThreshold } from '../types';
 
 interface AlertThresholdsPanelProps {
@@ -43,22 +44,18 @@ export const AlertThresholdsPanel: React.FC<AlertThresholdsPanelProps> = ({
             Configure when alerts are triggered for portfolio monitoring
           </p>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={!hasChanges}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
-        >
+        <Button onClick={handleSave} disabled={!hasChanges}>
           <Save className="h-4 w-4" />
           Save Changes
-        </button>
+        </Button>
       </div>
 
       {/* Info Banner */}
-      <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-100 rounded-lg">
-        <Info className="h-5 w-5 text-blue-600 mt-0.5" />
-        <div className="text-sm text-blue-800">
+      <div className="flex items-start gap-3 p-4 bg-info/10 border border-info/20 rounded-lg">
+        <Info className="h-5 w-5 text-info mt-0.5" />
+        <div className="text-sm text-info">
           <p className="font-medium">How thresholds work</p>
-          <p className="text-blue-700 mt-1">
+          <p className="text-info/80 mt-1">
             When a metric crosses the threshold, an alert is generated in the Early Warning System 
             and optionally sent via configured notification channels.
           </p>

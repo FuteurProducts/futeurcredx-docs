@@ -24,6 +24,7 @@ import {
   Bookmark
 } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import { toast } from 'sonner';
 
 interface CustomerDossierProps {
   customer: {
@@ -154,7 +155,10 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <button className="p-2 rounded-lg hover:bg-muted transition-colors">
+                <button
+                  onClick={() => toast.success('Customer bookmarked')}
+                  className="p-2 rounded-lg hover:bg-muted transition-colors"
+                >
                   <Bookmark className="h-5 w-5 text-muted-foreground" />
                 </button>
                 <button

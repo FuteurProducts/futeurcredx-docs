@@ -47,7 +47,13 @@ const scoreGaugeData = [
   { name: "Green", value: 150 },
 ];
 
-const SCORE_COLORS = ["#ef4444", "#f97316", "#fbbf24", "#84cc16", "#22c55e"];
+const SCORE_COLORS = [
+  "hsl(var(--destructive))",
+  "hsl(var(--warning))",
+  "hsl(var(--warning))",
+  "hsl(var(--success))",
+  "hsl(var(--success))"
+];
 
 const getGradeColor = (grade: string) => {
   if (grade.startsWith('A')) return 'text-success bg-success/10';

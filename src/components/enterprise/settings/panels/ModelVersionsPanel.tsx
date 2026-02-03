@@ -5,9 +5,10 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
+import {
   Cpu, CheckCircle, FileText, GitBranch, ExternalLink
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -131,7 +132,9 @@ export const ModelVersionsPanel: React.FC = () => {
                         Documentation
                       </Button>
                       {model.status === 'testing' && (
-                        <Button size="sm">
+                        <Button size="sm" onClick={() => {
+                          toast.success('Model promoted to production');
+                        }}>
                           Promote to Production
                         </Button>
                       )}

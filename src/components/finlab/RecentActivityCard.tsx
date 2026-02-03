@@ -66,7 +66,7 @@ export const RecentActivityCard = ({
     <div className="-mt-2">
       {items.slice(0, viewItems).map((item) => (
         <div key={item.id} className="flex items-center mt-8">
-          <div className="flex justify-center items-center w-[52px] h-[52px] rounded-full bg-[#F4F4F7]">
+          <div className="flex justify-center items-center w-[52px] h-[52px] rounded-full bg-muted">
             <img
               src={item.image}
               alt={item.title}

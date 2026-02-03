@@ -103,7 +103,7 @@ export const DocumentationPanel: React.FC = () => {
     const colors: Record<string, string> = {
       GET: 'bg-chart-2/10 text-chart-2 border-chart-2/20',
       POST: 'bg-primary/10 text-primary border-primary/20',
-      PUT: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
+      PUT: 'bg-warning/10 text-warning border-warning/20',
       DELETE: 'bg-destructive/10 text-destructive border-destructive/20',
       PATCH: 'bg-chart-4/10 text-chart-4 border-chart-4/20',
     };
@@ -206,7 +206,7 @@ print(response.json())`;
                 key={version.version}
                 className={`flex-1 p-4 rounded-lg ${
                   version.status === 'current' ? 'bg-primary/10 border border-primary/20' :
-                  version.status === 'deprecated' ? 'bg-yellow-500/10 border border-yellow-500/20' :
+                  version.status === 'deprecated' ? 'bg-warning/10 border border-warning/20' :
                   'bg-muted/50'
                 }`}
               >
@@ -438,7 +438,7 @@ print(response.json())`;
                   <span className="text-muted-foreground">Missing portfolioId</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <code className="font-mono text-yellow-600">429</code>
+                  <code className="font-mono text-warning">429</code>
                   <span className="text-muted-foreground">Rate limit exceeded</span>
                 </div>
               </div>

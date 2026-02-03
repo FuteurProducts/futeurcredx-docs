@@ -141,7 +141,7 @@ export const WebhooksPanel: React.FC = () => {
       case 'active':
         return <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">Active</Badge>;
       case 'paused':
-        return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Paused</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Paused</Badge>;
       case 'failed':
         return <Badge variant="destructive">Failed</Badge>;
       case 'disabled':
@@ -156,7 +156,7 @@ export const WebhooksPanel: React.FC = () => {
       case 'failed':
         return <XCircle className="h-4 w-4 text-destructive" />;
       case 'retrying':
-        return <RefreshCw className="h-4 w-4 text-yellow-500 animate-spin" />;
+        return <RefreshCw className="h-4 w-4 text-warning animate-spin" />;
       case 'pending':
         return <Clock className="h-4 w-4 text-muted-foreground" />;
     }
@@ -297,7 +297,7 @@ export const WebhooksPanel: React.FC = () => {
                 <div className="flex items-start gap-4">
                   <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
                     webhook.status === 'active' ? 'bg-chart-2/10 text-chart-2' :
-                    webhook.status === 'paused' ? 'bg-yellow-500/10 text-yellow-500' :
+                    webhook.status === 'paused' ? 'bg-warning/10 text-warning' :
                     'bg-destructive/10 text-destructive'
                   }`}>
                     <Webhook className="h-5 w-5" />
@@ -312,7 +312,7 @@ export const WebhooksPanel: React.FC = () => {
                       {webhook.lastDeliveryAt && (
                         <span>Last delivery {new Date(webhook.lastDeliveryAt).toLocaleString()}</span>
                       )}
-                      <span className={webhook.successRate >= 99 ? 'text-chart-2' : 'text-yellow-500'}>
+                      <span className={webhook.successRate >= 99 ? 'text-chart-2' : 'text-warning'}>
                         {webhook.successRate}% success rate
                       </span>
                     </div>
@@ -391,7 +391,7 @@ export const WebhooksPanel: React.FC = () => {
                                 Failed after {delivery.attempts} attempts (HTTP {delivery.responseCode})
                               </span>
                             ) : delivery.status === 'retrying' ? (
-                              <span className="text-yellow-500">
+                              <span className="text-warning">
                                 Retrying... Attempt {delivery.attempts}/{5}
                               </span>
                             ) : (

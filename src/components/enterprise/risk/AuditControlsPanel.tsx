@@ -38,8 +38,8 @@ const getActionStyle = (action: string) => {
   switch (action) {
     case 'view': return { bg: 'bg-info/10', text: 'text-info', icon: Eye };
     case 'export': return { bg: 'bg-warning/10', text: 'text-warning', icon: Download };
-    case 'modify': return { bg: 'bg-violet-50', text: 'text-violet-700', icon: FileText };
-    case 'delete': return { bg: 'bg-rose-50', text: 'text-rose-700', icon: FileText };
+    case 'modify': return { bg: 'bg-[var(--primary-04)]/10', text: 'text-[var(--primary-04)]', icon: FileText };
+    case 'delete': return { bg: 'bg-destructive/10', text: 'text-destructive', icon: FileText };
     default: return { bg: 'bg-muted', text: 'text-foreground', icon: Eye };
   }
 };
@@ -92,7 +92,7 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
         <div className="flex items-center gap-4">
           {/* Security Status */}
           <div className="flex items-center gap-2">
-            <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${mfaEnforced ? 'bg-success/10 text-success' : 'bg-rose-50 text-rose-700'}`}>
+            <div className={`flex items-center gap-1.5 px-2 py-1 rounded ${mfaEnforced ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive'}`}>
               <Key className="w-3.5 h-3.5" />
               <span className="text-xs font-medium">MFA {mfaEnforced ? 'ON' : 'OFF'}</span>
             </div>
@@ -182,7 +182,7 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
                         {event.action.toUpperCase()}
                       </span>
                       {event.sensitivityLevel === 'high' && (
-                        <span className="px-1.5 py-0.5 bg-rose-100 text-rose-700 rounded text-xs font-medium">
+                        <span className="px-1.5 py-0.5 bg-destructive/10 text-destructive rounded text-xs font-medium">
                           SENSITIVE
                         </span>
                       )}
@@ -208,11 +208,11 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
               >
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
                   change.changeType === 'grant' ? 'bg-success/10' :
-                  change.changeType === 'revoke' ? 'bg-rose-50' : 'bg-info/10'
+                  change.changeType === 'revoke' ? 'bg-destructive/10' : 'bg-info/10'
                 }`}>
                   <Key className={`w-4 h-4 ${
                     change.changeType === 'grant' ? 'text-success' :
-                    change.changeType === 'revoke' ? 'text-rose-600' : 'text-info'
+                    change.changeType === 'revoke' ? 'text-destructive' : 'text-info'
                   }`} />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -220,7 +220,7 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
                     <span className="font-medium text-foreground">{change.userName}</span>
                     <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
                       change.changeType === 'grant' ? 'bg-success/10 text-success' :
-                      change.changeType === 'revoke' ? 'bg-rose-100 text-rose-700' : 'bg-info/10 text-info'
+                      change.changeType === 'revoke' ? 'bg-destructive/10 text-destructive' : 'bg-info/10 text-info'
                     }`}>
                       {change.changeType.toUpperCase()}
                     </span>

@@ -206,7 +206,9 @@ export const ConsentPanel: React.FC = () => {
                 <p className="text-sm text-muted-foreground">Customize legal language for consent forms</p>
               </div>
             </div>
-            <Button variant="outline">
+            <Button variant="outline" onClick={() => {
+              toast({ title: 'Template editor coming soon' });
+            }}>
               <ExternalLink className="h-4 w-4 mr-2" />
               Edit Templates
             </Button>

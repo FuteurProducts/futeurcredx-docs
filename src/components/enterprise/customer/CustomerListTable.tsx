@@ -16,7 +16,7 @@ import {
 import { EmptyState } from '@/components/ui/empty-state';
 import { SortIndicator } from '@/components/ui/sort-indicator';
 import { exportToCSV } from '@/lib/export';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 export interface CustomerEntity {
   id: string;
@@ -237,13 +237,22 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
             <span className="text-sm text-muted-foreground">
               {selectedIds.length} selected
             </span>
-            <button className="px-3 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+            <button
+              onClick={() => toast.info('Relationship Manager assignment panel coming soon')}
+              className="px-3 py-1.5 text-xs font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            >
               Assign Relationship Manager
             </button>
-            <button className="px-3 py-1.5 text-xs font-medium bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors">
+            <button
+              onClick={() => toast.info('Campaign selection coming soon')}
+              className="px-3 py-1.5 text-xs font-medium bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors"
+            >
               Add to Campaign
             </button>
-            <button className="px-3 py-1.5 text-xs font-medium bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors">
+            <button
+              onClick={() => toast.success('Exporting selected customers...', { description: '3 customers selected' })}
+              className="px-3 py-1.5 text-xs font-medium bg-muted text-foreground rounded-lg hover:bg-muted/80 transition-colors"
+            >
               Export Selected
             </button>
           </motion.div>

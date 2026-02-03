@@ -15,6 +15,7 @@ import {
   Filter
 } from 'lucide-react';
 import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis, YAxis, BarChart, Bar, Cell } from 'recharts';
+import { toast } from 'sonner';
 
 interface CustomerEntity {
   id: string;
@@ -150,7 +151,7 @@ const getMetricData = (metric: string, customers: CustomerEntity[]) => {
         title: 'Revenue Opportunities',
         subtitle: 'AI-identified growth and upsell opportunities',
         icon: Lightbulb,
-        iconColor: '#F59E0B',
+        iconColor: 'hsl(var(--warning))',
         distribution: [
           { range: 'LOC Expansion', count: 28, color: 'hsl(var(--chart-1))' },
           { range: 'Equipment Financing', count: 22, color: 'hsl(var(--chart-2))' },
@@ -227,11 +228,17 @@ export const MetricDrilldownModal: React.FC<MetricDrilldownModalProps> = ({
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted transition-colors">
+                <button
+                  onClick={() => toast.info('Advanced filters coming soon')}
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted transition-colors"
+                >
                   <Filter className="h-4 w-4" />
                   Filter
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted transition-colors">
+                <button
+                  onClick={() => toast.success('Exporting metric data...')}
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground border border-border rounded-lg hover:bg-muted transition-colors"
+                >
                   <Download className="h-4 w-4" />
                   Export
                 </button>

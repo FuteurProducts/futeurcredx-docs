@@ -284,8 +284,8 @@ export const BulkActionsToolbar: React.FC<BulkActionsToolbarProps> = ({
         </div>
         
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-            <Send className="w-4 h-4 text-purple-600" />
+          <div className="w-8 h-8 rounded-lg bg-primary-04/10 flex items-center justify-center">
+            <Send className="w-4 h-4 text-primary-04" />
           </div>
           <div>
             <p className="text-xs text-muted-foreground">Avg. Decision Time</p>

@@ -46,7 +46,7 @@ const GEOGRAPHIES = [
 const CUSTOMER_SEGMENTS = [
   { id: 'micro', label: 'Micro (<$500K Rev)', color: 'bg-info/10 text-info' },
   { id: 'small', label: 'Small ($500K-$5M Rev)', color: 'bg-success/10 text-success' },
-  { id: 'mid-market', label: 'Mid-Market ($5M-$50M Rev)', color: 'bg-purple-100 text-purple-700' },
+  { id: 'mid-market', label: 'Mid-Market ($5M-$50M Rev)', color: 'bg-[var(--primary-04)]/10 text-[var(--primary-04)]' },
 ];
 
 const RELATIONSHIP_STAGES = [

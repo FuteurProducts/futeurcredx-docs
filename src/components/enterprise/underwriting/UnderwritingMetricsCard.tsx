@@ -49,7 +49,7 @@ export const UnderwritingMetricsCard: React.FC<UnderwritingMetricsCardProps> = (
 }) => {
   return (
     <div className="bg-card rounded-xl border border-border p-5">
-      <h3 className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+      <h3 className="text-body-2 font-semibold text-foreground mb-4 flex items-center gap-2">
         <Activity className="w-4 h-4 text-info" />
         {title}
       </h3>
@@ -75,9 +75,9 @@ export const UnderwritingMetricsCard: React.FC<UnderwritingMetricsCardProps> = (
                 </div>
                 
                 <div className="mb-1">
-                  <span className="text-2xl font-bold text-foreground">{metric.value}</span>
+                  <span className="text-h4 font-bold text-foreground">{metric.value}</span>
                 </div>
-                <p className="text-xs text-muted-foreground">{metric.label}</p>
+                <p className="text-caption text-muted-foreground">{metric.label}</p>
 
                 {metric.changeLabel && (
                   <p className="text-xs text-muted-foreground mt-1">{metric.changeLabel}</p>

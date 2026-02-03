@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react';
 import { useUser } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 
 // ============================================
 // PRODUCTS DATA (like Chase Business Cards)
@@ -99,26 +101,26 @@ const products: Product[] = [
   },
 ];
 
-// Color classes for cards
+// Color classes for cards - using CSS custom properties
 const colorClasses = {
   yellow: {
-    bg: "bg-[#FFF8E7]",
-    border: "border-[#FFE4A0]",
-    iconBg: "bg-[#FBA94B]",
+    bg: "bg-warning/10",
+    border: "border-warning/30",
+    iconBg: "bg-warning",
   },
   purple: {
-    bg: "bg-[#F5EDFA]",
-    border: "border-[#D4B8E8]",
-    iconBg: "bg-[#B981DA]",
+    bg: "bg-[hsl(var(--primary-04))]/10",
+    border: "border-[hsl(var(--primary-04))]/30",
+    iconBg: "bg-[hsl(var(--primary-04))]",
   },
   green: {
-    bg: "bg-[#E8F9EE]",
-    border: "border-[#A8E6C1]",
-    iconBg: "bg-[#32AE60]",
+    bg: "bg-success/10",
+    border: "border-success/30",
+    iconBg: "bg-success",
   },
   blue: {
-    bg: "bg-[#E8F4FF]",
-    border: "border-[#A0D4FF]",
+    bg: "bg-info/10",
+    border: "border-info/30",
     iconBg: "bg-primary",
   },
 };
@@ -269,7 +271,7 @@ const Products = () => {
             <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-1">
               {selectedProduct.details.features.map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 p-3 bg-muted rounded-xl">
-                  <div className="w-5 h-5 rounded-full bg-[#32AE60] flex items-center justify-center shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-success flex items-center justify-center shrink-0">
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
@@ -297,12 +299,27 @@ const Products = () => {
             
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <button className="flex-1 h-11 bg-foreground text-white rounded-xl font-semibold text-[0.875rem] hover:bg-foreground/90 transition-colors">
+              <Button
+                onClick={() => {
+                  toast.success('Opening sandbox environment...', {
+                    description: 'You can test this API with sample data',
+                  });
+                }}
+                className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
+              >
                 Try in Sandbox
-              </button>
-              <button className="flex-1 h-11 bg-muted text-foreground rounded-xl font-semibold text-[0.875rem] hover:bg-muted transition-colors">
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  toast.info('Opening documentation...', {
+                    description: 'API reference and integration guides',
+                  });
+                }}
+                className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
+              >
                 View Documentation
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -361,17 +378,32 @@ const Products = () => {
 
         {/* Quick Links */}
         <div className="space-y-2">
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+          <button
+            onClick={() => {
+              toast.info('The Credit Score API is our most popular choice for real-time credit assessments with multi-bureau support.');
+            }}
+            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
+          >
             <div className="text-[0.9375rem] font-semibold text-foreground">
               What's the best API for credit scores?
             </div>
           </button>
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+          <button
+            onClick={() => {
+              toast.info('See our documentation for step-by-step integration guides and code samples.');
+            }}
+            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
+          >
             <div className="text-[0.9375rem] font-semibold text-foreground">
               How do I integrate the Credit API?
             </div>
           </button>
-          <button className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors">
+          <button
+            onClick={() => {
+              toast.info('Pricing is usage-based, starting at $0.10/call. See documentation for volume discounts.');
+            }}
+            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
+          >
             <div className="text-[0.9375rem] font-semibold text-foreground">
               Can you explain the pricing model?
             </div>
@@ -379,9 +411,15 @@ const Products = () => {
         </div>
 
         {/* Browse All Button */}
-        <button className="w-full h-12 mt-6 bg-foreground text-white rounded-xl font-semibold text-[0.9375rem] hover:bg-foreground/90 transition-colors">
+        <Button
+          onClick={() => {
+            setSearchQuery('');
+            toast.info('Showing all available products');
+          }}
+          className="w-full h-12 mt-6 rounded-xl font-semibold text-[0.9375rem]"
+        >
           Browse All Products
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Plus, Search, X, Shield, ShieldCheck, ShieldX, 
+import {
+  Plus, Search, X, Shield, ShieldCheck, ShieldX,
   MoreHorizontal, Edit, Trash2, CheckCircle, Clock
 } from 'lucide-react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import type { PlatformUser, UserRole } from '../types';
 import { roleLabels } from '../mockData';
 
@@ -70,13 +72,10 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
             Manage platform users and their permissions
           </p>
         </div>
-        <button
-          onClick={onAddUser}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-        >
+        <Button onClick={onAddUser}>
           <Plus className="h-4 w-4" />
           Add User
-        </button>
+        </Button>
       </div>
 
       {/* Filters */}
@@ -183,12 +182,13 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
             >
               <div className="p-4 border-b border-border flex items-center justify-between">
                 <h3 className="text-lg font-semibold">User Details</h3>
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setSelectedUser(null)}
-                  className="p-2 hover:bg-muted rounded-md transition-colors"
                 >
                   <X className="h-5 w-5" />
-                </button>
+                </Button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -246,17 +246,24 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
               </div>
 
               <div className="p-4 border-t border-border flex gap-2">
-                <button
+                <Button
+                  variant="outline"
                   onClick={() => onRemoveUser(selectedUser.id)}
-                  className="flex items-center gap-2 px-4 py-2 border border-destructive text-destructive rounded-md text-sm font-medium hover:bg-destructive/10 transition-colors"
+                  className="text-destructive border-destructive hover:bg-destructive/10"
                 >
                   <Trash2 className="h-4 w-4" />
                   Remove
-                </button>
-                <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors">
+                </Button>
+                <Button
+                  className="flex-1"
+                  onClick={() => {
+                    toast.success('User changes saved successfully');
+                    setSelectedUser(null);
+                  }}
+                >
                   <Edit className="h-4 w-4" />
                   Save Changes
-                </button>
+                </Button>
               </div>
             </motion.div>
           </>

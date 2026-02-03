@@ -99,7 +99,9 @@ export const IntegrationsPanel: React.FC = () => {
             Manage third-party service connections and data sources
           </p>
         </div>
-        <Button variant="outline">
+        <Button variant="outline" onClick={() => {
+          toast({ title: 'Integration setup wizard coming soon' });
+        }}>
           <Plug className="h-4 w-4 mr-2" />
           Add Integration
         </Button>

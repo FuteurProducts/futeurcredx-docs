@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, TrendingUp, Calendar, ArrowUpRight } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
+import { Button } from '@/components/ui/button';
 import type { BillingInfo } from '../types';
 
 interface BillingPanelProps {
@@ -46,13 +47,10 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
             Monitor your subscription and API usage
           </p>
         </div>
-        <button
-          onClick={onUpgrade}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-        >
+        <Button onClick={onUpgrade}>
           <ArrowUpRight className="h-4 w-4" />
           Upgrade Plan
-        </button>
+        </Button>
       </div>
 
       {/* Plan Overview */}

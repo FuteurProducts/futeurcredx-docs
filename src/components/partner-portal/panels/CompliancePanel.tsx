@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
 import {
   mockComplianceStatuses,
   mockAuditLogs,
@@ -39,7 +40,7 @@ export const CompliancePanel: React.FC = () => {
       case 'compliant':
         return <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">Compliant</Badge>;
       case 'partially_compliant':
-        return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Partial</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Partial</Badge>;
       case 'non_compliant':
         return <Badge variant="destructive">Non-Compliant</Badge>;
       default:
@@ -52,7 +53,7 @@ export const CompliancePanel: React.FC = () => {
       case 'high':
         return <Badge variant="destructive">High Risk</Badge>;
       case 'medium':
-        return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Medium</Badge>;
+        return <Badge className="bg-warning/10 text-warning border-warning/20">Medium</Badge>;
       default:
         return <Badge variant="secondary">Low</Badge>;
     }
@@ -77,7 +78,14 @@ export const CompliancePanel: React.FC = () => {
             Security certifications, audit trails, and data governance
           </p>
         </div>
-        <Button variant="outline">
+        <Button
+          variant="outline"
+          onClick={() => {
+            toast.success('Audit report export initiated', {
+              description: 'Your compliance audit report will be ready for download shortly.'
+            });
+          }}
+        >
           <Download className="h-4 w-4 mr-2" />
           Export Audit Report
         </Button>
@@ -108,7 +116,7 @@ export const CompliancePanel: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <Shield className={`h-5 w-5 ${
                             status.status === 'compliant' ? 'text-chart-2' :
-                            status.status === 'partially_compliant' ? 'text-yellow-500' :
+                            status.status === 'partially_compliant' ? 'text-warning' :
                             'text-destructive'
                           }`} />
                           <CardTitle className="text-base">{framework.name}</CardTitle>
@@ -157,7 +165,7 @@ export const CompliancePanel: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="text-base flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                  <AlertTriangle className="h-5 w-5 text-warning" />
                   Open Compliance Findings
                 </CardTitle>
               </CardHeader>
@@ -239,7 +247,7 @@ export const CompliancePanel: React.FC = () => {
                     <div className="flex items-center gap-4">
                       <div className={`w-2 h-2 rounded-full ${
                         log.riskLevel === 'high' ? 'bg-destructive' :
-                        log.riskLevel === 'medium' ? 'bg-yellow-500' :
+                        log.riskLevel === 'medium' ? 'bg-warning' :
                         'bg-chart-2'
                       }`} />
                       <div>
@@ -322,7 +330,7 @@ export const CompliancePanel: React.FC = () => {
                           <td className="py-2 px-3 text-muted-foreground">{field.type}</td>
                           <td className="py-2 px-3 text-center">
                             {field.pii ? (
-                              <AlertTriangle className="h-4 w-4 text-yellow-500 mx-auto" />
+                              <AlertTriangle className="h-4 w-4 text-warning mx-auto" />
                             ) : (
                               <span className="text-muted-foreground">—</span>
                             )}

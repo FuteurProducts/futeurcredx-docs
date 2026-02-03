@@ -14,7 +14,7 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
 
   const stages = [
     { key: 'preQualified', label: 'Pre-qualified', icon: FileText, color: 'bg-info' },
-    { key: 'applied', label: 'Applied', icon: FileText, color: 'bg-cyan-500' },
+    { key: 'applied', label: 'Applied', icon: FileText, color: 'bg-primary' },
     { key: 'approved', label: 'Approved', icon: CheckCircle, color: 'bg-success' },
     { key: 'funded', label: 'Funded', icon: DollarSign, color: 'bg-success' },
   ];
@@ -28,7 +28,7 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold text-foreground">Application Funnel</h3>
+          <h3 className="text-h6 font-semibold text-foreground">Application Funnel</h3>
           <div className="relative group">
             <Info className="w-4 h-4 text-muted-foreground cursor-help" />
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
@@ -80,8 +80,8 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
               </div>
               {/* Label */}
               <div className="mt-3 text-center">
-                <div className="text-sm font-semibold text-foreground">{stage.label}</div>
-                <div className="text-xs text-muted-foreground">{heightPercent.toFixed(0)}%</div>
+                <div className="text-body-2 font-semibold text-foreground">{stage.label}</div>
+                <div className="text-caption text-muted-foreground">{heightPercent.toFixed(0)}%</div>
               </div>
             </div>
           );
@@ -91,20 +91,20 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
       {/* Metrics Row */}
       <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
         <div className="p-3 bg-muted rounded-xl text-center">
-          <div className="text-lg font-bold text-foreground">{selected.preQualToApplyRate}%</div>
-          <div className="text-xs text-muted-foreground">Pre-qual → Apply</div>
+          <div className="text-h6 font-bold text-foreground">{selected.preQualToApplyRate}%</div>
+          <div className="text-caption text-muted-foreground">Pre-qual → Apply</div>
         </div>
         <div className="p-3 bg-muted rounded-xl text-center">
-          <div className="text-lg font-bold text-foreground">{selected.applyToApproveRate}%</div>
-          <div className="text-xs text-muted-foreground">Apply → Approve</div>
+          <div className="text-h6 font-bold text-foreground">{selected.applyToApproveRate}%</div>
+          <div className="text-caption text-muted-foreground">Apply → Approve</div>
         </div>
         <div className="p-3 bg-muted rounded-xl text-center flex flex-col items-center">
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4 text-muted-foreground" />
-            <span className="text-lg font-bold text-foreground">{selected.avgTimeToDecision}</span>
-            <span className="text-sm text-muted-foreground">days</span>
+            <span className="text-h6 font-bold text-foreground">{selected.avgTimeToDecision}</span>
+            <span className="text-body-2 text-muted-foreground">days</span>
           </div>
-          <div className="text-xs text-muted-foreground">Avg Time to Decision</div>
+          <div className="text-caption text-muted-foreground">Avg Time to Decision</div>
         </div>
       </div>
     </motion.div>

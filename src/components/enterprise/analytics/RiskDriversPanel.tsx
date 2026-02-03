@@ -9,6 +9,7 @@ import {
   Users,
   Info,
 } from 'lucide-react';
+import { toast } from 'sonner';
 import type { RiskDriver } from './types';
 
 interface RiskDriversPanelProps {
@@ -19,7 +20,7 @@ interface RiskDriversPanelProps {
 const severityColors: Record<string, { bg: string; text: string; border: string }> = {
   low: { bg: 'bg-success/10', text: 'text-success', border: 'border-success/20' },
   medium: { bg: 'bg-warning/10', text: 'text-warning', border: 'border-warning/20' },
-  high: { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200' },
+  high: { bg: 'bg-warning/20', text: 'text-warning', border: 'border-warning/30' },
   critical: { bg: 'bg-destructive/10', text: 'text-destructive', border: 'border-destructive/20' },
 };
 
@@ -98,7 +99,7 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                   </div>
                   <div className="h-2 bg-card rounded-full overflow-hidden">
                     <div
-                      className={`h-full rounded-full ${driver.severity === 'critical' ? 'bg-destructive' : driver.severity === 'high' ? 'bg-orange-500' : 'bg-warning'}`}
+                      className={`h-full rounded-full ${driver.severity === 'critical' ? 'bg-destructive' : 'bg-warning'}`}
                       style={{ width: `${driver.impact}%` }}
                     />
                   </div>
@@ -125,7 +126,10 @@ export const RiskDriversPanel: React.FC<RiskDriversPanelProps> = ({ drivers, onV
                         >
                           View Affected Clients
                         </button>
-                        <button className="px-4 py-2 bg-muted hover:bg-muted/80 rounded-xl text-sm font-semibold transition-colors">
+                        <button
+                          onClick={() => toast.success(`Viewing trend analysis for ${driver.name}`)}
+                          className="px-4 py-2 bg-muted hover:bg-muted/80 rounded-xl text-sm font-semibold transition-colors"
+                        >
                           View Trend
                         </button>
                       </div>

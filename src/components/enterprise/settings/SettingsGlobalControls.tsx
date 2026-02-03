@@ -28,7 +28,7 @@ export const SettingsGlobalControls: React.FC<SettingsGlobalControlsProps> = ({
     >
       <div className="flex items-center justify-between">
         {/* Left - Title */}
-        <h1 className="text-xl font-semibold text-foreground">Platform Settings</h1>
+        <h1 className="text-h5 font-semibold text-foreground">Platform Settings</h1>
 
         {/* Right - Controls */}
         <div className="flex items-center gap-4">

@@ -38,8 +38,8 @@ const getHeatColor = (value: number, max: number): string => {
   if (intensity < 0.2) return 'bg-success/10 text-success';
   if (intensity < 0.4) return 'bg-success/20 text-success';
   if (intensity < 0.6) return 'bg-warning/20 text-warning';
-  if (intensity < 0.8) return 'bg-orange-300 text-orange-900';
-  return 'bg-rose-400 text-rose-900';
+  if (intensity < 0.8) return 'bg-warning/60 text-foreground';
+  return 'bg-destructive/60 text-destructive-foreground';
 };
 
 const HeatmapGrid: React.FC<{
@@ -120,7 +120,7 @@ const HeatmapGrid: React.FC<{
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">30d Change:</span>
-                          <span className={`font-medium ${cell.change > 0 ? 'text-rose-600' : 'text-success'}`}>
+                          <span className={`font-medium ${cell.change > 0 ? 'text-destructive' : 'text-success'}`}>
                             {cell.change > 0 ? '+' : ''}{cell.change}%
                           </span>
                         </div>
@@ -144,8 +144,8 @@ const HeatmapGrid: React.FC<{
           <div className="w-6 h-3 rounded bg-success/10" />
           <div className="w-6 h-3 rounded bg-success/20" />
           <div className="w-6 h-3 rounded bg-warning/20" />
-          <div className="w-6 h-3 rounded bg-orange-300" />
-          <div className="w-6 h-3 rounded bg-rose-400" />
+          <div className="w-6 h-3 rounded bg-warning/60" />
+          <div className="w-6 h-3 rounded bg-destructive/60" />
         </div>
         <span className="text-xs text-muted-foreground">Low → High</span>
       </div>

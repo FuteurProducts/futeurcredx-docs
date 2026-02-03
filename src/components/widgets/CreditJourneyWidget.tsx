@@ -92,7 +92,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
                 <div 
                   className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                     stage.status === 'completed' ? 'bg-success text-white' :
-                    stage.status === 'current' ? 'bg-blue-500 text-white animate-pulse' :
+                    stage.status === 'current' ? 'bg-info text-white animate-pulse' :
                     'bg-accent text-muted-foreground'
                   }`}
                 >
@@ -127,7 +127,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
         className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
       >
         <div className="flex items-center gap-2 mb-6">
-          <Sparkles className="w-5 h-5 text-purple-500" />
+          <Sparkles className="w-5 h-5 text-[var(--primary-04)]" />
           <h3 className="text-lg font-semibold text-foreground">Credit Journey</h3>
         </div>
 
@@ -144,7 +144,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
               )}
               
               <div className={`flex gap-4 p-3 rounded-xl transition-colors ${
-                stage.status === 'current' ? 'bg-blue-50' : ''
+                stage.status === 'current' ? 'bg-info/10' : ''
               }`}>
                 {getStageIcon(stage.status, index)}
                 
@@ -156,7 +156,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
                       {stage.name}
                     </h4>
                     {stage.status === 'current' && (
-                      <span className="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full">
+                      <span className="text-xs bg-info text-white px-2 py-0.5 rounded-full">
                         In Progress
                       </span>
                     )}
@@ -171,7 +171,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
                     <ul className="mt-2 space-y-1">
                       {stage.requirements.map((req, i) => (
                         <li key={i} className="text-xs text-muted-foreground flex items-center gap-2">
-                          <ArrowRight className="w-3 h-3 text-blue-500" />
+                          <ArrowRight className="w-3 h-3 text-info" />
                           {req}
                         </li>
                       ))}
@@ -193,7 +193,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
           <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl">
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Est. readiness</span>
-              <span className="font-semibold text-purple-700">{data.estimatedReadiness}</span>
+              <span className="font-semibold text-[var(--primary-04)]">{data.estimatedReadiness}</span>
             </div>
           </div>
         )}
@@ -210,7 +210,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-purple-500" />
+          <Sparkles className="w-5 h-5 text-[var(--primary-04)]" />
           <h3 className="text-lg font-semibold text-foreground">Approval Readiness</h3>
         </div>
         {data.estimatedReadiness && (
@@ -244,10 +244,10 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
 
       {/* Current stage details */}
       {stages[data.currentStage] && (
-        <div className="bg-blue-50 rounded-xl p-4">
+        <div className="bg-info/10 rounded-xl p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-blue-700">Current Stage</span>
+            <div className="w-2 h-2 bg-info rounded-full animate-pulse" />
+            <span className="text-sm font-semibold text-info">Current Stage</span>
           </div>
           <h4 className="font-semibold text-foreground mb-1">{stages[data.currentStage].name}</h4>
           <p className="text-sm text-muted-foreground mb-3">{stages[data.currentStage].description}</p>
@@ -256,7 +256,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
             <div className="space-y-1">
               {stages[data.currentStage].requirements?.map((req, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm text-foreground">
-                  <ArrowRight className="w-4 h-4 text-blue-500" />
+                  <ArrowRight className="w-4 h-4 text-info" />
                   {req}
                 </div>
               ))}

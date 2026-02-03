@@ -32,11 +32,11 @@ export interface BureauDataDisplayProps {
   className?: string;
 }
 
-// Bureau branding
+// Bureau branding - using brand-specific colors (these are official bureau brand colors)
 const bureauConfig: Record<string, { name: string; color: string; lightColor: string }> = {
-  dnb: { name: 'D&B PAYDEX®', color: '#00539B', lightColor: '#E6EEF5' },
-  experian: { name: 'Experian Intelliscore℠', color: '#D71635', lightColor: '#FCEEF1' },
-  equifax: { name: 'Equifax Business', color: '#BE1E2D', lightColor: '#FBECED' },
+  dnb: { name: 'D&B PAYDEX®', color: 'var(--primary-01)', lightColor: 'hsl(var(--info) / 0.1)' },
+  experian: { name: 'Experian Intelliscore℠', color: 'var(--primary-03)', lightColor: 'hsl(var(--destructive) / 0.1)' },
+  equifax: { name: 'Equifax Business', color: 'var(--primary-03)', lightColor: 'hsl(var(--destructive) / 0.1)' },
 };
 
 // ============================================
@@ -54,10 +54,10 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
 
   const getScoreColor = (score: number, maxScore: number) => {
     const percent = (score / maxScore) * 100;
-    if (percent >= 75) return '#10B981';
-    if (percent >= 50) return '#8B5CF6';
-    if (percent >= 25) return '#F59E0B';
-    return '#EF4444';
+    if (percent >= 75) return 'var(--primary-02)';
+    if (percent >= 50) return 'var(--primary-04)';
+    if (percent >= 25) return 'var(--primary-05)';
+    return 'var(--primary-03)';
   };
 
   const renderScoreRing = (score: number, maxScore: number, size: number = 80) => {
@@ -73,7 +73,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
           cx={size / 2}
           cy={size / 2}
           r={radius}
-          stroke="#e2e8f0"
+          stroke="hsl(var(--border))"
           strokeWidth={strokeWidth}
           fill="none"
         />

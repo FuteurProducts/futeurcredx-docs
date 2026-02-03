@@ -72,11 +72,11 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
 
   const getStatusColor = (status: SignalFactor['status']) => {
     switch (status) {
-      case 'strong': return { bg: '#10B981', text: '#065F46', light: '#D1FAE5' };
-      case 'good': return { bg: '#8B5CF6', text: '#5B21B6', light: '#EDE9FE' };
-      case 'fair': return { bg: '#F59E0B', text: '#92400E', light: '#FEF3C7' };
-      case 'weak': return { bg: '#EF4444', text: '#991B1B', light: '#FEE2E2' };
-      case 'missing': return { bg: '#6B7280', text: '#374151', light: '#F3F4F6' };
+      case 'strong': return { bg: 'var(--primary-02)', text: 'var(--primary-02)', light: 'hsl(var(--success) / 0.15)' };
+      case 'good': return { bg: 'var(--primary-04)', text: 'var(--primary-04)', light: 'hsl(var(--primary) / 0.15)' };
+      case 'fair': return { bg: 'var(--primary-05)', text: 'var(--primary-05)', light: 'hsl(var(--warning) / 0.15)' };
+      case 'weak': return { bg: 'var(--primary-03)', text: 'var(--primary-03)', light: 'hsl(var(--destructive) / 0.15)' };
+      case 'missing': return { bg: 'var(--shade-06)', text: 'var(--shade-05)', light: 'var(--shade-09)' };
     }
   };
 
@@ -183,7 +183,7 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
           <div className="text-3xl font-bold text-foreground">{data.overallScore}</div>
           <span className={`text-sm font-semibold px-2 py-0.5 rounded ${
             data.overallGrade.startsWith('A') ? 'bg-success/10 text-success' :
-            data.overallGrade.startsWith('B') ? 'bg-purple-100 text-purple-700' :
+            data.overallGrade.startsWith('B') ? 'bg-[var(--primary-04)]/10 text-[var(--primary-04)]' :
             data.overallGrade.startsWith('C') ? 'bg-warning/10 text-warning' :
             'bg-destructive/10 text-destructive'
           }`}>

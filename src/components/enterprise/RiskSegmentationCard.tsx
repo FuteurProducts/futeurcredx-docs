@@ -68,9 +68,9 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-warning/10 rounded-xl flex items-center justify-center">
             <svg
-              className="w-5 h-5 text-orange-600"
+              className="w-5 h-5 text-warning"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -87,14 +87,14 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
             <h3 className="text-title text-foreground">
               Risk Segmentation
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-body-2 text-muted-foreground">
               Portfolio risk distribution
             </p>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xs text-muted-foreground">Portfolio Risk Score</div>
-          <div className={`text-2xl font-bold ${getRiskScoreColor(riskScore)}`}>
+          <div className="text-caption text-muted-foreground">Portfolio Risk Score</div>
+          <div className={`text-h4 font-bold ${getRiskScoreColor(riskScore)}`}>
             {riskScore}
           </div>
         </div>
@@ -146,10 +146,10 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: segment.color }}
                 />
-                <span className="text-sm text-foreground">{segment.name}</span>
+                <span className="text-body-2 text-foreground">{segment.name}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-foreground">
+                <span className="text-body-2 font-medium text-foreground">
                   {formatNumber(segment.count)}
                 </span>
                 <div className="flex items-center gap-1">
@@ -174,8 +174,8 @@ export const RiskSegmentationCard: React.FC<RiskSegmentationCardProps> = ({
 
       {/* Total */}
       <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-        <span className="text-sm text-muted-foreground">Total Assessed</span>
-        <span className="text-lg font-bold text-foreground">
+        <span className="text-body-2 text-muted-foreground">Total Assessed</span>
+        <span className="text-h6 font-bold text-foreground">
           {formatNumber(totalBusinesses)}
         </span>
       </div>

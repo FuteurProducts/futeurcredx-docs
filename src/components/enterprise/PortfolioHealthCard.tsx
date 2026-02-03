@@ -34,7 +34,7 @@ export const PortfolioHealthCard: React.FC<PortfolioHealthCardProps> = ({
           <div className="p-2 bg-success/10 rounded-xl">
             <ShieldCheck className="h-5 w-5 text-success" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground">Portfolio Health</h3>
+          <h3 className="text-h6 font-semibold text-foreground">Portfolio Health</h3>
         </div>
         <span className="text-xs text-muted-foreground">Updated {data.lastUpdated}</span>
       </div>
@@ -92,10 +92,10 @@ export const PortfolioHealthCard: React.FC<PortfolioHealthCardProps> = ({
                   className="w-3 h-3 rounded-full"
                   style={{ backgroundColor: segment.color }}
                 />
-                <span className="text-sm text-muted-foreground">{segment.name}</span>
+                <span className="text-body-2 text-muted-foreground">{segment.name}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-foreground">
+                <span className="text-body-2 font-medium text-foreground">
                   {segment.count.toLocaleString()}
                 </span>
                 <span className="text-xs text-muted-foreground">
@@ -110,9 +110,9 @@ export const PortfolioHealthCard: React.FC<PortfolioHealthCardProps> = ({
       {/* Average Score Footer */}
       <div className="mt-6 pt-4 border-t border-border">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">Avg. LUMIQ AI Score</span>
+          <span className="text-body-2 text-muted-foreground">Avg. LUMIQ AI Score</span>
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-foreground">{data.averageScore}</span>
+            <span className="text-h5 font-bold text-foreground">{data.averageScore}</span>
             <span className="text-xs text-muted-foreground">/ 100</span>
           </div>
         </div>

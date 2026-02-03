@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import { 
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
@@ -163,7 +165,7 @@ const scoreGaugeData = [
   { name: "Green", value: 300 },
 ];
 
-const SCORE_GAUGE_COLORS = ["#F04D1A", "#FBA94B", "#B981DA", "#32AE60"];
+const SCORE_GAUGE_COLORS = ["var(--primary-03)", "var(--primary-05)", "var(--primary-04)", "var(--primary-02)"];
 
 interface CreditScoreGaugeProps {
   score: number;
@@ -175,10 +177,10 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
   const animatedScore = useCountUp(score, 1500);
   
   const getGradeColor = (g: string) => {
-    if (g === 'A' || g === 'A+') return '#32AE60';
-    if (g === 'B' || g === 'B+') return '#B981DA';
-    if (g === 'C' || g === 'C+') return '#FBA94B';
-    return '#F04D1A';
+    if (g === 'A' || g === 'A+') return 'var(--primary-02)';
+    if (g === 'B' || g === 'B+') return 'var(--primary-04)';
+    if (g === 'C' || g === 'C+') return 'var(--primary-05)';
+    return 'var(--primary-03)';
   };
   
   return (
@@ -194,7 +196,7 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
               endAngle={0}
               innerRadius={100}
               outerRadius={130}
-              fill="#8884d8"
+              fill="var(--primary-04)"
               paddingAngle={1}
               dataKey="value"
               stroke="transparent"
@@ -244,16 +246,16 @@ interface StatCardProps {
 const StatCard: React.FC<StatCardProps> = ({ label, value, color = 'default', badge, badgeColor = 'green' }) => {
   const valueColorClass = {
     default: 'text-foreground',
-    success: 'text-[#32AE60]',
-    warning: 'text-[#FBA94B]',
-    danger: 'text-[#F04D1A]',
+    success: 'text-primary-02',
+    warning: 'text-primary-05',
+    danger: 'text-primary-03',
   }[color];
   
   const badgeColorClass = {
-    green: 'bg-[#32AE60] text-white',
+    green: 'bg-primary-02 text-white',
     blue: 'bg-primary text-white',
-    yellow: 'bg-[#FBA94B] text-white',
-    red: 'bg-[#F04D1A] text-white',
+    yellow: 'bg-primary-05 text-white',
+    red: 'bg-primary-03 text-white',
   }[badgeColor];
   
   return (
@@ -308,9 +310,9 @@ interface VolatilityMeterProps {
 
 const VolatilityMeter: React.FC<VolatilityMeterProps> = ({ value, status }) => {
   const getStatusColor = (s: string) => {
-    if (s === 'Stable') return '#32AE60';
-    if (s === 'Moderate') return '#FBA94B';
-    return '#F04D1A';
+    if (s === 'Stable') return 'var(--primary-02)';
+    if (s === 'Moderate') return 'var(--primary-05)';
+    return 'var(--primary-03)';
   };
   
   return (
@@ -327,12 +329,12 @@ const VolatilityMeter: React.FC<VolatilityMeterProps> = ({ value, status }) => {
       <div className="flex items-center gap-6">
         <div className="flex-1">
           <div className="flex justify-between text-[0.8125rem] font-medium mb-3">
-            <span className="text-[#32AE60]">Stable</span>
-            <span className="text-[#FBA94B]">Moderate</span>
-            <span className="text-[#F04D1A]">Volatile</span>
+            <span className="text-primary-02">Stable</span>
+            <span className="text-primary-05">Moderate</span>
+            <span className="text-primary-03">Volatile</span>
           </div>
           <div className="relative h-4 rounded-full overflow-hidden bg-muted">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#32AE60] via-[#FBA94B] to-[#F04D1A]" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-02 via-primary-05 to-primary-03" />
             <div 
               className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full shadow-lg transition-all duration-500"
               style={{ 
@@ -428,13 +430,13 @@ const CreditIntelligence: React.FC = () => {
                     </div>
                     <span className="text-[0.9375rem] font-medium text-foreground">{factor.name}</span>
                     {factor.substituted && (
-                      <span className="px-2 py-0.5 bg-[#FBA94B]/10 text-[#FBA94B] rounded text-[0.75rem] font-medium">
+                      <span className="px-2 py-0.5 bg-primary-05/10 text-primary-05 rounded text-[0.75rem] font-medium">
                         Substituted
                       </span>
                     )}
                   </div>
                   <span className={`text-[1rem] font-semibold ${
-                    factor.score >= 90 ? 'text-[#32AE60]' : factor.score >= 80 ? 'text-[#32AE60]' : 'text-[#FBA94B]'
+                    factor.score >= 90 ? 'text-primary-02' : factor.score >= 80 ? 'text-primary-02' : 'text-primary-05'
                   }`}>
                     {factor.score}
                   </span>
@@ -449,14 +451,14 @@ const CreditIntelligence: React.FC = () => {
               <span className="text-[0.9375rem] text-muted-foreground">Owner FICO</span>
               <div className="flex items-center gap-2">
                 <span className="text-[1rem] font-semibold text-foreground">758</span>
-                <span className="px-2 py-0.5 border border-[#32AE60] text-[#32AE60] rounded-full text-[0.75rem] font-medium">
+                <span className="px-2 py-0.5 border border-primary-02 text-primary-02 rounded-full text-[0.75rem] font-medium">
                   Excellent
                 </span>
               </div>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-[0.9375rem] text-muted-foreground">KYB Status</span>
-              <span className="px-3 py-1 bg-[#32AE60] text-white rounded-full text-[0.75rem] font-medium">
+              <span className="px-3 py-1 bg-primary-02 text-white rounded-full text-[0.75rem] font-medium">
                 Pass
               </span>
             </div>
@@ -502,15 +504,15 @@ const CreditIntelligence: React.FC = () => {
           {/* Positive Drivers */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
-              <svg className="w-4 h-4 text-[#32AE60]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-primary-02" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
-              <span className="text-[0.9375rem] font-semibold text-[#32AE60]">Positive Drivers</span>
+              <span className="text-[0.9375rem] font-semibold text-primary-02">Positive Drivers</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {positiveDrivers.map((driver, i) => (
-                <div key={i} className="flex items-start gap-2 p-3 bg-[#DFF9E8]/50 rounded-xl">
-                  <svg className="w-5 h-5 text-[#32AE60] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <div key={i} className="flex items-start gap-2 p-3 bg-primary-02/10 rounded-xl">
+                  <svg className="w-5 h-5 text-primary-02 shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <span className="text-[0.875rem] text-foreground">{driver}</span>
@@ -522,15 +524,15 @@ const CreditIntelligence: React.FC = () => {
           {/* Risk Drivers */}
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
-              <svg className="w-4 h-4 text-[#FBA94B]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-primary-05" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />
               </svg>
-              <span className="text-[0.9375rem] font-semibold text-[#FBA94B]">Risk Drivers</span>
+              <span className="text-[0.9375rem] font-semibold text-primary-05">Risk Drivers</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {riskDrivers.map((driver, i) => (
-                <div key={i} className="flex items-start gap-2 p-3 bg-[#FBA94B]/10 rounded-xl">
-                  <svg className="w-5 h-5 text-[#FBA94B] shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <div key={i} className="flex items-start gap-2 p-3 bg-primary-05/10 rounded-xl">
+                  <svg className="w-5 h-5 text-primary-05 shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   <span className="text-[0.875rem] text-foreground">{driver}</span>
@@ -562,16 +564,16 @@ const CreditIntelligence: React.FC = () => {
           </div>
           
           {/* AI Recommendation */}
-          <div className="p-4 bg-[#DFF9E8] rounded-2xl flex items-center justify-between">
+          <div className="p-4 bg-primary-02/10 rounded-2xl flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#32AE60] rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-primary-02 rounded-full flex items-center justify-center">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div>
                 <div className="text-[0.8125rem] text-muted-foreground">AI Recommendation</div>
-                <div className="text-[1.25rem] font-semibold text-[#32AE60]">Approve</div>
+                <div className="text-[1.25rem] font-semibold text-primary-02">Approve</div>
               </div>
             </div>
             <div className="text-right">
@@ -612,36 +614,36 @@ const CreditIntelligence: React.FC = () => {
               <AreaChart data={balanceTrendData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#0C68E9" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#0C68E9" stopOpacity={0.05}/>
+                    <stop offset="5%" stopColor="var(--primary-01)" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="var(--primary-01)" stopOpacity={0.05}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" vertical={false} />
-                <XAxis 
-                  dataKey="date" 
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                <XAxis
+                  dataKey="date"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#6F767E' }}
+                  tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
                 />
-                <YAxis 
+                <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#6F767E' }}
+                  tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
                   tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`}
                 />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'white', 
-                    border: '1px solid #EFEFEF', 
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--card)',
+                    border: '1px solid var(--border)',
                     borderRadius: '12px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                   }}
                   formatter={(value: number | undefined) => value !== undefined ? [`$${value.toLocaleString()}`, 'Balance'] : ['$0', 'Balance']}
                 />
-                <Area 
-                  type="monotone" 
-                  dataKey="value" 
-                  stroke="#0C68E9" 
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="var(--primary-01)"
                   fill="url(#balanceGradient)"
                   strokeWidth={2}
                   isAnimationActive={true}
@@ -655,7 +657,7 @@ const CreditIntelligence: React.FC = () => {
         {/* ACH Returns */}
         <div className="bg-card rounded-2xl p-6 border border-border">
           <div className="flex items-center gap-2 mb-6">
-            <svg className="w-5 h-5 text-[#FBA94B]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-primary-05" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
             <h3 className="text-[1.125rem] font-semibold text-foreground">ACH Returns Timeline (12 Weeks)</h3>
@@ -663,30 +665,30 @@ const CreditIntelligence: React.FC = () => {
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={achReturnsData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" vertical={false} />
-                <XAxis 
-                  dataKey="week" 
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                <XAxis
+                  dataKey="week"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 11, fill: '#6F767E' }}
+                  tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }}
                 />
-                <YAxis 
+                <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#6F767E' }}
+                  tick={{ fontSize: 12, fill: 'var(--muted-foreground)' }}
                   domain={[0, 1]}
                 />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: 'white', 
-                    border: '1px solid #EFEFEF', 
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'var(--card)',
+                    border: '1px solid var(--border)',
                     borderRadius: '12px',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                   }}
                 />
-                <Bar 
-                  dataKey="returns" 
-                  fill="#FBA94B" 
+                <Bar
+                  dataKey="returns"
+                  fill="var(--primary-05)"
                   radius={[4, 4, 0, 0]}
                   isAnimationActive={true}
                   animationDuration={1500}
@@ -713,15 +715,22 @@ const CreditIntelligence: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="px-4 py-1.5 border border-[#32AE60] text-[#32AE60] rounded-full text-[0.875rem] font-medium">
+            <span className="px-4 py-1.5 border border-primary-02 text-primary-02 rounded-full text-[0.875rem] font-medium">
               8 Active Rules
             </span>
-            <button className="flex items-center gap-2 px-4 py-2 bg-foreground text-white rounded-xl text-[0.875rem] font-medium hover:bg-foreground/90 transition-colors">
+            <Button
+              onClick={() => {
+                toast.info('Rule builder coming soon', {
+                  description: 'Create custom credit monitoring rules',
+                });
+              }}
+              className="gap-2 rounded-xl"
+            >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
               Add Rule
-            </button>
+            </Button>
           </div>
         </div>
         
@@ -799,22 +808,47 @@ const CreditIntelligence: React.FC = () => {
                         </div>
                       )}
                       <div className="flex items-center gap-2">
-                        <button className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                        <button
+                          onClick={() => {
+                            toast.success('Email notifications enabled');
+                          }}
+                          className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white"
+                        >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
                         </button>
-                        <button className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                        <button
+                          onClick={() => {
+                            toast.success('SMS notifications enabled');
+                          }}
+                          className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white"
+                        >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                           </svg>
                         </button>
-                        <button className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                        <button
+                          onClick={() => {
+                            toast.success('Slack notifications enabled');
+                          }}
+                          className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white"
+                        >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                           </svg>
                         </button>
-                        <button className="w-8 h-8 text-[#F04D1A] hover:bg-[#F04D1A]/10 rounded-lg flex items-center justify-center">
+                        <button
+                          onClick={() => {
+                            toast.warning('Delete this rule?', {
+                              action: {
+                                label: 'Delete',
+                                onClick: () => toast.success('Rule deleted'),
+                              },
+                            });
+                          }}
+                          className="w-8 h-8 text-primary-03 hover:bg-primary-03/10 rounded-lg flex items-center justify-center"
+                        >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>

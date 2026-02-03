@@ -46,7 +46,7 @@ const formatNumber = (num: number): string => {
 
 const getBreachColor = (status: string): { bg: string; text: string; badge: string } => {
   switch (status) {
-    case 'breach': return { bg: 'bg-rose-50', text: 'text-rose-700', badge: 'bg-rose-500 text-white' };
+    case 'breach': return { bg: 'bg-destructive/10', text: 'text-destructive', badge: 'bg-destructive text-white' };
     case 'warning': return { bg: 'bg-warning/10', text: 'text-warning', badge: 'bg-warning text-white' };
     default: return { bg: 'bg-success/10', text: 'text-success', badge: 'bg-success text-white' };
   }
@@ -113,7 +113,7 @@ const ConcentrationTable: React.FC<{
                     <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
                       <div 
                         className={`h-full rounded-full transition-all ${
-                          item.utilizationPct >= 100 ? 'bg-rose-500' :
+                          item.utilizationPct >= 100 ? 'bg-destructive' :
                           item.utilizationPct >= 80 ? 'bg-warning' : 'bg-success'
                         }`}
                         style={{ width: `${Math.min(item.utilizationPct, 100)}%` }}
@@ -131,7 +131,7 @@ const ConcentrationTable: React.FC<{
                 <td className="py-3 px-3">
                   <div className="flex flex-col items-center">
                     <div className={`flex items-center gap-1 text-xs font-medium ${
-                      item.trend > 0 ? 'text-rose-600' : item.trend < 0 ? 'text-success' : 'text-muted-foreground'
+                      item.trend > 0 ? 'text-destructive' : item.trend < 0 ? 'text-success' : 'text-muted-foreground'
                     }`}>
                       {item.trend > 0 ? <TrendingUp className="w-3 h-3" /> : null}
                       {item.trend > 0 ? '+' : ''}{item.trend}%
@@ -205,7 +205,7 @@ export const ConcentrationPanel: React.FC<ConcentrationPanelProps> = ({
         
         <div className="flex items-center gap-3">
           {breachCount > 0 && (
-            <span className="flex items-center gap-1.5 px-3 py-1 bg-rose-500 text-white rounded-full text-sm font-semibold">
+            <span className="flex items-center gap-1.5 px-3 py-1 bg-destructive text-white rounded-full text-sm font-semibold">
               <AlertTriangle className="w-3.5 h-3.5" />
               {breachCount} Breach{breachCount > 1 ? 'es' : ''}
             </span>
@@ -238,7 +238,7 @@ export const ConcentrationPanel: React.FC<ConcentrationPanelProps> = ({
               <span>{category.title}</span>
               {catBreaches > 0 && (
                 <span className={`px-1.5 py-0.5 rounded-full text-xs ${
-                  activeCategory === category.id ? 'bg-white/20' : 'bg-rose-500 text-white'
+                  activeCategory === category.id ? 'bg-white/20' : 'bg-destructive text-white'
                 }`}>
                   {catBreaches}
                 </span>

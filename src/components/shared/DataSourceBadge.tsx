@@ -65,11 +65,11 @@ export const DataSourceBadge: React.FC<DataSourceBadgeProps> = ({
       {/* Tooltip */}
       {showTooltip && (
         <span
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 whitespace-nowrap rounded-lg bg-[#1A1D1F] px-3 py-1.5 text-xs font-medium text-white shadow-lg pointer-events-none"
+          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 whitespace-nowrap rounded-lg bg-[var(--shade-03)] px-3 py-1.5 text-xs font-medium text-white shadow-lg pointer-events-none"
         >
           {TOOLTIP_TEXT[resolved]}
           {/* Tooltip arrow */}
-          <span className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 rotate-45 bg-[#1A1D1F]" />
+          <span className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 rotate-45 bg-[var(--shade-03)]" />
         </span>
       )}
     </span>

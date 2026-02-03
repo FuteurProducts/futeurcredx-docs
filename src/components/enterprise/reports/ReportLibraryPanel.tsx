@@ -82,7 +82,7 @@ export const ReportLibraryPanel: React.FC<ReportLibraryPanelProps> = ({
     >
       {/* Header */}
       <div className="p-4 border-b border-border">
-        <h2 className="text-lg font-semibold text-foreground mb-3">Report Library</h2>
+        <h2 className="text-h6 font-semibold text-foreground mb-3">Report Library</h2>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
@@ -151,10 +151,10 @@ export const ReportLibraryPanel: React.FC<ReportLibraryPanelProps> = ({
                       >
                         <FormatIcon format={template.defaultFormat} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-foreground truncate">
+                          <p className="text-body-2 font-medium text-foreground truncate">
                             {template.name}
                           </p>
-                          <p className="text-xs text-muted-foreground truncate mt-0.5">
+                          <p className="text-caption text-muted-foreground truncate mt-0.5">
                             {template.description}
                           </p>
                           <div className="flex items-center gap-1 mt-1">

@@ -11,10 +11,10 @@ interface KeyUsageStatsProps {
 const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false }) => {
   if (!keyStats || keyStats.length === 0) {
     return (
-      <div className="bg-card/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
+      <div className="bg-card/80 backdrop-blur-sm border border-info/20 rounded-2xl p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <BarChart3 className="w-5 h-5 text-blue-600" />
+          <div className="p-2 bg-info/10 rounded-lg">
+            <BarChart3 className="w-5 h-5 text-info" />
           </div>
           <h3 className="text-lg font-semibold text-foreground">API Key Usage</h3>
         </div>
@@ -33,12 +33,12 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
   const mostUsedKey = keyStats.reduce((max, key) => key.callsUsed > max.callsUsed ? key : max, keyStats[0]);
 
   return (
-    <div className="bg-card/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-6 shadow-sm">
+    <div className="bg-card/80 backdrop-blur-sm border border-info/20 rounded-2xl p-6 shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <BarChart3 className="w-5 h-5 text-blue-600" />
+          <div className="p-2 bg-info/10 rounded-lg">
+            <BarChart3 className="w-5 h-5 text-info" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">API Key Usage Statistics</h3>
@@ -47,43 +47,43 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
           </div>
         </div>
         {isLive && (
-          <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-full border border-blue-200">
-            <Wifi className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-medium text-blue-700">Live Updates</span>
+          <div className="flex items-center gap-2 px-3 py-1 bg-info/10 rounded-full border border-info/20">
+            <Wifi className="w-4 h-4 text-info" />
+            <span className="text-sm font-medium text-info">Live Updates</span>
           </div>
         )}
       </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-300">
+        <div className="bg-gradient-to-r from-info/10 to-info/20 rounded-xl p-4 border border-info/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-blue-700">Total Calls</p>
-              <p className="text-2xl font-bold text-blue-900">{totalCalls.toLocaleString()}</p>
+              <p className="text-sm font-medium text-info">Total Calls</p>
+              <p className="text-2xl font-bold text-foreground">{totalCalls.toLocaleString()}</p>
             </div>
-            <Activity className="w-8 h-8 text-blue-600" />
+            <Activity className="w-8 h-8 text-info" />
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-300">
+        <div className="bg-gradient-to-r from-info/10 to-info/20 rounded-xl p-4 border border-info/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-blue-700">Active Keys</p>
-              <p className="text-2xl font-bold text-blue-900">{activeKeys}</p>
+              <p className="text-sm font-medium text-info">Active Keys</p>
+              <p className="text-2xl font-bold text-foreground">{activeKeys}</p>
             </div>
-            <CheckCircle className="w-8 h-8 text-blue-600" />
+            <CheckCircle className="w-8 h-8 text-info" />
           </div>
         </div>
         
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-300">
+        <div className="bg-gradient-to-r from-info/10 to-info/20 rounded-xl p-4 border border-info/30">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-blue-700">Most Used</p>
-              <p className="text-lg font-bold text-blue-900 truncate">{mostUsedKey.keyName}</p>
-              <p className="text-xs text-blue-600">{mostUsedKey.callsUsed} calls</p>
+              <p className="text-sm font-medium text-info">Most Used</p>
+              <p className="text-lg font-bold text-foreground truncate">{mostUsedKey.keyName}</p>
+              <p className="text-xs text-info">{mostUsedKey.callsUsed} calls</p>
             </div>
-            <TrendingUp className="w-8 h-8 text-blue-600" />
+            <TrendingUp className="w-8 h-8 text-info" />
           </div>
         </div>
       </div>
@@ -122,8 +122,8 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-blue-50 rounded-lg">
-                        <Key className="w-4 h-4 text-blue-600" />
+                      <div className="p-2 bg-info/10 rounded-lg">
+                        <Key className="w-4 h-4 text-info" />
                       </div>
                       <div>
                         <div className="font-medium text-foreground">{key.keyName}</div>
@@ -135,8 +135,8 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
                       key.environment === 'production' 
-                        ? 'bg-blue-100 text-blue-800 border-blue-300' 
-                        : 'bg-blue-50 text-blue-700 border-blue-200'
+                        ? 'bg-info/20 text-info border-info/30' 
+                        : 'bg-info/10 text-info border-info/20'
                     }`}>
                       {key.environment || 'development'}
                     </span>
@@ -162,8 +162,8 @@ const KeyUsageStats: React.FC<KeyUsageStatsProps> = ({ keyStats, isLive = false 
                     <div className="flex items-center justify-center gap-2">
                       {key.isActive ? (
                         <>
-                          <CheckCircle className="w-4 h-4 text-blue-500" />
-                          <span className="text-sm font-medium text-blue-700">Active</span>
+                          <CheckCircle className="w-4 h-4 text-info" />
+                          <span className="text-sm font-medium text-info">Active</span>
                         </>
                       ) : (
                         <>

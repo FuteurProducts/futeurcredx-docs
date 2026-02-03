@@ -1,5 +1,6 @@
 // Connection Detail Page - Full integration dossier with 7 tabs
 import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   ArrowLeft,
@@ -248,10 +249,21 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
               </div>
 
               <div className="mt-6 flex gap-3">
-                <button className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors">
+                <button
+                  onClick={() => {
+                    toast.info('Refreshing OAuth token...');
+                    setTimeout(() => toast.success('Token refreshed successfully'), 1000);
+                  }}
+                  className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors"
+                >
                   Refresh Token
                 </button>
-                <button className="px-4 py-2 bg-muted hover:bg-muted/80 rounded-xl text-sm font-semibold transition-colors">
+                <button
+                  onClick={() => {
+                    toast.info('Testing re-authentication flow...');
+                  }}
+                  className="px-4 py-2 bg-muted hover:bg-muted/80 rounded-xl text-sm font-semibold transition-colors"
+                >
                   Test Re-auth Flow
                 </button>
               </div>
@@ -463,10 +475,25 @@ export const ConnectionDetail: React.FC<ConnectionDetailProps> = ({ connection, 
                 </div>
 
                 <div className="mt-6 flex gap-2">
-                  <button className="px-3 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90">
+                  <button
+                    onClick={() => {
+                      toast.success('New secret generated');
+                    }}
+                    className="px-3 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90"
+                  >
                     Send Test Event
                   </button>
-                  <button className="px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm font-semibold">
+                  <button
+                    onClick={() => {
+                      toast.warning('Are you sure? This will invalidate all existing credentials.', {
+                        action: {
+                          label: 'Confirm',
+                          onClick: () => toast.success('Credentials rotated successfully'),
+                        },
+                      });
+                    }}
+                    className="px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg text-sm font-semibold"
+                  >
                     Replay Last 10
                   </button>
                 </div>

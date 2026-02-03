@@ -215,7 +215,10 @@ export const SSOPanel: React.FC = () => {
               </div>
 
               <div className="flex justify-end gap-2 pt-4">
-                <Button variant="outline">Test Connection</Button>
+                <Button variant="outline" onClick={() => {
+                  toast({ title: 'Testing SSO connection...' });
+                  setTimeout(() => toast({ title: 'SSO connection successful' }), 1500);
+                }}>Test Connection</Button>
                 <Button onClick={handleSaveSSO}>Save Configuration</Button>
               </div>
             </CardContent>

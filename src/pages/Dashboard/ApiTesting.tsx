@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH"
 
@@ -65,10 +67,10 @@ const endpoints: ApiEndpoint[] = [
 const getMethodColor = (method: HttpMethod) => {
   switch (method) {
     case "GET": return "text-primary bg-primary/10"
-    case "POST": return "text-emerald-500 bg-[#DFF9E8]"
-    case "PUT": return "text-[#FBA94B] bg-[#FEE6C7]"
-    case "DELETE": return "text-[#F04D1A] bg-[#FDE6D7]"
-    case "PATCH": return "text-[#B981DA] bg-[#F5EDFA]"
+    case "POST": return "text-success bg-success/10"
+    case "PUT": return "text-warning bg-warning/10"
+    case "DELETE": return "text-destructive bg-destructive/10"
+    case "PATCH": return "text-[var(--primary-04)] bg-[var(--primary-04)]/10"
     default: return "text-muted-foreground bg-muted"
   }
 }
@@ -340,7 +342,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       </svg>
                     </div>
                     {apiKeys.length === 0 && (
-                      <p className="mt-2 text-[0.75rem] text-[#F04D1A]">No API keys found. Generate one first or enter manually.</p>
+                      <p className="mt-2 text-[0.75rem] text-destructive">No API keys found. Generate one first or enter manually.</p>
                     )}
                   </div>
                 ) : (
@@ -396,12 +398,12 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                   <div className="space-y-2 p-3 bg-zinc-900 dark:bg-zinc-950 rounded-xl text-[0.8125rem] font-mono">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Content-Type:</span>
-                      <span className="text-emerald-500">application/json</span>
+                      <span className="text-success">application/json</span>
                     </div>
                     {activeKey && (
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">X-API-Key:</span>
-                        <span className="text-emerald-500">••••••••{activeKey.slice(-8)}</span>
+                        <span className="text-success">••••••••{activeKey.slice(-8)}</span>
                       </div>
                     )}
                   </div>
@@ -437,16 +439,16 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                   rows={5}
-                  className="w-full p-4 bg-zinc-900 dark:bg-zinc-950 border border-zinc-800 rounded-xl text-emerald-500 placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                  className="w-full p-4 bg-zinc-900 dark:bg-zinc-950 border border-zinc-800 rounded-xl text-success placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
                   />
                 </div>
               )}
 
             {/* Send Button */}
-              <button
+              <Button
                 onClick={handleSendRequest}
-              disabled={loading || (selectedEndpoint.protected && !activeKey)}
-              className="w-full h-14 flex items-center justify-center gap-2 bg-primary text-white rounded-xl font-bold text-[0.9375rem] hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                disabled={loading || (selectedEndpoint.protected && !activeKey)}
+                className="w-full h-14 rounded-xl font-bold text-[0.9375rem]"
               >
                 {loading ? (
                 <>
@@ -464,7 +466,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                   Send Request
                 </>
               )}
-              </button>
+              </Button>
           </div>
         </div>
 
@@ -478,9 +480,9 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             {responseStatus !== null && (
               <div className="flex items-center gap-3">
                 <span className={`px-3 py-1 rounded-lg text-[0.75rem] font-bold ${
-                        responseStatus >= 200 && responseStatus < 300 
-                    ? 'bg-[#DFF9E8] text-emerald-500' 
-                    : 'bg-[#FDE6D7] text-[#F04D1A]'
+                        responseStatus >= 200 && responseStatus < 300
+                    ? 'bg-success/10 text-success'
+                    : 'bg-destructive/10 text-destructive'
                       }`}>
                   {responseStatus === 0 ? 'Error' : responseStatus}
                       </span>
@@ -494,15 +496,18 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
           {/* Terminal */}
           <div className="bg-zinc-900 dark:bg-zinc-950 rounded-xl min-h-[400px] overflow-hidden">
             {/* Terminal Header */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#272B30] border-b border-[#33383F]">
-              <div className="w-3 h-3 rounded-full bg-[#F04D1A]"></div>
-              <div className="w-3 h-3 rounded-full bg-[#FBA94B]"></div>
-              <div className="w-3 h-3 rounded-full bg-[#32AE60]"></div>
+            <div className="flex items-center gap-2 px-4 py-3 bg-muted/80 border-b border-border">
+              <div className="w-3 h-3 rounded-full bg-destructive"></div>
+              <div className="w-3 h-3 rounded-full bg-warning"></div>
+              <div className="w-3 h-3 rounded-full bg-success"></div>
               <span className="ml-3 text-[0.75rem] text-muted-foreground">response.json</span>
               {response && (
                 <button
-                  onClick={() => navigator.clipboard.writeText(JSON.stringify(response, null, 2))}
-                  className="ml-auto text-[0.75rem] text-muted-foreground hover:text-white transition-colors flex items-center gap-1"
+                  onClick={() => {
+                    navigator.clipboard.writeText(JSON.stringify(response, null, 2))
+                    toast.success('Response copied to clipboard')
+                  }}
+                  className="ml-auto text-[0.75rem] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -516,7 +521,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             {/* Terminal Content */}
             <div className="p-4 font-mono text-[0.8125rem] leading-relaxed max-h-[350px] overflow-auto">
                     {loading ? (
-                <div className="flex items-center gap-2 text-emerald-500">
+                <div className="flex items-center gap-2 text-success">
                   <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
@@ -524,7 +529,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       </div>
               ) : response ? (
                 <pre className={`whitespace-pre-wrap ${
-                  response.error ? 'text-[#F04D1A]' : 'text-emerald-500'
+                  response.error ? 'text-destructive' : 'text-success'
                 }`}>
                         {JSON.stringify(response, null, 2)}
                       </pre>

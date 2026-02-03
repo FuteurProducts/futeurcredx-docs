@@ -196,7 +196,7 @@ export const CredentialsPanel: React.FC = () => {
       return <Badge variant="destructive">Expired</Badge>;
     }
     if (cred.expiresAt && new Date(cred.expiresAt) < new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)) {
-      return <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">Expiring Soon</Badge>;
+      return <Badge className="bg-warning/10 text-warning border-warning/20">Expiring Soon</Badge>;
     }
     return <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">Active</Badge>;
   };

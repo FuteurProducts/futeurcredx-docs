@@ -1,5 +1,6 @@
 // Main API Console Component - Enterprise-grade API Connections management
 import React, { useState, useEffect, useCallback } from 'react';
+import { toast } from 'sonner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -1262,7 +1263,12 @@ const WebhooksPanel: React.FC = () => {
           <h3 className="text-lg font-semibold">Webhook Endpoints</h3>
           <p className="text-sm text-muted-foreground">Configure endpoints to receive real-time events</p>
         </div>
-        <button className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors">
+        <button
+          onClick={() => {
+            toast.info('Webhook endpoint configuration coming soon');
+          }}
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:bg-primary/90 transition-colors"
+        >
           Add Endpoint
         </button>
       </div>

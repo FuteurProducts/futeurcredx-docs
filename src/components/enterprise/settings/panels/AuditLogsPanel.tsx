@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, Search, Filter } from 'lucide-react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import type { AuditLogEntry } from '../types';
 
 interface AuditLogsPanelProps {
@@ -26,10 +28,10 @@ const actionColors: Record<string, string> = {
   'user.deleted': 'bg-destructive/10 text-destructive',
   'api_key.created': 'bg-info/10 text-info',
   'api_key.revoked': 'bg-warning/10 text-warning',
-  'settings.updated': 'bg-purple-100 text-purple-700',
-  'report.exported': 'bg-cyan-100 text-cyan-700',
+  'settings.updated': 'bg-[var(--primary-04)]/10 text-[var(--primary-04)]',
+  'report.exported': 'bg-info/10 text-info',
   'customer.viewed': 'bg-muted text-muted-foreground',
-  'role.updated': 'bg-indigo-100 text-indigo-700',
+  'role.updated': 'bg-[var(--primary-01)]/10 text-[var(--primary-01)]',
 };
 
 export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
@@ -74,13 +76,10 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
             Complete audit trail of platform activity
           </p>
         </div>
-        <button
-          onClick={onExport}
-          className="flex items-center gap-2 px-4 py-2 border border-border rounded-md text-sm font-medium hover:bg-muted transition-colors"
-        >
+        <Button variant="outline" onClick={onExport}>
           <Download className="h-4 w-4" />
           Export CSV
-        </button>
+        </Button>
       </div>
 
       {/* Tabs */}
@@ -112,10 +111,17 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
             className="w-full h-9 pl-9 pr-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
-        <button className="flex items-center gap-2 px-3 py-2 border border-border rounded-md text-sm hover:bg-muted transition-colors">
+        <Button
+          variant="outline"
+          onClick={() => {
+            toast.info('Filter options', {
+              description: 'Advanced filtering coming soon. Use the search field to filter by user, action, or resource.'
+            });
+          }}
+        >
           <Filter className="h-4 w-4" />
           Filter
-        </button>
+        </Button>
       </div>
 
       {/* Logs Table */}

@@ -52,9 +52,9 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-info/10 rounded-xl flex items-center justify-center">
             <svg
-              className="w-5 h-5 text-blue-600"
+              className="w-5 h-5 text-info"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -123,8 +123,8 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
             {formatNumber(summary.totalStable)}
           </div>
         </div>
-        <div className="p-3 bg-blue-500/10 rounded-xl">
-          <div className="text-xs text-blue-600 mb-1">Avg Change</div>
+        <div className="p-3 bg-info/10 rounded-xl">
+          <div className="text-xs text-info mb-1">Avg Change</div>
           <div className={`text-lg font-bold ${summary.avgChange >= 0 ? "text-success" : "text-destructive"}`}>
             {summary.avgChange >= 0 ? "+" : ""}{summary.avgChange} pts
           </div>
@@ -137,8 +137,8 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
           <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="avgScoreGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.05} />
+                <stop offset="5%" stopColor="hsl(var(--info))" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(var(--info))" stopOpacity={0.05} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
@@ -166,7 +166,7 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
             <Area
               type="monotone"
               dataKey="avgScore"
-              stroke="#3b82f6"
+              stroke="hsl(var(--info))"
               fill="url(#avgScoreGradient)"
               strokeWidth={2}
             />

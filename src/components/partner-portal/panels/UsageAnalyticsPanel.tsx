@@ -62,14 +62,14 @@ export const UsageAnalyticsPanel: React.FC = () => {
   const getLatencyColor = (latency: number) => {
     if (latency < 100) return 'text-chart-2';
     if (latency < 200) return 'text-chart-4';
-    if (latency < 500) return 'text-yellow-500';
+    if (latency < 500) return 'text-warning';
     return 'text-destructive';
   };
 
   const getSuccessRateColor = (rate: number) => {
     if (rate >= 99.5) return 'text-chart-2';
     if (rate >= 99) return 'text-chart-4';
-    if (rate >= 95) return 'text-yellow-500';
+    if (rate >= 95) return 'text-warning';
     return 'text-destructive';
   };
 

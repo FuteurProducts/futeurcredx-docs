@@ -53,10 +53,10 @@ const FALLBACK_apiUsageData = {
 const FALLBACK_portfolioHealthData = {
   totalAssessed: PILOT_METRICS.scoredBusinesses,
   segments: [
-    { name: "Low Risk", count: 25976, percentage: 68, color: "#10b981" },
-    { name: "Medium Risk", count: 7640, percentage: 20, color: "#f59e0b" },
-    { name: "High Risk", count: 3820, percentage: 10, color: "#f97316" },
-    { name: "Critical", count: 764, percentage: 2, color: "#ef4444" },
+    { name: "Low Risk", count: 25976, percentage: 68, color: "hsl(var(--success))" },
+    { name: "Medium Risk", count: 7640, percentage: 20, color: "hsl(var(--warning))" },
+    { name: "High Risk", count: 3820, percentage: 10, color: "hsl(var(--primary-05))" },
+    { name: "Critical", count: 764, percentage: 2, color: "hsl(var(--destructive))" },
   ],
   averageScore: PILOT_METRICS.avgLumiqScore,
   lastUpdated: "2 min ago",

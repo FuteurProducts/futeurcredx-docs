@@ -203,7 +203,9 @@ export const RetentionPanel: React.FC = () => {
               <div className="text-xs text-muted-foreground">Processed (90d)</div>
             </div>
           </div>
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full" onClick={() => {
+            toast({ title: 'Deletion request queue - 0 pending requests' });
+          }}>
             View Deletion Request Queue
           </Button>
         </CardContent>

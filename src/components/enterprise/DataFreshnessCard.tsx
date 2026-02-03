@@ -29,10 +29,10 @@ export const DataFreshnessCard: React.FC<DataFreshnessCardProps> = ({
     <div className={`p-6 ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-violet-100 dark:bg-violet-900/30 rounded-xl">
-            <Database className="h-5 w-5 text-violet-600 dark:text-violet-400" />
+          <div className="p-2 bg-primary-04/10 rounded-xl">
+            <Database className="h-5 w-5 text-primary-04" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground">Data Freshness</h3>
+          <h3 className="text-h6 font-semibold text-foreground">Data Freshness</h3>
         </div>
         {onRefreshAll && (
           <button
@@ -81,8 +81,8 @@ export const DataFreshnessCard: React.FC<DataFreshnessCardProps> = ({
         </div>
 
         <div className="flex-1">
-          <p className="text-sm text-muted-foreground mb-1">Account data up-to-date</p>
-          <p className="text-2xl font-bold text-foreground">
+          <p className="text-body-2 text-muted-foreground mb-1">Account data up-to-date</p>
+          <p className="text-h4 font-bold text-foreground">
             {data.freshCount.toLocaleString()}
             <span className="text-sm font-normal text-muted-foreground ml-1">
               / {data.totalAccounts.toLocaleString()}
@@ -95,26 +95,26 @@ export const DataFreshnessCard: React.FC<DataFreshnessCardProps> = ({
       <div className="grid grid-cols-3 gap-3">
         <div className="p-3 bg-success/10 rounded-xl text-center">
           <CheckCircle2 className="h-5 w-5 text-success mx-auto mb-1" />
-          <span className="text-lg font-semibold text-foreground block">
+          <span className="text-h6 font-semibold text-foreground block">
             {data.freshCount.toLocaleString()}
           </span>
-          <span className="text-xs text-muted-foreground">Fresh (&lt;24h)</span>
+          <span className="text-caption text-muted-foreground">Fresh (&lt;24h)</span>
         </div>
 
         <div className="p-3 bg-warning/10 rounded-xl text-center">
           <Clock className="h-5 w-5 text-warning mx-auto mb-1" />
-          <span className="text-lg font-semibold text-foreground block">
+          <span className="text-h6 font-semibold text-foreground block">
             {data.staleCount.toLocaleString()}
           </span>
-          <span className="text-xs text-muted-foreground">Stale (1-7d)</span>
+          <span className="text-caption text-muted-foreground">Stale (1-7d)</span>
         </div>
 
         <div className="p-3 bg-destructive/10 rounded-xl text-center">
           <AlertCircle className="h-5 w-5 text-destructive mx-auto mb-1" />
-          <span className="text-lg font-semibold text-foreground block">
+          <span className="text-h6 font-semibold text-foreground block">
             {data.criticalCount.toLocaleString()}
           </span>
-          <span className="text-xs text-muted-foreground">Critical (&gt;7d)</span>
+          <span className="text-caption text-muted-foreground">Critical (&gt;7d)</span>
         </div>
       </div>
 

@@ -39,10 +39,10 @@ export interface WebhookConfigPanelProps {
 
 // Event categories
 const eventCategories: Record<string, { color: string; lightColor: string }> = {
-  score: { color: '#3B82F6', lightColor: '#EFF6FF' },
-  application: { color: '#8B5CF6', lightColor: '#F5F3FF' },
-  alert: { color: '#F59E0B', lightColor: '#FFFBEB' },
-  account: { color: '#10B981', lightColor: '#ECFDF5' },
+  score: { color: 'var(--primary-01)', lightColor: 'hsl(var(--info) / 0.1)' },
+  application: { color: 'var(--primary-04)', lightColor: 'hsl(var(--primary) / 0.1)' },
+  alert: { color: 'var(--primary-05)', lightColor: 'hsl(var(--warning) / 0.1)' },
+  account: { color: 'var(--primary-02)', lightColor: 'hsl(var(--success) / 0.1)' },
 };
 
 // Default events if not provided
@@ -267,7 +267,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
                   <div className="flex flex-wrap gap-1 mt-2">
                     {endpoint.events.map(eventId => {
                       const event = availableEvents.find(e => e.id === eventId);
-                      const catConfig = event ? eventCategories[event.category] : { color: '#6B7280', lightColor: '#F3F4F6' };
+                      const catConfig = event ? eventCategories[event.category] : { color: 'var(--shade-06)', lightColor: 'var(--shade-09)' };
                       return (
                         <span 
                           key={eventId}

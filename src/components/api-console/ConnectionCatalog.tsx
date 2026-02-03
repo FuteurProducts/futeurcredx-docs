@@ -26,10 +26,10 @@ interface ConnectionCatalogProps {
 }
 
 const connectionTypeConfig: Record<ConnectionType, { label: string; icon: React.ElementType; color: string }> = {
-  'open-banking': { label: 'Open Banking', icon: Building2, color: 'text-blue-600 bg-blue-100' },
-  'aggregator': { label: 'Aggregator', icon: Database, color: 'text-purple-600 bg-purple-100' },
+  'open-banking': { label: 'Open Banking', icon: Building2, color: 'text-info bg-info/10' },
+  'aggregator': { label: 'Aggregator', icon: Database, color: 'text-[var(--primary-04)] bg-[var(--primary-04)]/10' },
   'accounting': { label: 'Accounting', icon: FileText, color: 'text-success bg-success/10' },
-  'bureau': { label: 'Credit Bureau', icon: CreditCard, color: 'text-orange-600 bg-orange-100' },
+  'bureau': { label: 'Credit Bureau', icon: CreditCard, color: 'text-warning bg-warning/10' },
   'internal': { label: 'Internal', icon: Zap, color: 'text-muted-foreground bg-muted' },
 };
 

@@ -9,11 +9,11 @@ interface CrossSellFunnelProps {
 }
 
 const stageColors = [
-  'bg-blue-500',
-  'bg-blue-400',
-  'bg-cyan-500',
-  'bg-green-400',
-  'bg-green-500',
+  'bg-info',
+  'bg-info/80',
+  'bg-primary',
+  'bg-success/80',
+  'bg-success',
 ];
 
 export const CrossSellFunnel: React.FC<CrossSellFunnelProps> = ({ stages }) => {
@@ -23,7 +23,7 @@ export const CrossSellFunnel: React.FC<CrossSellFunnelProps> = ({ stages }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

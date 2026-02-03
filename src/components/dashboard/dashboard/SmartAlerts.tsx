@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { AlertTriangle, TrendingUp, Shield, Sparkles, X } from 'lucide-react';
+import { toast } from 'sonner';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -48,6 +50,19 @@ const alerts: Alert[] = [
 ];
 
 export function SmartAlerts() {
+  const [dismissedAlerts, setDismissedAlerts] = useState<Set<string>>(new Set());
+
+  const handleDismiss = (alertId: string) => {
+    setDismissedAlerts(prev => new Set(prev).add(alertId));
+    toast.success('Alert dismissed');
+  };
+
+  const handleAction = (action: string) => {
+    toast.info(`Taking action: ${action}`);
+  };
+
+  const visibleAlerts = alerts.filter(alert => !dismissedAlerts.has(alert.id));
+
   const getIcon = (type: string) => {
     switch(type) {
       case 'anomaly': return AlertTriangle;
@@ -80,11 +95,11 @@ export function SmartAlerts() {
               <p className="text-sm text-muted-foreground">AI-powered anomaly detection</p>
             </div>
           </div>
-          <Badge variant="destructive">{alerts.length} Active</Badge>
+          <Badge variant="destructive">{visibleAlerts.length} Active</Badge>
         </div>
 
         <div className="space-y-3">
-          {alerts.map((alert, i) => {
+          {visibleAlerts.map((alert, i) => {
             const Icon = getIcon(alert.type);
             return (
               <div
@@ -113,12 +128,22 @@ export function SmartAlerts() {
                           {alert.description}
                         </p>
                       </div>
-                      <Button variant="ghost" size="icon" className="h-6 w-6 -mt-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-6 w-6 -mt-1"
+                        onClick={() => handleDismiss(alert.id)}
+                      >
                         <X className="w-4 h-4" />
                       </Button>
                     </div>
                     {alert.action && (
-                      <Button size="sm" variant="outline" className="mt-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="mt-2"
+                        onClick={() => handleAction(alert.action!)}
+                      >
                         {alert.action}
                       </Button>
                     )}

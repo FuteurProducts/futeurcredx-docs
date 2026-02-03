@@ -60,8 +60,8 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
             <Server className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-foreground">System Status</h3>
-            <p className="text-xs text-muted-foreground">
+            <h3 className="text-h6 font-semibold text-foreground">System Status</h3>
+            <p className="text-caption text-muted-foreground">
               {operationalCount}/{services.length} services operational
             </p>
           </div>
@@ -79,8 +79,8 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
       {/* Overall Uptime */}
       <div className="mb-6 p-4 bg-muted/50 rounded-xl">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-muted-foreground">30-day Uptime</span>
-          <span className={`text-xl font-bold ${
+          <span className="text-body-2 text-muted-foreground">30-day Uptime</span>
+          <span className={`text-h5 font-bold ${
             overallUptime >= 99.9 ? "text-success" :
             overallUptime >= 99 ? "text-warning" : "text-destructive"
           }`}>
@@ -115,7 +115,7 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
             >
               <div className="flex items-center gap-3">
                 <div className={`w-2 h-2 rounded-full ${config.bg}`} />
-                <span className="text-sm font-medium text-foreground">{service.name}</span>
+                <span className="text-body-2 font-medium text-foreground">{service.name}</span>
               </div>
               
               <div className="flex items-center gap-4">

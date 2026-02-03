@@ -55,8 +55,8 @@ const formatCurrency = (num: number): string => {
 
 const getSeverityStyle = (severity: string) => {
   switch (severity) {
-    case 'critical': return { bg: 'bg-rose-50', border: 'border-l-rose-500', badge: 'bg-rose-500 text-white', icon: 'text-rose-600' };
-    case 'high': return { bg: 'bg-orange-50', border: 'border-l-orange-500', badge: 'bg-orange-500 text-white', icon: 'text-orange-600' };
+    case 'critical': return { bg: 'bg-destructive/10', border: 'border-l-destructive', badge: 'bg-destructive text-white', icon: 'text-destructive' };
+    case 'high': return { bg: 'bg-warning/10', border: 'border-l-warning', badge: 'bg-warning text-white', icon: 'text-warning' };
     case 'medium': return { bg: 'bg-warning/10', border: 'border-l-warning', badge: 'bg-warning text-white', icon: 'text-warning' };
     default: return { bg: 'bg-info/10', border: 'border-l-info', badge: 'bg-info text-white', icon: 'text-info' };
   }
@@ -127,7 +127,7 @@ const QueueItemCard: React.FC<{
 
         {/* Risk Change */}
         <div className="text-center w-20">
-          <div className={`text-sm font-semibold ${item.riskChange > 0 ? 'text-rose-600' : 'text-success'}`}>
+          <div className={`text-sm font-semibold ${item.riskChange > 0 ? 'text-destructive' : 'text-success'}`}>
             {item.riskChange > 0 ? '+' : ''}{item.riskChange}%
           </div>
           <div className="text-xs text-muted-foreground">risk Δ</div>
@@ -286,8 +286,8 @@ export const EWSWorkQueue: React.FC<EWSWorkQueueProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-rose-500/10 rounded-xl flex items-center justify-center">
-            <Bell className="w-5 h-5 text-rose-600" />
+          <div className="w-10 h-10 bg-destructive/10 rounded-xl flex items-center justify-center">
+            <Bell className="w-5 h-5 text-destructive" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">Early Warning System</h3>
@@ -297,7 +297,7 @@ export const EWSWorkQueue: React.FC<EWSWorkQueueProps> = ({
 
         <div className="flex items-center gap-3">
           {slaBreachedCount > 0 && (
-            <span className="flex items-center gap-1.5 px-3 py-1 bg-rose-500 text-white rounded-full text-sm font-semibold animate-pulse">
+            <span className="flex items-center gap-1.5 px-3 py-1 bg-destructive text-white rounded-full text-sm font-semibold animate-pulse">
               <Clock className="w-3.5 h-3.5" />
               {slaBreachedCount} SLA Breached
             </span>
@@ -305,7 +305,7 @@ export const EWSWorkQueue: React.FC<EWSWorkQueueProps> = ({
           <span className="px-3 py-1 bg-destructive/10 text-destructive rounded-full text-sm font-semibold">
             {criticalCount} Critical
           </span>
-          <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
+          <span className="px-3 py-1 bg-warning/10 text-warning rounded-full text-sm font-semibold">
             {highCount} High
           </span>
         </div>

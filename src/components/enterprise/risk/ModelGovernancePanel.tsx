@@ -41,7 +41,7 @@ const getStatusStyle = (status: string) => {
   switch (status) {
     case 'ok': return { bg: 'bg-success/10', text: 'text-success', badge: 'bg-success', icon: CheckCircle2 };
     case 'warning': return { bg: 'bg-warning/10', text: 'text-warning', badge: 'bg-warning', icon: AlertTriangle };
-    case 'breach': return { bg: 'bg-rose-50', text: 'text-rose-700', badge: 'bg-rose-500', icon: AlertTriangle };
+    case 'breach': return { bg: 'bg-destructive/10', text: 'text-destructive', badge: 'bg-destructive', icon: AlertTriangle };
     default: return { bg: 'bg-muted', text: 'text-foreground', badge: 'bg-muted-foreground', icon: CheckCircle2 };
   }
 };
@@ -65,8 +65,8 @@ export const ModelGovernancePanel: React.FC<ModelGovernancePanelProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-violet-500/10 rounded-xl flex items-center justify-center">
-            <Cpu className="w-5 h-5 text-violet-600" />
+          <div className="w-10 h-10 bg-primary-04/10 rounded-xl flex items-center justify-center">
+            <Cpu className="w-5 h-5 text-primary-04" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-foreground">Model Governance</h3>
@@ -195,7 +195,7 @@ export const ModelGovernancePanel: React.FC<ModelGovernancePanelProps> = ({
                       <td className="py-2 px-3 text-right text-muted-foreground">{metric.expected}%</td>
                       <td className="py-2 px-3 text-right font-medium">{metric.actual}%</td>
                       <td className={`py-2 px-3 text-right font-medium ${
-                        metric.variance > 0 ? 'text-rose-600' : 'text-success'
+                        metric.variance > 0 ? 'text-destructive' : 'text-success'
                       }`}>
                         {metric.variance > 0 ? '+' : ''}{metric.variance}%
                       </td>

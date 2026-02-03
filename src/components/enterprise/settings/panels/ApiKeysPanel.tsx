@@ -6,6 +6,7 @@ import {
   Plus, X, Key, RefreshCw, Trash2,
   CheckCircle, XCircle, Eye, EyeOff
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { ApiKey, Environment } from '../types';
 import { CopyButton } from '@/components/ui/copy-button';
 import { EmptyState } from '@/components/ui/empty-state';
@@ -84,13 +85,10 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
             Manage API keys for programmatic access
           </p>
         </div>
-        <button
-          onClick={() => setShowDrawer(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-        >
+        <Button onClick={() => setShowDrawer(true)}>
           <Plus className="h-4 w-4" />
           Create API Key
-        </button>
+        </Button>
       </div>
 
       {/* Keys Table */}
@@ -232,12 +230,13 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
             >
               <div className="p-4 border-b border-border flex items-center justify-between">
                 <h3 className="text-lg font-semibold">Create API Key</h3>
-                <button
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setShowDrawer(false)}
-                  className="p-2 hover:bg-muted rounded-md transition-colors"
                 >
                   <X className="h-5 w-5" />
-                </button>
+                </Button>
               </div>
 
               <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -295,14 +294,15 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
               </div>
 
               <div className="p-4 border-t border-border">
-                <button
+                <Button
+                  className="w-full"
+                  size="lg"
                   onClick={handleCreate}
                   disabled={!newKeyName || newKeyScopes.length === 0}
-                  className="w-full flex items-center justify-center gap-2 h-11 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
                   <Key className="h-4 w-4" />
                   Generate Key
-                </button>
+                </Button>
               </div>
             </motion.div>
           </>

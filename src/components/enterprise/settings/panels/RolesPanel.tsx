@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Save } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { RolePermissions, Permission, UserRole } from '../types';
 import { roleLabels } from '../mockData';
 
@@ -51,14 +52,10 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
             Configure access levels for each role
           </p>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={!hasChanges}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
-        >
+        <Button onClick={handleSave} disabled={!hasChanges}>
           <Save className="h-4 w-4" />
           Save Changes
-        </button>
+        </Button>
       </div>
 
       <div className="grid grid-cols-4 gap-4">

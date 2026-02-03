@@ -16,7 +16,7 @@ export const ProductPenetrationTable: React.FC<ProductPenetrationTableProps> = (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-border p-6"
+      className="bg-card rounded-2xl border border-border p-6"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -61,7 +61,7 @@ export const ProductPenetrationTable: React.FC<ProductPenetrationTableProps> = (
                   <span className="font-semibold text-foreground">{product.product}</span>
                 </td>
                 <td className="py-4 text-center">
-                  <span className="inline-flex items-center justify-center w-12 h-8 bg-blue-100 text-blue-700 rounded-lg font-semibold text-sm">
+                  <span className="inline-flex items-center justify-center w-12 h-8 bg-info/10 text-info rounded-lg font-semibold text-sm">
                     {product.held}%
                   </span>
                 </td>

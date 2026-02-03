@@ -51,22 +51,22 @@ export const ExpenseAnalysisCard = ({
           >
             <defs>
               <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#B2E0FF" stopOpacity={0.9} />
-                <stop offset="95%" stopColor="#B2E0FF" stopOpacity={0} />
+                <stop offset="5%" stopColor="hsl(var(--info))" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="hsl(var(--info))" stopOpacity={0} />
               </linearGradient>
             </defs>
             <XAxis dataKey="name" hide={true} />
             <YAxis hide={true} />
             <Area
               dot={{
-                stroke: "#4D81E7",
-                fill: "#fff",
+                stroke: "hsl(var(--primary-01))",
+                fill: "hsl(var(--background))",
                 strokeWidth: 3,
                 r: 5,
               }}
               type="linear"
               dataKey="value"
-              stroke="#4D81E7"
+              stroke="hsl(var(--primary-01))"
               strokeWidth={3}
               fillOpacity={1}
               fill="url(#expenseGradient)"

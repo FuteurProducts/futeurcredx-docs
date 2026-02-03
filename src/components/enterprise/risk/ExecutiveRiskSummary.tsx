@@ -43,8 +43,8 @@ const formatNumber = (num: number): string => {
 const KPICard: React.FC<{ kpi: RiskKPI; index: number }> = ({ kpi, index }) => {
   const TrendIcon = kpi.trend === 'up' ? TrendingUp : TrendingDown;
   const trendColor = kpi.trendIsGood
-    ? kpi.trend === 'up' ? 'text-success' : 'text-rose-600'
-    : kpi.trend === 'up' ? 'text-rose-600' : 'text-success';
+    ? kpi.trend === 'up' ? 'text-success' : 'text-destructive'
+    : kpi.trend === 'up' ? 'text-destructive' : 'text-success';
 
   return (
     <motion.div
@@ -74,11 +74,11 @@ const KPICard: React.FC<{ kpi: RiskKPI; index: number }> = ({ kpi, index }) => {
         )}
       </div>
       
-      <div className="text-2xl font-bold text-foreground mb-1">
+      <div className="text-h4 font-bold text-foreground mb-1">
         {typeof kpi.value === 'number' ? formatNumber(kpi.value) : kpi.value}
       </div>
-      
-      <div className={`flex items-center gap-1 text-sm ${trendColor}`}>
+
+      <div className={`flex items-center gap-1 text-body-2 ${trendColor}`}>
         {kpi.trend !== 'stable' && <TrendIcon className="w-3.5 h-3.5" />}
         <span className="font-medium">
           {kpi.change > 0 ? '+' : ''}{kpi.change}%
@@ -104,7 +104,7 @@ const TrendStrip: React.FC<{
         <div className="text-xs font-medium text-muted-foreground mb-1">{label}</div>
         <div className="flex items-center gap-2">
           <span className="text-lg font-semibold text-foreground">{formatNumber(latestValue)}</span>
-          <span className={`text-xs font-medium ${change >= 0 ? 'text-rose-600' : 'text-success'}`}>
+          <span className={`text-xs font-medium ${change >= 0 ? 'text-destructive' : 'text-success'}`}>
             {change >= 0 ? '+' : ''}{change.toFixed(1)}%
           </span>
         </div>
@@ -144,8 +144,8 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
           <Shield className="w-5 h-5 text-primary" />
         </div>
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Executive Risk Summary</h2>
-          <p className="text-sm text-muted-foreground">CRO-level portfolio health overview</p>
+          <h2 className="text-h6 font-semibold text-foreground">Executive Risk Summary</h2>
+          <p className="text-body-2 text-muted-foreground">CRO-level portfolio health overview</p>
         </div>
       </div>
 
@@ -160,13 +160,13 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
       <div className="bg-card border border-border rounded-xl p-4">
         <div className="flex items-center gap-2 mb-4">
           <Activity className="w-4 h-4 text-muted-foreground" />
-          <span className="text-sm font-medium text-foreground">Trend Indicators (30d)</span>
+          <span className="text-body-2 font-medium text-foreground">Trend Indicators (30d)</span>
         </div>
         <div className="grid grid-cols-4 gap-3 lg:grid-cols-2">
-          <TrendStrip label="Deteriorations" data={trendData.deteriorations} color="#ef4444" />
-          <TrendStrip label="Delinquencies" data={trendData.delinquencies} color="#f97316" />
-          <TrendStrip label="Cashflow Stress" data={trendData.cashflowStress} color="#eab308" />
-          <TrendStrip label="Bureau Drops" data={trendData.bureauDrops} color="#8b5cf6" />
+          <TrendStrip label="Deteriorations" data={trendData.deteriorations} color="hsl(var(--destructive))" />
+          <TrendStrip label="Delinquencies" data={trendData.delinquencies} color="hsl(var(--warning))" />
+          <TrendStrip label="Cashflow Stress" data={trendData.cashflowStress} color="hsl(var(--primary-05))" />
+          <TrendStrip label="Bureau Drops" data={trendData.bureauDrops} color="hsl(var(--primary-04))" />
         </div>
       </div>
 
@@ -175,7 +175,7 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 text-warning" />
-            <span className="text-sm font-medium text-foreground">Top 3 Deterioration Drivers</span>
+            <span className="text-body-2 font-medium text-foreground">Top 3 Deterioration Drivers</span>
           </div>
           <span className="text-xs text-muted-foreground">Model explainability at portfolio level</span>
         </div>
@@ -193,9 +193,9 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-lg font-semibold text-foreground">{driver.impact}%</div>
+                <div className="text-h6 font-semibold text-foreground">{driver.impact}%</div>
                 <div className={`text-xs ${
-                  driver.trend === 'up' ? 'text-rose-600' : driver.trend === 'down' ? 'text-success' : 'text-muted-foreground'
+                  driver.trend === 'up' ? 'text-destructive' : driver.trend === 'down' ? 'text-success' : 'text-muted-foreground'
                 }`}>
                   {driver.trend === 'up' ? '↑ Increasing' : driver.trend === 'down' ? '↓ Decreasing' : '→ Stable'}
                 </div>

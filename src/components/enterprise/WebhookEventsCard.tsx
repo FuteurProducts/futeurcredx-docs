@@ -66,7 +66,7 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
           <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
             <Webhook className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
           </div>
-          <h3 className="text-lg font-semibold text-foreground">Webhook Events</h3>
+          <h3 className="text-h6 font-semibold text-foreground">Webhook Events</h3>
         </div>
         {onViewLogs && (
           <button
@@ -82,28 +82,28 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
       {/* Stats Row */}
       <div className="grid grid-cols-4 gap-2 mb-6">
         <div className="text-center p-2 bg-muted/50 rounded-lg">
-          <span className="text-lg font-semibold text-foreground block">
+          <span className="text-h6 font-semibold text-foreground block">
             {stats.totalSent.toLocaleString()}
           </span>
-          <span className="text-xs text-muted-foreground">Sent</span>
+          <span className="text-caption text-muted-foreground">Sent</span>
         </div>
         <div className="text-center p-2 bg-muted/50 rounded-lg">
-          <span className="text-lg font-semibold text-success block">
+          <span className="text-h6 font-semibold text-success block">
             {stats.deliveryRate}%
           </span>
-          <span className="text-xs text-muted-foreground">Delivered</span>
+          <span className="text-caption text-muted-foreground">Delivered</span>
         </div>
         <div className="text-center p-2 bg-muted/50 rounded-lg">
-          <span className="text-lg font-semibold text-foreground block">
+          <span className="text-h6 font-semibold text-foreground block">
             {stats.avgResponseTime}ms
           </span>
-          <span className="text-xs text-muted-foreground">Avg Time</span>
+          <span className="text-caption text-muted-foreground">Avg Time</span>
         </div>
         <div className="text-center p-2 bg-muted/50 rounded-lg">
-          <span className="text-lg font-semibold text-destructive block">
+          <span className="text-h6 font-semibold text-destructive block">
             {stats.failedCount}
           </span>
-          <span className="text-xs text-muted-foreground">Failed</span>
+          <span className="text-caption text-muted-foreground">Failed</span>
         </div>
       </div>
 

@@ -26,7 +26,7 @@ export const FinlabCard = ({
   right,
   children,
 }: FinlabCardProps) => (
-  <div className={`mt-6 p-6 bg-white rounded-2xl ${className}`}>
+  <div className={`mt-6 p-6 bg-card rounded-2xl ${className}`}>
     <div className="flex items-start">
       <div className="mr-auto text-lg font-semibold text-foreground flex items-center gap-1.5">
         {title}

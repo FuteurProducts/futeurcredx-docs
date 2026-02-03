@@ -56,21 +56,21 @@ export const IncomeAnalysisCard = ({
             barSize={20}
             margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#DCE4E8" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--shade-08)" vertical={false} />
             <XAxis
               dataKey="name"
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fontWeight: 400, fill: "#ACB5BB" }}
+              tick={{ fontSize: 12, fontWeight: 400, fill: "var(--shade-06)" }}
             />
             <YAxis
               tickFormatter={formatYAxis}
               type="number"
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fontWeight: 400, fill: "#ACB5BB" }}
+              tick={{ fontSize: 12, fontWeight: 400, fill: "var(--shade-06)" }}
             />
-            <Bar dataKey="value" fill="#E7854D" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="value" fill="var(--primary-05)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -11,8 +11,8 @@ interface FeatureImportanceChartProps {
 // Use design system semantic colors
 const categoryColors: Record<string, string> = {
   'Financial Health': 'bg-info',
-  'Credit Behavior': 'bg-purple-500',
-  'External Data': 'bg-cyan-500',
+  'Credit Behavior': 'bg-[hsl(var(--primary-04))]',
+  'External Data': 'bg-primary',
   'Market Factors': 'bg-warning',
   'Business Profile': 'bg-success',
 };
@@ -64,7 +64,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
                 <div className="flex items-center gap-2">
                   <TrendIcon
                     className={`w-4 h-4 ${
-                      feature.trend === 'increasing' ? 'text-orange-500' : feature.trend === 'decreasing' ? 'text-success' : 'text-muted-foreground'
+                      feature.trend === 'increasing' ? 'text-warning' : feature.trend === 'decreasing' ? 'text-success' : 'text-muted-foreground'
                     }`}
                   />
                   <span className="font-bold text-foreground">{feature.importance}%</span>

@@ -63,7 +63,7 @@ export function WebhookEventStream() {
       case 'approval_granted': return 'border-success/30 bg-success/5';
       case 'credit_inquiry': return 'border-warning/30 bg-warning/5';
       case 'application_submitted': return 'border-primary/30 bg-primary/5';
-      default: return 'border-blue-500/30 bg-blue-500/5';
+      default: return 'border-info/30 bg-info/5';
     }
   };
 

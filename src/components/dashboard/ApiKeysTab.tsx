@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface ApiKey {
   id: string;
@@ -106,7 +107,7 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
           </div>
           
           {error && (
-            <div className="mb-4 p-4 bg-[#FEE6C7] border border-[#FBA94B] rounded-xl">
+            <div className="mb-4 p-4 bg-warning/10 border border-warning/30 rounded-xl">
               <div className="text-[0.875rem] text-foreground">{error}</div>
             </div>
           )}
@@ -141,9 +142,9 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
 
           {/* Newly Generated Key */}
         {newlyGeneratedKey && (
-            <div className="mt-5 p-4 bg-[#DFF9E8] border border-[#32AE60] rounded-xl">
+            <div className="mt-5 p-4 bg-success/10 border border-success/30 rounded-xl">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-6 h-6 flex items-center justify-center bg-[#32AE60] rounded-full">
+                <div className="w-6 h-6 flex items-center justify-center bg-success rounded-full">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                   </svg>
@@ -151,18 +152,21 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
                 <span className="text-[0.9375rem] font-semibold text-foreground">{newlyGeneratedKey.name} created!</span>
                   </div>
               <div className="bg-foreground rounded-lg p-3 mb-3">
-                <code className="text-[0.8125rem] font-mono text-[#32AE60] break-all select-all">
+                <code className="text-[0.8125rem] font-mono text-success break-all select-all">
                       {newlyGeneratedKey.key}
                     </code>
               </div>
               <div className="flex gap-2">
                     <button
-                      onClick={() => navigator.clipboard.writeText(newlyGeneratedKey.key)}
+                      onClick={() => {
+                        navigator.clipboard.writeText(newlyGeneratedKey.key)
+                        toast.success('API key copied to clipboard')
+                      }}
                   className="flex-1 h-10 bg-foreground text-white rounded-lg font-semibold text-[0.8125rem] hover:bg-foreground/90 transition-colors"
                     >
                   Copy Key
                     </button>
-                <button 
+                <button
                   onClick={() => setNewlyGeneratedKey(null)}
                   className="h-10 px-4 bg-card text-muted-foreground rounded-lg font-semibold text-[0.8125rem] hover:bg-muted transition-colors"
                 >
@@ -189,7 +193,7 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
             </div>
             <Link
               to="/docs"
-              className="text-[0.8125rem] text-primary hover:text-blue-600 font-semibold flex items-center gap-1"
+              className="text-[0.8125rem] text-primary hover:text-primary/80 font-semibold flex items-center gap-1"
             >
               View Docs
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -211,12 +215,12 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
                 <div key={key.id} className="p-4 bg-muted rounded-xl hover:bg-muted transition-colors">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-[#32AE60]" />
+                      <div className="w-2 h-2 rounded-full bg-success" />
                       <span className="text-[0.9375rem] font-semibold text-foreground">{key.name}</span>
                     </div>
-                  <button 
+                  <button
                     onClick={() => handleRevokeKey(key.id)}
-                      className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-[#F04D1A] hover:bg-card rounded-lg transition-all"
+                      className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-destructive hover:bg-card rounded-lg transition-all"
                       title="Revoke key"
                   >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -246,7 +250,10 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
                       </svg>
                   </button>
                     <button
-                      onClick={() => navigator.clipboard.writeText(key.key || '')}
+                      onClick={() => {
+                        navigator.clipboard.writeText(key.key || '')
+                        toast.success('API key copied to clipboard')
+                      }}
                       className="w-7 h-7 flex items-center justify-center hover:bg-muted rounded transition-colors"
                       title="Copy"
                     >
