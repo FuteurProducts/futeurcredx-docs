@@ -208,10 +208,10 @@ const Products = () => {
 
         {/* Greeting */}
         <div className="mb-10">
-          <h1 className="text-[2.5rem] md:text-[1.75rem] font-semibold text-foreground leading-tight">
+          <h1 className="text-3xl md:text-2xl font-bold text-foreground leading-tight">
             Hello {firstName},
           </h1>
-          <h2 className="text-[2.5rem] md:text-[1.75rem] font-semibold text-muted-foreground leading-tight">
+          <h2 className="text-3xl md:text-2xl font-semibold text-muted-foreground leading-tight mt-1">
             How can I help you today?
           </h2>
         </div>
@@ -229,7 +229,7 @@ const Products = () => {
                 selectedProduct?.id === product.id ? 'ring-2 ring-primary ring-offset-2' : ''
               }`}
             >
-              <h3 className="text-[1.125rem] font-semibold text-foreground mb-2">
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 {product.title}
               </h3>
               <p className="text-[0.875rem] text-muted-foreground mb-auto line-clamp-3 min-h-[4rem]">
@@ -251,7 +251,7 @@ const Products = () => {
                   <ProductIcon name={selectedProduct.icon} className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-[1.25rem] font-semibold text-foreground">{selectedProduct.title}</h3>
+                  <h3 className="text-xl font-semibold text-foreground">{selectedProduct.title}</h3>
                   <p className="text-[0.875rem] text-muted-foreground">{selectedProduct.details.apiEndpoint}</p>
                 </div>
               </div>

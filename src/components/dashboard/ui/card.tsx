@@ -9,8 +9,22 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-3xl border border-border bg-card text-card-foreground shadow-[var(--shadow-widget)] transition-all duration-200 hover:shadow-[var(--shadow-depth)]",
-      "dark:shadow-[inset_0_0_0_1.5px_rgba(229,229,229,0.04),0px_5px_1.5px_-4px_rgba(8,8,8,0.5),0px_6px_4px_-4px_rgba(8,8,8,0.05)]",
+      // Premium card styling with enhanced shadows and hover effects
+      "rounded-2xl border border-border/50 bg-card text-card-foreground",
+      "shadow-[0px_4px_6px_-2px_rgba(0,0,0,0.05),0px_10px_15px_-3px_rgba(0,0,0,0.1)]",
+      "transition-all duration-300 ease-out",
+      // Enhanced hover - lift effect with stronger shadow
+      "hover:shadow-[0px_20px_25px_-5px_rgba(0,0,0,0.1),0px_8px_10px_-6px_rgba(0,0,0,0.1)]",
+      "hover:-translate-y-1 hover:border-border",
+      // Subtle gradient overlay on hover
+      "relative overflow-hidden",
+      "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/5 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300",
+      "hover:before:opacity-100",
+      // Dark mode with premium inset glow and stronger shadow
+      "dark:bg-gradient-to-br dark:from-slate-800/90 dark:to-slate-900/90 dark:border-white/5",
+      "dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0px_10px_20px_-5px_rgba(0,0,0,0.5)]",
+      "dark:hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0px_25px_30px_-10px_rgba(0,0,0,0.6)]",
+      "dark:hover:border-white/10",
       className
     )}
     {...props}
@@ -20,14 +34,14 @@ Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("flex flex-col space-y-1.5 p-6", className)} {...props} />
+    <div ref={ref} className={cn("flex flex-col space-y-2 p-6 pb-4", className)} {...props} />
   ),
 );
 CardHeader.displayName = "CardHeader";
 
 const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
-    <h3 ref={ref} className={cn("text-title leading-none tracking-tight", className)} {...props} />
+    <h3 ref={ref} className={cn("text-xl font-semibold leading-none tracking-tight", className)} {...props} />
   ),
 );
 CardTitle.displayName = "CardTitle";

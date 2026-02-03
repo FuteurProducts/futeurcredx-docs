@@ -72,14 +72,14 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card rounded-2xl p-4 sm:p-6 shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.15),0px_6px_4px_-4px_rgba(8,8,8,0.1),0px_12px_24px_-8px_rgba(8,8,8,0.12)] hover:shadow-[0px_8px_24px_-4px_rgba(8,8,8,0.18),0px_16px_32px_-8px_rgba(8,8,8,0.14)] hover:-translate-y-0.5 transition-all duration-200"
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-black/5 rounded-xl">
+          <div className="p-3 bg-primary/10 rounded-xl">
             <img src="/icons/lock-03.svg" alt="Key" className="w-8 h-8" style={{ filter: 'brightness(0)' }} />
           </div>
           <div>
-            <h3 className="font-black uppercase tracking-tight text-black">API Keys</h3>
+            <h3 className="font-black uppercase tracking-tight text-foreground">API Keys</h3>
             <p className="text-sm text-muted-foreground font-medium">Total keys</p>
           </div>
         </div>
@@ -90,14 +90,14 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card rounded-2xl p-4 sm:p-6 shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.15),0px_6px_4px_-4px_rgba(8,8,8,0.1),0px_12px_24px_-8px_rgba(8,8,8,0.12)] hover:shadow-[0px_8px_24px_-4px_rgba(8,8,8,0.18),0px_16px_32px_-8px_rgba(8,8,8,0.14)] hover:-translate-y-0.5 transition-all duration-200"
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-black/5 rounded-xl">
+          <div className="p-3 bg-primary/10 rounded-xl">
             <img src="/icons/disc-02.svg" alt="Activity" className="w-8 h-8" style={{ filter: 'brightness(0)' }} />
           </div>
           <div>
-            <h3 className="font-black uppercase tracking-tight text-black">Total API Calls</h3>
+            <h3 className="font-black uppercase tracking-tight text-foreground">Total API Calls</h3>
             <p className="text-sm text-muted-foreground font-medium">All time usage</p>
           </div>
         </div>
@@ -108,14 +108,14 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card rounded-2xl p-4 sm:p-6 shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.15),0px_6px_4px_-4px_rgba(8,8,8,0.1),0px_12px_24px_-8px_rgba(8,8,8,0.12)] hover:shadow-[0px_8px_24px_-4px_rgba(8,8,8,0.18),0px_16px_32px_-8px_rgba(8,8,8,0.14)] hover:-translate-y-0.5 transition-all duration-200"
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-black/5 rounded-xl">
+          <div className="p-3 bg-primary/10 rounded-xl">
             <img src="/icons/disc-02.svg" alt="Trending" className="w-8 h-8" style={{ filter: 'brightness(0)' }} />
           </div>
           <div>
-            <h3 className="font-black uppercase tracking-tight text-black">This Month</h3>
+            <h3 className="font-black uppercase tracking-tight text-foreground">This Month</h3>
             <p className="text-sm text-muted-foreground font-medium">Current month calls</p>
           </div>
         </div>
@@ -131,14 +131,14 @@ const MetricCards: React.FC<MetricCardsProps> = ({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-4 sm:p-6 shadow-sm"
+        className="bg-card rounded-2xl p-4 sm:p-6 shadow-[0px_5px_1.5px_-4px_rgba(8,8,8,0.15),0px_6px_4px_-4px_rgba(8,8,8,0.1),0px_12px_24px_-8px_rgba(8,8,8,0.12)] hover:shadow-[0px_8px_24px_-4px_rgba(8,8,8,0.18),0px_16px_32px_-8px_rgba(8,8,8,0.14)] hover:-translate-y-0.5 transition-all duration-200"
       >
         <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-black/5 rounded-xl">
+          <div className="p-3 bg-primary/10 rounded-xl">
             <img src="/icons/help-circle.svg" alt="Calendar" className="w-8 h-8" style={{ filter: 'brightness(0)' }} />
           </div>
           <div>
-            <h3 className="font-black uppercase tracking-tight text-black">Member Since</h3>
+            <h3 className="font-black uppercase tracking-tight text-foreground">Member Since</h3>
             <p className="text-sm text-muted-foreground font-medium">Account created</p>
           </div>
         </div>

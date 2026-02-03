@@ -151,11 +151,11 @@ const Index = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-display bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
               LUMIQ AI Control Tower
             </h1>
-            <p className="text-muted-foreground mt-1">
-              Enterprise API Platform • Real-time Business Credit Intelligence
+            <p className="text-base text-muted-foreground mt-2">
+              Enterprise API Platform - Real-time Business Credit Intelligence
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -183,9 +183,9 @@ const Index = () => {
           </TabsList>
 
           <TabsContent value="overview" className="space-y-8">{/* Header */}
-        <div>
-          <h2 className="text-2xl font-bold">Performance Overview</h2>
-          <p className="text-muted-foreground mt-1">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-foreground">Performance Overview</h2>
+          <p className="text-base text-muted-foreground mt-2">
             Comprehensive business credit performance and forecasting metrics
           </p>
         </div>

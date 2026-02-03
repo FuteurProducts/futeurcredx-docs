@@ -35,15 +35,18 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
   const { user } = useUser();
 
   return (
-    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-10">
+    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-10 relative overflow-hidden">
+      {/* Subtle gradient accent at top of header */}
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-accent to-primary" />
+
       <div className="flex items-center gap-4 flex-1 min-w-0">
-        <SidebarTrigger />
-        
+        <SidebarTrigger className="hover:bg-primary/10 hover:text-primary" />
+
         <div className="relative max-w-md w-full">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary/50 w-4 h-4" />
           <Input
             placeholder="Search..."
-            className="pl-10 bg-background"
+            className="pl-10 bg-background border-primary/20 focus:border-primary focus:ring-primary/30"
           />
         </div>
 
@@ -115,8 +118,8 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="flex items-center gap-2" aria-label="User menu">
-              <Avatar className="w-8 h-8">
-                <AvatarFallback className="bg-primary/10 text-primary">
+              <Avatar className="w-8 h-8 ring-2 ring-primary/20">
+                <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-white">
                   <User className="w-4 h-4" />
                 </AvatarFallback>
               </Avatar>

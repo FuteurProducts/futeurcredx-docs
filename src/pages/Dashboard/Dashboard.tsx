@@ -514,49 +514,57 @@ const Dashboard: React.FC = () => {
         />
       )}
       
-      {/* Sidebar */}
-      <aside 
+      {/* Sidebar - Premium gradient background */}
+      <aside
         className={`
-          fixed top-0 left-0 h-full z-50 bg-card
+          fixed top-0 left-0 h-full z-50
+          bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900
+          dark:from-slate-950 dark:via-slate-900 dark:to-slate-950
           transform transition-all duration-300 ease-in-out
           lg:translate-x-0 lg:static lg:z-auto flex flex-col
+          border-r border-white/5
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
           ${sidebarCollapsed ? 'lg:w-[80px]' : 'lg:w-[280px]'}
           w-[280px]
         `}
       >
         {/* Logo & Toggle */}
-        <div className={`${sidebarCollapsed ? 'h-20' : 'h-[140px]'} flex items-center shrink-0 ${sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-6'}`}>
-          <Link to="/" className="flex items-center">
-            <img 
-              src={withBaseUrl('/lumiqlogo.png')}
-              alt="LUMIQ AI" 
-              className={`object-contain transition-all duration-300 ${sidebarCollapsed ? 'w-14 h-14' : 'w-[120px] h-[120px]'}`}
-              onError={(e) => {
-                // Fallback if logo fails to load
-                const target = e.target as HTMLImageElement;
-                target.src = withBaseUrl('/lumiqlogo.png');
-              }}
-            />
+        <div className={`${sidebarCollapsed ? 'h-20' : 'h-[140px]'} flex items-center shrink-0 ${sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-6'} border-b border-white/5`}>
+          <Link to="/" className="flex items-center group">
+            <div className={`relative ${sidebarCollapsed ? '' : 'p-2'}`}>
+              <img
+                src={withBaseUrl('/lumiqlogo.png')}
+                alt="LUMIQ AI"
+                className={`object-contain transition-all duration-300 group-hover:scale-105 ${sidebarCollapsed ? 'w-14 h-14' : 'w-[100px] h-[100px]'}`}
+                onError={(e) => {
+                  // Fallback if logo fails to load
+                  const target = e.target as HTMLImageElement;
+                  target.src = withBaseUrl('/lumiqlogo.png');
+                }}
+              />
+              {!sidebarCollapsed && (
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-full opacity-60" />
+              )}
+            </div>
           </Link>
           {/* Collapse/Close toggle button */}
           {!sidebarCollapsed && (
             <button
-              className="p-2.5 hover:bg-muted rounded-xl transition-colors hidden lg:flex"
+              className="p-2.5 hover:bg-white/10 rounded-xl transition-colors hidden lg:flex"
               onClick={() => setSidebarCollapsed(true)}
               title="Collapse sidebar"
             >
-              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
               </svg>
             </button>
           )}
           {/* Mobile close button */}
           <button
-            className="p-2.5 hover:bg-muted rounded-xl transition-colors lg:hidden"
+            className="p-2.5 hover:bg-white/10 rounded-xl transition-colors lg:hidden"
             onClick={() => setSidebarOpen(false)}
           >
-            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -566,11 +574,11 @@ const Dashboard: React.FC = () => {
         {sidebarCollapsed && (
           <div className="hidden lg:flex justify-center px-2 mb-2">
             <button
-              className="p-2.5 hover:bg-muted rounded-xl transition-colors"
+              className="p-2.5 hover:bg-white/10 rounded-xl transition-colors"
               onClick={() => setSidebarCollapsed(false)}
               title="Expand sidebar"
             >
-              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
             </button>
@@ -578,38 +586,67 @@ const Dashboard: React.FC = () => {
         )}
         
         {/* Navigation - grows to fill available space */}
-        <nav className={`flex-1 space-y-1 overflow-y-auto ${sidebarCollapsed ? 'px-2' : 'p-3'}`}>
-          {navigation.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => setActiveTab(link.id)}
-              title={sidebarCollapsed ? link.title : undefined}
-              className={`
-                w-full flex items-center rounded-xl text-left transition-all duration-200
-                ${sidebarCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3.5'}
-                ${activeTab === link.id 
-                  ? 'bg-muted' 
-                  : 'text-muted-foreground hover:bg-muted/50'
-                }
-              `}
-            >
-              <div className={`w-6 h-6 flex items-center justify-center shrink-0 ${activeTab === link.id ? '' : 'opacity-75'}`}>
-                <link.icon className="w-5 h-5" />
-              </div>
-              {!sidebarCollapsed && (
-                <>
-                  <span className={`text-[0.9375rem] font-semibold ${activeTab === link.id ? 'text-foreground' : ''}`}>
-                    {link.title}
-                  </span>
-                  {activeTab === link.id && (
-                    <svg className="w-5 h-5 ml-auto text-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  )}
-                </>
-              )}
-            </button>
-          ))}
+        <nav className={`flex-1 space-y-1.5 overflow-y-auto ${sidebarCollapsed ? 'px-2' : 'p-3'}`}>
+          {navigation.map((link, idx) => {
+            // Premium icon gradient colors for each nav item
+            const iconColors = [
+              'from-blue-500 to-indigo-600',      // Dashboard
+              'from-amber-400 to-orange-500',     // Credit Intelligence
+              'from-emerald-400 to-teal-500',     // Underwriting
+              'from-rose-400 to-pink-500',        // Risk
+              'from-violet-400 to-purple-500',    // Customer
+              'from-cyan-400 to-blue-500',        // API Console
+              'from-fuchsia-400 to-pink-500',     // Partner Portal
+              'from-green-400 to-emerald-500',    // Analytics
+              'from-orange-400 to-red-500',       // Products
+              'from-indigo-400 to-violet-500',    // Users
+              'from-teal-400 to-cyan-500',        // Reports
+              'from-slate-400 to-gray-500',       // Settings
+            ];
+            const gradientClass = iconColors[idx % iconColors.length];
+            const isActive = activeTab === link.id;
+
+            return (
+              <button
+                key={link.id}
+                onClick={() => setActiveTab(link.id)}
+                title={sidebarCollapsed ? link.title : undefined}
+                className={`
+                  w-full flex items-center rounded-xl text-left transition-all duration-200 group
+                  ${sidebarCollapsed ? 'justify-center p-3' : 'gap-3 px-3 py-3'}
+                  ${isActive
+                    ? 'bg-gradient-to-r from-white/10 to-white/5 shadow-lg shadow-black/20'
+                    : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                  }
+                `}
+              >
+                <div className={`
+                  w-9 h-9 flex items-center justify-center shrink-0 rounded-lg transition-all duration-200
+                  ${isActive
+                    ? `bg-gradient-to-br ${gradientClass} shadow-lg`
+                    : `bg-white/5 group-hover:bg-gradient-to-br group-hover:${gradientClass}`
+                  }
+                `}>
+                  <link.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                </div>
+                {!sidebarCollapsed && (
+                  <>
+                    <span className={`text-[0.9375rem] font-semibold ${isActive ? 'text-white' : 'group-hover:text-white'}`}>
+                      {link.title}
+                    </span>
+                    {isActive && (
+                      <div className="ml-auto flex items-center gap-1">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                        <svg className="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    )}
+                  </>
+                )}
+              </button>
+            );
+          })}
         </nav>
       </aside>
 
@@ -631,9 +668,9 @@ const Dashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Header - Fixed/Sticky */}
+        {/* Header - Fixed/Sticky with premium gradient */}
         <header
-          className="sticky top-0 z-[100] bg-muted shrink-0"
+          className="sticky top-0 z-[100] bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border-b border-border/50 shrink-0"
         >
           <div 
             className="flex items-center h-16 lg:h-20 mx-auto px-4 lg:px-10"
@@ -847,13 +884,16 @@ const Dashboard: React.FC = () => {
           </div>
         </header>
 
-        {/* Main Content - scrollable area below sticky header */}
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-muted">
+        {/* Main Content - scrollable area below sticky header with premium background */}
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-900 dark:via-slate-800/50 dark:to-slate-900 relative">
+          {/* Subtle grid pattern overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-30 dark:opacity-10" />
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
+            className="relative z-10"
           >
           {activeTab === 'overview' && (
             <FinlabOverview />

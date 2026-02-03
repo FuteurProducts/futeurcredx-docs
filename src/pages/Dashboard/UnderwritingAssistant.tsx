@@ -245,10 +245,10 @@ const UnderwritingAssistant: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-display">Underwriting Assistant</h1>
-          <p className="text-body text-muted-foreground mt-1">AI-powered bulk loan decisioning for enterprise portfolios</p>
+          <h1 className="text-3xl font-bold text-foreground">Underwriting Assistant</h1>
+          <p className="text-base text-muted-foreground mt-2">AI-powered bulk loan decisioning for enterprise portfolios</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-xl">
@@ -259,8 +259,8 @@ const UnderwritingAssistant: React.FC = () => {
       </div>
 
       {/* Portfolio Segments */}
-      <div>
-        <h2 className="text-sm font-semibold text-foreground mb-3">Portfolio Segments</h2>
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold text-foreground mb-4">Portfolio Segments</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 overflow-hidden">
           {PORTFOLIO_SEGMENTS.map(segment => (
             <PortfolioSegmentCard

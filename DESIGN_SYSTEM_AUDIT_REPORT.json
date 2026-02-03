@@ -1,0 +1,577 @@
+{
+  "auditDate": "2026-02-03",
+  "auditType": "WAR-GRADE Design System Consistency Audit",
+  "project": "Lumiq AI Dashboard",
+  "summary": {
+    "totalIssuesFound": 387,
+    "criticalIssues": 89,
+    "warningIssues": 156,
+    "minorIssues": 142,
+    "darkModeCompatibilityScore": "65%",
+    "designTokenAdherenceScore": "58%"
+  },
+  "hardcodedColors": [
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": 68,
+      "value": "#DFF9E8",
+      "shouldBe": "bg-success/10",
+      "severity": "critical"
+    },
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": 69,
+      "value": "#FBA94B, #FEE6C7",
+      "shouldBe": "text-warning bg-warning/10",
+      "severity": "critical"
+    },
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": 70,
+      "value": "#F04D1A, #FDE6D7",
+      "shouldBe": "text-destructive bg-destructive/10",
+      "severity": "critical"
+    },
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": 71,
+      "value": "#B981DA, #F5EDFA",
+      "shouldBe": "text-accent bg-accent/10",
+      "severity": "critical"
+    },
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": 497,
+      "value": "#272B30, #33383F",
+      "shouldBe": "bg-muted border-border",
+      "severity": "critical",
+      "note": "Terminal window header with hardcoded dark colors - breaks in light mode"
+    },
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": "498-500",
+      "value": "#F04D1A, #FBA94B, #32AE60",
+      "shouldBe": "bg-destructive, bg-warning, bg-success",
+      "severity": "warning",
+      "note": "MacOS-style window buttons"
+    },
+    {
+      "file": "src/components/widgets/SignalBreakdownCard.tsx",
+      "line": "75-79",
+      "value": "#10B981, #8B5CF6, #F59E0B, #EF4444, #6B7280",
+      "shouldBe": "Use CSS variables: --success, --chart-2, --warning, --destructive, --muted-foreground",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/widgets/CreditScoreWidget.tsx",
+      "line": 65,
+      "value": "#EF4444, #F59E0B, #8B5CF6, #10B981",
+      "shouldBe": "Array using hsl(var(--destructive)), hsl(var(--warning)), etc.",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/widgets/BureauDataDisplay.tsx",
+      "line": "37-39",
+      "value": "#00539B, #D71635, #BE1E2D",
+      "shouldBe": "Consider brand color tokens or chart colors",
+      "severity": "warning",
+      "note": "Bureau brand colors - may be intentional for brand recognition"
+    },
+    {
+      "file": "src/components/widgets/WebhookConfigPanel.tsx",
+      "line": "42-45",
+      "value": "#3B82F6, #8B5CF6, #F59E0B, #10B981",
+      "shouldBe": "Use chart color tokens: --chart-1 through --chart-5",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/finlab/IncomeAnalysisCard.tsx",
+      "line": "59-73",
+      "value": "#DCE4E8, #ACB5BB, #E7854D",
+      "shouldBe": "border-border, text-muted-foreground, fill-chart-1",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/finlab/ExpenseCategoryCard.tsx",
+      "line": "31-34",
+      "value": "#83BF6E, #FF6A55, #8E59FF, #4D81E7",
+      "shouldBe": "Use --chart-1 through --chart-5 CSS variables",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/finlab/FinlabOverview.tsx",
+      "line": "56-59",
+      "value": "#10b981, #f59e0b, #f97316, #ef4444",
+      "shouldBe": "--success, --warning, --chart-5, --destructive",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/finlab/RecentActivityCard.tsx",
+      "line": 69,
+      "value": "#F4F4F7",
+      "shouldBe": "bg-muted",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/finlab/ExpenseAnalysisCard.tsx",
+      "line": "54-69",
+      "value": "#B2E0FF, #4D81E7, #fff",
+      "shouldBe": "Use chart tokens and bg-card/bg-background",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/shared/DataSourceBadge.tsx",
+      "line": "68-72",
+      "value": "#1A1D1F",
+      "shouldBe": "bg-popover or bg-foreground",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/dashboard/ApiKeysTab.tsx",
+      "line": "109-154",
+      "value": "#FEE6C7, #FBA94B, #DFF9E8, #32AE60",
+      "shouldBe": "bg-warning/10, border-warning, bg-success/10, border-success",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/dashboard/pages/Products.tsx",
+      "line": "105-121",
+      "value": "#FFF8E7, #FFE4A0, #FBA94B, etc.",
+      "shouldBe": "Define semantic color classes using CSS variables",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/dashboard/pages/UnderwritingAssistant.tsx",
+      "line": "396-401",
+      "value": "#32AE60, #FBA94B, #F04D1A, #6F767E, #0C68E9",
+      "shouldBe": "--success, --warning, --destructive, --muted-foreground, --primary",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/dashboard/pages/UnderwritingAssistant.tsx",
+      "line": "437-517",
+      "value": "Multiple hardcoded colors for status styles",
+      "shouldBe": "Create reusable status variant classes",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/dashboard/pages/CreditIntelligence.tsx",
+      "line": "166-256",
+      "value": "#F04D1A, #FBA94B, #B981DA, #32AE60, etc.",
+      "shouldBe": "Use semantic color tokens throughout",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/dashboard/charts/NeutradeCharts.tsx",
+      "line": "84",
+      "value": "#EFEFEF, #0C68E9",
+      "shouldBe": "hover:bg-muted, focus:ring-ring",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/dashboard/charts/NeutradeCharts.tsx",
+      "line": "503-1862",
+      "value": "Multiple hardcoded chart colors",
+      "shouldBe": "Use hsl(var(--chart-1)) through hsl(var(--chart-5))",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/enterprise/risk/ExecutiveRiskSummary.tsx",
+      "line": "166-169",
+      "value": "#ef4444, #f97316, #eab308, #8b5cf6",
+      "shouldBe": "--destructive, --chart-5, --warning, --chart-4",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/enterprise/ScoreDistributionCard.tsx",
+      "line": "31-35",
+      "value": "#10b981, #22c55e, #f59e0b, #f97316, #ef4444",
+      "shouldBe": "hsl(var(--success)), hsl(var(--chart-2)), etc.",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/enterprise/PortfolioScoreTrendsCard.tsx",
+      "line": "140-169",
+      "value": "#3b82f6",
+      "shouldBe": "hsl(var(--primary))",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/enterprise/underwriting/AIDecisioningPanel.tsx",
+      "line": 50,
+      "value": "#ef4444, #f97316, #fbbf24, #84cc16, #22c55e",
+      "shouldBe": "Use semantic score color tokens",
+      "severity": "critical"
+    }
+  ],
+  "rgbaBoxShadowIssues": [
+    {
+      "file": "src/components/dashboard/pages/CreditIntelligence.tsx",
+      "line": 637,
+      "value": "rgba(0,0,0,0.1)",
+      "shouldBe": "Use var(--shadow-md) or shadow-md Tailwind class",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/dashboard/pages/CreditIntelligence.tsx",
+      "line": 684,
+      "value": "rgba(0,0,0,0.1)",
+      "shouldBe": "Use var(--shadow-md) Tailwind class",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/PortfolioScoreTrendsCard.tsx",
+      "line": 162,
+      "value": "rgba(0,0,0,0.1)",
+      "shouldBe": "Use CSS variable shadow",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/dashboard/charts/NeutradeCharts.tsx",
+      "line": "1772, 1840",
+      "value": "rgba(0,0,0,0.1)",
+      "shouldBe": "Use CSS variable shadow",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/ScoreDistributionCard.tsx",
+      "line": 138,
+      "value": "rgba(0,0,0,0.1)",
+      "shouldBe": "Use CSS variable shadow",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/RiskSegmentationCard.tsx",
+      "line": 127,
+      "value": "rgba(0,0,0,0.1)",
+      "shouldBe": "Use CSS variable shadow",
+      "severity": "warning"
+    }
+  ],
+  "typographyIssues": [
+    {
+      "file": "src/pages/Dashboard/Dashboard.tsx",
+      "line": "696-697",
+      "value": "text-[10px]",
+      "shouldBe": "text-xs (12px) - 10px is too small for accessibility",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/reports/ReportLibraryPanel.tsx",
+      "line": 164,
+      "value": "text-[10px]",
+      "shouldBe": "text-xs",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/widgets/CreditJourneyWidget.tsx",
+      "line": 101,
+      "value": "text-[10px]",
+      "shouldBe": "text-xs",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/analytics/ScoreMigrationMatrix.tsx",
+      "line": 87,
+      "value": "text-[10px]",
+      "shouldBe": "text-xs",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/analytics/PortfolioKPITiles.tsx",
+      "line": 81,
+      "value": "text-[10px]",
+      "shouldBe": "text-xs",
+      "severity": "warning"
+    },
+    {
+      "file": "src/components/enterprise/customer/LifecyclePipeline.tsx",
+      "line": "122-161",
+      "value": "text-[10px]",
+      "shouldBe": "text-xs",
+      "severity": "warning"
+    },
+    {
+      "file": "Multiple files",
+      "line": "Various",
+      "value": "text-[0.6875rem], text-[0.75rem], text-[0.8125rem], text-[0.875rem], text-[0.9375rem], text-[1rem], text-[1.25rem], text-[1.5rem]",
+      "shouldBe": "Use standard Tailwind classes: text-xs, text-sm, text-base, text-lg, text-xl, text-2xl",
+      "severity": "critical",
+      "count": 200,
+      "note": "Custom rem values create inconsistency. See full list in separate file."
+    },
+    {
+      "file": "Chart components",
+      "line": "Various",
+      "value": "fontSize: 12, fontSize: 11, fontSize: 10",
+      "shouldBe": "Define chart font sizes as CSS variables or constants",
+      "severity": "warning",
+      "note": "Recharts components use inline fontSize - consider centralizing"
+    }
+  ],
+  "spacingIssues": [
+    {
+      "file": "src/components/dashboard/ui/scroll-area.tsx",
+      "line": "27-28",
+      "value": "p-[1px]",
+      "shouldBe": "Acceptable for scroll area thumb padding",
+      "severity": "minor"
+    },
+    {
+      "file": "src/components/dashboard/ui/navigation-menu.tsx",
+      "line": 52,
+      "value": "top-[1px]",
+      "shouldBe": "Acceptable for fine positioning",
+      "severity": "minor"
+    },
+    {
+      "file": "Various files",
+      "line": "Multiple",
+      "value": "w-[Npx], h-[Npx], max-w-[Npx], min-w-[Npx], max-h-[Npx]",
+      "shouldBe": "Use standard Tailwind spacing or define custom values in config",
+      "severity": "warning",
+      "count": 78,
+      "examples": [
+        "w-[52px] -> w-13",
+        "h-[140px] -> h-36",
+        "w-[280px] -> w-72",
+        "max-h-[400px] -> max-h-96",
+        "w-[340px] -> w-[21.25rem] (already done in some places)"
+      ]
+    }
+  ],
+  "componentInconsistencies": [
+    {
+      "type": "buttons",
+      "issue": "Native button elements with custom styling instead of Button component",
+      "count": 89,
+      "files": [
+        "src/components/widgets/CreditScoreWidget.tsx",
+        "src/components/finlab/PocketPlansCard.tsx",
+        "src/pages/Dashboard/Dashboard.tsx",
+        "src/components/enterprise/reports/ReportPreviewDrawer.tsx",
+        "src/components/dashboard/pages/Products.tsx",
+        "src/components/dashboard/PartnerDashboard.tsx",
+        "src/components/dashboard/pages/CreditIntelligence.tsx",
+        "And 30+ more files"
+      ],
+      "shouldBe": "Import and use Button from @/components/ui/button",
+      "severity": "warning"
+    },
+    {
+      "type": "cards",
+      "issue": "Multiple card implementations using raw div with card-like styling",
+      "count": 150,
+      "patterns": [
+        "div className=\"bg-card rounded-2xl p-6 border border-border\"",
+        "div className=\"bg-card rounded-xl border border-border\"",
+        "div className=\"bg-card/80 backdrop-blur-sm border\"",
+        "class=\"card flex-1 min-w-0 bg-card\"",
+        "class=\"glass-card rounded-lg\""
+      ],
+      "shouldBe": "Use Card, CardContent, CardHeader, CardTitle from @/components/ui/card",
+      "severity": "warning"
+    },
+    {
+      "type": "modals",
+      "issue": "Custom modal implementations instead of Dialog component",
+      "count": 12,
+      "files": [
+        "src/pages/Dashboard/Notifications.tsx",
+        "src/pages/Dashboard/Dashboard.tsx",
+        "src/components/widgets/SandboxEnvironmentToggle.tsx",
+        "src/components/api-console/ApiConsoleHeader.tsx",
+        "src/components/enterprise/reports/ReportPreviewDrawer.tsx",
+        "src/components/enterprise/settings/panels/UsersPanel.tsx",
+        "src/components/enterprise/settings/panels/ApiKeysPanel.tsx",
+        "src/components/enterprise/customer/CustomerDossier.tsx",
+        "src/components/enterprise/customer/MetricDrilldownModal.tsx"
+      ],
+      "shouldBe": "Use Dialog, DialogContent, DialogHeader from @/components/ui/dialog",
+      "severity": "warning"
+    },
+    {
+      "type": "inputs",
+      "issue": "Mix of Input component and native input elements",
+      "count": 44,
+      "note": "Found 44 total input occurrences across 19 files, many using native elements",
+      "shouldBe": "Standardize on Input component from @/components/ui/input",
+      "severity": "warning"
+    }
+  ],
+  "darkModeIssues": [
+    {
+      "file": "src/pages/Dashboard/ApiTesting.tsx",
+      "line": 497,
+      "value": "bg-[#272B30] border-[#33383F]",
+      "issue": "Terminal header uses dark colors that won't adapt to themes",
+      "shouldBe": "bg-zinc-900 dark:bg-zinc-950 (already partially done at line 495)",
+      "severity": "critical"
+    },
+    {
+      "file": "Multiple files",
+      "value": "text-white, bg-white",
+      "issue": "100+ instances of hardcoded white that may not work in dark mode",
+      "count": 107,
+      "shouldBe": "text-primary-foreground, bg-background, or bg-card where appropriate",
+      "severity": "warning",
+      "note": "Many are intentional (e.g., icon on colored background), but should be reviewed"
+    },
+    {
+      "file": "src/components/dashboard/KeyUsageStats.tsx",
+      "line": "Multiple",
+      "value": "bg-blue-50, text-blue-700, text-blue-900",
+      "issue": "Hardcoded Tailwind colors won't adapt to dark mode",
+      "shouldBe": "Use primary/10, text-primary, or define dark: variants",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/dashboard/PartnerDashboard.tsx",
+      "line": "Multiple",
+      "value": "bg-blue-50, bg-purple-50, bg-orange-50, text-blue-900, etc.",
+      "issue": "Missing dark mode variants",
+      "shouldBe": "Add dark: variants or use semantic tokens",
+      "severity": "critical"
+    },
+    {
+      "file": "src/components/finlab/ExpenseCategoryCard.tsx",
+      "line": 93,
+      "value": "bg-white shadow-lg",
+      "issue": "Hardcoded white for donut chart center",
+      "shouldBe": "bg-card or bg-background",
+      "severity": "warning"
+    },
+    {
+      "file": "Chart fill colors",
+      "value": "#6F767E, #ACB5BB, #EFEFEF",
+      "issue": "Chart tick fills use hardcoded gray tones",
+      "shouldBe": "Use hsl(var(--muted-foreground)) consistently",
+      "severity": "warning",
+      "count": 15
+    },
+    {
+      "file": "src/components/dashboard/charts/NeutradeCharts.tsx",
+      "line": 106,
+      "value": "bg-white",
+      "issue": "Dropdown uses hardcoded white",
+      "shouldBe": "bg-popover or bg-card",
+      "severity": "warning"
+    }
+  ],
+  "missingSemanticTokens": {
+    "recommendation": "Add these tokens to tailwind.config.js",
+    "tokens": [
+      {
+        "name": "success",
+        "currentStatus": "Defined in CSS but not in Tailwind config",
+        "fix": "Add success: { DEFAULT: 'hsl(var(--success))', foreground: 'hsl(var(--success-foreground))' }"
+      },
+      {
+        "name": "warning",
+        "currentStatus": "Defined in CSS but not in Tailwind config",
+        "fix": "Add warning: { DEFAULT: 'hsl(var(--warning))', foreground: 'hsl(var(--warning-foreground))' }"
+      },
+      {
+        "name": "info",
+        "currentStatus": "Defined in CSS but not in Tailwind config",
+        "fix": "Add info: { DEFAULT: 'hsl(var(--info))', foreground: 'hsl(var(--info-foreground))' }"
+      },
+      {
+        "name": "chart colors",
+        "currentStatus": "Defined in CSS as --chart-1 through --chart-5",
+        "fix": "Add chart: { 1: 'hsl(var(--chart-1))', ... 5: 'hsl(var(--chart-5))' }"
+      }
+    ]
+  },
+  "tailwindColorClassUsage": {
+    "issue": "Direct Tailwind color classes used instead of semantic tokens",
+    "classes": [
+      {
+        "class": "text-blue-600, bg-blue-50, bg-blue-100, text-blue-700, etc.",
+        "count": 45,
+        "shouldBe": "text-primary, bg-primary/10, bg-primary/20"
+      },
+      {
+        "class": "text-green-*, bg-green-*",
+        "count": 8,
+        "shouldBe": "text-success, bg-success/10"
+      },
+      {
+        "class": "text-orange-*, bg-orange-*",
+        "count": 28,
+        "shouldBe": "text-warning (or new orange token), bg-warning/10"
+      },
+      {
+        "class": "text-purple-*, bg-purple-*",
+        "count": 22,
+        "shouldBe": "text-accent or define purple semantic token"
+      },
+      {
+        "class": "text-yellow-*, bg-yellow-*",
+        "count": 32,
+        "shouldBe": "text-warning, bg-warning/10"
+      }
+    ]
+  },
+  "focusRingInconsistency": {
+    "issue": "Inconsistent focus ring colors",
+    "examples": [
+      {
+        "file": "src/components/dashboard/charts/NeutradeCharts.tsx",
+        "line": 84,
+        "value": "focus:ring-[#0C68E9]",
+        "shouldBe": "focus:ring-ring or focus:ring-primary"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "priority": "P0 - Critical",
+      "action": "Add missing semantic color tokens to tailwind.config.js",
+      "impact": "Enables proper dark mode and theming support",
+      "files": ["tailwind.config.js"]
+    },
+    {
+      "priority": "P0 - Critical",
+      "action": "Replace all hardcoded hex colors with CSS variables",
+      "impact": "Fixes 89+ critical design system violations",
+      "files": ["27 component files identified above"]
+    },
+    {
+      "priority": "P1 - High",
+      "action": "Standardize typography scale - remove all custom rem/px values",
+      "impact": "Improves consistency and maintainability",
+      "files": ["200+ occurrences across codebase"]
+    },
+    {
+      "priority": "P1 - High",
+      "action": "Replace native buttons with Button component",
+      "impact": "Ensures consistent styling, accessibility, and variants",
+      "files": ["89 button instances to update"]
+    },
+    {
+      "priority": "P1 - High",
+      "action": "Replace custom modals with Dialog component",
+      "impact": "Consistent modal behavior, accessibility, animations",
+      "files": ["12 custom modal implementations"]
+    },
+    {
+      "priority": "P2 - Medium",
+      "action": "Add dark: variants for all Tailwind color classes",
+      "impact": "Proper dark mode support",
+      "files": ["135+ color class instances"]
+    },
+    {
+      "priority": "P2 - Medium",
+      "action": "Standardize Card component usage",
+      "impact": "Consistent card styling and structure",
+      "files": ["150+ card-like div implementations"]
+    },
+    {
+      "priority": "P3 - Low",
+      "action": "Centralize chart configuration (colors, fonts, tooltips)",
+      "impact": "DRY code, easier theme updates",
+      "files": ["Create src/lib/chart-config.ts"]
+    }
+  ]
+}

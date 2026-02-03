@@ -27,22 +27,25 @@ export function DashboardSidebar() {
   const { currentEnvironment } = useEnvironment();
 
   return (
-    <Sidebar className={open ? "w-64" : "w-16"} collapsible="icon" role="navigation">
-      <SidebarContent className="flex flex-col h-full">
+    <Sidebar className={`${open ? "w-64" : "w-16"} relative`} collapsible="icon" role="navigation">
+      {/* Vibrant colored accent strip on left edge */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-accent to-primary" />
+
+      <SidebarContent className="flex flex-col h-full pl-1">
         <div className="p-4 border-b border-border">
           {open ? (
-            <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Dashboard
             </h2>
           ) : (
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-              <LayoutDashboard className="w-5 h-5 text-primary" />
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+              <LayoutDashboard className="w-5 h-5 text-white" />
             </div>
           )}
         </div>
 
         <SidebarGroup className="mt-4 flex-1">
-          <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-primary/70 font-semibold">Main Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -52,10 +55,10 @@ export function DashboardSidebar() {
                       to={item.url}
                       end
                       className={({ isActive }) =>
-                        `flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
+                        `flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
                           isActive
-                            ? "bg-primary/10 text-primary font-medium"
-                            : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                            ? "bg-gradient-to-r from-primary/15 to-accent/10 text-primary font-semibold border-l-2 border-primary shadow-sm"
+                            : "text-muted-foreground hover:bg-primary/5 hover:text-primary hover:translate-x-1"
                         }`
                       }
                     >
@@ -72,12 +75,12 @@ export function DashboardSidebar() {
         {/* Environment indicator at bottom */}
         <div className="p-3 border-t border-border">
           {currentEnvironment === 'sandbox' ? (
-            <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-warning/10 text-warning ${open ? '' : 'justify-center'}`}>
+            <div className={`flex items-center gap-2 px-2.5 py-2 rounded-lg bg-gradient-to-r from-warning/15 to-warning/5 text-warning border border-warning/20 ${open ? '' : 'justify-center'}`}>
               <FlaskConical className="w-4 h-4 shrink-0" />
               {open && <span className="text-xs font-semibold uppercase tracking-wide">Sandbox</span>}
             </div>
           ) : (
-            <div className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-success/10 text-success ${open ? '' : 'justify-center'}`}>
+            <div className={`flex items-center gap-2 px-2.5 py-2 rounded-lg bg-gradient-to-r from-success/15 to-success/5 text-success border border-success/20 ${open ? '' : 'justify-center'}`}>
               <Radio className="w-4 h-4 shrink-0" />
               {open && <span className="text-xs font-semibold uppercase tracking-wide">Production</span>}
             </div>

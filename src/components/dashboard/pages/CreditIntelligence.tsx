@@ -317,13 +317,13 @@ const VolatilityMeter: React.FC<VolatilityMeterProps> = ({ value, status }) => {
   
   return (
     <div className="bg-card rounded-2xl p-6 border border-border">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-          <svg className="w-5 h-5 text-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-10 h-10 bg-muted rounded-xl flex items-center justify-center">
+          <svg className="w-6 h-6 text-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
         </div>
-        <h3 className="text-[1.125rem] font-semibold text-foreground">Deposit Volatility Meter</h3>
+        <h3 className="text-lg font-semibold text-foreground">Deposit Volatility Meter</h3>
       </div>
       
       <div className="flex items-center gap-6">
@@ -375,11 +375,11 @@ const CreditIntelligence: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-card rounded-2xl p-6 border border-border">
+      <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-[1.5rem] font-semibold text-foreground">Credit Intelligence</h1>
-            <p className="text-muted-foreground text-[0.9375rem]">Comprehensive business credit analysis and fundability assessment</p>
+            <h1 className="text-3xl font-bold text-foreground">Credit Intelligence</h1>
+            <p className="text-base text-muted-foreground mt-2">Comprehensive business credit analysis and fundability assessment</p>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3 px-4 py-2 bg-muted rounded-xl">
@@ -407,13 +407,13 @@ const CreditIntelligence: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Score Card */}
         <div className="bg-card rounded-2xl p-6 border border-border">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-              <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h2 className="text-[1.125rem] font-semibold text-foreground">LUMIQ AI Composite Fundability Score</h2>
+            <h2 className="text-xl font-semibold text-foreground">LUMIQ AI Composite Fundability Score</h2>
           </div>
           
           <CreditScoreGauge score={742} grade="A" />
@@ -493,13 +493,13 @@ const CreditIntelligence: React.FC = () => {
 
         {/* Why This Score */}
         <div className="bg-card rounded-2xl p-6 border border-border">
-          <div className="flex items-center gap-2 mb-2">
-            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <div className="flex items-center gap-3 mb-2">
+            <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <h2 className="text-[1.125rem] font-semibold text-foreground">Why This Score?</h2>
+            <h2 className="text-xl font-semibold text-foreground">Why This Score?</h2>
           </div>
-          <p className="text-[0.875rem] text-muted-foreground mb-6">Detailed breakdown of factors influencing the fundability assessment</p>
+          <p className="text-base text-muted-foreground mb-6">Detailed breakdown of factors influencing the fundability assessment</p>
           
           {/* Positive Drivers */}
           <div className="mb-6">
@@ -603,11 +603,11 @@ const CreditIntelligence: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Balance Trend */}
         <div className="bg-card rounded-2xl p-6 border border-border">
-          <div className="flex items-center gap-2 mb-6">
-            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <div className="flex items-center gap-3 mb-6">
+            <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-foreground">Balance Trend (90 Days)</h3>
+            <h3 className="text-lg font-semibold text-foreground">Balance Trend (90 Days)</h3>
           </div>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -656,11 +656,11 @@ const CreditIntelligence: React.FC = () => {
 
         {/* ACH Returns */}
         <div className="bg-card rounded-2xl p-6 border border-border">
-          <div className="flex items-center gap-2 mb-6">
-            <svg className="w-5 h-5 text-primary-05" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <div className="flex items-center gap-3 mb-6">
+            <svg className="w-6 h-6 text-primary-05" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <h3 className="text-[1.125rem] font-semibold text-foreground">ACH Returns Timeline (12 Weeks)</h3>
+            <h3 className="text-lg font-semibold text-foreground">ACH Returns Timeline (12 Weeks)</h3>
           </div>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -705,13 +705,13 @@ const CreditIntelligence: React.FC = () => {
       {/* Credit Monitoring Alerts */}
       <div className="bg-card rounded-2xl p-6 border border-border">
         <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <div className="flex items-center gap-3">
+            <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
             <div>
-              <h2 className="text-[1.125rem] font-semibold text-foreground">Credit Monitoring Alerts</h2>
-              <p className="text-[0.875rem] text-muted-foreground">Configure thresholds and notification preferences for credit events</p>
+              <h2 className="text-xl font-semibold text-foreground">Credit Monitoring Alerts</h2>
+              <p className="text-base text-muted-foreground">Configure thresholds and notification preferences for credit events</p>
             </div>
           </div>
           <div className="flex items-center gap-3">

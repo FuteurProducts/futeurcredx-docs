@@ -399,9 +399,10 @@ const Risk: React.FC = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
+        className="mb-6"
       >
-        <h1 className="text-display">Risk Intelligence</h1>
-        <p className="text-body text-muted-foreground mt-1">
+        <h1 className="text-3xl font-bold text-foreground">Risk Intelligence</h1>
+        <p className="text-base text-muted-foreground mt-2">
           Portfolio risk monitoring and early warning system
         </p>
       </motion.div>

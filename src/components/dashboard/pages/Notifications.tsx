@@ -194,14 +194,14 @@ const Notifications: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
-            <Icon name="bell" className="w-5 h-5" />
+      <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border mb-6">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
+            <Icon name="bell" className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-semibold text-foreground">Notification Preferences</h1>
+          <h1 className="text-3xl font-bold text-foreground">Notification Preferences</h1>
         </div>
-        <p className="text-[0.9375rem] text-muted-foreground ml-[52px]">
+        <p className="text-base text-muted-foreground ml-16">
           Configure how and when you receive alerts and updates
         </p>
       </div>
@@ -293,7 +293,7 @@ const Notifications: React.FC = () => {
 
       {/* Integration Status */}
       <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
-        <h2 className="text-[1.125rem] font-semibold text-foreground mb-4">Integration Status</h2>
+        <h2 className="text-xl font-semibold text-foreground mb-4">Integration Status</h2>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <div className="w-6 h-6 rounded-full bg-success flex items-center justify-center">
