@@ -70,7 +70,7 @@ const navigation: { id: string; title: string; icon: LucideIcon }[] = [
   { id: 'partner-portal', title: 'Partner Portal', icon: Link2 },
   { id: 'analytics', title: 'Analytics', icon: TrendingUp },
   { id: 'products', title: 'Products', icon: Package },
-  { id: 'users', title: 'Users', icon: Building2 },
+  { id: 'users', title: 'Businesses', icon: Building2 },
   { id: 'reports', title: 'Reports', icon: BarChart3 },
   { id: 'settings', title: 'Settings', icon: SlidersHorizontal },
 ];
@@ -775,7 +775,7 @@ const Dashboard: React.FC = () => {
                   
                   {/* Avatar */}
                   <img 
-                    src={user?.imageUrl || '/lumiqlogo.png'} 
+                    src={user?.imageUrl || '/lumiq-avatar.png'}
                     alt="Avatar"
                     className="w-12 h-12 rounded-full object-cover border-2 border-transparent hover:border-primary transition-colors"
                   />
@@ -796,7 +796,7 @@ const Dashboard: React.FC = () => {
                       <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">
                           <img 
-                            src={user?.imageUrl || '/lumiqlogo.png'} 
+                            src={user?.imageUrl || '/lumiq-avatar.png'}
                             alt="Avatar"
                             className="w-16 h-16 rounded-full object-cover"
                           />

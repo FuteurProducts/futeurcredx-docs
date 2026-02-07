@@ -170,6 +170,17 @@ class AuthService {
     }
   }
 
+  /**
+   * SHA-256 hash a password string via Web Crypto API
+   */
+  private async hashPassword(password: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
   // Mock implementations for development/testing
   private async mockLogin(credentials: LoginCredentials): Promise<AuthResponse> {
     // Simulate network delay
@@ -179,11 +190,25 @@ class AuthService {
     const users = JSON.parse(localStorage.getItem('mockUsers') || '{}');
     const user = users[credentials.email];
 
-    if (!user || user.password !== credentials.password) {
+    const hashedInput = await this.hashPassword(credentials.password);
+
+    // Support both legacy plaintext and new hashed passwords
+    const passwordMatch =
+      user?.password === hashedInput ||
+      user?.password === credentials.password;
+
+    if (!user || !passwordMatch) {
       throw {
         message: 'Invalid email or password',
         code: 'INVALID_CREDENTIALS'
       };
+    }
+
+    // Migrate plaintext password to hash on successful login
+    if (user.password === credentials.password && user.password !== hashedInput) {
+      user.password = hashedInput;
+      users[credentials.email] = user;
+      localStorage.setItem('mockUsers', JSON.stringify(users));
     }
 
     // Generate mock token
@@ -220,12 +245,13 @@ class AuthService {
       };
     }
 
-    // Create new mock user
+    // Create new mock user with hashed password
+    const hashedPassword = await this.hashPassword(credentials.password);
     const newUser = {
       id: `user_${Date.now()}`,
       email: credentials.email,
       name: credentials.name,
-      password: credentials.password, // In real app, this would be hashed
+      password: hashedPassword,
       customerId: `cust_${Date.now()}`,
       plan: 'free' as const,
       apiCallsUsed: 0,

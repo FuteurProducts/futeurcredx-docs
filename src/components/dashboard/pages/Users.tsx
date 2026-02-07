@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line } from 'recha
 import dashboardService from '@/services/dashboardService';
 import { logger } from '@/utils/logger';
 import { cn } from '@/lib/utils';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 
 // shadcn components
 import { Button } from '@/components/ui/button';
@@ -255,7 +256,7 @@ const Users = () => {
       {/* LEFT: Users List */}
       <Card className="flex-1 min-w-0">
         <CardHeader>
-          <CardTitle>Users</CardTitle>
+          <CardTitle>Businesses</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Search Bar */}
@@ -328,7 +329,7 @@ const Users = () => {
             </div>
           ) : businesses.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              <p className="text-base">No users found matching your criteria</p>
+              <p className="text-base">No businesses found matching your criteria</p>
               <Button variant="default" onClick={clearFilters} className="mt-4">
                 Clear Filters
               </Button>
@@ -428,7 +429,7 @@ const Users = () => {
           {/* Results count */}
           {!isLoading && businesses.length > 0 && (
             <div className="pt-4 border-t border-border text-sm text-muted-foreground">
-              Showing {businesses.length} users
+              Showing {businesses.length} businesses
             </div>
           )}
         </CardContent>
@@ -526,8 +527,16 @@ const Users = () => {
 
           {/* View All Button */}
           <Button variant="secondary" className="w-full">
-            View all users
+            View all businesses
           </Button>
+
+          <DataLineageFooter
+            meta={{
+              lastUpdated: new Date().toISOString(),
+              dataSources: ['LUMIQ AI Score Engine', 'Bureau Data'],
+            }}
+            className="mt-4"
+          />
         </CardContent>
       </Card>
 

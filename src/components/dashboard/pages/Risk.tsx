@@ -38,6 +38,7 @@ import {
   type StressImpact,
 } from '@/components/enterprise/risk';
 import { RiskDashboardSkeleton } from '@/components/ui/skeletons';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 
 // ============================================
 // MOCK DATA FOR ENTERPRISE RISK COMPONENTS
@@ -569,6 +570,16 @@ const Risk: React.FC = () => {
           />
         </motion.div>
       </div>
+
+      {/* Data Source Footer */}
+      <DataLineageFooter
+        meta={{
+          lastUpdated: new Date().toISOString(),
+          dataSources: ['LUMIQ AI Score Engine', 'Experian Business', 'D&B PAYDEX', 'Plaid Banking'],
+        }}
+        onRefresh={() => fetchRiskData()}
+        isRefreshing={isLoading}
+      />
     </div>
   );
 };

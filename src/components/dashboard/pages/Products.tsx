@@ -1,18 +1,24 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useUser } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 // ============================================
-// PRODUCTS DATA (like Chase Business Cards)
+// PRODUCT CATALOG DATA
 // ============================================
+
+type ProductStatus = 'GA' | 'Beta' | 'Coming Soon';
+type ProductCategory = 'Credit' | 'Identity' | 'Banking' | 'Compliance';
 
 interface Product {
   id: string;
   title: string;
   description: string;
-  color: 'yellow' | 'purple' | 'green' | 'blue';
-  icon: 'chart' | 'bell' | 'shield' | 'zap';
+  color: 'yellow' | 'purple' | 'green' | 'blue' | 'cyan' | 'orange';
+  icon: 'chart' | 'bell' | 'shield' | 'zap' | 'fingerprint' | 'bank';
+  status: ProductStatus;
+  category: ProductCategory;
   details: {
     features: string[];
     pricing: string;
@@ -29,6 +35,8 @@ const products: Product[] = [
     description: "Get real-time credit scores for individuals and businesses with comprehensive risk assessment.",
     color: "yellow",
     icon: "chart",
+    status: "GA",
+    category: "Credit",
     details: {
       features: [
         "Real-time credit score retrieval",
@@ -48,6 +56,8 @@ const products: Product[] = [
     description: "Access detailed credit reports including payment history, accounts, and public records.",
     color: "purple",
     icon: "bell",
+    status: "GA",
+    category: "Credit",
     details: {
       features: [
         "Complete credit history",
@@ -67,6 +77,8 @@ const products: Product[] = [
     description: "Enterprise-grade Experian data integration with advanced scoring models.",
     color: "green",
     icon: "shield",
+    status: "GA",
+    category: "Credit",
     details: {
       features: [
         "Experian business data",
@@ -86,6 +98,8 @@ const products: Product[] = [
     description: "Track credit improvement progress with personalized recommendations and insights.",
     color: "blue",
     icon: "zap",
+    status: "Beta",
+    category: "Credit",
     details: {
       features: [
         "Score progress tracking",
@@ -99,10 +113,73 @@ const products: Product[] = [
       responseTime: "< 250ms"
     }
   },
+  {
+    id: "identity-verification",
+    title: "Identity Verification API",
+    description: "Verify consumer and business identities in real time with document and biometric checks.",
+    color: "cyan",
+    icon: "fingerprint",
+    status: "GA",
+    category: "Identity",
+    details: {
+      features: [
+        "Document verification (ID, passport, license)",
+        "Biometric liveness detection",
+        "Watchlist and sanctions screening",
+        "Address and phone validation"
+      ],
+      pricing: "Starting at $0.30/call",
+      apiEndpoint: "/v1/identity/verify",
+      rateLimit: "800 calls/minute",
+      responseTime: "< 350ms"
+    }
+  },
+  {
+    id: "banking-health",
+    title: "Banking Health API",
+    description: "Analyze bank account health with transaction categorization, income detection, and cash flow insights.",
+    color: "orange",
+    icon: "bank",
+    status: "Beta",
+    category: "Banking",
+    details: {
+      features: [
+        "Transaction categorization",
+        "Income and employment detection",
+        "Cash flow analysis",
+        "Account balance trends"
+      ],
+      pricing: "Starting at $0.40/call",
+      apiEndpoint: "/v1/banking/health",
+      rateLimit: "600 calls/minute",
+      responseTime: "< 400ms"
+    }
+  },
+  {
+    id: "kyb-compliance",
+    title: "KYB Compliance API",
+    description: "Automate Know Your Business checks with entity verification, beneficial ownership, and regulatory screening.",
+    color: "purple",
+    icon: "shield",
+    status: "Coming Soon",
+    category: "Compliance",
+    details: {
+      features: [
+        "Business entity verification",
+        "Beneficial ownership mapping",
+        "AML and sanctions screening",
+        "Ongoing monitoring and alerts"
+      ],
+      pricing: "Contact sales",
+      apiEndpoint: "/v1/compliance/kyb",
+      rateLimit: "TBD",
+      responseTime: "TBD"
+    }
+  },
 ];
 
-// Color classes for cards - using CSS custom properties
-const colorClasses = {
+// Color classes for cards
+const colorClasses: Record<Product['color'], { bg: string; border: string; iconBg: string }> = {
   yellow: {
     bg: "bg-warning/10",
     border: "border-warning/30",
@@ -123,7 +200,33 @@ const colorClasses = {
     border: "border-info/30",
     iconBg: "bg-primary",
   },
+  cyan: {
+    bg: "bg-info/10",
+    border: "border-info/30",
+    iconBg: "bg-info",
+  },
+  orange: {
+    bg: "bg-warning/10",
+    border: "border-warning/30",
+    iconBg: "bg-warning",
+  },
 };
+
+// Status badge mapping
+const statusConfig: Record<ProductStatus, { variant: 'success' | 'warning' | 'secondary'; label: string }> = {
+  'GA': { variant: 'success', label: 'GA' },
+  'Beta': { variant: 'warning', label: 'Beta' },
+  'Coming Soon': { variant: 'secondary', label: 'Coming Soon' },
+};
+
+// Category filter options
+const categories: Array<{ label: string; value: ProductCategory | 'All' }> = [
+  { label: 'All', value: 'All' },
+  { label: 'Credit', value: 'Credit' },
+  { label: 'Identity', value: 'Identity' },
+  { label: 'Banking', value: 'Banking' },
+  { label: 'Compliance', value: 'Compliance' },
+];
 
 // Icons
 const ProductIcon = ({ name, className = "" }: { name: string; className?: string }) => {
@@ -152,6 +255,18 @@ const ProductIcon = ({ name, className = "" }: { name: string; className?: strin
           <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       );
+    case 'fingerprint':
+      return (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+        </svg>
+      );
+    case 'bank':
+      return (
+        <svg className={className} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+        </svg>
+      );
     default:
       return null;
   }
@@ -162,85 +277,113 @@ const ProductIcon = ({ name, className = "" }: { name: string; className?: strin
 // ============================================
 
 const Products = () => {
-  const { user } = useUser();
+  useUser();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [mode, setMode] = useState({ id: "0", title: "Expert mode" });
+  const [activeCategory, setActiveCategory] = useState<ProductCategory | 'All'>('All');
   const [searchQuery, setSearchQuery] = useState("");
-  const carouselRef = useRef<HTMLDivElement>(null);
-  
-  const modes = [
-    { id: "0", title: "Expert mode" },
-    { id: "1", title: "Basic mode" },
-  ];
 
-  const firstName = user?.firstName || 'there';
+  // Filter products based on search and category
+  const filteredProducts = products.filter(p => {
+    const matchesSearch =
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeCategory === 'All' || p.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
-  // Filter products based on search
-  const filteredProducts = products.filter(p => 
-    p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    p.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Count per category (ignoring search for the pill counts)
+  const categoryCounts: Record<string, number> = { All: products.length };
+  for (const p of products) {
+    categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
+  }
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-start lg:gap-6">
-      {/* LEFT SIDE - Main Content (like NeuraAI left panel) */}
+      {/* LEFT SIDE - Main Content */}
       <div className="card flex-1 min-w-0 bg-card rounded-2xl p-4 sm:p-6">
-        {/* Mode Selector */}
-        <div className="flex items-center mb-6">
-          <div className="relative">
-            <select
-              value={mode.id}
-              onChange={(e) => {
-                const selected = modes.find(m => m.id === e.target.value);
-                if (selected) setMode(selected);
-              }}
-              className="h-10 pl-4 pr-10 bg-card border border-border rounded-xl text-[0.9375rem] font-semibold text-foreground appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
-            >
-              {modes.map(m => (
-                <option key={m.id} value={m.id}>{m.title}</option>
-              ))}
-            </select>
-            <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Greeting */}
-        <div className="mb-10">
-          <h1 className="text-3xl md:text-2xl font-bold text-foreground leading-tight">
-            Hello {firstName},
+        {/* Page Header */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-foreground leading-tight">
+            API Product Catalog
           </h1>
-          <h2 className="text-3xl md:text-2xl font-semibold text-muted-foreground leading-tight mt-1">
-            How can I help you today?
-          </h2>
+          <p className="text-[0.9375rem] text-muted-foreground mt-1">
+            Browse and explore available APIs across credit, identity, banking, and compliance.
+          </p>
         </div>
 
-        {/* Product Cards Carousel */}
-        <div 
-          ref={carouselRef}
-          className="flex overflow-x-auto gap-4 pb-4 scrollbar-none scroll-smooth"
-        >
-          {products.map((product) => (
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          {categories.map((cat) => (
             <button
-              key={product.id}
-              onClick={() => setSelectedProduct(product)}
-              className={`group flex flex-col shrink-0 w-64 p-6 rounded-2xl border-2 text-left transition-all hover:scale-[1.02] hover:shadow-lg ${colorClasses[product.color].bg} ${colorClasses[product.color].border} ${
-                selectedProduct?.id === product.id ? 'ring-2 ring-primary ring-offset-2' : ''
+              key={cat.value}
+              onClick={() => {
+                setActiveCategory(cat.value);
+                // Clear selection when switching categories so stale detail doesn't linger
+                if (selectedProduct && cat.value !== 'All' && selectedProduct.category !== cat.value) {
+                  setSelectedProduct(null);
+                }
+              }}
+              className={`px-4 py-1.5 rounded-full text-[0.8125rem] font-semibold transition-all ${
+                activeCategory === cat.value
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
               }`}
             >
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {product.title}
-              </h3>
-              <p className="text-[0.875rem] text-muted-foreground mb-auto line-clamp-3 min-h-[4rem]">
-                {product.description}
-              </p>
-              <div className={`mt-4 w-10 h-10 rounded-xl flex items-center justify-center ${colorClasses[product.color].iconBg} transition-transform group-hover:scale-110`}>
-                <ProductIcon name={product.icon} className="w-5 h-5 text-white" />
-              </div>
+              {cat.label}
+              <span className="ml-1.5 opacity-70">{categoryCounts[cat.value] ?? 0}</span>
             </button>
           ))}
         </div>
+
+        {/* Product Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          {filteredProducts.map((product) => {
+            const statusCfg = statusConfig[product.status];
+            return (
+              <button
+                key={product.id}
+                onClick={() => setSelectedProduct(product)}
+                className={`group flex flex-col p-5 rounded-2xl border-2 text-left transition-all hover:scale-[1.02] hover:shadow-lg ${colorClasses[product.color].bg} ${colorClasses[product.color].border} ${
+                  selectedProduct?.id === product.id ? 'ring-2 ring-primary ring-offset-2' : ''
+                }`}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${colorClasses[product.color].iconBg} transition-transform group-hover:scale-110`}>
+                    <ProductIcon name={product.icon} className="w-5 h-5 text-white" />
+                  </div>
+                  <Badge variant={statusCfg.variant} className="text-[0.6875rem]">
+                    {statusCfg.label}
+                  </Badge>
+                </div>
+                <h3 className="text-[0.9375rem] font-semibold text-foreground mb-1.5">
+                  {product.title}
+                </h3>
+                <p className="text-[0.8125rem] text-muted-foreground line-clamp-2 mb-3 min-h-[2.5rem]">
+                  {product.description}
+                </p>
+                <div className="mt-auto flex items-center gap-2">
+                  <span className="text-[0.6875rem] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-md">
+                    {product.category}
+                  </span>
+                  <span className="text-[0.6875rem] text-muted-foreground">
+                    {product.details.apiEndpoint}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Empty state */}
+        {filteredProducts.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <svg className="w-12 h-12 text-muted-foreground/40 mb-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <p className="text-[0.9375rem] font-medium text-muted-foreground">No products found</p>
+            <p className="text-[0.8125rem] text-muted-foreground/70 mt-1">Try adjusting your search or category filter.</p>
+          </div>
+        )}
 
         {/* Product Details (when selected) */}
         {selectedProduct && (
@@ -251,22 +394,27 @@ const Products = () => {
                   <ProductIcon name={selectedProduct.icon} className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground">{selectedProduct.title}</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-semibold text-foreground">{selectedProduct.title}</h3>
+                    <Badge variant={statusConfig[selectedProduct.status].variant} className="text-[0.6875rem]">
+                      {statusConfig[selectedProduct.status].label}
+                    </Badge>
+                  </div>
                   <p className="text-[0.875rem] text-muted-foreground">{selectedProduct.details.apiEndpoint}</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setSelectedProduct(null)}
-                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted"
+                className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors"
               >
                 <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-            
+
             <p className="text-[0.9375rem] text-muted-foreground mb-6">{selectedProduct.description}</p>
-            
+
             {/* Features */}
             <div className="grid grid-cols-2 gap-3 mb-6 md:grid-cols-1">
               {selectedProduct.details.features.map((feature, i) => (
@@ -280,7 +428,7 @@ const Products = () => {
                 </div>
               ))}
             </div>
-            
+
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-3 mb-6 md:grid-cols-1">
               <div className="p-3 bg-muted rounded-xl">
@@ -296,36 +444,51 @@ const Products = () => {
                 <div className="text-[0.875rem] font-semibold text-foreground">{selectedProduct.details.pricing}</div>
               </div>
             </div>
-            
+
             {/* Action Buttons */}
             <div className="flex gap-3">
-              <Button
-                onClick={() => {
-                  toast.success('Opening sandbox environment...', {
-                    description: 'You can test this API with sample data',
-                  });
-                }}
-                className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
-              >
-                Try in Sandbox
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  toast.info('Opening documentation...', {
-                    description: 'API reference and integration guides',
-                  });
-                }}
-                className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
-              >
-                View Documentation
-              </Button>
+              {selectedProduct.status === 'Coming Soon' ? (
+                <Button
+                  onClick={() => {
+                    toast.success('You will be notified when this API launches.', {
+                      description: `We'll send updates about ${selectedProduct.title}.`,
+                    });
+                  }}
+                  className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
+                >
+                  Notify Me at Launch
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => {
+                      toast.success('Opening sandbox environment...', {
+                        description: 'You can test this API with sample data',
+                      });
+                    }}
+                    className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
+                  >
+                    Try in Sandbox
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      toast.info('Opening documentation...', {
+                        description: 'API reference and integration guides',
+                      });
+                    }}
+                    className="flex-1 h-11 rounded-xl font-semibold text-[0.875rem]"
+                  >
+                    View Documentation
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}
       </div>
 
-      {/* RIGHT SIDE - Sidebar (like NeuraAI right panel) */}
+      {/* RIGHT SIDE - Sidebar */}
       <div className="card-sidebar w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0 bg-card rounded-2xl p-4 sm:p-6">
         {/* Search */}
         <div className="relative mb-6">
@@ -334,7 +497,7 @@ const Products = () => {
           </svg>
           <input
             type="text"
-            placeholder="Search for product"
+            placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-12 pl-12 pr-4 bg-muted border border-border rounded-xl text-[0.9375rem] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
@@ -343,82 +506,70 @@ const Products = () => {
 
         {/* Product List */}
         <div className="space-y-2 max-h-[400px] overflow-y-auto">
-          {filteredProducts.map((product) => (
-            <button
-              key={product.id}
-              onClick={() => setSelectedProduct(product)}
-              className={`w-full flex items-start p-4 rounded-xl text-left transition-all hover:bg-muted ${
-                selectedProduct?.id === product.id ? 'bg-muted border border-border' : ''
-              }`}
-            >
-              <div className="flex-1 min-w-0">
-                <div className="text-[0.9375rem] font-semibold text-foreground mb-1">
-                  {product.title}
+          {filteredProducts.map((product) => {
+            const statusCfg = statusConfig[product.status];
+            return (
+              <button
+                key={product.id}
+                onClick={() => setSelectedProduct(product)}
+                className={`w-full flex items-start p-4 rounded-xl text-left transition-all hover:bg-muted ${
+                  selectedProduct?.id === product.id ? 'bg-muted border border-border' : ''
+                }`}
+              >
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${colorClasses[product.color].iconBg} shrink-0 mr-3`}>
+                  <ProductIcon name={product.icon} className="w-4 h-4 text-white" />
                 </div>
-                <div className="text-[0.8125rem] text-muted-foreground line-clamp-2">
-                  {product.description}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[0.875rem] font-semibold text-foreground truncate">
+                      {product.title}
+                    </span>
+                    <Badge variant={statusCfg.variant} className="text-[0.5625rem] px-1.5 py-0 shrink-0">
+                      {statusCfg.label}
+                    </Badge>
+                  </div>
+                  <div className="text-[0.75rem] text-muted-foreground line-clamp-1">
+                    {product.description}
+                  </div>
                 </div>
-              </div>
-              {product.icon === 'chart' && (
-                <img 
-                  src="/credit-back.jpg" 
-                  alt="" 
-                  className="w-14 h-14 rounded-xl object-cover ml-3 shrink-0"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-              )}
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
 
         {/* Divider */}
         <div className="h-px bg-border my-6" />
 
-        {/* Quick Links */}
-        <div className="space-y-2">
-          <button
-            onClick={() => {
-              toast.info('The Credit Score API is our most popular choice for real-time credit assessments with multi-bureau support.');
-            }}
-            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
-          >
-            <div className="text-[0.9375rem] font-semibold text-foreground">
-              What's the best API for credit scores?
+        {/* Status Legend */}
+        <div className="mb-6">
+          <h4 className="text-[0.8125rem] font-semibold text-foreground mb-3">Status Legend</h4>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2.5">
+              <Badge variant="success" className="text-[0.6875rem]">GA</Badge>
+              <span className="text-[0.8125rem] text-muted-foreground">Generally Available -- production-ready</span>
             </div>
-          </button>
-          <button
-            onClick={() => {
-              toast.info('See our documentation for step-by-step integration guides and code samples.');
-            }}
-            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
-          >
-            <div className="text-[0.9375rem] font-semibold text-foreground">
-              How do I integrate the Credit API?
+            <div className="flex items-center gap-2.5">
+              <Badge variant="warning" className="text-[0.6875rem]">Beta</Badge>
+              <span className="text-[0.8125rem] text-muted-foreground">Public beta -- API may change</span>
             </div>
-          </button>
-          <button
-            onClick={() => {
-              toast.info('Pricing is usage-based, starting at $0.10/call. See documentation for volume discounts.');
-            }}
-            className="w-full flex items-center p-3 rounded-xl text-left hover:bg-muted transition-colors"
-          >
-            <div className="text-[0.9375rem] font-semibold text-foreground">
-              Can you explain the pricing model?
+            <div className="flex items-center gap-2.5">
+              <Badge variant="secondary" className="text-[0.6875rem]">Coming Soon</Badge>
+              <span className="text-[0.8125rem] text-muted-foreground">In development -- not yet available</span>
             </div>
-          </button>
+          </div>
         </div>
 
         {/* Browse All Button */}
         <Button
           onClick={() => {
             setSearchQuery('');
+            setActiveCategory('All');
+            setSelectedProduct(null);
             toast.info('Showing all available products');
           }}
-          className="w-full h-12 mt-6 rounded-xl font-semibold text-[0.9375rem]"
+          className="w-full h-12 rounded-xl font-semibold text-[0.9375rem]"
         >
-          Browse All Products
+          Reset Filters
         </Button>
       </div>
     </div>
@@ -426,4 +577,3 @@ const Products = () => {
 };
 
 export default Products;
-

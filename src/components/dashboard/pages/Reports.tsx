@@ -12,6 +12,7 @@ import { useReportPolling } from '@/hooks/useReportPolling';
 import { logger } from '@/utils/logger';
 import { PILOT_CONFIG } from '@/data/demoData';
 import type { ReportJob } from '@/services/bff/types';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 import {
   ReportsGlobalControls,
   ReportLibraryPanel,
@@ -332,6 +333,17 @@ const Reports: React.FC = () => {
             />
           )}
         </motion.div>
+      </div>
+
+      {/* Data Source Footer */}
+      <div className="px-4 lg:px-6 pb-4">
+        <DataLineageFooter
+          meta={{
+            lastUpdated: new Date().toISOString(),
+            dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed'],
+          }}
+          onRefresh={handleRefreshHistory}
+        />
       </div>
 
       {/* Preview Drawer */}

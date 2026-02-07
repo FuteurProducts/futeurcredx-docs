@@ -29,7 +29,7 @@ import {
   Bell,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import { useClerk } from '@clerk/clerk-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Command {
   id: string;
@@ -49,7 +49,7 @@ export function CommandPalette({ onNavigate }: CommandPaletteProps) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { resolvedTheme, setTheme } = useTheme();
-  const { signOut } = useClerk();
+  const { signOut } = useAuth();
 
   // Handle navigation - either use provided callback or navigate directly
   const handleNavigate = useCallback(

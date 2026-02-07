@@ -19,6 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useToast } from '@/hooks/use-toast';
 import type { ApiCredential, EnvironmentType, AuthMethod } from '../types';
 import { mockCredentials } from '../mockData';
+import { useAuditEmit } from '@/hooks/useAuditEmit';
 
 const AVAILABLE_SCOPES = [
   { id: 'customers:read', label: 'Read Customers', category: 'Customers' },
@@ -62,12 +63,14 @@ function saveCredentialsToStorage(credentials: ApiCredential[]) {
 
 export const CredentialsPanel: React.FC = () => {
   const { toast } = useToast();
+  const { emit } = useAuditEmit();
   const [credentials, setCredentials] = useState<ApiCredential[]>(
     () => loadCredentialsFromStorage() ?? mockCredentials
   );
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [revealedKeys, setRevealedKeys] = useState<Set<string>>(new Set());
   const [, setSelectedCredential] = useState<ApiCredential | null>(null);
+  const autoHideTimers = React.useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
   // Persist credentials to localStorage whenever they change
   useEffect(() => {
@@ -173,20 +176,51 @@ export const CredentialsPanel: React.FC = () => {
     toast({ title: 'Key Rotated', description: 'New key generated - copy it now!' });
   };
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, credId?: string) => {
     navigator.clipboard.writeText(text);
     toast({ title: 'Copied!', description: 'Copied to clipboard' });
+    // Audit: credential value copied
+    emit('EXPORT_INITIATED', {
+      resourceType: 'credential',
+      resourceId: credId,
+      details: { action: 'copy_to_clipboard' },
+    });
   };
 
   const toggleReveal = (credId: string) => {
     const newRevealed = new Set(revealedKeys);
     if (newRevealed.has(credId)) {
       newRevealed.delete(credId);
+      // Clear any pending auto-hide timer
+      const timer = autoHideTimers.current.get(credId);
+      if (timer) { clearTimeout(timer); autoHideTimers.current.delete(credId); }
     } else {
       newRevealed.add(credId);
+      // Audit: credential revealed
+      emit('SCORE_VIEWED', {
+        resourceType: 'credential',
+        resourceId: credId,
+        details: { action: 'reveal_key' },
+      });
+      // Auto-hide after 30 seconds
+      const timer = setTimeout(() => {
+        setRevealedKeys(prev => {
+          const next = new Set(prev);
+          next.delete(credId);
+          return next;
+        });
+        autoHideTimers.current.delete(credId);
+      }, 30_000);
+      autoHideTimers.current.set(credId, timer);
     }
     setRevealedKeys(newRevealed);
   };
+
+  // Cleanup auto-hide timers on unmount
+  useEffect(() => {
+    const timers = autoHideTimers.current;
+    return () => { timers.forEach(t => clearTimeout(t)); timers.clear(); };
+  }, []);
 
   const getStatusBadge = (cred: ApiCredential) => {
     if (cred.status === 'revoked') {
@@ -492,7 +526,7 @@ export const CredentialsPanel: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button size="icon" variant="ghost" onClick={() => copyToClipboard(cred.fullKey || cred.keyPrefix)}>
+                      <Button size="icon" variant="ghost" onClick={() => copyToClipboard(cred.fullKey || cred.keyPrefix, cred.id)}>
                         <Copy className="h-4 w-4" />
                       </Button>
                       {cred.fullKey && (

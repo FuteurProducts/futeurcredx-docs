@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import { toast } from '@/components/dashboard/ui/sonner';
 import { Button } from '@/components/ui/button';
+import { useAuditEmit } from '@/hooks/useAuditEmit';
 
 // ============================================
 // COUNT UP ANIMATION HOOK
@@ -615,6 +616,7 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
 const UnderwritingAssistant: React.FC = () => {
   const [selectedApp, setSelectedApp] = useState<Application>(applications[0]);
   const [activeTab, setActiveTab] = useState<'overview' | 'profile' | 'credit' | 'rules'>('overview');
+  const { emitBulkActionExecuted } = useAuditEmit();
 
   const getStatusBadge = (status: Application['status']) => {
     const config = {
@@ -761,6 +763,7 @@ const UnderwritingAssistant: React.FC = () => {
                     toast.error('Application declined', {
                       description: `${selectedApp.companyName} - ${selectedApp.appId}`,
                     });
+                    emitBulkActionExecuted('decline', [selectedApp.appId]);
                   }}
                   className="gap-2 rounded-xl"
                 >
@@ -772,6 +775,7 @@ const UnderwritingAssistant: React.FC = () => {
                     toast.success('Application approved successfully', {
                       description: `${selectedApp.companyName} - ${selectedApp.appId}`,
                     });
+                    emitBulkActionExecuted('approve', [selectedApp.appId]);
                   }}
                   className="gap-2 rounded-xl bg-primary-02 hover:bg-primary-02/90"
                 >

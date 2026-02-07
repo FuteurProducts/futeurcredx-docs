@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => ({
     include: ['react', 'react-dom', 'react-is', 'recharts'],
   },
   server: {
-    host: "::",
+    host: "localhost",
     port: 8080,
   },
 }))
