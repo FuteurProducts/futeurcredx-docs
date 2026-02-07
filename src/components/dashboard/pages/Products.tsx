@@ -3,6 +3,8 @@ import { useUser } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 
 // ============================================
 // PRODUCT CATALOG DATA
@@ -301,6 +303,7 @@ const Products = () => {
     <div className="flex flex-col lg:flex-row lg:items-start lg:gap-6">
       {/* LEFT SIDE - Main Content */}
       <div className="card flex-1 min-w-0 bg-card rounded-2xl p-4 sm:p-6">
+        <div className="mb-4"><BankDisclaimer compact /></div>
         {/* Page Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-foreground leading-tight">
@@ -571,6 +574,16 @@ const Products = () => {
         >
           Reset Filters
         </Button>
+      </div>
+
+      {/* Data Source Footer */}
+      <div className="w-full mt-6 lg:mt-0">
+        <DataLineageFooter
+          meta={{
+            lastUpdated: new Date().toISOString(),
+            dataSources: ['LUMIQ AI Product Registry'],
+          }}
+        />
       </div>
     </div>
   );

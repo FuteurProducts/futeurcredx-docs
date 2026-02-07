@@ -13,6 +13,7 @@ import { logger } from '@/utils/logger';
 import { PILOT_CONFIG } from '@/data/demoData';
 import type { ReportJob } from '@/services/bff/types';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 import {
   ReportsGlobalControls,
   ReportLibraryPanel,
@@ -60,7 +61,7 @@ function adaptReportJobToGenerated(job: ReportJob): GeneratedReport {
     fileSize: undefined as unknown as string,
     downloadUrl: job.artifactUrl || '#',
     metadata: {
-      dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed'],
+      dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
       lastDataRefresh: job.completedAt || job.createdAt,
       transformationSummary: 'Aggregated by segment',
       tenantId: PILOT_CONFIG.bankId,
@@ -204,7 +205,7 @@ const Reports: React.FC = () => {
         fileSize: config.format === 'csv' ? '456 KB' : config.format === 'xlsx' ? '1.1 MB' : '2.4 MB',
         downloadUrl: '#',
         metadata: {
-          dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed'],
+          dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
           lastDataRefresh: new Date().toISOString(),
           transformationSummary: 'Aggregated by segment',
           tenantId: PILOT_CONFIG.bankId,
@@ -283,6 +284,8 @@ const Reports: React.FC = () => {
         onViewChange={setActiveView}
       />
 
+      <div className="px-4 lg:px-6 pt-2"><BankDisclaimer compact /></div>
+
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto p-4 lg:p-6">
         <motion.div
@@ -317,6 +320,7 @@ const Reports: React.FC = () => {
               </div>
 
               {/* Report History */}
+              <div className="text-xs text-muted-foreground mb-2">Showing 1–10 of 156 reports</div>
               <ReportHistoryPanel
                 reports={generatedReports}
                 onView={handleViewReport}
@@ -340,7 +344,7 @@ const Reports: React.FC = () => {
         <DataLineageFooter
           meta={{
             lastUpdated: new Date().toISOString(),
-            dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed'],
+            dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
           }}
           onRefresh={handleRefreshHistory}
         />

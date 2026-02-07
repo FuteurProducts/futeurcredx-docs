@@ -27,6 +27,7 @@ import {
   mockSignalDrift,
 } from '@/components/enterprise/analytics';
 import type { AnalyticsFilters, PortfolioKPI, ScoreBucket } from '@/components/enterprise/analytics/types';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 
 // ============================================
 // MAIN COMPONENT
@@ -55,7 +56,7 @@ const Analytics: React.FC = () => {
         prev.map(kpi => {
           switch (kpi.id) {
             case 'avg-score':
-              return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LUMIQ AI Score Engine' };
+              return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LUMIQ AI Signal Engine' };
             case 'deteriorating-clients':
               return { ...kpi, value: live.delinquencyRate, lastUpdated: 'just now', dataSource: 'Risk Analytics Engine' };
             case 'improving-clients':
@@ -83,7 +84,7 @@ const Analytics: React.FC = () => {
     const distResult = await withFallback(
       () => scoresService.getDistribution(portfolioId!, 'internal').then(r => r.data),
       { ranges: [] as { min: number; max: number; count: number }[] },
-      'Score Distribution',
+      'Risk Indicator Distribution',
     );
 
     if (distResult.source === 'live' && distResult.data.ranges.length > 0) {
@@ -180,7 +181,7 @@ const Analytics: React.FC = () => {
         <motion.div variants={itemVariants}>
           <ScoreDistributionChart
             data={scoreDistribution}
-            title="Portfolio Score Distribution"
+            title="Portfolio Risk Indicator Distribution"
           />
         </motion.div>
         <motion.div variants={itemVariants}>
@@ -225,7 +226,7 @@ const Analytics: React.FC = () => {
       <motion.div variants={itemVariants}>
         <ScoreDistributionChart
           data={scoreDistribution}
-          title="Risk Score Distribution"
+          title="Risk Indicator Distribution"
         />
       </motion.div>
     </motion.div>
@@ -335,6 +336,7 @@ const Analytics: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-muted/50 p-6 space-y-6">
+      <BankDisclaimer compact />
       {/* Global Controls */}
       <AnalyticsGlobalControls
         filters={filters}
@@ -349,7 +351,7 @@ const Analytics: React.FC = () => {
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-primary" />
-            Data Sources: LUMIQ AI Score Engine, Portfolio Analytics, Risk Engine
+            Data Sources: LUMIQ AI Signal Engine, Portfolio Analytics, Risk Engine
           </span>
           <span>|</span>
           <span>Last Updated: {new Date().toLocaleTimeString()}</span>

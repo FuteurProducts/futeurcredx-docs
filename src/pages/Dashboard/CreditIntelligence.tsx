@@ -1,1 +1,1 @@
-export { default } from '@/components/dashboard/pages/ScoresBff';
+export { default } from '@/components/dashboard/pages/CreditIntelligence';

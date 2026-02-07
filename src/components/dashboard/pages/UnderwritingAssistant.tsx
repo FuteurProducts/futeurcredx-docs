@@ -1,610 +1,514 @@
-import React, { useState, useEffect } from 'react';
+// Underwriting Assistant — Case Management Workspace
+// NO composite scores, NO auto-approve, NO AI confidence %
+// Bank-safe language: recommendations, not decisions
+
+import React, { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import {
-  PieChart, Pie, Cell,
-  ResponsiveContainer
-} from 'recharts';
-import { toast } from '@/components/dashboard/ui/sonner';
-import { Button } from '@/components/ui/button';
+  FileText,
+  Building2,
+  Clock,
+  User,
+  ChevronDown,
+  ChevronRight,
+  Shield,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  TrendingUp,
+  Minus,
+  TrendingDown,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 import { useAuditEmit } from '@/hooks/useAuditEmit';
+import {
+  CASE_STATUSES,
+  SIGNAL_STATUSES,
+  SIGNAL_DIRECTIONS,
+  DISCLAIMER_TEXT,
+  type CaseStatus,
+  type SignalStatus,
+  type SignalDirection,
+} from '@/constants/bankTerminology';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
+import { DemoMetaBadge } from '@/components/shared/DemoMetaBadge';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 
 // ============================================
-// COUNT UP ANIMATION HOOK
+// TYPES
 // ============================================
 
-const useCountUp = (end: number, duration: number = 1500) => {
-  const [count, setCount] = useState(0);
-  
-  useEffect(() => {
-    let startTime: number | null = null;
-    let animationFrame: number;
-    
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const easeOut = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(easeOut * end));
-      
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-    
-    animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [end, duration]);
-  
-  return count;
-};
+type PolicyCheckResult = 'pass' | 'review' | 'fail';
 
-// ============================================
-// ICON COMPONENT
-// ============================================
-
-const Icon: React.FC<{ type: string; className?: string }> = ({ type, className = "w-5 h-5" }) => {
-  const iconPaths: Record<string, React.ReactNode> = {
-    check: <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />,
-    warning: <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />,
-    x: <path strokeLinecap="round" strokeLinejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />,
-    clock: <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />,
-    brain: <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />,
-    users: <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />,
-    document: <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />,
-    shield: <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />,
-    building: <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />,
-    creditCard: <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />,
-    fingerprint: <path strokeLinecap="round" strokeLinejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />,
-    info: <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />,
-    trendUp: <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />,
-    trendDown: <path strokeLinecap="round" strokeLinejoin="round" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6" />,
-  };
-  
-  return (
-    <svg className={className} fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
-      {iconPaths[type] || iconPaths.document}
-    </svg>
-  );
-};
-
-// ============================================
-// MOCK DATA
-// ============================================
-
-interface Application {
+interface PolicyCheck {
   id: string;
-  appId: string;
+  name: string;
+  result: PolicyCheckResult;
+  value: string;
+  threshold: string;
+  source: string;
+}
+
+interface SignalSummary {
+  name: string;
+  status: SignalStatus;
+  direction: SignalDirection;
+  detail: string;
+}
+
+interface ComparativeBenchmark {
+  label: string;
+  applicantValue: string;
+  portfolioPeerAvg: string;
+  industryPeerAvg: string;
+}
+
+type RecommendationAction = 'recommend_approval' | 'request_info' | 'flag_committee' | 'recommend_decline';
+
+interface CaseApplication {
+  id: string;
+  caseId: string;
   companyName: string;
   amount: number;
-  confidence: number;
-  status: 'approve' | 'review' | 'decline';
   productType: string;
-  tags?: string[];
-  ownerFico: number;
-  bankingHealth: number;
-  kybStatus: 'Pass' | 'Fail' | 'Pending';
-  identityMatch: number;
-  compositeScore: number;
-  grade: string;
-  positiveDrivers: string[];
-  riskDrivers: string[];
-  summary: string;
-  // Business Info
-  dba?: string;
-  ein: string;
+  caseStatus: CaseStatus;
+  assignedAnalyst: string;
+  daysInQueue: number;
+  slaTarget: number;
+  pdBand: string;
   industry: string;
   naicsCode: string;
   established: string;
   yearsInBusiness: number;
-  // Contact Info
-  address: string;
-  phone: string;
-  email: string;
-  website: string;
-  // Owner Info
   ownerName: string;
   ownership: number;
-  identityVerified: boolean;
-  // Credit Data
-  subscores: {
-    tradelines: number;
-    payments: number;
-    bankingHealth: number;
-    identityMatch: number;
-  };
-  banking: {
-    avg30dBalance: number;
-    avg90dBalance: number;
-    nsf90d: number;
-    achReturns90d: number;
-    depositConsistency: 'Stable' | 'Moderate' | 'Volatile';
-    cashRunway: number;
-  };
-  tradelines: {
-    vendorsReporting: number;
-    oldestTradeline: string;
-    onTimePayment: number;
-    dbtAverage: number;
-  };
-  publicRecords: {
-    uccFilings: number;
-    liens: boolean;
-    judgments: boolean;
-    bankruptcies: boolean;
-  };
-  kyb: {
-    registry: 'Verified' | 'Pending' | 'Failed';
-    ein: boolean;
-    addressStability: 'High' | 'Medium' | 'Low';
-  };
-  // Rule Triggers
-  ruleTriggers: {
-    id: number;
-    name: string;
-    description: string;
-    status: 'passed' | 'failed' | 'warning';
-    category: 'credit' | 'identity' | 'banking' | 'compliance';
-  }[];
+  address: string;
+  tags?: string[];
+  // Signal-based data
+  signals: SignalSummary[];
+  policyChecks: PolicyCheck[];
+  benchmarks: ComparativeBenchmark[];
+  // Decision support
+  riskLevel: 'low' | 'moderate' | 'elevated';
+  supportingFactors: string[];
+  areasOfAttention: string[];
+  suggestedNextSteps: string[];
 }
 
-const applications: Application[] = [
+// ============================================
+// DEMO DATA — Bank-safe, signal-based
+// ============================================
+
+const CASES: CaseApplication[] = [
   {
     id: '1',
-    appId: 'APP-2024-001',
+    caseId: 'CASE-2026-001',
     companyName: 'Stellar Dynamics LLC',
     amount: 250000,
-    confidence: 92,
-    status: 'approve',
     productType: 'Business Line of Credit',
-    ownerFico: 758,
-    bankingHealth: 85,
-    kybStatus: 'Pass',
-    identityMatch: 98,
-    compositeScore: 728,
-    grade: 'B+',
-    positiveDrivers: [
-      'Stable deposit pattern over 90 days',
-      '98.5% on-time payment history',
-      'Strong owner FICO score (758)',
-      '7 years business history',
-      'Low DBT average (12 days)',
-    ],
-    riskDrivers: [],
-    summary: 'Strong creditworthiness with consistent payment history and healthy financials. Low-risk profile suitable for standard approval.',
-    // Extended data
-    dba: 'Stellar Tech',
-    ein: '82-1234567',
+    caseStatus: 'in_review',
+    assignedAnalyst: 'J. Morrison',
+    daysInQueue: 2,
+    slaTarget: 5,
+    pdBand: 'PD 1.2-2.0% (Investment Grade Equivalent)',
     industry: 'Technology Services',
-    naicsCode: '541512',
+    naicsCode: '541511',
     established: '2017',
     yearsInBusiness: 7,
-    address: '1420 Innovation Way, Austin, TX 78701',
-    phone: '(512) 555-0142',
-    email: 'contact@stellardynamics.com',
-    website: 'www.stellardynamics.com',
     ownerName: 'James Morrison',
     ownership: 85,
-    identityVerified: true,
-    subscores: { tradelines: 82, payments: 91, bankingHealth: 85, identityMatch: 98 },
-    banking: { avg30dBalance: 127500, avg90dBalance: 142300, nsf90d: 0, achReturns90d: 0, depositConsistency: 'Stable', cashRunway: 8.2 },
-    tradelines: { vendorsReporting: 23, oldestTradeline: '5 years 3 months', onTimePayment: 98.5, dbtAverage: 12 },
-    publicRecords: { uccFilings: 1, liens: false, judgments: false, bankruptcies: false },
-    kyb: { registry: 'Verified', ein: true, addressStability: 'High' },
-    ruleTriggers: [
-      { id: 1, name: 'Minimum Credit Score', description: 'Score 728 exceeds minimum 650', status: 'passed', category: 'credit' },
-      { id: 2, name: 'Time in Business', description: '7 years exceeds 2 year minimum', status: 'passed', category: 'compliance' },
-      { id: 3, name: 'Debt Service Coverage', description: 'DSCR 1.8x exceeds 1.25x threshold', status: 'passed', category: 'banking' },
-      { id: 4, name: 'Payment History', description: '98.5% on-time payments', status: 'passed', category: 'credit' },
+    address: '1420 Innovation Way, Austin, TX 78701',
+    signals: [
+      { name: 'Payment Behavior', status: 'strong', direction: 'improving', detail: '98.2% on-time across 12 trade lines' },
+      { name: 'Revenue Trajectory', status: 'stable', direction: 'improving', detail: '+8.3% QoQ from deposit activity' },
+      { name: 'Debt Service Coverage', status: 'strong', direction: 'stable', detail: 'DSCR 1.8x vs 1.25x policy minimum' },
+      { name: 'Cash Flow Consistency', status: 'strong', direction: 'improving', detail: 'CV 0.12, 18-month runway' },
+      { name: 'Owner Credit Profile', status: 'weak', direction: 'worsening', detail: 'Guarantor FICO declined 15pts in 90d' },
+    ],
+    policyChecks: [
+      { id: 'p1', name: 'Minimum Time in Business', result: 'pass', value: '7 years', threshold: '≥ 2 years', source: 'Secretary of State' },
+      { id: 'p2', name: 'Revenue Floor', result: 'pass', value: '$3.4M annual', threshold: '≥ $250K', source: 'Banking Data Feed' },
+      { id: 'p3', name: 'Owner FICO Floor', result: 'review', value: '742 (declining)', threshold: '≥ 680', source: 'Experian Soft Pull' },
+      { id: 'p4', name: 'Industry Exclusion', result: 'pass', value: 'Technology Services', threshold: 'Not on exclusion list', source: 'Policy Engine' },
+      { id: 'p5', name: 'Collateral Coverage', result: 'pass', value: 'LTV 62%', threshold: '≤ 80% LTV', source: 'UCC + Appraisal' },
+      { id: 'p6', name: 'UCC Filing Status', result: 'pass', value: '1 active (current)', threshold: 'No derogatory', source: 'UCC Search' },
+      { id: 'p7', name: 'OFAC/BSA Screening', result: 'pass', value: 'Clear', threshold: 'No matches', source: 'Compliance Engine' },
+      { id: 'p8', name: 'Debt-to-Income Ratio', result: 'pass', value: '28%', threshold: '≤ 43%', source: 'Financial Analysis' },
+    ],
+    benchmarks: [
+      { label: 'Default Rate (12mo)', applicantValue: '0.0%', portfolioPeerAvg: '1.8%', industryPeerAvg: '2.1%' },
+      { label: 'Avg Facility Utilization', applicantValue: '62%', portfolioPeerAvg: '58%', industryPeerAvg: '65%' },
+      { label: 'Payment Timeliness', applicantValue: '98.2%', portfolioPeerAvg: '94.5%', industryPeerAvg: '92.8%' },
+      { label: 'Revenue Growth (QoQ)', applicantValue: '+8.3%', portfolioPeerAvg: '+4.2%', industryPeerAvg: '+5.1%' },
+    ],
+    riskLevel: 'low',
+    supportingFactors: [
+      'Strong payment history exceeding portfolio median',
+      'DSCR well above policy minimum with stable trajectory',
+      'Consistent cash flow with low coefficient of variation',
+      '7 years operating history in stable industry vertical',
+    ],
+    areasOfAttention: [
+      'Owner/guarantor FICO has declined 15 points in 90 days — monitor for further deterioration',
+      'Revenue concentration in single client vertical (technology)',
+    ],
+    suggestedNextSteps: [
+      'Request updated personal financial statement from guarantor',
+      'Verify revenue diversification across client base',
+      'Proceed to credit committee with standard documentation package',
     ],
   },
   {
     id: '2',
-    appId: 'APP-2024-002',
+    caseId: 'CASE-2026-002',
     companyName: 'GreenTech Innovations',
     amount: 150000,
-    confidence: 67,
-    status: 'review',
     productType: 'Equipment Financing',
-    tags: ['High utilization', 'Recent inquiry'],
-    ownerFico: 680,
-    bankingHealth: 72,
-    kybStatus: 'Pass',
-    identityMatch: 95,
-    compositeScore: 645,
-    grade: 'C+',
-    positiveDrivers: [
-      'Growing revenue trend',
-      'Verified business identity',
-    ],
-    riskDrivers: [
-      'High credit utilization (78%)',
-      'Recent credit inquiry (30 days)',
-      'Short business history (2 years)',
-    ],
-    summary: 'Moderate risk profile with some concerning factors. Manual review recommended to assess recent credit activity.',
-    dba: 'GreenTech',
-    ein: '47-9876543',
+    caseStatus: 'pending_review',
+    assignedAnalyst: 'Unassigned',
+    daysInQueue: 4,
+    slaTarget: 5,
+    pdBand: 'PD 3.5-5.0% (Non-Investment Grade)',
     industry: 'Environmental Services',
     naicsCode: '541620',
     established: '2022',
     yearsInBusiness: 2,
-    address: '890 Eco Boulevard, Portland, OR 97201',
-    phone: '(503) 555-0198',
-    email: 'info@greentechinnovations.com',
-    website: 'www.greentechinnovations.com',
     ownerName: 'Sarah Chen',
     ownership: 100,
-    identityVerified: true,
-    subscores: { tradelines: 65, payments: 72, bankingHealth: 72, identityMatch: 95 },
-    banking: { avg30dBalance: 45000, avg90dBalance: 52000, nsf90d: 1, achReturns90d: 0, depositConsistency: 'Moderate', cashRunway: 3.5 },
-    tradelines: { vendorsReporting: 8, oldestTradeline: '1 year 8 months', onTimePayment: 85.2, dbtAverage: 28 },
-    publicRecords: { uccFilings: 0, liens: false, judgments: false, bankruptcies: false },
-    kyb: { registry: 'Verified', ein: true, addressStability: 'Medium' },
-    ruleTriggers: [
-      { id: 1, name: 'Minimum Credit Score', description: 'Score 645 below minimum 650', status: 'warning', category: 'credit' },
-      { id: 2, name: 'Time in Business', description: '2 years meets 2 year minimum', status: 'passed', category: 'compliance' },
-      { id: 3, name: 'Credit Utilization', description: '78% exceeds 50% threshold', status: 'failed', category: 'credit' },
-      { id: 4, name: 'Recent Inquiries', description: '3 inquiries in 30 days', status: 'warning', category: 'credit' },
+    address: '890 Eco Boulevard, Portland, OR 97201',
+    tags: ['SLA at risk', 'Unassigned'],
+    signals: [
+      { name: 'Payment Behavior', status: 'stable', direction: 'stable', detail: '85.2% on-time, limited history' },
+      { name: 'Revenue Trajectory', status: 'stable', direction: 'improving', detail: 'Growing but limited track record' },
+      { name: 'Debt Service Coverage', status: 'weak', direction: 'stable', detail: 'DSCR 1.1x — at policy minimum' },
+      { name: 'Cash Flow Consistency', status: 'weak', direction: 'stable', detail: 'CV 0.35, 3.5-month runway' },
+      { name: 'Owner Credit Profile', status: 'stable', direction: 'stable', detail: 'Guarantor FICO 680, stable' },
+    ],
+    policyChecks: [
+      { id: 'p1', name: 'Minimum Time in Business', result: 'pass', value: '2 years', threshold: '≥ 2 years', source: 'Secretary of State' },
+      { id: 'p2', name: 'Revenue Floor', result: 'pass', value: '$820K annual', threshold: '≥ $250K', source: 'Banking Data Feed' },
+      { id: 'p3', name: 'Owner FICO Floor', result: 'pass', value: '680', threshold: '≥ 680', source: 'Experian Soft Pull' },
+      { id: 'p4', name: 'Industry Exclusion', result: 'pass', value: 'Environmental', threshold: 'Not excluded', source: 'Policy Engine' },
+      { id: 'p5', name: 'Collateral Coverage', result: 'review', value: 'Equipment as collateral', threshold: '≤ 80% LTV', source: 'Pending appraisal' },
+      { id: 'p6', name: 'UCC Filing Status', result: 'pass', value: 'None', threshold: 'No derogatory', source: 'UCC Search' },
+      { id: 'p7', name: 'OFAC/BSA Screening', result: 'pass', value: 'Clear', threshold: 'No matches', source: 'Compliance Engine' },
+      { id: 'p8', name: 'Debt-to-Income Ratio', result: 'fail', value: '48%', threshold: '≤ 43%', source: 'Financial Analysis' },
+    ],
+    benchmarks: [
+      { label: 'Default Rate (12mo)', applicantValue: 'N/A (new)', portfolioPeerAvg: '3.2%', industryPeerAvg: '4.1%' },
+      { label: 'Avg Facility Utilization', applicantValue: 'N/A', portfolioPeerAvg: '52%', industryPeerAvg: '58%' },
+      { label: 'Payment Timeliness', applicantValue: '85.2%', portfolioPeerAvg: '91.0%', industryPeerAvg: '89.5%' },
+      { label: 'Revenue Growth (QoQ)', applicantValue: '+15.2%', portfolioPeerAvg: '+6.8%', industryPeerAvg: '+7.5%' },
+    ],
+    riskLevel: 'elevated',
+    supportingFactors: [
+      'Strong revenue growth trajectory (+15.2% QoQ)',
+      'Clean compliance screening',
+      'Owner fully committed (100% ownership)',
+    ],
+    areasOfAttention: [
+      'DTI ratio exceeds policy maximum (48% vs 43% threshold)',
+      'Limited operating history — only 2 years',
+      'Cash flow runway below comfortable threshold (3.5 months)',
+      'DSCR at policy minimum with no cushion',
+    ],
+    suggestedNextSteps: [
+      'Request DTI exception approval from senior credit officer',
+      'Obtain equipment appraisal for collateral valuation',
+      'Consider reduced facility size to improve coverage ratios',
     ],
   },
   {
     id: '3',
-    appId: 'APP-2024-003',
+    caseId: 'CASE-2026-003',
     companyName: 'Metro Logistics Corp',
     amount: 500000,
-    confidence: 95,
-    status: 'approve',
     productType: 'Working Capital',
-    ownerFico: 790,
-    bankingHealth: 92,
-    kybStatus: 'Pass',
-    identityMatch: 99,
-    compositeScore: 785,
-    grade: 'A',
-    positiveDrivers: [
-      'Excellent owner credit (790)',
-      'Strong cash reserves',
-      '15 years in business',
-      'Consistent revenue growth',
-      'No derogatory marks',
-    ],
-    riskDrivers: [],
-    summary: 'Excellent credit profile with strong financials across all metrics. Recommended for immediate approval.',
-    dba: 'Metro Logistics',
-    ein: '36-5432109',
+    caseStatus: 'conditional',
+    assignedAnalyst: 'R. Patel',
+    daysInQueue: 8,
+    slaTarget: 10,
+    pdBand: 'PD 0.5-1.2% (Prime)',
     industry: 'Transportation & Warehousing',
     naicsCode: '484110',
     established: '2009',
     yearsInBusiness: 15,
-    address: '2500 Commerce Drive, Chicago, IL 60601',
-    phone: '(312) 555-0234',
-    email: 'business@metrologistics.com',
-    website: 'www.metrologistics.com',
     ownerName: 'Michael Rodriguez',
     ownership: 75,
-    identityVerified: true,
-    subscores: { tradelines: 95, payments: 98, bankingHealth: 92, identityMatch: 99 },
-    banking: { avg30dBalance: 485000, avg90dBalance: 520000, nsf90d: 0, achReturns90d: 0, depositConsistency: 'Stable', cashRunway: 12.5 },
-    tradelines: { vendorsReporting: 45, oldestTradeline: '12 years 7 months', onTimePayment: 99.8, dbtAverage: 5 },
-    publicRecords: { uccFilings: 2, liens: false, judgments: false, bankruptcies: false },
-    kyb: { registry: 'Verified', ein: true, addressStability: 'High' },
-    ruleTriggers: [
-      { id: 1, name: 'Minimum Credit Score', description: 'Score 785 exceeds minimum 650', status: 'passed', category: 'credit' },
-      { id: 2, name: 'Time in Business', description: '15 years exceeds 2 year minimum', status: 'passed', category: 'compliance' },
-      { id: 3, name: 'Debt Service Coverage', description: 'DSCR 2.4x exceeds 1.25x threshold', status: 'passed', category: 'banking' },
-      { id: 4, name: 'Payment History', description: '99.8% on-time payments', status: 'passed', category: 'credit' },
+    address: '2500 Commerce Drive, Chicago, IL 60601',
+    tags: ['Conditional'],
+    signals: [
+      { name: 'Payment Behavior', status: 'strong', direction: 'stable', detail: '99.8% on-time across 45 trade lines' },
+      { name: 'Revenue Trajectory', status: 'strong', direction: 'improving', detail: '+12% YoY consistent growth' },
+      { name: 'Debt Service Coverage', status: 'strong', direction: 'stable', detail: 'DSCR 2.4x — well above minimum' },
+      { name: 'Cash Flow Consistency', status: 'strong', direction: 'stable', detail: 'CV 0.08, 12.5-month runway' },
+      { name: 'Owner Credit Profile', status: 'strong', direction: 'stable', detail: 'Guarantor FICO 790, stable 12mo' },
+    ],
+    policyChecks: [
+      { id: 'p1', name: 'Minimum Time in Business', result: 'pass', value: '15 years', threshold: '≥ 2 years', source: 'Secretary of State' },
+      { id: 'p2', name: 'Revenue Floor', result: 'pass', value: '$8.2M annual', threshold: '≥ $250K', source: 'Banking Data Feed' },
+      { id: 'p3', name: 'Owner FICO Floor', result: 'pass', value: '790', threshold: '≥ 680', source: 'Experian Soft Pull' },
+      { id: 'p4', name: 'Industry Exclusion', result: 'pass', value: 'Transportation', threshold: 'Not excluded', source: 'Policy Engine' },
+      { id: 'p5', name: 'Collateral Coverage', result: 'pass', value: 'Fleet $1.2M, LTV 45%', threshold: '≤ 80% LTV', source: 'Equipment Appraisal' },
+      { id: 'p6', name: 'UCC Filing Status', result: 'pass', value: '2 active (current)', threshold: 'No derogatory', source: 'UCC Search' },
+      { id: 'p7', name: 'OFAC/BSA Screening', result: 'pass', value: 'Clear', threshold: 'No matches', source: 'Compliance Engine' },
+      { id: 'p8', name: 'Debt-to-Income Ratio', result: 'pass', value: '22%', threshold: '≤ 43%', source: 'Financial Analysis' },
+    ],
+    benchmarks: [
+      { label: 'Default Rate (12mo)', applicantValue: '0.0%', portfolioPeerAvg: '1.5%', industryPeerAvg: '2.3%' },
+      { label: 'Avg Facility Utilization', applicantValue: '45%', portfolioPeerAvg: '55%', industryPeerAvg: '61%' },
+      { label: 'Payment Timeliness', applicantValue: '99.8%', portfolioPeerAvg: '95.2%', industryPeerAvg: '93.1%' },
+      { label: 'Revenue Growth (QoQ)', applicantValue: '+3.0%', portfolioPeerAvg: '+2.8%', industryPeerAvg: '+1.9%' },
+    ],
+    riskLevel: 'low',
+    supportingFactors: [
+      'Exceptional payment history — top decile of portfolio',
+      'DSCR 2.4x provides significant debt service cushion',
+      'Strong fleet collateral with conservative LTV',
+      '15-year operating history with consistent profitability',
+      'Owner FICO 790 — excellent personal credit standing',
+    ],
+    areasOfAttention: [
+      'Conditional on updated fleet appraisal (pending)',
+      'Fuel cost exposure in current macro environment',
+    ],
+    suggestedNextSteps: [
+      'Obtain updated fleet appraisal to clear conditional status',
+      'Present to credit committee for final approval',
     ],
   },
   {
     id: '4',
-    appId: 'APP-2024-004',
+    caseId: 'CASE-2026-004',
     companyName: 'QuickServe Restaurants',
     amount: 75000,
-    confidence: 88,
-    status: 'decline',
     productType: 'Business Term Loan',
-    tags: ['Delinquency history', 'Low revenue', '+1'],
-    ownerFico: 580,
-    bankingHealth: 45,
-    kybStatus: 'Pass',
-    identityMatch: 92,
-    compositeScore: 520,
-    grade: 'D',
-    positiveDrivers: [
-      'Verified business identity',
-    ],
-    riskDrivers: [
-      'Previous 90-day delinquency',
-      'Declining revenue trend',
-      'Low owner FICO score (580)',
-      'High NSF occurrence (5 in 90 days)',
-    ],
-    summary: 'High-risk profile with significant credit issues. Multiple risk factors present including payment delinquency and declining financials.',
-    dba: 'QuickServe',
-    ein: '58-7654321',
+    caseStatus: 'declined',
+    assignedAnalyst: 'K. Williams',
+    daysInQueue: 6,
+    slaTarget: 5,
+    pdBand: 'PD 8.0-12.0% (Substandard)',
     industry: 'Food Services',
     naicsCode: '722511',
     established: '2019',
     yearsInBusiness: 5,
-    address: '456 Main Street, Denver, CO 80202',
-    phone: '(303) 555-0167',
-    email: 'manager@quickserve.com',
-    website: 'www.quickserverestaurants.com',
     ownerName: 'David Thompson',
     ownership: 60,
-    identityVerified: true,
-    subscores: { tradelines: 45, payments: 52, bankingHealth: 45, identityMatch: 92 },
-    banking: { avg30dBalance: 12500, avg90dBalance: 15000, nsf90d: 5, achReturns90d: 2, depositConsistency: 'Volatile', cashRunway: 1.2 },
-    tradelines: { vendorsReporting: 12, oldestTradeline: '4 years 2 months', onTimePayment: 72.5, dbtAverage: 45 },
-    publicRecords: { uccFilings: 0, liens: true, judgments: false, bankruptcies: false },
-    kyb: { registry: 'Verified', ein: true, addressStability: 'Medium' },
-    ruleTriggers: [
-      { id: 1, name: 'Minimum Credit Score', description: 'Score 520 below minimum 650', status: 'failed', category: 'credit' },
-      { id: 2, name: 'Payment Delinquency', description: '90-day delinquency detected', status: 'failed', category: 'credit' },
-      { id: 3, name: 'NSF Activity', description: '5 NSF events in 90 days', status: 'failed', category: 'banking' },
-      { id: 4, name: 'Cash Runway', description: '1.2 months below 3 month minimum', status: 'failed', category: 'banking' },
+    address: '456 Main Street, Denver, CO 80202',
+    tags: ['Multiple policy failures'],
+    signals: [
+      { name: 'Payment Behavior', status: 'weak', direction: 'worsening', detail: '72.5% on-time, 90-day delinquency noted' },
+      { name: 'Revenue Trajectory', status: 'weak', direction: 'worsening', detail: '-12% QoQ decline in deposit activity' },
+      { name: 'Debt Service Coverage', status: 'weak', direction: 'worsening', detail: 'DSCR 0.85x — below breakeven' },
+      { name: 'Cash Flow Consistency', status: 'weak', direction: 'worsening', detail: 'CV 0.52, 1.2-month runway' },
+      { name: 'Owner Credit Profile', status: 'weak', direction: 'worsening', detail: 'Guarantor FICO 580, lien detected' },
+    ],
+    policyChecks: [
+      { id: 'p1', name: 'Minimum Time in Business', result: 'pass', value: '5 years', threshold: '≥ 2 years', source: 'Secretary of State' },
+      { id: 'p2', name: 'Revenue Floor', result: 'pass', value: '$480K annual', threshold: '≥ $250K', source: 'Banking Data Feed' },
+      { id: 'p3', name: 'Owner FICO Floor', result: 'fail', value: '580', threshold: '≥ 680', source: 'Experian Soft Pull' },
+      { id: 'p4', name: 'Industry Exclusion', result: 'pass', value: 'Food Services', threshold: 'Not excluded', source: 'Policy Engine' },
+      { id: 'p5', name: 'Collateral Coverage', result: 'fail', value: 'No collateral offered', threshold: '≤ 80% LTV', source: 'N/A' },
+      { id: 'p6', name: 'UCC Filing Status', result: 'review', value: 'Tax lien detected', threshold: 'No derogatory', source: 'UCC Search' },
+      { id: 'p7', name: 'OFAC/BSA Screening', result: 'pass', value: 'Clear', threshold: 'No matches', source: 'Compliance Engine' },
+      { id: 'p8', name: 'Debt-to-Income Ratio', result: 'fail', value: '62%', threshold: '≤ 43%', source: 'Financial Analysis' },
+    ],
+    benchmarks: [
+      { label: 'Default Rate (12mo)', applicantValue: 'N/A (est. >8%)', portfolioPeerAvg: '2.8%', industryPeerAvg: '4.5%' },
+      { label: 'Avg Facility Utilization', applicantValue: 'N/A', portfolioPeerAvg: '48%', industryPeerAvg: '55%' },
+      { label: 'Payment Timeliness', applicantValue: '72.5%', portfolioPeerAvg: '90.2%', industryPeerAvg: '87.5%' },
+      { label: 'Revenue Growth (QoQ)', applicantValue: '-12.0%', portfolioPeerAvg: '+3.5%', industryPeerAvg: '+2.1%' },
+    ],
+    riskLevel: 'elevated',
+    supportingFactors: [
+      '5 years operating history in known industry',
+      'Clean OFAC/BSA screening',
+    ],
+    areasOfAttention: [
+      'Owner FICO 580 — below policy minimum of 680',
+      'DSCR below breakeven at 0.85x',
+      'Active tax lien on record',
+      'DTI ratio 62% — significantly exceeds 43% maximum',
+      'Cash flow runway critically low at 1.2 months',
+      '90-day payment delinquency in trade data',
+    ],
+    suggestedNextSteps: [
+      'Decline recommendation documented — multiple policy threshold failures',
+      'Provide applicant with adverse action notice per Reg B requirements',
+      'Suggest alternative: smaller facility with personal collateral pledge',
     ],
   },
   {
     id: '5',
-    appId: 'APP-2024-005',
-    companyName: 'Apex Construction',
+    caseId: 'CASE-2026-005',
+    companyName: 'Apex Construction Group',
     amount: 350000,
-    confidence: 89,
-    status: 'approve',
     productType: 'Equipment Financing',
-    tags: ['Seasonal revenue'],
-    ownerFico: 720,
-    bankingHealth: 78,
-    kybStatus: 'Pass',
-    identityMatch: 97,
-    compositeScore: 695,
-    grade: 'B',
-    positiveDrivers: [
-      'Strong owner credit (720)',
-      '10 years in business',
-      'Industry expertise verified',
-      'Consistent seasonal patterns',
-    ],
-    riskDrivers: [
-      'Seasonal revenue fluctuation',
-    ],
-    summary: 'Good credit profile with predictable seasonal patterns. Standard approval with consideration for seasonal cash flow.',
-    dba: 'Apex Builders',
-    ein: '29-8765432',
+    caseStatus: 'in_review',
+    assignedAnalyst: 'J. Morrison',
+    daysInQueue: 1,
+    slaTarget: 5,
+    pdBand: 'PD 2.0-3.5% (Near-Investment Grade)',
     industry: 'Construction',
     naicsCode: '236220',
     established: '2014',
     yearsInBusiness: 10,
-    address: '780 Industrial Parkway, Phoenix, AZ 85004',
-    phone: '(480) 555-0289',
-    email: 'projects@apexconstruction.com',
-    website: 'www.apexconstruction.com',
     ownerName: 'Robert Williams',
     ownership: 90,
-    identityVerified: true,
-    subscores: { tradelines: 78, payments: 85, bankingHealth: 78, identityMatch: 97 },
-    banking: { avg30dBalance: 185000, avg90dBalance: 210000, nsf90d: 0, achReturns90d: 0, depositConsistency: 'Moderate', cashRunway: 5.8 },
-    tradelines: { vendorsReporting: 32, oldestTradeline: '8 years 11 months', onTimePayment: 96.2, dbtAverage: 18 },
-    publicRecords: { uccFilings: 1, liens: false, judgments: false, bankruptcies: false },
-    kyb: { registry: 'Verified', ein: true, addressStability: 'High' },
-    ruleTriggers: [
-      { id: 1, name: 'Minimum Credit Score', description: 'Score 695 exceeds minimum 650', status: 'passed', category: 'credit' },
-      { id: 2, name: 'Time in Business', description: '10 years exceeds 2 year minimum', status: 'passed', category: 'compliance' },
-      { id: 3, name: 'Revenue Stability', description: 'Seasonal pattern detected', status: 'warning', category: 'banking' },
-      { id: 4, name: 'Payment History', description: '96.2% on-time payments', status: 'passed', category: 'credit' },
+    address: '780 Industrial Parkway, Phoenix, AZ 85004',
+    tags: ['Seasonal revenue'],
+    signals: [
+      { name: 'Payment Behavior', status: 'strong', direction: 'stable', detail: '96.2% on-time across 32 trade lines' },
+      { name: 'Revenue Trajectory', status: 'stable', direction: 'stable', detail: 'Seasonal pattern — consistent with prior years' },
+      { name: 'Debt Service Coverage', status: 'stable', direction: 'stable', detail: 'DSCR 1.45x — adequate with seasonal adjustment' },
+      { name: 'Cash Flow Consistency', status: 'stable', direction: 'stable', detail: 'CV 0.28, 5.8-month runway' },
+      { name: 'Owner Credit Profile', status: 'strong', direction: 'stable', detail: 'Guarantor FICO 720, stable 12mo' },
+    ],
+    policyChecks: [
+      { id: 'p1', name: 'Minimum Time in Business', result: 'pass', value: '10 years', threshold: '≥ 2 years', source: 'Secretary of State' },
+      { id: 'p2', name: 'Revenue Floor', result: 'pass', value: '$5.1M annual', threshold: '≥ $250K', source: 'Banking Data Feed' },
+      { id: 'p3', name: 'Owner FICO Floor', result: 'pass', value: '720', threshold: '≥ 680', source: 'Experian Soft Pull' },
+      { id: 'p4', name: 'Industry Exclusion', result: 'pass', value: 'Construction', threshold: 'Not excluded', source: 'Policy Engine' },
+      { id: 'p5', name: 'Collateral Coverage', result: 'pass', value: 'Equipment collateral', threshold: '≤ 80% LTV', source: 'Equipment Appraisal' },
+      { id: 'p6', name: 'UCC Filing Status', result: 'pass', value: '1 active (current)', threshold: 'No derogatory', source: 'UCC Search' },
+      { id: 'p7', name: 'OFAC/BSA Screening', result: 'pass', value: 'Clear', threshold: 'No matches', source: 'Compliance Engine' },
+      { id: 'p8', name: 'Debt-to-Income Ratio', result: 'pass', value: '31%', threshold: '≤ 43%', source: 'Financial Analysis' },
+    ],
+    benchmarks: [
+      { label: 'Default Rate (12mo)', applicantValue: '0.0%', portfolioPeerAvg: '2.1%', industryPeerAvg: '3.2%' },
+      { label: 'Avg Facility Utilization', applicantValue: '55%', portfolioPeerAvg: '58%', industryPeerAvg: '62%' },
+      { label: 'Payment Timeliness', applicantValue: '96.2%', portfolioPeerAvg: '93.8%', industryPeerAvg: '91.5%' },
+      { label: 'Revenue Growth (QoQ)', applicantValue: '-2.0% (seasonal)', portfolioPeerAvg: '+1.5%', industryPeerAvg: '+0.8%' },
+    ],
+    riskLevel: 'moderate',
+    supportingFactors: [
+      'Strong payment history — above portfolio median',
+      '10-year operating history with predictable seasonal patterns',
+      'All policy checks passed',
+      'Equipment collateral provides adequate coverage',
+    ],
+    areasOfAttention: [
+      'Seasonal revenue pattern requires adjusted cash flow analysis',
+      'Construction industry cyclicality in current macro environment',
+    ],
+    suggestedNextSteps: [
+      'Complete seasonal cash flow adjustment analysis',
+      'Verify equipment specifications match financing request',
+      'Present to credit committee with standard package',
     ],
   },
 ];
 
-const stats = [
-  { label: 'Approved Today', value: 47, icon: 'check', color: 'var(--primary-02)' },
-  { label: 'In Review', value: 12, icon: 'warning', color: 'var(--primary-05)' },
-  { label: 'Declined Today', value: 8, icon: 'x', color: 'var(--primary-03)' },
-  { label: 'Avg Processing', value: '4.2 mins', icon: 'clock', color: 'var(--muted-foreground)' },
-  { label: 'AI Accuracy', value: '94.7%', icon: 'brain', color: 'var(--primary-01)' },
-  { label: 'Human Override', value: '6.3%', icon: 'users', color: 'var(--muted-foreground)' },
+const QUEUE_STATS = [
+  { label: 'Pending Review', value: 23, color: 'text-slate-600' },
+  { label: 'In Review', value: 15, color: 'text-blue-600' },
+  { label: 'Conditional', value: 8, color: 'text-amber-600' },
+  { label: 'Approved (MTD)', value: 47, color: 'text-emerald-600' },
+  { label: 'Declined (MTD)', value: 12, color: 'text-red-600' },
+  { label: 'Avg Days to Decision', value: '3.8', color: 'text-muted-foreground' },
 ];
 
 // ============================================
-// RULE TRIGGERS TAB (Notification Style)
+// SUB-COMPONENTS
 // ============================================
 
-interface RuleTrigger {
-  id: number;
-  name: string;
-  description: string;
-  status: 'passed' | 'failed' | 'warning';
-  category: 'credit' | 'identity' | 'banking' | 'compliance';
-}
-
-interface RuleTriggersTabProps {
-  triggers: RuleTrigger[];
-}
-
-const RuleTriggersTab: React.FC<RuleTriggersTabProps> = ({ triggers }) => {
-  const [filter, setFilter] = useState<'all' | 'credit' | 'banking' | 'compliance'>('all');
-  
-  const filters = [
-    { id: 'all', label: 'All' },
-    { id: 'credit', label: 'Credit Rules' },
-    { id: 'banking', label: 'Banking Rules' },
-    { id: 'compliance', label: 'Compliance' },
-  ];
-  
-  const filteredTriggers = filter === 'all' 
-    ? triggers 
-    : triggers.filter(t => t.category === filter);
-
-  const getStatusConfig = (status: RuleTrigger['status']) => {
-    switch (status) {
-      case 'passed':
-        return { bg: 'bg-primary-02/10', iconBg: 'bg-primary-02/10', iconColor: 'text-primary-02', borderColor: 'border-l-primary-02', label: 'Passed' };
-      case 'failed':
-        return { bg: 'bg-primary-03/10', iconBg: 'bg-primary-03/10', iconColor: 'text-primary-03', borderColor: 'border-l-primary-03', label: 'Failed' };
-      case 'warning':
-        return { bg: 'bg-primary-05/10', iconBg: 'bg-primary-05/10', iconColor: 'text-primary-05', borderColor: 'border-l-primary-05', label: 'Warning' };
-    }
-  };
-
-  const passedCount = triggers.filter(t => t.status === 'passed').length;
-  const failedCount = triggers.filter(t => t.status === 'failed').length;
-  const warningCount = triggers.filter(t => t.status === 'warning').length;
+const CaseStatusStepper: React.FC<{ status: CaseStatus }> = ({ status }) => {
+  const steps: CaseStatus[] = ['pending_review', 'in_review', 'conditional', 'approved'];
+  const currentStep = CASE_STATUSES[status].step;
+  const isDeclined = status === 'declined';
 
   return (
-    <div className="bg-card rounded-2xl border border-border">
-      {/* Header with filter tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-6 border-b border-border">
-        <div className="flex items-center gap-2">
-          {filters.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setFilter(f.id as any)}
-              className={`px-4 py-2 rounded-xl text-[0.875rem] font-medium transition-all ${
-                filter === f.id
-                  ? 'bg-card border-2 border-primary text-primary'
-                  : 'text-muted-foreground hover:bg-muted'
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-        
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1 text-[0.8125rem] text-primary-02">
-            <Icon type="check" className="w-4 h-4" />
-            {passedCount} Passed
-          </span>
-          {warningCount > 0 && (
-            <span className="flex items-center gap-1 text-[0.8125rem] text-primary-05">
-              <Icon type="warning" className="w-4 h-4" />
-              {warningCount} Warning
-            </span>
-          )}
-          {failedCount > 0 && (
-            <span className="flex items-center gap-1 text-[0.8125rem] text-primary-03">
-              <Icon type="x" className="w-4 h-4" />
-              {failedCount} Failed
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Rules List */}
-      <div className="p-4 space-y-3">
-        {filteredTriggers.map((trigger) => {
-          const config = getStatusConfig(trigger.status);
-          return (
+    <div className="flex items-center gap-1">
+      {steps.map((step, idx) => {
+        const cfg = CASE_STATUSES[step];
+        const isActive = !isDeclined && currentStep >= cfg.step;
+        const isCurrent = !isDeclined && currentStep === cfg.step;
+        return (
+          <React.Fragment key={step}>
+            {idx > 0 && (
+              <div className={cn('h-0.5 w-6', isActive ? 'bg-primary' : 'bg-border')} />
+            )}
             <div
-              key={trigger.id}
-              className={`flex items-center gap-4 p-4 rounded-xl border-l-4 ${config.borderColor} bg-muted/50 hover:bg-muted transition-colors`}
+              className={cn(
+                'flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border',
+                isCurrent ? cfg.bg : isActive ? 'bg-muted border-border text-muted-foreground' : 'bg-transparent border-border text-muted-foreground',
+              )}
             >
-              <div className={`w-12 h-12 rounded-full ${config.iconBg} flex items-center justify-center shrink-0`}>
-                {trigger.status === 'passed' && <Icon type="check" className={`w-6 h-6 ${config.iconColor}`} />}
-                {trigger.status === 'failed' && <Icon type="x" className={`w-6 h-6 ${config.iconColor}`} />}
-                {trigger.status === 'warning' && <Icon type="warning" className={`w-6 h-6 ${config.iconColor}`} />}
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="px-2 py-0.5 bg-primary-02/10 text-primary-02 rounded text-[0.6875rem] font-semibold uppercase">
-                    INFO
-                  </span>
-                </div>
-                <h4 className="text-[1rem] font-semibold text-foreground mb-0.5">{trigger.name}</h4>
-                <p className="text-[0.875rem] text-muted-foreground">{trigger.description}</p>
-              </div>
-              
-              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border ${
-                trigger.status === 'passed' ? 'border-primary-02 text-primary-02' :
-                trigger.status === 'failed' ? 'border-primary-03 text-primary-03' :
-                'border-primary-05 text-primary-05'
-              }`}>
-                <Icon type="check" className="w-4 h-4" />
-                <span className="text-[0.875rem] font-medium">{config.label}</span>
-              </div>
+              <span className={cn('w-1.5 h-1.5 rounded-full', isCurrent ? 'bg-current' : isActive ? 'bg-muted-foreground' : 'bg-border')} />
+              {cfg.label}
             </div>
-          );
-        })}
-
-        {filteredTriggers.length === 0 && (
-          <div className="text-center py-12">
-            <Icon type="document" className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground">No rules found for this category</p>
+          </React.Fragment>
+        );
+      })}
+      {isDeclined && (
+        <>
+          <div className="h-0.5 w-6 bg-red-300" />
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border bg-red-50 border-red-200 text-red-700">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+            Declined
           </div>
-        )}
+        </>
+      )}
+    </div>
+  );
+};
+
+const SignalRow: React.FC<{ signal: SignalSummary }> = ({ signal }) => {
+  const sCfg = SIGNAL_STATUSES[signal.status];
+  const dCfg = SIGNAL_DIRECTIONS[signal.direction];
+  const DirIcon = signal.direction === 'improving' ? TrendingUp : signal.direction === 'worsening' ? TrendingDown : Minus;
+
+  return (
+    <div className={cn('flex items-center gap-3 px-3 py-2.5 rounded-lg border', sCfg.bg)}>
+      <div className="flex-1 min-w-0">
+        <span className={cn('text-sm font-medium', sCfg.color)}>{signal.name}</span>
+        <p className="text-xs text-foreground/70 truncate">{signal.detail}</p>
+      </div>
+      <div className="flex items-center gap-2 shrink-0">
+        <span className={cn('text-[10px] font-medium px-2 py-0.5 rounded-full border', sCfg.bg, sCfg.color)}>
+          {SIGNAL_STATUSES[signal.status].label}
+        </span>
+        <DirIcon className={cn('h-3.5 w-3.5', dCfg.color)} />
       </div>
     </div>
   );
 };
 
-// ============================================
-// CREDIT SCORE GAUGE (Same as UsageLimitGauge style)
-// ============================================
+const PolicyCheckRow: React.FC<{ check: PolicyCheck; isExpanded: boolean; onToggle: () => void }> = ({
+  check,
+  isExpanded,
+  onToggle,
+}) => {
+  const resultCfg = {
+    pass: { icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50', label: 'Pass' },
+    review: { icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50', label: 'Review' },
+    fail: { icon: XCircle, color: 'text-red-600', bg: 'bg-red-50', label: 'Fail' },
+  }[check.result];
+  const Icon = resultCfg.icon;
 
-const scoreGaugeData = [
-  { name: "Red", value: 400 },
-  { name: "Yellow", value: 250 },
-  { name: "Pink", value: 350 },
-  { name: "Green", value: 300 },
-];
-
-const SCORE_GAUGE_COLORS = ["var(--primary-03)", "var(--primary-05)", "var(--primary-04)", "var(--primary-02)"];
-
-interface CreditScoreGaugeProps {
-  score: number;
-  grade: string;
-}
-
-const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => {
-  const animatedScore = useCountUp(score, 1500);
-  
-  const getGradeColor = (g: string) => {
-    if (g.startsWith('A')) return 'var(--primary-02)';
-    if (g.startsWith('B')) return 'var(--primary-02)';
-    if (g.startsWith('C')) return 'var(--primary-05)';
-    return 'var(--primary-03)';
-  };
-  
   return (
-    <div className="flex flex-col items-center">
-      <div className="relative w-40 h-20">
-        <ResponsiveContainer width="100%" height={80}>
-          <PieChart>
-            <Pie
-              data={scoreGaugeData}
-              cx="50%"
-              cy="100%"
-              startAngle={180}
-              endAngle={0}
-              innerRadius={50}
-              outerRadius={70}
-              paddingAngle={1}
-              dataKey="value"
-              stroke="transparent"
-            >
-              {scoreGaugeData.map((_entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={SCORE_GAUGE_COLORS[index % SCORE_GAUGE_COLORS.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-        
-        {/* Score in center */}
-        <div className="absolute left-1/2 bottom-0 -translate-x-1/2 text-center">
-          <div className="text-[2rem] font-bold text-foreground">{animatedScore}</div>
+    <div>
+      <button onClick={onToggle} className="w-full grid grid-cols-12 gap-3 items-center px-3 py-2.5 rounded-lg hover:bg-muted/50 transition-colors text-left">
+        <div className="col-span-4 flex items-center gap-2">
+          {isExpanded ? <ChevronDown className="h-3 w-3 text-muted-foreground" /> : <ChevronRight className="h-3 w-3 text-muted-foreground" />}
+          <span className="text-sm text-foreground">{check.name}</span>
         </div>
-      </div>
-      
-      {/* Grade Badge */}
-      <div 
-        className="mt-2 text-[0.9375rem] font-semibold"
-        style={{ color: getGradeColor(grade) }}
-      >
-        Grade {grade}
-      </div>
+        <div className="col-span-2">
+          <span className={cn('inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium', resultCfg.bg, resultCfg.color)}>
+            <Icon className="h-3 w-3" />
+            {resultCfg.label}
+          </span>
+        </div>
+        <div className="col-span-2 text-xs text-foreground">{check.value}</div>
+        <div className="col-span-2 text-xs text-muted-foreground">{check.threshold}</div>
+        <div className="col-span-2 text-xs text-muted-foreground">{check.source}</div>
+      </button>
+      {isExpanded && (
+        <div className="ml-7 mr-3 mb-2 px-3 py-2 bg-muted/50 rounded-lg text-xs text-muted-foreground">
+          <span className="font-medium">Value:</span> {check.value} | <span className="font-medium">Threshold:</span> {check.threshold} | <span className="font-medium">Source:</span> {check.source}
+        </div>
+      )}
     </div>
   );
 };
@@ -614,606 +518,413 @@ const CreditScoreGauge: React.FC<CreditScoreGaugeProps> = ({ score, grade }) => 
 // ============================================
 
 const UnderwritingAssistant: React.FC = () => {
-  const [selectedApp, setSelectedApp] = useState<Application>(applications[0]);
-  const [activeTab, setActiveTab] = useState<'overview' | 'profile' | 'credit' | 'rules'>('overview');
+  const [selectedCase, setSelectedCase] = useState<CaseApplication>(CASES[0]);
+  const [activeTab, setActiveTab] = useState<'signals' | 'policy' | 'benchmarks' | 'decision'>('signals');
+  const [expandedCheck, setExpandedCheck] = useState<string | null>(null);
+  const [rationale, setRationale] = useState('');
+  const { toast } = useToast();
   const { emitBulkActionExecuted } = useAuditEmit();
 
-  const getStatusBadge = (status: Application['status']) => {
-    const config = {
-      approve: { bg: 'bg-primary-02/10', text: 'text-primary-02', label: 'Approve' },
-      review: { bg: 'bg-primary-05/10', text: 'text-primary-05', label: 'Review' },
-      decline: { bg: 'bg-primary-03/10', text: 'text-primary-03', label: 'Decline' },
-    };
-    return config[status];
-  };
+  const policyPassCount = useMemo(
+    () => selectedCase.policyChecks.filter((c) => c.result === 'pass').length,
+    [selectedCase],
+  );
+  const policyTotal = selectedCase.policyChecks.length;
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
+  const handleAction = (action: RecommendationAction) => {
+    if (!rationale.trim()) return;
+    const labels: Record<RecommendationAction, string> = {
+      recommend_approval: 'Recommended for Approval',
+      request_info: 'Additional Information Requested',
+      flag_committee: 'Flagged for Committee Review',
+      recommend_decline: 'Decline Recommended',
+    };
+    toast({ title: labels[action], description: `${selectedCase.companyName} — ${selectedCase.caseId}` });
+    emitBulkActionExecuted(action, [selectedCase.caseId]);
+    setRationale('');
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="text-[1.75rem] font-bold text-foreground">Underwriting Assistant</h1>
-          <p className="text-muted-foreground text-[0.9375rem]">AI-powered decisioning with real-time risk assessment</p>
-        </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-xl">
-          <div className="w-2 h-2 rounded-full bg-primary-02 animate-pulse" />
-          <span className="text-[0.875rem] font-medium text-foreground">AI Engine Active</span>
-        </div>
-      </div>
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-6 gap-4 lg:grid-cols-3 md:grid-cols-2">
-        {stats.map((stat) => (
-          <div key={stat.label} className="bg-card rounded-2xl p-5 border border-border">
-            <div className="flex justify-center mb-3">
-              <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: `${stat.color}15` }}
-              >
-                <Icon type={stat.icon} className="w-5 h-5" />
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-[1.5rem] font-bold text-foreground">{stat.value}</div>
-              <div className="text-[0.8125rem] text-muted-foreground">{stat.label}</div>
-            </div>
-          </div>
-        ))}
+    <div className="flex flex-col h-full">
+      {/* Disclaimer */}
+      <div className="px-4 lg:px-6 pt-4">
+        <BankDisclaimer />
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row lg:gap-6">
-        {/* Application Queue - Left Sidebar */}
-        <div className="w-full lg:w-[340px] lg:shrink-0 bg-card rounded-2xl p-5 border border-border mb-6 lg:mb-0">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-              <Icon type="document" className="w-4 h-4 text-foreground" />
-            </div>
-            <h2 className="text-[1.125rem] font-semibold text-foreground">Application Queue</h2>
+      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+        {/* Header */}
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Underwriting Assistant</h1>
+            <p className="text-sm text-muted-foreground">Case management and decision support workspace</p>
           </div>
-          <p className="text-[0.875rem] text-muted-foreground mb-4">{applications.length} pending review</p>
-          
-          <div className="space-y-2">
-            {applications.map((app) => {
-              const badge = getStatusBadge(app.status);
-              const isSelected = selectedApp.id === app.id;
-              
-              return (
-                <div
-                  key={app.id}
-                  onClick={() => setSelectedApp(app)}
-                  className={`p-4 rounded-xl cursor-pointer transition-all ${
-                    isSelected 
-                      ? 'bg-muted border-2 border-primary' 
-                      : 'hover:bg-muted border border-transparent'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-[0.75rem] text-muted-foreground font-mono">{app.appId}</span>
-                    <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${badge.bg} ${badge.text}`}>
-                      {app.status === 'approve' && <Icon type="check" className="w-3 h-3" />}
-                      {app.status === 'review' && <Icon type="warning" className="w-3 h-3" />}
-                      {app.status === 'decline' && <Icon type="x" className="w-3 h-3" />}
-                      {badge.label}
-                    </div>
-                  </div>
-                  <div className="font-semibold text-foreground mb-1">{app.companyName}</div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[0.875rem] text-muted-foreground">{formatCurrency(app.amount)}</span>
-                    <span className="text-[0.875rem] text-muted-foreground">% {app.confidence}%</span>
-                  </div>
-                  {app.tags && app.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {app.tags.slice(0, 2).map((tag) => (
-                        <span key={tag} className="px-2 py-0.5 bg-primary-05/10 text-primary-05 rounded text-[0.6875rem] font-medium">
-                          {tag}
-                        </span>
-                      ))}
-                      {app.tags.length > 2 && (
-                        <span className="px-2 py-0.5 bg-muted text-muted-foreground rounded text-[0.6875rem] font-medium">
-                          +{app.tags.length - 2}
-                        </span>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+          <div className="text-xs text-muted-foreground">
+            Showing 5 of 89 applications
           </div>
         </div>
 
-        {/* Application Detail - Right Panel */}
-        <div className="flex-1 space-y-6">
-          {/* Application Header */}
-          <div className="bg-card rounded-2xl p-6 border border-border">
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-primary-02/10 rounded-xl flex items-center justify-center">
-                  <Icon type="check" className="w-6 h-6 text-primary-02" />
-                </div>
+        {/* Queue Stats */}
+        <div className="grid grid-cols-6 gap-3 lg:grid-cols-3 md:grid-cols-2">
+          {QUEUE_STATS.map((stat) => (
+            <div key={stat.label} className="bg-card rounded-xl p-4 border border-border text-center">
+              <div className={cn('text-xl font-bold', stat.color)}>{stat.value}</div>
+              <div className="text-[10px] text-muted-foreground mt-0.5">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Main Layout */}
+        <div className="flex flex-col lg:flex-row lg:gap-6">
+          {/* Case Queue — Left */}
+          <div className="w-full lg:w-[320px] lg:shrink-0 bg-card rounded-xl border border-border mb-6 lg:mb-0">
+            <div className="p-4 border-b border-border">
+              <div className="flex items-center gap-2">
+                <FileText className="h-4 w-4 text-muted-foreground" />
+                <h2 className="text-sm font-semibold text-foreground">Case Queue</h2>
+              </div>
+              <p className="text-[10px] text-muted-foreground mt-0.5">{CASES.length} cases loaded</p>
+            </div>
+            <div className="p-2 space-y-1.5">
+              {CASES.map((c) => {
+                const isSelected = selectedCase.id === c.id;
+                const statusCfg = CASE_STATUSES[c.caseStatus];
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => { setSelectedCase(c); setActiveTab('signals'); }}
+                    className={cn(
+                      'w-full text-left p-3 rounded-lg transition-all',
+                      isSelected ? 'bg-primary/5 border-2 border-primary' : 'hover:bg-muted border border-transparent',
+                    )}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] text-muted-foreground font-mono">{c.caseId}</span>
+                      <span className={cn('text-[10px] px-1.5 py-0.5 rounded-full border font-medium', statusCfg.bg, statusCfg.color)}>
+                        {statusCfg.label}
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-foreground">{c.companyName}</div>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-xs text-muted-foreground">{c.productType}</span>
+                      <span className="text-xs text-muted-foreground">${(c.amount / 1000).toFixed(0)}K</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1.5">
+                      <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                        <User className="h-2.5 w-2.5" />
+                        {c.assignedAnalyst}
+                      </div>
+                      <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                        <Clock className="h-2.5 w-2.5" />
+                        {c.daysInQueue}d
+                      </div>
+                    </div>
+                    {c.tags && c.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {c.tags.map((tag) => (
+                          <span key={tag} className="px-1.5 py-0.5 bg-amber-50 text-amber-700 border border-amber-200 rounded text-[10px]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Case Detail — Right */}
+          <div className="flex-1 space-y-4">
+            {/* Case Header */}
+            <div className="bg-card rounded-xl border border-border p-5">
+              <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
-                  <div className="flex items-center gap-3">
-                    <h3 className="text-[1.25rem] font-semibold text-foreground">{selectedApp.companyName}</h3>
-                    <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${getStatusBadge(selectedApp.status).bg} ${getStatusBadge(selectedApp.status).text}`}>
-                      AI: {getStatusBadge(selectedApp.status).label}
-                    </span>
+                  <div className="flex items-center gap-3 mb-1">
+                    <h3 className="text-xl font-semibold text-foreground">{selectedCase.companyName}</h3>
+                    <span className="text-xs text-muted-foreground font-mono">{selectedCase.caseId}</span>
                   </div>
-                  <div className="text-[0.875rem] text-muted-foreground">
-                    {selectedApp.productType} • {formatCurrency(selectedApp.amount)} • {selectedApp.appId}
+                  <div className="text-sm text-muted-foreground">
+                    {selectedCase.productType} &middot; ${selectedCase.amount.toLocaleString()} &middot; {selectedCase.industry}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {selectedCase.pdBand}
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-1">
+                    <User className="h-3 w-3" />
+                    {selectedCase.assignedAnalyst}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {selectedCase.daysInQueue}d / {selectedCase.slaTarget}d SLA
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="text-center px-4">
-                  <div className="flex items-center gap-1">
-                    <div className="w-5 h-5 bg-primary-02/10 rounded-full flex items-center justify-center">
-                      <Icon type="shield" className="w-3 h-3 text-primary-02" />
-                    </div>
-                    <span className="text-[1.5rem] font-bold text-primary-02">{selectedApp.confidence}%</span>
-                  </div>
-                  <div className="text-[0.75rem] text-muted-foreground">Confidence</div>
-                </div>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    toast.error('Application declined', {
-                      description: `${selectedApp.companyName} - ${selectedApp.appId}`,
-                    });
-                    emitBulkActionExecuted('decline', [selectedApp.appId]);
-                  }}
-                  className="gap-2 rounded-xl"
-                >
-                  <Icon type="x" className="w-4 h-4" />
-                  Decline
-                </Button>
-                <Button
-                  onClick={() => {
-                    toast.success('Application approved successfully', {
-                      description: `${selectedApp.companyName} - ${selectedApp.appId}`,
-                    });
-                    emitBulkActionExecuted('approve', [selectedApp.appId]);
-                  }}
-                  className="gap-2 rounded-xl bg-primary-02 hover:bg-primary-02/90"
-                >
-                  <Icon type="check" className="w-4 h-4" />
-                  Approve
-                </Button>
+
+              {/* Status Stepper */}
+              <div className="mb-4">
+                <CaseStatusStepper status={selectedCase.caseStatus} />
+              </div>
+
+              {/* Tabs */}
+              <div className="flex gap-0.5 p-0.5 bg-muted rounded-lg w-fit">
+                {[
+                  { id: 'signals', label: 'Signals' },
+                  { id: 'policy', label: `Policy Checks (${policyPassCount}/${policyTotal})` },
+                  { id: 'benchmarks', label: 'Benchmarks' },
+                  { id: 'decision', label: 'Decision Support' },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                    className={cn(
+                      'px-3 py-1.5 rounded-md text-xs font-medium transition-colors',
+                      activeTab === tab.id
+                        ? 'bg-card text-foreground shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground',
+                    )}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Tabs */}
-            <div className="flex gap-1 p-1 bg-muted rounded-xl w-fit">
-              {[
-                { id: 'overview', label: 'Overview' },
-                { id: 'profile', label: 'Applicant Profile' },
-                { id: 'credit', label: 'Credit Data' },
-                { id: 'rules', label: 'Rule Triggers' },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`px-4 py-2 rounded-lg text-[0.875rem] font-medium transition-colors ${
-                    activeTab === tab.id 
-                      ? 'bg-card text-foreground shadow-sm' 
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            {/* Signals Tab */}
+            {activeTab === 'signals' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-sm font-semibold text-foreground">Risk Indicator Signals</h3>
+                    <DemoMetaBadge lastUpdated="2026-01-28T10:00:00Z" dataSources={['D&B', 'Experian', 'Banking Feed']} />
+                  </div>
+                  <div className="space-y-2">
+                    {selectedCase.signals.map((signal) => (
+                      <SignalRow key={signal.name} signal={signal} />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Business Profile Summary */}
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <h3 className="text-sm font-semibold text-foreground mb-3">Applicant Profile</h3>
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+                    {[
+                      { label: 'Industry', value: `${selectedCase.industry} (${selectedCase.naicsCode})` },
+                      { label: 'Established', value: `${selectedCase.established} (${selectedCase.yearsInBusiness} years)` },
+                      { label: 'Owner', value: `${selectedCase.ownerName} (${selectedCase.ownership}%)` },
+                      { label: 'Location', value: selectedCase.address },
+                    ].map((item) => (
+                      <div key={item.label} className="flex justify-between py-1.5 border-b border-border">
+                        <span className="text-xs text-muted-foreground">{item.label}</span>
+                        <span className="text-xs font-medium text-foreground text-right">{item.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Policy Checks Tab */}
+            {activeTab === 'policy' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="bg-card rounded-xl border border-border">
+                  <div className="flex items-center justify-between p-5 pb-3">
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <h3 className="text-sm font-semibold text-foreground">Policy & Eligibility Checks</h3>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px]">
+                      <span className="text-emerald-600">{selectedCase.policyChecks.filter((c) => c.result === 'pass').length} Pass</span>
+                      <span className="text-amber-600">{selectedCase.policyChecks.filter((c) => c.result === 'review').length} Review</span>
+                      <span className="text-red-600">{selectedCase.policyChecks.filter((c) => c.result === 'fail').length} Fail</span>
+                    </div>
+                  </div>
+                  {/* Column headers */}
+                  <div className="grid grid-cols-12 gap-3 px-8 py-2 text-[10px] font-medium text-muted-foreground uppercase tracking-wide border-b border-border">
+                    <div className="col-span-4">Check</div>
+                    <div className="col-span-2">Result</div>
+                    <div className="col-span-2">Value</div>
+                    <div className="col-span-2">Threshold</div>
+                    <div className="col-span-2">Source</div>
+                  </div>
+                  <div className="p-3">
+                    {selectedCase.policyChecks.map((check) => (
+                      <PolicyCheckRow
+                        key={check.id}
+                        check={check}
+                        isExpanded={expandedCheck === check.id}
+                        onToggle={() => setExpandedCheck(expandedCheck === check.id ? null : check.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Benchmarks Tab */}
+            {activeTab === 'benchmarks' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-sm font-semibold text-foreground">Comparative Benchmarks</h3>
+                    <DemoMetaBadge lastUpdated="2026-01-28T10:00:00Z" dataSources={['Portfolio Analytics', 'Industry Benchmarks']} />
+                  </div>
+                  {/* Table header */}
+                  <div className="grid grid-cols-4 gap-4 px-3 py-2 text-[10px] font-medium text-muted-foreground uppercase tracking-wide border-b border-border">
+                    <div>Metric</div>
+                    <div>This Applicant</div>
+                    <div>Portfolio Peers</div>
+                    <div>Industry Peers</div>
+                  </div>
+                  <div className="divide-y divide-border">
+                    {selectedCase.benchmarks.map((bm) => (
+                      <div key={bm.label} className="grid grid-cols-4 gap-4 px-3 py-3 items-center">
+                        <div className="text-sm text-foreground">{bm.label}</div>
+                        <div className="text-sm font-semibold text-foreground">{bm.applicantValue}</div>
+                        <div className="text-sm text-muted-foreground">{bm.portfolioPeerAvg}</div>
+                        <div className="text-sm text-muted-foreground">{bm.industryPeerAvg}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3 text-[10px] text-muted-foreground">
+                    Peer comparisons based on same segment, product type, and SIC code within portfolio and industry databases.
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Decision Support Tab */}
+            {activeTab === 'decision' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
+                {/* Decision Support Summary */}
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <h3 className="text-sm font-semibold text-foreground mb-3">Decision Support Summary</h3>
+
+                  {/* Risk Level */}
+                  <div className="mb-4">
+                    <span
+                      className={cn(
+                        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border',
+                        selectedCase.riskLevel === 'low'
+                          ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                          : selectedCase.riskLevel === 'moderate'
+                            ? 'bg-amber-50 border-amber-200 text-amber-700'
+                            : 'bg-red-50 border-red-200 text-red-700',
+                      )}
+                    >
+                      {selectedCase.riskLevel === 'low' ? 'Low' : selectedCase.riskLevel === 'moderate' ? 'Moderate' : 'Elevated'} Risk Indicators
+                    </span>
+                  </div>
+
+                  {/* Supporting Factors */}
+                  <div className="mb-4">
+                    <h4 className="text-xs font-medium text-emerald-700 mb-2">Key Supporting Factors</h4>
+                    <ul className="space-y-1.5">
+                      {selectedCase.supportingFactors.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs text-foreground">
+                          <CheckCircle className="h-3.5 w-3.5 text-emerald-500 mt-0.5 shrink-0" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Areas of Attention */}
+                  <div className="mb-4">
+                    <h4 className="text-xs font-medium text-amber-700 mb-2">Areas Requiring Attention</h4>
+                    <ul className="space-y-1.5">
+                      {selectedCase.areasOfAttention.map((a, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs text-foreground">
+                          <AlertTriangle className="h-3.5 w-3.5 text-amber-500 mt-0.5 shrink-0" />
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Suggested Next Steps */}
+                  <div className="mb-4">
+                    <h4 className="text-xs font-medium text-blue-700 mb-2">Suggested Next Steps</h4>
+                    <ol className="space-y-1.5 list-decimal list-inside">
+                      {selectedCase.suggestedNextSteps.map((s, i) => (
+                        <li key={i} className="text-xs text-foreground">{s}</li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  {/* Decision disclaimer */}
+                  <div className="mt-4 pt-3 border-t border-border">
+                    <p className="text-[10px] text-muted-foreground italic">
+                      {DISCLAIMER_TEXT} This summary is for informational purposes only and does not constitute a lending decision.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Analyst Action Panel */}
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <h3 className="text-sm font-semibold text-foreground mb-3">Analyst Recommendation</h3>
+                  <textarea
+                    value={rationale}
+                    onChange={(e) => setRationale(e.target.value)}
+                    placeholder="Enter rationale for recommendation (required)..."
+                    className="w-full h-24 px-3 py-2 text-sm bg-muted rounded-lg border border-border resize-none focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder-muted-foreground"
+                  />
+                  <div className="grid grid-cols-2 gap-3 mt-3">
+                    <button
+                      onClick={() => handleAction('recommend_approval')}
+                      disabled={!rationale.trim()}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-emerald-300 text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <CheckCircle className="h-3.5 w-3.5" />
+                      Recommend for Approval
+                    </button>
+                    <button
+                      onClick={() => handleAction('request_info')}
+                      disabled={!rationale.trim()}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-blue-300 text-blue-700 hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <FileText className="h-3.5 w-3.5" />
+                      Request Additional Info
+                    </button>
+                    <button
+                      onClick={() => handleAction('flag_committee')}
+                      disabled={!rationale.trim()}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-amber-300 text-amber-700 hover:bg-amber-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <AlertTriangle className="h-3.5 w-3.5" />
+                      Flag for Committee Review
+                    </button>
+                    <button
+                      onClick={() => handleAction('recommend_decline')}
+                      disabled={!rationale.trim()}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-red-300 text-red-700 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      <XCircle className="h-3.5 w-3.5" />
+                      Recommend Decline
+                    </button>
+                  </div>
+                  <p className="mt-2 text-[10px] text-muted-foreground">
+                    All actions are logged to the audit trail. Rationale is required for every recommendation.
+                  </p>
+                </div>
+              </motion.div>
+            )}
           </div>
-
-          {/* Overview Tab Content */}
-          {activeTab === 'overview' && (
-            <>
-              {/* Score and Stats */}
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <div className="flex flex-wrap items-center gap-6 lg:gap-0">
-                  {/* Credit Score Gauge */}
-                  <div className="w-full lg:w-1/3 flex flex-col items-center py-4 lg:border-r border-border">
-                    <CreditScoreGauge score={selectedApp.compositeScore} grade={selectedApp.grade} />
-                    <div className="mt-3 text-[0.8125rem] text-muted-foreground">Composite Score</div>
-                  </div>
-
-                  {/* Stats Grid */}
-                  <div className="flex-1 grid grid-cols-4 gap-4 lg:pl-6 md:grid-cols-2">
-                    <div className="text-center">
-                      <div className="text-[1.5rem] font-bold text-foreground">{selectedApp.ownerFico}</div>
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-medium bg-primary-02/10 text-primary-02 border border-primary-02/20">
-                        {selectedApp.ownerFico >= 720 ? 'Excellent' : selectedApp.ownerFico >= 680 ? 'Good' : 'Fair'}
-                      </div>
-                      <div className="mt-1 text-[0.75rem] text-muted-foreground">Owner FICO</div>
-                    </div>
-                    <div className="text-center border-l border-border pl-4">
-                      <div className="text-[1.5rem] font-bold text-foreground">{selectedApp.bankingHealth}</div>
-                      <div className="w-16 h-1 bg-muted rounded-full mx-auto mt-1 mb-1">
-                        <div 
-                          className="h-full bg-foreground rounded-full" 
-                          style={{ width: `${selectedApp.bankingHealth}%` }}
-                        />
-                      </div>
-                      <div className="text-[0.75rem] text-muted-foreground">Banking Health</div>
-                    </div>
-                    <div className="text-center border-l border-border pl-4">
-                      <div className="flex items-center justify-center gap-1 mb-1">
-                        <Icon type="check" className="w-4 h-4 text-primary-02" />
-                        <span className="text-[1rem] font-semibold text-primary-02">{selectedApp.kybStatus}</span>
-                      </div>
-                      <div className="text-[0.75rem] text-muted-foreground">KYB Verified</div>
-                    </div>
-                    <div className="text-center border-l border-border pl-4">
-                      <div className="text-[1.5rem] font-bold text-primary-02">{selectedApp.identityMatch}%</div>
-                      <div className="text-[0.75rem] text-muted-foreground">Identity Match</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer */}
-                <div className="flex justify-between items-center pt-4 mt-4 border-t border-border text-[0.8125rem] text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Icon type="trendUp" className="w-4 h-4" />
-                    Data sources matched: 8/9
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Icon type="clock" className="w-4 h-4" />
-                    Signals updated: 1h ago
-                  </div>
-                </div>
-              </div>
-
-              {/* Why This Score */}
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="info" className="w-4 h-4 text-foreground" />
-                    </div>
-                    <h3 className="text-[1.125rem] font-semibold text-foreground">Why this score?</h3>
-                  </div>
-                  <span className={`px-4 py-1.5 rounded-full text-[0.875rem] font-semibold ${
-                    selectedApp.status === 'approve' ? 'bg-primary-02/10 text-primary-02' :
-                    selectedApp.status === 'review' ? 'bg-primary-05/10 text-primary-05' :
-                    'bg-primary-03/10 text-primary-03'
-                  }`}>
-                    AI Recommendation: {getStatusBadge(selectedApp.status).label.toUpperCase()}
-                  </span>
-                </div>
-
-                <p className="text-[0.9375rem] text-foreground mb-6">{selectedApp.summary}</p>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Positive Drivers */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Icon type="check" className="w-4 h-4 text-primary-02" />
-                      <span className="text-[0.9375rem] font-semibold text-primary-02">Positive Drivers</span>
-                    </div>
-                    {selectedApp.positiveDrivers.length > 0 ? (
-                      <ul className="space-y-2">
-                        {selectedApp.positiveDrivers.map((driver, i) => (
-                          <li key={i} className="flex items-start gap-2 text-[0.875rem] text-foreground">
-                            <span className="text-primary-02 mt-1">•</span>
-                            {driver}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-[0.875rem] text-muted-foreground italic">No positive factors identified</p>
-                    )}
-                  </div>
-
-                  {/* Risk Drivers */}
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <Icon type="warning" className="w-4 h-4 text-primary-03" />
-                      <span className="text-[0.9375rem] font-semibold text-primary-03">Risk Drivers</span>
-                    </div>
-                    {selectedApp.riskDrivers.length > 0 ? (
-                      <ul className="space-y-2">
-                        {selectedApp.riskDrivers.map((driver, i) => (
-                          <li key={i} className="flex items-start gap-2 text-[0.875rem] text-foreground">
-                            <span className="text-primary-03 mt-1">•</span>
-                            {driver}
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-[0.875rem] text-muted-foreground italic">No risk factors identified</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* Applicant Profile Tab */}
-          {activeTab === 'profile' && (
-            <div className="space-y-6">
-              {/* Business & Contact Info */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Business Information */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="building" className="w-4 h-4 text-foreground" />
-                    </div>
-                    <h3 className="text-[1rem] font-semibold text-foreground">Business Information</h3>
-                  </div>
-                  <div className="space-y-4">
-                    {[
-                      { label: 'Legal Name', value: selectedApp.companyName },
-                      { label: 'DBA', value: selectedApp.dba || 'N/A' },
-                      { label: 'EIN', value: selectedApp.ein },
-                      { label: 'Industry', value: selectedApp.industry },
-                      { label: 'NAICS Code', value: selectedApp.naicsCode },
-                      { label: 'Established', value: `${selectedApp.established} (${selectedApp.yearsInBusiness} years)` },
-                    ].map((item) => (
-                      <div key={item.label} className="flex justify-between items-center py-2 border-b border-border last:border-0">
-                        <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
-                        <span className="text-[0.875rem] font-semibold text-foreground">{item.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Contact Information */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="info" className="w-4 h-4 text-foreground" />
-                    </div>
-                    <h3 className="text-[1rem] font-semibold text-foreground">Contact Information</h3>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center shrink-0 mt-0.5">
-                        <Icon type="building" className="w-3.5 h-3.5 text-muted-foreground" />
-                      </div>
-                      <span className="text-[0.875rem] text-foreground">{selectedApp.address}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
-                        <Icon type="info" className="w-3.5 h-3.5 text-muted-foreground" />
-                      </div>
-                      <span className="text-[0.875rem] text-foreground">{selectedApp.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
-                        <Icon type="info" className="w-3.5 h-3.5 text-muted-foreground" />
-                      </div>
-                      <span className="text-[0.875rem] text-foreground">{selectedApp.email}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
-                        <Icon type="trendUp" className="w-3.5 h-3.5 text-muted-foreground" />
-                      </div>
-                      <a href={`https://${selectedApp.website}`} target="_blank" rel="noopener noreferrer" className="text-[0.875rem] text-primary hover:underline">
-                        {selectedApp.website}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Owner Information */}
-              <div className="bg-card rounded-2xl p-6 border border-border">
-                <div className="flex items-center gap-2 mb-5">
-                  <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                    <Icon type="users" className="w-4 h-4 text-foreground" />
-                  </div>
-                  <h3 className="text-[1rem] font-semibold text-foreground">Owner Information</h3>
-                </div>
-                <div className="grid grid-cols-4 gap-6 md:grid-cols-2">
-                  <div className="text-center p-4 bg-muted rounded-xl">
-                    <div className="text-[1.25rem] font-bold text-foreground mb-1">{selectedApp.ownerName}</div>
-                    <div className="text-[0.8125rem] text-muted-foreground">Primary Owner</div>
-                  </div>
-                  <div className="text-center p-4 bg-muted rounded-xl">
-                    <div className="text-[1.5rem] font-bold text-foreground mb-1">{selectedApp.ownerFico}</div>
-                    <span className={`inline-block px-2 py-0.5 rounded-full text-[0.75rem] font-medium mb-1 ${
-                      selectedApp.ownerFico >= 720 ? 'bg-primary-02/10 text-primary-02' :
-                      selectedApp.ownerFico >= 680 ? 'bg-primary-05/10 text-primary-05' :
-                      'bg-primary-03/10 text-primary-03'
-                    }`}>
-                      {selectedApp.ownerFico >= 720 ? 'Excellent' : selectedApp.ownerFico >= 680 ? 'Good' : 'Fair'}
-                    </span>
-                    <div className="text-[0.8125rem] text-muted-foreground">Personal FICO</div>
-                  </div>
-                  <div className="text-center p-4 bg-muted rounded-xl">
-                    <div className="text-[1.5rem] font-bold text-foreground mb-1">{selectedApp.ownership}%</div>
-                    <div className="text-[0.8125rem] text-muted-foreground">Ownership</div>
-                  </div>
-                  <div className="text-center p-4 bg-muted rounded-xl">
-                    <div className="flex items-center justify-center gap-1 mb-1">
-                      <Icon type="check" className="w-5 h-5 text-primary-02" />
-                      <span className="text-[1rem] font-bold text-primary-02">Verified</span>
-                    </div>
-                    <div className="text-[0.8125rem] text-muted-foreground">Identity Check</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Credit Data Tab */}
-          {activeTab === 'credit' && (
-            <div className="space-y-6">
-              {/* Subscores, Banking Health, Tradelines */}
-              <div className="grid grid-cols-3 gap-6 lg:grid-cols-1">
-                {/* Subscores */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <h3 className="text-[1rem] font-semibold text-foreground mb-5">Subscores</h3>
-                  <div className="space-y-4">
-                    {[
-                      { label: 'Tradelines', score: selectedApp.subscores.tradelines },
-                      { label: 'Payments', score: selectedApp.subscores.payments },
-                      { label: 'Banking Health', score: selectedApp.subscores.bankingHealth },
-                      { label: 'Identity Match', score: selectedApp.subscores.identityMatch },
-                    ].map((item) => (
-                      <div key={item.label}>
-                        <div className="flex justify-between items-center mb-1.5">
-                          <span className="text-[0.875rem] text-foreground">{item.label}</span>
-                          <span className="text-[0.875rem] font-semibold text-foreground">{item.score}/100</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-primary rounded-full transition-all duration-500" 
-                            style={{ width: `${item.score}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Banking Health */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="building" className="w-4 h-4 text-primary" />
-                    </div>
-                    <h3 className="text-[1rem] font-semibold text-foreground">Banking Health</h3>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { label: 'Avg 30d Balance', value: `$${selectedApp.banking.avg30dBalance.toLocaleString()}` },
-                      { label: 'Avg 90d Balance', value: `$${selectedApp.banking.avg90dBalance.toLocaleString()}` },
-                      { label: 'NSF (90d)', value: selectedApp.banking.nsf90d, isNumber: true },
-                      { label: 'ACH Returns (90d)', value: selectedApp.banking.achReturns90d, isNumber: true },
-                      { label: 'Deposit Consistency', value: selectedApp.banking.depositConsistency, isBadge: true },
-                      { label: 'Cash Runway', value: `${selectedApp.banking.cashRunway} months` },
-                    ].map((item) => (
-                      <div key={item.label} className="flex justify-between items-center py-1.5">
-                        <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
-                        {item.isBadge ? (
-                          <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
-                            item.value === 'Stable' ? 'bg-primary-02/10 text-primary-02 border border-primary-02/20' :
-                            item.value === 'Moderate' ? 'bg-primary-05/10 text-primary-05 border border-primary-05/20' :
-                            'bg-primary-03/10 text-primary-03 border border-primary-03/20'
-                          }`}>
-                            {item.value}
-                          </span>
-                        ) : (
-                          <span className={`text-[0.875rem] font-semibold ${
-                            item.isNumber && Number(item.value) > 0 ? 'text-primary-03' : 'text-foreground'
-                          }`}>
-                            {item.isNumber && Number(item.value) === 0 ? <span className="text-primary-02">0</span> : item.value}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tradelines & Payments */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="document" className="w-4 h-4 text-primary" />
-                    </div>
-                    <h3 className="text-[1rem] font-semibold text-foreground">Tradelines & Payments</h3>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { label: 'Vendors Reporting', value: selectedApp.tradelines.vendorsReporting },
-                      { label: 'Oldest Tradeline', value: selectedApp.tradelines.oldestTradeline },
-                      { label: 'On-Time Payment', value: `${selectedApp.tradelines.onTimePayment}%`, isGreen: selectedApp.tradelines.onTimePayment >= 95 },
-                      { label: 'DBT Average', value: `${selectedApp.tradelines.dbtAverage} days`, isGreen: selectedApp.tradelines.dbtAverage <= 15 },
-                    ].map((item) => (
-                      <div key={item.label} className="flex justify-between items-center py-1.5">
-                        <span className="text-[0.875rem] text-muted-foreground">{item.label}</span>
-                        <span className={`text-[0.875rem] font-semibold ${item.isGreen ? 'text-primary-02' : 'text-foreground'}`}>
-                          {item.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Public Records & Identity */}
-              <div className="grid grid-cols-2 gap-6 lg:grid-cols-1">
-                {/* Public Records & Liens */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="shield" className="w-4 h-4 text-primary" />
-                    </div>
-                    <h3 className="text-[1rem] font-semibold text-foreground">Public Records & Liens</h3>
-                  </div>
-                  <div className="grid grid-cols-4 gap-4 md:grid-cols-2">
-                    <div className="text-center p-3 bg-muted rounded-xl">
-                      <div className="text-[1.25rem] font-bold text-foreground mb-1">{selectedApp.publicRecords.uccFilings}</div>
-                      <div className="text-[0.75rem] text-muted-foreground">UCC Filings</div>
-                    </div>
-                    {[
-                      { label: 'Liens', value: selectedApp.publicRecords.liens },
-                      { label: 'Judgments', value: selectedApp.publicRecords.judgments },
-                      { label: 'Bankruptcies', value: selectedApp.publicRecords.bankruptcies },
-                    ].map((item) => (
-                      <div key={item.label} className="text-center p-3 bg-muted rounded-xl">
-                        <div className="flex justify-center mb-1">
-                          <Icon type="check" className={`w-5 h-5 ${item.value ? 'text-primary-03' : 'text-primary-02'}`} />
-                        </div>
-                        <div className="text-[0.75rem] text-muted-foreground">{item.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Identity & KYB */}
-                <div className="bg-card rounded-2xl p-6 border border-border">
-                  <div className="flex items-center gap-2 mb-5">
-                    <div className="w-8 h-8 bg-muted rounded-lg flex items-center justify-center">
-                      <Icon type="fingerprint" className="w-4 h-4 text-primary" />
-                    </div>
-                    <h3 className="text-[1rem] font-semibold text-foreground">Identity & KYB</h3>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center py-1.5">
-                      <span className="text-[0.875rem] text-muted-foreground">Registry</span>
-                      <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
-                        selectedApp.kyb.registry === 'Verified' ? 'bg-primary-02/10 text-primary-02' :
-                        selectedApp.kyb.registry === 'Pending' ? 'bg-primary-05/10 text-primary-05' :
-                        'bg-primary-03/10 text-primary-03'
-                      }`}>
-                        {selectedApp.kyb.registry}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center py-1.5">
-                      <span className="text-[0.875rem] text-muted-foreground">EIN</span>
-                      <Icon type="check" className={`w-5 h-5 ${selectedApp.kyb.ein ? 'text-primary-02' : 'text-primary-03'}`} />
-                    </div>
-                    <div className="flex justify-between items-center py-1.5">
-                      <span className="text-[0.875rem] text-muted-foreground">Address Stability</span>
-                      <span className={`px-2 py-0.5 rounded-full text-[0.75rem] font-medium ${
-                        selectedApp.kyb.addressStability === 'High' ? 'bg-primary-02/10 text-primary-02' :
-                        selectedApp.kyb.addressStability === 'Medium' ? 'bg-primary-05/10 text-primary-05' :
-                        'bg-primary-03/10 text-primary-03'
-                      }`}>
-                        {selectedApp.kyb.addressStability}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Rule Triggers Tab - Notification Style */}
-          {activeTab === 'rules' && (
-            <RuleTriggersTab triggers={selectedApp.ruleTriggers} />
-          )}
         </div>
+
+        {/* Data Lineage Footer */}
+        <DataLineageFooter
+          meta={{
+            lastUpdated: '2026-01-28T10:00:00Z',
+            dataSources: ['D&B Commercial', 'Experian BizID', 'Banking Data Feed', 'UCC Filing Search', 'Compliance Engine'],
+          }}
+        />
       </div>
     </div>
   );
 };
 
 export default UnderwritingAssistant;
-

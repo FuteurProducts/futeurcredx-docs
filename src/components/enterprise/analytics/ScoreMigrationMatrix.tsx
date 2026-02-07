@@ -47,11 +47,11 @@ export const ScoreMigrationMatrix: React.FC<ScoreMigrationMatrixProps> = ({ data
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold text-foreground">Score Migration Matrix</h3>
+          <h3 className="text-lg font-semibold text-foreground">Signal Migration Matrix</h3>
           <div className="relative group">
             <Info className="w-4 h-4 text-muted-foreground cursor-help" />
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-              Score band transitions over {data.period}
+              Signal band transitions over {data.period}
             </div>
           </div>
         </div>

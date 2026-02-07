@@ -241,26 +241,35 @@ export const mockDataSources: DataSource[] = [
 ];
 
 export const mockModelVersions: ModelVersion[] = [
-  { id: 'model-001', name: 'LUMIQ AI Score Engine', version: 'v3.2.1', status: 'active', validatedOn: '2024-01-10T00:00:00Z', notes: 'Production model with improved cash flow features' },
-  { id: 'model-002', name: 'LUMIQ AI Score Engine', version: 'v3.1.0', status: 'deprecated', validatedOn: '2023-11-15T00:00:00Z', notes: 'Previous stable version' },
+  { id: 'model-001', name: 'LUMIQ AI Signal Engine', version: 'v3.2.1', status: 'active', validatedOn: '2024-01-10T00:00:00Z', notes: 'Production model with improved cash flow features' },
+  { id: 'model-002', name: 'LUMIQ AI Signal Engine', version: 'v3.1.0', status: 'deprecated', validatedOn: '2023-11-15T00:00:00Z', notes: 'Previous stable version' },
   { id: 'model-003', name: 'Early Warning System', version: 'v2.0.0', status: 'active', validatedOn: '2024-01-05T00:00:00Z', notes: 'Enhanced deterioration detection' },
   { id: 'model-004', name: 'Cross-sell Propensity', version: 'v1.5.0', status: 'testing', validatedOn: '2024-01-12T00:00:00Z', notes: 'A/B testing in progress' },
 ];
 
 export const mockAlertThresholds: AlertThreshold[] = [
   { id: 'alert-001', label: 'Cash Flow Drop Trigger', description: 'Alert when cash flow drops by this percentage', value: 20, min: 5, max: 50, unit: '%' },
-  { id: 'alert-002', label: 'Score Drop Trigger', description: 'Alert when score drops by this many points', value: 10, min: 5, max: 30, unit: 'pts' },
+  { id: 'alert-002', label: 'Risk Indicator Drop Trigger', description: 'Signal when risk indicator declines by this many points', value: 10, min: 5, max: 30, unit: 'pts' },
   { id: 'alert-003', label: 'Utilization Spike', description: 'Alert when utilization exceeds this threshold', value: 75, min: 50, max: 95, unit: '%' },
   { id: 'alert-004', label: 'Payment Delay Days', description: 'Alert when payment is delayed by this many days', value: 15, min: 7, max: 45, unit: 'days' },
 ];
 
 export const mockAuditLogs: AuditLogEntry[] = [
-  { id: 'log-001', user: 'john.admin@partnerbank.com', action: 'user.created', resource: 'tom.analyst@partnerbank.com', timestamp: '2024-01-15T14:30:00Z', ip: '192.168.1.100' },
-  { id: 'log-002', user: 'sarah.dev@partnerbank.com', action: 'api_key.created', resource: 'Sandbox Test Key', timestamp: '2024-01-15T12:00:00Z', ip: '192.168.1.105' },
-  { id: 'log-003', user: 'john.admin@partnerbank.com', action: 'settings.updated', resource: 'alert_thresholds', timestamp: '2024-01-14T16:45:00Z', ip: '192.168.1.100' },
-  { id: 'log-004', user: 'mike.risk@partnerbank.com', action: 'report.exported', resource: 'Portfolio Risk Summary', timestamp: '2024-01-14T15:30:00Z', ip: '192.168.1.110' },
-  { id: 'log-005', user: 'lisa.rm@partnerbank.com', action: 'customer.viewed', resource: 'Business ID: BIZ-12345', timestamp: '2024-01-14T14:00:00Z', ip: '192.168.1.115' },
-  { id: 'log-006', user: 'john.admin@partnerbank.com', action: 'role.updated', resource: 'Risk Analyst', timestamp: '2024-01-13T10:00:00Z', ip: '192.168.1.100' },
+  { id: 'log-001', user: 'john.admin@partnerbank.com', action: 'user.created', resource: 'tom.analyst@partnerbank.com', timestamp: '2026-01-28T14:30:00Z', ip: '192.168.1.100' },
+  { id: 'log-002', user: 'sarah.dev@partnerbank.com', action: 'api_key.created', resource: 'Sandbox Test Key', timestamp: '2026-01-28T12:00:00Z', ip: '192.168.1.105' },
+  { id: 'log-003', user: 'mike.risk@partnerbank.com', action: 'customer.viewed', resource: 'Business: Stellar Dynamics LLC (biz-001)', timestamp: '2026-01-28T11:45:00Z', ip: '192.168.1.110' },
+  { id: 'log-004', user: 'mike.risk@partnerbank.com', action: 'report.exported', resource: 'Credit Intelligence Dossier — Stellar Dynamics', timestamp: '2026-01-28T11:42:00Z', ip: '192.168.1.110' },
+  { id: 'log-005', user: 'john.admin@partnerbank.com', action: 'settings.updated', resource: 'Early Warning Signal Thresholds', timestamp: '2026-01-28T10:15:00Z', ip: '192.168.1.100' },
+  { id: 'log-006', user: 'lisa.rm@partnerbank.com', action: 'customer.viewed', resource: 'Business: Metro Logistics Corp (biz-002)', timestamp: '2026-01-28T09:30:00Z', ip: '192.168.1.115' },
+  { id: 'log-007', user: 'mike.risk@partnerbank.com', action: 'report.exported', resource: 'Portfolio Risk Summary Q1-2026', timestamp: '2026-01-27T16:20:00Z', ip: '192.168.1.110' },
+  { id: 'log-008', user: 'sarah.dev@partnerbank.com', action: 'settings.updated', resource: 'Webhook endpoint configuration', timestamp: '2026-01-27T14:00:00Z', ip: '192.168.1.105' },
+  { id: 'log-009', user: 'john.admin@partnerbank.com', action: 'role.updated', resource: 'Risk Analyst — added PII access', timestamp: '2026-01-27T11:30:00Z', ip: '192.168.1.100' },
+  { id: 'log-010', user: 'lisa.rm@partnerbank.com', action: 'customer.viewed', resource: 'Business: GreenTech Solutions (biz-003)', timestamp: '2026-01-27T09:15:00Z', ip: '192.168.1.115' },
+  { id: 'log-011', user: 'mike.risk@partnerbank.com', action: 'customer.viewed', resource: 'Business: Apex Construction (biz-005)', timestamp: '2026-01-26T15:45:00Z', ip: '192.168.1.110' },
+  { id: 'log-012', user: 'john.admin@partnerbank.com', action: 'api_key.revoked', resource: 'Legacy Key (Deprecated)', timestamp: '2026-01-26T10:00:00Z', ip: '192.168.1.100' },
+  { id: 'log-013', user: 'sarah.dev@partnerbank.com', action: 'report.exported', resource: 'API Usage Report — January 2026', timestamp: '2026-01-25T17:00:00Z', ip: '192.168.1.105' },
+  { id: 'log-014', user: 'mike.risk@partnerbank.com', action: 'settings.updated', resource: 'Risk Indicator Drop Trigger — changed to 10pts', timestamp: '2026-01-25T14:30:00Z', ip: '192.168.1.110' },
+  { id: 'log-015', user: 'lisa.rm@partnerbank.com', action: 'customer.viewed', resource: 'Business: QuickServe Restaurant (biz-004)', timestamp: '2026-01-25T10:15:00Z', ip: '192.168.1.115' },
 ];
 
 export const mockBillingInfo: BillingInfo = {

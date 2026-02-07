@@ -7,6 +7,9 @@ import { usePortfolio } from "@/contexts/PortfolioContext";
 import { getDashboardKPIs } from "@/services/dashboardMetrics";
 import { logger } from "@/utils/logger";
 import { getEnrichedBusiness } from "@/data/demoData";
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
+import { DemoMetaBadge } from '@/components/shared/DemoMetaBadge';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 
 // Import enterprise components for bank staff monitoring SMB customers
 import {
@@ -150,7 +153,7 @@ export const FinlabOverview: React.FC = () => {
     setIsRefreshing(true);
     try {
       await loadLiveData();
-      toast({ title: "Data refreshed", description: "All scores and bureau data have been refreshed." });
+      toast({ title: "Data refreshed", description: "All risk indicators and bureau data have been refreshed." });
     } finally {
       setIsRefreshing(false);
     }
@@ -169,6 +172,7 @@ export const FinlabOverview: React.FC = () => {
 
   return (
     <div className="space-y-6 md:space-y-8 w-full overflow-hidden relative">
+      <BankDisclaimer compact />
       {/* Premium Welcome Hero Banner */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -234,7 +238,7 @@ export const FinlabOverview: React.FC = () => {
               </div>
               <div>
                 <div className="text-xl font-bold text-white">{portfolioHealthData.averageScore}</div>
-                <div className="text-xs text-blue-200">Avg Score</div>
+                <div className="text-xs text-blue-200">Avg Risk Indicator</div>
               </div>
             </div>
           </div>
@@ -355,6 +359,7 @@ export const FinlabOverview: React.FC = () => {
         transition={{ duration: 0.3, delay: 0.45 }}
         className="min-w-0"
       >
+        <div className="text-xs text-muted-foreground mb-2">Showing top 25 of 47,500 businesses</div>
         <TopBusinessesTable
           businesses={topBusinesses}
           onViewBusiness={handleViewBusiness}
@@ -362,6 +367,14 @@ export const FinlabOverview: React.FC = () => {
           className="shadow-lg bg-card rounded-2xl border border-border"
         />
       </motion.div>
+
+      {/* Data Source Footer */}
+      <DataLineageFooter
+        meta={{
+          lastUpdated: new Date().toISOString(),
+          dataSources: ['LUMIQ AI Signal Engine', 'Experian Business', 'Plaid Banking'],
+        }}
+      />
     </div>
   );
 };

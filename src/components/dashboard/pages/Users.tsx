@@ -5,6 +5,7 @@ import dashboardService from '@/services/dashboardService';
 import { logger } from '@/utils/logger';
 import { cn } from '@/lib/utils';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 
 // shadcn components
 import { Button } from '@/components/ui/button';
@@ -216,7 +217,7 @@ const Users = () => {
   // Pie chart data for business breakdown
   const pieData = [
     { name: 'With Apps', value: stats?.businessesWithApplications || 0 },
-    { name: 'With Score', value: businesses.filter(b => b.score).length },
+    { name: 'With Risk Indicator', value: businesses.filter(b => b.score).length },
     { name: 'With Recs', value: businesses.filter(b => b.recommendation).length },
     { name: 'Active', value: Math.max(0, (stats?.businessesWithApplications || 0)) },
     { name: 'Other', value: Math.max(0, (stats?.totalBusinesses || 0) - (businesses.filter(b => b.score || b.recommendation || (b.applications?.length || 0) > 0).length)) },
@@ -253,6 +254,7 @@ const Users = () => {
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-start lg:gap-6">
+      <div className="w-full mb-4"><BankDisclaimer compact /></div>
       {/* LEFT: Users List */}
       <Card className="flex-1 min-w-0">
         <CardHeader>
@@ -275,12 +277,12 @@ const Users = () => {
           <div className="flex flex-wrap gap-3">
             <Select value={hasScoreFilter} onValueChange={setHasScoreFilter}>
               <SelectTrigger className="w-[160px]">
-                <SelectValue placeholder="All Scores" />
+                <SelectValue placeholder="All Risk Indicators" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Scores</SelectItem>
-                <SelectItem value="yes">With Score</SelectItem>
-                <SelectItem value="no">Without Score</SelectItem>
+                <SelectItem value="all">All Risk Indicators</SelectItem>
+                <SelectItem value="yes">With Risk Indicator</SelectItem>
+                <SelectItem value="no">Without Risk Indicator</SelectItem>
               </SelectContent>
             </Select>
 
@@ -512,7 +514,7 @@ const Users = () => {
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">With Score</span>
+              <span className="text-sm text-muted-foreground">With Risk Indicator</span>
               <span className="text-sm font-semibold text-foreground">
                 {businesses.filter(b => b.score).length}
               </span>
@@ -533,7 +535,7 @@ const Users = () => {
           <DataLineageFooter
             meta={{
               lastUpdated: new Date().toISOString(),
-              dataSources: ['LUMIQ AI Score Engine', 'Bureau Data'],
+              dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data'],
             }}
             className="mt-4"
           />
@@ -566,7 +568,7 @@ const Users = () => {
                 <div className="p-4 bg-muted rounded-xl">
                   <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
                     <CreditCard className="h-3 w-3" />
-                    Credit Score
+                    Credit Risk Indicator
                   </div>
                   <div className="text-2xl font-semibold">
                     {selectedBusiness.score?.score ? (
@@ -628,7 +630,7 @@ const Users = () => {
                   )}
                   {selectedBusiness.score?.type && (
                     <div className="p-3 bg-muted rounded-xl">
-                      <div className="text-xs text-muted-foreground">Score Type</div>
+                      <div className="text-xs text-muted-foreground">Risk Indicator Type</div>
                       <div className="text-sm font-semibold text-foreground">{selectedBusiness.score.type}</div>
                     </div>
                   )}

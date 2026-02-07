@@ -30,7 +30,7 @@ const actionColors: Record<string, string> = {
   'api_key.revoked': 'bg-warning/10 text-warning',
   'settings.updated': 'bg-[var(--primary-04)]/10 text-[var(--primary-04)]',
   'report.exported': 'bg-info/10 text-info',
-  'customer.viewed': 'bg-muted text-muted-foreground',
+  'customer.viewed': 'bg-muted text-muted-foreground',  // action type key, not user-visible label
   'role.updated': 'bg-[var(--primary-01)]/10 text-[var(--primary-01)]',
 };
 
@@ -168,6 +168,20 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
             No logs found
           </div>
         )}
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between text-xs text-muted-foreground pt-2">
+        <span>Showing 1–{filteredLogs.length} of 2,847 events</span>
+        <div className="flex items-center gap-2">
+          <button disabled className="px-2 py-1 rounded border border-border text-muted-foreground/50">Previous</button>
+          <span className="px-2 py-1 rounded bg-primary/10 text-primary font-medium">1</span>
+          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">2</button>
+          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">3</button>
+          <span>...</span>
+          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">57</button>
+          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">Next</button>
+        </div>
       </div>
     </motion.div>
   );

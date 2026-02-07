@@ -27,6 +27,8 @@ import { AlertCircle, RefreshCw, Users, UserX, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CustomerTableSkeleton, SkeletonCard, SkeletonPanel, MetricSkeleton } from '@/components/ui/skeletons';
 import { EmptyState } from '@/components/ui/empty-state';
+import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 
 import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
 import { CUSTOMER_DEMO_DATA } from '@/data/customerDemoData';
@@ -629,6 +631,7 @@ const CustomerBff: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <BankDisclaimer compact />
       {/* Header with refresh and last updated */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -756,6 +759,14 @@ const CustomerBff: React.FC = () => {
           onAddNote={(_note: string) => { /* Note saved to dossier */ }}
         />
       )}
+
+      {/* Data Source Footer */}
+      <DataLineageFooter
+        meta={{
+          lastUpdated: lastUpdated || new Date().toISOString(),
+          dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
+        }}
+      />
     </div>
   );
 };

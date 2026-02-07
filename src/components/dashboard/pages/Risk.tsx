@@ -39,6 +39,8 @@ import {
 } from '@/components/enterprise/risk';
 import { RiskDashboardSkeleton } from '@/components/ui/skeletons';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
+import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
+import { DemoMetaBadge } from '@/components/shared/DemoMetaBadge';
 
 // ============================================
 // MOCK DATA FOR ENTERPRISE RISK COMPONENTS
@@ -65,7 +67,7 @@ const initialRiskLenses: RiskLens[] = [
 const riskKPIs: RiskKPI[] = [
   {
     id: 'portfolio_risk_score',
-    label: 'Portfolio Risk Score',
+    label: 'Portfolio Risk Indicator',
     value: 724,
     change: -12,
     changeLabel: 'from 736 last month',
@@ -124,7 +126,7 @@ const riskKPIs: RiskKPI[] = [
 const deteriorationDrivers: DeteriorationDriver[] = [
   { driver: 'Payment Behavior', impact: 34, affectedAccounts: 847, trend: 'up' },
   { driver: 'Credit Utilization', impact: 28, affectedAccounts: 1234, trend: 'up' },
-  { driver: 'Bureau Score Drops', impact: 22, affectedAccounts: 567, trend: 'stable' },
+  { driver: 'Bureau Risk Indicator Drops', impact: 22, affectedAccounts: 567, trend: 'stable' },
   { driver: 'Cash Flow Stress', impact: 16, affectedAccounts: 423, trend: 'down' },
 ];
 
@@ -192,7 +194,7 @@ const ewsIndicators: EWSIndicator[] = [
   { id: '1', name: 'Cash Flow Deterioration', description: '3 months declining operating cash', threshold: '15% decline', enabled: true, precision: 0.82, recall: 0.76 },
   { id: '2', name: 'Payment Pattern Change', description: 'Late payments after on-time history', threshold: '2+ consecutive', enabled: true, precision: 0.89, recall: 0.71 },
   { id: '3', name: 'Utilization Spike', description: 'Rapid increase in credit usage', threshold: '30% increase / 30 days', enabled: true, precision: 0.78, recall: 0.84 },
-  { id: '4', name: 'Bureau Score Drop', description: 'Significant credit score decline', threshold: '25+ points', enabled: true, precision: 0.91, recall: 0.68 },
+  { id: '4', name: 'Bureau Risk Indicator Drop', description: 'Significant credit risk indicator decline', threshold: '25+ points', enabled: true, precision: 0.91, recall: 0.68 },
 ];
 
 const ewsQueueItems: EWSQueueItem[] = [
@@ -203,7 +205,7 @@ const ewsQueueItems: EWSQueueItem[] = [
     businessName: 'TechFlow Solutions',
     primaryDriver: 'Payment Pattern Change',
     driverType: 'payment',
-    signals: ['3 late payments', 'Utilization 78%', 'Score drop 32pts'],
+    signals: ['3 late payments', 'Utilization 78%', 'Risk Indicator drop 32pts'],
     recommendedAction: 'Contact immediately, review credit line',
     exposure: 125000,
     riskScore: 42,
@@ -236,7 +238,7 @@ const ewsQueueItems: EWSQueueItem[] = [
 
 // Model Governance Data
 const models: ModelInfo[] = [
-  { id: '1', name: 'SMB Credit Score v3.2', version: '3.2.1', deployedDate: '2025-09-15', lastValidationDate: '2025-12-01', nextValidationDue: '2026-03-01', status: 'ok', type: 'credit_score' },
+  { id: '1', name: 'SMB Risk Indicator v3.2', version: '3.2.1', deployedDate: '2025-09-15', lastValidationDate: '2025-12-01', nextValidationDue: '2026-03-01', status: 'ok', type: 'credit_score' },
   { id: '2', name: 'PD Model - Working Capital', version: '2.1.0', deployedDate: '2025-06-01', lastValidationDate: '2025-11-15', nextValidationDue: '2026-02-15', status: 'warning', type: 'pd' },
   { id: '3', name: 'EWS Detector v1.5', version: '1.5.3', deployedDate: '2025-10-01', lastValidationDate: '2025-12-15', nextValidationDue: '2026-03-15', status: 'ok', type: 'ews' },
 ];
@@ -262,16 +264,16 @@ const dataSources: DataSource[] = [
 ];
 
 const missingFields: MissingField[] = [
-  { field: 'annual_revenue', missingPct: 12, impactLevel: 'high', affectedModels: ['Credit Score', 'PD Model'] },
-  { field: 'years_in_business', missingPct: 8, impactLevel: 'medium', affectedModels: ['Credit Score'] },
-  { field: 'owner_credit_score', missingPct: 23, impactLevel: 'high', affectedModels: ['Credit Score', 'EWS'] },
+  { field: 'annual_revenue', missingPct: 12, impactLevel: 'high', affectedModels: ['Risk Indicator Model', 'PD Model'] },
+  { field: 'years_in_business', missingPct: 8, impactLevel: 'medium', affectedModels: ['Risk Indicator Model'] },
+  { field: 'owner_credit_score', missingPct: 23, impactLevel: 'high', affectedModels: ['Risk Indicator Model', 'EWS'] },
 ];
 
 // Audit Controls Data
 const accessEvents: AccessEvent[] = [
   { id: '1', userId: 'u1', userName: 'John Smith', action: 'view', resource: 'TechFlow Solutions', resourceType: 'entity', timestamp: new Date(Date.now() - 15 * 60 * 1000), ipAddress: '192.168.1.45', sensitivityLevel: 'high' },
   { id: '2', userId: 'u2', userName: 'Sarah Chen', action: 'export', resource: 'Q4 Risk Report', resourceType: 'report', timestamp: new Date(Date.now() - 45 * 60 * 1000), ipAddress: '192.168.1.78', sensitivityLevel: 'high' },
-  { id: '3', userId: 'u1', userName: 'John Smith', action: 'modify', resource: 'Alert Thresholds', resourceType: 'settings', timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), ipAddress: '192.168.1.45', sensitivityLevel: 'medium' },
+  { id: '3', userId: 'u1', userName: 'John Smith', action: 'modify', resource: 'Early Warning Signal Thresholds', resourceType: 'settings', timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), ipAddress: '192.168.1.45', sensitivityLevel: 'medium' },
 ];
 
 const permissionChanges: PermissionChange[] = [
@@ -298,7 +300,7 @@ const migrationMatrix: MigrationMatrix[] = [
 const stressImpacts: StressImpact[] = [
   { metric: 'Expected Loss', baseline: 1.2, stressed: 3.8, change: 2.6, unit: '%' },
   { metric: 'Delinquency Rate', baseline: 2.4, stressed: 8.2, change: 5.8, unit: '%' },
-  { metric: 'Average Score', baseline: 724, stressed: 678, change: -46, unit: 'pts' },
+  { metric: 'Average Risk Indicator', baseline: 724, stressed: 678, change: -46, unit: 'pts' },
 ];
 
 // ============================================
@@ -395,6 +397,8 @@ const Risk: React.FC = () => {
 
   return (
     <div className="space-y-6 pb-8">
+      <div className="px-4 lg:px-6 pt-4"><BankDisclaimer /></div>
+
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -470,6 +474,7 @@ const Risk: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.2 }}
       >
+        <div className="text-xs text-muted-foreground mb-2">Showing 1–20 of 342 active signals</div>
         <EWSWorkQueue
           indicators={ewsToggles}
           queueItems={queueItems}
@@ -575,7 +580,7 @@ const Risk: React.FC = () => {
       <DataLineageFooter
         meta={{
           lastUpdated: new Date().toISOString(),
-          dataSources: ['LUMIQ AI Score Engine', 'Experian Business', 'D&B PAYDEX', 'Plaid Banking'],
+          dataSources: ['LUMIQ AI Signal Engine', 'Experian Business', 'D&B PAYDEX', 'Plaid Banking'],
         }}
         onRefresh={() => fetchRiskData()}
         isRefreshing={isLoading}

@@ -224,9 +224,9 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Score Range</label>
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Risk Indicator Range</label>
               <select className="w-full h-10 px-3 bg-muted rounded-xl text-sm font-medium">
-                <option>All Scores</option>
+                <option>All Indicators</option>
                 <option>86–100 (Excellent)</option>
                 <option>76–85 (Good)</option>
                 <option>66–75 (Fair)</option>

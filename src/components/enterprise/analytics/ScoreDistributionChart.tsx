@@ -35,7 +35,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     const data = payload[0].payload as ScoreBucket;
     return (
       <div className="bg-popover/95 backdrop-blur-sm border border-border rounded-xl p-4 shadow-lg shadow-black/5">
-        <div className="font-semibold text-foreground mb-2">Score Range: {data.range}</div>
+        <div className="font-semibold text-foreground mb-2">Risk Indicator Range: {data.range}</div>
         <div className="space-y-1.5 text-sm">
           <div className="flex justify-between gap-4">
             <span className="text-muted-foreground">Count:</span>
@@ -58,7 +58,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 export const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
   data,
-  title = 'Score Distribution',
+  title = 'Risk Indicator Distribution',
   isLoading = false,
 }) => {
   const [timePeriod, setTimePeriod] = useState<TimePeriod>('1M');
@@ -77,7 +77,7 @@ export const ScoreDistributionChart: React.FC<ScoreDistributionChartProps> = ({
           <div className="relative group">
             <Info className="w-4 h-4 text-muted-foreground cursor-help" />
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">
-              Distribution of LUMIQ AI scores across portfolio
+              Distribution of risk indicators across portfolio
             </div>
           </div>
         </div>
