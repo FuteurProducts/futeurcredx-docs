@@ -18,7 +18,7 @@ import {
 
 interface Recommendation {
   id: string;
-  type: 'loc-increase' | 'pre-qualify' | 'merchant-migration' | 'quarterly-review' | 'insights-report';
+  type: string;
   title: string;
   description: string;
   rationale: string[];
@@ -35,32 +35,28 @@ interface NextBestActionsProps {
   onDismiss: (recommendationId: string) => void;
 }
 
-const TYPE_CONFIG = {
-  'loc-increase': { 
-    icon: TrendingUp, 
-    color: 'hsl(var(--chart-2))',
-    label: 'Line Increase'
-  },
-  'pre-qualify': { 
-    icon: CreditCard, 
-    color: 'hsl(var(--chart-1))',
-    label: 'Pre-Qualification'
-  },
-  'merchant-migration': { 
-    icon: Building2, 
-    color: 'hsl(var(--chart-3))',
-    label: 'Merchant Services'
-  },
-  'quarterly-review': { 
-    icon: Calendar, 
-    color: 'hsl(var(--chart-4))',
-    label: 'Review Scheduled'
-  },
-  'insights-report': { 
-    icon: FileText, 
-    color: 'hsl(var(--primary))',
-    label: 'Insights Report'
-  },
+const DEFAULT_TYPE_CONFIG = {
+  icon: Lightbulb,
+  color: 'hsl(var(--primary))',
+  label: 'Action',
+};
+
+const TYPE_CONFIG: Record<string, { icon: React.ElementType; color: string; label: string }> = {
+  'loc-increase': { icon: TrendingUp, color: 'hsl(var(--chart-2))', label: 'Line Increase' },
+  'pre-qualify': { icon: CreditCard, color: 'hsl(var(--chart-1))', label: 'Pre-Qualification' },
+  'merchant-migration': { icon: Building2, color: 'hsl(var(--chart-3))', label: 'Merchant Services' },
+  'quarterly-review': { icon: Calendar, color: 'hsl(var(--chart-4))', label: 'Review Scheduled' },
+  'insights-report': { icon: FileText, color: 'hsl(var(--primary))', label: 'Insights Report' },
+  'risk-mitigation': { icon: AlertCircle, color: 'hsl(var(--destructive))', label: 'Risk Mitigation' },
+  'risk-review': { icon: AlertCircle, color: 'hsl(var(--destructive))', label: 'Risk Review' },
+  'onboarding': { icon: User, color: 'hsl(var(--chart-1))', label: 'Onboarding' },
+  'card-prequal': { icon: CreditCard, color: 'hsl(var(--chart-2))', label: 'Card Pre-Qual' },
+  'treasury-upsell': { icon: Building2, color: 'hsl(var(--chart-3))', label: 'Treasury Upsell' },
+  'sba-refinance': { icon: FileText, color: 'hsl(var(--chart-4))', label: 'SBA Refinance' },
+  'equipment-renewal': { icon: TrendingUp, color: 'hsl(var(--chart-2))', label: 'Equipment Renewal' },
+  'regional-campaign': { icon: Building2, color: 'hsl(var(--chart-3))', label: 'Regional Campaign' },
+  'cross-sell': { icon: Sparkles, color: 'hsl(var(--chart-1))', label: 'Cross-Sell' },
+  'portfolio-health': { icon: Calendar, color: 'hsl(var(--chart-4))', label: 'Portfolio Health' },
 };
 
 const PRIORITY_CONFIG = {
@@ -84,7 +80,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
   };
 
   const RecommendationCard = ({ rec, index }: { rec: Recommendation; index: number }) => {
-    const typeConfig = TYPE_CONFIG[rec.type];
+    const typeConfig = TYPE_CONFIG[rec.type] || DEFAULT_TYPE_CONFIG;
     const priorityConfig = PRIORITY_CONFIG[rec.priority];
     const TypeIcon = typeConfig.icon;
     const isExpanded = expandedId === rec.id;

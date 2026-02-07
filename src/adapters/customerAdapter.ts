@@ -9,6 +9,46 @@ import type { EnrichedBusiness } from '@/data/demoData';
 import { getEnrichedBusiness } from '@/data/demoData';
 import { deterministicValue } from '@/utils/deterministicHash';
 
+// Map enriched product names to filter IDs used by CustomerGlobalControls
+const PRODUCT_NAME_TO_ID: Record<string, string> = {
+  'line of credit': 'loc',
+  'business line of credit': 'loc',
+  'working capital loc': 'loc',
+  'equipment loc': 'equipment',
+  'business checking': 'deposits',
+  'business savings': 'deposits',
+  'business credit card': 'cards',
+  'credit card': 'cards',
+  'fleet card program': 'auto',
+  'treasury management': 'merchant',
+  'term loan': 'sba',
+  'sba 7(a) loan': 'sba',
+  'sba 504 loan': 'sba',
+  'sba express': 'sba',
+  'sba microloan': 'sba',
+  'equipment financing': 'equipment',
+  'equipment loan': 'equipment',
+  'equipment lease': 'equipment',
+  'commercial re loan': 'cre',
+  'commercial mortgage': 'cre',
+  'cre warehouse loan': 'cre',
+  'auto equipment loan': 'auto',
+  'auto fleet': 'auto',
+  'fleet financing': 'auto',
+  'merchant services': 'merchant',
+  'merchant pos': 'merchant',
+};
+
+function deriveProductIds(enrichedProducts: { name: string }[]): string[] {
+  const ids = new Set<string>();
+  for (const p of enrichedProducts) {
+    const key = p.name.toLowerCase();
+    const id = PRODUCT_NAME_TO_ID[key];
+    if (id) ids.add(id);
+  }
+  return Array.from(ids);
+}
+
 // Industry mapping from NAICS codes
 const NAICS_TO_INDUSTRY: Record<string, string> = {
   '236220': 'Construction',
@@ -89,6 +129,7 @@ export function adaptSmbEntityToCustomer(entity: SmbEntity): CustomerEntity {
     rhs: getEnrichedBusiness(entity.id)?.rhs ?? deterministicValue(entity.id + '_rhs', 65, 94),
     rhsChange: getEnrichedBusiness(entity.id)?.rhsChange ?? deterministicValue(entity.id + '_rhsc', -3, 6),
     primaryProduct: getEnrichedBusiness(entity.id)?.products[0]?.name ?? 'Checking',
+    products: getEnrichedBusiness(entity.id)?.products ? deriveProductIds(getEnrichedBusiness(entity.id)!.products) : ['deposits'],
     riskTier: getRiskTier(entity.riskTier),
     relationshipStage: mapRelationshipStage(getEnrichedBusiness(entity.id)?.relationshipStage) ?? getRelationshipStage(entity.createdAt),
     lastActivity: entity.updatedAt || new Date().toISOString().split('T')[0],
@@ -146,6 +187,7 @@ export function adaptBffCustomerList(customers: BffCustomerListItem[]): Customer
       rhs: getEnrichedBusiness(c.id)?.rhs ?? deterministicValue(c.id + '_rhs', 65, 94),
       rhsChange: getEnrichedBusiness(c.id)?.rhsChange ?? deterministicValue(c.id + '_rhsc', -3, 6),
       primaryProduct: getEnrichedBusiness(c.id)?.products[0]?.name ?? 'Checking',
+      products: getEnrichedBusiness(c.id)?.products ? deriveProductIds(getEnrichedBusiness(c.id)!.products) : ['deposits'],
       riskTier: getRiskTier(c.riskClass, c.latestScore),
       relationshipStage: mapRelationshipStage(getEnrichedBusiness(c.id)?.relationshipStage) ?? 'growing',
       lastActivity: c.lastScorePull || c.createdAt || new Date().toISOString().split('T')[0],

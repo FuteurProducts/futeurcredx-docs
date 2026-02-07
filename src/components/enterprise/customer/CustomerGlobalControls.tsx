@@ -91,6 +91,25 @@ export const CustomerGlobalControls: React.FC<CustomerGlobalControlsProps> = ({
     value: string
   ) => {
     const current = filters[category];
+
+    // Region: "National" exclusive toggle
+    if (category === 'region') {
+      if (value === 'national') {
+        // Selecting National clears other regions; deselecting National does nothing special
+        const updated = current.includes('national') ? [] : ['national'];
+        onFiltersChange({ ...filters, region: updated });
+        return;
+      } else {
+        // Selecting a specific region clears "National"
+        const withoutNational = current.filter(v => v !== 'national');
+        const updated = withoutNational.includes(value)
+          ? withoutNational.filter(v => v !== value)
+          : [...withoutNational, value];
+        onFiltersChange({ ...filters, region: updated });
+        return;
+      }
+    }
+
     const updated = current.includes(value)
       ? current.filter((v) => v !== value)
       : [...current, value];

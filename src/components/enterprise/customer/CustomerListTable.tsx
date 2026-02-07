@@ -29,6 +29,7 @@ export interface CustomerEntity {
   rhs: number;
   rhsChange: number;
   primaryProduct: string;
+  products: string[];
   riskTier: 'low' | 'medium' | 'high';
   relationshipStage: 'prospect' | 'new' | 'growing' | 'mature' | 'at-risk';
   lastActivity: string;

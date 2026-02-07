@@ -1,9 +1,10 @@
 /**
  * Customer Page - BFF Wired
  * Fetches customer data from /customers endpoint
+ * Filters are applied client-side via useMemo for dynamic KPIs
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { customersService } from '@/services/bff';
 import type { BffListResponse } from '@/services/bff/client';
@@ -28,11 +29,34 @@ import { CustomerTableSkeleton, SkeletonCard, SkeletonPanel, MetricSkeleton } fr
 import { EmptyState } from '@/components/ui/empty-state';
 
 import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
+import { CUSTOMER_DEMO_DATA } from '@/data/customerDemoData';
 import { withFallback } from '@/utils/withFallback';
 import { logger } from '@/utils/logger';
 
-// Fallback demo customers derived from centralized business data
-const FALLBACK_CUSTOMERS: BffCustomerListItem[] = DEMO_BUSINESSES.map((biz, idx) => ({
+// Build fallback CustomerEntity[] directly from the 36-record demo dataset
+const FALLBACK_CUSTOMERS_FULL: CustomerEntity[] = CUSTOMER_DEMO_DATA.map(rec => ({
+  id: rec.id,
+  businessName: rec.businessName,
+  industry: rec.industry,
+  naicsCode: rec.naicsCode,
+  segment: rec.segment,
+  region: rec.region,
+  branch: `${rec.city} Branch`,
+  rhs: rec.rhs,
+  rhsChange: rec.rhsChange,
+  primaryProduct: rec.primaryProduct,
+  products: rec.products,
+  riskTier: rec.riskTier,
+  relationshipStage: rec.relationshipStage,
+  lastActivity: rec.lastActivity,
+  assignedRM: rec.assignedRM,
+  totalExposure: rec.totalExposure,
+  depositBalance: rec.depositBalance,
+  productCount: rec.productCount,
+}));
+
+// Legacy BFF fallback for API path (first 10 only, matches DEMO_BUSINESSES)
+const FALLBACK_BFF_CUSTOMERS: BffCustomerListItem[] = DEMO_BUSINESSES.map((biz, idx) => ({
   id: biz.id,
   businessName: biz.name,
   naicsCode: biz.naicsCode,
@@ -46,48 +70,145 @@ const FALLBACK_CUSTOMERS: BffCustomerListItem[] = DEMO_BUSINESSES.map((biz, idx)
   createdAt: `2025-${String((idx % 12) + 1).padStart(2, '0')}-${String((idx * 7 % 28) + 1).padStart(2, '0')}`,
 }));
 
-const mockHealthSummary = {
-  avgRHS: 74,
-  rhsTrend: 2.3,
-  growingPercentage: 28,
-  growingTrend: 4.1,
-  atRiskPercentage: 12,
-  atRiskTrend: -1.8,
-  crossSellPenetration: 42,
-  crossSellTrend: 3.2,
-  topOpportunities: [],
-  rhsTrendData: [
-    { date: 'Jul', value: 68 },
-    { date: 'Aug', value: 70 },
-    { date: 'Sep', value: 71 },
-    { date: 'Oct', value: 72 },
-    { date: 'Nov', value: 73 },
-    { date: 'Dec', value: 74 },
-  ],
-};
+// ── Dynamic recommendation generation ──────────────────────────────────────
 
-const mockLifecycleStages = [
-  { id: 'prospect' as const, label: 'Prospect', count: 0, avgRHS: 0, avgRevenue: 0, avgProductCount: 0, trend: 0 },
-  { id: 'new' as const, label: 'New', count: 0, avgRHS: 68, avgRevenue: 45000, avgProductCount: 1.8, trend: 0 },
-  { id: 'growing' as const, label: 'Growing', count: 0, avgRHS: 82, avgRevenue: 125000, avgProductCount: 3.2, trend: 0 },
-  { id: 'mature' as const, label: 'Mature', count: 0, avgRHS: 76, avgRevenue: 285000, avgProductCount: 4.8, trend: 0 },
-  { id: 'at-risk' as const, label: 'At Risk', count: 0, avgRHS: 48, avgRevenue: 95000, avgProductCount: 2.1, trend: 0 },
-];
+function generateRecommendations(
+  filtered: CustomerEntity[],
+  filters: CustomerFilters,
+) {
+  const recs: {
+    id: string;
+    type: string;
+    title: string;
+    description: string;
+    rationale: string[];
+    confidenceScore: number;
+    riskAdjustedConfidence: number;
+    estimatedRevenueImpact: number;
+    priority: 'high' | 'medium' | 'low';
+    expiresIn: string;
+  }[] = [];
 
-const mockRecommendations = [
-  {
-    id: '1',
-    type: 'loc-increase' as const,
-    title: 'Pull Credit Scores',
-    description: 'No scores on file. Pull credit to enable prequal offers.',
-    rationale: ['No bureau data available', 'Required for risk assessment'],
-    confidenceScore: 95,
-    riskAdjustedConfidence: 90,
-    estimatedRevenueImpact: 0,
-    priority: 'high' as const,
-    expiresIn: '30 days',
-  },
-];
+  let nextId = 1;
+
+  // Stage-specific recommendations
+  if (filters.relationshipStage.includes('at-risk')) {
+    recs.push({
+      id: String(nextId++), type: 'risk-mitigation',
+      title: 'Generate Risk Mitigation Report',
+      description: `${filtered.length} at-risk relationship${filtered.length !== 1 ? 's' : ''} identified. Schedule RM outreach within 5 business days.`,
+      rationale: ['Declining RHS trend across cohort', 'Early intervention reduces churn by 35%'],
+      confidenceScore: 92, riskAdjustedConfidence: 88, estimatedRevenueImpact: 45000,
+      priority: 'high', expiresIn: '7 days',
+    });
+  }
+  if (filters.relationshipStage.includes('prospect')) {
+    recs.push({
+      id: String(nextId++), type: 'onboarding',
+      title: 'Launch Prospect Activation Campaign',
+      description: `${filtered.length} prospect${filtered.length !== 1 ? 's' : ''} ready for initial outreach. Pull bureau scores to enable pre-qualification.`,
+      rationale: ['No credit bureau data on file', 'Required for risk assessment pipeline'],
+      confidenceScore: 95, riskAdjustedConfidence: 90, estimatedRevenueImpact: 0,
+      priority: 'high', expiresIn: '30 days',
+    });
+  }
+
+  // Segment-specific
+  if (filters.segment.includes('micro')) {
+    recs.push({
+      id: String(nextId++), type: 'card-prequal',
+      title: 'Pre-Qualify Micro Businesses for Credit Cards',
+      description: 'Micro-segment businesses with 6+ months deposit history are strong candidates for card pre-qualification.',
+      rationale: ['Low avg product count in segment', 'Card products have 78% acceptance rate for micro'],
+      confidenceScore: 85, riskAdjustedConfidence: 80, estimatedRevenueImpact: 12000,
+      priority: 'medium', expiresIn: '14 days',
+    });
+  }
+  if (filters.segment.includes('mid-market')) {
+    recs.push({
+      id: String(nextId++), type: 'treasury-upsell',
+      title: 'Offer Treasury Management Solutions',
+      description: 'Mid-market clients with >$500K deposits benefit from treasury management and sweep accounts.',
+      rationale: ['High deposit balances underutilized', 'Treasury services increase retention by 42%'],
+      confidenceScore: 88, riskAdjustedConfidence: 84, estimatedRevenueImpact: 65000,
+      priority: 'high', expiresIn: '21 days',
+    });
+  }
+
+  // Product-specific
+  if (filters.product.includes('sba')) {
+    recs.push({
+      id: String(nextId++), type: 'sba-refinance',
+      title: 'SBA Refinance Opportunity Assessment',
+      description: 'Review existing SBA borrowers for rate reduction opportunities under current programs.',
+      rationale: ['Rate environment favorable for refinancing', 'Strengthens borrower relationship'],
+      confidenceScore: 82, riskAdjustedConfidence: 78, estimatedRevenueImpact: 28000,
+      priority: 'medium', expiresIn: '30 days',
+    });
+  }
+  if (filters.product.includes('equipment')) {
+    recs.push({
+      id: String(nextId++), type: 'equipment-renewal',
+      title: 'Equipment Lease Renewal Pipeline',
+      description: 'Identify equipment loans approaching maturity for proactive renewal outreach.',
+      rationale: ['Equipment lifecycle typically 5-7 years', 'Renewal has 3x lower acquisition cost'],
+      confidenceScore: 87, riskAdjustedConfidence: 83, estimatedRevenueImpact: 42000,
+      priority: 'medium', expiresIn: '21 days',
+    });
+  }
+
+  // Region-specific
+  if (filters.region.includes('southwest')) {
+    recs.push({
+      id: String(nextId++), type: 'regional-campaign',
+      title: 'Southwest Market Expansion Review',
+      description: 'Southwest region showing strong growth. Assess capacity for additional RM coverage.',
+      rationale: ['Highest deposit growth rate across regions', 'Under-penetrated product mix'],
+      confidenceScore: 79, riskAdjustedConfidence: 75, estimatedRevenueImpact: 35000,
+      priority: 'low', expiresIn: '30 days',
+    });
+  }
+
+  // Default recommendation when no specific filters active
+  if (recs.length === 0) {
+    const atRiskCount = filtered.filter(c => c.relationshipStage === 'at-risk').length;
+    const lowProductCount = filtered.filter(c => c.productCount <= 1).length;
+
+    if (atRiskCount > 0) {
+      recs.push({
+        id: String(nextId++), type: 'risk-review',
+        title: 'Review At-Risk Relationships',
+        description: `${atRiskCount} customer${atRiskCount !== 1 ? 's' : ''} showing declining health scores. Schedule relationship review.`,
+        rationale: ['Proactive outreach reduces attrition', 'Declining RHS indicates disengagement'],
+        confidenceScore: 90, riskAdjustedConfidence: 86, estimatedRevenueImpact: 38000,
+        priority: 'high', expiresIn: '14 days',
+      });
+    }
+    if (lowProductCount > 0) {
+      recs.push({
+        id: String(nextId++), type: 'cross-sell',
+        title: 'Cross-Sell Opportunity Analysis',
+        description: `${lowProductCount} customer${lowProductCount !== 1 ? 's' : ''} with single-product relationships. Run cross-sell model to identify best fit products.`,
+        rationale: ['Single-product relationships have highest churn risk', 'Each additional product reduces attrition by 15%'],
+        confidenceScore: 86, riskAdjustedConfidence: 82, estimatedRevenueImpact: 52000,
+        priority: 'medium', expiresIn: '21 days',
+      });
+    }
+    if (recs.length === 0) {
+      recs.push({
+        id: String(nextId++), type: 'portfolio-health',
+        title: 'Portfolio Health Check',
+        description: 'Run quarterly health assessment across all customer segments to identify emerging opportunities.',
+        rationale: ['Quarterly reviews improve NPS by 12 points', 'Early pattern detection for risk and growth'],
+        confidenceScore: 80, riskAdjustedConfidence: 76, estimatedRevenueImpact: 25000,
+        priority: 'low', expiresIn: '30 days',
+      });
+    }
+  }
+
+  return recs;
+}
+
 const CustomerBff: React.FC = () => {
   const { portfolioId, isLoading: portfolioLoading } = usePortfolio();
   const { emitDossierOpened, emitFilterApplied } = useAuditEmit();
@@ -96,7 +217,6 @@ const CustomerBff: React.FC = () => {
   const [customers, setCustomers] = useState<CustomerEntity[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [totalCount, setTotalCount] = useState(0);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   // UI state
@@ -133,31 +253,29 @@ const CustomerBff: React.FC = () => {
           page: currentPage,
           pageSize,
         }),
-        { data: FALLBACK_CUSTOMERS as unknown as SmbEntity[], meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } } as BffListResponse<SmbEntity>,
+        { data: FALLBACK_BFF_CUSTOMERS as unknown as SmbEntity[], meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_BFF_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } } as BffListResponse<SmbEntity>,
         'Customer List'
       );
 
-      // Adapt BFF response to UI format
-      const bffCustomers = response.data as unknown as BffCustomerListItem[];
-      const adaptedCustomers = adaptBffCustomerList(bffCustomers);
-
-      setCustomers(adaptedCustomers);
-      setTotalCount(response.pagination?.total || adaptedCustomers.length);
-      setLastUpdated(response.meta?.lastUpdated || new Date().toISOString());
-
+      // If we got live BFF data, use it; otherwise use our full 36-record set
       if (source === 'live') {
+        const bffCustomers = response.data as unknown as BffCustomerListItem[];
+        const adaptedCustomers = adaptBffCustomerList(bffCustomers);
+        setCustomers(adaptedCustomers);
+        setLastUpdated(response.meta?.lastUpdated || new Date().toISOString());
         emitFilterApplied('customer_list', {
           portfolioId,
           search: searchQuery,
           page: currentPage,
           resultCount: adaptedCustomers.length,
         });
+      } else {
+        setCustomers(FALLBACK_CUSTOMERS_FULL);
+        setLastUpdated(new Date().toISOString());
       }
     } catch (err) {
       logger.info('[CustomerBff] BFF unavailable, using fallback data');
-      const adaptedCustomers = adaptBffCustomerList(FALLBACK_CUSTOMERS);
-      setCustomers(adaptedCustomers);
-      setTotalCount(FALLBACK_CUSTOMERS.length);
+      setCustomers(FALLBACK_CUSTOMERS_FULL);
       setLastUpdated(new Date().toISOString());
       setError(null);
     } finally {
@@ -172,25 +290,125 @@ const CustomerBff: React.FC = () => {
     }
   }, [portfolioId, fetchCustomers]);
 
+  // ── Filter customers based on global controls ────────────────────────────
+  const filteredCustomers = useMemo(() => {
+    return customers.filter(c => {
+      // Product filter: customer holds ANY selected product (OR logic)
+      if (filters.product.length > 0) {
+        if (!c.products.some(p => filters.product.includes(p))) return false;
+      }
+      // Segment filter: exact match
+      if (filters.segment.length > 0) {
+        if (!filters.segment.includes(c.segment)) return false;
+      }
+      // Region filter: case-insensitive match; "national" = no filter
+      if (filters.region.length > 0) {
+        const activeRegions = filters.region.filter(r => r !== 'national');
+        if (activeRegions.length > 0) {
+          if (!activeRegions.some(r => r.toLowerCase() === c.region.toLowerCase())) return false;
+        }
+      }
+      // Stage filter: exact match
+      if (filters.relationshipStage.length > 0) {
+        if (!filters.relationshipStage.includes(c.relationshipStage)) return false;
+      }
+      return true;
+    });
+  }, [customers, filters]);
+
+  // ── Dynamic health summary from filtered data ────────────────────────────
+  const healthSummary = useMemo(() => {
+    const n = filteredCustomers.length;
+    if (n === 0) {
+      return {
+        avgRHS: 0, rhsTrend: 0,
+        growingPercentage: 0, growingTrend: 0,
+        atRiskPercentage: 0, atRiskTrend: 0,
+        crossSellPenetration: 0, crossSellTrend: 0,
+        topOpportunities: [],
+        rhsTrendData: [
+          { date: 'Jul', value: 0 }, { date: 'Aug', value: 0 },
+          { date: 'Sep', value: 0 }, { date: 'Oct', value: 0 },
+          { date: 'Nov', value: 0 }, { date: 'Dec', value: 0 },
+        ],
+      };
+    }
+
+    const avgRHS = Math.round(filteredCustomers.reduce((sum, c) => sum + c.rhs, 0) / n);
+    const avgRHSChange = parseFloat((filteredCustomers.reduce((sum, c) => sum + c.rhsChange, 0) / n).toFixed(1));
+    const growingCount = filteredCustomers.filter(c => c.relationshipStage === 'growing').length;
+    const atRiskCount = filteredCustomers.filter(c => c.relationshipStage === 'at-risk').length;
+    const multiProductCount = filteredCustomers.filter(c => c.productCount >= 2).length;
+
+    return {
+      avgRHS,
+      rhsTrend: avgRHSChange,
+      growingPercentage: Math.round((growingCount / n) * 100),
+      growingTrend: 4.1,
+      atRiskPercentage: Math.round((atRiskCount / n) * 100),
+      atRiskTrend: -1.8,
+      crossSellPenetration: Math.round((multiProductCount / n) * 100),
+      crossSellTrend: 3.2,
+      topOpportunities: [],
+      rhsTrendData: [
+        { date: 'Jul', value: Math.max(0, avgRHS - 6) },
+        { date: 'Aug', value: Math.max(0, avgRHS - 5) },
+        { date: 'Sep', value: Math.max(0, avgRHS - 3) },
+        { date: 'Oct', value: Math.max(0, avgRHS - 2) },
+        { date: 'Nov', value: Math.max(0, avgRHS - 1) },
+        { date: 'Dec', value: avgRHS },
+      ],
+    };
+  }, [filteredCustomers]);
+
+  // ── Dynamic lifecycle stages from filtered data ──────────────────────────
+  const lifecycleStages = useMemo(() => {
+    const stageIds = ['prospect', 'new', 'growing', 'mature', 'at-risk'] as const;
+    const stageLabels: Record<string, string> = {
+      prospect: 'Prospect', new: 'New', growing: 'Growing', mature: 'Mature', 'at-risk': 'At Risk',
+    };
+
+    return stageIds.map(id => {
+      const stageCustomers = filteredCustomers.filter(c => c.relationshipStage === id);
+      const count = stageCustomers.length;
+      return {
+        id,
+        label: stageLabels[id],
+        count,
+        avgRHS: count > 0 ? Math.round(stageCustomers.reduce((s, c) => s + c.rhs, 0) / count) : 0,
+        avgRevenue: count > 0 ? Math.round(stageCustomers.reduce((s, c) => s + c.totalExposure, 0) / count) : 0,
+        avgProductCount: count > 0 ? parseFloat((stageCustomers.reduce((s, c) => s + c.productCount, 0) / count).toFixed(1)) : 0,
+        trend: 0,
+      };
+    });
+  }, [filteredCustomers]);
+
+  // ── Dynamic recommendations ──────────────────────────────────────────────
+  const recommendations = useMemo(
+    () => generateRecommendations(filteredCustomers, filters),
+    [filteredCustomers, filters],
+  );
+
   // Handlers
   const handleFiltersChange = (newFilters: CustomerFilters) => {
     setFilters(newFilters);
     setCurrentPage(1);
+    setSelectedIds([]);
   };
 
   const handleSelectCustomer = (id: string) => {
     setSelectedCustomerId(id);
-    const customer = customers.find(c => c.id === id);
+    const customer = filteredCustomers.find(c => c.id === id);
     if (customer) {
       emitDossierOpened(id, customer.businessName);
     }
   };
 
   const handleSelectAll = () => {
-    if (selectedIds.length === customers.length) {
+    if (selectedIds.length === filteredCustomers.length) {
       setSelectedIds([]);
     } else {
-      setSelectedIds(customers.map(c => c.id));
+      setSelectedIds(filteredCustomers.map(c => c.id));
     }
   };
 
@@ -221,8 +439,11 @@ const CustomerBff: React.FC = () => {
   const handleStageClick = (stageId: string) => {
     setFilters(prev => ({
       ...prev,
-      relationshipStage: [stageId],
+      relationshipStage: prev.relationshipStage.includes(stageId)
+        ? prev.relationshipStage.filter(s => s !== stageId)
+        : [stageId],
     }));
+    setCurrentPage(1);
   };
 
   const handleAssignTask = (_recommendation: unknown, _assignee: string) => {
@@ -233,15 +454,8 @@ const CustomerBff: React.FC = () => {
     // Recommendation dismissed
   };
 
-  const selectedCustomer = customers.find(c => c.id === selectedCustomerId);
-
-  // Calculate lifecycle counts from loaded customers
-  const lifecycleStages = mockLifecycleStages.map(stage => ({
-    ...stage,
-    count: customers.filter(c => c.relationshipStage === stage.id).length,
-  }));
-
-  const totalClients = customers.length;
+  const selectedCustomer = filteredCustomers.find(c => c.id === selectedCustomerId);
+  const totalClients = filteredCustomers.length;
 
   // Build engagement panel data for selected customer (enriched data preferred)
   const engagementData = selectedCustomer ? (() => {
@@ -298,6 +512,7 @@ const CustomerBff: React.FC = () => {
   const dossierData = dossierCustomer ? (() => {
     const enriched = getEnrichedBusiness(dossierCustomer.id);
     const baseBiz = DEMO_BUSINESSES.find(b => b.id === dossierCustomer.id);
+    const demoRec = CUSTOMER_DEMO_DATA.find(r => r.id === dossierCustomer.id);
 
     const trendData = enriched?.rhsTrendData
       ? ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, i) => ({
@@ -323,19 +538,19 @@ const CustomerBff: React.FC = () => {
     return {
       id: dossierCustomer.id,
       businessName: dossierCustomer.businessName,
-      legalName: baseBiz?.legalName || dossierCustomer.businessName,
-      dba: baseBiz?.name || dossierCustomer.businessName,
+      legalName: baseBiz?.legalName || demoRec?.legalName || dossierCustomer.businessName,
+      dba: baseBiz?.name || demoRec?.businessName || dossierCustomer.businessName,
       industry: dossierCustomer.industry,
       naicsCode: dossierCustomer.naicsCode,
       segment: dossierCustomer.segment,
       region: dossierCustomer.region,
-      address: baseBiz ? `${baseBiz.city}, ${baseBiz.state}` : dossierCustomer.branch,
+      address: baseBiz ? `${baseBiz.city}, ${baseBiz.state}` : demoRec ? `${demoRec.city}, ${demoRec.state}` : dossierCustomer.branch,
       phone: enriched?.phone || 'On file',
       email: enriched?.email || 'On file',
       website: enriched?.website || 'On file',
-      yearsInBusiness: baseBiz?.yearsInBusiness || 5,
-      employeeCount: baseBiz?.employeeCount || 25,
-      annualRevenue: baseBiz?.annualRevenue || dossierCustomer.totalExposure * 8,
+      yearsInBusiness: baseBiz?.yearsInBusiness || demoRec?.yearsInBusiness || 5,
+      employeeCount: baseBiz?.employeeCount || demoRec?.employeeCount || 25,
+      annualRevenue: baseBiz?.annualRevenue || demoRec?.annualRevenue || dossierCustomer.totalExposure * 8,
       assignedRM: {
         name: enriched?.assignedRM || dossierCustomer.assignedRM || 'Unassigned',
         email: `${(enriched?.assignedRM || 'rm').toLowerCase().replace(/\s+/g, '.')}@partnerbank.com`,
@@ -450,34 +665,38 @@ const CustomerBff: React.FC = () => {
       <CustomerGlobalControls filters={filters} onFiltersChange={handleFiltersChange} />
 
       {/* Lifecycle Pipeline */}
-      <LifecyclePipeline 
-        stages={lifecycleStages} 
+      <LifecyclePipeline
+        stages={lifecycleStages}
         onStageClick={handleStageClick}
         totalClients={totalClients}
       />
 
       {/* Relationship Health Summary */}
-      <RelationshipHealthSummary data={mockHealthSummary} onDrilldown={handleDrilldown} />
+      <RelationshipHealthSummary data={healthSummary} onDrilldown={handleDrilldown} />
 
       {/* Main Content Area */}
       <div className="grid grid-cols-12 gap-6">
         {/* Left: Customer List Table */}
         <div className="col-span-12 xl:col-span-5">
-          {isLoading && customers.length === 0 ? (
+          {isLoading && filteredCustomers.length === 0 ? (
             <CustomerTableSkeleton rows={6} />
-          ) : customers.length === 0 ? (
+          ) : filteredCustomers.length === 0 ? (
             <EmptyState
               icon={searchQuery ? UserX : Users}
-              title={searchQuery ? 'No customers match your search' : 'No customers found'}
+              title={searchQuery ? 'No customers match your search' : 'No customers match filters'}
               description={
                 searchQuery
                   ? `No results for "${searchQuery}". Try adjusting your search terms.`
-                  : 'Add your first customer or adjust filters to see results.'
+                  : 'Adjust your filter selections to see results.'
               }
               action={
                 searchQuery
                   ? { label: 'Clear search', onClick: () => setSearchQuery(''), variant: 'outline' }
-                  : undefined
+                  : {
+                      label: 'Clear filters',
+                      onClick: () => handleFiltersChange({ ...filters, product: [], segment: [], region: [], relationshipStage: [] }),
+                      variant: 'outline',
+                    }
               }
               variant="card"
               size="sm"
@@ -485,7 +704,7 @@ const CustomerBff: React.FC = () => {
             />
           ) : (
             <CustomerListTable
-              customers={customers}
+              customers={filteredCustomers}
               selectedIds={selectedIds}
               onSelect={handleSelectCustomer}
               onSelectAll={handleSelectAll}
@@ -495,7 +714,7 @@ const CustomerBff: React.FC = () => {
               onSort={handleSort}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
-              totalCount={totalCount}
+              totalCount={filteredCustomers.length}
               currentPage={currentPage}
               pageSize={pageSize}
               onPageChange={setCurrentPage}
@@ -522,7 +741,7 @@ const CustomerBff: React.FC = () => {
         {/* Right: Next Best Actions */}
         <div className="col-span-12 xl:col-span-3">
           <NextBestActions
-            recommendations={mockRecommendations}
+            recommendations={recommendations}
             onAssignTask={handleAssignTask}
             onDismiss={handleDismissRecommendation}
           />
