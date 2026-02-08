@@ -7,7 +7,7 @@ import { ApiConsole } from '@/components/api-console';
 import {
   Home, Lightbulb, FileText, Eye, Briefcase,
   KeyRound, Link2, TrendingUp, Package, Building2,
-  BarChart3, SlidersHorizontal, Bell,
+  BarChart3, SlidersHorizontal, Bell, Book,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -23,6 +23,7 @@ import Customer from '@/pages/Dashboard/Customer';
 import Notifications from '@/pages/Dashboard/Notifications';
 import { PartnerPortalEnterprise } from '@/components/partner-portal';
 import Settings from '@/pages/Dashboard/Settings';
+import Documentation from '@/components/dashboard/pages/Documentation';
 
 // Import Connected Environment Toggle (uses global context)
 import { ConnectedEnvironmentToggle } from '@/components/widgets';
@@ -73,6 +74,7 @@ const navigation: { id: string; title: string; icon: LucideIcon }[] = [
   { id: 'users', title: 'Businesses', icon: Building2 },
   { id: 'reports', title: 'Reports', icon: BarChart3 },
   { id: 'settings', title: 'Settings', icon: SlidersHorizontal },
+  { id: 'documentation', title: 'Documentation', icon: Book },
 ];
 
 
@@ -739,7 +741,7 @@ const Dashboard: React.FC = () => {
 
               {/* Docs Link */}
               <button
-                onClick={() => toast({ title: 'Documentation portal available at docs.lumiq.ai', description: 'Access API references, guides, and integration examples.' })}
+                onClick={() => setActiveTab('documentation')}
                 className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-card hover:bg-muted border border-border transition-all duration-200 group"
                 title="Documentation"
               >
@@ -928,6 +930,7 @@ const Dashboard: React.FC = () => {
             {activeTab === 'reports' && <Reports />}
             {activeTab === 'notifications' && <Notifications />}
             {activeTab === 'settings' && <Settings />}
+            {activeTab === 'documentation' && <Documentation />}
           </motion.div>
       </main>
       </div>

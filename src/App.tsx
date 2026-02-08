@@ -23,6 +23,7 @@ const Notifications = React.lazy(() => import('./pages/Dashboard/Notifications')
 const UnderwritingAssistant = React.lazy(() => import('./pages/Dashboard/UnderwritingAssistant'))
 const ApiTesting = React.lazy(() => import('./pages/Dashboard/ApiTesting'))
 const WidgetsShowcase = React.lazy(() => import('./pages/Dashboard/WidgetsShowcase'))
+const DocumentationPage = React.lazy(() => import('./pages/Dashboard/Documentation'))
 const NotFound = React.lazy(() => import('./pages/Dashboard/NotFound'))
 
 const LoadingFallback = () => (
@@ -162,6 +163,12 @@ function App() {
           <Route path="/dashboard/widgets" element={
             <ProtectedRoute>
               <WidgetsShowcase />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/dashboard/documentation" element={
+            <ProtectedRoute>
+              <DocumentationPage />
             </ProtectedRoute>
           } />
           
