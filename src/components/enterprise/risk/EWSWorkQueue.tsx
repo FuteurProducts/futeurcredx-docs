@@ -16,9 +16,13 @@ export interface EWSIndicator {
   recall?: number;
 }
 
+export type AlertLifecycleStatus = 'new' | 'assigned' | 'in_review' | 'resolved' | 'dismissed' | 'escalated';
+
 export interface EWSQueueItem {
   id: string;
   severity: 'critical' | 'high' | 'medium' | 'low';
+  /** Lifecycle status — tracks alert from creation through resolution */
+  status: AlertLifecycleStatus;
   businessId: string;
   businessName: string;
   primaryDriver: string;
@@ -32,6 +36,9 @@ export interface EWSQueueItem {
   slaDue: Date;
   slaBreached: boolean;
   assignee?: string;
+  resolvedAt?: Date;
+  resolvedBy?: string;
+  resolution?: 'resolved' | 'dismissed' | 'escalated';
   createdAt: Date;
   notes: { author: string; text: string; timestamp: Date }[];
 }
@@ -103,6 +110,18 @@ const QueueItemCard: React.FC<{
         {/* Severity Badge */}
         <span className={`px-2 py-0.5 rounded text-xs font-bold uppercase ${style.badge}`}>
           {item.severity}
+        </span>
+
+        {/* Lifecycle Status */}
+        <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+          item.status === 'new' ? 'bg-blue-100 text-blue-700' :
+          item.status === 'assigned' ? 'bg-purple-100 text-purple-700' :
+          item.status === 'in_review' ? 'bg-yellow-100 text-yellow-700' :
+          item.status === 'resolved' ? 'bg-green-100 text-green-700' :
+          item.status === 'escalated' ? 'bg-red-100 text-red-700' :
+          'bg-gray-100 text-gray-600'
+        }`}>
+          {item.status === 'in_review' ? 'In Review' : item.status.charAt(0).toUpperCase() + item.status.slice(1)}
         </span>
 
         {/* Business Info */}

@@ -3,14 +3,17 @@
  * Strips sensitive fields before export and emits audit events.
  */
 
+import { auditService } from '@/services/bff/audit';
+
 /** Fields that contain PII and must be redacted before export */
 const PII_FIELDS = new Set([
   'ssn', 'socialSecurityNumber', 'social_security_number',
   'taxId', 'tax_id', 'ein',
   'bankAccount', 'bank_account', 'accountNumber', 'account_number',
-  'routingNumber', 'routing_number',
+  'bankAccountNumber', 'routingNumber', 'routing_number',
   'dob', 'dateOfBirth', 'date_of_birth',
   'driversLicense', 'drivers_license',
+  'password', 'secret', 'token',
 ]);
 
 function redactPII(row: Record<string, unknown>): Record<string, unknown> {
@@ -24,7 +27,7 @@ function redactPII(row: Record<string, unknown>): Record<string, unknown> {
 export function exportToCSV(
   data: Record<string, unknown>[],
   filename: string,
-  options?: { onAudit?: (recordCount: number) => void }
+  options?: { resourceType?: string; resourceId?: string }
 ) {
   if (data.length === 0) return;
 
@@ -44,6 +47,20 @@ export function exportToCSV(
     )
   ].join('\n');
 
+  // Emit audit event before download
+  auditService.emit(
+    'EXPORT_INITIATED',
+    options?.resourceType ?? 'data_export',
+    options?.resourceId,
+    {
+      filename,
+      rowCount: data.length,
+      columnCount: headers.length,
+      columns: headers,
+      exportFormat: 'csv',
+    }
+  ).catch(() => { /* best-effort audit logging */ });
+
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -51,7 +68,4 @@ export function exportToCSV(
   link.download = `${filename}-${new Date().toISOString().slice(0, 10)}.csv`;
   link.click();
   URL.revokeObjectURL(url);
-
-  // Fire audit callback
-  options?.onAudit?.(data.length);
 }

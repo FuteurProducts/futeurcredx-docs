@@ -201,6 +201,7 @@ const ewsQueueItems: EWSQueueItem[] = [
   {
     id: '1',
     severity: 'critical',
+    status: 'new',
     businessId: 'BIZ-2847',
     businessName: 'TechFlow Solutions',
     primaryDriver: 'Payment Pattern Change',
@@ -219,6 +220,7 @@ const ewsQueueItems: EWSQueueItem[] = [
   {
     id: '2',
     severity: 'high',
+    status: 'assigned',
     businessId: 'BIZ-1923',
     businessName: 'Metro Logistics Corp',
     primaryDriver: 'Utilization Spike',
@@ -348,6 +350,7 @@ const Risk: React.FC = () => {
         const mappedQueue: EWSQueueItem[] = alerts.map((alert, idx) => ({
           id: alert.id,
           severity: alert.severity === 'critical' ? 'critical' : 'high',
+          status: 'new',
           businessId: alert.smbEntityId,
           businessName: alert.message?.split(' ')[0] || `Business ${idx + 1}`,
           primaryDriver: alert.alertType.replace(/_/g, ' '),

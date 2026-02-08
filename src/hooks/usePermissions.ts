@@ -1,10 +1,15 @@
 /**
  * usePermissions Hook — RBAC Permission Gating
+ *
  * Role-based access control with a strict permission matrix.
- * Roles: admin, developer, risk_analyst, relationship_manager, readonly
+ * In demo/sandbox mode, the current user's role is stored in localStorage
+ * and defaults to 'admin' so the full feature set is visible.
+ *
+ * In production this would read from the authenticated session / JWT claims.
  */
 
-export type Role = 'admin' | 'developer' | 'risk_analyst' | 'relationship_manager' | 'readonly';
+import { useMemo, useSyncExternalStore } from 'react';
+import type { UserRole } from '@/components/enterprise/settings/types';
 
 export type Permission =
   | 'credentials:read'
@@ -24,7 +29,7 @@ export type Permission =
   | 'settings:manage'
   | 'users:manage';
 
-const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
+const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
   admin: [
     'credentials:read', 'credentials:write', 'credentials:reveal',
     'export:csv', 'export:pdf',
@@ -39,13 +44,13 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     'export:csv', 'export:pdf',
     'reports:generate', 'reports:download',
   ],
-  risk_analyst: [
+  risk: [
     'credentials:read',
     'export:csv', 'export:pdf',
     'risk:acknowledge_alert', 'risk:modify_thresholds',
     'reports:generate', 'reports:download',
   ],
-  relationship_manager: [
+  rm: [
     'credentials:read',
     'export:csv',
     'underwriting:approve', 'underwriting:decline',
@@ -58,16 +63,49 @@ const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   ],
 };
 
+// ── localStorage-backed role store (for demo mode) ──────────────────────
+const ROLE_STORAGE_KEY = 'lumiqai-current-role';
+const DEFAULT_ROLE: UserRole = 'admin';
+
+let listeners: Array<() => void> = [];
+
+function getSnapshot(): UserRole {
+  try {
+    const stored = localStorage.getItem(ROLE_STORAGE_KEY);
+    if (stored && stored in ROLE_PERMISSIONS) return stored as UserRole;
+  } catch { /* SSR / restricted */ }
+  return DEFAULT_ROLE;
+}
+
+function subscribe(listener: () => void) {
+  listeners = [...listeners, listener];
+  return () => {
+    listeners = listeners.filter(l => l !== listener);
+  };
+}
+
+/** Call this to change the active demo role (e.g. from Settings page). */
+export function setCurrentRole(role: UserRole) {
+  localStorage.setItem(ROLE_STORAGE_KEY, role);
+  listeners.forEach(l => l());
+}
+
+const ROLE_LABELS: Record<UserRole, string> = {
+  admin: 'Administrator',
+  developer: 'Developer',
+  risk: 'Risk Analyst',
+  rm: 'Relationship Manager',
+  readonly: 'Read-only',
+};
+
 /**
  * Returns the current user's role and permission check helpers.
- * In mock/demo mode, defaults to 'admin' for full access.
+ * Reactively updates when the demo role changes via setCurrentRole().
  */
 export function usePermissions() {
-  // In production this would read from Clerk session claims or a JWT.
-  // For the demo/sandbox, default to admin so everything is accessible.
-  const role: Role = 'admin';
+  const role = useSyncExternalStore(subscribe, getSnapshot, () => DEFAULT_ROLE);
 
-  const permissions = ROLE_PERMISSIONS[role] ?? [];
+  const permissions = useMemo(() => ROLE_PERMISSIONS[role] ?? [], [role]);
 
   const hasPermission = (permission: Permission): boolean =>
     permissions.includes(permission);
@@ -78,5 +116,12 @@ export function usePermissions() {
   const hasAllPermissions = (...perms: Permission[]): boolean =>
     perms.every((p) => permissions.includes(p));
 
-  return { role, permissions, hasPermission, hasAnyPermission, hasAllPermissions };
+  return {
+    role,
+    roleLabel: ROLE_LABELS[role] ?? role,
+    permissions,
+    hasPermission,
+    hasAnyPermission,
+    hasAllPermissions,
+  };
 }

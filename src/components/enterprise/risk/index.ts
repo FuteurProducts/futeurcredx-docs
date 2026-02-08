@@ -14,7 +14,7 @@ export { ConcentrationPanel } from './ConcentrationPanel';
 export type { ConcentrationItem, ConcentrationCategory, ConcentrationPanelProps } from './ConcentrationPanel';
 
 export { EWSWorkQueue } from './EWSWorkQueue';
-export type { EWSIndicator, EWSQueueItem, EWSWorkQueueProps } from './EWSWorkQueue';
+export type { EWSIndicator, EWSQueueItem, EWSWorkQueueProps, AlertLifecycleStatus } from './EWSWorkQueue';
 
 export { ModelGovernancePanel } from './ModelGovernancePanel';
 export type { ModelInfo, FeatureDrift, OutcomeMonitoring, ModelGovernancePanelProps } from './ModelGovernancePanel';
