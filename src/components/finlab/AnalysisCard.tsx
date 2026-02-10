@@ -45,7 +45,7 @@ export const AnalysisCard = ({
       right={
         row ? (
           <Select value={duration} onValueChange={setDuration}>
-            <SelectTrigger className="w-[110px] h-8 text-sm border-border">
+            <SelectTrigger className="w-[110px] h-12 text-sm border-border">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -67,7 +67,7 @@ export const AnalysisCard = ({
             </div>
             <div className={`flex items-center text-base font-medium ${row ? "ml-4 mt-2" : ""}`}>
               <div
-                className={`flex items-center mr-3 px-2 py-0.5 rounded-md text-sm font-semibold ${
+                className={`flex items-center mr-3 px-2 py-0.5 rounded-full text-sm font-semibold ${
                   percent >= 0
                     ? "bg-success/10 text-success"
                     : "bg-destructive/10 text-destructive"
@@ -102,7 +102,7 @@ export const AnalysisCard = ({
         {!row && (
           <div className="flex justify-end mb-4">
             <Select value={duration} onValueChange={setDuration}>
-              <SelectTrigger className="w-[110px] h-8 text-sm border-border">
+              <SelectTrigger className="w-[110px] h-12 text-sm border-border">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

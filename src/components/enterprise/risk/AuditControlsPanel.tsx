@@ -150,7 +150,7 @@ export const AuditControlsPanel: React.FC<AuditControlsPanelProps> = ({
             <select
               value={filterSensitivity}
               onChange={(e) => setFilterSensitivity(e.target.value as typeof filterSensitivity)}
-              className="h-8 px-2 bg-muted border-0 rounded-lg text-sm"
+              className="h-12 px-2 bg-muted border-0 rounded-lg text-sm"
             >
               <option value="all">All Sensitivity</option>
               <option value="high">High Only</option>

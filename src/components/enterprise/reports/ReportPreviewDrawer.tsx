@@ -213,17 +213,17 @@ export const ReportPreviewDrawer: React.FC<ReportPreviewDrawerProps> = ({
             <div className="p-4 border-t border-border space-y-2">
               <button
                 onClick={() => onDownload(report)}
-                className="w-full flex items-center justify-center gap-2 h-11 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors"
+                className="w-full flex items-center justify-center gap-2 h-11 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors"
               >
                 <Download className="h-4 w-4" />
                 Download Report
               </button>
               <div className="flex gap-2">
-                <button className="flex-1 flex items-center justify-center gap-2 h-10 border border-border rounded-md text-sm font-medium hover:bg-muted transition-colors">
+                <button className="flex-1 flex items-center justify-center gap-2 h-10 border border-border rounded-xl text-sm font-medium hover:bg-muted transition-colors">
                   <Share2 className="h-4 w-4" />
                   Share Internally
                 </button>
-                <button className="flex-1 flex items-center justify-center gap-2 h-10 border border-border rounded-md text-sm font-medium hover:bg-muted transition-colors">
+                <button className="flex-1 flex items-center justify-center gap-2 h-10 border border-border rounded-xl text-sm font-medium hover:bg-muted transition-colors">
                   <Cloud className="h-4 w-4" />
                   Export to S3
                 </button>

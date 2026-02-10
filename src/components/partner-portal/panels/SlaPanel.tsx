@@ -170,7 +170,7 @@ export const SlaPanel: React.FC = () => {
             {uptimeDays.map((status, i) => (
               <div
                 key={i}
-                className={`flex-1 h-8 rounded-sm ${
+                className={`flex-1 h-8 rounded-lg ${
                   status === 'operational' ? 'bg-chart-2' :
                   status === 'degraded' ? 'bg-warning' :
                   'bg-destructive'

@@ -165,7 +165,7 @@ export const PortfolioFilterBar: React.FC<PortfolioFilterBarProps> = ({
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
-            className="absolute top-full left-0 mt-1.5 w-52 bg-card border border-border rounded-lg shadow-lg z-50 p-1.5"
+            className="absolute top-full left-0 mt-1.5 w-52 bg-card border border-border rounded-2xl shadow-lg z-50 p-1.5"
           >
             {options.map((opt) => (
               <button

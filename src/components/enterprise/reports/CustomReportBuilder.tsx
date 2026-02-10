@@ -126,7 +126,7 @@ export const CustomReportBuilder: React.FC<CustomReportBuilderProps> = ({
       className="grid grid-cols-2 gap-4 h-full"
     >
       {/* Left - Metric Tree */}
-      <div className="bg-card rounded-lg border border-border shadow-sm flex flex-col">
+      <div className="bg-card rounded-2xl border border-border shadow-sm flex flex-col">
         <div className="p-4 border-b border-border">
           <h2 className="text-lg font-semibold text-foreground">Available Metrics</h2>
           <p className="text-sm text-muted-foreground mt-1">
@@ -139,14 +139,14 @@ export const CustomReportBuilder: React.FC<CustomReportBuilderProps> = ({
       </div>
 
       {/* Right - Builder Canvas */}
-      <div className="bg-card rounded-lg border border-border shadow-sm flex flex-col">
+      <div className="bg-card rounded-2xl border border-border shadow-sm flex flex-col">
         <div className="p-4 border-b border-border">
           <div className="flex items-center gap-3">
             <input
               type="text"
               value={templateName}
               onChange={(e) => setTemplateName(e.target.value)}
-              className="flex-1 h-9 px-3 text-lg font-semibold bg-transparent border-b border-transparent hover:border-border focus:border-primary focus:outline-none"
+              className="flex-1 h-12 px-3 text-lg font-semibold bg-transparent border-b border-transparent hover:border-border focus:border-primary focus:outline-none"
             />
           </div>
           <p className="text-sm text-muted-foreground mt-1">
@@ -175,7 +175,7 @@ export const CustomReportBuilder: React.FC<CustomReportBuilderProps> = ({
                   <Reorder.Item
                     key={block.id}
                     value={block}
-                    className="bg-muted/50 rounded-lg border border-border p-3 cursor-grab active:cursor-grabbing"
+                    className="bg-muted/50 rounded-xl border border-border p-3 cursor-grab active:cursor-grabbing"
                   >
                     <div className="flex items-center gap-3">
                       <GripVertical className="h-5 w-5 text-muted-foreground" />
@@ -220,7 +220,7 @@ export const CustomReportBuilder: React.FC<CustomReportBuilderProps> = ({
           <button
             onClick={() => onSave(templateName, selectedBlocks)}
             disabled={selectedBlocks.length === 0}
-            className="flex-1 flex items-center justify-center gap-2 h-10 border border-border rounded-md font-medium hover:bg-muted transition-colors disabled:opacity-50"
+            className="flex-1 flex items-center justify-center gap-2 h-10 border border-border rounded-xl font-medium hover:bg-muted transition-colors disabled:opacity-50"
           >
             <Save className="h-4 w-4" />
             Save Template
@@ -228,7 +228,7 @@ export const CustomReportBuilder: React.FC<CustomReportBuilderProps> = ({
           <button
             onClick={() => onRun(selectedBlocks)}
             disabled={selectedBlocks.length === 0}
-            className="flex-1 flex items-center justify-center gap-2 h-10 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+            className="flex-1 flex items-center justify-center gap-2 h-10 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
           >
             <Play className="h-4 w-4" />
             Run Now

@@ -363,7 +363,7 @@ export const EWSWorkQueue: React.FC<EWSWorkQueueProps> = ({
                 placeholder="Search businesses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-9 pl-9 pr-3 bg-muted border-0 rounded-lg text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-primary"
+                className="w-full h-12 pl-9 pr-3 bg-muted border-0 rounded-lg text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-primary"
               />
             </div>
             

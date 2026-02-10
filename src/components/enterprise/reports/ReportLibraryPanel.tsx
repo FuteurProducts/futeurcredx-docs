@@ -78,7 +78,7 @@ export const ReportLibraryPanel: React.FC<ReportLibraryPanelProps> = ({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-card rounded-lg border border-border shadow-sm h-full flex flex-col"
+      className="bg-card rounded-2xl border border-border shadow-sm h-full flex flex-col"
     >
       {/* Header */}
       <div className="p-4 border-b border-border">
@@ -90,7 +90,7 @@ export const ReportLibraryPanel: React.FC<ReportLibraryPanelProps> = ({
             placeholder="Search reports..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-9 pl-9 pr-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full h-12 pl-9 pr-3 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>

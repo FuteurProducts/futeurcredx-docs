@@ -29,7 +29,7 @@ export const ProductShelfCard: React.FC<ProductShelfCardProps> = ({ product }) =
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <h4 className="text-sm font-semibold text-foreground leading-tight pr-2">{product.name}</h4>
-        <span className={`shrink-0 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase border ${statusColors[product.status]}`}>
+        <span className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border ${statusColors[product.status]}`}>
           {product.status}
         </span>
       </div>
@@ -59,11 +59,11 @@ export const ProductShelfCard: React.FC<ProductShelfCardProps> = ({ product }) =
 
       {/* Footer: Tier + Segments */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${tierColors[product.eligibilityTier]}`}>
+        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${tierColors[product.eligibilityTier]}`}>
           {product.eligibilityTier}
         </span>
         {product.targetSegments.slice(0, 2).map((seg) => (
-          <span key={seg} className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-muted text-muted-foreground">
+          <span key={seg} className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-muted text-muted-foreground">
             {seg}
           </span>
         ))}

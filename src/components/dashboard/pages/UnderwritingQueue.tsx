@@ -111,7 +111,7 @@ const UnderwritingQueue: React.FC = () => {
 
   const SortHeader: React.FC<{ field: SortField; label: string; className?: string }> = ({ field, label, className }) => (
     <th
-      className={cn('px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-all duration-200 select-none', className)}
+      className={cn('px-5 py-4 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-all duration-200 select-none', className)}
       onClick={() => handleSort(field)}
     >
       <div className="flex items-center gap-1">
@@ -364,9 +364,9 @@ const UnderwritingQueue: React.FC = () => {
         <div className="bg-card rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-muted/50 border-b border-border">
-                <tr>
-                  <th className="w-10 px-4 py-3" />
+              <thead className="bg-muted/50 border-b border-border/30">
+                <tr className="h-14">
+                  <th className="w-10 px-5 py-4" />
                   <SortHeader field="business" label="Business" />
                   <SortHeader field="product" label="Product" />
                   <SortHeader field="amount" label="Amount" />
@@ -376,7 +376,7 @@ const UnderwritingQueue: React.FC = () => {
                   <SortHeader field="slaStatus" label="SLA" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-y divide-border/30">
                 {sortedQueue.map((item, index) => {
                   const sla = getSLAIndicator(item.slaStatus);
                   const isSelected = selectedIds.has(item.id);
@@ -388,13 +388,13 @@ const UnderwritingQueue: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: index * 0.03 }}
                       className={cn(
-                        'hover:bg-muted/50 cursor-pointer transition-colors duration-150',
+                        'hover:bg-muted/30 cursor-pointer transition-colors duration-150',
                         isSelected && 'bg-primary/5',
                         item.slaStatus === 'breach' && 'bg-rose-50/50 dark:bg-rose-950/20',
                       )}
                       onClick={() => setDetailItem(item)}
                     >
-                      <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                      <td className="px-5 py-4" onClick={e => e.stopPropagation()}>
                         <input
                           type="checkbox"
                           checked={isSelected}
@@ -402,19 +402,19 @@ const UnderwritingQueue: React.FC = () => {
                           className="w-4 h-4 rounded border-border"
                         />
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-5 py-4">
                         <div className="font-semibold text-sm text-foreground">{item.business}</div>
                         <div className="text-xs text-muted-foreground font-mono">{item.id.toUpperCase()}</div>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-5 py-4">
                         <span className="px-2 py-0.5 rounded text-xs font-semibold bg-muted text-foreground">
                           {item.product}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold text-foreground">
+                      <td className="px-5 py-4 text-sm font-semibold text-foreground">
                         {formatCurrency(item.amount)}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-5 py-4">
                         <span className={cn(
                           'text-sm font-semibold',
                           item.score >= 70 ? 'text-emerald-600' : item.score >= 50 ? 'text-foreground' : 'text-rose-600',
@@ -422,15 +422,15 @@ const UnderwritingQueue: React.FC = () => {
                           {item.score}
                         </span>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-5 py-4">
                         <span className={cn('px-2 py-0.5 rounded text-xs font-semibold border', getRiskBadgeClass(item.risk))}>
                           {item.risk}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-sm text-foreground tabular-nums">
+                      <td className="px-5 py-4 text-sm text-foreground tabular-nums">
                         {item.timeInQueue.toFixed(1)}h
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-5 py-4">
                         <span className={cn('text-xs font-semibold', sla.colorClass)}>
                           {sla.label}
                         </span>
@@ -538,34 +538,34 @@ const UnderwritingQueue: React.FC = () => {
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Segment</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Applications</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Approved</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Rate</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Variance</th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+              <thead className="bg-muted/50 border-b border-border/30">
+                <tr className="h-14">
+                  <th className="px-5 py-4 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Segment</th>
+                  <th className="px-5 py-4 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Applications</th>
+                  <th className="px-5 py-4 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Approved</th>
+                  <th className="px-5 py-4 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Rate</th>
+                  <th className="px-5 py-4 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Variance</th>
+                  <th className="px-5 py-4 text-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border">
+              <tbody className="divide-y divide-border/30">
                 {COMPLIANCE.approvalVariance.map(row => (
                   <tr key={row.segment} className={cn(
-                    'hover:bg-muted/50 transition-colors duration-150',
+                    'hover:bg-muted/30 transition-colors duration-150',
                     row.status === 'flag' && 'bg-rose-50/50 dark:bg-rose-950/20',
                     row.status === 'review' && 'bg-amber-50/50 dark:bg-amber-950/20',
                   )}>
-                    <td className="px-4 py-3 text-sm text-foreground">{row.segment}</td>
-                    <td className="px-4 py-3 text-sm text-right text-foreground tabular-nums">{formatNumber(row.applications)}</td>
-                    <td className="px-4 py-3 text-sm text-right text-foreground tabular-nums">{formatNumber(row.approved)}</td>
-                    <td className="px-4 py-3 text-sm text-right text-foreground tabular-nums">{formatPercent(row.rate)}</td>
+                    <td className="px-5 py-4 text-sm text-foreground">{row.segment}</td>
+                    <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatNumber(row.applications)}</td>
+                    <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatNumber(row.approved)}</td>
+                    <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatPercent(row.rate)}</td>
                     <td className={cn(
-                      'px-4 py-3 text-sm text-right font-medium tabular-nums',
+                      'px-5 py-4 text-sm text-right font-medium tabular-nums',
                       row.variance > 0 ? 'text-emerald-600' : row.variance < -0.05 ? 'text-rose-600' : 'text-foreground',
                     )}>
                       {row.variance > 0 ? '+' : ''}{formatPercent(row.variance)}
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-5 py-4 text-center">
                       {row.status === 'ok' && <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto" />}
                       {row.status === 'review' && <AlertTriangle className="h-4 w-4 text-amber-500 mx-auto" />}
                       {row.status === 'flag' && <XCircle className="h-4 w-4 text-rose-500 mx-auto" />}

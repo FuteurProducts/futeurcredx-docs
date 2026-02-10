@@ -104,7 +104,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.product}
             onChange={(e) => updateFilter('product', e.target.value as ProductType)}
-            className="appearance-none h-10 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
           >
             {products.map((p) => (
               <option key={p.id} value={p.id}>{p.label}</option>
@@ -119,7 +119,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.segment}
             onChange={(e) => updateFilter('segment', e.target.value as SegmentType)}
-            className="appearance-none h-10 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
           >
             {segments.map((s) => (
               <option key={s.id} value={s.id}>{s.label}</option>
@@ -134,7 +134,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.geography}
             onChange={(e) => updateFilter('geography', e.target.value)}
-            className="appearance-none h-10 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
           >
             <option value="national">National</option>
             <option value="northeast">Northeast</option>
@@ -152,7 +152,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.relationshipStage}
             onChange={(e) => updateFilter('relationshipStage', e.target.value as RelationshipStage)}
-            className="appearance-none h-10 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
           >
             {stages.map((s) => (
               <option key={s.id} value={s.id}>{s.label}</option>
@@ -205,7 +205,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="space-y-2">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Industry</label>
-              <select className="w-full h-10 px-3 bg-muted rounded-xl text-sm font-medium">
+              <select className="w-full h-12 px-3 bg-muted rounded-xl text-sm font-medium">
                 <option>All Industries</option>
                 <option>Restaurants</option>
                 <option>Retail</option>
@@ -216,7 +216,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
             </div>
             <div className="space-y-2">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Risk Tier</label>
-              <select className="w-full h-10 px-3 bg-muted rounded-xl text-sm font-medium">
+              <select className="w-full h-12 px-3 bg-muted rounded-xl text-sm font-medium">
                 <option>All Tiers</option>
                 <option>Low Risk</option>
                 <option>Medium Risk</option>
@@ -225,7 +225,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
             </div>
             <div className="space-y-2">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Risk Indicator Range</label>
-              <select className="w-full h-10 px-3 bg-muted rounded-xl text-sm font-medium">
+              <select className="w-full h-12 px-3 bg-muted rounded-xl text-sm font-medium">
                 <option>All Indicators</option>
                 <option>86–100 (Excellent)</option>
                 <option>76–85 (Good)</option>
@@ -236,7 +236,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
             </div>
             <div className="space-y-2">
               <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Exposure Range</label>
-              <select className="w-full h-10 px-3 bg-muted rounded-xl text-sm font-medium">
+              <select className="w-full h-12 px-3 bg-muted rounded-xl text-sm font-medium">
                 <option>All Exposures</option>
                 <option>$0 – $100K</option>
                 <option>$100K – $500K</option>

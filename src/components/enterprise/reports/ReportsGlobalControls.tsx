@@ -39,7 +39,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
         <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
           <button
             onClick={() => onViewChange('library')}
-            className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
+            className={`px-4 py-1.5 text-sm font-medium rounded-xl transition-colors ${
               activeView === 'library'
                 ? 'bg-background text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -49,7 +49,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           </button>
           <button
             onClick={() => onViewChange('custom')}
-            className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
+            className={`px-4 py-1.5 text-sm font-medium rounded-xl transition-colors ${
               activeView === 'custom'
                 ? 'bg-background text-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -93,7 +93,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.product}
             onChange={(e) => updateFilter('product', e.target.value)}
-            className="h-8 px-2 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {productOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -103,7 +103,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.segment}
             onChange={(e) => updateFilter('segment', e.target.value)}
-            className="h-8 px-2 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {segmentOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -113,7 +113,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.geography}
             onChange={(e) => updateFilter('geography', e.target.value)}
-            className="h-8 px-2 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {geographyOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -123,7 +123,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.relationshipStage}
             onChange={(e) => updateFilter('relationshipStage', e.target.value)}
-            className="h-8 px-2 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
           >
             {stageOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>

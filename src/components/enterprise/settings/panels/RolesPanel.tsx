@@ -80,17 +80,17 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
         </div>
 
         {/* Permissions Matrix */}
-        <div className="col-span-3 bg-card rounded-2xl border border-border overflow-hidden">
+        <div className="col-span-3 bg-card rounded-2xl border border-border/50 overflow-hidden">
           <table className="w-full">
-            <thead className="bg-muted/50">
-              <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">
+            <thead className="bg-muted/50 border-b border-border/30">
+              <tr className="h-14">
+                <th className="px-5 py-4 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Permission
                 </th>
                 {roles.map((role) => (
                   <th
                     key={role.role}
-                    className={`px-3 py-3 text-center text-xs font-medium uppercase ${
+                    className={`px-5 py-4 text-center text-xs font-semibold uppercase tracking-wider ${
                       selectedRole === role.role ? 'text-primary bg-primary/5' : 'text-muted-foreground'
                     }`}
                   >
@@ -99,10 +99,10 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/30">
               {permissions.map((permission) => (
-                <tr key={permission.id} className="hover:bg-muted/30">
-                  <td className="px-4 py-3">
+                <tr key={permission.id} className="hover:bg-muted/30 transition-colors duration-150">
+                  <td className="px-5 py-4">
                     <div>
                       <p className="text-sm font-medium text-foreground">{permission.label}</p>
                       <p className="text-xs text-muted-foreground">{permission.description}</p>
@@ -111,7 +111,7 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
                   {roles.map((role) => (
                     <td
                       key={role.role}
-                      className={`px-3 py-3 text-center ${
+                      className={`px-5 py-4 text-center ${
                         selectedRole === role.role ? 'bg-primary/5' : ''
                       }`}
                     >

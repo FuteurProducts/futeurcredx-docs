@@ -50,7 +50,7 @@ export const ExpenseCategoryCard = ({
       tooltip="Breakdown of your expenses by category"
       right={
         <Select value={duration} onValueChange={setDuration}>
-          <SelectTrigger className="w-[110px] h-8 text-sm border-border">
+          <SelectTrigger className="w-[110px] h-12 text-sm border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

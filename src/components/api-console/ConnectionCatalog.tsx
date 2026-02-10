@@ -66,7 +66,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
   return (
     <div className="space-y-6">
       {/* Search and Filters */}
-      <div className="bg-card rounded-2xl border border-border p-4">
+      <div className="bg-card rounded-2xl border border-border p-5">
         <div className="flex flex-wrap items-center gap-4">
           {/* Search */}
           <div className="relative flex-1 min-w-[240px]">
@@ -76,7 +76,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
               placeholder="Search connections..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 bg-muted rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full h-12 pl-10 pr-4 bg-muted rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 

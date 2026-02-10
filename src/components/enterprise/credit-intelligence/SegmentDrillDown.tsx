@@ -266,7 +266,7 @@ function SampleBusinessTable({
       </div>
 
       {/* Table Header */}
-      <div className="grid grid-cols-12 gap-3 px-3 py-2 text-[10px] font-medium text-muted-foreground uppercase tracking-wide border-b border-border">
+      <div className="grid grid-cols-12 gap-3 px-5 py-4 text-[10px] font-medium text-muted-foreground uppercase tracking-wide border-b border-border">
         <div className="col-span-4">Business Name</div>
         <div className="col-span-2 text-right">Revenue</div>
         <div className="col-span-2 text-center">Score</div>
@@ -279,7 +279,7 @@ function SampleBusinessTable({
         businesses.map((biz) => (
           <div
             key={biz.id}
-            className="grid grid-cols-12 gap-3 px-3 py-2.5 items-center hover:bg-muted/50 rounded-lg transition-colors"
+            className="grid grid-cols-12 gap-3 px-5 py-4 items-center hover:bg-muted/50 rounded-lg transition-colors"
           >
             <div className="col-span-4">
               <div className="text-sm font-medium text-foreground">

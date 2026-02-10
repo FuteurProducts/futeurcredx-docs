@@ -137,7 +137,7 @@ export const ProductPerformanceDashboard: React.FC<ProductPerformanceDashboardPr
 
                   {/* Family */}
                   <td className="py-3.5 pr-4">
-                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-md">
+                    <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded-full">
                       {row.family}
                     </span>
                   </td>

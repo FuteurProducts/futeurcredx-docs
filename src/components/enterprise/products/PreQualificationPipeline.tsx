@@ -75,15 +75,15 @@ const ReadinessBars: React.FC<ReadinessBarsProps> = ({ data }) => {
       {/* Legend */}
       <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm bg-emerald-500" />
+          <span className="w-3 h-3 rounded-lg bg-emerald-500" />
           Likely
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm bg-amber-400" />
+          <span className="w-3 h-3 rounded-lg bg-amber-400" />
           Borderline
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm bg-red-400" />
+          <span className="w-3 h-3 rounded-lg bg-red-400" />
           Unlikely
         </span>
       </div>

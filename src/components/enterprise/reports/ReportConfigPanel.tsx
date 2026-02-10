@@ -81,7 +81,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-card rounded-lg border border-border shadow-sm h-full flex items-center justify-center"
+        className="bg-card rounded-2xl border border-border shadow-sm h-full flex items-center justify-center"
       >
         <div className="text-center p-8">
           <Settings className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
@@ -95,7 +95,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-card rounded-lg border border-border shadow-sm h-full flex flex-col"
+      className="bg-card rounded-2xl border border-border shadow-sm h-full flex flex-col"
     >
       {/* Header */}
       <div className="p-4 border-b border-border">
@@ -116,7 +116,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
               type="text"
               value={config.name || ''}
               onChange={(e) => setConfig((prev) => ({ ...prev, name: e.target.value }))}
-              className="w-full h-9 px-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full h-12 px-3 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -238,7 +238,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
                         schedule: { frequency: e.target.value as ScheduleFrequency, ...prev.schedule },
                       }))
                     }
-                    className="w-full h-8 px-2 text-sm bg-background border border-border rounded-md"
+                    className="w-full h-12 px-2 text-sm bg-background border border-border rounded-xl"
                   >
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
@@ -255,7 +255,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
                         schedule: { frequency: prev.schedule?.frequency || 'weekly', ...prev.schedule, dayOfWeek: e.target.value },
                       }))
                     }
-                    className="w-full h-8 px-2 text-sm bg-background border border-border rounded-md"
+                    className="w-full h-12 px-2 text-sm bg-background border border-border rounded-xl"
                   >
                     {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((d) => (
                       <option key={d} value={d}>{d}</option>
@@ -272,7 +272,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
                         schedule: { frequency: prev.schedule?.frequency || 'weekly', ...prev.schedule, time: e.target.value },
                       }))
                     }
-                    className="w-full h-8 px-2 text-sm bg-background border border-border rounded-md"
+                    className="w-full h-12 px-2 text-sm bg-background border border-border rounded-xl"
                   >
                     {['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00'].map((t) => (
                       <option key={t} value={t}>{t}</option>
@@ -290,7 +290,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
         <button
           onClick={handleGenerate}
           disabled={isGenerating}
-          className="w-full flex items-center justify-center gap-2 h-11 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 h-11 bg-primary text-primary-foreground rounded-xl font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
           {isGenerating ? (
             <>

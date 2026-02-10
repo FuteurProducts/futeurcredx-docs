@@ -38,7 +38,7 @@ export const TotalBalanceCard = ({
       tooltip="Your total balance across all accounts"
       right={
         <Select value={selectedCard} onValueChange={setSelectedCard}>
-          <SelectTrigger className="w-[130px] h-8 text-sm border-border">
+          <SelectTrigger className="w-[130px] h-12 text-sm border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -66,7 +66,7 @@ export const TotalBalanceCard = ({
       {percent !== undefined && (
         <div className="flex items-center mt-4 text-base font-medium text-foreground">
           <div
-            className={`flex items-center mr-3 px-2 py-0.5 rounded-md text-sm font-semibold ${
+            className={`flex items-center mr-3 px-2 py-0.5 rounded-full text-sm font-semibold ${
               percent >= 0
                 ? "bg-success/10 text-success"
                 : "bg-destructive/10 text-destructive"

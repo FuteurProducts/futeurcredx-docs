@@ -95,7 +95,7 @@ export const StressScenarioPanel: React.FC<StressScenarioPanelProps> = ({
           <select
             value={selectedScenarioId}
             onChange={(e) => onScenarioChange?.(e.target.value)}
-            className="h-9 px-3 bg-muted border-0 rounded-lg text-sm font-medium"
+            className="h-12 px-3 bg-muted border-0 rounded-lg text-sm font-medium"
           >
             {scenarios.map((scenario) => (
               <option key={scenario.id} value={scenario.id}>

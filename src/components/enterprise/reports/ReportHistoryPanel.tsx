@@ -77,7 +77,7 @@ export const ReportHistoryPanel: React.FC<ReportHistoryPanelProps> = ({
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 }}
-      className="bg-card rounded-lg border border-border shadow-sm h-full flex flex-col"
+      className="bg-card rounded-2xl border border-border shadow-sm h-full flex flex-col"
     >
       {/* Header */}
       <div className="p-4 border-b border-border flex items-center justify-between">

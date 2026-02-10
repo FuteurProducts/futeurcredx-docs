@@ -46,7 +46,7 @@ const BusinessListTable: React.FC<BusinessListTableProps> = ({
         />
       </div>
       <div className="space-y-1">
-        <div className="grid grid-cols-12 gap-4 px-3 py-2 text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
+        <div className="grid grid-cols-12 gap-4 px-5 py-4 text-[10px] font-medium text-muted-foreground uppercase tracking-wide">
           <div className="col-span-4">Business</div>
           <div className="col-span-2">Industry</div>
           <div className="col-span-1">Score</div>

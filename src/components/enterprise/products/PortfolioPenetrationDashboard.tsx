@@ -203,7 +203,7 @@ export const PortfolioPenetrationDashboard: React.FC<PortfolioPenetrationDashboa
 
                     {/* Cross-Sell Gap */}
                     <td className="py-4 text-right">
-                      <span className="inline-flex items-center justify-center px-2 py-1 bg-warning/10 text-warning rounded-md text-xs font-semibold tabular-nums">
+                      <span className="inline-flex items-center justify-center px-2 py-1 bg-warning/10 text-warning rounded-full text-xs font-semibold tabular-nums">
                         {row.crossSellGap.toFixed(1)}%
                       </span>
                     </td>

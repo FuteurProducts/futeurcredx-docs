@@ -99,7 +99,7 @@ export const BulkActionsToolbar: React.FC<BulkActionsToolbarProps> = ({
           {hasSelection && (
             <button
               onClick={onDeselectAll}
-              className="text-sm text-info hover:text-info/80 font-medium"
+              className="text-sm text-info hover:text-info/80 font-medium transition-colors"
             >
               Clear selection
             </button>

@@ -55,7 +55,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
   const systemStatus = getSystemStatus();
 
   return (
-    <div className="bg-card rounded-2xl border border-border p-4 mb-6">
+    <div className="bg-card rounded-2xl border border-border p-5 mb-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         {/* Left: Environment + Tenant + Portfolio */}
         <div className="flex items-center gap-3">

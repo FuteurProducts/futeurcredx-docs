@@ -183,7 +183,7 @@ export const EligibilityMatrix: React.FC<EligibilityMatrixProps> = ({ filters })
                   <th
                     key={col.key}
                     className={`
-                      px-3 py-3 text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider
+                      px-5 py-4 text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider
                       border-b border-border whitespace-nowrap
                       ${idx === 0 ? 'sticky left-0 z-20 bg-muted/40 min-w-[180px]' : ''}
                       ${col.key === 'requiredSignals' ? 'min-w-[200px]' : ''}
@@ -216,7 +216,7 @@ export const EligibilityMatrix: React.FC<EligibilityMatrixProps> = ({ filters })
                       {/* Sticky product name column */}
                       <td
                         className={`
-                          px-3 py-2.5 sticky left-0 z-10
+                          px-5 py-4 sticky left-0 z-10
                           ${rowIdx % 2 === 1 ? 'bg-muted/10' : 'bg-card'}
                           border-r border-border/30
                         `}
@@ -227,47 +227,47 @@ export const EligibilityMatrix: React.FC<EligibilityMatrixProps> = ({ filters })
                       </td>
 
                       {/* Time in Business */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.timeInBusiness} />
                       </td>
 
                       {/* Annual Revenue */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.annualRevenue} />
                       </td>
 
                       {/* DSCR */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.dscr} />
                       </td>
 
                       {/* PAYDEX */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.paydex} />
                       </td>
 
                       {/* FICO */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.fico} />
                       </td>
 
                       {/* Max LTV */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.maxLTV} />
                       </td>
 
                       {/* Collateral */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.collateral} />
                       </td>
 
                       {/* Guarantor */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <CellValue value={rule.guarantor} />
                       </td>
 
                       {/* Required Signals */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <div className="flex flex-wrap gap-1 max-w-[240px]">
                           {rule.requiredSignals.map((signal) => (
                             <SignalBadge key={signal} signal={signal} />
@@ -276,7 +276,7 @@ export const EligibilityMatrix: React.FC<EligibilityMatrixProps> = ({ filters })
                       </td>
 
                       {/* Policy Notes */}
-                      <td className="px-3 py-2.5">
+                      <td className="px-5 py-4">
                         <span className="text-xs text-muted-foreground leading-relaxed">
                           {rule.policyNotes}
                         </span>

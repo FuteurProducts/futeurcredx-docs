@@ -183,7 +183,7 @@ function ConcentrationPanel({
           <h3 className="text-sm font-semibold text-foreground">{title}</h3>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/60 px-2 py-0.5 text-xs font-medium text-muted-foreground">
+          <span className="inline-flex items-center rounded-full border border-border/60 bg-muted/60 px-2 py-0.5 text-xs font-medium text-muted-foreground">
             Limit {formatPercent(limit, 0)}
           </span>
           <button
@@ -255,7 +255,7 @@ function EWSClusterCard({
               </h4>
               <span
                 className={cn(
-                  'inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs font-semibold uppercase tracking-wider',
+                  'inline-flex items-center rounded-full border px-1.5 py-0.5 text-xs font-semibold uppercase tracking-wider',
                   getSeverityBadgeClass(cluster.severity),
                 )}
               >
@@ -297,7 +297,7 @@ function EWSClusterCard({
                     {cluster.heaviestSegments.map((seg) => (
                       <span
                         key={seg.segment}
-                        className="inline-flex items-center gap-1 rounded-md bg-muted/60 border border-border/60 px-2 py-1 text-xs text-foreground"
+                        className="inline-flex items-center gap-1 rounded-full bg-muted/60 border border-border/60 px-2 py-1 text-xs text-foreground"
                       >
                         {seg.segment}
                         <span className="text-muted-foreground font-medium">({formatNumber(seg.count)})</span>
@@ -404,7 +404,7 @@ function ComplianceTable({
                 <td className="text-center px-4 py-3">
                   <span
                     className={cn(
-                      'inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-semibold uppercase tracking-wider',
+                      'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold uppercase tracking-wider',
                       row.status === 'ok' && 'bg-emerald-100 text-emerald-700 border-emerald-200',
                       row.status === 'review' && 'bg-amber-100 text-amber-700 border-amber-200',
                       row.status === 'flag' && 'bg-rose-100 text-rose-700 border-rose-200',
@@ -697,7 +697,7 @@ const Risk: React.FC = () => {
               <h3 className="text-sm font-semibold text-foreground">
                 Early Warning System — Alert Clusters
               </h3>
-              <span className="inline-flex items-center rounded-md bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 text-xs font-semibold">
+              <span className="inline-flex items-center rounded-full bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 text-xs font-semibold">
                 {EWS_CLUSTERS.reduce((sum, c) => sum + c.businessCount, 0).toLocaleString()} total
               </span>
             </div>
@@ -708,7 +708,7 @@ const Risk: React.FC = () => {
               <select
                 value={ewsSortField}
                 onChange={(e) => setEwsSortField(e.target.value as SortField)}
-                className="text-xs border border-border/60 rounded-md bg-background px-2 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all duration-200"
+                className="text-xs border border-border/60 rounded-xl bg-background px-2 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all duration-200"
               >
                 {SORT_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>

@@ -80,7 +80,7 @@ export function PolicyChecksPanel({ checks, className }: PolicyChecksPanelProps)
       </div>
 
       {/* Column Headers */}
-      <div className="grid grid-cols-[minmax(0,2fr)_100px_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-5 py-2.5 border-b border-border text-xs font-medium text-muted-foreground uppercase tracking-wider">
+      <div className="grid grid-cols-[minmax(0,2fr)_100px_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-5 py-4 border-b border-border text-xs font-medium text-muted-foreground uppercase tracking-wider">
         <span>Check Name</span>
         <span>Result</span>
         <span>Value</span>
@@ -101,7 +101,7 @@ export function PolicyChecksPanel({ checks, className }: PolicyChecksPanelProps)
                 type="button"
                 onClick={() => toggleRow(check.id)}
                 className={cn(
-                  'w-full grid grid-cols-[minmax(0,2fr)_100px_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-5 py-3 text-left text-sm transition-colors',
+                  'w-full grid grid-cols-[minmax(0,2fr)_100px_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-2 px-5 py-4 text-left text-sm transition-colors',
                   'hover:bg-muted/50',
                   isExpanded && 'bg-muted/30'
                 )}

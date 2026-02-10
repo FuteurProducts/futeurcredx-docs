@@ -101,7 +101,7 @@ const Products = () => {
                   {product.description}
                 </p>
                 <div className="mt-auto flex items-center gap-2">
-                  <span className="text-[0.6875rem] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-md">
+                  <span className="text-[0.6875rem] font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
                     {product.category}
                   </span>
                   <span className="text-[0.6875rem] text-muted-foreground">
