@@ -1,31 +1,24 @@
-// Credit Intelligence — Portfolio-Centric View
-// Primary demo screen: GlobalControls → KPI Row → Segment Grid → Charts → Drill-Down
-// Bank-safe language throughout
+/**
+ * Credit Intelligence — Portfolio-Centric View (REWRITE)
+ *
+ * Thin orchestrator: KPI Row -> Segment Grid -> Score Distribution -> Drill-Down
+ * All sub-components live in @/components/enterprise/credit-intelligence/
+ * Data sourced from @/data/chaseDemoData — no local hardcoded numbers
+ */
 
-import React, { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 import {
-  PortfolioFilterBar,
-  DEFAULT_PORTFOLIO_FILTERS,
-  type PortfolioFilters,
-} from '@/components/shared/PortfolioFilterBar';
-import { BusinessDrillDown } from '@/components/enterprise/portfolio/BusinessDrillDown';
-import { BusinessListTable } from '@/components/enterprise/portfolio/BusinessListTable';
-import { PortfolioKPIRow } from '@/components/enterprise/portfolio/PortfolioKPIRow';
-import { RiskDistributionChart } from '@/components/enterprise/portfolio/RiskDistributionChart';
-import { RiskHeatmap } from '@/components/enterprise/portfolio/RiskHeatmap';
-import { SegmentGrid } from '@/components/enterprise/portfolio/SegmentGrid';
-import { SegmentScatterPlot } from '@/components/enterprise/portfolio/SegmentScatterPlot';
-import { DEMO_BUSINESSES } from '@/data/fallback/demoData';
-import {
-  INDUSTRY_SEGMENTS,
-  PORTFOLIO_KPIS,
-  RISK_TIER_DISTRIBUTION,
-} from '@/data/portfolioSegments';
-import { useSegments } from '@/hooks/useSegments';
+  CreditKPIRow,
+  ScoreDistribution,
+  SegmentDrillDown,
+  SegmentGrid,
+} from '@/components/enterprise/credit-intelligence';
+import { PORTFOLIO } from '@/data/chaseDemoData';
+import { formatNumber } from '@/lib/formatters';
 
 const DATA_SOURCES = [
   'D&B Commercial',
@@ -35,37 +28,17 @@ const DATA_SOURCES = [
 ];
 
 const CreditIntelligence: React.FC = () => {
-  const [filters, setFilters] = useState<PortfolioFilters>(DEFAULT_PORTFOLIO_FILTERS);
-  const [drillDownBusinessId, setDrillDownBusinessId] = useState<string | null>(null);
-  const [selectedSegmentId, setSelectedSegmentId] = useState<string | undefined>(undefined);
-  const { segments, sortBy, sortOrder, setSortBy } = useSegments();
-
-  const handleSortChange = (field: string) => {
-    const validFields = ['businessCount', 'totalExposure', 'qualRate', 'avgScore', 'highRiskPct'];
-    if (validFields.includes(field)) {
-      setSortBy(field as typeof sortBy);
-    }
-  };
+  const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(
+    null,
+  );
 
   const handleSegmentSelect = (segmentId: string) => {
-    setSelectedSegmentId(selectedSegmentId === segmentId ? undefined : segmentId);
+    setSelectedSegmentId(segmentId);
   };
 
-  const selectedSegmentName = useMemo(() => {
-    if (!selectedSegmentId) return undefined;
-    return INDUSTRY_SEGMENTS.find((s) => s.id === selectedSegmentId)?.name;
-  }, [selectedSegmentId]);
-
-  // Sample businesses for drill-down (from selected segment or all)
-  const sampleBusinesses = useMemo(() => {
-    if (!selectedSegmentId) return DEMO_BUSINESSES.slice(0, 5);
-    const segment = INDUSTRY_SEGMENTS.find((s) => s.id === selectedSegmentId);
-    if (!segment) return DEMO_BUSINESSES.slice(0, 5);
-    const matched = DEMO_BUSINESSES.filter(
-      (b) => b.industry.toLowerCase().includes(segment.name.split(' ')[0].toLowerCase())
-    );
-    return matched.length > 0 ? matched.slice(0, 5) : DEMO_BUSINESSES.slice(0, 5);
-  }, [selectedSegmentId]);
+  const handleBack = () => {
+    setSelectedSegmentId(null);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -74,80 +47,57 @@ const CreditIntelligence: React.FC = () => {
         <BankDisclaimer />
       </div>
 
-      {/* Portfolio Filter Bar */}
-      <div className="mt-3">
-        <PortfolioFilterBar
-          filters={filters}
-          onFiltersChange={setFilters}
-          showStage={false}
-          showTimeRange
-        />
-      </div>
-
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
-        {drillDownBusinessId ? (
-          <BusinessDrillDown
-            businessId={drillDownBusinessId}
-            onClose={() => setDrillDownBusinessId(null)}
+        {selectedSegmentId ? (
+          /* Segment Drill-Down View */
+          <SegmentDrillDown
+            segmentId={selectedSegmentId}
+            onBack={handleBack}
           />
         ) : (
           <>
-            {/* Header */}
+            {/* Page Header */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h1 className="text-3xl font-bold text-foreground">Credit Intelligence</h1>
+              <h1 className="text-3xl font-bold text-foreground">
+                Credit Intelligence
+              </h1>
               <p className="text-base text-muted-foreground mt-2">
-                Portfolio-level credit analytics across 287,000 businesses
+                Portfolio-level credit analytics across{' '}
+                {formatNumber(PORTFOLIO.totalBusinesses)} businesses
               </p>
             </motion.div>
 
-            {/* KPI Row */}
-            <PortfolioKPIRow kpis={PORTFOLIO_KPIS} />
+            {/* KPI Row — 6 cards */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+            >
+              <CreditKPIRow />
+            </motion.div>
 
-            {/* Segment Grid */}
-            <SegmentGrid
-              segments={segments}
-              sortBy={sortBy}
-              sortOrder={sortOrder}
-              onSortChange={handleSortChange}
-              onSegmentSelect={handleSegmentSelect}
-              selectedSegmentId={selectedSegmentId}
-            />
+            {/* Segment Grid — 8 cards with sort/search/toggle/export */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              <SegmentGrid onSegmentSelect={handleSegmentSelect} />
+            </motion.div>
 
-            {/* Charts Row: Risk Distribution + Heatmap */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-              >
-                <RiskDistributionChart tiers={RISK_TIER_DISTRIBUTION} />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.15 }}
-              >
-                <RiskHeatmap segments={segments} />
-              </motion.div>
-            </div>
-
-            {/* Scatter Plot */}
-            <SegmentScatterPlot
-              segments={segments}
-              onSegmentClick={handleSegmentSelect}
-            />
-
-            {/* Sample Business Drill-Down Table */}
-            <BusinessListTable
-              businesses={sampleBusinesses}
-              selectedSegmentName={selectedSegmentName}
-              onBusinessClick={setDrillDownBusinessId}
-            />
+            {/* Score Distribution Chart */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+            >
+              <ScoreDistribution />
+            </motion.div>
           </>
         )}
 
