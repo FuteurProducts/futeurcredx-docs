@@ -143,7 +143,7 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-sm border border-border ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -241,7 +241,7 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
         >
           <Book className="w-4 h-4 text-info" />
           <span className="text-sm font-medium text-foreground">Documentation</span>
-          <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
+          <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
         </div>
 
         <div
@@ -258,7 +258,7 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
         >
           <FileCode className="w-4 h-4 text-[var(--primary-04)]" />
           <span className="text-sm font-medium text-foreground">API Reference</span>
-          <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
+          <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
         </div>
 
         <div
@@ -275,7 +275,7 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
         >
           <Zap className="w-4 h-4 text-warning" />
           <span className="text-sm font-medium text-foreground">Changelog</span>
-          <ExternalLink className="w-3 h-3 text-muted-foreground/40 ml-auto" />
+          <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
         </div>
         
         <button

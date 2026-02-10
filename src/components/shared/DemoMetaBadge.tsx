@@ -48,18 +48,18 @@ export function DemoMetaBadge({
         </TooltipTrigger>
         <TooltipContent side="bottom" className="max-w-xs text-xs space-y-1.5 p-3">
           <div className="flex items-center gap-1.5">
-            <Clock className="h-3 w-3 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-muted-foreground" />
             <span>Updated: {new Date(ts).toLocaleString()}</span>
           </div>
           {dataSources && dataSources.length > 0 && (
             <div className="flex items-start gap-1.5">
-              <Database className="h-3 w-3 text-muted-foreground mt-0.5" />
+              <Database className="h-4 w-4 text-muted-foreground mt-0.5" />
               <span>Sources: {dataSources.join(', ')}</span>
             </div>
           )}
           {coverage !== undefined && (
             <div className="flex items-center gap-1.5">
-              <BarChart3 className="h-3 w-3 text-muted-foreground" />
+              <BarChart3 className="h-4 w-4 text-muted-foreground" />
               <span>Coverage: {coverage}%</span>
             </div>
           )}

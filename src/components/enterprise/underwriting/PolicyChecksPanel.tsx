@@ -34,17 +34,17 @@ const resultConfig: Record<
   pass: {
     icon: CheckCircle,
     label: 'Pass',
-    className: 'text-green-600 bg-green-500/10 border-green-500/20',
+    className: 'text-emerald-600 bg-emerald-500/10 border-emerald-500/20',
   },
   review: {
     icon: AlertTriangle,
     label: 'Review',
-    className: 'text-amber-600 bg-amber-500/10 border-amber-500/20',
+    className: 'text-warning bg-warning/10 border-warning/20',
   },
   fail: {
     icon: XCircle,
     label: 'Fail',
-    className: 'text-red-600 bg-red-500/10 border-red-500/20',
+    className: 'text-destructive bg-destructive/10 border-destructive/20',
   },
 };
 
@@ -110,9 +110,9 @@ export function PolicyChecksPanel({ checks, className }: PolicyChecksPanelProps)
                 <span className="flex items-center gap-2 text-foreground font-medium">
                   {check.detail ? (
                     isExpanded ? (
-                      <ChevronDown className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                      <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
                     ) : (
-                      <ChevronRight className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                      <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
                     )
                   ) : (
                     <span className="w-3.5 shrink-0" />
@@ -128,7 +128,7 @@ export function PolicyChecksPanel({ checks, className }: PolicyChecksPanelProps)
                       config.className
                     )}
                   >
-                    <ResultIcon className="h-3.5 w-3.5" />
+                    <ResultIcon className="h-4 w-4" />
                     {config.label}
                   </span>
                 </span>

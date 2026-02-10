@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Beaker, Rocket, AlertTriangle, Check, 
@@ -93,51 +94,54 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
           </button>
         </div>
 
-        {/* Confirmation Dialog (needed for minimal variant too) */}
-        <AnimatePresence>
-          {showConfirmDialog && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
-                    <AlertTriangle className="w-6 h-6 text-warning" />
+        {/* Confirmation Dialog — portaled to body to escape header stacking context */}
+        {createPortal(
+          <AnimatePresence>
+            {showConfirmDialog && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
+                      <AlertTriangle className="w-6 h-6 text-warning" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">Switch to Production?</h3>
+                      <p className="text-sm text-muted-foreground">This will use live API endpoints</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground">Switch to Production?</h3>
-                    <p className="text-sm text-muted-foreground">This will use live API endpoints</p>
+
+                  <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 mb-6">
+                    <p className="text-sm text-warning">
+                      <strong>Warning:</strong> Production API calls are billed and affect real data.
+                      Make sure your integration is fully tested.
+                    </p>
                   </div>
-                </div>
 
-                <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 mb-6">
-                  <p className="text-sm text-warning">
-                    <strong>Warning:</strong> Production API calls are billed and affect real data.
-                    Make sure your integration is fully tested.
-                  </p>
-                </div>
-
-                <div className="flex gap-3 justify-end">
-                  <button
-                    onClick={() => setShowConfirmDialog(false)}
-                    className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={confirmSwitch}
-                    className="px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-colors"
-                  >
-                    Switch to Production
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={() => setShowConfirmDialog(false)}
+                      className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={confirmSwitch}
+                      className="px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-colors"
+                    >
+                      Switch to Production
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
       </>
     );
   }
@@ -180,51 +184,54 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
           </div>
         </motion.div>
 
-        {/* Confirmation Dialog */}
-        <AnimatePresence>
-          {showConfirmDialog && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
-                    <AlertTriangle className="w-6 h-6 text-warning" />
+        {/* Confirmation Dialog — portaled to body to escape stacking context */}
+        {createPortal(
+          <AnimatePresence>
+            {showConfirmDialog && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
+                      <AlertTriangle className="w-6 h-6 text-warning" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">Switch to Production?</h3>
+                      <p className="text-sm text-muted-foreground">This will use live API endpoints</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground">Switch to Production?</h3>
-                    <p className="text-sm text-muted-foreground">This will use live API endpoints</p>
+
+                  <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 mb-6">
+                    <p className="text-sm text-warning">
+                      <strong>Warning:</strong> Production API calls are billed and affect real data.
+                      Make sure your integration is fully tested.
+                    </p>
                   </div>
-                </div>
 
-                <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 mb-6">
-                  <p className="text-sm text-warning">
-                    <strong>Warning:</strong> Production API calls are billed and affect real data.
-                    Make sure your integration is fully tested.
-                  </p>
-                </div>
-
-                <div className="flex gap-3 justify-end">
-                  <button
-                    onClick={() => setShowConfirmDialog(false)}
-                    className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={confirmSwitch}
-                    className="px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-colors"
-                  >
-                    Switch to Production
-                  </button>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+                  <div className="flex gap-3 justify-end">
+                    <button
+                      onClick={() => setShowConfirmDialog(false)}
+                      className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={confirmSwitch}
+                      className="px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-colors"
+                    >
+                      Switch to Production
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
       </>
     );
   }
@@ -235,7 +242,7 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`bg-card rounded-2xl shadow-lg border border-border overflow-hidden ${className}`}
+        className={`bg-card rounded-2xl shadow-sm hover:shadow-md transition-shadow border border-border overflow-hidden ${className}`}
       >
         {/* Header */}
         <div 
@@ -400,51 +407,54 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
         </AnimatePresence>
       </motion.div>
 
-      {/* Confirmation Dialog */}
-      <AnimatePresence>
-        {showConfirmDialog && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
-                  <AlertTriangle className="w-6 h-6 text-warning" />
+      {/* Confirmation Dialog — portaled to body to escape stacking context */}
+      {createPortal(
+        <AnimatePresence>
+          {showConfirmDialog && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
+                    <AlertTriangle className="w-6 h-6 text-warning" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground">Switch to Production?</h3>
+                    <p className="text-sm text-muted-foreground">This will use live API endpoints</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground">Switch to Production?</h3>
-                  <p className="text-sm text-muted-foreground">This will use live API endpoints</p>
+
+                <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 mb-6">
+                  <p className="text-sm text-warning">
+                    <strong>Warning:</strong> Production API calls are billed and affect real data.
+                    Make sure your integration is fully tested.
+                  </p>
                 </div>
-              </div>
 
-              <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 mb-6">
-                <p className="text-sm text-warning">
-                  <strong>Warning:</strong> Production API calls are billed and affect real data.
-                  Make sure your integration is fully tested.
-                </p>
-              </div>
-
-              <div className="flex gap-3 justify-end">
-                <button
-                  onClick={() => setShowConfirmDialog(false)}
-                  className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={confirmSwitch}
-                  className="px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-colors"
-                >
-                  Switch to Production
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                <div className="flex gap-3 justify-end">
+                  <button
+                    onClick={() => setShowConfirmDialog(false)}
+                    className="px-4 py-2 text-muted-foreground hover:bg-muted rounded-lg transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={confirmSwitch}
+                    className="px-4 py-2 bg-success text-white rounded-lg hover:bg-success/90 transition-colors"
+                  >
+                    Switch to Production
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 };

@@ -119,8 +119,8 @@ export function CaseStatusBanner({
               className={cn(
                 "w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold border-2 transition-colors",
                 isDeclined
-                  ? "border-transparent text-white bg-red-600"
-                  : "border-red-300 bg-red-50 text-red-400 dark:border-red-800 dark:bg-red-950 dark:text-red-600"
+                  ? "border-transparent text-white bg-destructive"
+                  : "border-destructive/30 bg-destructive/5 text-destructive/60 dark:border-destructive/30 dark:bg-destructive/10 dark:text-destructive/70"
               )}
             >
               {isDeclined ? (
@@ -133,7 +133,7 @@ export function CaseStatusBanner({
               className={cn(
                 "text-xs whitespace-nowrap",
                 isDeclined
-                  ? "font-semibold text-red-600"
+                  ? "font-semibold text-destructive"
                   : "text-muted-foreground"
               )}
             >
@@ -165,9 +165,9 @@ export function CaseStatusBanner({
         {daysInQueue != null && slaTarget != null && (
           <div
             className={cn("flex items-center gap-1.5 text-xs font-medium", {
-              "text-green-600 dark:text-green-400": sla.variant === "ok",
-              "text-yellow-600 dark:text-yellow-400": sla.variant === "warning",
-              "text-red-600 dark:text-red-400": sla.variant === "breach",
+              "text-success": sla.variant === "ok",
+              "text-warning": sla.variant === "warning",
+              "text-destructive": sla.variant === "breach",
             })}
           >
             {sla.variant === "breach" && (

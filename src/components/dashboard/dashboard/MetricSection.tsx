@@ -81,7 +81,7 @@ export function CompactMetricCard({
   }[colorScheme];
 
   return (
-    <Card className={`p-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm hover:shadow-lg transition-all duration-300`}>
+    <Card className={`p-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm shadow-sm hover:shadow-md transition-all duration-300`}>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{label}</p>

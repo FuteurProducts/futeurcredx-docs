@@ -87,7 +87,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
         <div className="flex items-center gap-2 flex-wrap">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search segments..."
@@ -96,7 +96,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
               className={cn(
                 'pl-8 pr-3 py-1.5 text-sm rounded-lg border border-border bg-card',
                 'text-foreground placeholder:text-muted-foreground',
-                'focus:outline-none focus:ring-2 focus:ring-primary/40',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
                 'w-44',
               )}
             />
@@ -111,7 +111,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
                 'appearance-none bg-card border border-border rounded-lg',
                 'px-3 py-1.5 pr-8 text-sm text-foreground cursor-pointer',
                 'hover:bg-accent transition-colors',
-                'focus:outline-none focus:ring-2 focus:ring-primary/40',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
               )}
             >
               {SORT_OPTIONS.map((opt) => (
@@ -120,7 +120,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
                 </option>
               ))}
             </select>
-            <ArrowUpDown className="absolute right-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+            <ArrowUpDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           </div>
 
           {/* View Toggle */}
@@ -160,7 +160,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
               'hover:bg-accent hover:scale-[1.02] active:scale-[0.98] transition-all duration-200',
             )}
           >
-            <Download className="h-3.5 w-3.5" />
+            <Download className="h-4 w-4" />
             Export
           </button>
         </div>

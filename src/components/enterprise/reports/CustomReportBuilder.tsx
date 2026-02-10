@@ -146,7 +146,7 @@ export const CustomReportBuilder: React.FC<CustomReportBuilderProps> = ({
               type="text"
               value={templateName}
               onChange={(e) => setTemplateName(e.target.value)}
-              className="flex-1 h-12 px-3 text-lg font-semibold bg-transparent border-b border-transparent hover:border-border focus:border-primary focus:outline-none"
+              className="flex-1 h-12 px-3 text-lg font-semibold bg-transparent border-b border-transparent hover:border-border focus:outline-none focus-visible:border-primary"
             />
           </div>
           <p className="text-sm text-muted-foreground mt-1">

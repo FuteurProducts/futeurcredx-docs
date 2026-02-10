@@ -29,22 +29,22 @@ interface WebhookEventsCardProps {
 
 const statusConfig: Record<string, { icon: React.ReactNode; color: string; bg: string }> = {
   delivered: {
-    icon: <CheckCircle2 className="h-3.5 w-3.5" />,
+    icon: <CheckCircle2 className="h-4 w-4" />,
     color: "text-success",
     bg: "bg-success/10"
   },
   failed: {
-    icon: <XCircle className="h-3.5 w-3.5" />,
+    icon: <XCircle className="h-4 w-4" />,
     color: "text-destructive",
     bg: "bg-destructive/10"
   },
   pending: {
-    icon: <Clock className="h-3.5 w-3.5" />,
+    icon: <Clock className="h-4 w-4" />,
     color: "text-warning",
     bg: "bg-warning/10"
   },
   retrying: {
-    icon: <Send className="h-3.5 w-3.5" />,
+    icon: <Send className="h-4 w-4" />,
     color: "text-info",
     bg: "bg-info/10"
   },
@@ -109,50 +109,56 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
 
       {/* Recent Events */}
       <div className="space-y-3">
-        {displayedEvents.map((event, index) => {
-          const config = statusConfig[event.status];
-          
-          return (
-            <motion.div
-              key={event.id}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg"
-            >
-              <div className={`p-1.5 rounded ${config.bg} ${config.color}`}>
-                {config.icon}
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-foreground">
-                    {event.eventType}
+        {displayedEvents.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <p className="text-muted-foreground">No webhook events available</p>
+          </div>
+        ) : (
+          displayedEvents.map((event, index) => {
+            const config = statusConfig[event.status];
+
+            return (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg"
+              >
+                <div className={`p-1.5 rounded ${config.bg} ${config.color}`}>
+                  {config.icon}
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-foreground">
+                      {event.eventType}
+                    </span>
+                    {event.retryCount && event.retryCount > 0 && (
+                      <span className="text-xs px-1.5 py-0.5 bg-warning/10 text-warning rounded">
+                        Retry #{event.retryCount}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {event.endpoint}
+                  </p>
+                </div>
+
+                <div className="text-right flex-shrink-0">
+                  <span className="text-xs text-muted-foreground block">
+                    {event.timestamp}
                   </span>
-                  {event.retryCount && event.retryCount > 0 && (
-                    <span className="text-xs px-1.5 py-0.5 bg-warning/10 text-warning rounded">
-                      Retry #{event.retryCount}
+                  {event.responseTime && (
+                    <span className="text-xs text-muted-foreground">
+                      {event.responseTime}ms
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground truncate">
-                  {event.endpoint}
-                </p>
-              </div>
-              
-              <div className="text-right flex-shrink-0">
-                <span className="text-xs text-muted-foreground block">
-                  {event.timestamp}
-                </span>
-                {event.responseTime && (
-                  <span className="text-xs text-muted-foreground">
-                    {event.responseTime}ms
-                  </span>
-                )}
-              </div>
-            </motion.div>
-          );
-        })}
+              </motion.div>
+            );
+          })
+        )}
       </div>
     </div>
   );

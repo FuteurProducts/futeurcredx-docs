@@ -57,7 +57,7 @@ class AuthService {
       localStorage.setItem('currentUserEmail', response.data.user.email);
       
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleAuthError(error);
     }
   }
@@ -78,7 +78,7 @@ class AuthService {
       localStorage.setItem('currentUserEmail', response.data.user.email);
       
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleAuthError(error);
     }
   }
@@ -99,9 +99,10 @@ class AuthService {
     try {
       const response = await apiService.get<User>('/auth/me');
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       // If token is invalid, clear it
-      if (error.status === 401) {
+      const apiError = error as { status?: number };
+      if (apiError.status === 401) {
         this.logout();
       }
       throw this.handleAuthError(error);
@@ -139,32 +140,34 @@ class AuthService {
   /**
    * Handle authentication errors
    */
-  private handleAuthError(error: any): AuthError {
-    if (error.status === 401) {
+  private handleAuthError(error: unknown): AuthError {
+    const apiError = error as { status?: number; data?: { message?: string; field?: string }; message?: string };
+
+    if (apiError.status === 401) {
       return {
         message: 'Invalid email or password',
         code: 'INVALID_CREDENTIALS'
       };
-    } else if (error.status === 409) {
+    } else if (apiError.status === 409) {
       return {
         message: 'User already exists with this email',
         code: 'USER_EXISTS',
         field: 'email'
       };
-    } else if (error.status === 422) {
+    } else if (apiError.status === 422) {
       return {
-        message: error.data?.message || 'Validation failed',
+        message: apiError.data?.message || 'Validation failed',
         code: 'VALIDATION_ERROR',
-        field: error.data?.field
+        field: apiError.data?.field
       };
-    } else if (error.status === 0) {
+    } else if (apiError.status === 0) {
       return {
         message: 'Network error. Please check your connection.',
         code: 'NETWORK_ERROR'
       };
     } else {
       return {
-        message: error.message || 'An unexpected error occurred',
+        message: apiError.message || 'An unexpected error occurred',
         code: 'UNKNOWN_ERROR'
       };
     }

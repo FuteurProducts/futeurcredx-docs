@@ -82,8 +82,8 @@ const Products = () => {
               <button
                 key={product.id}
                 onClick={() => setSelectedProduct(product)}
-                className={`group flex flex-col p-5 rounded-2xl border-2 text-left transition-all hover:scale-[1.02] hover:shadow-lg ${COLOR_CLASSES[product.color].bg} ${COLOR_CLASSES[product.color].border} ${
-                  selectedProduct?.id === product.id ? 'ring-2 ring-primary ring-offset-2' : ''
+                className={`group flex flex-col p-5 rounded-2xl border-2 text-left transition-all hover:scale-[1.02] hover:shadow-md ${COLOR_CLASSES[product.color].bg} ${COLOR_CLASSES[product.color].border} ${
+                  selectedProduct?.id === product.id ? 'ring-2 ring-primary' : ''
                 }`}
               >
                 <div className="flex items-start justify-between mb-3">
@@ -239,7 +239,7 @@ const Products = () => {
             placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 pl-12 pr-4 bg-muted border border-border rounded-xl text-[0.9375rem] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full h-12 pl-12 pr-4 bg-muted border border-border rounded-xl text-[0.9375rem] text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
         </div>
 

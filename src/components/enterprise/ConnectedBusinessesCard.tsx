@@ -46,9 +46,9 @@ export const ConnectedBusinessesCard: React.FC<ConnectedBusinessesCardProps> = (
               : "bg-destructive/10 text-destructive"
           }`}>
             {isPositiveGrowth ? (
-              <TrendingUp className="h-3 w-3" />
+              <TrendingUp className="h-4 w-4" />
             ) : (
-              <TrendingDown className="h-3 w-3" />
+              <TrendingDown className="h-4 w-4" />
             )}
             <span>{Math.abs(data.monthlyGrowth)}%</span>
           </div>

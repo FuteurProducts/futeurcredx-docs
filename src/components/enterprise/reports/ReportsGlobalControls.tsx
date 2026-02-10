@@ -93,7 +93,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.product}
             onChange={(e) => updateFilter('product', e.target.value)}
-            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {productOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -103,7 +103,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.segment}
             onChange={(e) => updateFilter('segment', e.target.value)}
-            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {segmentOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -113,7 +113,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.geography}
             onChange={(e) => updateFilter('geography', e.target.value)}
-            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {geographyOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -123,7 +123,7 @@ export const ReportsGlobalControls: React.FC<ReportsGlobalControlsProps> = ({
           <select
             value={filters.relationshipStage}
             onChange={(e) => updateFilter('relationshipStage', e.target.value)}
-            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
+            className="h-12 px-2 text-sm bg-background border border-border rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           >
             {stageOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>

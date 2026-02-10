@@ -102,8 +102,16 @@ const webhookEventTypes = [
   { value: 'business.updated', label: 'business.updated - Business data changed' },
 ];
 
+interface ApiKey {
+  id: string;
+  name: string;
+  key?: string;
+  keyPrefix?: string;
+  environment?: string;
+}
+
 interface ApiConsoleProps {
-  apiKeys?: any[];
+  apiKeys?: ApiKey[];
   isLoadingKeys?: boolean;
   error?: string;
   newKeyName?: string;
@@ -234,7 +242,7 @@ const ActivityLogPanel: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {mockActivityLogs.map((log: any) => (
+            {mockActivityLogs.map((log) => (
               <tr key={log.id} className="hover:bg-muted/30 transition-colors">
                 <td className="px-4 py-3 text-sm font-mono text-muted-foreground">
                   {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
@@ -257,8 +265,8 @@ const ActivityLogPanel: React.FC = () => {
                 </td>
                 <td className="px-4 py-3 text-sm font-mono">{log.endpoint}</td>
                 <td className="px-4 py-3">
-                  <span className={`text-sm font-semibold ${log.statusCode < 300 ? 'text-success' : 'text-destructive'}`}>
-                    {log.statusCode}
+                  <span className={`text-sm font-semibold ${(log.statusCode ?? 0) < 300 ? 'text-success' : 'text-destructive'}`}>
+                    {log.statusCode ?? '-'}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-sm text-muted-foreground">
@@ -588,7 +596,7 @@ const ApiPlaygroundPanel: React.FC = () => {
     const resolvedPath = ep.path.replace(':id', 'biz_test_8f2k9x');
     const displayKey = apiKey || `lq_test_YOUR_API_KEY`;
 
-    const fetchOptions: any = {
+    const fetchOptions: { method: string; headers: Record<string, string>; body?: string } = {
       method: ep.method,
       headers: {
         'Authorization': `Bearer ${displayKey}`,
@@ -1211,7 +1219,7 @@ const ApiPlaygroundPanel: React.FC = () => {
 const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }) => {
   const { currentEnvironment } = useEnvironment();
 
-  const filteredKeys = apiKeys.filter((key: any) => {
+  const filteredKeys = apiKeys.filter((key) => {
     // Match by environment field
     if (key.environment === currentEnvironment) return true;
     // Fallback: match by key prefix
@@ -1228,12 +1236,14 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }
       <p className="text-sm text-muted-foreground mb-6">Manage your API keys and OAuth client credentials for secure access.</p>
 
       {isLoadingKeys ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+        <div className="space-y-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-16 bg-muted/50 animate-pulse rounded-xl" />
+          ))}
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredKeys.length > 0 ? filteredKeys.map((key: any) => (
+          {filteredKeys.length > 0 ? filteredKeys.map((key) => (
             <div key={key.id} className="flex items-center justify-between p-4 bg-muted rounded-xl">
               <div>
                 <span className="font-medium">{key.name}</span>
@@ -1274,10 +1284,10 @@ const WebhooksPanel: React.FC = () => {
       </div>
 
       <div className="space-y-4">
-        {mockWebhookConfigs.map((wh: any) => (
+        {mockWebhookConfigs.map((wh) => (
           <div key={wh.id} className="flex items-center justify-between p-4 bg-muted rounded-xl">
             <div className="flex items-center gap-4">
-              <div className={`w-2 h-2 rounded-full ${wh.deliveryMetrics?.failureRate > 1 ? 'bg-warning' : 'bg-success'}`} />
+              <div className={`w-2 h-2 rounded-full ${(wh.deliveryMetrics?.failureRate ?? 0) > 1 ? 'bg-warning' : 'bg-success'}`} />
               <div>
                 <code className="text-sm font-mono">{wh.endpointUrl}</code>
                 <div className="text-xs text-muted-foreground mt-1">{wh.eventTypes.length} event types subscribed</div>

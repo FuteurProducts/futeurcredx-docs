@@ -173,7 +173,7 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
             'hover:bg-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200',
           )}
         >
-          <Eye className="h-3.5 w-3.5" />
+          <Eye className="h-4 w-4" />
           View
         </button>
         <button
@@ -184,7 +184,7 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
             'hover:bg-muted/80 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200',
           )}
         >
-          <Megaphone className="h-3.5 w-3.5" />
+          <Megaphone className="h-4 w-4" />
           Campaign
         </button>
       </div>

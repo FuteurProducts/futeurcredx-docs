@@ -13,8 +13,8 @@ interface ApiEndpoint {
   description: string
   name: string
   parameters?: { name: string; type: string; description: string }[]
-  bodySchema?: Record<string, any>
-  defaultBody?: Record<string, any>
+  bodySchema?: Record<string, unknown>
+  defaultBody?: Record<string, unknown>
 }
 
 const endpoints: ApiEndpoint[] = [
@@ -75,8 +75,15 @@ const getMethodColor = (method: HttpMethod) => {
   }
 }
 
+interface ApiKey {
+  id: string
+  key?: string
+  name: string
+  environment?: string
+}
+
 interface ApiTestingProps {
-  apiKeys: any[]
+  apiKeys: ApiKey[]
 }
 
 const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
@@ -87,7 +94,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
   const [showManualKey, setShowManualKey] = useState(false)
   const [paramValues, setParamValues] = useState<Record<string, string>>({})
   const [requestBody, setRequestBody] = useState('')
-  const [response, setResponse] = useState<any>(null)
+  const [response, setResponse] = useState<Record<string, unknown> | null>(null)
   const [loading, setLoading] = useState(false)
   const [responseStatus, setResponseStatus] = useState<number | null>(null)
   const [responseTime, setResponseTime] = useState<number | null>(null)
@@ -150,10 +157,10 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
 
       // Add body for non-GET requests
       if (selectedEndpoint.method !== 'GET') {
-        let bodyData: any
+        let bodyData: Record<string, unknown> | undefined
         if (requestBody && requestBody.trim()) {
           try {
-            bodyData = JSON.parse(requestBody)
+            bodyData = JSON.parse(requestBody) as Record<string, unknown>
           } catch (e) {
             setResponse({ error: 'Invalid JSON in request body' })
             setResponseStatus(400)
@@ -163,7 +170,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
         } else if (selectedEndpoint.defaultBody) {
           bodyData = selectedEndpoint.defaultBody
         }
-        
+
         if (bodyData) {
           requestOptions.body = JSON.stringify(bodyData)
         }
@@ -175,7 +182,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
       setResponseTime(endTime - startTime)
 
       // Parse response
-      let responseData: any
+      let responseData: Record<string, unknown>
       const contentType = apiResponse.headers.get('content-type')
       
       if (contentType && contentType.includes('application/json')) {
@@ -192,11 +199,11 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
       setResponse(responseData)
       setResponseStatus(apiResponse.status)
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       const endTime = Date.now()
       setResponseTime(endTime - startTime)
-      
-      if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
         setResponse({ 
           error: 'Network Error',
           message: 'Could not connect to the API. This may be due to CORS restrictions when calling from the browser.',
@@ -204,8 +211,8 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
           details: error.message
         })
       } else {
-        setResponse({ 
-          error: error.message || 'Request failed',
+        setResponse({
+          error: error instanceof Error ? error.message : 'Request failed',
           details: 'Check the console for more information'
         })
       }
@@ -266,7 +273,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       setRequestBody('')
                     }
                   }}
-                  className="w-full h-12 px-4 pr-10 bg-muted/50 border border-border/50 rounded-xl text-foreground text-[0.9375rem] font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer transition-all duration-200"
+                  className="w-full h-12 px-4 pr-10 bg-muted/50 border border-border/50 rounded-xl text-foreground text-[0.9375rem] font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent appearance-none cursor-pointer transition-all duration-200"
                 >
                   {endpoints.map((ep) => (
                     <option key={ep.path} value={ep.path}>
@@ -327,10 +334,10 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     <select
                       value={selectedApiKey}
                       onChange={(e) => setSelectedApiKey(e.target.value)}
-                      className="w-full h-12 px-4 bg-muted/50 border border-border/50 rounded-xl text-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer transition-all duration-200"
+                      className="w-full h-12 px-4 bg-muted/50 border border-border/50 rounded-xl text-foreground text-[0.9375rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent appearance-none cursor-pointer transition-all duration-200"
                     >
                       <option value="">Select an API key...</option>
-                      {apiKeys.map((key: any) => (
+                      {apiKeys.map((key) => (
                         <option key={key.id} value={key.key || key.id}>
                           {key.name} {key.environment ? `(${key.environment})` : ''}
                         </option>
@@ -352,7 +359,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       value={manualApiKey}
                       onChange={(e) => setManualApiKey(e.target.value)}
                       placeholder="Paste your API key here..."
-                      className="w-full h-12 px-4 pr-12 bg-muted/50 border border-border/50 rounded-xl text-foreground placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      className="w-full h-12 px-4 pr-12 bg-muted/50 border border-border/50 rounded-xl text-foreground placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all duration-200"
                     />
                     <button
                       onClick={() => setShowManualKey(!showManualKey)}
@@ -422,7 +429,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                           value={paramValues[param.name] || ''}
                       onChange={(e) => setParamValues(prev => ({ ...prev, [param.name]: e.target.value }))}
                       placeholder={`${param.name} (${param.type})`}
-                      className="w-full h-12 px-4 bg-muted/50 border border-border/50 rounded-xl text-foreground placeholder:text-muted-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                      className="w-full h-12 px-4 bg-muted/50 border border-border/50 rounded-xl text-foreground placeholder:text-muted-foreground text-[0.9375rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent transition-all duration-200"
                     />
                     <p className="mt-1 text-[0.75rem] text-muted-foreground">{param.description}</p>
                       </div>
@@ -439,7 +446,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                   rows={5}
-                  className="w-full p-4 bg-muted/50 border border-border/50 rounded-xl text-success placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none transition-all duration-200"
+                  className="w-full p-4 bg-muted/50 border border-border/50 rounded-xl text-success placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent resize-none transition-all duration-200"
                   />
                 </div>
               )}

@@ -124,7 +124,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-sm border border-border ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -166,7 +166,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
               placeholder="https://your-server.com/webhook"
-              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-ring outline-none"
+              className="w-full px-4 py-2 border border-border rounded-lg focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-ring outline-none"
             />
           </div>
           
@@ -286,7 +286,7 @@ export const WebhookConfigPanel: React.FC<WebhookConfigPanelProps> = ({
                   <button
                     onClick={() => handleTest(endpoint.id)}
                     disabled={testingEndpoint === endpoint.id}
-                    className="p-2 hover:bg-muted rounded-lg transition-colors"
+                    className="p-2 hover:bg-muted rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
                     title="Send test event"
                   >
                     {testingEndpoint === endpoint.id ? (

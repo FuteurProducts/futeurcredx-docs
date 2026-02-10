@@ -64,7 +64,7 @@ const ToggleSwitch: React.FC<{
       role="switch"
       aria-checked={enabled}
       aria-label={label}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
         enabled ? 'bg-primary' : 'bg-muted'
       }`}
     >

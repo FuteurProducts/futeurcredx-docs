@@ -149,7 +149,7 @@ export const PIIMaskingPanel: React.FC = () => {
                         </Badge>
                         {field.requiresAudit && (
                           <Badge variant="secondary" className="text-xs">
-                            <Lock className="h-3 w-3 mr-1" />
+                            <Lock className="h-4 w-4 mr-1" />
                             Audited
                           </Badge>
                         )}

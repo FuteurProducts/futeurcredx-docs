@@ -90,7 +90,7 @@ export const ReportLibraryPanel: React.FC<ReportLibraryPanelProps> = ({
             placeholder="Search reports..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 pl-9 pr-3 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full h-12 pl-9 pr-3 text-sm bg-background border border-border rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
           />
         </div>
       </div>

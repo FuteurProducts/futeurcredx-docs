@@ -251,7 +251,7 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
             onClick={() => toast.info('Full engagement history coming soon')}
             className="text-xs text-primary hover:text-primary/80 flex items-center gap-1"
           >
-            View all <ChevronRight className="h-3 w-3" />
+            View all <ChevronRight className="h-4 w-4" />
           </button>
         </div>
 
@@ -278,7 +278,7 @@ export const CustomerEngagementPanel: React.FC<CustomerEngagementPanelProps> = (
                   <p className="text-xs text-muted-foreground line-clamp-1">{event.description}</p>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground shrink-0">
-                  <Clock className="h-3 w-3" />
+                  <Clock className="h-4 w-4" />
                   <span>{event.timestamp}</span>
                 </div>
               </div>

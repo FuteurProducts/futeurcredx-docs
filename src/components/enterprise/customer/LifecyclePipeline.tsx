@@ -182,7 +182,7 @@ export const LifecyclePipeline: React.FC<LifecyclePipelineProps> = ({
                 {/* View Details Link */}
                 <div className="mt-3 flex items-center gap-1 text-xs font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity">
                   <span>View clients</span>
-                  <ChevronRight className="h-3 w-3" />
+                  <ChevronRight className="h-4 w-4" />
                 </div>
               </div>
             );

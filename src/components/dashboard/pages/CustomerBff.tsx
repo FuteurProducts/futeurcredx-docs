@@ -732,8 +732,8 @@ const CustomerBff: React.FC = () => {
           ) : (
             <EmptyState
               icon={Users}
-              title="Select a customer"
-              description="Click on a customer from the list to view their engagement details and relationship health"
+              title="Select a business"
+              description="Click on a business from the list to view their engagement details and relationship health"
               variant="card"
               size="sm"
               className="h-full min-h-[300px]"

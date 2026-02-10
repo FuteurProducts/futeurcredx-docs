@@ -95,7 +95,7 @@ export const RelationshipHealthSummary: React.FC<RelationshipHealthSummaryProps>
           trend > 0 ? 'text-success' : trend < 0 ? 'text-destructive' : 'text-muted-foreground'
         }`}>
           {trend !== 0 && (
-            trend > 0 ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />
+            trend > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />
           )}
           <span>{trend > 0 ? '+' : ''}{trend}%</span>
         </div>
@@ -103,7 +103,7 @@ export const RelationshipHealthSummary: React.FC<RelationshipHealthSummaryProps>
 
       <div className="mt-2 flex items-center gap-1 text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
         <span>View details</span>
-        <ChevronRight className="h-3 w-3" />
+        <ChevronRight className="h-4 w-4" />
       </div>
     </motion.div>
   );
@@ -252,7 +252,7 @@ export const RelationshipHealthSummary: React.FC<RelationshipHealthSummaryProps>
             className="w-full mt-3 py-2 text-xs font-medium text-primary hover:text-primary/80 transition-colors flex items-center justify-center gap-1"
           >
             View all opportunities
-            <ChevronRight className="h-3 w-3" />
+            <ChevronRight className="h-4 w-4" />
           </button>
         </motion.div>
       </div>

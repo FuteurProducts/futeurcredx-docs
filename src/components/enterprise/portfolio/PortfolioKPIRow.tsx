@@ -43,9 +43,9 @@ const getStatusColor = (status?: string): string => {
     case 'positive':
       return 'text-emerald-600';
     case 'warning':
-      return 'text-amber-600';
+      return 'text-warning';
     case 'critical':
-      return 'text-red-600';
+      return 'text-destructive';
     case 'neutral':
     default:
       return 'text-muted-foreground';
@@ -84,7 +84,7 @@ export function PortfolioKPIRow({ kpis, className }: PortfolioKPIRowProps) {
                 {kpi.label}
               </span>
               {kpi.tooltip && (
-                <Info className="h-3 w-3 text-muted-foreground/50" />
+                <Info className="h-4 w-4 text-muted-foreground" />
               )}
             </div>
 
@@ -99,7 +99,7 @@ export function PortfolioKPIRow({ kpis, className }: PortfolioKPIRowProps) {
 
             {kpi.trend && TrendIcon && (
               <div className={cn('flex items-center gap-1 text-xs', statusColor)}>
-                <TrendIcon className="h-3 w-3" />
+                <TrendIcon className="h-4 w-4" />
                 <span>{kpi.trend.value.toFixed(1)}%</span>
                 <span className="text-muted-foreground ml-1">{kpi.trend.label}</span>
               </div>

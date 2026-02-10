@@ -114,11 +114,11 @@ const QueueItemCard: React.FC<{
 
         {/* Lifecycle Status */}
         <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-          item.status === 'new' ? 'bg-blue-100 text-blue-700' :
+          item.status === 'new' ? 'bg-info/10 text-info' :
           item.status === 'assigned' ? 'bg-purple-100 text-purple-700' :
-          item.status === 'in_review' ? 'bg-yellow-100 text-yellow-700' :
-          item.status === 'resolved' ? 'bg-green-100 text-green-700' :
-          item.status === 'escalated' ? 'bg-red-100 text-red-700' :
+          item.status === 'in_review' ? 'bg-warning/10 text-warning' :
+          item.status === 'resolved' ? 'bg-success/10 text-success' :
+          item.status === 'escalated' ? 'bg-destructive/10 text-destructive' :
           'bg-muted text-muted-foreground'
         }`}>
           {item.status === 'in_review' ? 'In Review' : item.status.charAt(0).toUpperCase() + item.status.slice(1)}
@@ -363,7 +363,7 @@ export const EWSWorkQueue: React.FC<EWSWorkQueueProps> = ({
                 placeholder="Search businesses..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-12 pl-9 pr-3 bg-muted border-0 rounded-lg text-sm placeholder:text-muted-foreground focus:ring-2 focus:ring-primary"
+                className="w-full h-12 pl-9 pr-3 bg-muted border-0 rounded-lg text-sm placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-primary"
               />
             </div>
             

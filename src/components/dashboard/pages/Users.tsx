@@ -184,7 +184,7 @@ const Users = () => {
 
         // Fetch businesses
         const response = await dashboardService.getBusinessInsights(filters);
-        setBusinesses(response.data || []);
+        setBusinesses((response.data || []) as unknown as BusinessInsight[]);
 
         // Fetch stats
         try {
@@ -192,15 +192,15 @@ const Users = () => {
           setStats(statsResponse);
         } catch {
           // Fallback stats
-          const allBiz = response.data || [];
+          const allBiz = (response.data || []) as unknown as BusinessInsight[];
           let totalApps = 0;
-          allBiz.forEach((b: BusinessInsight) => {
+          allBiz.forEach((b) => {
             totalApps += (b.applications?.length || 0);
           });
           setStats({
             totalBusinesses: allBiz.length,
             totalApplications: totalApps,
-            businessesWithApplications: allBiz.filter((b: BusinessInsight) => (b.applications?.length || 0) > 0).length,
+            businessesWithApplications: allBiz.filter((b) => (b.applications?.length || 0) > 0).length,
           });
         }
       } catch (err) {
@@ -378,7 +378,7 @@ const Users = () => {
                         variant={appCount > 0 ? 'success' : 'secondary'}
                         className="gap-1.5"
                       >
-                        <FileText className="h-3 w-3" />
+                        <FileText className="h-4 w-4" />
                         {appCount} {appCount === 1 ? 'app' : 'apps'}
                       </Badge>
                     </div>
@@ -449,7 +449,7 @@ const Users = () => {
               {animatedTotalBusinesses.toLocaleString()}
             </div>
             <div className="flex items-center gap-1 text-success text-sm font-semibold">
-              <TrendingUp className="h-3 w-3" />
+              <TrendingUp className="h-4 w-4" />
               {animatedTotalApplications} total applications
             </div>
           </div>
@@ -567,7 +567,7 @@ const Users = () => {
               <div className="grid grid-cols-3 gap-4 mt-6">
                 <div className="p-4 bg-muted rounded-xl">
                   <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
-                    <CreditCard className="h-3 w-3" />
+                    <CreditCard className="h-4 w-4" />
                     Credit Risk Indicator
                   </div>
                   <div className="text-2xl font-semibold">
@@ -582,7 +582,7 @@ const Users = () => {
                 </div>
                 <div className="p-4 bg-success/10 rounded-xl">
                   <div className="text-xs text-success mb-1 flex items-center gap-1">
-                    <FileText className="h-3 w-3" />
+                    <FileText className="h-4 w-4" />
                     Applications
                   </div>
                   <div className="text-2xl font-semibold text-success">
@@ -604,7 +604,7 @@ const Users = () => {
                   {selectedBusiness.legalStruct && (
                     <div className="p-3 bg-muted rounded-xl">
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Building2 className="h-3 w-3" />
+                        <Building2 className="h-4 w-4" />
                         Structure
                       </div>
                       <div className="text-sm font-semibold text-foreground">{selectedBusiness.legalStruct}</div>
@@ -613,7 +613,7 @@ const Users = () => {
                   {selectedBusiness.yearFounded && (
                     <div className="p-3 bg-muted rounded-xl">
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
+                        <Calendar className="h-4 w-4" />
                         Founded
                       </div>
                       <div className="text-sm font-semibold text-foreground">{selectedBusiness.yearFounded}</div>
@@ -622,7 +622,7 @@ const Users = () => {
                   {selectedBusiness.empCount && (
                     <div className="p-3 bg-muted rounded-xl">
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
-                        <UsersIcon className="h-3 w-3" />
+                        <UsersIcon className="h-4 w-4" />
                         Employees
                       </div>
                       <div className="text-sm font-semibold text-foreground">{selectedBusiness.empCount}</div>

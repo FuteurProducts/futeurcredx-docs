@@ -85,7 +85,7 @@ const Customer: React.FC = () => {
     }));
   };
 
-  const handleAssignTask = (_recommendation: any, _assignee: string) => {
+  const handleAssignTask = (_recommendation: unknown, _assignee: string) => {
     // Placeholder for future task assignment
   };
 
@@ -270,7 +270,7 @@ const Customer: React.FC = () => {
             <div className="bg-card rounded-xl border border-border p-8 h-full flex items-center justify-center min-h-[400px]">
               <div className="text-center text-muted-foreground">
                 <div className="text-4xl mb-3">&#x1F448;</div>
-                <p className="font-medium">Select a customer</p>
+                <p className="font-medium">Select a business</p>
                 <p className="text-sm">View engagement details and product footprint</p>
               </div>
             </div>
@@ -290,7 +290,7 @@ const Customer: React.FC = () => {
               <div className="text-center text-muted-foreground">
                 <div className="text-4xl mb-3">&#x1F3AF;</div>
                 <p className="font-medium">AI Recommendations</p>
-                <p className="text-sm">Select a customer to see actions</p>
+                <p className="text-sm">Select a business to see actions</p>
               </div>
             </div>
           )}

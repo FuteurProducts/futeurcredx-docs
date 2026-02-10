@@ -84,9 +84,9 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
                 className="w-full flex items-center gap-2 px-2 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 {isExpanded ? (
-                  <ChevronDown className="h-3 w-3" />
+                  <ChevronDown className="h-4 w-4" />
                 ) : (
-                  <ChevronRight className="h-3 w-3" />
+                  <ChevronRight className="h-4 w-4" />
                 )}
                 <span className="uppercase tracking-wider">{category}</span>
               </button>

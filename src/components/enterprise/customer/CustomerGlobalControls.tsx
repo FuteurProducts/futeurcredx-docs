@@ -159,7 +159,7 @@ export const CustomerGlobalControls: React.FC<CustomerGlobalControlsProps> = ({
             {selectedValues.length}
           </span>
         )}
-        <ChevronDown className={`h-3 w-3 transition-transform flex-shrink-0 ${activeDropdown === id ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-4 w-4 transition-transform flex-shrink-0 ${activeDropdown === id ? 'rotate-180' : ''}`} />
       </button>
 
       <AnimatePresence>
@@ -301,7 +301,7 @@ export const CustomerGlobalControls: React.FC<CustomerGlobalControlsProps> = ({
                 className={`
                   px-3 py-1.5 rounded-md text-xs font-medium transition-all
                   ${filters.timeWindow === tw.id
-                    ? 'bg-card text-foreground shadow-sm'
+                    ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground'
                   }
                 `}
@@ -318,7 +318,7 @@ export const CustomerGlobalControls: React.FC<CustomerGlobalControlsProps> = ({
               className={`
                 p-2 rounded-md transition-all
                 ${filters.viewMode === 'portfolio'
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground'
                 }
               `}
@@ -331,7 +331,7 @@ export const CustomerGlobalControls: React.FC<CustomerGlobalControlsProps> = ({
               className={`
                 p-2 rounded-md transition-all
                 ${filters.viewMode === 'entity'
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground'
                 }
               `}

@@ -43,7 +43,7 @@ export const ModelVersionsPanel: React.FC = () => {
           </p>
         </div>
         <Badge variant="outline" className="text-xs">
-          <FileText className="h-3 w-3 mr-1" />
+          <FileText className="h-4 w-4 mr-1" />
           SR 11-7 Compliant
         </Badge>
       </div>
@@ -115,11 +115,11 @@ export const ModelVersionsPanel: React.FC = () => {
                         
                         <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground">
                           <span className="flex items-center gap-1">
-                            <CheckCircle className="h-3 w-3 text-chart-2" />
+                            <CheckCircle className="h-4 w-4 text-chart-2" />
                             Validated {new Date(model.validatedOn).toLocaleDateString()}
                           </span>
                           <span className="flex items-center gap-1">
-                            <GitBranch className="h-3 w-3" />
+                            <GitBranch className="h-4 w-4" />
                             SHA: {model.id.slice(-8)}
                           </span>
                         </div>

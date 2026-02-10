@@ -84,7 +84,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
               onClick={() => updateFilter('viewMode', mode.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all ${
                 isActive
-                  ? 'bg-foreground text-background shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'bg-muted text-muted-foreground hover:bg-muted/80'
               }`}
             >
@@ -102,7 +102,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
           <select
             value={filters.productFamily}
             onChange={(e) => updateFilter('productFamily', e.target.value as ProductFamily | 'All')}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by product family"
           >
             {productFamilies.map((f) => (
@@ -118,7 +118,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
           <select
             value={filters.segment}
             onChange={(e) => updateFilter('segment', e.target.value as SegmentType)}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by segment"
           >
             {segments.map((s) => (
@@ -134,7 +134,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
           <select
             value={filters.status}
             onChange={(e) => updateFilter('status', e.target.value as ProductStatus | 'All')}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
             aria-label="Filter by product status"
           >
             {statuses.map((s) => (
@@ -156,7 +156,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
               onClick={() => updateFilter('timeWindow', tw.id)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 filters.timeWindow === tw.id
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >

@@ -118,7 +118,7 @@ const ApiKeysTab: React.FC<ApiKeysTabProps> = ({
                 value={newKeyName}
                 onChange={(e) => setNewKeyName(e.target.value)}
               placeholder="Key name (e.g., Production)"
-              className="flex-1 h-12 px-4 bg-muted border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-[0.9375rem]"
+              className="flex-1 h-12 px-4 bg-muted border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary text-[0.9375rem]"
               />
               <button
                 onClick={handleGenerateKey}

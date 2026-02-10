@@ -93,6 +93,7 @@ const UnderwritingAssistant: React.FC = () => {
         'Applications Pipeline'
       );
       if (source === 'live' && response.apps.length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const adapted = adaptApplicationsToPipeline(response.apps as any, response.nameMap);
         setApplications(adapted);
       } else if (source === 'fallback') {

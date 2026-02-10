@@ -260,7 +260,7 @@ function SampleBusinessTable({
             'hover:bg-accent transition-colors',
           )}
         >
-          <RefreshCw className="h-3.5 w-3.5" />
+          <RefreshCw className="h-4 w-4" />
           Refresh Sample
         </button>
       </div>
@@ -410,7 +410,7 @@ export function SegmentDrillDown({ segmentId, onBack }: SegmentDrillDownProps) {
               'hover:bg-primary/90 transition-colors',
             )}
           >
-            <Megaphone className="h-3.5 w-3.5" />
+            <Megaphone className="h-4 w-4" />
             Push Offers
           </button>
           <button
@@ -421,7 +421,7 @@ export function SegmentDrillDown({ segmentId, onBack }: SegmentDrillDownProps) {
               'hover:bg-accent transition-colors',
             )}
           >
-            <Eye className="h-3.5 w-3.5" />
+            <Eye className="h-4 w-4" />
             Add to Watch
           </button>
           <button
@@ -432,7 +432,7 @@ export function SegmentDrillDown({ segmentId, onBack }: SegmentDrillDownProps) {
               'hover:bg-accent transition-colors',
             )}
           >
-            <Download className="h-3.5 w-3.5" />
+            <Download className="h-4 w-4" />
             Export CSV
           </button>
         </div>

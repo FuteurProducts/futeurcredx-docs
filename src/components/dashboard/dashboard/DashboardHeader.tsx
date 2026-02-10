@@ -46,7 +46,7 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary/50 w-4 h-4" />
           <Input
             placeholder="Search..."
-            className="pl-10 bg-background border-primary/20 focus:border-primary focus:ring-primary/30"
+            className="pl-10 bg-background border-primary/20 focus-visible:border-primary focus-visible:ring-primary/30"
           />
         </div>
 

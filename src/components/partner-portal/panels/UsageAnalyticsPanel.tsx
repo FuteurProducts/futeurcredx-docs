@@ -38,7 +38,7 @@ const MetricCard: React.FC<{
             <div className={`flex items-center gap-1 text-xs mt-1 ${
               trend.direction === 'up' ? 'text-chart-2' : 'text-destructive'
             }`}>
-              {trend.direction === 'up' ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+              {trend.direction === 'up' ? <ArrowUpRight className="h-4 w-4" /> : <ArrowDownRight className="h-4 w-4" />}
               {trend.value}% vs last period
             </div>
           )}

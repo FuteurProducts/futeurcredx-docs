@@ -117,9 +117,9 @@ const UnderwritingQueue: React.FC = () => {
       <div className="flex items-center gap-1">
         <span>{label}</span>
         {sortField === field ? (
-          sortDir === 'asc' ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />
+          sortDir === 'asc' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />
         ) : (
-          <ArrowUpDown className="h-3 w-3 opacity-30" />
+          <ArrowUpDown className="h-4 w-4 opacity-30" />
         )}
       </div>
     </th>
@@ -139,14 +139,14 @@ const UnderwritingQueue: React.FC = () => {
               onClick={() => setShowRules(r => !r)}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all duration-200"
             >
-              <Shield className="h-3.5 w-3.5" />
+              <Shield className="h-4 w-4" />
               {showRules ? 'Hide' : 'Show'} Rules
             </button>
             <button
               onClick={() => toast({ title: 'Queue exported', description: `${sortedQueue.length} applications exported to CSV` })}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all duration-200"
             >
-              <Download className="h-3.5 w-3.5" />
+              <Download className="h-4 w-4" />
               Export
             </button>
           </div>
@@ -226,37 +226,45 @@ const UnderwritingQueue: React.FC = () => {
                 {/* Auto-Approve */}
                 <div className="rounded-xl border border-border/60 p-4">
                   <h4 className="text-xs font-semibold text-emerald-700 uppercase tracking-wider mb-2 flex items-center gap-1">
-                    <CheckCircle2 className="h-3 w-3" /> AUTO-APPROVE when ALL met:
+                    <CheckCircle2 className="h-4 w-4" /> AUTO-APPROVE when ALL met:
                   </h4>
                   <ul className="space-y-1.5">
-                    {UNDERWRITING.rules.autoApprove.map((rule, i) => (
-                      <li key={i} className="flex items-center gap-2 text-xs text-foreground">
-                        <CheckCircle2 className="h-3 w-3 text-emerald-500 shrink-0" />
-                        {rule}
-                      </li>
-                    ))}
+                    {UNDERWRITING.rules.autoApprove && UNDERWRITING.rules.autoApprove.length > 0 ? (
+                      UNDERWRITING.rules.autoApprove.map((rule, i) => (
+                        <li key={i} className="flex items-center gap-2 text-xs text-foreground">
+                          <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+                          {rule}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-xs text-muted-foreground">No rules configured</li>
+                    )}
                   </ul>
                 </div>
 
                 {/* Auto-Decline */}
                 <div className="rounded-xl border border-border/60 p-4">
                   <h4 className="text-xs font-semibold text-rose-700 uppercase tracking-wider mb-2 flex items-center gap-1">
-                    <XCircle className="h-3 w-3" /> AUTO-DECLINE when ANY met:
+                    <XCircle className="h-4 w-4" /> AUTO-DECLINE when ANY met:
                   </h4>
                   <ul className="space-y-1.5">
-                    {UNDERWRITING.rules.autoDecline.map((rule, i) => (
-                      <li key={i} className="flex items-center gap-2 text-xs text-foreground">
-                        <XCircle className="h-3 w-3 text-rose-500 shrink-0" />
-                        {rule}
-                      </li>
-                    ))}
+                    {UNDERWRITING.rules.autoDecline && UNDERWRITING.rules.autoDecline.length > 0 ? (
+                      UNDERWRITING.rules.autoDecline.map((rule, i) => (
+                        <li key={i} className="flex items-center gap-2 text-xs text-foreground">
+                          <XCircle className="h-4 w-4 text-rose-500 shrink-0" />
+                          {rule}
+                        </li>
+                      ))
+                    ) : (
+                      <li className="text-xs text-muted-foreground">No rules configured</li>
+                    )}
                   </ul>
                 </div>
 
                 {/* Manual Review */}
                 <div className="rounded-xl border border-border/60 p-4">
                   <h4 className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2 flex items-center gap-1">
-                    <AlertTriangle className="h-3 w-3" /> MANUAL REVIEW:
+                    <AlertTriangle className="h-4 w-4" /> MANUAL REVIEW:
                   </h4>
                   <p className="text-xs text-muted-foreground">
                     Everything that doesn&apos;t match auto-approve or auto-decline criteria is routed to the manual review queue for analyst decision.
@@ -295,7 +303,7 @@ const UnderwritingQueue: React.FC = () => {
 
               {/* Filters */}
               <div className="flex items-center gap-1.5">
-                <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+                <Filter className="h-4 w-4 text-muted-foreground" />
                 <select
                   value={filterProduct}
                   onChange={e => setFilterProduct(e.target.value)}
@@ -322,7 +330,7 @@ const UnderwritingQueue: React.FC = () => {
                     onClick={() => { setFilterProduct('all'); setFilterRisk('all'); }}
                     className="text-xs text-primary hover:underline flex items-center gap-0.5 transition-all duration-200"
                   >
-                    <X className="h-3 w-3" /> Clear
+                    <X className="h-4 w-4" /> Clear
                   </button>
                 )}
               </div>
@@ -335,25 +343,25 @@ const UnderwritingQueue: React.FC = () => {
                   onClick={() => handleBulkAction('Approved')}
                   className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all duration-200"
                 >
-                  <CheckCircle2 className="h-3 w-3" /> Approve
+                  <CheckCircle2 className="h-4 w-4" /> Approve
                 </button>
                 <button
                   onClick={() => handleBulkAction('Declined')}
                   className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 transition-all duration-200"
                 >
-                  <XCircle className="h-3 w-3" /> Decline
+                  <XCircle className="h-4 w-4" /> Decline
                 </button>
                 <button
                   onClick={() => handleBulkAction('Sent for review')}
                   className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
                 >
-                  <AlertTriangle className="h-3 w-3" /> Request Info
+                  <AlertTriangle className="h-4 w-4" /> Request Info
                 </button>
                 <button
                   onClick={() => handleBulkAction('Escalated')}
                   className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
                 >
-                  <Users className="h-3 w-3" /> Escalate
+                  <Users className="h-4 w-4" /> Escalate
                 </button>
               </motion.div>
             )}
@@ -496,25 +504,25 @@ const UnderwritingQueue: React.FC = () => {
                 onClick={() => { toast({ title: 'Application approved', description: detailItem.business }); setDetailItem(null); }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all duration-200"
               >
-                <CheckCircle2 className="h-3.5 w-3.5" /> Approve
+                <CheckCircle2 className="h-4 w-4" /> Approve
               </button>
               <button
                 onClick={() => { toast({ title: 'Application declined', description: detailItem.business }); setDetailItem(null); }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 transition-all duration-200"
               >
-                <XCircle className="h-3.5 w-3.5" /> Decline
+                <XCircle className="h-4 w-4" /> Decline
               </button>
               <button
                 onClick={() => { toast({ title: 'Sent for additional review', description: detailItem.business }); }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
               >
-                <FileText className="h-3.5 w-3.5" /> Request Info
+                <FileText className="h-4 w-4" /> Request Info
               </button>
               <button
                 onClick={() => { toast({ title: 'Escalated to committee', description: detailItem.business }); }}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
               >
-                <AlertTriangle className="h-3.5 w-3.5" /> Escalate
+                <AlertTriangle className="h-4 w-4" /> Escalate
               </button>
             </div>
           </motion.div>
@@ -549,29 +557,37 @@ const UnderwritingQueue: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/30">
-                {COMPLIANCE.approvalVariance.map(row => (
-                  <tr key={row.segment} className={cn(
-                    'hover:bg-muted/30 transition-colors duration-150',
-                    row.status === 'flag' && 'bg-rose-50/50 dark:bg-rose-950/20',
-                    row.status === 'review' && 'bg-amber-50/50 dark:bg-amber-950/20',
-                  )}>
-                    <td className="px-5 py-4 text-sm text-foreground">{row.segment}</td>
-                    <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatNumber(row.applications)}</td>
-                    <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatNumber(row.approved)}</td>
-                    <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatPercent(row.rate)}</td>
-                    <td className={cn(
-                      'px-5 py-4 text-sm text-right font-medium tabular-nums',
-                      row.variance > 0 ? 'text-emerald-600' : row.variance < -0.05 ? 'text-rose-600' : 'text-foreground',
+                {COMPLIANCE.approvalVariance && COMPLIANCE.approvalVariance.length > 0 ? (
+                  COMPLIANCE.approvalVariance.map(row => (
+                    <tr key={row.segment} className={cn(
+                      'hover:bg-muted/30 transition-colors duration-150',
+                      row.status === 'flag' && 'bg-rose-50/50 dark:bg-rose-950/20',
+                      row.status === 'review' && 'bg-amber-50/50 dark:bg-amber-950/20',
                     )}>
-                      {row.variance > 0 ? '+' : ''}{formatPercent(row.variance)}
-                    </td>
-                    <td className="px-5 py-4 text-center">
-                      {row.status === 'ok' && <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto" />}
-                      {row.status === 'review' && <AlertTriangle className="h-4 w-4 text-amber-500 mx-auto" />}
-                      {row.status === 'flag' && <XCircle className="h-4 w-4 text-rose-500 mx-auto" />}
+                      <td className="px-5 py-4 text-sm text-foreground">{row.segment}</td>
+                      <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatNumber(row.applications)}</td>
+                      <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatNumber(row.approved)}</td>
+                      <td className="px-5 py-4 text-sm text-right text-foreground tabular-nums">{formatPercent(row.rate)}</td>
+                      <td className={cn(
+                        'px-5 py-4 text-sm text-right font-medium tabular-nums',
+                        row.variance > 0 ? 'text-emerald-600' : row.variance < -0.05 ? 'text-rose-600' : 'text-foreground',
+                      )}>
+                        {row.variance > 0 ? '+' : ''}{formatPercent(row.variance)}
+                      </td>
+                      <td className="px-5 py-4 text-center">
+                        {row.status === 'ok' && <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto" />}
+                        {row.status === 'review' && <AlertTriangle className="h-4 w-4 text-amber-500 mx-auto" />}
+                        {row.status === 'flag' && <XCircle className="h-4 w-4 text-rose-500 mx-auto" />}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={6} className="py-12 text-center">
+                      <p className="text-sm text-muted-foreground">No compliance data available</p>
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

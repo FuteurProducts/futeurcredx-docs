@@ -149,14 +149,14 @@ export const PortfolioFilterBar: React.FC<PortfolioFilterBarProps> = ({
             : 'bg-card border-border text-muted-foreground hover:bg-muted',
         )}
       >
-        <Icon className="h-3.5 w-3.5" />
+        <Icon className="h-4 w-4" />
         <span>{label}</span>
         {selected.length > 0 && (
           <span className="px-1 py-0.5 bg-primary text-primary-foreground text-[10px] rounded-full leading-none">
             {selected.length}
           </span>
         )}
-        <ChevronDown className={cn('h-3 w-3 transition-transform', activeDropdown === id && 'rotate-180')} />
+        <ChevronDown className={cn('h-4 w-4 transition-transform', activeDropdown === id && 'rotate-180')} />
       </button>
 
       <AnimatePresence>
@@ -211,7 +211,7 @@ export const PortfolioFilterBar: React.FC<PortfolioFilterBarProps> = ({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex items-center gap-1.5 mr-1">
-            <Filter className="h-3.5 w-3.5 text-muted-foreground" />
+            <Filter className="h-4 w-4 text-muted-foreground" />
             <span className="text-xs font-medium text-foreground">Portfolio</span>
             {activeCount > 0 && (
               <span className="text-[10px] text-muted-foreground">({activeCount})</span>
@@ -239,7 +239,7 @@ export const PortfolioFilterBar: React.FC<PortfolioFilterBarProps> = ({
 
         {showTimeRange && (
           <div className="flex items-center gap-0.5 bg-muted rounded-md p-0.5">
-            <Calendar className="h-3.5 w-3.5 text-muted-foreground ml-1.5" />
+            <Calendar className="h-4 w-4 text-muted-foreground ml-1.5" />
             {TIME_WINDOWS.map((tw) => (
               <button
                 key={tw.id}
@@ -247,7 +247,7 @@ export const PortfolioFilterBar: React.FC<PortfolioFilterBarProps> = ({
                 className={cn(
                   'px-2 py-1 rounded text-[10px] font-medium transition-all',
                   filters.timeWindow === tw.id
-                    ? 'bg-card text-foreground shadow-sm'
+                    ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground',
                 )}
               >

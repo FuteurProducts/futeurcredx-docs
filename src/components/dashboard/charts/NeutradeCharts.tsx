@@ -82,7 +82,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 h-10 px-4 bg-muted hover:bg-[var(--shade-09)] border border-border rounded-xl text-[0.875rem] font-semibold text-foreground transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--primary-01)] focus:ring-offset-1"
+        className="flex items-center gap-2 h-10 px-4 bg-muted hover:bg-[var(--shade-09)] border border-border rounded-xl text-[0.875rem] font-semibold text-foreground transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-01)] focus-visible:ring-offset-1"
       >
         <span>{value.title}</span>
         <svg 
@@ -226,6 +226,7 @@ const durationOptions = [
 ];
 
 // Professional tooltip with design system colors
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -681,6 +682,7 @@ const balanceDurationOptions = [
   { id: "2", title: "Year" },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const BarTooltip = ({ active, payload, label: _label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -905,6 +907,7 @@ interface ApiUsageOverviewProps {
   monthlyData?: { name: string; calls: number }[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ApiUsageTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -1604,6 +1607,7 @@ export const ConversionLiftChart: React.FC = () => {
                 return (
                   <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
                     <div className="mb-2 text-xs font-medium text-muted-foreground">{label}</div>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {payload.map((entry: any) => (
                       <div key={entry.dataKey} className="flex items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
@@ -1854,6 +1858,7 @@ export const ApprovalRateTrendChart: React.FC = () => {
                 return (
                   <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
                     <div className="mb-2 text-xs font-medium text-muted-foreground">{label}</div>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {payload.map((entry: any, index: number) => (
                       <div key={index} className="flex items-center justify-between gap-4">
                         <span className="text-sm text-muted-foreground">{entry.name}</span>

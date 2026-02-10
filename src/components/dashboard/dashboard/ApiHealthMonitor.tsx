@@ -52,7 +52,7 @@ export function ApiHealthMonitor() {
             className="animate-fade-in"
             style={{ animationDelay: `${i * 100}ms` }}
           >
-            <Card className="glass-card p-4 hover:shadow-xl transition-shadow">
+            <Card className="glass-card p-4 shadow-sm hover:shadow-md transition-shadow">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">

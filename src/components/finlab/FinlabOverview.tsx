@@ -254,7 +254,7 @@ export const FinlabOverview: React.FC = () => {
         >
           <ConnectedBusinessesCard
             data={connectedBusinessesData}
-            className="h-full shadow-lg bg-card rounded-2xl border border-border"
+            className="h-full shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
 
@@ -266,7 +266,7 @@ export const FinlabOverview: React.FC = () => {
         >
           <ApiUsageCard
             data={apiUsageData}
-            className="h-full shadow-lg bg-card rounded-2xl border border-border"
+            className="h-full shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
 
@@ -278,7 +278,7 @@ export const FinlabOverview: React.FC = () => {
         >
           <PortfolioHealthCard
             data={portfolioHealthData}
-            className="h-full shadow-lg bg-card rounded-2xl border border-border"
+            className="h-full shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
       </div>
@@ -294,7 +294,7 @@ export const FinlabOverview: React.FC = () => {
           <DataFreshnessCard
             data={dataFreshnessData}
             onRefreshAll={handleRefreshAll}
-            className="shadow-lg bg-card rounded-2xl border border-border"
+            className="shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
 
@@ -310,7 +310,7 @@ export const FinlabOverview: React.FC = () => {
               toast({ title: "Activity log", description: "Opening Audit Logs in Settings." });
               navigate('/dashboard?tab=settings');
             }}
-            className="shadow-lg bg-card rounded-2xl border border-border"
+            className="shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
       </div>
@@ -330,7 +330,7 @@ export const FinlabOverview: React.FC = () => {
               toast({ title: "Webhook logs", description: "Opening Partner Portal webhook logs." });
               navigate('/dashboard?tab=partner-portal');
             }}
-            className="shadow-lg bg-card rounded-2xl border border-border"
+            className="shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
 
@@ -346,7 +346,7 @@ export const FinlabOverview: React.FC = () => {
             onRefresh={() => {
               toast({ title: "Status refreshed", description: "All service health checks updated." });
             }}
-            className="shadow-lg bg-card rounded-2xl border border-border"
+            className="shadow-sm bg-card rounded-2xl border border-border"
           />
         </motion.div>
       </div>

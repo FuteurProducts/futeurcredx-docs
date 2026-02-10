@@ -247,7 +247,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.businessName}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white placeholder-gray-400"
                       placeholder="Your Business Name"
                     />
                   </div>
@@ -259,7 +259,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.legalStruct}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white"
                     >
                       <option value="">Select Structure</option>
                       {legalStructures.map(structure => (
@@ -279,7 +279,7 @@ const BusinessSignup: React.FC = () => {
                       onChange={handleInputChange}
                       min="1900"
                       max={new Date().getFullYear()}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white"
                     />
                   </div>
                 </div>
@@ -301,7 +301,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.streetAddress}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white placeholder-gray-400"
                       placeholder="123 Business St"
                     />
                   </div>
@@ -314,7 +314,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.city}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white placeholder-gray-400"
                       placeholder="City"
                     />
                   </div>
@@ -326,7 +326,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.state}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white"
                     >
                       <option value="">Select State</option>
                       {usStates.map(state => (
@@ -345,7 +345,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.zipCode}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white placeholder-gray-400"
                       placeholder="12345"
                     />
                   </div>
@@ -356,7 +356,7 @@ const BusinessSignup: React.FC = () => {
                       name="country"
                       value={formData.country}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white"
                     >
                       <option value="US" className="bg-black">United States</option>
                       <option value="CA" className="bg-black">Canada</option>
@@ -382,7 +382,7 @@ const BusinessSignup: React.FC = () => {
                       value={formData.empCount}
                       onChange={handleInputChange}
                       min="1"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white"
                     />
                   </div>
                   
@@ -393,7 +393,7 @@ const BusinessSignup: React.FC = () => {
                       name="phoneNum"
                       value={formData.phoneNum}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-white/30 text-white placeholder-gray-400"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus-visible:border-white/30 text-white placeholder-gray-400"
                       placeholder="(555) 123-4567"
                     />
                   </div>

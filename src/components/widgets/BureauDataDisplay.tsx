@@ -275,7 +275,7 @@ export const BureauDataDisplay: React.FC<BureauDataDisplayProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
+              className="bg-card rounded-2xl p-6 shadow-sm border border-border"
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-4">

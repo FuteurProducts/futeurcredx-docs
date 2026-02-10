@@ -167,7 +167,7 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
             placeholder="Search applications..."
             value={filters.searchQuery}
             onChange={(e) => onFiltersChange({ ...filters, searchQuery: e.target.value })}
-            className="w-full pl-9 pr-3 py-2 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-info focus:border-transparent"
+            className="w-full pl-9 pr-3 py-2 text-sm border border-border rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-info focus-visible:border-transparent"
           />
         </div>
         
@@ -192,7 +192,7 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
                   type="checkbox"
                   checked={filters.productType.includes(product)}
                   onChange={() => toggleFilter('productType', product)}
-                  className="w-4 h-4 rounded border-border text-info focus:ring-info"
+                  className="w-4 h-4 rounded border-border text-info focus-visible:ring-info"
                 />
                 <span className="text-sm text-muted-foreground">{product}</span>
               </label>
@@ -212,7 +212,7 @@ export const ApplicationQueueFilters: React.FC<ApplicationQueueFiltersProps> = (
                   type="checkbox"
                   checked={filters.geography.includes(geo)}
                   onChange={() => toggleFilter('geography', geo)}
-                  className="w-4 h-4 rounded border-border text-info focus:ring-info"
+                  className="w-4 h-4 rounded border-border text-info focus-visible:ring-info"
                 />
                 <span className="text-sm text-muted-foreground">{geo}</span>
               </label>

@@ -322,10 +322,10 @@ export const WebhooksPanel: React.FC = () => {
                         {revealedSecrets.has(webhook.id) ? webhook.secret : webhook.secretMasked}
                       </code>
                       <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => copyToClipboard(webhook.secret)}>
-                        <Copy className="h-3 w-3" />
+                        <Copy className="h-4 w-4" />
                       </Button>
                       <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => toggleSecretReveal(webhook.id)}>
-                        {revealedSecrets.has(webhook.id) ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                        {revealedSecrets.has(webhook.id) ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </Button>
                     </div>
                     <div className="flex gap-1 mt-2">
@@ -340,7 +340,7 @@ export const WebhooksPanel: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Button size="sm" variant="outline" onClick={() => handleTestWebhook(webhook)}>
-                    <Send className="h-3 w-3 mr-1" />
+                    <Send className="h-4 w-4 mr-1" />
                     Test
                   </Button>
                   <Button

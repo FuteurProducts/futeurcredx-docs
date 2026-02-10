@@ -66,7 +66,7 @@ export const SettingsGlobalControls: React.FC<SettingsGlobalControlsProps> = ({
           {/* SSO Badge */}
           {ssoEnabled && (
             <div className="flex items-center gap-1.5 px-2 py-1 bg-success/10 text-success rounded-lg text-xs font-medium">
-              <Shield className="h-3 w-3" />
+              <Shield className="h-4 w-4" />
               SSO Enabled
             </div>
           )}

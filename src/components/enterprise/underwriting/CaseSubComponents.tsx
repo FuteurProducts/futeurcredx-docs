@@ -51,9 +51,9 @@ export const CaseStatusStepper: React.FC<{ status: CaseStatus }> = ({ status }) 
       })}
       {isDeclined && (
         <>
-          <div className="h-0.5 w-6 bg-red-300" />
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border bg-red-50 border-red-200 text-red-700">
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+          <div className="h-0.5 w-6 bg-destructive/30" />
+          <div className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border bg-destructive/5 border-destructive/20 text-destructive">
+            <span className="w-1.5 h-1.5 rounded-full bg-destructive" />
             Declined
           </div>
         </>
@@ -71,13 +71,13 @@ export const SignalRow: React.FC<{ signal: SignalSummary }> = ({ signal }) => {
     <div className={cn('flex items-center gap-3 px-3 py-2.5 rounded-lg border', sCfg.bg)}>
       <div className="flex-1 min-w-0">
         <span className={cn('text-sm font-medium', sCfg.color)}>{signal.name}</span>
-        <p className="text-xs text-foreground/70 truncate">{signal.detail}</p>
+        <p className="text-xs text-foreground truncate">{signal.detail}</p>
       </div>
       <div className="flex items-center gap-2 shrink-0">
         <span className={cn('text-[10px] font-medium px-2 py-0.5 rounded-full border', sCfg.bg, sCfg.color)}>
           {SIGNAL_STATUSES[signal.status].label}
         </span>
-        <DirIcon className={cn('h-3.5 w-3.5', dCfg.color)} />
+        <DirIcon className={cn('h-4 w-4', dCfg.color)} />
       </div>
     </div>
   );
@@ -90,8 +90,8 @@ export const PolicyCheckRow: React.FC<{ check: PolicyCheck; isExpanded: boolean;
 }) => {
   const resultCfg = {
     pass: { icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50', label: 'Pass' },
-    review: { icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50', label: 'Review' },
-    fail: { icon: XCircle, color: 'text-red-600', bg: 'bg-red-50', label: 'Fail' },
+    review: { icon: AlertTriangle, color: 'text-warning', bg: 'bg-warning/5', label: 'Review' },
+    fail: { icon: XCircle, color: 'text-destructive', bg: 'bg-destructive/5', label: 'Fail' },
   }[check.result];
   const Icon = resultCfg.icon;
 
@@ -99,12 +99,12 @@ export const PolicyCheckRow: React.FC<{ check: PolicyCheck; isExpanded: boolean;
     <div>
       <button onClick={onToggle} className="w-full grid grid-cols-12 gap-3 items-center px-3 py-2.5 rounded-lg hover:bg-muted/50 transition-colors text-left">
         <div className="col-span-4 flex items-center gap-2">
-          {isExpanded ? <ChevronDown className="h-3 w-3 text-muted-foreground" /> : <ChevronRight className="h-3 w-3 text-muted-foreground" />}
+          {isExpanded ? <ChevronDown className="h-4 w-4 text-muted-foreground" /> : <ChevronRight className="h-4 w-4 text-muted-foreground" />}
           <span className="text-sm text-foreground">{check.name}</span>
         </div>
         <div className="col-span-2">
           <span className={cn('inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium', resultCfg.bg, resultCfg.color)}>
-            <Icon className="h-3 w-3" />
+            <Icon className="h-4 w-4" />
             {resultCfg.label}
           </span>
         </div>

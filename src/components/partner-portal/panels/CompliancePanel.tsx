@@ -148,7 +148,7 @@ export const CompliancePanel: React.FC = () => {
                         {status.certificateUrl && (
                           <Button variant="link" className="p-0 h-auto text-sm" asChild>
                             <a href={status.certificateUrl} target="_blank" rel="noopener noreferrer">
-                              View Certificate <ExternalLink className="h-3 w-3 ml-1" />
+                              View Certificate <ExternalLink className="h-4 w-4 ml-1" />
                             </a>
                           </Button>
                         )}
@@ -304,7 +304,7 @@ export const CompliancePanel: React.FC = () => {
                     </Badge>
                     {classification.encryptionRequired && (
                       <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">
-                        <Lock className="h-3 w-3 mr-1" />
+                        <Lock className="h-4 w-4 mr-1" />
                         Encrypted
                       </Badge>
                     )}

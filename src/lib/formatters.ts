@@ -154,8 +154,8 @@ export const getThresholdColorClass = (status: ThresholdStatus): string => {
 export const getThresholdBgClass = (status: ThresholdStatus): string => {
   const map: Record<ThresholdStatus, string> = {
     ok: 'bg-emerald-500',
-    warning: 'bg-amber-500',
-    danger: 'bg-red-500',
+    warning: 'bg-warning',
+    danger: 'bg-destructive',
   };
   return map[status];
 };
@@ -174,20 +174,20 @@ export const getSLAIndicator = (status: string): { label: string; colorClass: st
 // ── Severity helpers ─────────────────────────────────────────────
 
 const SEVERITY_CLASSES: Record<string, string> = {
-  critical: 'bg-red-100 text-red-700 border-red-300',
+  critical: 'bg-destructive/10 text-destructive border-destructive/30',
   high: 'bg-orange-100 text-orange-700 border-orange-300',
-  medium: 'bg-amber-100 text-amber-700 border-amber-300',
-  low: 'bg-blue-100 text-blue-700 border-blue-300',
+  medium: 'bg-warning/10 text-warning border-warning/30',
+  low: 'bg-info/10 text-info border-info/30',
 };
 
 export const getSeverityBadgeClass = (severity: string): string =>
   SEVERITY_CLASSES[severity] ?? 'bg-gray-100 text-gray-700 border-gray-300';
 
 const SEVERITY_DOT: Record<string, string> = {
-  critical: 'bg-red-500',
+  critical: 'bg-destructive',
   high: 'bg-orange-500',
-  medium: 'bg-amber-500',
-  low: 'bg-blue-500',
+  medium: 'bg-warning',
+  low: 'bg-info',
 };
 
 export const getSeverityDotClass = (severity: string): string =>

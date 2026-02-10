@@ -56,9 +56,9 @@ export const ProductReadinessTable: React.FC<ProductReadinessTableProps> = ({
               >
                 <div className="col-span-4 flex items-center gap-2">
                   {expandedProduct === item.productId ? (
-                    <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   ) : (
-                    <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
                   )}
                   <div>
                     <div className="text-sm font-medium text-foreground">{item.productName}</div>
@@ -68,10 +68,10 @@ export const ProductReadinessTable: React.FC<ProductReadinessTableProps> = ({
                 <div className="col-span-2">
                   <ReadinessBadge readiness={item.readiness} />
                 </div>
-                <div className="col-span-3 text-xs text-foreground/80 truncate">
+                <div className="col-span-3 text-xs text-foreground truncate">
                   {item.qualifyingSignal}
                 </div>
-                <div className="col-span-3 text-xs text-foreground/80 truncate">
+                <div className="col-span-3 text-xs text-foreground truncate">
                   {item.concern}
                 </div>
               </button>

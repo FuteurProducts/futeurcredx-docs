@@ -134,7 +134,7 @@ export const RetentionPanel: React.FC = () => {
                         <h3 className="font-medium">{policy.dataType}</h3>
                         {policy.complianceRequired && (
                           <Badge className="bg-warning/10 text-warning border-warning/20">
-                            <Shield className="h-3 w-3 mr-1" />
+                            <Shield className="h-4 w-4 mr-1" />
                             Regulated
                           </Badge>
                         )}

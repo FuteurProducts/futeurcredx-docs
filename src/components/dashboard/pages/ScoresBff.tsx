@@ -107,6 +107,7 @@ const ScoresBff: React.FC = () => {
     try {
       const { data: response, source } = await withFallback(
         () => scoresService.list(portfolioId, { pageSize: 100 }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         { data: FALLBACK_SCORES as any, meta: { requestId: 'fallback' } },
         'Score List'
       );
@@ -357,7 +358,7 @@ const ScoresBff: React.FC = () => {
               Pull Credit Scores
             </CardTitle>
             <CardDescription>
-              Select a customer to pull their credit score from bureaus
+              Select a business to pull their credit score from bureaus
             </CardDescription>
           </CardHeader>
           <CardContent>

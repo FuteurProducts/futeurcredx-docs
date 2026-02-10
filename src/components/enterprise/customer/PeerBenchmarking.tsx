@@ -93,22 +93,22 @@ export const PeerBenchmarking: React.FC<PeerBenchmarkingProps> = ({
             onClick={onViewPeerList}
             className="text-xs text-primary hover:text-primary/80 flex items-center gap-1"
           >
-            View peer list <ArrowRight className="h-3 w-3" />
+            View peer list <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
         {/* Business Context */}
         <div className="flex flex-wrap items-center gap-3 mb-4">
           <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium text-foreground">
-            <Building2 className="inline h-3 w-3 mr-1" />
+            <Building2 className="inline h-4 w-4 mr-1" />
             {currentBusiness.industry}
           </span>
           <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium text-foreground">
-            <DollarSign className="inline h-3 w-3 mr-1" />
+            <DollarSign className="inline h-4 w-4 mr-1" />
             {currentBusiness.revenueBand}
           </span>
           <span className="px-3 py-1.5 bg-muted rounded-lg text-xs font-medium text-foreground">
-            <MapPin className="inline h-3 w-3 mr-1" />
+            <MapPin className="inline h-4 w-4 mr-1" />
             {currentBusiness.region}
           </span>
         </div>
@@ -183,8 +183,8 @@ export const PeerBenchmarking: React.FC<PeerBenchmarkingProps> = ({
                   <div className="text-right">
                     <div className="flex items-center gap-1">
                       {isAboveAvg 
-                        ? <TrendingUp className="h-3 w-3 text-success" />
-                        : <TrendingDown className="h-3 w-3 text-destructive" />
+                        ? <TrendingUp className="h-4 w-4 text-success" />
+                        : <TrendingDown className="h-4 w-4 text-destructive" />
                       }
                       <span className="text-lg font-bold" style={{ color: percentileColor }}>
                         {config?.format(metric.yourValue)}

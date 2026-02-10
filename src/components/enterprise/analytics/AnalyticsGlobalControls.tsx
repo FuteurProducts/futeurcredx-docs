@@ -86,7 +86,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
               onClick={() => updateFilter('analysisMode', mode.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all ${
                 isActive
-                  ? 'bg-foreground text-background shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'bg-muted text-muted-foreground hover:bg-muted/80'
               }`}
             >
@@ -104,7 +104,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.product}
             onChange={(e) => updateFilter('product', e.target.value as ProductType)}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
           >
             {products.map((p) => (
               <option key={p.id} value={p.id}>{p.label}</option>
@@ -119,7 +119,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.segment}
             onChange={(e) => updateFilter('segment', e.target.value as SegmentType)}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
           >
             {segments.map((s) => (
               <option key={s.id} value={s.id}>{s.label}</option>
@@ -134,7 +134,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.geography}
             onChange={(e) => updateFilter('geography', e.target.value)}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
           >
             <option value="national">National</option>
             <option value="northeast">Northeast</option>
@@ -152,7 +152,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
           <select
             value={filters.relationshipStage}
             onChange={(e) => updateFilter('relationshipStage', e.target.value as RelationshipStage)}
-            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer"
           >
             {stages.map((s) => (
               <option key={s.id} value={s.id}>{s.label}</option>
@@ -173,7 +173,7 @@ export const AnalyticsGlobalControls: React.FC<AnalyticsGlobalControlsProps> = (
               onClick={() => updateFilter('timeWindow', tw.id)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 filters.timeWindow === tw.id
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >

@@ -44,7 +44,7 @@ const PartnerPortalEnterprise: React.FC = () => {
           </p>
         </div>
         <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">
-          <CheckCircle className="h-3 w-3 mr-1" />
+          <CheckCircle className="h-4 w-4 mr-1" />
           API Status: Operational
         </Badge>
       </div>

@@ -68,7 +68,7 @@ class DashboardService {
     try {
       const response = await apiService.get<ApiKeyResponse>('/api/v1/api-keys');
       return response.data.apiKeys || [];
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleApiKeyError(error);
     }
   }
@@ -84,7 +84,7 @@ class DashboardService {
     try {
       const response = await apiService.post<ApiKey>('/api/v1/api-keys', request);
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleApiKeyError(error);
     }
   }
@@ -99,7 +99,7 @@ class DashboardService {
 
     try {
       await apiService.delete(`/api/v1/api-keys/${keyId}`);
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleApiKeyError(error);
     }
   }
@@ -115,7 +115,7 @@ class DashboardService {
     try {
       const response = await apiService.get<ApiStats>('/api/v1/api-keys/stats');
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Return default stats on error
       logger.error('Failed to fetch API stats:', error);
       return {
@@ -140,7 +140,7 @@ class DashboardService {
     try {
       const response = await apiService.get<ApiKey>(`/api/v1/api-keys/${keyId}`);
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleApiKeyError(error);
     }
   }
@@ -151,9 +151,9 @@ class DashboardService {
   async testApiEndpoint(
     endpoint: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' = 'GET',
-    data?: any,
+    data?: Record<string, unknown>,
     apiKey?: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     // Set API key for this request if provided
     if (apiKey) {
       apiService.setApiKey(apiKey);
@@ -182,7 +182,7 @@ class DashboardService {
       }
 
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       throw this.handleApiKeyError(error);
     } finally {
       // Clear API key after request
@@ -203,8 +203,8 @@ class DashboardService {
     hasRecommendation?: boolean;
     hasScore?: boolean;
     hasApplications?: boolean;
-  }): Promise<{ 
-    data: any[]; 
+  }): Promise<{
+    data: Record<string, unknown>[];
     metadata?: {
       totalDocs: number;
       hasNextPage: boolean;
@@ -244,8 +244,8 @@ class DashboardService {
       const queryString = params.toString();
       const endpoint = `/api/v1/businesses/insights${queryString ? `?${queryString}` : ''}`;
       
-      const response = await apiService.get<{ 
-        data: any[]; 
+      const response = await apiService.get<{
+        data: Record<string, unknown>[];
         metadata?: {
           totalDocs: number;
           hasNextPage: boolean;
@@ -262,7 +262,7 @@ class DashboardService {
         page: response.data.metadata?.currentPage,
         limit: response.data.metadata?.totalDocsInPage,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error('Failed to fetch business insights:', error);
       throw this.handleApiKeyError(error);
     }
@@ -271,13 +271,13 @@ class DashboardService {
   /**
    * Get application statistics
    */
-  async getApplicationStats(): Promise<any> {
+  async getApplicationStats(): Promise<Record<string, unknown>> {
     try {
-      const response = await apiService.get<any>('/api/v1/recommendations/applications/stats');
+      const response = await apiService.get<Record<string, unknown>>('/api/v1/recommendations/applications/stats');
       // API returns { message: "...", data: { totalBusinesses, totalApplications, ... } }
       // Return the nested data property if it exists, otherwise return the full response
-      return response.data?.data || response.data;
-    } catch (error: any) {
+      return (response.data?.data as Record<string, unknown>) || response.data;
+    } catch (error: unknown) {
       logger.error('Failed to fetch application stats:', error);
       throw this.handleApiKeyError(error);
     }
@@ -286,11 +286,11 @@ class DashboardService {
   /**
    * Get applications for a specific business
    */
-  async getBusinessApplications(businessId: string): Promise<any[]> {
+  async getBusinessApplications(businessId: string): Promise<Record<string, unknown>[]> {
     try {
-      const response = await apiService.get<{ data: any[] }>(`/api/v1/recommendations/${businessId}/applications`);
+      const response = await apiService.get<{ data: Record<string, unknown>[] }>(`/api/v1/recommendations/${businessId}/applications`);
       return response.data.data || [];
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error('Failed to fetch business applications:', error);
       throw this.handleApiKeyError(error);
     }
@@ -299,42 +299,44 @@ class DashboardService {
   /**
    * Handle API key related errors
    */
-  private handleApiKeyError(error: any): ApiKeyError {
-    if (error.status === 401) {
+  private handleApiKeyError(error: unknown): ApiKeyError {
+    const apiError = error as { status?: number; data?: { message?: string; field?: string }; message?: string };
+
+    if (apiError.status === 401) {
       return {
         message: 'Authentication failed. Please sign in again.',
         code: 'UNAUTHORIZED'
       };
-    } else if (error.status === 403) {
+    } else if (apiError.status === 403) {
       return {
         message: 'Access forbidden. Please check your permissions.',
         code: 'FORBIDDEN'
       };
-    } else if (error.status === 404) {
+    } else if (apiError.status === 404) {
       return {
         message: 'API key not found.',
         code: 'NOT_FOUND'
       };
-    } else if (error.status === 409) {
+    } else if (apiError.status === 409) {
       return {
         message: 'API key name already exists.',
         code: 'CONFLICT',
         field: 'name'
       };
-    } else if (error.status === 422) {
+    } else if (apiError.status === 422) {
       return {
-        message: error.data?.message || 'Validation failed',
+        message: apiError.data?.message || 'Validation failed',
         code: 'VALIDATION_ERROR',
-        field: error.data?.field
+        field: apiError.data?.field
       };
-    } else if (error.status === 0) {
+    } else if (apiError.status === 0) {
       return {
         message: 'Network error. Please check your connection.',
         code: 'NETWORK_ERROR'
       };
     } else {
       return {
-        message: error.message || 'An unexpected error occurred',
+        message: apiError.message || 'An unexpected error occurred',
         code: 'UNKNOWN_ERROR'
       };
     }

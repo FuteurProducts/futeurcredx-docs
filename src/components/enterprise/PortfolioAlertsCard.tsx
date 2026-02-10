@@ -141,39 +141,45 @@ export const PortfolioAlertsCard: React.FC<PortfolioAlertsCardProps> = ({
       {/* Rules Tab */}
       {activeTab === "rules" && (
         <div className="space-y-3 max-h-[300px] overflow-y-auto">
-          {rules.map((rule) => (
-            <div
-              key={rule.id}
-              className="flex items-center gap-4 p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors"
-            >
-              <button
-                onClick={() => onToggleRule?.(rule.id, !rule.enabled)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  rule.enabled ? "bg-primary" : "bg-muted"
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${
-                    rule.enabled ? "translate-x-6" : "translate-x-1"
-                  }`}
-                />
-              </button>
-              <div className="w-9 h-9 bg-card rounded-lg flex items-center justify-center border border-border">
-                {getTypeIcon(rule.type)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="font-medium text-foreground truncate">{rule.name}</div>
-                <div className="text-xs text-muted-foreground truncate">
-                  {rule.description}
-                </div>
-              </div>
-              {rule.triggered24h > 0 && (
-                <span className="px-2 py-1 bg-warning/10 text-warning rounded text-xs font-medium">
-                  {rule.triggered24h} triggered
-                </span>
-              )}
+          {rules.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              No alert rules configured
             </div>
-          ))}
+          ) : (
+            rules.map((rule) => (
+              <div
+                key={rule.id}
+                className="flex items-center gap-4 p-4 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors"
+              >
+                <button
+                  onClick={() => onToggleRule?.(rule.id, !rule.enabled)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    rule.enabled ? "bg-primary" : "bg-muted"
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform ${
+                      rule.enabled ? "translate-x-6" : "translate-x-1"
+                    }`}
+                  />
+                </button>
+                <div className="w-9 h-9 bg-card rounded-lg flex items-center justify-center border border-border">
+                  {getTypeIcon(rule.type)}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-foreground truncate">{rule.name}</div>
+                  <div className="text-xs text-muted-foreground truncate">
+                    {rule.description}
+                  </div>
+                </div>
+                {rule.triggered24h > 0 && (
+                  <span className="px-2 py-1 bg-warning/10 text-warning rounded text-xs font-medium">
+                    {rule.triggered24h} triggered
+                  </span>
+                )}
+              </div>
+            ))
+          )}
         </div>
       )}
 

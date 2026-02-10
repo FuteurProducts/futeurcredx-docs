@@ -207,12 +207,12 @@ function ConcentrationPanel({
       <div className="px-6 py-3 bg-muted/30 border-t border-border/60">
         {allWithinLimits ? (
           <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-medium">
-            <CheckCircle2 className="h-3.5 w-3.5" />
+            <CheckCircle2 className="h-4 w-4" />
             All within limits
           </div>
         ) : (
           <div className="flex items-center gap-1.5 text-xs text-rose-600 font-medium">
-            <AlertTriangle className="h-3.5 w-3.5" />
+            <AlertTriangle className="h-4 w-4" />
             Limit breach detected
           </div>
         )}
@@ -321,10 +321,10 @@ function EWSClusterCard({
                       'border border-border/60 bg-background hover:bg-muted text-foreground',
                     )}
                   >
-                    {action === 'View Segment' && <Eye className="h-3 w-3" />}
-                    {(action === 'Add All to Watch List' || action === 'Immediate Review') && <ListPlus className="h-3 w-3" />}
-                    {(action === 'Assign to Team' || action === 'Assign to Senior' || action === 'Assign') && <Users className="h-3 w-3" />}
-                    {action === 'Legal Review Queue' && <FileWarning className="h-3 w-3" />}
+                    {action === 'View Segment' && <Eye className="h-4 w-4" />}
+                    {(action === 'Add All to Watch List' || action === 'Immediate Review') && <ListPlus className="h-4 w-4" />}
+                    {(action === 'Assign to Team' || action === 'Assign to Senior' || action === 'Assign') && <Users className="h-4 w-4" />}
+                    {action === 'Legal Review Queue' && <FileWarning className="h-4 w-4" />}
                     {action}
                   </button>
                 ))}
@@ -438,7 +438,7 @@ function ComplianceTable({
         <span className="text-muted-foreground">
           Fair lending status:{' '}
           <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 uppercase">
-            <CheckCircle2 className="h-3 w-3" />
+            <CheckCircle2 className="h-4 w-4" />
             {COMPLIANCE.fairLendingStatus}
           </span>
         </span>
@@ -704,11 +704,11 @@ const Risk: React.FC = () => {
 
             {/* Sort dropdown */}
             <div className="flex items-center gap-2">
-              <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground" />
+              <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
               <select
                 value={ewsSortField}
                 onChange={(e) => setEwsSortField(e.target.value as SortField)}
-                className="text-xs border border-border/60 rounded-xl bg-background px-2 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all duration-200"
+                className="text-xs border border-border/60 rounded-xl bg-background px-2 py-1 text-foreground focus:outline-none focus-visible:ring-1 focus-visible:ring-ring transition-all duration-200"
               >
                 {SORT_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>

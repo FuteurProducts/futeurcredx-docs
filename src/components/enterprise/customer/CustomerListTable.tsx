@@ -183,7 +183,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
                 placeholder="Search businesses..."
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                className="pl-9 pr-4 py-2 w-64 bg-muted border-none rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20"
+                className="pl-9 pr-4 py-2 w-64 bg-muted border-none rounded-lg text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
@@ -355,7 +355,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <MapPin className="h-3 w-3" />
+                        <MapPin className="h-4 w-4" />
                         <span>{customer.region}</span>
                       </div>
                     </td>
@@ -369,8 +369,8 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
                             customer.rhsChange > 0 ? 'text-success' : 'text-destructive'
                           }`}>
                             {customer.rhsChange > 0
-                              ? <TrendingUp className="h-3 w-3" />
-                              : <TrendingDown className="h-3 w-3" />
+                              ? <TrendingUp className="h-4 w-4" />
+                              : <TrendingDown className="h-4 w-4" />
                             }
                           </span>
                         )}
@@ -381,7 +381,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5">
-                        <RiskIcon className="h-3.5 w-3.5" style={{ color: riskConfig.color }} />
+                        <RiskIcon className="h-4 w-4" style={{ color: riskConfig.color }} />
                         <span
                           className="text-xs font-medium"
                           style={{ color: riskConfig.color }}

@@ -83,7 +83,7 @@ export const BulkActionsToolbar: React.FC<BulkActionsToolbarProps> = ({
               type="checkbox"
               checked={allSelected}
               onChange={allSelected ? onDeselectAll : onSelectAll}
-              className="w-4 h-4 rounded border-border text-info focus:ring-info"
+              className="w-4 h-4 rounded border-border text-info focus-visible:ring-info"
             />
             <span className="text-sm text-muted-foreground">
               {hasSelection ? (

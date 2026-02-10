@@ -88,8 +88,8 @@ export const TopBusinessesTable: React.FC<TopBusinessesTableProps> = ({
         <span>{label}</span>
         {sortField === field && (
           sortDirection === "asc"
-            ? <ChevronUp className="h-3 w-3" />
-            : <ChevronDown className="h-3 w-3" />
+            ? <ChevronUp className="h-4 w-4" />
+            : <ChevronDown className="h-4 w-4" />
         )}
       </button>
     </th>
@@ -128,68 +128,76 @@ export const TopBusinessesTable: React.FC<TopBusinessesTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {sortedBusinesses.map((business, index) => {
-              const risk = riskColors[business.riskLevel];
-              
-              return (
-                <motion.tr
-                  key={business.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="hover:bg-muted/30 transition-colors"
-                >
-                  <td className="py-3">
-                    <div>
-                      <span className="text-sm font-medium text-foreground">
-                        {business.name}
+            {sortedBusinesses.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="py-12 text-center">
+                  <p className="text-sm text-muted-foreground">No businesses found</p>
+                </td>
+              </tr>
+            ) : (
+              sortedBusinesses.map((business, index) => {
+                const risk = riskColors[business.riskLevel];
+
+                return (
+                  <motion.tr
+                    key={business.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="hover:bg-muted/30 transition-colors"
+                  >
+                    <td className="py-3">
+                      <div>
+                        <span className="text-sm font-medium text-foreground">
+                          {business.name}
+                        </span>
+                        <span className="text-xs text-muted-foreground block">
+                          {business.industry}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-3 text-center">
+                      <div className="flex items-center justify-center gap-1">
+                        <span className="text-sm font-semibold text-foreground">
+                          {business.lumiqScore}
+                        </span>
+                        {business.scoreTrend === "up" && (
+                          <TrendingUp className="h-4 w-4 text-success" />
+                        )}
+                        {business.scoreTrend === "down" && (
+                          <TrendingDown className="h-4 w-4 text-destructive" />
+                        )}
+                      </div>
+                    </td>
+                    <td className="py-3 text-center">
+                      <span className="text-sm text-muted-foreground">
+                        {business.apiCalls.toLocaleString()}
                       </span>
-                      <span className="text-xs text-muted-foreground block">
-                        {business.industry}
+                    </td>
+                    <td className="py-3 text-center">
+                      <span className={`text-xs font-medium px-2 py-1 rounded-full ${risk.text} ${risk.bg}`}>
+                        {business.riskLevel.charAt(0).toUpperCase() + business.riskLevel.slice(1)}
                       </span>
-                    </div>
-                  </td>
-                  <td className="py-3 text-center">
-                    <div className="flex items-center justify-center gap-1">
-                      <span className="text-sm font-semibold text-foreground">
-                        {business.lumiqScore}
+                    </td>
+                    <td className="py-3 text-right">
+                      <span className="text-xs text-muted-foreground">
+                        {business.lastActivity}
                       </span>
-                      {business.scoreTrend === "up" && (
-                        <TrendingUp className="h-3.5 w-3.5 text-success" />
+                    </td>
+                    <td className="py-3">
+                      {onViewBusiness && (
+                        <button
+                          onClick={() => onViewBusiness(business.id)}
+                          className="p-1.5 hover:bg-muted rounded transition-colors"
+                        >
+                          <Eye className="h-4 w-4 text-muted-foreground" />
+                        </button>
                       )}
-                      {business.scoreTrend === "down" && (
-                        <TrendingDown className="h-3.5 w-3.5 text-destructive" />
-                      )}
-                    </div>
-                  </td>
-                  <td className="py-3 text-center">
-                    <span className="text-sm text-muted-foreground">
-                      {business.apiCalls.toLocaleString()}
-                    </span>
-                  </td>
-                  <td className="py-3 text-center">
-                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${risk.text} ${risk.bg}`}>
-                      {business.riskLevel.charAt(0).toUpperCase() + business.riskLevel.slice(1)}
-                    </span>
-                  </td>
-                  <td className="py-3 text-right">
-                    <span className="text-xs text-muted-foreground">
-                      {business.lastActivity}
-                    </span>
-                  </td>
-                  <td className="py-3">
-                    {onViewBusiness && (
-                      <button
-                        onClick={() => onViewBusiness(business.id)}
-                        className="p-1.5 hover:bg-muted rounded transition-colors"
-                      >
-                        <Eye className="h-4 w-4 text-muted-foreground" />
-                      </button>
-                    )}
-                  </td>
-                </motion.tr>
-              );
-            })}
+                    </td>
+                  </motion.tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>

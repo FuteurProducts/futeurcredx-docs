@@ -53,7 +53,7 @@ export const CurrencyCard = ({
             1
           </div>
           <Select value={currency} onValueChange={setCurrency}>
-            <SelectTrigger className="flex-grow border-0 h-12 px-3 uppercase text-sm font-medium focus:ring-0">
+            <SelectTrigger className="flex-grow border-0 h-12 px-3 uppercase text-sm font-medium focus-visible:ring-0">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

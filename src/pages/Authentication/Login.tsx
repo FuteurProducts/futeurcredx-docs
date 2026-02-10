@@ -81,7 +81,7 @@ export default function Page() {
       
       // If sign-in succeeded (or bypassed), navigate to dashboard
       navigate("/dashboard", { replace: true })
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error("Demo launch error:", err)
       // If auth fails but we're in demo mode, still navigate (auth bypass handles it)
       logger.info("Attempting direct navigation to dashboard...")
@@ -106,9 +106,9 @@ export default function Page() {
 
       await signIn(email, password)
       navigate("/dashboard", { replace: true })
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error("Sign in error:", err)
-      setError(err?.message || "An error occurred during sign in")
+      setError(err instanceof Error ? err.message : "An error occurred during sign in")
     } finally {
       setIsLoading(false)
     }
@@ -168,7 +168,7 @@ export default function Page() {
               type="button"
               disabled={isDemoLoading || !isLoaded}
               onClick={handleDemoLaunch}
-              className="bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all duration-200 rounded-xl py-7 px-8 w-full text-base flex items-center justify-center gap-3 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-all duration-200 rounded-xl py-7 px-8 w-full text-base flex items-center justify-center gap-3 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isDemoLoading ? (
                 <>
@@ -260,7 +260,7 @@ export default function Page() {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
                       required
-                      className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none rounded-lg py-2.5 px-4 transition-all duration-200 text-sm w-full"
+                      className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-2.5 px-4 transition-all duration-200 text-sm w-full"
                     />
                   </div>
 
@@ -277,7 +277,7 @@ export default function Page() {
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
                         required
-                        className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none rounded-lg py-2.5 px-4 pr-10 transition-all duration-200 text-sm w-full"
+                        className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-2.5 px-4 pr-10 transition-all duration-200 text-sm w-full"
                       />
                       <button
                         type="button"

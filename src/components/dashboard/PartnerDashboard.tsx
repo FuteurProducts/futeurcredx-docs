@@ -196,10 +196,37 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center p-12">
-        <div className="flex items-center gap-3">
-          <RefreshCw className="w-5 h-5 animate-spin text-info" />
-          <span className="text-muted-foreground">Loading partner data...</span>
+      <div className="space-y-6">
+        {/* Header skeleton */}
+        <div className="flex justify-between items-center">
+          <div>
+            <div className="h-8 w-64 bg-muted animate-pulse rounded-lg" />
+            <div className="h-4 w-96 bg-muted animate-pulse rounded mt-2" />
+          </div>
+          <div className="h-10 w-24 bg-muted animate-pulse rounded-lg" />
+        </div>
+
+        {/* Stats cards skeleton */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-[140px] bg-muted/50 animate-pulse rounded-2xl" />
+          ))}
+        </div>
+
+        {/* Timeframe selector skeleton */}
+        <div className="flex gap-2">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-10 w-20 bg-muted animate-pulse rounded-lg" />
+          ))}
+        </div>
+
+        {/* Business table skeleton */}
+        <div className="bg-card rounded-2xl border border-border overflow-hidden">
+          <div className="p-6 space-y-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-16 bg-muted/50 animate-pulse rounded-xl" />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -338,7 +365,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
               <select
                 value={selectedTimeframe}
                 onChange={(e) => setSelectedTimeframe(e.target.value)}
-                className="px-3 py-1 text-sm border border-border rounded-lg focus:ring-2 focus:ring-info focus:border-info"
+                className="px-3 py-1 text-sm border border-border rounded-lg focus-visible:ring-2 focus-visible:ring-info focus-visible:border-info"
               >
                 <option value="7d">Last 7 days</option>
                 <option value="30d">Last 30 days</option>

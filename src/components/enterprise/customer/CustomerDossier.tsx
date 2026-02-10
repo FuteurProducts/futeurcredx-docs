@@ -182,7 +182,7 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                 className="px-2.5 py-1 text-xs font-medium rounded-full flex items-center gap-1"
                 style={{ backgroundColor: `${riskConfig.color}15`, color: riskConfig.color }}
               >
-                <RiskIcon className="h-3 w-3" />
+                <RiskIcon className="h-4 w-4" />
                 {riskConfig.label}
               </span>
               <span
@@ -346,7 +346,7 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                         className="text-sm text-primary hover:underline flex items-center gap-1"
                       >
                         {customer.website}
-                        <ExternalLink className="h-3 w-3" />
+                        <ExternalLink className="h-4 w-4" />
                       </a>
                     </div>
                   )}
@@ -413,7 +413,7 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                   value={newNote}
                   onChange={(e) => setNewNote(e.target.value)}
                   placeholder="Add a note..."
-                  className="w-full p-3 bg-muted border-none rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  className="w-full p-3 bg-muted border-none rounded-lg text-sm resize-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
                   rows={3}
                 />
                 <div className="flex justify-end mt-2">
@@ -460,7 +460,7 @@ export const CustomerDossier: React.FC<CustomerDossierProps> = ({
                     <p className="text-xs text-muted-foreground">by {log.user}</p>
                   </div>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Clock className="h-3 w-3" />
+                    <Clock className="h-4 w-4" />
                     {log.timestamp}
                   </div>
                 </div>

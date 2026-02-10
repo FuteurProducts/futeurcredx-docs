@@ -133,9 +133,9 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                         className="p-1 hover:bg-muted rounded-lg transition-all duration-200"
                       >
                         {revealedKeys.has(key.id) ? (
-                          <EyeOff className="h-3 w-3 text-muted-foreground" />
+                          <EyeOff className="h-4 w-4 text-muted-foreground" />
                         ) : (
-                          <Eye className="h-3 w-3 text-muted-foreground" />
+                          <Eye className="h-4 w-4 text-muted-foreground" />
                         )}
                       </button>
                       <CopyButton value={key.keyMasked} />
@@ -171,12 +171,12 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                   <td className="px-4 py-3">
                     {key.status === 'active' ? (
                       <span className="inline-flex items-center gap-1 text-xs text-success">
-                        <CheckCircle className="h-3 w-3" />
+                        <CheckCircle className="h-4 w-4" />
                         Active
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                        <XCircle className="h-3 w-3" />
+                        <XCircle className="h-4 w-4" />
                         Revoked
                       </span>
                     )}
@@ -247,7 +247,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                     value={newKeyName}
                     onChange={(e) => setNewKeyName(e.target.value)}
                     placeholder="e.g., Production API Key"
-                    className="w-full h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-200"
+                    className="w-full h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary transition-all duration-200"
                   />
                 </div>
 
@@ -284,7 +284,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                           type="checkbox"
                           checked={newKeyScopes.includes(scope.id)}
                           onChange={() => toggleScope(scope.id)}
-                          className="h-4 w-4 rounded-md border-border text-primary focus:ring-primary"
+                          className="h-4 w-4 rounded-md border-border text-primary focus-visible:ring-primary"
                         />
                         <span className="text-sm">{scope.label}</span>
                       </label>

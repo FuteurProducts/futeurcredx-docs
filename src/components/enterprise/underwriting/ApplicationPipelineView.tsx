@@ -172,8 +172,8 @@ export const ApplicationPipelineView: React.FC<ApplicationPipelineViewProps> = (
         <span>{label}</span>
         {sortField === field && (
           sortDirection === 'asc'
-            ? <ChevronUp className="h-3 w-3" />
-            : <ChevronDown className="h-3 w-3" />
+            ? <ChevronUp className="h-4 w-4" />
+            : <ChevronDown className="h-4 w-4" />
         )}
       </div>
     </th>

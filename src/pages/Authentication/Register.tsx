@@ -47,9 +47,9 @@ const Register: React.FC = () => {
     try {
       await signUp(email, password)
       navigate("/dashboard", { replace: true })
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error("Sign up error:", err)
-      setError(err?.message || "An error occurred. Please try again.")
+      setError(err instanceof Error ? err.message : "An error occurred. Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -85,7 +85,7 @@ const Register: React.FC = () => {
           </div>
 
           {/* Signup Form Card */}
-          <div className="bg-card rounded-2xl shadow-lg border border-border p-8 sm:p-10">
+          <div className="bg-card rounded-2xl shadow-sm border border-border p-8 sm:p-10">
             <div className="mb-8">
               <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
                 Get Started Now!
@@ -115,7 +115,7 @@ const Register: React.FC = () => {
                   onChange={(e) => setFullName(e.target.value)}
                   placeholder="Enter your full name"
                   required
-                  className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none rounded-lg py-3 px-4 transition-all duration-200 text-sm w-full"
+                  className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 transition-all duration-200 text-sm w-full"
                 />
               </div>
 
@@ -131,7 +131,7 @@ const Register: React.FC = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
-                  className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none rounded-lg py-3 px-4 transition-all duration-200 text-sm w-full"
+                  className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 transition-all duration-200 text-sm w-full"
                 />
               </div>
 
@@ -149,7 +149,7 @@ const Register: React.FC = () => {
                     placeholder="min 8 chars"
                     required
                     minLength={8}
-                    className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none rounded-lg py-3 px-4 pr-10 transition-all duration-200 text-sm w-full"
+                    className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 pr-10 transition-all duration-200 text-sm w-full"
                   />
                   <button
                     type="button"
@@ -179,7 +179,7 @@ const Register: React.FC = () => {
                     placeholder="Confirm your password"
                     required
                     minLength={8}
-                    className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none rounded-lg py-3 px-4 pr-10 transition-all duration-200 text-sm w-full"
+                    className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 pr-10 transition-all duration-200 text-sm w-full"
                   />
                   <button
                     type="button"

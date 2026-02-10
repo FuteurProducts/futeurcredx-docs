@@ -609,9 +609,9 @@ const SegmentExplorer: React.FC = () => {
   const SortIcon: React.FC<{ column: SortColumn }> = ({ column }) => {
     if (sortColumn !== column) return null;
     return sortDirection === 'asc' ? (
-      <ArrowUpAZ className="inline h-3 w-3 ml-1" />
+      <ArrowUpAZ className="inline h-4 w-4 ml-1" />
     ) : (
-      <ArrowDownAZ className="inline h-3 w-3 ml-1" />
+      <ArrowDownAZ className="inline h-4 w-4 ml-1" />
     );
   };
 
@@ -659,7 +659,7 @@ const SegmentExplorer: React.FC = () => {
               onClick={handleClearFilters}
               className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-all duration-200"
             >
-              <X className="h-3 w-3" />
+              <X className="h-4 w-4" />
               Clear all filters
             </button>
           )}
@@ -790,19 +790,19 @@ const SegmentExplorer: React.FC = () => {
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" size="sm" onClick={handleViewSegment}>
-              <Eye className="h-3.5 w-3.5" />
+              <Eye className="h-4 w-4" />
               View Segment
             </Button>
             <Button variant="outline" size="sm" onClick={() => setShowSaveDialog(true)}>
-              <Bookmark className="h-3.5 w-3.5" />
+              <Bookmark className="h-4 w-4" />
               Save Segment
             </Button>
             <Button variant="outline" size="sm" onClick={handleStartCampaign}>
-              <Megaphone className="h-3.5 w-3.5" />
+              <Megaphone className="h-4 w-4" />
               Start Campaign
             </Button>
             <Button variant="default" size="sm" onClick={handleExportCSV}>
-              <Download className="h-3.5 w-3.5" />
+              <Download className="h-4 w-4" />
               Export CSV
             </Button>
           </div>
@@ -829,7 +829,7 @@ const SegmentExplorer: React.FC = () => {
             size="sm"
             onClick={() => setShowSaveDialog(true)}
           >
-            <Plus className="h-3.5 w-3.5" />
+            <Plus className="h-4 w-4" />
             New Segment
           </Button>
         </div>
@@ -889,7 +889,7 @@ const SegmentExplorer: React.FC = () => {
                           onClick={() => handleLoadSegment(segment)}
                           className="h-7 px-2.5 text-xs transition-all duration-200"
                         >
-                          <Upload className="h-3 w-3" />
+                          <Upload className="h-4 w-4" />
                           Load
                         </Button>
                         <button
@@ -897,7 +897,7 @@ const SegmentExplorer: React.FC = () => {
                           onClick={() => handleDeleteSegment(segment.id)}
                           className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"
                         >
-                          <Trash2 className="h-3.5 w-3.5" />
+                          <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
                     </td>
@@ -928,7 +928,7 @@ const SegmentExplorer: React.FC = () => {
             </span>
           </div>
           <Button variant="outline" size="sm" onClick={handleRefreshSample}>
-            <RefreshCw className="h-3.5 w-3.5" />
+            <RefreshCw className="h-4 w-4" />
             Refresh Sample
           </Button>
         </div>

@@ -76,7 +76,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
               placeholder="Search connections..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-12 pl-10 pr-4 bg-muted rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full h-12 pl-10 pr-4 bg-muted rounded-xl text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             />
           </div>
 
@@ -234,7 +234,7 @@ export const ConnectionCatalog: React.FC<ConnectionCatalogProps> = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
               onClick={() => onSelectConnection(connection)}
-              className={`bg-card rounded-2xl border p-5 text-left transition-all hover:shadow-lg hover:border-primary/30 ${
+              className={`bg-card rounded-2xl border p-5 text-left transition-all shadow-sm hover:shadow-md hover:border-primary/30 ${
                 selectedConnectionId === connection.id ? 'border-primary ring-2 ring-primary/20' : 'border-border'
               }`}
             >

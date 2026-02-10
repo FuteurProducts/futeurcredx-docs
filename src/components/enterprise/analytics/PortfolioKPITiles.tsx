@@ -53,7 +53,7 @@ export const PortfolioKPITiles: React.FC<PortfolioKPITilesProps> = ({ kpis, onDr
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-medium text-muted-foreground leading-tight">{kpi.label}</span>
                 <div className="relative group/tooltip">
-                  <Info className="w-3 h-3 text-muted-foreground/50 cursor-help" />
+                  <Info className="w-3 h-3 text-muted-foreground cursor-help" />
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity whitespace-nowrap z-50 pointer-events-none">
                     {kpi.tooltip}
                     <div className="text-muted-foreground mt-1">Source: {kpi.dataSource}</div>
@@ -78,7 +78,7 @@ export const PortfolioKPITiles: React.FC<PortfolioKPITilesProps> = ({ kpis, onDr
             </div>
 
             {/* Freshness */}
-            <div className="mt-2 text-[10px] text-muted-foreground/70">
+            <div className="mt-2 text-[10px] text-muted-foreground">
               Updated {kpi.lastUpdated}
             </div>
           </motion.div>

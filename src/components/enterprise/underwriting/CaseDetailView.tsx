@@ -69,11 +69,11 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
           </div>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
-              <User className="h-3 w-3" />
+              <User className="h-4 w-4" />
               {selectedCase.assignedAnalyst}
             </div>
             <div className="flex items-center gap-1">
-              <Clock className="h-3 w-3" />
+              <Clock className="h-4 w-4" />
               {selectedCase.daysInQueue}d / {selectedCase.slaTarget}d SLA
             </div>
           </div>
@@ -98,7 +98,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               className={cn(
                 'px-3 py-1.5 rounded-md text-xs font-medium transition-colors',
                 activeTab === tab.id
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground',
               )}
             >
@@ -154,8 +154,8 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               </div>
               <div className="flex items-center gap-3 text-[10px]">
                 <span className="text-emerald-600">{selectedCase.policyChecks.filter((c) => c.result === 'pass').length} Pass</span>
-                <span className="text-amber-600">{selectedCase.policyChecks.filter((c) => c.result === 'review').length} Review</span>
-                <span className="text-red-600">{selectedCase.policyChecks.filter((c) => c.result === 'fail').length} Fail</span>
+                <span className="text-warning">{selectedCase.policyChecks.filter((c) => c.result === 'review').length} Review</span>
+                <span className="text-destructive">{selectedCase.policyChecks.filter((c) => c.result === 'fail').length} Fail</span>
               </div>
             </div>
             <div className="grid grid-cols-12 gap-3 px-8 py-2 text-[10px] font-medium text-muted-foreground uppercase tracking-wide border-b border-border">
@@ -236,7 +236,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               <ul className="space-y-1.5">
                 {selectedCase.supportingFactors.map((f, i) => (
                   <li key={i} className="flex items-start gap-2 text-xs text-foreground">
-                    <CheckCircle className="h-3.5 w-3.5 text-emerald-500 mt-0.5 shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
                     {f}
                   </li>
                 ))}
@@ -248,7 +248,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               <ul className="space-y-1.5">
                 {selectedCase.areasOfAttention.map((a, i) => (
                   <li key={i} className="flex items-start gap-2 text-xs text-foreground">
-                    <AlertTriangle className="h-3.5 w-3.5 text-amber-500 mt-0.5 shrink-0" />
+                    <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 shrink-0" />
                     {a}
                   </li>
                 ))}
@@ -278,7 +278,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               value={rationale}
               onChange={(e) => setRationale(e.target.value)}
               placeholder="Enter rationale for recommendation (required)..."
-              className="w-full h-24 px-3 py-2 text-sm bg-muted rounded-lg border border-border resize-none focus:outline-none focus:ring-1 focus:ring-primary text-foreground placeholder-muted-foreground"
+              className="w-full h-24 px-3 py-2 text-sm bg-muted rounded-lg border border-border resize-none focus:outline-none focus-visible:ring-1 focus-visible:ring-primary text-foreground placeholder-muted-foreground"
             />
             <div className="grid grid-cols-2 gap-3 mt-3">
               <button
@@ -286,7 +286,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
                 disabled={!rationale.trim()}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-emerald-300 text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
-                <CheckCircle className="h-3.5 w-3.5" />
+                <CheckCircle className="h-4 w-4" />
                 Recommend for Approval
               </button>
               <button
@@ -294,7 +294,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
                 disabled={!rationale.trim()}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-blue-300 text-blue-700 hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
-                <FileText className="h-3.5 w-3.5" />
+                <FileText className="h-4 w-4" />
                 Request Additional Info
               </button>
               <button
@@ -302,7 +302,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
                 disabled={!rationale.trim()}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-amber-300 text-amber-700 hover:bg-amber-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
-                <AlertTriangle className="h-3.5 w-3.5" />
+                <AlertTriangle className="h-4 w-4" />
                 Flag for Committee Review
               </button>
               <button
@@ -310,7 +310,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
                 disabled={!rationale.trim()}
                 className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-red-300 text-red-700 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
-                <XCircle className="h-3.5 w-3.5" />
+                <XCircle className="h-4 w-4" />
                 Recommend Decline
               </button>
             </div>

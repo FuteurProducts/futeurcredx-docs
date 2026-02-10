@@ -201,7 +201,7 @@ export const OAuthPanel: React.FC = () => {
                         <span className="text-xs text-muted-foreground w-20">Client ID:</span>
                         <code className="text-xs font-mono bg-background px-2 py-1 rounded-lg">{client.clientId}</code>
                         <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => copyToClipboard(client.clientId)}>
-                          <Copy className="h-3 w-3" />
+                          <Copy className="h-4 w-4" />
                         </Button>
                       </div>
                       {client.clientSecret && (
@@ -221,10 +221,10 @@ export const OAuthPanel: React.FC = () => {
                               setRevealedSecrets(next);
                             }}
                           >
-                            {revealedSecrets.has(client.id) ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                            {revealedSecrets.has(client.id) ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                           </Button>
                           <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => copyToClipboard(client.clientSecret || '')}>
-                            <Copy className="h-3 w-3" />
+                            <Copy className="h-4 w-4" />
                           </Button>
                         </div>
                       )}
@@ -251,7 +251,7 @@ export const OAuthPanel: React.FC = () => {
                   {/* Actions */}
                   <div className="flex items-center gap-2">
                     <Button size="sm" variant="outline" onClick={() => handleRotateSecret(client.id)}>
-                      <RefreshCw className="h-3 w-3 mr-1" />
+                      <RefreshCw className="h-4 w-4 mr-1" />
                       Rotate Secret
                     </Button>
                     <Button 

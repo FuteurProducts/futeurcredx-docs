@@ -210,7 +210,7 @@ const PartnerPortal: React.FC = () => {
         </div>
         <div className="flex items-center gap-2">
           <Badge variant="outline" className="bg-chart-2/10 text-chart-2 border-chart-2/20">
-            <CheckCircle className="h-3 w-3 mr-1" />
+            <CheckCircle className="h-4 w-4 mr-1" />
             API Status: Operational
           </Badge>
         </div>
@@ -357,7 +357,7 @@ const PartnerPortal: React.FC = () => {
                               {revealedKey === key.id && key.fullKey ? key.fullKey : key.keyPrefix}
                             </code>
                             <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
+                              <Clock className="h-4 w-4" />
                               Created {key.createdAt}
                             </span>
                           </div>

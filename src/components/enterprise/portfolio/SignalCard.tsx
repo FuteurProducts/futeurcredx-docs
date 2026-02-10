@@ -67,7 +67,7 @@ export const SignalCard: React.FC<SignalCardProps> = ({ signal }) => {
           </span>
         </div>
       </div>
-      <p className="text-xs text-foreground/80 leading-relaxed">{signal.detail}</p>
+      <p className="text-xs text-foreground leading-relaxed">{signal.detail}</p>
       <div className="mt-2 text-[10px] text-muted-foreground">Source: {signal.source}</div>
     </div>
   );

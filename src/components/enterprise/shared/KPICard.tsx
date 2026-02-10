@@ -27,14 +27,14 @@ export interface KPICardProps {
 
 const STATUS_RING: Record<string, string> = {
   ok: 'ring-emerald-400/30',
-  warning: 'ring-amber-400/30',
-  danger: 'ring-red-400/30',
+  warning: 'ring-warning/30',
+  danger: 'ring-destructive/30',
 };
 
 const STATUS_ACCENT: Record<string, string> = {
   ok: 'border-l-emerald-500',
-  warning: 'border-l-amber-500',
-  danger: 'border-l-red-500',
+  warning: 'border-l-warning',
+  danger: 'border-l-destructive',
 };
 
 export const KPICard: React.FC<KPICardProps> = ({
@@ -80,7 +80,7 @@ export const KPICard: React.FC<KPICardProps> = ({
           {label}
         </span>
         {icon && (
-          <span className="text-muted-foreground/70">{icon}</span>
+          <span className="text-muted-foreground">{icon}</span>
         )}
       </div>
 
@@ -97,17 +97,17 @@ export const KPICard: React.FC<KPICardProps> = ({
         {trend && (
           <div className="flex items-center gap-1.5 mt-2">
             {trend.direction === 'up' && (
-              <TrendingUp className={cn('h-3.5 w-3.5', trend.isPositive ? 'text-emerald-500' : 'text-red-500')} />
+              <TrendingUp className={cn('h-4 w-4', trend.isPositive ? 'text-emerald-500' : 'text-destructive')} />
             )}
             {trend.direction === 'down' && (
-              <TrendingDown className={cn('h-3.5 w-3.5', trend.isPositive ? 'text-emerald-500' : 'text-red-500')} />
+              <TrendingDown className={cn('h-4 w-4', trend.isPositive ? 'text-emerald-500' : 'text-destructive')} />
             )}
             {trend.direction === 'flat' && (
-              <Minus className="h-3.5 w-3.5 text-muted-foreground" />
+              <Minus className="h-4 w-4 text-muted-foreground" />
             )}
             <span className={cn(
               'text-xs font-medium',
-              trend.direction === 'flat' ? 'text-muted-foreground' : (trend.isPositive ? 'text-emerald-600' : 'text-red-600'),
+              trend.direction === 'flat' ? 'text-muted-foreground' : (trend.isPositive ? 'text-emerald-600' : 'text-destructive'),
             )}>
               {trend.value}
             </span>

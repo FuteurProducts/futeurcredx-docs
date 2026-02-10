@@ -57,14 +57,14 @@ export function DataLineageFooter({
       <div className="flex items-center gap-4">
         {/* Last Updated */}
         <div className="flex items-center gap-1.5">
-          <Clock className={cn('h-3 w-3', getFreshnessColor(meta.lastUpdated))} />
+          <Clock className={cn('h-4 w-4', getFreshnessColor(meta.lastUpdated))} />
           <span>Updated {formatTimestamp(meta.lastUpdated)}</span>
         </div>
 
         {/* Data Sources */}
         {meta.dataSources && meta.dataSources.length > 0 && (
           <div className="flex items-center gap-1.5">
-            <Database className="h-3 w-3" />
+            <Database className="h-4 w-4" />
             <span>{meta.dataSources.join(', ')}</span>
           </div>
         )}
@@ -80,7 +80,7 @@ export function DataLineageFooter({
             isRefreshing && 'opacity-50 cursor-not-allowed'
           )}
         >
-          <RefreshCw className={cn('h-3 w-3', isRefreshing && 'animate-spin')} />
+          <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
           <span>Refresh</span>
         </button>
       )}

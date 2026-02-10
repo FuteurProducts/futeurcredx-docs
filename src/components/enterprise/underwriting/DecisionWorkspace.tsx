@@ -44,11 +44,11 @@ const riskConfig = {
   },
   moderate: {
     label: 'Moderate Risk Indicators',
-    badgeClass: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+    badgeClass: 'bg-warning/10 text-warning border-warning/30',
   },
   elevated: {
     label: 'Elevated Risk Indicators',
-    badgeClass: 'bg-red-500/10 text-red-400 border-red-500/30',
+    badgeClass: 'bg-destructive/10 text-destructive border-destructive/30',
   },
 };
 
@@ -72,25 +72,25 @@ const actionButtons: {
     action: 'request_info',
     label: 'Request Additional Information',
     icon: MessageSquare,
-    borderClass: 'border-blue-500/40',
-    textClass: 'text-blue-400',
-    hoverClass: 'hover:bg-blue-500/10 hover:border-blue-500/60',
+    borderClass: 'border-info/40',
+    textClass: 'text-info',
+    hoverClass: 'hover:bg-info/10 hover:border-info/60',
   },
   {
     action: 'flag_committee',
     label: 'Flag for Committee Review',
     icon: AlertCircle,
-    borderClass: 'border-amber-500/40',
-    textClass: 'text-amber-400',
-    hoverClass: 'hover:bg-amber-500/10 hover:border-amber-500/60',
+    borderClass: 'border-warning/40',
+    textClass: 'text-warning',
+    hoverClass: 'hover:bg-warning/10 hover:border-warning/60',
   },
   {
     action: 'recommend_decline',
     label: 'Recommend Decline',
     icon: AlertCircle,
-    borderClass: 'border-red-500/40',
-    textClass: 'text-red-400',
-    hoverClass: 'hover:bg-red-500/10 hover:border-red-500/60',
+    borderClass: 'border-destructive/40',
+    textClass: 'text-destructive',
+    hoverClass: 'hover:bg-destructive/10 hover:border-destructive/60',
   },
 ];
 
@@ -142,20 +142,20 @@ export function DecisionWorkspace({ data, onAction, className }: DecisionWorkspa
                   !isNaN(applicantNum) && !isNaN(portfolioNum)
                     ? applicantNum >= portfolioNum
                       ? 'text-emerald-400'
-                      : 'text-red-400'
+                      : 'text-destructive'
                     : 'text-foreground';
 
                 const vsIndustry =
                   !isNaN(applicantNum) && !isNaN(industryNum)
                     ? applicantNum >= industryNum
                       ? 'text-emerald-400'
-                      : 'text-red-400'
+                      : 'text-destructive'
                     : 'text-foreground';
 
                 // Use the worse comparison for the applicant cell color
                 const applicantColor =
-                  vsPeer === 'text-red-400' || vsIndustry === 'text-red-400'
-                    ? 'text-red-400'
+                  vsPeer === 'text-destructive' || vsIndustry === 'text-destructive'
+                    ? 'text-destructive'
                     : vsPeer === 'text-emerald-400' || vsIndustry === 'text-emerald-400'
                       ? 'text-emerald-400'
                       : 'text-foreground';
@@ -211,7 +211,7 @@ export function DecisionWorkspace({ data, onAction, className }: DecisionWorkspa
             <ul className="space-y-1">
               {data.supportingFactors.map((factor, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
-                  <TrendingUp className="h-3.5 w-3.5 mt-0.5 shrink-0 text-emerald-400" />
+                  <TrendingUp className="h-4 w-4 mt-0.5 shrink-0 text-emerald-400" />
                   {factor}
                 </li>
               ))}
@@ -227,7 +227,7 @@ export function DecisionWorkspace({ data, onAction, className }: DecisionWorkspa
             <ul className="space-y-1">
               {data.areasOfAttention.map((area, idx) => (
                 <li key={idx} className="flex items-start gap-2 text-sm text-foreground">
-                  <AlertCircle className="h-3.5 w-3.5 mt-0.5 shrink-0 text-amber-400" />
+                  <AlertCircle className="h-4 w-4 mt-0.5 shrink-0 text-amber-400" />
                   {area}
                 </li>
               ))}
@@ -278,7 +278,7 @@ export function DecisionWorkspace({ data, onAction, className }: DecisionWorkspa
             className={cn(
               'w-full rounded-lg border border-border bg-background px-3 py-2',
               'text-sm text-foreground placeholder:text-muted-foreground',
-              'focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent',
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-transparent',
               'resize-y',
             )}
           />

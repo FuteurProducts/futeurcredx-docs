@@ -292,7 +292,7 @@ export const SlaPanel: React.FC = () => {
                   {incident.postmortemUrl && (
                     <Button variant="link" className="p-0 h-auto text-sm mt-2" asChild>
                       <a href={incident.postmortemUrl} target="_blank" rel="noopener noreferrer">
-                        View Postmortem <ExternalLink className="h-3 w-3 ml-1" />
+                        View Postmortem <ExternalLink className="h-4 w-4 ml-1" />
                       </a>
                     </Button>
                   )}

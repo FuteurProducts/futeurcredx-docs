@@ -190,7 +190,7 @@ const CandidatesTable: React.FC<CandidatesTableProps> = ({ candidates, products 
           <select
             value={selectedProduct}
             onChange={(e) => setSelectedProduct(e.target.value)}
-            className="text-xs bg-muted/50 border border-border rounded-lg px-2.5 py-1.5 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className="text-xs bg-muted/50 border border-border rounded-lg px-2.5 py-1.5 text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
           >
             <option value="All">All Products</option>
             {products.map((p) => (

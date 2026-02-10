@@ -85,7 +85,7 @@ const getTrendColor = (direction: string): string => {
     case 'up':
       return 'text-emerald-600';
     case 'down':
-      return 'text-red-600';
+      return 'text-destructive';
     case 'stable':
     default:
       return 'text-muted-foreground';
@@ -95,10 +95,10 @@ const getTrendColor = (direction: string): string => {
 const getRiskColor = (key: string): string => {
   const normalized = key.toUpperCase();
   if (normalized.includes('LOW')) return 'bg-emerald-500';
-  if (normalized.includes('MODERATE')) return 'bg-yellow-500';
+  if (normalized.includes('MODERATE')) return 'bg-warning';
   if (normalized.includes('ELEVATED')) return 'bg-orange-500';
-  if (normalized.includes('HIGH')) return 'bg-red-500';
-  if (normalized.includes('CRITICAL')) return 'bg-red-900';
+  if (normalized.includes('HIGH')) return 'bg-destructive';
+  if (normalized.includes('CRITICAL')) return 'bg-destructive';
   return 'bg-gray-500';
 };
 
@@ -132,7 +132,7 @@ export function SegmentCard({ segment, onSelect, isSelected, className }: Segmen
       className={cn(
         'bg-card rounded-xl border border-border p-4 hover:shadow-md transition-all cursor-pointer',
         'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
-        isSelected && 'ring-2 ring-primary shadow-lg',
+        isSelected && 'ring-2 ring-primary shadow-md',
         className
       )}
     >
@@ -171,7 +171,7 @@ export function SegmentCard({ segment, onSelect, isSelected, className }: Segmen
         </div>
         <div>
           <div className="text-xs text-muted-foreground mb-1">High Risk</div>
-          <div className="text-sm font-semibold text-red-600">
+          <div className="text-sm font-semibold text-destructive">
             {segment.highRiskPct.toFixed(1)}%
           </div>
         </div>
@@ -195,7 +195,7 @@ export function SegmentCard({ segment, onSelect, isSelected, className }: Segmen
       </div>
 
       <div className={cn('flex items-center gap-1 text-xs', trendColor)}>
-        <TrendIcon className="h-3 w-3" />
+        <TrendIcon className="h-4 w-4" />
         <span>{Math.abs(segment.trend.value).toFixed(1)}% vs last period</span>
       </div>
     </motion.div>

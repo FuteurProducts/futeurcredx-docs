@@ -93,7 +93,7 @@ const FunnelStage: React.FC<FunnelStageProps> = ({
       </div>
     </div>
     {!isLast && (
-      <ChevronRight className="h-4 w-4 text-muted-foreground/50 flex-shrink-0" />
+      <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
     )}
   </div>
 );
@@ -163,15 +163,15 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
             </div>
             <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground flex-wrap">
               <span className="flex items-center gap-1">
-                <Target className="h-3 w-3" />
+                <Target className="h-4 w-4" />
                 {campaign.targetCriteria}
               </span>
               <span className="flex items-center gap-1">
-                <Timer className="h-3 w-3" />
+                <Timer className="h-4 w-4" />
                 {campaign.startDate} - {campaign.endDate}
               </span>
               <span className="flex items-center gap-1">
-                <Users className="h-3 w-3" />
+                <Users className="h-4 w-4" />
                 {campaign.owner}
               </span>
             </div>
@@ -235,7 +235,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           onClick={() => onAction('view', campaign.name)}
           className="transition-all duration-200 hover:scale-[1.02]"
         >
-          <Eye className="h-3.5 w-3.5" />
+          <Eye className="h-4 w-4" />
           View Details
         </Button>
         <Button
@@ -244,7 +244,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           onClick={() => onAction('pause', campaign.name)}
           className="transition-all duration-200"
         >
-          <Pause className="h-3.5 w-3.5" />
+          <Pause className="h-4 w-4" />
           Pause
         </Button>
         <Button
@@ -253,7 +253,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           onClick={() => onAction('extend', campaign.name)}
           className="transition-all duration-200"
         >
-          <ArrowRight className="h-3.5 w-3.5" />
+          <ArrowRight className="h-4 w-4" />
           Extend
         </Button>
         <Button
@@ -262,7 +262,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           onClick={() => onAction('clone', campaign.name)}
           className="transition-all duration-200"
         >
-          <Copy className="h-3.5 w-3.5" />
+          <Copy className="h-4 w-4" />
           Clone
         </Button>
       </div>
@@ -494,7 +494,7 @@ const Campaigns: React.FC = () => {
               Segment Conversion Comparison
             </h2>
             <Button variant="outline" size="sm" onClick={handleExport}>
-              <Download className="h-3.5 w-3.5" />
+              <Download className="h-4 w-4" />
               Export Data
             </Button>
           </div>

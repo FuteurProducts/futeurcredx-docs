@@ -116,7 +116,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
               type="text"
               value={config.name || ''}
               onChange={(e) => setConfig((prev) => ({ ...prev, name: e.target.value }))}
-              className="w-full h-12 px-3 text-sm bg-background border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full h-12 px-3 text-sm bg-background border border-border rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary"
             />
           </div>
 
@@ -181,7 +181,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
                     type="checkbox"
                     checked={config.options?.[opt.id] === true}
                     onChange={(e) => handleOptionChange(opt.id, e.target.checked)}
-                    className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                    className="h-4 w-4 rounded border-border text-primary focus-visible:ring-primary"
                   />
                   <span className="text-sm text-foreground">{opt.label}</span>
                 </label>
@@ -208,7 +208,7 @@ export const ReportConfigPanel: React.FC<ReportConfigPanelProps> = ({
                   name="delivery"
                   checked={config.delivery === option}
                   onChange={() => setConfig((prev) => ({ ...prev, delivery: option }))}
-                  className="h-4 w-4 text-primary focus:ring-primary"
+                  className="h-4 w-4 text-primary focus-visible:ring-primary"
                 />
                 <div className="flex items-center gap-2">
                   {option === 'download' && <Download className="h-4 w-4 text-muted-foreground" />}

@@ -324,7 +324,7 @@ export const TestingPanel: React.FC = () => {
               </span>
               {overallProgress >= 100 && (
                 <Badge className="ml-2 bg-chart-2/10 text-chart-2 border-chart-2/20">
-                  <CheckCircle className="h-3 w-3 mr-1" />
+                  <CheckCircle className="h-4 w-4 mr-1" />
                   Certified
                 </Badge>
               )}
@@ -402,7 +402,7 @@ export const TestingPanel: React.FC = () => {
                             onClick={() => handleRunTest(test.id)}
                             disabled={isRunning}
                           >
-                            <Play className="h-3 w-3" />
+                            <Play className="h-4 w-4" />
                           </Button>
                         </div>
                       </motion.div>

@@ -80,7 +80,7 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
       <div className="grid grid-cols-2 gap-3">
         <div className="p-3 bg-muted/50 rounded-xl">
           <div className="flex items-center gap-2 mb-1">
-            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-muted-foreground" />
             <span className="text-caption text-muted-foreground">Avg Latency</span>
           </div>
           <span className="text-h6 font-semibold text-foreground">{data.avgLatency}ms</span>
@@ -88,7 +88,7 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
 
         <div className="p-3 bg-muted/50 rounded-xl">
           <div className="flex items-center gap-2 mb-1">
-            <AlertTriangle className="h-3.5 w-3.5 text-warning" />
+            <AlertTriangle className="h-4 w-4 text-warning" />
             <span className="text-caption text-muted-foreground">Errors</span>
           </div>
           <span className="text-h6 font-semibold text-foreground">{formatNumber(data.errorCount)}</span>
@@ -96,7 +96,7 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
 
         <div className="p-3 bg-muted/50 rounded-xl">
           <div className="flex items-center gap-2 mb-1">
-            <Zap className="h-3.5 w-3.5 text-warning" />
+            <Zap className="h-4 w-4 text-warning" />
             <span className="text-caption text-muted-foreground">Rate Limits</span>
           </div>
           <span className="text-h6 font-semibold text-foreground">{data.rateLimitHits}</span>
@@ -104,7 +104,7 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
 
         <div className="p-3 bg-muted/50 rounded-xl">
           <div className="flex items-center gap-2 mb-1">
-            <BarChart3 className="h-3.5 w-3.5 text-primary" />
+            <BarChart3 className="h-4 w-4 text-primary" />
             <span className="text-caption text-muted-foreground">Daily Avg</span>
           </div>
           <span className="text-h6 font-semibold text-foreground">{formatNumber(data.dailyAvg)}</span>

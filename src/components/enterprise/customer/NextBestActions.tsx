@@ -121,7 +121,7 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
                 </span>
                 {rec.expiresIn && (
                   <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <Clock className="h-3 w-3" />
+                    <Clock className="h-4 w-4" />
                     {rec.expiresIn}
                   </span>
                 )}

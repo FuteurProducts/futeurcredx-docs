@@ -104,7 +104,7 @@ export function DeveloperHub() {
                     <p className="text-xs text-muted-foreground">{link.desc}</p>
                   </div>
                 </div>
-                <ExternalLink className="w-4 h-4 text-muted-foreground/40" />
+                <ExternalLink className="w-4 h-4 text-muted-foreground" />
               </div>
             ))}
           </div>

@@ -124,7 +124,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
       <motion.div 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
+        className={`bg-card rounded-2xl p-6 shadow-sm border border-border ${className}`}
       >
         <div className="flex items-center gap-2 mb-6">
           <Sparkles className="w-5 h-5 text-[var(--primary-04)]" />
@@ -206,7 +206,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-sm border border-border ${className}`}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">

@@ -54,15 +54,13 @@ const SIGNAL_COLORS: Record<string, string> = {
   'Business Verification': 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
 };
 
-const DEFAULT_SIGNAL_COLOR = 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
-
 function getSignalColor(signal: string): string {
   return SIGNAL_COLORS[signal] || 'bg-muted text-muted-foreground';
 }
 
 function CellValue({ value }: { value: string }) {
   if (value === 'N/A') {
-    return <span className="text-muted-foreground/50 text-xs italic">N/A</span>;
+    return <span className="text-muted-foreground text-xs italic">N/A</span>;
   }
   return <span className="text-foreground text-xs">{value}</span>;
 }

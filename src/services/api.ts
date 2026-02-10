@@ -3,7 +3,7 @@
  * Handles all HTTP requests with authentication, error handling, and interceptors
  */
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data: T;
   status: number;
   statusText: string;
@@ -14,13 +14,13 @@ export interface ApiError {
   message: string;
   status?: number;
   statusText?: string;
-  data?: any;
+  data?: unknown;
 }
 
 export interface RequestConfig {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
   headers?: Record<string, string>;
-  body?: any;
+  body?: unknown;
   timeout?: number;
   retries?: number;
 }
@@ -169,7 +169,7 @@ class ApiService {
   /**
    * Make HTTP request
    */
-  async request<T = any>(
+  async request<T = unknown>(
     endpoint: string,
     config: RequestConfig = {}
   ): Promise<ApiResponse<T>> {
@@ -187,10 +187,12 @@ class ApiService {
     try {
       const currentHeaders: Record<string, string> = requestConfig.headers || {};
       const hasAuthorizationHeader = !!currentHeaders['Authorization'];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const clerk = (window as any)?.Clerk;
 
       if (!hasAuthorizationHeader && clerk?.session?.getToken) {
         // Prefer a specific JWT template if configured; fall back to default token
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const jwtTemplate = (import.meta as any)?.env?.VITE_CLERK_JWT_TEMPLATE;
         let jwt: string | null = null;
         if (jwtTemplate) {
@@ -299,35 +301,35 @@ class ApiService {
   /**
    * GET request
    */
-  async get<T = any>(endpoint: string, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<ApiResponse<T>> {
+  async get<T = unknown>(endpoint: string, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { ...config, method: 'GET' });
   }
 
   /**
    * POST request
    */
-  async post<T = any>(endpoint: string, data?: any, config?: Omit<RequestConfig, 'method'>): Promise<ApiResponse<T>> {
+  async post<T = unknown>(endpoint: string, data?: unknown, config?: Omit<RequestConfig, 'method'>): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { ...config, method: 'POST', body: data });
   }
 
   /**
    * PUT request
    */
-  async put<T = any>(endpoint: string, data?: any, config?: Omit<RequestConfig, 'method'>): Promise<ApiResponse<T>> {
+  async put<T = unknown>(endpoint: string, data?: unknown, config?: Omit<RequestConfig, 'method'>): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { ...config, method: 'PUT', body: data });
   }
 
   /**
    * DELETE request
    */
-  async delete<T = any>(endpoint: string, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<ApiResponse<T>> {
+  async delete<T = unknown>(endpoint: string, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { ...config, method: 'DELETE' });
   }
 
   /**
    * PATCH request
    */
-  async patch<T = any>(endpoint: string, data?: any, config?: Omit<RequestConfig, 'method'>): Promise<ApiResponse<T>> {
+  async patch<T = unknown>(endpoint: string, data?: unknown, config?: Omit<RequestConfig, 'method'>): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { ...config, method: 'PATCH', body: data });
   }
 

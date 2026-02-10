@@ -108,7 +108,7 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
             placeholder="Search logs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 pl-9 pr-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-200"
+            className="w-full h-12 pl-9 pr-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus-visible:ring-1 focus-visible:ring-primary transition-all duration-200"
           />
         </div>
         <Button
@@ -174,7 +174,7 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
       <div className="flex items-center justify-between text-xs text-muted-foreground pt-2">
         <span>Showing 1–{filteredLogs.length} of 2,847 events</span>
         <div className="flex items-center gap-2">
-          <button disabled className="px-2 py-1 rounded-lg border border-border text-muted-foreground/50">Previous</button>
+          <button disabled className="px-2 py-1 rounded-lg border border-border text-muted-foreground/50 disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
           <span className="px-2 py-1 rounded-lg bg-primary/10 text-primary font-medium">1</span>
           <button className="px-2 py-1 rounded-lg border border-border hover:bg-muted transition-all duration-200">2</button>
           <button className="px-2 py-1 rounded-lg border border-border hover:bg-muted transition-all duration-200">3</button>

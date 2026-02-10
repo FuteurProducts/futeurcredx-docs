@@ -65,7 +65,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
               onClick={() => onEnvironmentChange('sandbox')}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                 environment === 'sandbox'
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >
@@ -75,7 +75,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
               onClick={() => onEnvironmentChange('production')}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
                 environment === 'production'
-                  ? 'bg-card text-foreground shadow-sm'
+                  ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               }`}
             >

@@ -180,7 +180,7 @@ export const ApprovalPathWidget: React.FC<ApprovalPathWidgetProps> = ({
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`bg-card rounded-2xl p-6 shadow-lg border border-border ${className}`}
+      className={`bg-card rounded-2xl p-6 shadow-sm border border-border ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

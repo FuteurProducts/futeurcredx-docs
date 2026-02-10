@@ -65,7 +65,7 @@ export const BusinessDrillDown: React.FC<BusinessDrillDownProps> = ({
             onClick={onClose}
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground bg-muted rounded-lg transition-colors"
           >
-            <X className="h-3.5 w-3.5" />
+            <X className="h-4 w-4" />
             Back to Portfolio
           </button>
         </div>

@@ -192,15 +192,15 @@ export function SegmentScatterPlot({
       <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded-full bg-emerald-500" />
+            <div className="h-4 w-4 rounded-full bg-emerald-500" />
             <span>Low Risk (&lt;8%)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded-full bg-amber-500" />
+            <div className="h-4 w-4 rounded-full bg-amber-500" />
             <span>Medium Risk (8-12%)</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-3 w-3 rounded-full bg-red-500" />
+            <div className="h-4 w-4 rounded-full bg-red-500" />
             <span>High Risk (&gt;12%)</span>
           </div>
         </div>

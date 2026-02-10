@@ -122,7 +122,7 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
                         {role.permissions[permission.id] ? (
                           <CheckCircle className="h-5 w-5 text-success" />
                         ) : (
-                          <XCircle className="h-5 w-5 text-muted-foreground/30" />
+                          <XCircle className="h-5 w-5 text-muted-foreground" />
                         )}
                       </button>
                     </td>

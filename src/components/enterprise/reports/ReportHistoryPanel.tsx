@@ -50,7 +50,7 @@ const StatusBadge: React.FC<{ status: GeneratedReport['status'] }> = ({ status }
 
   return (
     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${bg} ${text}`}>
-      <Icon className={`h-3 w-3 ${status === 'processing' ? 'animate-spin' : ''}`} />
+      <Icon className={`h-4 w-4 ${status === 'processing' ? 'animate-spin' : ''}`} />
       {label}
     </span>
   );

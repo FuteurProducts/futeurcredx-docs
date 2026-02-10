@@ -312,7 +312,7 @@ export const CredentialsPanel: React.FC = () => {
                         size="sm"
                         onClick={() => setNewKeyAuthMethod('api_key')}
                       >
-                        <Key className="h-3 w-3 mr-1" />
+                        <Key className="h-4 w-4 mr-1" />
                         API Key
                       </Button>
                       <Button
@@ -320,7 +320,7 @@ export const CredentialsPanel: React.FC = () => {
                         size="sm"
                         onClick={() => setNewKeyAuthMethod('oauth2')}
                       >
-                        <Shield className="h-3 w-3 mr-1" />
+                        <Shield className="h-4 w-4 mr-1" />
                         OAuth2
                       </Button>
                       <Button
@@ -328,7 +328,7 @@ export const CredentialsPanel: React.FC = () => {
                         size="sm"
                         onClick={() => setNewKeyAuthMethod('mtls')}
                       >
-                        <Lock className="h-3 w-3 mr-1" />
+                        <Lock className="h-4 w-4 mr-1" />
                         mTLS
                       </Button>
                     </div>
@@ -491,7 +491,7 @@ export const CredentialsPanel: React.FC = () => {
                             {revealedKeys.has(cred.id) && cred.fullKey ? cred.fullKey : cred.keyPrefix}
                           </code>
                           <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
+                            <Clock className="h-4 w-4" />
                             Created {new Date(cred.createdAt).toLocaleDateString()}
                           </span>
                           {cred.lastUsedAt && (
@@ -500,7 +500,7 @@ export const CredentialsPanel: React.FC = () => {
                         </div>
                         {cred.ipWhitelist.length > 0 && (
                           <div className="flex items-center gap-2 mt-2 text-sm">
-                            <Globe className="h-3 w-3 text-muted-foreground" />
+                            <Globe className="h-4 w-4 text-muted-foreground" />
                             <span className="text-muted-foreground">IP Whitelist:</span>
                             {cred.ipWhitelist.map((ip) => (
                               <Badge key={ip} variant="secondary" className="text-xs">{ip}</Badge>
@@ -509,7 +509,7 @@ export const CredentialsPanel: React.FC = () => {
                         )}
                         {cred.rotationPolicy.enabled && cred.rotationPolicy.nextRotationAt && (
                           <div className="flex items-center gap-2 mt-2 text-sm">
-                            <Calendar className="h-3 w-3 text-muted-foreground" />
+                            <Calendar className="h-4 w-4 text-muted-foreground" />
                             <span className="text-muted-foreground">
                               Next rotation: {new Date(cred.rotationPolicy.nextRotationAt).toLocaleDateString()}
                             </span>
