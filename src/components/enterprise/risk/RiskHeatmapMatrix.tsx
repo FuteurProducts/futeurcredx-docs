@@ -88,10 +88,18 @@ const HeatmapGrid: React.FC<{
               return (
                 <div
                   key={`${row}-${col}`}
-                  className={`flex-1 h-10 rounded-md ${colorClass} flex items-center justify-center text-xs font-semibold cursor-pointer transition-all hover:ring-2 hover:ring-primary hover:ring-offset-1 relative`}
+                  className={`flex-1 h-10 rounded-md ${colorClass} flex items-center justify-center text-xs font-semibold cursor-pointer transition-all hover:ring-2 hover:ring-primary hover:ring-offset-1 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50`}
                   onMouseEnter={() => setHoveredCell(cell || null)}
                   onMouseLeave={() => setHoveredCell(null)}
                   onClick={() => cell && onCellClick?.(cell)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      cell && onCellClick?.(cell);
+                    }
+                  }}
                 >
                   {value > 0 ? formatNumber(cell?.count || 0) : '-'}
                   

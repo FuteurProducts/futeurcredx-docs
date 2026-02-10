@@ -88,7 +88,7 @@ const staggerChild = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' as const },
+    transition: { delay: i * 0.06, duration: 0.2, ease: 'easeOut' as const },
   }),
 };
 
@@ -147,7 +147,7 @@ function ConcentrationBar({
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${fillPercent}%` }}
-          transition={{ duration: 0.7, delay: index * 0.08, ease: 'easeOut' }}
+          transition={{ duration: 0.2, delay: index * 0.08, ease: 'easeOut' }}
           className={cn('absolute inset-y-0 left-0 rounded-full', getThresholdBgClass(barStatus))}
         />
       </div>
@@ -547,7 +547,7 @@ const Risk: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
       >
         <h1 className="text-3xl font-bold text-foreground">Risk & Concentration</h1>
         <p className="text-base text-muted-foreground mt-2">
@@ -657,7 +657,7 @@ const Risk: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.1 }}
+          transition={{ duration: 0.2, delay: 0.1 }}
         >
           <ConcentrationPanel
             title="Industry Concentration"
@@ -671,7 +671,7 @@ const Risk: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.15 }}
+          transition={{ duration: 0.2, delay: 0.15 }}
         >
           <ConcentrationPanel
             title="Geographic Concentration"
@@ -687,7 +687,7 @@ const Risk: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.2 }}
+        transition={{ duration: 0.2, delay: 0.2 }}
       >
         <div className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
           {/* Section header */}
@@ -738,7 +738,7 @@ const Risk: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.25 }}
+        transition={{ duration: 0.2, delay: 0.25 }}
       >
         <ComplianceTable onRowClick={handleComplianceRowClick} />
       </motion.div>

@@ -88,7 +88,17 @@ const OverviewTab: React.FC = () => {
           Quick Actions
         </h3>
         <div className="space-y-4">
-          <div className="block p-4 bg-muted hover:bg-accent rounded-xl transition-colors cursor-pointer">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => {}}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+              }
+            }}
+            className="block p-4 bg-muted hover:bg-accent rounded-xl transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+          >
             <div className="flex items-center gap-4">
               <div className="p-3 bg-foreground/5 rounded-lg">
                 <img src="/icons/file-02.svg" alt="Code" className="w-5 h-5" style={{ filter: 'brightness(0)' }} />

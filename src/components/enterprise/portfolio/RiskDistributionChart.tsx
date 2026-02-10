@@ -29,7 +29,7 @@ const RiskDistributionChart: React.FC<RiskDistributionChartProps> = ({ tiers, cl
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${tier.percentage}%` }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
                 className={cn('h-full rounded-full', tier.color)}
               />
               <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold text-foreground">

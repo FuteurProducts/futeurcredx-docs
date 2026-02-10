@@ -46,22 +46,33 @@ const BusinessSignup: React.FC = () => {
     const lowercase = 'abcdefghijklmnopqrstuvwxyz'
     const numbers = '0123456789'
     const specials = '!@#$%^&*()_+-=[]{}|;:,.<>?'
-    
+
+    const getSecureRandomIndex = (max: number): number => {
+      const array = new Uint32Array(1);
+      crypto.getRandomValues(array);
+      return array[0] % max;
+    };
+
     // Ensure at least one character from each required category
     let password = ''
-    password += uppercase[Math.floor(Math.random() * uppercase.length)]
-    password += lowercase[Math.floor(Math.random() * lowercase.length)]
-    password += numbers[Math.floor(Math.random() * numbers.length)]
-    password += specials[Math.floor(Math.random() * specials.length)]
-    
+    password += uppercase[getSecureRandomIndex(uppercase.length)]
+    password += lowercase[getSecureRandomIndex(lowercase.length)]
+    password += numbers[getSecureRandomIndex(numbers.length)]
+    password += specials[getSecureRandomIndex(specials.length)]
+
     // Fill remaining length with random characters
     const allChars = uppercase + lowercase + numbers + specials
     for (let i = password.length; i < 12; i++) {
-      password += allChars[Math.floor(Math.random() * allChars.length)]
+      password += allChars[getSecureRandomIndex(allChars.length)]
     }
-    
-    // Shuffle the password
-    return password.split('').sort(() => Math.random() - 0.5).join('')
+
+    // Fisher-Yates shuffle with crypto random
+    const chars = password.split('');
+    for (let i = chars.length - 1; i > 0; i--) {
+      const j = getSecureRandomIndex(i + 1);
+      [chars[i], chars[j]] = [chars[j], chars[i]];
+    }
+    return chars.join('');
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

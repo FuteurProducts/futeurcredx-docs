@@ -55,11 +55,15 @@ const Icon = ({ name, className = "", style }: { name: string; className?: strin
 const ToggleSwitch: React.FC<{
   enabled: boolean;
   onChange: (enabled: boolean) => void;
-}> = ({ enabled, onChange }) => {
+  label: string;
+}> = ({ enabled, onChange, label }) => {
   return (
     <button
       type="button"
       onClick={() => onChange(!enabled)}
+      role="switch"
+      aria-checked={enabled}
+      aria-label={label}
       className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
         enabled ? 'bg-primary' : 'bg-muted'
       }`}
@@ -208,7 +212,7 @@ const Notifications: React.FC = () => {
 
       {/* Notification Channels Header */}
       <div className="bg-card rounded-2xl p-6 lg:p-8 border border-border">
-        <div className="grid grid-cols-5 gap-4 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
           <div className="col-span-2">
             <span className="text-[0.875rem] font-medium text-muted-foreground">Notification Type</span>
           </div>
@@ -241,7 +245,7 @@ const Notifications: React.FC = () => {
             transition={{ duration: 0.2 }}
             className="bg-card rounded-2xl p-6 lg:p-8 border border-border"
           >
-            <div className="grid grid-cols-5 gap-4 items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
               {/* Notification Type */}
               <div className="col-span-2">
                 <h3 className="text-[1rem] font-semibold text-foreground mb-1">
@@ -257,6 +261,7 @@ const Notifications: React.FC = () => {
                 <ToggleSwitch
                   enabled={setting.email}
                   onChange={(enabled) => updateSetting(setting.id, 'email', enabled)}
+                  label={`Enable email notifications for ${setting.title}`}
                 />
               </div>
 
@@ -265,6 +270,7 @@ const Notifications: React.FC = () => {
                 <ToggleSwitch
                   enabled={setting.sms}
                   onChange={(enabled) => updateSetting(setting.id, 'sms', enabled)}
+                  label={`Enable SMS notifications for ${setting.title}`}
                 />
               </div>
 
@@ -273,6 +279,7 @@ const Notifications: React.FC = () => {
                 <ToggleSwitch
                   enabled={setting.slack}
                   onChange={(enabled) => updateSetting(setting.id, 'slack', enabled)}
+                  label={`Enable Slack notifications for ${setting.title}`}
                 />
               </div>
 

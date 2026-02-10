@@ -94,7 +94,7 @@ export const PortfolioScoreTrendsCard: React.FC<PortfolioScoreTrendsCardProps> =
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         <div className="p-3 bg-success/10 rounded-xl">
           <div className="flex items-center gap-1 text-xs text-success mb-1">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

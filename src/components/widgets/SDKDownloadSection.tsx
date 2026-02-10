@@ -231,8 +231,13 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
           role="button"
           tabIndex={0}
           onClick={handleExternalLink}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
-          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleExternalLink();
+            }
+          }}
+          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         >
           <Book className="w-4 h-4 text-info" />
           <span className="text-sm font-medium text-foreground">Documentation</span>
@@ -243,8 +248,13 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
           role="button"
           tabIndex={0}
           onClick={handleExternalLink}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
-          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleExternalLink();
+            }
+          }}
+          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         >
           <FileCode className="w-4 h-4 text-[var(--primary-04)]" />
           <span className="text-sm font-medium text-foreground">API Reference</span>
@@ -255,8 +265,13 @@ export const SDKDownloadSection: React.FC<SDKDownloadSectionProps> = ({
           role="button"
           tabIndex={0}
           onClick={handleExternalLink}
-          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleExternalLink(); }}
-          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleExternalLink();
+            }
+          }}
+          className="flex items-center gap-2 p-3 bg-accent hover:bg-accent/80 rounded-xl transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
         >
           <Zap className="w-4 h-4 text-warning" />
           <span className="text-sm font-medium text-foreground">Changelog</span>

@@ -222,7 +222,7 @@ const UnderwritingQueue: React.FC = () => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Auto-Approve */}
                 <div className="rounded-xl border border-border/60 p-4">
                   <h4 className="text-xs font-semibold text-emerald-700 uppercase tracking-wider mb-2 flex items-center gap-1">
@@ -468,7 +468,7 @@ const UnderwritingQueue: React.FC = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
               <div className="p-3 bg-muted rounded-lg">
                 <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Risk Tier</div>
                 <div className={cn('text-sm font-semibold mt-1', getRiskBadgeClass(detailItem.risk).split(' ')[1])}>

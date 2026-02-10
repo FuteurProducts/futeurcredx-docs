@@ -190,7 +190,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
             {/* Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`p-2 rounded-lg border transition-colors ${
+              className={`p-2 rounded-lg border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 ${
                 showFilters ? 'bg-primary/10 border-primary/20 text-primary' : 'border-border text-muted-foreground hover:bg-muted'
               }`}
             >
@@ -220,7 +220,7 @@ export const CustomerListTable: React.FC<CustomerListTableProps> = ({
                 })), 'customers');
                 toast.success('CSV exported successfully');
               }}
-              className="p-2 rounded-lg border border-border text-muted-foreground hover:bg-muted transition-colors"
+              className="p-2 rounded-lg border border-border text-muted-foreground hover:bg-muted transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
               aria-label="Export CSV"
             >
               <Download className="h-4 w-4" />

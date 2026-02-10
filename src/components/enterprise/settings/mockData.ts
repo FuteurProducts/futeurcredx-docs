@@ -302,7 +302,7 @@ export const settingsSections: SettingsSection[] = [
   // Integrations
   { id: 'integrations', label: 'Integrations', icon: 'plug', category: 'Integrations' },
   // Notifications
-  { id: 'notifications', label: 'Notification Preferences', icon: 'mail', category: 'Notifications' },
+  { id: 'notifications', label: 'Notifications', icon: 'mail', category: 'Notifications' },
   // Billing
   { id: 'billing', label: 'Plan & Usage', icon: 'credit-card', category: 'Billing & Usage' },
   // Audit

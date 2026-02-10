@@ -92,7 +92,7 @@ export const DataFreshnessCard: React.FC<DataFreshnessCardProps> = ({
       </div>
 
       {/* Status Breakdown */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="p-3 bg-success/10 rounded-xl text-center">
           <CheckCircle2 className="h-5 w-5 text-success mx-auto mb-1" />
           <span className="text-h6 font-semibold text-foreground block">

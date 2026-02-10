@@ -133,7 +133,7 @@ export function RiskHeatmap({ segments, className, onCellClick }: RiskHeatmapPro
                   key={industry}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: rowIndex * 0.05 }}
+                  transition={{ duration: 0.2, delay: rowIndex * 0.05 }}
                   className="border-b border-border/50 last:border-b-0"
                 >
                   <td className="text-sm font-medium text-foreground p-2">

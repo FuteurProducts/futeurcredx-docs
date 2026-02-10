@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Building2, TrendingUp, TrendingDown, ArrowRight, Eye, ChevronUp, ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface BusinessRow {
   id: string;
@@ -74,18 +75,23 @@ export const TopBusinessesTable: React.FC<TopBusinessesTableProps> = ({
   }, [businesses, sortField, sortDirection]);
 
   const SortHeader = ({ field, label, align = "left" }: { field: string; label: string; align?: "left" | "center" | "right" }) => (
-    <th
-      className={`text-${align} text-xs font-medium text-muted-foreground uppercase tracking-wider pb-3 cursor-pointer hover:text-foreground transition-colors select-none`}
-      onClick={() => handleSort(field)}
-    >
-      <div className={`flex items-center gap-1 ${align === "center" ? "justify-center" : align === "right" ? "justify-end" : ""}`}>
+    <th className={`text-${align} text-xs font-medium text-muted-foreground uppercase tracking-wider pb-3 select-none`}>
+      <button
+        onClick={() => handleSort(field)}
+        className={cn(
+          "w-full flex items-center gap-1 transition-colors",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded px-1 py-0.5",
+          "hover:text-foreground",
+          align === "center" ? "justify-center" : align === "right" ? "justify-end" : ""
+        )}
+      >
         <span>{label}</span>
         {sortField === field && (
           sortDirection === "asc"
             ? <ChevronUp className="h-3 w-3" />
             : <ChevronDown className="h-3 w-3" />
         )}
-      </div>
+      </button>
     </th>
   );
 

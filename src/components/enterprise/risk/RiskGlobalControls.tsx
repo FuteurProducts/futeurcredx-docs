@@ -61,14 +61,16 @@ export const RiskGlobalControls: React.FC<RiskGlobalControlsProps> = ({
     filterKey: keyof PortfolioFilter 
   }) => {
     const isExpanded = expandedFilter === filterKey;
-    
+
     return (
       <div className="relative">
         <button
           onClick={() => setExpandedFilter(isExpanded ? null : filterKey)}
+          aria-expanded={isExpanded}
+          aria-label={`Filter by ${label}`}
           className={`flex items-center gap-2 h-9 px-3 rounded-lg border text-sm font-medium transition-all ${
-            selected.length > 0 
-              ? 'border-primary bg-primary/5 text-primary' 
+            selected.length > 0
+              ? 'border-primary bg-primary/5 text-primary'
               : 'border-border bg-background text-foreground hover:border-muted-foreground'
           }`}
         >

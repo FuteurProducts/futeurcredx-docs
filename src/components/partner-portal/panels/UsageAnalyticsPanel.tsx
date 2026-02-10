@@ -324,7 +324,7 @@ export const UsageAnalyticsPanel: React.FC = () => {
           <CardDescription>Response time percentiles</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { label: 'P50 (Median)', value: mockUsageMetrics.p50LatencyMs },
               { label: 'Average', value: mockUsageMetrics.avgLatencyMs },

@@ -48,7 +48,15 @@ export function DeveloperHub() {
             {sdks.map((sdk, i) => (
               <div
                 key={sdk.name}
-                className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-background/50 transition-colors cursor-pointer animate-fade-in"
+                role="button"
+                tabIndex={0}
+                onClick={() => {}}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                  }
+                }}
+                className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-background/50 transition-colors cursor-pointer animate-fade-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 style={{ animationDelay: `${500 + i * 100}ms` }}
               >
                 <div className="flex items-center gap-3">
@@ -80,8 +88,13 @@ export function DeveloperHub() {
                 role="button"
                 tabIndex={0}
                 onClick={handleLinkClick}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleLinkClick(); }}
-                className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-background/50 hover:border-primary/50 border border-transparent transition-all group animate-fade-in cursor-pointer"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleLinkClick();
+                  }
+                }}
+                className="flex items-center justify-between p-3 bg-background/30 rounded-lg hover:bg-background/50 hover:border-primary/50 border border-transparent transition-all group animate-fade-in cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 style={{ animationDelay: `${600 + i * 100}ms` }}
               >
                 <div className="flex items-center gap-3">

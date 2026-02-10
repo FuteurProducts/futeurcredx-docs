@@ -267,6 +267,7 @@ const Users = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-10 h-12"
+              aria-label="Search businesses by name, city, or state"
             />
           </div>
 
@@ -553,7 +554,7 @@ const Users = () => {
               </DialogHeader>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-3 gap-4 mt-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
                 <div className="p-4 bg-muted rounded-2xl">
                   <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
                     <CreditCard className="h-3 w-3" />

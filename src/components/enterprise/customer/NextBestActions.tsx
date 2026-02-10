@@ -95,8 +95,16 @@ export const NextBestActions: React.FC<NextBestActionsProps> = ({
       >
         {/* Header */}
         <div
-          className="p-4 cursor-pointer hover:bg-muted/30 transition-colors"
+          role="button"
+          tabIndex={0}
+          className="p-4 cursor-pointer hover:bg-muted/30 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           onClick={() => setExpandedId(isExpanded ? null : rec.id)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setExpandedId(isExpanded ? null : rec.id);
+            }
+          }}
         >
           <div className="flex items-start gap-3">
             <div

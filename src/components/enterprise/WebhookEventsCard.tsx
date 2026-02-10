@@ -80,7 +80,7 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-4 gap-2 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
         <div className="text-center p-2 bg-muted/50 rounded-lg">
           <span className="text-h6 font-semibold text-foreground block">
             {stats.totalSent.toLocaleString()}

@@ -333,7 +333,7 @@ export function RiskDashboardSkeleton() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
           <MetricSkeleton key={i} />
         ))}

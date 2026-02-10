@@ -395,7 +395,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-                  <div className="space-y-2 p-3 bg-zinc-900 dark:bg-zinc-950 rounded-xl text-[0.8125rem] font-mono">
+                  <div className="space-y-2 p-3 bg-card rounded-xl text-[0.8125rem] font-mono">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Content-Type:</span>
                       <span className="text-success">application/json</span>
@@ -494,7 +494,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
           </div>
 
           {/* Terminal */}
-          <div className="bg-zinc-900 dark:bg-zinc-950 rounded-xl min-h-[400px] overflow-hidden">
+          <div className="bg-card rounded-xl min-h-[400px] overflow-hidden">
             {/* Terminal Header */}
             <div className="flex items-center gap-2 px-4 py-3 bg-muted/80 border-b border-border">
               <div className="w-3 h-3 rounded-full bg-destructive"></div>

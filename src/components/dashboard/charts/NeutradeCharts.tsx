@@ -104,7 +104,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ options, value, onChange }) =
             onClick={() => setIsOpen(false)}
           />
           {/* Dropdown Menu */}
-          <div className="absolute right-0 top-full mt-2 z-50 min-w-[140px] py-2 bg-white rounded-xl shadow-lg border border-border overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 z-50 min-w-[140px] py-2 bg-card rounded-xl shadow-lg border border-border overflow-hidden">
             {options.map((opt) => (
               <button
                 key={opt.id}
@@ -158,9 +158,9 @@ export const NCard: React.FC<NCardProps> = ({
   };
 
   return (
-    <div className={`bg-white rounded-2xl p-6 ${className || ""}`}>
+    <div className={`bg-card rounded-2xl p-6 ${className || ""}`}>
       {(title || rightContent || options || seeAllUrl) && (
-        <div className="relative z-2 flex justify-between items-center min-h-[2.5rem] mb-4">
+        <div className="relative z-10 flex justify-between items-center min-h-[2.5rem] mb-4">
           {title && (
             <div className="flex items-center text-[1.125rem] md:text-[1.125rem] font-semibold text-foreground">
               <div className={`truncate ${options ? "md:max-w-[33vw]" : ""}`}>
@@ -1490,7 +1490,7 @@ export const CreditIntelligenceDashboard: React.FC = () => {
   const animatedCount = useCountUp(915, 1500);
   
   return (
-    <div className="bg-white rounded-2xl p-6 mb-6">
+    <div className="bg-card rounded-2xl p-6 mb-6">
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
@@ -1514,7 +1514,7 @@ export const CreditIntelligenceDashboard: React.FC = () => {
                 key={range}
                 onClick={() => setTimeRange(range)}
                 className={`px-4 py-2 rounded-lg text-[0.875rem] font-medium transition-colors ${
-                  timeRange === range ? 'bg-white text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                  timeRange === range ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {range === '7d' ? 'Last 7 Days' : range === '30d' ? 'Last 30 Days' : 'Last 90 Days'}
@@ -1525,7 +1525,7 @@ export const CreditIntelligenceDashboard: React.FC = () => {
       </div>
       
       {/* Stats Cards */}
-      <div className="grid grid-cols-5 gap-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <StatCard title="Apps Scored Today" value={animatedCount} change={12.3} color="cyan" />
         <StatCard title="Conversion Rate" value="16.7%" change={3.2} color="green" />
         <StatCard title="Approval Rate" value="75.6%" change={5.4} color="purple" />

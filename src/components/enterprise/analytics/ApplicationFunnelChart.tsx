@@ -56,7 +56,7 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
       </div>
 
       {/* Funnel Bars */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {stages.map((stage, index) => {
           const value = selected[stage.key as keyof ApplicationFunnelMetrics] as number;
           const maxValue = selected.preQualified;
@@ -89,7 +89,7 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-border">
         <div className="p-3 bg-muted rounded-xl text-center">
           <div className="text-h6 font-bold text-foreground">{selected.preQualToApplyRate}%</div>
           <div className="text-caption text-muted-foreground">Pre-qual → Apply</div>

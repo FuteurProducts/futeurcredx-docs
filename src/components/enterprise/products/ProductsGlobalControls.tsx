@@ -103,6 +103,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
             value={filters.productFamily}
             onChange={(e) => updateFilter('productFamily', e.target.value as ProductFamily | 'All')}
             className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            aria-label="Filter by product family"
           >
             {productFamilies.map((f) => (
               <option key={f.id} value={f.id}>{f.label}</option>
@@ -118,6 +119,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
             value={filters.segment}
             onChange={(e) => updateFilter('segment', e.target.value as SegmentType)}
             className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            aria-label="Filter by segment"
           >
             {segments.map((s) => (
               <option key={s.id} value={s.id}>{s.label}</option>
@@ -133,6 +135,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
             value={filters.status}
             onChange={(e) => updateFilter('status', e.target.value as ProductStatus | 'All')}
             className="appearance-none h-12 pl-10 pr-8 bg-muted rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
+            aria-label="Filter by product status"
           >
             {statuses.map((s) => (
               <option key={s.id} value={s.id}>{s.label}</option>

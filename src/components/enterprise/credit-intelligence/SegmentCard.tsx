@@ -79,10 +79,20 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, delay: index * 0.04 }}
+      role="button"
+      tabIndex={0}
+      onClick={() => onView(segment.id)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onView(segment.id);
+        }
+      }}
       className={cn(
         'bg-card rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-5',
         'hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-200',
         'flex flex-col justify-between min-h-[200px] cursor-pointer',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
       )}
     >
       {/* Header: Icon + Name + Status Badge */}

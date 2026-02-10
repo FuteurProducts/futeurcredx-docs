@@ -76,7 +76,7 @@ export function PortfolioKPIRow({ kpis, className }: PortfolioKPIRowProps) {
             key={kpi.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.05 }}
+            transition={{ duration: 0.2, delay: index * 0.05 }}
             className="bg-card rounded-xl border border-border p-4 hover:shadow-md transition-shadow"
           >
             <div className="flex items-start justify-between mb-2">

@@ -61,7 +61,7 @@ const CreditIntelligence: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
             >
               <h1 className="text-2xl font-bold text-foreground tracking-tight">
                 Credit Intelligence
@@ -76,7 +76,7 @@ const CreditIntelligence: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
+              transition={{ duration: 0.2, delay: 0.05 }}
             >
               <CreditKPIRow />
             </motion.div>
@@ -85,7 +85,7 @@ const CreditIntelligence: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
             >
               <SegmentGrid onSegmentSelect={handleSegmentSelect} />
             </motion.div>
@@ -94,7 +94,7 @@ const CreditIntelligence: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
+              transition={{ duration: 0.2, delay: 0.15 }}
             >
               <ScoreDistribution />
             </motion.div>

@@ -211,7 +211,7 @@ export const MetricDrilldownModal: React.FC<MetricDrilldownModalProps> = ({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-4 md:inset-10 lg:inset-20 bg-card border border-border rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col"
+            className="fixed inset-4 md:inset-10 lg:inset-20 bg-card border border-border rounded-2xl shadow-xl z-50 overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-border">

@@ -135,7 +135,7 @@ export function ScoreDistribution() {
       </div>
 
       {/* Exposure row below */}
-      <div className="grid grid-cols-5 gap-2 mt-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mt-3">
         {chartData.map((tier) => (
           <button
             key={tier.tier}

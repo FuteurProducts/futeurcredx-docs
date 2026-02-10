@@ -86,12 +86,12 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
 
   if (variant === 'minimal') {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className={`bg-card rounded-xl p-4 shadow-sm border border-border ${className}`}
       >
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
           {data.factors.slice(0, 5).map(factor => {
             const colors = getStatusColor(factor.status);
             return (

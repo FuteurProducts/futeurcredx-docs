@@ -59,7 +59,7 @@ const MetricCards: React.FC<MetricCardsProps> = ({
           <button
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-lg hover:bg-foreground/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <img src="/icons/loading-01.svg" alt="Refresh" className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} style={{ filter: 'brightness(0) invert(1)' }} />
             {isRefreshing ? 'Refreshing...' : 'Refresh'}

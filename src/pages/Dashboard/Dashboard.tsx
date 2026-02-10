@@ -553,8 +553,9 @@ const Dashboard: React.FC = () => {
               className="p-2.5 hover:bg-white/10 rounded-xl transition-colors hidden lg:flex"
               onClick={() => setSidebarCollapsed(true)}
               title="Collapse sidebar"
+              aria-label="Collapse sidebar"
             >
-              <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
               </svg>
             </button>
@@ -563,8 +564,9 @@ const Dashboard: React.FC = () => {
           <button
             className="p-2.5 hover:bg-white/10 rounded-xl transition-colors lg:hidden"
             onClick={() => setSidebarOpen(false)}
+            aria-label="Close sidebar"
           >
-            <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
@@ -577,8 +579,9 @@ const Dashboard: React.FC = () => {
               className="p-2.5 hover:bg-white/10 rounded-xl transition-colors"
               onClick={() => setSidebarCollapsed(false)}
               title="Expand sidebar"
+              aria-label="Expand sidebar"
             >
-              <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
               </svg>
             </button>
@@ -616,7 +619,7 @@ const Dashboard: React.FC = () => {
                   ${sidebarCollapsed ? 'justify-center p-3' : 'gap-3 px-3 py-3'}
                   ${isActive
                     ? 'bg-gradient-to-r from-primary/15 to-transparent border-l-2 border-primary shadow-lg shadow-primary/10'
-                    : 'text-slate-400 hover:bg-white/8 hover:text-white'
+                    : 'text-muted-foreground hover:bg-white/8 hover:text-white'
                   }
                 `}
               >
@@ -627,7 +630,7 @@ const Dashboard: React.FC = () => {
                     : `bg-white/5 group-hover:bg-gradient-to-br group-hover:${gradientClass}`
                   }
                 `}>
-                  <link.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
+                  <link.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-muted-foreground group-hover:text-white'}`} />
                 </div>
                 {!sidebarCollapsed && (
                   <>
@@ -654,7 +657,7 @@ const Dashboard: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Sandbox Environment Banner */}
         {currentEnvironment === 'sandbox' && (
-          <div className="sticky top-0 z-[110] bg-amber-500 text-white px-4 py-1.5 flex items-center justify-center gap-2 text-sm font-medium shrink-0">
+          <div className="sticky top-0 z-20 bg-amber-500 text-white px-4 py-1.5 flex items-center justify-center gap-2 text-sm font-medium shrink-0">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
             </svg>
@@ -670,7 +673,7 @@ const Dashboard: React.FC = () => {
 
         {/* Header - Fixed/Sticky with premium gradient */}
         <header
-          className="sticky top-0 z-[100] bg-background/95 backdrop-blur-xl border-b border-border/50 shrink-0"
+          className="sticky top-0 z-10 bg-background/95 backdrop-blur-xl border-b border-border/50 shrink-0"
         >
           <div
             className="flex items-center h-18 lg:h-22 mx-auto px-4 lg:px-10"
@@ -678,9 +681,10 @@ const Dashboard: React.FC = () => {
             {/* Left: Hamburger (mobile) + Logo (mobile) / Back + Title (desktop) */}
             <div className="flex items-center mr-auto gap-3">
               {/* Mobile: Hamburger menu */}
-              <button 
+              <button
                 className="lg:hidden p-2 -ml-2 rounded-xl hover:bg-card/50 transition-colors"
                 onClick={() => setSidebarOpen(true)}
+                aria-label="Open navigation menu"
               >
                 <svg className="w-6 h-6 text-foreground" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -717,22 +721,23 @@ const Dashboard: React.FC = () => {
             {/* Right: Environment Toggle + Docs + User Info */}
             <div className="flex items-center gap-3 lg:gap-4">
               {/* Sandbox/Production Toggle */}
-              <div className="relative z-[200] pointer-events-auto">
+              <div className="relative z-10 pointer-events-auto">
                 <ConnectedEnvironmentToggle variant="minimal" />
               </div>
 
               {/* Command Palette Keyboard Hint */}
-              <div
+              <button
                 className="hidden md:flex items-center gap-1 text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors px-2 py-1 rounded-lg hover:bg-card/50"
                 onClick={() => {
                   // Dispatch keyboard event to open command palette
                   window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
                 }}
                 title="Open command palette"
+                aria-label="Open command palette"
               >
                 <kbd className="bg-muted px-1.5 py-0.5 rounded text-[10px] font-medium border border-border">Cmd</kbd>
                 <kbd className="bg-muted px-1.5 py-0.5 rounded text-[10px] font-medium border border-border">K</kbd>
-              </div>
+              </button>
 
               {/* Divider */}
               <div className="hidden md:block w-px h-8 bg-border" />
@@ -742,6 +747,7 @@ const Dashboard: React.FC = () => {
                 onClick={() => setActiveTab('documentation')}
                 className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-xl bg-card hover:bg-muted border border-border transition-all duration-200 group"
                 title="Documentation"
+                aria-label="View documentation"
               >
                 <svg
                   className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
@@ -785,13 +791,13 @@ const Dashboard: React.FC = () => {
                 {accountMenuOpen && (
                   <>
                     {/* Backdrop */}
-                    <div 
-                      className="fixed inset-0 z-[150]" 
+                    <div
+                      className="fixed inset-0 z-40"
                       onClick={() => setAccountMenuOpen(false)}
                     />
-                    
+
                     {/* Dropdown */}
-                    <div className="absolute right-0 top-full mt-2 z-[160] w-72 bg-card/95 backdrop-blur-xl rounded-3xl shadow-[var(--shadow-dropdown)] border border-white/[0.08] overflow-hidden">
+                    <div className="absolute right-0 top-full mt-2 z-50 w-72 bg-card/95 backdrop-blur-xl rounded-3xl shadow-[var(--shadow-dropdown)] border border-white/[0.08] overflow-hidden">
                       {/* User Info */}
                       <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">

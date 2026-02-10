@@ -57,7 +57,7 @@ const SIGNAL_COLORS: Record<string, string> = {
 const DEFAULT_SIGNAL_COLOR = 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
 
 function getSignalColor(signal: string): string {
-  return SIGNAL_COLORS[signal] || DEFAULT_SIGNAL_COLOR;
+  return SIGNAL_COLORS[signal] || 'bg-muted text-muted-foreground';
 }
 
 function CellValue({ value }: { value: string }) {

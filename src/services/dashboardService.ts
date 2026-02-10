@@ -356,7 +356,7 @@ class DashboardService {
     const newApiKey: ApiKey = {
       id: `key_${Date.now()}`,
       name: request.name,
-      key: `sk_test_${Math.random().toString(36).substring(2, 15)}${Math.random().toString(36).substring(2, 15)}`,
+      key: `sk_test_${crypto.randomUUID().replace(/-/g, '')}`,
       callsUsed: 0,
       isActive: true,
       createdAt: new Date().toISOString(),

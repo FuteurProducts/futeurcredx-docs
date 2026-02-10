@@ -81,7 +81,7 @@ const FunnelStage: React.FC<FunnelStageProps> = ({
         {label}
       </div>
       <div
-        className="bg-primary/15 rounded-xl px-3 py-2 transition-all duration-300"
+        className="bg-primary/15 rounded-xl px-3 py-2 transition-all duration-200"
         style={{ width: `${Math.max(widthPercent, 30)}%` }}
       >
         <div className="text-base font-bold text-foreground tabular-nums">
@@ -138,7 +138,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.2 }}
       className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 space-y-4 transition-all duration-200"
     >
       {/* Header */}
@@ -200,7 +200,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-500"
+              className="h-full bg-primary rounded-full transition-all duration-200"
               style={{
                 width: `${(campaign.funnel.approved / campaign.funnel.pushed) * 100}%`,
               }}
@@ -289,7 +289,7 @@ const MiniBar: React.FC<MiniBarProps> = ({ value, status = 'ok' }) => {
     <div className="flex items-center gap-2">
       <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
         <div
-          className={cn('h-full rounded-full transition-all duration-500', barColor)}
+          className={cn('h-full rounded-full transition-all duration-200', barColor)}
           style={{ width: `${value * 100}%` }}
         />
       </div>
@@ -390,7 +390,7 @@ const Campaigns: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
           className="flex items-start justify-between gap-4"
         >
           <div>
@@ -412,7 +412,7 @@ const Campaigns: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.05 }}
+          transition={{ duration: 0.2, delay: 0.05 }}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
         >
           <KPICard
@@ -467,7 +467,7 @@ const Campaigns: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
+          transition={{ duration: 0.2, delay: 0.1 }}
           className="space-y-6"
         >
           <h2 className="text-lg font-semibold text-foreground mb-6">
@@ -486,7 +486,7 @@ const Campaigns: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.15 }}
+          transition={{ duration: 0.2, delay: 0.15 }}
           className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
         >
           <div className="flex items-center justify-between p-6 pb-0">

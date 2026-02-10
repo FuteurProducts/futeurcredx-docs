@@ -100,8 +100,16 @@ export const LifecyclePipeline: React.FC<LifecyclePipelineProps> = ({
                   initial={{ opacity: 0, scaleX: 0 }}
                   animate={{ opacity: 1, scaleX: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`flex-1 min-w-[80px] cursor-pointer group`}
+                  className={`flex-1 min-w-[80px] cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50`}
                   onClick={() => onStageClick(stage.id)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onStageClick(stage.id);
+                    }
+                  }}
                 >
                   {/* Stage Bar */}
                   <div 
@@ -139,14 +147,22 @@ export const LifecyclePipeline: React.FC<LifecyclePipelineProps> = ({
 
       {/* Stage Details Grid */}
       <div className="border-t border-border">
-        <div className="grid grid-cols-5 divide-x divide-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 divide-x divide-border">
           {stages.map((stage) => {
-            
+
             return (
               <div
                 key={stage.id}
-                className="p-4 hover:bg-muted/30 cursor-pointer transition-colors"
+                className="p-4 hover:bg-muted/30 cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                 onClick={() => onStageClick(stage.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onStageClick(stage.id);
+                  }
+                }}
               >
                 <div className="space-y-3">
                   <div>

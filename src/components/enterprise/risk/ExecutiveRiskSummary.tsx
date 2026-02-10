@@ -150,7 +150,7 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
       </div>
 
       {/* KPI Tiles */}
-      <div className="grid grid-cols-5 gap-4 lg:grid-cols-3 md:grid-cols-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {kpis.map((kpi, index) => (
           <KPICard key={kpi.id} kpi={kpi} index={index} />
         ))}
@@ -162,7 +162,7 @@ export const ExecutiveRiskSummary: React.FC<ExecutiveRiskSummaryProps> = ({
           <Activity className="w-4 h-4 text-muted-foreground" />
           <span className="text-body-2 font-medium text-foreground">Trend Indicators (30d)</span>
         </div>
-        <div className="grid grid-cols-4 gap-3 lg:grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <TrendStrip label="Deteriorations" data={trendData.deteriorations} color="hsl(var(--destructive))" />
           <TrendStrip label="Delinquencies" data={trendData.delinquencies} color="hsl(var(--warning))" />
           <TrendStrip label="Cashflow Stress" data={trendData.cashflowStress} color="hsl(var(--primary-05))" />

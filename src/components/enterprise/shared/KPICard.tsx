@@ -53,11 +53,22 @@ export const KPICard: React.FC<KPICardProps> = ({
 
   const card = (
     <div
-      onClick={onClick}
+      {...(onClick && {
+        role: 'button',
+        tabIndex: 0,
+        onClick,
+        onKeyDown: (e: React.KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        },
+      })}
       className={cn(
         'bg-card rounded-2xl border border-border/60 p-5 h-[160px] flex flex-col',
         'shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200',
         onClick && 'cursor-pointer hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 active:translate-y-0',
+        onClick && 'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
         !onClick && 'hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]',
         status && STATUS_ACCENT[status],
         status && 'border-l-[3px]',

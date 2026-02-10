@@ -103,8 +103,8 @@ const QueueItemCard: React.FC<{
       className={`border-l-4 ${style.border} ${style.bg} rounded-r-xl overflow-hidden`}
     >
       {/* Main Row */}
-      <div 
-        className="flex items-center gap-4 p-4 cursor-pointer hover:bg-black/5 transition-colors"
+      <div
+        className="flex items-center gap-4 p-4 cursor-pointer hover:bg-muted/50 transition-colors"
         onClick={() => setExpanded(!expanded)}
       >
         {/* Severity Badge */}
@@ -119,7 +119,7 @@ const QueueItemCard: React.FC<{
           item.status === 'in_review' ? 'bg-yellow-100 text-yellow-700' :
           item.status === 'resolved' ? 'bg-green-100 text-green-700' :
           item.status === 'escalated' ? 'bg-red-100 text-red-700' :
-          'bg-gray-100 text-gray-600'
+          'bg-muted text-muted-foreground'
         }`}>
           {item.status === 'in_review' ? 'In Review' : item.status.charAt(0).toUpperCase() + item.status.slice(1)}
         </span>

@@ -101,7 +101,7 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl"
+                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
@@ -188,7 +188,7 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl"
+                className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">
@@ -408,7 +408,7 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-xl"
+              className="bg-card rounded-2xl p-6 w-full max-w-md mx-4 shadow-lg"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-full bg-warning/10 flex items-center justify-center">

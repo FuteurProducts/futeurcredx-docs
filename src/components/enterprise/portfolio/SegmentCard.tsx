@@ -120,9 +120,18 @@ export function SegmentCard({ segment, onSelect, isSelected, className }: Segmen
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.2 }}
+      role="button"
+      tabIndex={0}
       onClick={handleClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
       className={cn(
         'bg-card rounded-xl border border-border p-4 hover:shadow-md transition-all cursor-pointer',
+        'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
         isSelected && 'ring-2 ring-primary shadow-lg',
         className
       )}
