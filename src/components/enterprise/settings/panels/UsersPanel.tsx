@@ -103,55 +103,55 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
       </div>
 
       {/* Users Table */}
-      <div className="bg-card rounded-2xl border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
         <table className="w-full">
-          <thead className="bg-muted/50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Name</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Email</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Role</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Status</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">Last Login</th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase">MFA</th>
-              <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase">Actions</th>
+          <thead>
+            <tr className="bg-muted/50 border-b border-border/30">
+              <th className="px-5 py-4 h-14 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Name</th>
+              <th className="px-5 py-4 h-14 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Email</th>
+              <th className="px-5 py-4 h-14 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Role</th>
+              <th className="px-5 py-4 h-14 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
+              <th className="px-5 py-4 h-14 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">Last Login</th>
+              <th className="px-5 py-4 h-14 text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider">MFA</th>
+              <th className="px-5 py-4 h-14 text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody>
             {filteredUsers.map((user) => (
               <tr
                 key={user.id}
-                className="hover:bg-muted/30 cursor-pointer transition-colors"
+                className="h-16 border-b border-border/30 last:border-0 hover:bg-muted/30 cursor-pointer transition-colors duration-150"
                 onClick={() => setSelectedUser(user)}
               >
-                <td className="px-4 py-3">
+                <td className="px-5 py-4">
                   <span className="text-sm font-medium text-foreground">{user.name}</span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-5 py-4">
                   <span className="text-sm text-muted-foreground">{user.email}</span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-5 py-4">
                   <span className="text-sm">{roleLabels[user.role]}</span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-5 py-4">
                   <StatusBadge status={user.status} />
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-5 py-4">
                   <span className="text-sm text-muted-foreground">{formatDate(user.lastLogin)}</span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-5 py-4">
                   {user.mfaEnabled ? (
                     <ShieldCheck className="h-4 w-4 text-success" />
                   ) : (
                     <Shield className="h-4 w-4 text-muted-foreground" />
                   )}
                 </td>
-                <td className="px-4 py-3 text-right">
+                <td className="px-5 py-4 text-right">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onEditUser(user);
                     }}
-                    className="p-1.5 hover:bg-muted rounded transition-colors"
+                    className="p-1.5 hover:bg-muted rounded-lg transition-all duration-200"
                   >
                     <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
                   </button>
@@ -178,7 +178,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-0 h-full w-full max-w-md bg-card border-l border-border shadow-xl z-50 flex flex-col"
+              className="fixed right-0 top-0 h-full w-full max-w-md bg-card/95 backdrop-blur-xl border-l border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.5)] rounded-l-3xl z-50 flex flex-col"
             >
               <div className="p-4 border-b border-border flex items-center justify-between">
                 <h3 className="text-lg font-semibold">User Details</h3>

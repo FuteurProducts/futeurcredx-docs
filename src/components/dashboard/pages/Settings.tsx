@@ -375,11 +375,11 @@ const Settings: React.FC = () => {
           </motion.div>
 
           {/* Reset Demo Section */}
-          <div className="mt-12 pt-6 border-t border-border">
-            <div className="flex items-center justify-between">
+          <div className="mt-12">
+            <div className="rounded-2xl border border-border/50 p-5 flex items-center justify-between bg-card">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Demo Session</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
+                <h4 className="text-sm font-semibold text-foreground">Demo Session</h4>
+                <p className="text-xs text-muted-foreground mt-1">
                   Reset all demo data (approvals, score pulls, etc.) to initial state
                 </p>
               </div>
@@ -391,7 +391,7 @@ const Settings: React.FC = () => {
                   toast({ title: 'Demo Reset', description: 'All demo session data has been cleared. Refreshing...' });
                   setTimeout(() => window.location.reload(), 800);
                 }}
-                className="text-destructive hover:text-destructive/80 border-destructive/20 hover:border-destructive/40"
+                className="rounded-xl border-rose-500/50 text-rose-500 hover:bg-rose-500/10 hover:border-rose-500 transition-all duration-200"
               >
                 Reset Demo
               </Button>

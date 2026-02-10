@@ -164,56 +164,57 @@ export const NotificationsPanel: React.FC = () => {
           <CardTitle className="text-base">Notification Categories</CardTitle>
           <CardDescription>Choose which events trigger notifications on each channel</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-1">
+        <CardContent className="p-0">
+          <div className="rounded-2xl border border-border/50 overflow-hidden">
             {/* Header Row */}
-            <div className="grid grid-cols-[1fr,80px,80px,80px,80px] gap-4 p-3 text-xs font-medium text-muted-foreground border-b">
-              <div>Event Type</div>
-              <div className="text-center">Email</div>
-              <div className="text-center">In-App</div>
-              <div className="text-center">SMS</div>
-              <div className="text-center">Webhook</div>
+            <div className="grid grid-cols-[1fr_80px_80px_80px_80px] gap-4 px-5 h-14 bg-muted/50 border-b border-border/30 items-center">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Event Type</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center">Email</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center">In-App</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center">SMS</span>
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground text-center">Webhook</span>
             </div>
-            
+
+            {/* Notification Rows */}
             {categories.map((category) => (
               <motion.div
                 key={category.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="grid grid-cols-[1fr,80px,80px,80px,80px] gap-4 p-3 items-center hover:bg-muted/50 rounded-xl transition-all duration-200"
+                className="grid grid-cols-[1fr_80px_80px_80px_80px] gap-4 px-5 h-16 items-center border-b border-border/30 last:border-0 hover:bg-muted/20 transition-colors duration-150"
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-medium">{category.name}</span>
+                    <span className="text-sm font-medium">{category.name}</span>
                     {category.critical && (
-                      <Badge className="bg-destructive/10 text-destructive text-xs">Critical</Badge>
+                      <Badge className="bg-destructive/10 text-destructive text-[10px] px-2 py-0.5 rounded-full">Critical</Badge>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground">{category.description}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{category.description}</p>
                 </div>
                 <div className="flex justify-center">
-                  <Switch 
+                  <Switch
                     checked={category.email}
                     onCheckedChange={(checked) => handleCategoryToggle(category.id, 'email', checked)}
                     disabled={!channels.find(c => c.id === 'email')?.enabled}
                   />
                 </div>
                 <div className="flex justify-center">
-                  <Switch 
+                  <Switch
                     checked={category.inApp}
                     onCheckedChange={(checked) => handleCategoryToggle(category.id, 'inApp', checked)}
                     disabled={!channels.find(c => c.id === 'in-app')?.enabled}
                   />
                 </div>
                 <div className="flex justify-center">
-                  <Switch 
+                  <Switch
                     checked={category.sms}
                     onCheckedChange={(checked) => handleCategoryToggle(category.id, 'sms', checked)}
                     disabled={!channels.find(c => c.id === 'sms')?.enabled}
                   />
                 </div>
                 <div className="flex justify-center">
-                  <Switch 
+                  <Switch
                     checked={category.webhook}
                     onCheckedChange={(checked) => handleCategoryToggle(category.id, 'webhook', checked)}
                     disabled={!channels.find(c => c.id === 'webhook')?.enabled}
