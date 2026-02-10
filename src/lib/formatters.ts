@@ -39,7 +39,7 @@ const RISK_CLASSES: Record<string, string> = {
   MODERATE: 'text-blue-600',
   ELEVATED: 'text-amber-500',
   HIGH: 'text-orange-500',
-  CRITICAL: 'text-red-600',
+  CRITICAL: 'text-rose-600',
 };
 
 const RISK_BG_CLASSES: Record<string, string> = {
@@ -47,7 +47,7 @@ const RISK_BG_CLASSES: Record<string, string> = {
   MODERATE: 'bg-blue-100 text-blue-700 border-blue-200',
   ELEVATED: 'bg-amber-100 text-amber-700 border-amber-200',
   HIGH: 'bg-orange-100 text-orange-700 border-orange-200',
-  CRITICAL: 'bg-red-100 text-red-700 border-red-200',
+  CRITICAL: 'bg-rose-100 text-rose-700 border-rose-200',
 };
 
 /** Returns Tailwind text color class */
@@ -90,10 +90,10 @@ const STATUS_CLASSES: Record<string, string> = {
   review: 'text-amber-500',
   below_target: 'text-amber-500',
   below_benchmark: 'text-amber-500',
-  breach: 'text-red-600',
-  flag: 'text-red-600',
-  at_risk: 'text-red-600',
-  critical: 'text-red-600',
+  breach: 'text-rose-600',
+  flag: 'text-rose-600',
+  at_risk: 'text-rose-600',
+  critical: 'text-rose-600',
 };
 
 const STATUS_BG_CLASSES: Record<string, string> = {
@@ -106,10 +106,10 @@ const STATUS_BG_CLASSES: Record<string, string> = {
   review: 'bg-amber-100 text-amber-700',
   below_target: 'bg-amber-100 text-amber-700',
   below_benchmark: 'bg-amber-100 text-amber-700',
-  breach: 'bg-red-100 text-red-700',
-  flag: 'bg-red-100 text-red-700',
-  at_risk: 'bg-red-100 text-red-700',
-  critical: 'bg-red-100 text-red-700',
+  breach: 'bg-rose-100 text-rose-700',
+  flag: 'bg-rose-100 text-rose-700',
+  at_risk: 'bg-rose-100 text-rose-700',
+  critical: 'bg-rose-100 text-rose-700',
 };
 
 /** Returns Tailwind text color class */
@@ -146,7 +146,7 @@ export const getThresholdColorClass = (status: ThresholdStatus): string => {
   const map: Record<ThresholdStatus, string> = {
     ok: 'text-emerald-600',
     warning: 'text-amber-500',
-    danger: 'text-red-600',
+    danger: 'text-rose-600',
   };
   return map[status];
 };
@@ -166,7 +166,7 @@ export const getSLAIndicator = (status: string): { label: string; colorClass: st
   const map: Record<string, { label: string; colorClass: string }> = {
     ok: { label: 'On Track', colorClass: 'text-emerald-600' },
     warning: { label: 'At Risk', colorClass: 'text-amber-500' },
-    breach: { label: 'Breached', colorClass: 'text-red-600' },
+    breach: { label: 'Breached', colorClass: 'text-rose-600' },
   };
   return map[status] ?? { label: status, colorClass: 'text-gray-500' };
 };

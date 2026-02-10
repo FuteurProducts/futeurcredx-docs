@@ -76,9 +76,9 @@ export function ScoreDistribution() {
   }, []);
 
   return (
-    <div className="bg-card rounded-xl border border-border p-5">
+    <div className="bg-card rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6">
       <div className="mb-4">
-        <h3 className="text-lg font-bold text-foreground">
+        <h3 className="text-lg font-semibold text-foreground">
           Score Distribution
         </h3>
         <p className="text-sm text-muted-foreground">
@@ -141,21 +141,21 @@ export function ScoreDistribution() {
             key={tier.tier}
             onClick={() => handleBarClick(tier)}
             className={cn(
-              'text-center p-2 rounded-lg transition-colors',
-              'hover:bg-muted/50 cursor-pointer',
+              'text-center p-2 rounded-lg',
+              'hover:bg-muted/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer',
             )}
           >
             <div
               className="w-3 h-3 rounded-full mx-auto mb-1"
               style={{ backgroundColor: tier.fill }}
             />
-            <div className="text-[10px] text-muted-foreground font-medium">
+            <div className="text-xs text-muted-foreground font-medium">
               {tier.label}
             </div>
             <div className="text-xs font-semibold text-foreground">
               {formatCurrency(tier.exposure)}
             </div>
-            <div className="text-[10px] text-muted-foreground">
+            <div className="text-xs text-muted-foreground">
               {tier.percent.toFixed(0)}%
             </div>
           </button>

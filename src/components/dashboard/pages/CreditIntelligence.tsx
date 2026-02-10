@@ -48,7 +48,7 @@ const CreditIntelligence: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-8">
         {selectedSegmentId ? (
           /* Segment Drill-Down View */
           <SegmentDrillDown
@@ -63,7 +63,7 @@ const CreditIntelligence: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <h1 className="text-3xl font-bold text-foreground">
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">
                 Credit Intelligence
               </h1>
               <p className="text-base text-muted-foreground mt-2">

@@ -80,9 +80,9 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25, delay: index * 0.04 }}
       className={cn(
-        'bg-card rounded-xl border border-border p-4',
-        'hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200',
-        'flex flex-col justify-between',
+        'bg-card rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-5',
+        'hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-200',
+        'flex flex-col justify-between min-h-[200px] cursor-pointer',
       )}
     >
       {/* Header: Icon + Name + Status Badge */}
@@ -95,14 +95,14 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
             <h3 className="text-sm font-semibold text-foreground leading-tight">
               {segment.name}
             </h3>
-            <span className="text-[11px] text-muted-foreground">
+            <span className="text-xs text-muted-foreground">
               {formatNumber(segment.businessCount)} businesses
             </span>
           </div>
         </div>
         <span
           className={cn(
-            'inline-flex px-2 py-0.5 rounded-full text-[10px] font-medium border',
+            'inline-flex px-2 py-0.5 rounded-full text-xs font-semibold border',
             getStatusBadgeClass(segment.status),
           )}
         >
@@ -121,8 +121,8 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
       {/* Pre-Qual Progress Bar */}
       <div className="mb-3">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-[11px] text-muted-foreground">Pre-Qual</span>
-          <span className="text-[11px] font-semibold text-foreground">
+          <span className="text-xs text-muted-foreground">Pre-Qual</span>
+          <span className="text-xs font-semibold text-foreground">
             {formatPercent(segment.preQualRate, 0)}
           </span>
         </div>
@@ -146,7 +146,7 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
           High+Critical:{' '}
           <span className={cn(
             'font-semibold',
-            highRiskPct >= 20 ? 'text-red-600' : highRiskPct >= 10 ? 'text-amber-600' : 'text-foreground',
+            highRiskPct >= 20 ? 'text-rose-600' : highRiskPct >= 10 ? 'text-amber-600' : 'text-foreground',
           )}>
             {highRiskPct.toFixed(0)}%
           </span>
@@ -160,7 +160,7 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
           className={cn(
             'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg',
             'bg-primary/10 text-primary text-xs font-medium',
-            'hover:bg-primary/20 transition-colors',
+            'hover:bg-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200',
           )}
         >
           <Eye className="h-3.5 w-3.5" />
@@ -171,7 +171,7 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
           className={cn(
             'flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg',
             'bg-muted text-muted-foreground text-xs font-medium',
-            'hover:bg-muted/80 transition-colors',
+            'hover:bg-muted/80 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200',
           )}
         >
           <Megaphone className="h-3.5 w-3.5" />

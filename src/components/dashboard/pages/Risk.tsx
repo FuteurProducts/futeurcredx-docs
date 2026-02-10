@@ -80,7 +80,7 @@ const SORT_OPTIONS: { value: SortField; label: string }[] = [
 const COMPLIANCE_STATUS_ICON: Record<ComplianceStatus, React.ReactNode> = {
   ok: <CheckCircle2 className="h-4 w-4 text-emerald-500" />,
   review: <Eye className="h-4 w-4 text-amber-500" />,
-  flag: <Flag className="h-4 w-4 text-red-500" />,
+  flag: <Flag className="h-4 w-4 text-rose-500" />,
 };
 
 const staggerChild = {
@@ -151,7 +151,7 @@ function ConcentrationBar({
           className={cn('absolute inset-y-0 left-0 rounded-full', getThresholdBgClass(barStatus))}
         />
       </div>
-      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span>{fillPercent.toFixed(0)}% of limit</span>
       </div>
     </motion.div>
@@ -175,20 +175,20 @@ function ConcentrationPanel({
   const allWithinLimits = entries.every(e => e.percent < limit);
 
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-border/60">
         <div className="flex items-center gap-2.5">
           {icon}
           <h3 className="text-sm font-semibold text-foreground">{title}</h3>
         </div>
         <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-md border border-border bg-muted/60 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+          <span className="inline-flex items-center rounded-md border border-border/60 bg-muted/60 px-2 py-0.5 text-xs font-medium text-muted-foreground">
             Limit {formatPercent(limit, 0)}
           </span>
           <button
             onClick={onEditThresholds}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-all duration-200"
             aria-label="Edit thresholds"
           >
             <Settings className="h-4 w-4" />
@@ -197,21 +197,21 @@ function ConcentrationPanel({
       </div>
 
       {/* Bars */}
-      <div className="px-5 py-4 space-y-4">
+      <div className="px-6 py-4 space-y-3">
         {entries.map((entry, i) => (
           <ConcentrationBar key={entry.name} entry={entry} limit={limit} index={i} />
         ))}
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-3 bg-muted/30 border-t border-border">
+      <div className="px-6 py-3 bg-muted/30 border-t border-border/60">
         {allWithinLimits ? (
           <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-medium">
             <CheckCircle2 className="h-3.5 w-3.5" />
             All within limits
           </div>
         ) : (
-          <div className="flex items-center gap-1.5 text-xs text-red-600 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-rose-600 font-medium">
             <AlertTriangle className="h-3.5 w-3.5" />
             Limit breach detected
           </div>
@@ -234,11 +234,11 @@ function EWSClusterCard({
   onAction: (cluster: EWSCluster, action: string) => void;
 }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 cursor-pointer transition-all duration-200 overflow-hidden">
       {/* Clickable header */}
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-all duration-200"
       >
         <div className="flex items-center gap-3 min-w-0">
           {/* Severity dot */}
@@ -255,7 +255,7 @@ function EWSClusterCard({
               </h4>
               <span
                 className={cn(
-                  'inline-flex items-center rounded-md border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
+                  'inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs font-semibold uppercase tracking-wider',
                   getSeverityBadgeClass(cluster.severity),
                 )}
               >
@@ -286,18 +286,18 @@ function EWSClusterCard({
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="px-5 pb-4 space-y-3 border-t border-border pt-3">
+            <div className="px-5 pb-4 space-y-3 border-t border-border/60 pt-3">
               {/* Heaviest segments */}
               {cluster.heaviestSegments.length > 0 && (
                 <div>
-                  <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Heaviest Segments
                   </span>
                   <div className="flex flex-wrap gap-2 mt-1.5">
                     {cluster.heaviestSegments.map((seg) => (
                       <span
                         key={seg.segment}
-                        className="inline-flex items-center gap-1 rounded-md bg-muted/60 border border-border px-2 py-1 text-xs text-foreground"
+                        className="inline-flex items-center gap-1 rounded-md bg-muted/60 border border-border/60 px-2 py-1 text-xs text-foreground"
                       >
                         {seg.segment}
                         <span className="text-muted-foreground font-medium">({formatNumber(seg.count)})</span>
@@ -317,8 +317,8 @@ function EWSClusterCard({
                       onAction(cluster, action);
                     }}
                     className={cn(
-                      'inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
-                      'border border-border bg-background hover:bg-muted text-foreground',
+                      'inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all duration-200',
+                      'border border-border/60 bg-background hover:bg-muted text-foreground',
                     )}
                   >
                     {action === 'View Segment' && <Eye className="h-3 w-3" />}
@@ -344,8 +344,8 @@ function ComplianceTable({
   onRowClick: (segment: string) => void;
 }) {
   return (
-    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-      <div className="flex items-center gap-2.5 px-5 py-4 border-b border-border">
+    <div className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
+      <div className="flex items-center gap-2.5 px-6 py-4 border-b border-border/60">
         <Shield className="h-5 w-5 text-muted-foreground" />
         <h3 className="text-sm font-semibold text-foreground">Compliance / Fair Lending</h3>
       </div>
@@ -354,13 +354,13 @@ function ComplianceTable({
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-muted/30">
-              <th className="text-left px-5 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Segment</th>
-              <th className="text-right px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Applications</th>
-              <th className="text-right px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Approved</th>
-              <th className="text-right px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Rate</th>
-              <th className="text-right px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Variance</th>
-              <th className="text-center px-4 py-2.5 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Status</th>
+            <tr className="border-b border-border/60 bg-muted/30">
+              <th className="text-left px-5 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Segment</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Applications</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Approved</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Rate</th>
+              <th className="text-right px-4 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Variance</th>
+              <th className="text-center px-4 py-2.5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -369,8 +369,8 @@ function ComplianceTable({
                 key={row.segment}
                 onClick={() => onRowClick(row.segment)}
                 className={cn(
-                  'border-b border-border last:border-b-0 cursor-pointer transition-colors hover:bg-muted/30',
-                  row.status === 'flag' && 'bg-red-50/50 dark:bg-red-950/10',
+                  'border-b border-border/60 last:border-b-0 cursor-pointer transition-all duration-200 hover:bg-muted/30',
+                  row.status === 'flag' && 'bg-rose-50/50 dark:bg-rose-950/10',
                   row.status === 'review' && 'bg-amber-50/50 dark:bg-amber-950/10',
                 )}
               >
@@ -394,7 +394,7 @@ function ComplianceTable({
                     className={cn(
                       'font-semibold',
                       row.variance > 0 && 'text-emerald-600',
-                      row.variance < -0.04 && 'text-red-600',
+                      row.variance < -0.04 && 'text-rose-600',
                       row.variance >= -0.04 && row.variance <= 0 && 'text-amber-600',
                     )}
                   >
@@ -404,10 +404,10 @@ function ComplianceTable({
                 <td className="text-center px-4 py-3">
                   <span
                     className={cn(
-                      'inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider',
+                      'inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-semibold uppercase tracking-wider',
                       row.status === 'ok' && 'bg-emerald-100 text-emerald-700 border-emerald-200',
                       row.status === 'review' && 'bg-amber-100 text-amber-700 border-amber-200',
-                      row.status === 'flag' && 'bg-red-100 text-red-700 border-red-200',
+                      row.status === 'flag' && 'bg-rose-100 text-rose-700 border-rose-200',
                     )}
                   >
                     {row.status}
@@ -420,7 +420,7 @@ function ComplianceTable({
       </div>
 
       {/* Footer */}
-      <div className="px-5 py-3 bg-muted/30 border-t border-border flex flex-wrap items-center gap-4 text-xs">
+      <div className="px-6 py-3 bg-muted/30 border-t border-border/60 flex flex-wrap items-center gap-4 text-xs">
         <span className="text-muted-foreground">
           Portfolio approval rate:{' '}
           <span className="font-semibold text-foreground">
@@ -542,7 +542,7 @@ const Risk: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6 pb-8">
+    <div className="space-y-8 pb-8">
       {/* ── Header ──────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -689,15 +689,15 @@ const Risk: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, delay: 0.2 }}
       >
-        <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
           {/* Section header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-border/60">
             <div className="flex items-center gap-2.5">
               <AlertTriangle className="h-5 w-5 text-muted-foreground" />
               <h3 className="text-sm font-semibold text-foreground">
                 Early Warning System — Alert Clusters
               </h3>
-              <span className="inline-flex items-center rounded-md bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold">
+              <span className="inline-flex items-center rounded-md bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 text-xs font-semibold">
                 {EWS_CLUSTERS.reduce((sum, c) => sum + c.businessCount, 0).toLocaleString()} total
               </span>
             </div>
@@ -708,7 +708,7 @@ const Risk: React.FC = () => {
               <select
                 value={ewsSortField}
                 onChange={(e) => setEwsSortField(e.target.value as SortField)}
-                className="text-xs border border-border rounded-md bg-background px-2 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+                className="text-xs border border-border/60 rounded-md bg-background px-2 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all duration-200"
               >
                 {SORT_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -720,7 +720,7 @@ const Risk: React.FC = () => {
           </div>
 
           {/* Cluster cards */}
-          <div className="p-4 space-y-3">
+          <div className="p-6 space-y-3">
             {sortedClusters.map((cluster) => (
               <EWSClusterCard
                 key={cluster.id}

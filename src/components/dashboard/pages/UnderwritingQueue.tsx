@@ -111,7 +111,7 @@ const UnderwritingQueue: React.FC = () => {
 
   const SortHeader: React.FC<{ field: SortField; label: string; className?: string }> = ({ field, label, className }) => (
     <th
-      className={cn('px-4 py-3 text-left text-[10px] font-semibold text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-colors select-none', className)}
+      className={cn('px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-all duration-200 select-none', className)}
       onClick={() => handleSort(field)}
     >
       <div className="flex items-center gap-1">
@@ -127,24 +127,24 @@ const UnderwritingQueue: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-8">
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Underwriting Queue</h1>
             <p className="text-sm text-muted-foreground">Decision queue management and compliance</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setShowRules(r => !r)}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all duration-200"
             >
               <Shield className="h-3.5 w-3.5" />
               {showRules ? 'Hide' : 'Show'} Rules
             </button>
             <button
               onClick={() => toast({ title: 'Queue exported', description: `${sortedQueue.length} applications exported to CSV` })}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all duration-200"
             >
               <Download className="h-3.5 w-3.5" />
               Export
@@ -153,7 +153,7 @@ const UnderwritingQueue: React.FC = () => {
         </div>
 
         {/* KPI Row */}
-        <div className="grid grid-cols-6 gap-4 lg:grid-cols-6 md:grid-cols-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <KPICard
             label="Queue Depth"
             value={kpis.queueDepth}
@@ -208,15 +208,15 @@ const UnderwritingQueue: React.FC = () => {
         {/* Rules Panel (collapsible) */}
         {showRules && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="overflow-hidden">
-            <div className="bg-card rounded-xl border border-border p-5">
+            <div className="bg-card rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-muted-foreground" />
-                  <h3 className="text-sm font-semibold text-foreground">Underwriting Rules (Active)</h3>
+                  <h3 className="text-lg font-semibold text-foreground">Underwriting Rules (Active)</h3>
                 </div>
                 <button
                   onClick={() => toast({ title: 'Rule Editor', description: 'Rule management — coming in next release' })}
-                  className="text-xs text-primary hover:underline"
+                  className="text-xs text-primary hover:underline transition-all duration-200"
                 >
                   Edit Rules
                 </button>
@@ -224,8 +224,8 @@ const UnderwritingQueue: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-6">
                 {/* Auto-Approve */}
-                <div>
-                  <h4 className="text-xs font-medium text-emerald-700 mb-2 flex items-center gap-1">
+                <div className="rounded-xl border border-border/60 p-4">
+                  <h4 className="text-xs font-semibold text-emerald-700 uppercase tracking-wider mb-2 flex items-center gap-1">
                     <CheckCircle2 className="h-3 w-3" /> AUTO-APPROVE when ALL met:
                   </h4>
                   <ul className="space-y-1.5">
@@ -239,14 +239,14 @@ const UnderwritingQueue: React.FC = () => {
                 </div>
 
                 {/* Auto-Decline */}
-                <div>
-                  <h4 className="text-xs font-medium text-red-700 mb-2 flex items-center gap-1">
+                <div className="rounded-xl border border-border/60 p-4">
+                  <h4 className="text-xs font-semibold text-rose-700 uppercase tracking-wider mb-2 flex items-center gap-1">
                     <XCircle className="h-3 w-3" /> AUTO-DECLINE when ANY met:
                   </h4>
                   <ul className="space-y-1.5">
                     {UNDERWRITING.rules.autoDecline.map((rule, i) => (
                       <li key={i} className="flex items-center gap-2 text-xs text-foreground">
-                        <XCircle className="h-3 w-3 text-red-500 shrink-0" />
+                        <XCircle className="h-3 w-3 text-rose-500 shrink-0" />
                         {rule}
                       </li>
                     ))}
@@ -254,8 +254,8 @@ const UnderwritingQueue: React.FC = () => {
                 </div>
 
                 {/* Manual Review */}
-                <div>
-                  <h4 className="text-xs font-medium text-amber-700 mb-2 flex items-center gap-1">
+                <div className="rounded-xl border border-border/60 p-4">
+                  <h4 className="text-xs font-semibold text-amber-700 uppercase tracking-wider mb-2 flex items-center gap-1">
                     <AlertTriangle className="h-3 w-3" /> MANUAL REVIEW:
                   </h4>
                   <p className="text-xs text-muted-foreground">
@@ -268,7 +268,7 @@ const UnderwritingQueue: React.FC = () => {
         )}
 
         {/* Filters + Bulk Actions Bar */}
-        <div className="bg-card rounded-xl border border-border p-4">
+        <div className="bg-card rounded-2xl border border-border/60 p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div className="flex items-center gap-3">
               {/* Selection */}
@@ -287,7 +287,7 @@ const UnderwritingQueue: React.FC = () => {
                   )}
                 </span>
                 {selectedIds.size > 0 && (
-                  <button onClick={() => setSelectedIds(new Set())} className="text-xs text-primary hover:underline">Clear</button>
+                  <button onClick={() => setSelectedIds(new Set())} className="text-xs text-primary hover:underline transition-all duration-200">Clear</button>
                 )}
               </div>
 
@@ -320,7 +320,7 @@ const UnderwritingQueue: React.FC = () => {
                 {(filterProduct !== 'all' || filterRisk !== 'all') && (
                   <button
                     onClick={() => { setFilterProduct('all'); setFilterRisk('all'); }}
-                    className="text-xs text-primary hover:underline flex items-center gap-0.5"
+                    className="text-xs text-primary hover:underline flex items-center gap-0.5 transition-all duration-200"
                   >
                     <X className="h-3 w-3" /> Clear
                   </button>
@@ -330,28 +330,28 @@ const UnderwritingQueue: React.FC = () => {
 
             {/* Bulk Action Buttons */}
             {selectedIds.size > 0 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-2">
+              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-3">
                 <button
                   onClick={() => handleBulkAction('Approved')}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all duration-200"
                 >
                   <CheckCircle2 className="h-3 w-3" /> Approve
                 </button>
                 <button
                   onClick={() => handleBulkAction('Declined')}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-red-600 text-white hover:bg-red-700 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 transition-all duration-200"
                 >
                   <XCircle className="h-3 w-3" /> Decline
                 </button>
                 <button
                   onClick={() => handleBulkAction('Sent for review')}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-colors"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
                 >
                   <AlertTriangle className="h-3 w-3" /> Request Info
                 </button>
                 <button
                   onClick={() => handleBulkAction('Escalated')}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-colors"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
                 >
                   <Users className="h-3 w-3" /> Escalate
                 </button>
@@ -361,7 +361,7 @@ const UnderwritingQueue: React.FC = () => {
         </div>
 
         {/* Queue Table */}
-        <div className="bg-card rounded-xl border border-border overflow-hidden">
+        <div className="bg-card rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-muted/50 border-b border-border">
@@ -388,9 +388,9 @@ const UnderwritingQueue: React.FC = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: index * 0.03 }}
                       className={cn(
-                        'hover:bg-muted/50 cursor-pointer transition-colors',
+                        'hover:bg-muted/50 cursor-pointer transition-colors duration-150',
                         isSelected && 'bg-primary/5',
-                        item.slaStatus === 'breach' && 'bg-red-50/50 dark:bg-red-950/20',
+                        item.slaStatus === 'breach' && 'bg-rose-50/50 dark:bg-rose-950/20',
                       )}
                       onClick={() => setDetailItem(item)}
                     >
@@ -403,11 +403,11 @@ const UnderwritingQueue: React.FC = () => {
                         />
                       </td>
                       <td className="px-4 py-3">
-                        <div className="font-medium text-sm text-foreground">{item.business}</div>
-                        <div className="text-[10px] text-muted-foreground font-mono">{item.id.toUpperCase()}</div>
+                        <div className="font-semibold text-sm text-foreground">{item.business}</div>
+                        <div className="text-xs text-muted-foreground font-mono">{item.id.toUpperCase()}</div>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-muted text-foreground">
+                        <span className="px-2 py-0.5 rounded text-xs font-semibold bg-muted text-foreground">
                           {item.product}
                         </span>
                       </td>
@@ -417,13 +417,13 @@ const UnderwritingQueue: React.FC = () => {
                       <td className="px-4 py-3">
                         <span className={cn(
                           'text-sm font-semibold',
-                          item.score >= 70 ? 'text-emerald-600' : item.score >= 50 ? 'text-foreground' : 'text-red-600',
+                          item.score >= 70 ? 'text-emerald-600' : item.score >= 50 ? 'text-foreground' : 'text-rose-600',
                         )}>
                           {item.score}
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <span className={cn('px-2 py-0.5 rounded text-[10px] font-medium border', getRiskBadgeClass(item.risk))}>
+                        <span className={cn('px-2 py-0.5 rounded text-xs font-semibold border', getRiskBadgeClass(item.risk))}>
                           {item.risk}
                         </span>
                       </td>
@@ -451,7 +451,7 @@ const UnderwritingQueue: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-card rounded-xl border border-border p-5"
+            className="bg-card rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
           >
             <div className="flex items-start justify-between mb-4">
               <div>
@@ -462,7 +462,7 @@ const UnderwritingQueue: React.FC = () => {
               </div>
               <button
                 onClick={() => setDetailItem(null)}
-                className="p-1 hover:bg-muted rounded transition-colors"
+                className="p-1 hover:bg-muted rounded transition-all duration-200"
               >
                 <X className="h-4 w-4 text-muted-foreground" />
               </button>
@@ -470,49 +470,49 @@ const UnderwritingQueue: React.FC = () => {
 
             <div className="grid grid-cols-4 gap-4 mb-4">
               <div className="p-3 bg-muted rounded-lg">
-                <div className="text-[10px] text-muted-foreground uppercase">Risk Tier</div>
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Risk Tier</div>
                 <div className={cn('text-sm font-semibold mt-1', getRiskBadgeClass(detailItem.risk).split(' ')[1])}>
                   {detailItem.risk}
                 </div>
               </div>
               <div className="p-3 bg-muted rounded-lg">
-                <div className="text-[10px] text-muted-foreground uppercase">Time in Queue</div>
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Time in Queue</div>
                 <div className="text-sm font-semibold text-foreground mt-1">{detailItem.timeInQueue.toFixed(1)} hours</div>
               </div>
               <div className="p-3 bg-muted rounded-lg">
-                <div className="text-[10px] text-muted-foreground uppercase">SLA Status</div>
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">SLA Status</div>
                 <div className={cn('text-sm font-semibold mt-1', getSLAIndicator(detailItem.slaStatus).colorClass)}>
                   {getSLAIndicator(detailItem.slaStatus).label}
                 </div>
               </div>
               <div className="p-3 bg-muted rounded-lg">
-                <div className="text-[10px] text-muted-foreground uppercase">Composite Score</div>
+                <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Composite Score</div>
                 <div className="text-sm font-semibold text-foreground mt-1">{detailItem.score}/100</div>
               </div>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <button
                 onClick={() => { toast({ title: 'Application approved', description: detailItem.business }); setDetailItem(null); }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-all duration-200"
               >
                 <CheckCircle2 className="h-3.5 w-3.5" /> Approve
               </button>
               <button
                 onClick={() => { toast({ title: 'Application declined', description: detailItem.business }); setDetailItem(null); }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-red-300 text-red-700 hover:bg-red-50 transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-rose-600 text-white hover:bg-rose-700 transition-all duration-200"
               >
                 <XCircle className="h-3.5 w-3.5" /> Decline
               </button>
               <button
                 onClick={() => { toast({ title: 'Sent for additional review', description: detailItem.business }); }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
               >
                 <FileText className="h-3.5 w-3.5" /> Request Info
               </button>
               <button
                 onClick={() => { toast({ title: 'Escalated to committee', description: detailItem.business }); }}
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-amber-300 text-amber-700 hover:bg-amber-50 transition-colors"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold border border-border hover:bg-muted transition-all duration-200"
               >
                 <AlertTriangle className="h-3.5 w-3.5" /> Escalate
               </button>
@@ -521,15 +521,15 @@ const UnderwritingQueue: React.FC = () => {
         )}
 
         {/* Compliance Section */}
-        <div className="bg-card rounded-xl border border-border p-5">
+        <div className="bg-card rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-foreground">Approval Variance by Segment (Fair Lending)</h3>
-            <div className="flex items-center gap-3 text-[10px]">
+            <h3 className="text-lg font-semibold text-foreground">Approval Variance by Segment (Fair Lending)</h3>
+            <div className="flex items-center gap-3 text-xs">
               <span className="text-muted-foreground">Portfolio Rate: {formatPercent(COMPLIANCE.portfolioApprovalRate)}</span>
               <span className="text-muted-foreground">Adverse Actions: {formatNumber(COMPLIANCE.adverseActionsSent)}</span>
               <span className={cn(
-                'px-2 py-0.5 rounded-full font-medium',
-                COMPLIANCE.fairLendingStatus === 'pass' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700',
+                'px-2 py-0.5 rounded-full font-semibold',
+                COMPLIANCE.fairLendingStatus === 'pass' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700',
               )}>
                 Fair Lending: {COMPLIANCE.fairLendingStatus.toUpperCase()}
               </span>
@@ -540,35 +540,35 @@ const UnderwritingQueue: React.FC = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="px-4 py-2 text-left text-[10px] font-semibold text-muted-foreground uppercase">Segment</th>
-                  <th className="px-4 py-2 text-right text-[10px] font-semibold text-muted-foreground uppercase">Applications</th>
-                  <th className="px-4 py-2 text-right text-[10px] font-semibold text-muted-foreground uppercase">Approved</th>
-                  <th className="px-4 py-2 text-right text-[10px] font-semibold text-muted-foreground uppercase">Rate</th>
-                  <th className="px-4 py-2 text-right text-[10px] font-semibold text-muted-foreground uppercase">Variance</th>
-                  <th className="px-4 py-2 text-center text-[10px] font-semibold text-muted-foreground uppercase">Status</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Segment</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Applications</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Approved</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Rate</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Variance</th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
                 {COMPLIANCE.approvalVariance.map(row => (
                   <tr key={row.segment} className={cn(
-                    'hover:bg-muted/50 transition-colors',
-                    row.status === 'flag' && 'bg-red-50/50 dark:bg-red-950/20',
+                    'hover:bg-muted/50 transition-colors duration-150',
+                    row.status === 'flag' && 'bg-rose-50/50 dark:bg-rose-950/20',
                     row.status === 'review' && 'bg-amber-50/50 dark:bg-amber-950/20',
                   )}>
-                    <td className="px-4 py-2.5 text-sm text-foreground">{row.segment}</td>
-                    <td className="px-4 py-2.5 text-sm text-right text-foreground tabular-nums">{formatNumber(row.applications)}</td>
-                    <td className="px-4 py-2.5 text-sm text-right text-foreground tabular-nums">{formatNumber(row.approved)}</td>
-                    <td className="px-4 py-2.5 text-sm text-right text-foreground tabular-nums">{formatPercent(row.rate)}</td>
+                    <td className="px-4 py-3 text-sm text-foreground">{row.segment}</td>
+                    <td className="px-4 py-3 text-sm text-right text-foreground tabular-nums">{formatNumber(row.applications)}</td>
+                    <td className="px-4 py-3 text-sm text-right text-foreground tabular-nums">{formatNumber(row.approved)}</td>
+                    <td className="px-4 py-3 text-sm text-right text-foreground tabular-nums">{formatPercent(row.rate)}</td>
                     <td className={cn(
-                      'px-4 py-2.5 text-sm text-right font-medium tabular-nums',
-                      row.variance > 0 ? 'text-emerald-600' : row.variance < -0.05 ? 'text-red-600' : 'text-foreground',
+                      'px-4 py-3 text-sm text-right font-medium tabular-nums',
+                      row.variance > 0 ? 'text-emerald-600' : row.variance < -0.05 ? 'text-rose-600' : 'text-foreground',
                     )}>
                       {row.variance > 0 ? '+' : ''}{formatPercent(row.variance)}
                     </td>
-                    <td className="px-4 py-2.5 text-center">
+                    <td className="px-4 py-3 text-center">
                       {row.status === 'ok' && <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto" />}
                       {row.status === 'review' && <AlertTriangle className="h-4 w-4 text-amber-500 mx-auto" />}
-                      {row.status === 'flag' && <XCircle className="h-4 w-4 text-red-500 mx-auto" />}
+                      {row.status === 'flag' && <XCircle className="h-4 w-4 text-rose-500 mx-auto" />}
                     </td>
                   </tr>
                 ))}
@@ -576,7 +576,7 @@ const UnderwritingQueue: React.FC = () => {
             </table>
           </div>
 
-          <div className="mt-3 text-[10px] text-muted-foreground italic">
+          <div className="mt-3 text-xs text-muted-foreground italic">
             Reg B / ECOA compliance monitoring. Variance exceeding ±5% triggers review; ±10% triggers investigation.
           </div>
         </div>

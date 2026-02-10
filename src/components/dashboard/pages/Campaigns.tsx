@@ -77,11 +77,11 @@ const FunnelStage: React.FC<FunnelStageProps> = ({
 }) => (
   <div className="flex items-center gap-2 flex-1 min-w-0">
     <div className="flex-1 min-w-0">
-      <div className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
         {label}
       </div>
       <div
-        className="bg-primary/15 rounded-md px-3 py-2 transition-all duration-300"
+        className="bg-primary/15 rounded-xl px-3 py-2 transition-all duration-300"
         style={{ width: `${Math.max(widthPercent, 30)}%` }}
       >
         <div className="text-base font-bold text-foreground tabular-nums">
@@ -139,7 +139,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-card rounded-xl border border-border p-5 space-y-4"
+      className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)] p-6 space-y-4 transition-all duration-200"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
@@ -149,12 +149,12 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-base font-semibold text-foreground truncate">
+              <h3 className="text-base font-bold text-foreground truncate">
                 {campaign.name}
               </h3>
               <span
                 className={cn(
-                  'inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wide',
+                  'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider',
                   getStatusBadgeClass(campaign.health),
                 )}
               >
@@ -219,7 +219,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
 
       {/* Warning callout */}
       {campaign.warning && (
-        <div className="flex items-start gap-2 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 px-3 py-2.5">
+        <div className="flex items-start gap-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800 p-4">
           <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
           <span className="text-sm text-amber-700 dark:text-amber-400">
             {campaign.warning}
@@ -233,6 +233,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           variant="outline"
           size="sm"
           onClick={() => onAction('view', campaign.name)}
+          className="transition-all duration-200 hover:scale-[1.02]"
         >
           <Eye className="h-3.5 w-3.5" />
           View Details
@@ -241,6 +242,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           variant="ghost"
           size="sm"
           onClick={() => onAction('pause', campaign.name)}
+          className="transition-all duration-200"
         >
           <Pause className="h-3.5 w-3.5" />
           Pause
@@ -249,6 +251,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           variant="ghost"
           size="sm"
           onClick={() => onAction('extend', campaign.name)}
+          className="transition-all duration-200"
         >
           <ArrowRight className="h-3.5 w-3.5" />
           Extend
@@ -257,6 +260,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ campaign, onAction }) => {
           variant="ghost"
           size="sm"
           onClick={() => onAction('clone', campaign.name)}
+          className="transition-all duration-200"
         >
           <Copy className="h-3.5 w-3.5" />
           Clone
@@ -276,7 +280,7 @@ interface MiniBarProps {
 const MiniBar: React.FC<MiniBarProps> = ({ value, status = 'ok' }) => {
   const barColor =
     status === 'at_risk'
-      ? 'bg-red-500'
+      ? 'bg-rose-500'
       : status === 'warning'
         ? 'bg-amber-500'
         : 'bg-emerald-500';
@@ -381,7 +385,7 @@ const Campaigns: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 lg:p-6 space-y-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -409,7 +413,7 @@ const Campaigns: React.FC = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.05 }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
         >
           <KPICard
             label="Active Campaigns"
@@ -464,9 +468,9 @@ const Campaigns: React.FC = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.1 }}
-          className="space-y-4"
+          className="space-y-6"
         >
-          <h2 className="text-lg font-semibold text-foreground">
+          <h2 className="text-lg font-semibold text-foreground mb-6">
             Active Campaigns
           </h2>
           {CAMPAIGNS.map((campaign) => (
@@ -483,9 +487,9 @@ const Campaigns: React.FC = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.15 }}
-          className="bg-card rounded-xl border border-border"
+          className="rounded-2xl border border-border/60 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
         >
-          <div className="flex items-center justify-between p-5 pb-0">
+          <div className="flex items-center justify-between p-6 pb-0">
             <h2 className="text-lg font-semibold text-foreground">
               Segment Conversion Comparison
             </h2>
@@ -495,23 +499,23 @@ const Campaigns: React.FC = () => {
             </Button>
           </div>
 
-          <div className="overflow-x-auto p-5">
+          <div className="overflow-x-auto p-6">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-3 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <th className="text-left py-3 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Segment
                   </th>
-                  <th className="text-left py-3 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide w-36">
+                  <th className="text-left py-3 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider w-36">
                     View Rate
                   </th>
-                  <th className="text-left py-3 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide w-36">
+                  <th className="text-left py-3 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider w-36">
                     Apply Rate
                   </th>
-                  <th className="text-left py-3 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide w-36">
+                  <th className="text-left py-3 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider w-36">
                     Approval Rate
                   </th>
-                  <th className="text-left py-3 px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide w-36">
+                  <th className="text-left py-3 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider w-36">
                     End-to-End
                   </th>
                 </tr>
@@ -529,7 +533,7 @@ const Campaigns: React.FC = () => {
                     <tr
                       key={row.segment}
                       onClick={() => handleSegmentRowClick(row.segment)}
-                      className="border-b border-border/50 last:border-0 cursor-pointer hover:bg-muted/30 transition-colors"
+                      className="border-b border-border/50 last:border-0 cursor-pointer hover:bg-muted/50 transition-colors duration-150"
                     >
                       <td className="py-3 px-3 font-medium text-foreground">
                         {row.segment}
@@ -561,7 +565,7 @@ const Campaigns: React.FC = () => {
           </div>
 
           {/* Insight callout */}
-          <div className="mx-5 mb-5 flex items-start gap-2 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 px-3 py-2.5">
+          <div className="mx-6 mb-6 flex items-start gap-2 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800 p-4">
             <AlertTriangle className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
             <span className="text-sm text-amber-700 dark:text-amber-400">
               Construction and Food Service underperforming -- consider A/B test

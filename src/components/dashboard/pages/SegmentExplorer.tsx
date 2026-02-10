@@ -90,10 +90,10 @@ const FilterChip: React.FC<FilterChipProps> = ({ label, selected, onClick }) => 
     type="button"
     onClick={onClick}
     className={cn(
-      'px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors',
+      'px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 hover:scale-[1.02]',
       selected
         ? 'bg-primary text-primary-foreground border-primary'
-        : 'bg-card text-muted-foreground border-border hover:border-primary/50',
+        : 'bg-muted text-muted-foreground border-border/60',
     )}
   >
     {label}
@@ -618,7 +618,7 @@ const SegmentExplorer: React.FC = () => {
   // ── Render ───────────────────────────────────────────────────
 
   return (
-    <div className="flex flex-col gap-6 p-4 lg:p-6">
+    <div className="flex flex-col space-y-8 p-4 lg:p-6">
       {/* ── Page Header ─────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -644,12 +644,12 @@ const SegmentExplorer: React.FC = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.05 }}
-        className="bg-card rounded-xl border border-border p-5 space-y-5"
+        className="rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-6"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+            <h2 className="text-lg font-semibold text-foreground">
               Segment Builder
             </h2>
           </div>
@@ -657,7 +657,7 @@ const SegmentExplorer: React.FC = () => {
             <button
               type="button"
               onClick={handleClearFilters}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-all duration-200"
             >
               <X className="h-3 w-3" />
               Clear all filters
@@ -666,13 +666,13 @@ const SegmentExplorer: React.FC = () => {
         </div>
 
         {/* Row 1: Multi-select filter chips */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {/* Industry */}
           <div className="space-y-2">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Industry
             </h4>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {FILTER_OPTIONS.industries.map((industry) => (
                 <FilterChip
                   key={industry}
@@ -686,10 +686,10 @@ const SegmentExplorer: React.FC = () => {
 
           {/* Geography */}
           <div className="space-y-2">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Geography
             </h4>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {FILTER_OPTIONS.states.map((state) => (
                 <FilterChip
                   key={state}
@@ -703,10 +703,10 @@ const SegmentExplorer: React.FC = () => {
 
           {/* Risk Tier */}
           <div className="space-y-2">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Risk Tier
             </h4>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {FILTER_OPTIONS.riskTiers.map((risk) => (
                 <FilterChip
                   key={risk}
@@ -720,10 +720,10 @@ const SegmentExplorer: React.FC = () => {
 
           {/* Product */}
           <div className="space-y-2">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Product
             </h4>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {FILTER_OPTIONS.products.map((product) => (
                 <FilterChip
                   key={product}
@@ -738,8 +738,8 @@ const SegmentExplorer: React.FC = () => {
 
         {/* Row 2: Range sliders */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-1">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <div className="space-y-3">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Score Range
             </h4>
             <DualRange
@@ -751,8 +751,8 @@ const SegmentExplorer: React.FC = () => {
               step={1}
             />
           </div>
-          <div className="space-y-1">
-            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+          <div className="space-y-3">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Revenue Range
             </h4>
             <DualRange
@@ -767,18 +767,24 @@ const SegmentExplorer: React.FC = () => {
         </div>
 
         {/* Matching count bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2 border-t border-border">
-          <div className="flex items-center gap-2">
-            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-semibold text-foreground">
-              MATCHING:{' '}
-              <span className="tabular-nums">{formatNumber(animatedBizCount)}</span>{' '}
-              businesses{' '}
-              <span className="text-muted-foreground font-normal">
-                · {formatCurrency(animatedExposure)} exposure ·{' '}
-                {formatPercent(matching.preQualRate)} pre-qual rate
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-border/60">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Matching Businesses
               </span>
-            </span>
+            </div>
+            <div className="flex items-baseline gap-3">
+              <span className="text-3xl font-bold tracking-tight text-foreground tabular-nums">
+                {formatNumber(animatedBizCount)}
+              </span>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <span>{formatCurrency(animatedExposure)} exposure</span>
+                <span>·</span>
+                <span>{formatPercent(matching.preQualRate)} pre-qual rate</span>
+              </div>
+            </div>
           </div>
 
           {/* Action buttons */}
@@ -808,12 +814,12 @@ const SegmentExplorer: React.FC = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="bg-card rounded-xl border border-border p-5 space-y-4"
+        className="rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Bookmark className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+            <h2 className="text-lg font-semibold text-foreground">
               Saved Segments
             </h2>
             <span className="text-xs text-muted-foreground">({savedSegments.length})</span>
@@ -836,20 +842,20 @@ const SegmentExplorer: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-2 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                <tr className="border-b border-border/60">
+                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Name
                   </th>
-                  <th className="text-right py-2 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Businesses
                   </th>
-                  <th className="text-right py-2 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Exposure
                   </th>
-                  <th className="text-left py-2 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <th className="text-left py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Created
                   </th>
-                  <th className="text-right py-2 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  <th className="text-right py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider">
                     Action
                   </th>
                 </tr>
@@ -858,30 +864,30 @@ const SegmentExplorer: React.FC = () => {
                 {savedSegments.map((segment) => (
                   <tr
                     key={segment.id}
-                    className="border-b border-border/50 last:border-0 group hover:bg-muted/50 transition-colors"
+                    className="border-b border-border/50 last:border-0 group hover:bg-muted/50 transition-colors duration-150"
                   >
-                    <td className="py-2.5 px-3 font-medium text-foreground">
+                    <td className="py-3 px-4 font-medium text-foreground">
                       {segment.name}
                     </td>
-                    <td className="py-2.5 px-3 text-right tabular-nums text-muted-foreground">
+                    <td className="py-3 px-4 text-right tabular-nums text-muted-foreground">
                       {formatNumber(segment.businessCount)}
                     </td>
-                    <td className="py-2.5 px-3 text-right tabular-nums text-muted-foreground">
+                    <td className="py-3 px-4 text-right tabular-nums text-muted-foreground">
                       {formatCurrency(segment.exposure)}
                     </td>
-                    <td className="py-2.5 px-3 text-muted-foreground">
+                    <td className="py-3 px-4 text-muted-foreground">
                       {new Date(segment.createdAt).toLocaleDateString('en-US', {
                         month: 'short',
                         day: 'numeric',
                       })}
                     </td>
-                    <td className="py-2.5 px-3 text-right">
+                    <td className="py-3 px-4 text-right">
                       <div className="flex items-center justify-end gap-1">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleLoadSegment(segment)}
-                          className="h-7 px-2.5 text-xs"
+                          className="h-7 px-2.5 text-xs transition-all duration-200"
                         >
                           <Upload className="h-3 w-3" />
                           Load
@@ -889,7 +895,7 @@ const SegmentExplorer: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleDeleteSegment(segment.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"
+                          className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-1 rounded hover:bg-destructive/10 text-muted-foreground hover:text-destructive"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </button>
@@ -909,12 +915,12 @@ const SegmentExplorer: React.FC = () => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.15 }}
-        className="bg-card rounded-xl border border-border p-5 space-y-4"
+        className="rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Search className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-semibold text-foreground uppercase tracking-wide">
+            <h2 className="text-lg font-semibold text-foreground">
               Sample Businesses
             </h2>
             <span className="text-xs text-muted-foreground">
@@ -935,7 +941,7 @@ const SegmentExplorer: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border">
+                <tr className="border-b border-border/60">
                   {([
                     { key: 'name' as SortColumn, label: 'Business Name', align: 'left' },
                     { key: 'revenue' as SortColumn, label: 'Revenue', align: 'right' },
@@ -947,7 +953,7 @@ const SegmentExplorer: React.FC = () => {
                     <th
                       key={col.key}
                       className={cn(
-                        'py-2 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-colors select-none',
+                        'py-3 px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider cursor-pointer hover:text-foreground transition-colors duration-150 select-none',
                         col.align === 'right' ? 'text-right' : 'text-left',
                       )}
                       onClick={() => handleSort(col.key)}
@@ -962,15 +968,15 @@ const SegmentExplorer: React.FC = () => {
                 {filteredBusinesses.map((biz) => (
                   <tr
                     key={biz.id}
-                    className="border-b border-border/50 last:border-0 hover:bg-muted/50 transition-colors"
+                    className="border-b border-border/50 last:border-0 hover:bg-muted/50 transition-colors duration-150"
                   >
-                    <td className="py-2.5 px-3 font-medium text-foreground">
+                    <td className="py-3 px-4 font-medium text-foreground">
                       {biz.name}
                     </td>
-                    <td className="py-2.5 px-3 text-right tabular-nums text-muted-foreground">
+                    <td className="py-3 px-4 text-right tabular-nums text-muted-foreground">
                       {formatCurrency(biz.revenue)}
                     </td>
-                    <td className="py-2.5 px-3 text-right tabular-nums">
+                    <td className="py-3 px-4 text-right tabular-nums">
                       <span
                         className={cn(
                           'font-semibold',
@@ -984,18 +990,18 @@ const SegmentExplorer: React.FC = () => {
                         {biz.score}
                       </span>
                     </td>
-                    <td className="py-2.5 px-3">
+                    <td className="py-3 px-4">
                       <span
                         className={cn(
-                          'inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold',
+                          'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold',
                           getRiskBadgeClass(biz.risk),
                         )}
                       >
                         {biz.risk}
                       </span>
                     </td>
-                    <td className="py-2.5 px-3 text-muted-foreground">{biz.status}</td>
-                    <td className="py-2.5 px-3 text-muted-foreground">{biz.state}</td>
+                    <td className="py-3 px-4 text-muted-foreground">{biz.status}</td>
+                    <td className="py-3 px-4 text-muted-foreground">{biz.state}</td>
                   </tr>
                 ))}
               </tbody>
