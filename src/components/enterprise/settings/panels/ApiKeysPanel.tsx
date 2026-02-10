@@ -92,7 +92,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
       </div>
 
       {/* Keys Table */}
-      <div className="bg-card rounded-lg border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border overflow-hidden">
         {apiKeys.length === 0 ? (
           <EmptyState
             icon={Key}
@@ -125,12 +125,12 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
+                      <code className="text-xs bg-muted px-2 py-1 rounded-lg font-mono">
                         {revealedKeys.has(key.id) ? key.keyMasked.replace(/\*/g, 'x') : key.keyMasked}
                       </code>
                       <button
                         onClick={() => toggleKeyVisibility(key.id)}
-                        className="p-1 hover:bg-muted rounded"
+                        className="p-1 hover:bg-muted rounded-lg transition-all duration-200"
                       >
                         {revealedKeys.has(key.id) ? (
                           <EyeOff className="h-3 w-3 text-muted-foreground" />
@@ -142,7 +142,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                    <span className={`px-2 py-0.5 rounded-lg text-xs font-medium ${
                       key.environment === 'production'
                         ? 'bg-success/10 text-success'
                         : 'bg-warning/10 text-warning'
@@ -153,7 +153,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
                       {key.scopes.slice(0, 2).map((scope) => (
-                        <span key={scope} className="text-xs bg-muted px-1.5 py-0.5 rounded">
+                        <span key={scope} className="text-xs bg-muted px-1.5 py-0.5 rounded-lg">
                           {scope}
                         </span>
                       ))}
@@ -187,14 +187,14 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                         <>
                           <button
                             onClick={() => onRotateKey(key.id)}
-                            className="p-1.5 hover:bg-muted rounded transition-colors"
+                            className="p-1.5 hover:bg-muted rounded-lg transition-all duration-200"
                             title="Rotate"
                           >
                             <RefreshCw className="h-4 w-4 text-muted-foreground" />
                           </button>
                           <button
                             onClick={() => onRevokeKey(key.id)}
-                            className="p-1.5 hover:bg-destructive/10 rounded transition-colors"
+                            className="p-1.5 hover:bg-destructive/10 rounded-lg transition-all duration-200"
                             title="Revoke"
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />
@@ -247,7 +247,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                     value={newKeyName}
                     onChange={(e) => setNewKeyName(e.target.value)}
                     placeholder="e.g., Production API Key"
-                    className="w-full h-9 px-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+                    className="w-full h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-200"
                   />
                 </div>
 
@@ -258,7 +258,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                       <button
                         key={env}
                         onClick={() => setNewKeyEnv(env)}
-                        className={`flex-1 px-4 py-2 rounded-md border text-sm font-medium transition-colors ${
+                        className={`flex-1 px-4 py-2 rounded-xl border text-sm font-medium transition-all duration-200 ${
                           newKeyEnv === env
                             ? env === 'production'
                               ? 'bg-success/10 border-success/20 text-success'
@@ -278,13 +278,13 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                     {availableScopes.map((scope) => (
                       <label
                         key={scope.id}
-                        className="flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 cursor-pointer"
+                        className="flex items-center gap-3 p-2 rounded-md hover:bg-muted/50 cursor-pointer transition-all duration-200"
                       >
                         <input
                           type="checkbox"
                           checked={newKeyScopes.includes(scope.id)}
                           onChange={() => toggleScope(scope.id)}
-                          className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
+                          className="h-4 w-4 rounded-md border-border text-primary focus:ring-primary"
                         />
                         <span className="text-sm">{scope.label}</span>
                       </label>

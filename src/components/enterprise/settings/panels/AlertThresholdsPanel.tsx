@@ -51,19 +51,19 @@ export const AlertThresholdsPanel: React.FC<AlertThresholdsPanelProps> = ({
       </div>
 
       {/* Info Banner */}
-      <div className="flex items-start gap-3 p-4 bg-info/10 border border-info/20 rounded-lg">
+      <div className="flex items-start gap-3 p-4 bg-info/10 border border-info/20 rounded-xl">
         <Info className="h-5 w-5 text-info mt-0.5" />
         <div className="text-sm text-info">
           <p className="font-medium">How thresholds work</p>
           <p className="text-info/80 mt-1">
-            When a metric crosses the threshold, an alert is generated in the Early Warning System 
+            When a metric crosses the threshold, an alert is generated in the Early Warning System
             and optionally sent via configured notification channels.
           </p>
         </div>
       </div>
 
       {/* Threshold Sliders */}
-      <div className="bg-card rounded-lg border border-border p-6 space-y-6">
+      <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
         {thresholds.map((threshold) => {
           const percentage = ((threshold.value - threshold.min) / (threshold.max - threshold.min)) * 100;
 

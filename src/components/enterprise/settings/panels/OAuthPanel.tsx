@@ -127,8 +127,8 @@ export const OAuthPanel: React.FC = () => {
 
               <div className="space-y-2">
                 <Label>Redirect URIs (one per line)</Label>
-                <textarea 
-                  className="w-full h-24 p-3 text-sm bg-muted rounded-lg border border-border"
+                <textarea
+                  className="w-full h-24 p-3 text-sm bg-muted/50 rounded-xl border border-border/50 transition-all duration-200"
                   placeholder="https://app.example.com/callback&#10;myapp://callback"
                   value={newRedirectUris}
                   onChange={(e) => setNewRedirectUris(e.target.value)}
@@ -140,7 +140,7 @@ export const OAuthPanel: React.FC = () => {
                 <div className="grid grid-cols-2 gap-2">
                   {availableScopes.map((scope) => (
                     <label key={scope.id} className="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-muted">
-                      <input 
+                      <input
                         type="checkbox"
                         checked={newScopes.includes(scope.id)}
                         disabled={scope.required}
@@ -151,7 +151,7 @@ export const OAuthPanel: React.FC = () => {
                             setNewScopes(newScopes.filter(s => s !== scope.id));
                           }
                         }}
-                        className="rounded"
+                        className="rounded-md"
                       />
                       <span className="text-sm">{scope.label}</span>
                     </label>
@@ -181,7 +181,7 @@ export const OAuthPanel: React.FC = () => {
                 <div className="flex items-start justify-between">
                   <div className="space-y-3 flex-1">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                         <Lock className="h-5 w-5 text-primary" />
                       </div>
                       <div>
@@ -196,10 +196,10 @@ export const OAuthPanel: React.FC = () => {
                     </div>
 
                     {/* Credentials */}
-                    <div className="grid gap-2 p-4 bg-muted/50 rounded-lg">
+                    <div className="grid gap-2 p-4 bg-muted/50 rounded-xl">
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-muted-foreground w-20">Client ID:</span>
-                        <code className="text-xs font-mono bg-background px-2 py-1 rounded">{client.clientId}</code>
+                        <code className="text-xs font-mono bg-background px-2 py-1 rounded-lg">{client.clientId}</code>
                         <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => copyToClipboard(client.clientId)}>
                           <Copy className="h-3 w-3" />
                         </Button>
@@ -207,7 +207,7 @@ export const OAuthPanel: React.FC = () => {
                       {client.clientSecret && (
                         <div className="flex items-center gap-2">
                           <span className="text-xs text-muted-foreground w-20">Secret:</span>
-                          <code className="text-xs font-mono bg-background px-2 py-1 rounded">
+                          <code className="text-xs font-mono bg-background px-2 py-1 rounded-lg">
                             {revealedSecrets.has(client.id) ? client.clientSecret : '••••••••••••••••••••'}
                           </code>
                           <Button 
@@ -235,7 +235,7 @@ export const OAuthPanel: React.FC = () => {
                       <span className="text-xs text-muted-foreground">Redirect URIs:</span>
                       <div className="flex flex-wrap gap-1">
                         {client.redirectUris.map((uri, idx) => (
-                          <code key={idx} className="text-xs bg-muted px-2 py-1 rounded">{uri}</code>
+                          <code key={idx} className="text-xs bg-muted/50 px-2 py-1 rounded-lg">{uri}</code>
                         ))}
                       </div>
                     </div>
@@ -243,7 +243,7 @@ export const OAuthPanel: React.FC = () => {
                     {/* Scopes */}
                     <div className="flex gap-1">
                       {client.scopes.map((scope) => (
-                        <Badge key={scope} variant="secondary" className="text-xs">{scope}</Badge>
+                        <Badge key={scope} variant="secondary" className="text-xs rounded-lg">{scope}</Badge>
                       ))}
                     </div>
                   </div>

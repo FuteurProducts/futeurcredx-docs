@@ -42,7 +42,7 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({ code, langua
   };
 
   return (
-    <div className="relative group rounded-lg border border-border bg-muted/50 overflow-hidden my-3">
+    <div className="relative group rounded-xl border border-border bg-muted/50 overflow-hidden my-3">
       {language && (
         <div className="flex items-center justify-between px-4 py-1.5 bg-muted border-b border-border">
           <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">{language}</span>
@@ -67,7 +67,7 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({ code, langua
 // ---------------------------------------------------------------------------
 
 const DocTable: React.FC<{ headers: string[]; rows: string[][] }> = ({ headers, rows }) => (
-  <div className="overflow-x-auto my-4 rounded-lg border border-border">
+  <div className="overflow-x-auto my-4 rounded-xl border border-border">
     <table className="w-full text-sm">
       <thead>
         <tr className="bg-muted/50">
@@ -96,7 +96,7 @@ const DocTable: React.FC<{ headers: string[]; rows: string[][] }> = ({ headers, 
 const Collapsible: React.FC<{ title: string; defaultOpen?: boolean; children: React.ReactNode }> = ({ title, defaultOpen = false, children }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border border-border rounded-lg my-3 overflow-hidden">
+    <div className="border border-border rounded-xl my-3 overflow-hidden">
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between w-full px-4 py-3 bg-muted/30 hover:bg-muted/50 transition-colors text-left"
@@ -206,7 +206,7 @@ const Documentation: React.FC = () => {
               placeholder="Search sections..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-2 text-xs rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full pl-8 pr-3 py-2 h-12 text-xs rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
         </div>
@@ -215,7 +215,7 @@ const Documentation: React.FC = () => {
             <button
               key={section.id}
               onClick={() => scrollToSection(section.id)}
-              className={`flex items-center gap-2 w-full px-3 py-2 rounded-md text-xs font-medium transition-colors text-left ${
+              className={`flex items-center gap-2 w-full px-3 py-2 rounded-xl text-xs font-medium transition-colors text-left ${
                 activeSection === section.id
                   ? 'bg-primary/10 text-primary'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'

@@ -253,7 +253,7 @@ const Users = () => {
   return (
     <div className="flex flex-col lg:flex-row lg:items-start lg:gap-6">
       {/* LEFT: Users List */}
-      <Card className="flex-1 min-w-0">
+      <Card className="flex-1 min-w-0 rounded-2xl">
         <CardHeader>
           <CardTitle>Users</CardTitle>
         </CardHeader>
@@ -266,7 +266,7 @@ const Users = () => {
               placeholder="Search by name, city, or state..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 h-11"
+              className="pl-10 h-12"
             />
           </div>
 
@@ -435,7 +435,7 @@ const Users = () => {
       </Card>
 
       {/* RIGHT: Business Overview */}
-      <Card className="w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0">
+      <Card className="w-full mt-6 lg:mt-0 lg:w-[21.25rem] lg:shrink-0 rounded-2xl">
         <CardHeader>
           <CardTitle>Business Overview</CardTitle>
         </CardHeader>
@@ -554,7 +554,7 @@ const Users = () => {
 
               {/* Stats Grid */}
               <div className="grid grid-cols-3 gap-4 mt-6">
-                <div className="p-4 bg-muted rounded-xl">
+                <div className="p-4 bg-muted rounded-2xl">
                   <div className="text-xs text-muted-foreground mb-1 flex items-center gap-1">
                     <CreditCard className="h-3 w-3" />
                     Credit Score
@@ -569,7 +569,7 @@ const Users = () => {
                     )}
                   </div>
                 </div>
-                <div className="p-4 bg-success/10 rounded-xl">
+                <div className="p-4 bg-success/10 rounded-2xl">
                   <div className="text-xs text-success mb-1 flex items-center gap-1">
                     <FileText className="h-3 w-3" />
                     Applications
@@ -578,7 +578,7 @@ const Users = () => {
                     {selectedBusiness.applications?.length || 0}
                   </div>
                 </div>
-                <div className="p-4 bg-muted rounded-xl">
+                <div className="p-4 bg-muted rounded-2xl">
                   <div className="text-xs text-muted-foreground mb-1">Recommendations</div>
                   <div className="text-2xl font-semibold text-foreground">
                     {selectedBusiness.recommendation?.recommendations?.length || 0}
@@ -591,7 +591,7 @@ const Users = () => {
                 <h3 className="text-base font-semibold text-foreground mb-3">Business Info</h3>
                 <div className="grid grid-cols-2 gap-3">
                   {selectedBusiness.legalStruct && (
-                    <div className="p-3 bg-muted rounded-xl">
+                    <div className="p-3 bg-muted rounded-2xl">
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
                         <Building2 className="h-3 w-3" />
                         Structure
@@ -600,7 +600,7 @@ const Users = () => {
                     </div>
                   )}
                   {selectedBusiness.yearFounded && (
-                    <div className="p-3 bg-muted rounded-xl">
+                    <div className="p-3 bg-muted rounded-2xl">
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         Founded
@@ -609,7 +609,7 @@ const Users = () => {
                     </div>
                   )}
                   {selectedBusiness.empCount && (
-                    <div className="p-3 bg-muted rounded-xl">
+                    <div className="p-3 bg-muted rounded-2xl">
                       <div className="text-xs text-muted-foreground flex items-center gap-1">
                         <UsersIcon className="h-3 w-3" />
                         Employees
@@ -618,7 +618,7 @@ const Users = () => {
                     </div>
                   )}
                   {selectedBusiness.score?.type && (
-                    <div className="p-3 bg-muted rounded-xl">
+                    <div className="p-3 bg-muted rounded-2xl">
                       <div className="text-xs text-muted-foreground">Score Type</div>
                       <div className="text-sm font-semibold text-foreground">{selectedBusiness.score.type}</div>
                     </div>
@@ -634,7 +634,7 @@ const Users = () => {
                   </h3>
                   <div className="space-y-2">
                     {selectedBusiness.applications.map((app, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-3 bg-muted rounded-xl">
+                      <div key={idx} className="flex items-center justify-between p-3 bg-muted rounded-2xl">
                         <div>
                           <div className="text-sm font-semibold text-foreground">{app.cardName}</div>
                           <div className="text-xs text-muted-foreground">
@@ -656,7 +656,7 @@ const Users = () => {
                   <h3 className="text-base font-semibold text-foreground mb-3">Card Recommendations</h3>
                   <div className="space-y-2">
                     {selectedBusiness.recommendation.recommendations.map((rec, idx) => (
-                      <div key={idx} className="p-4 bg-muted rounded-xl">
+                      <div key={idx} className="p-4 bg-muted rounded-2xl">
                         <div className="flex items-center justify-between mb-2">
                           <div className="text-sm font-semibold text-foreground">{rec.cardName}</div>
                           <Badge variant="default">

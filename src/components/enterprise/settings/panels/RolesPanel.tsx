@@ -60,14 +60,14 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
 
       <div className="grid grid-cols-4 gap-4">
         {/* Roles List */}
-        <div className="bg-card rounded-lg border border-border p-2">
+        <div className="bg-card rounded-2xl border border-border p-2 overflow-hidden">
           <h3 className="text-xs font-medium text-muted-foreground uppercase px-2 py-2">Roles</h3>
           <div className="space-y-1">
             {roles.map((role) => (
               <button
                 key={role.role}
                 onClick={() => setSelectedRole(role.role)}
-                className={`w-full px-3 py-2 rounded-md text-sm text-left transition-colors ${
+                className={`w-full px-3 py-2 rounded-xl text-sm text-left transition-all duration-200 ${
                   selectedRole === role.role
                     ? 'bg-primary/10 text-primary font-medium'
                     : 'text-foreground hover:bg-muted'
@@ -80,7 +80,7 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
         </div>
 
         {/* Permissions Matrix */}
-        <div className="col-span-3 bg-card rounded-lg border border-border overflow-hidden">
+        <div className="col-span-3 bg-card rounded-2xl border border-border overflow-hidden">
           <table className="w-full">
             <thead className="bg-muted/50">
               <tr>
@@ -117,7 +117,7 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
                     >
                       <button
                         onClick={() => togglePermission(role.role, permission.id)}
-                        className="p-1 rounded hover:bg-muted transition-colors"
+                        className="p-1 rounded-lg hover:bg-muted transition-all duration-200"
                       >
                         {role.permissions[permission.id] ? (
                           <CheckCircle className="h-5 w-5 text-success" />

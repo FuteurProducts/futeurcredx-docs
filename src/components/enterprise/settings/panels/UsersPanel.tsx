@@ -87,13 +87,13 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
             placeholder="Search by name or email..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-9 pl-9 pr-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full h-12 pl-9 pr-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-200"
           />
         </div>
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value as UserRole | 'all')}
-          className="h-9 px-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+          className="h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-200"
         >
           <option value="all">All Roles</option>
           {Object.entries(roleLabels).map(([role, label]) => (
@@ -103,7 +103,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
       </div>
 
       {/* Users Table */}
-      <div className="bg-card rounded-lg border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border overflow-hidden">
         <table className="w-full">
           <thead className="bg-muted/50">
             <tr>
@@ -198,7 +198,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                     type="text"
                     value={selectedUser.name}
                     readOnly
-                    className="w-full h-9 px-3 text-sm bg-muted border border-border rounded-md"
+                    className="w-full h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl transition-all duration-200"
                   />
                 </div>
                 <div>
@@ -207,14 +207,14 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                     type="email"
                     value={selectedUser.email}
                     readOnly
-                    className="w-full h-9 px-3 text-sm bg-muted border border-border rounded-md"
+                    className="w-full h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl transition-all duration-200"
                   />
                 </div>
                 <div>
                   <label className="text-xs text-muted-foreground mb-1 block">Role</label>
                   <select
                     defaultValue={selectedUser.role}
-                    className="w-full h-9 px-3 text-sm bg-background border border-border rounded-md"
+                    className="w-full h-12 px-3 text-sm bg-muted/50 border border-border/50 rounded-xl transition-all duration-200"
                   >
                     {Object.entries(roleLabels).map(([role, label]) => (
                       <option key={role} value={role}>{label}</option>
@@ -223,7 +223,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                 </div>
                 <div>
                   <label className="text-xs text-muted-foreground mb-1 block">Portfolio Access</label>
-                  <div className="text-sm text-foreground bg-muted p-2 rounded-md">
+                  <div className="text-sm text-foreground bg-muted/50 p-2 rounded-xl">
                     {selectedUser.portfolioAccess.join(', ') || 'None'}
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                   <input
                     type="checkbox"
                     defaultChecked={selectedUser.allowExports}
-                    className="h-4 w-4 text-primary rounded"
+                    className="h-4 w-4 text-primary rounded-md"
                   />
                 </div>
                 <div className="flex items-center justify-between py-2">
@@ -240,7 +240,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                   <input
                     type="checkbox"
                     defaultChecked={selectedUser.allowApiKeyCreation}
-                    className="h-4 w-4 text-primary rounded"
+                    className="h-4 w-4 text-primary rounded-md"
                   />
                 </div>
               </div>

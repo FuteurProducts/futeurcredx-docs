@@ -66,7 +66,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
-      className="bg-card rounded-lg border border-border shadow-sm h-full overflow-y-auto"
+      className="bg-card rounded-2xl border border-border shadow-sm h-full overflow-y-auto"
     >
       <div className="p-4 border-b border-border">
         <h2 className="text-sm font-semibold text-foreground">Settings</h2>
@@ -102,7 +102,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
                       <button
                         key={section.id}
                         onClick={() => onSectionChange(section.id)}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
                           isActive
                             ? 'bg-primary/10 text-primary font-medium'
                             : 'text-muted-foreground hover:bg-muted hover:text-foreground'

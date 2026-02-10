@@ -124,7 +124,7 @@ export const SSOPanel: React.FC = () => {
                   <button
                     key={provider}
                     onClick={() => setSsoConfig({ ...ssoConfig, provider })}
-                    className={`p-4 rounded-lg border-2 text-center transition-colors ${
+                    className={`p-4 rounded-xl border-2 text-center transition-all duration-200 ${
                       ssoConfig.provider === provider
                         ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
@@ -165,8 +165,8 @@ export const SSOPanel: React.FC = () => {
 
                 <div className="space-y-2">
                   <Label>X.509 Certificate</Label>
-                  <textarea 
-                    className="w-full h-24 p-3 text-xs font-mono bg-muted rounded-lg border border-border"
+                  <textarea
+                    className="w-full h-24 p-3 text-xs font-mono bg-muted/50 rounded-xl border border-border/50 transition-all duration-200"
                     value={ssoConfig.certificate}
                     onChange={(e) => setSsoConfig({ ...ssoConfig, certificate: e.target.value })}
                   />
@@ -198,7 +198,7 @@ export const SSOPanel: React.FC = () => {
                 </div>
 
                 {ssoConfig.enforceSSO && (
-                  <div className="flex items-center justify-between p-3 bg-warning/10 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-warning/10 rounded-xl">
                     <div className="flex items-center gap-2">
                       <AlertTriangle className="h-4 w-4 text-warning" />
                       <div>
@@ -270,7 +270,7 @@ export const SSOPanel: React.FC = () => {
                             : [...mfaPolicy.methods, method.id as typeof mfaPolicy.methods[number]];
                           setMfaPolicy({ ...mfaPolicy, methods });
                         }}
-                        className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-colors ${
+                        className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all duration-200 ${
                           isEnabled ? 'border-primary bg-primary/5' : 'border-border'
                         }`}
                       >
@@ -368,13 +368,13 @@ export const SSOPanel: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center justify-between p-4 border rounded-xl">
                   <div>
                     <Label>Re-auth for Sensitive Actions</Label>
                     <p className="text-xs text-muted-foreground">Require password for PII access</p>
                   </div>
-                  <Switch 
-                    checked={sessionPolicy.requireReauthForSensitive} 
+                  <Switch
+                    checked={sessionPolicy.requireReauthForSensitive}
                     onCheckedChange={(checked) => setSessionPolicy({ ...sessionPolicy, requireReauthForSensitive: checked })}
                   />
                 </div>

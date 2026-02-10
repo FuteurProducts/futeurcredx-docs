@@ -57,11 +57,11 @@ export const DataSourcesPanel: React.FC<DataSourcesPanelProps> = ({
       key={source.id}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="bg-card rounded-lg border border-border p-4"
+      className="bg-card rounded-2xl border border-border p-4"
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-muted rounded-lg">
+          <div className="p-2 bg-muted rounded-xl">
             <TypeIcon type={source.type} />
           </div>
           <div>

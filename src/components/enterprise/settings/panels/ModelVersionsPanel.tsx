@@ -96,7 +96,7 @@ export const ModelVersionsPanel: React.FC = () => {
                 <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
-                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
                         model.status === 'active' ? 'bg-chart-2/10' :
                         model.status === 'testing' ? 'bg-warning/10' : 'bg-muted'
                       }`}>

@@ -102,7 +102,7 @@ export const WebhookSecurityPanel: React.FC = () => {
                 <button
                   key={algo}
                   onClick={() => setConfig({ ...config, signatureAlgorithm: algo })}
-                  className={`p-4 rounded-lg border-2 text-left transition-colors ${
+                  className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                     config.signatureAlgorithm === algo
                       ? 'border-primary bg-primary/5'
                       : 'border-border hover:border-primary/50'
@@ -154,7 +154,7 @@ export const WebhookSecurityPanel: React.FC = () => {
               Verification Example (Node.js)
             </Label>
             <div className="relative">
-              <pre className="p-4 bg-muted rounded-lg overflow-x-auto text-xs font-mono">
+              <pre className="p-4 bg-muted/50 rounded-xl overflow-x-auto text-xs font-mono">
 {`const crypto = require('crypto');
 
 function verifyWebhook(payload, signature, timestamp, secret) {
@@ -196,13 +196,13 @@ function verifyWebhook(payload, signature, timestamp, secret) {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+          <div className="flex items-center justify-between p-4 bg-muted/50 rounded-xl">
             <div>
               <Label>Enable Automatic Retries</Label>
               <p className="text-xs text-muted-foreground">Retry failed deliveries with exponential backoff</p>
             </div>
-            <Switch 
-              checked={config.retryEnabled} 
+            <Switch
+              checked={config.retryEnabled}
               onCheckedChange={(checked) => setConfig({ ...config, retryEnabled: checked })}
             />
           </div>
@@ -251,7 +251,7 @@ function verifyWebhook(payload, signature, timestamp, secret) {
 
           {/* Retry Schedule Preview */}
           {config.retryEnabled && (
-            <div className="p-4 bg-muted/50 rounded-lg">
+            <div className="p-4 bg-muted/50 rounded-xl">
               <Label className="mb-3 block">Retry Schedule Preview</Label>
               <div className="flex items-center gap-2 flex-wrap">
                 {Array.from({ length: config.maxRetries }, (_, i) => {
@@ -286,13 +286,13 @@ function verifyWebhook(payload, signature, timestamp, secret) {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+          <div className="flex items-center justify-between p-4 bg-muted/50 rounded-xl">
             <div>
               <Label>Restrict Available Events</Label>
               <p className="text-xs text-muted-foreground">Partners can only subscribe to selected events</p>
             </div>
-            <Switch 
-              checked={config.eventFiltering} 
+            <Switch
+              checked={config.eventFiltering}
               onCheckedChange={(checked) => setConfig({ ...config, eventFiltering: checked })}
             />
           </div>
@@ -302,13 +302,13 @@ function verifyWebhook(payload, signature, timestamp, secret) {
               {allEvents.map((event) => {
                 const isAllowed = config.allowedEvents.includes(event.id);
                 return (
-                  <label 
+                  <label
                     key={event.id}
-                    className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                    className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
                       isAllowed ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted'
                     }`}
                   >
-                    <input 
+                    <input
                       type="checkbox"
                       checked={isAllowed}
                       onChange={(e) => {
@@ -317,7 +317,7 @@ function verifyWebhook(payload, signature, timestamp, secret) {
                           : config.allowedEvents.filter(id => id !== event.id);
                         setConfig({ ...config, allowedEvents: events });
                       }}
-                      className="rounded"
+                      className="rounded-md"
                     />
                     <div>
                       <span className="text-sm font-medium">{event.label}</span>

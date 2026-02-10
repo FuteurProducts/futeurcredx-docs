@@ -55,9 +55,9 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
 
       {/* Plan Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-card rounded-lg border border-border p-5">
+        <div className="bg-card rounded-2xl border border-border p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
+            <div className="p-2 bg-primary/10 rounded-xl">
               <CreditCard className="h-5 w-5 text-primary" />
             </div>
             <span className="text-sm text-muted-foreground">Current Plan</span>
@@ -66,9 +66,9 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
           <p className="text-sm text-muted-foreground mt-1">{billing.tier} tier</p>
         </div>
 
-        <div className="bg-card rounded-lg border border-border p-5">
+        <div className="bg-card rounded-2xl border border-border p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-success/10 rounded-lg">
+            <div className="p-2 bg-success/10 rounded-xl">
               <TrendingUp className="h-5 w-5 text-success" />
             </div>
             <span className="text-sm text-muted-foreground">Monthly Usage</span>
@@ -81,9 +81,9 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
           </p>
         </div>
 
-        <div className="bg-card rounded-lg border border-border p-5">
+        <div className="bg-card rounded-2xl border border-border p-5">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-warning/10 rounded-lg">
+            <div className="p-2 bg-warning/10 rounded-xl">
               <Calendar className="h-5 w-5 text-warning" />
             </div>
             <span className="text-sm text-muted-foreground">Next Invoice</span>
@@ -96,7 +96,7 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
       </div>
 
       {/* Usage Progress */}
-      <div className="bg-card rounded-lg border border-border p-5">
+      <div className="bg-card rounded-2xl border border-border p-5">
         <div className="flex items-center justify-between mb-3">
           <span className="font-medium text-foreground">Usage This Month</span>
           <span className="text-sm text-muted-foreground">{usagePercentage.toFixed(1)}% used</span>
@@ -118,7 +118,7 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
       </div>
 
       {/* Daily Usage Chart */}
-      <div className="bg-card rounded-lg border border-border p-5">
+      <div className="bg-card rounded-2xl border border-border p-5">
         <h3 className="font-medium text-foreground mb-4">API Calls Per Day (Last 7 Days)</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">

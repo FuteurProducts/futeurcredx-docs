@@ -111,7 +111,7 @@ export const IntegrationsPanel: React.FC = () => {
       <div className="grid grid-cols-3 gap-4">
         <Card>
           <CardContent className="pt-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg bg-chart-2/10 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-chart-2/10 flex items-center justify-center">
               <CheckCircle className="h-6 w-6 text-chart-2" />
             </div>
             <div>
@@ -122,7 +122,7 @@ export const IntegrationsPanel: React.FC = () => {
         </Card>
         <Card>
           <CardContent className="pt-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg bg-destructive/10 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-destructive/10 flex items-center justify-center">
               <AlertTriangle className="h-6 w-6 text-destructive" />
             </div>
             <div>
@@ -133,7 +133,7 @@ export const IntegrationsPanel: React.FC = () => {
         </Card>
         <Card>
           <CardContent className="pt-6 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center">
+            <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
               <XCircle className="h-6 w-6 text-muted-foreground" />
             </div>
             <div>
@@ -162,7 +162,7 @@ export const IntegrationsPanel: React.FC = () => {
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center">
                           <Plug className="h-6 w-6 text-muted-foreground" />
                         </div>
                         <div>

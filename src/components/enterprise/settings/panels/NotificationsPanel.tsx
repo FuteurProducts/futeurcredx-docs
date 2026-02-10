@@ -94,14 +94,14 @@ export const NotificationsPanel: React.FC = () => {
             {channels.map((channel) => {
               const Icon = channel.icon;
               return (
-                <div 
+                <div
                   key={channel.id}
-                  className={`flex items-center justify-between p-4 rounded-lg border ${
+                  className={`flex items-center justify-between p-4 rounded-xl border ${
                     channel.enabled ? 'border-primary/30 bg-primary/5' : 'border-border'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                       channel.enabled ? 'bg-primary/10' : 'bg-muted'
                     }`}>
                       <Icon className={`h-5 w-5 ${channel.enabled ? 'text-primary' : 'text-muted-foreground'}`} />
@@ -180,7 +180,7 @@ export const NotificationsPanel: React.FC = () => {
                 key={category.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="grid grid-cols-[1fr,80px,80px,80px,80px] gap-4 p-3 items-center hover:bg-muted/50 rounded-lg"
+                className="grid grid-cols-[1fr,80px,80px,80px,80px] gap-4 p-3 items-center hover:bg-muted/50 rounded-xl transition-all duration-200"
               >
                 <div>
                   <div className="flex items-center gap-2">

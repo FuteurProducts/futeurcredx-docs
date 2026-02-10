@@ -126,7 +126,7 @@ export const RetentionPanel: React.FC = () => {
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                       <Database className="h-5 w-5 text-primary" />
                     </div>
                     <div>
@@ -190,15 +190,15 @@ export const RetentionPanel: React.FC = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-3 gap-4">
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-primary">24h</div>
               <div className="text-xs text-muted-foreground">Avg. Processing Time</div>
             </div>
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-primary">12</div>
               <div className="text-xs text-muted-foreground">Pending Requests</div>
             </div>
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-chart-2">147</div>
               <div className="text-xs text-muted-foreground">Processed (90d)</div>
             </div>

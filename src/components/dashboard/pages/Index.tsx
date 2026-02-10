@@ -94,10 +94,10 @@ const Index = () => {
           {/* Header skeleton */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
-              <div className="h-8 w-64 rounded-lg bg-muted animate-pulse" />
-              <div className="h-4 w-96 rounded bg-muted animate-pulse" />
+              <div className="h-8 w-64 rounded-xl bg-muted animate-pulse" />
+              <div className="h-4 w-96 rounded-xl bg-muted animate-pulse" />
             </div>
-            <div className="h-14 w-48 rounded-lg bg-muted animate-pulse" />
+            <div className="h-14 w-48 rounded-xl bg-muted animate-pulse" />
           </div>
 
           {/* API Health Monitor skeleton */}
@@ -150,7 +150,7 @@ const Index = () => {
               Enterprise API Platform • Real-time Business Credit Intelligence
             </p>
           </div>
-          <div className="px-4 py-2 bg-card/90 backdrop-blur-sm border border-border/80 rounded-lg shadow-sm">
+          <div className="px-4 py-2 bg-card/90 backdrop-blur-sm border border-border/80 rounded-2xl shadow-sm">
             <p className="text-xs text-muted-foreground">API Status</p>
             <div className="flex items-center gap-2 mt-1">
               <div className="w-2 h-2 bg-success rounded-full pulse-glow" />

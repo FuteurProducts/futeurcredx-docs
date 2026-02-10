@@ -135,10 +135,10 @@ export const PIIMaskingPanel: React.FC = () => {
                   key={field.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                  className="flex items-center justify-between p-4 rounded-xl bg-muted/50 hover:bg-muted transition-all duration-200"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-background flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-background flex items-center justify-center">
                       <Icon className="h-5 w-5 text-muted-foreground" />
                     </div>
                     <div>
@@ -156,11 +156,11 @@ export const PIIMaskingPanel: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-4 mt-1 text-sm">
                         <span className="text-muted-foreground">
-                          Example: <code className="bg-background px-1 rounded">{field.example}</code>
+                          Example: <code className="bg-background px-1 rounded-lg">{field.example}</code>
                         </span>
                         <span className="text-muted-foreground">→</span>
                         <span className={field.masked ? 'text-chart-2' : 'text-destructive'}>
-                          Shown as: <code className="bg-background px-1 rounded">{field.masked ? field.maskedExample : field.example}</code>
+                          Shown as: <code className="bg-background px-1 rounded-lg">{field.masked ? field.maskedExample : field.example}</code>
                         </span>
                       </div>
                     </div>
@@ -202,7 +202,7 @@ export const PIIMaskingPanel: React.FC = () => {
               { role: 'Relationship Manager', canUnmask: true, canExport: false },
               { role: 'Read-only', canUnmask: false, canExport: false },
             ].map((roleConfig) => (
-              <div key={roleConfig.role} className="flex items-center justify-between p-4 rounded-lg bg-muted/50">
+              <div key={roleConfig.role} className="flex items-center justify-between p-4 rounded-xl bg-muted/50">
                 <span className="font-medium">{roleConfig.role}</span>
                 <div className="flex items-center gap-6">
                   <div className="flex items-center gap-2">

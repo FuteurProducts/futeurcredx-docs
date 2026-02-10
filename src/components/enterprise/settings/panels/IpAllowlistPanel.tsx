@@ -162,10 +162,10 @@ export const IpAllowlistPanel: React.FC = () => {
                 key={entry.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                className="flex items-center justify-between p-4 rounded-xl bg-muted/50 hover:bg-muted transition-all duration-200"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Globe className="h-5 w-5 text-primary" />
                   </div>
                   <div>

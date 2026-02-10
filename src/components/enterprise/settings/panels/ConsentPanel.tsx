@@ -91,7 +91,7 @@ export const ConsentPanel: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
+          <div className="flex items-start gap-3 p-4 bg-muted/50 rounded-xl">
             <Info className="h-5 w-5 text-primary mt-0.5" />
             <div className="text-sm text-muted-foreground">
               <p className="font-medium text-foreground mb-1">Semantic Versioning</p>
@@ -111,7 +111,7 @@ export const ConsentPanel: React.FC = () => {
               <CardContent className="pt-6">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                       category.required ? 'bg-warning/10' : 'bg-primary/10'
                     }`}>
                       {category.required ? (
@@ -175,19 +175,19 @@ export const ConsentPanel: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-4 gap-4">
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-primary">98.2%</div>
               <div className="text-xs text-muted-foreground">Credit Pull Consent Rate</div>
             </div>
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-primary">94.7%</div>
               <div className="text-xs text-muted-foreground">Bank Connect Rate</div>
             </div>
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-primary">67.3%</div>
               <div className="text-xs text-muted-foreground">Data Sharing Opt-in</div>
             </div>
-            <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <div className="p-4 bg-muted/50 rounded-xl text-center">
               <div className="text-2xl font-bold text-primary">45.1%</div>
               <div className="text-xs text-muted-foreground">Marketing Opt-in</div>
             </div>

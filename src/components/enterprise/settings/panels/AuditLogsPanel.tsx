@@ -108,7 +108,7 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
             placeholder="Search logs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-9 pl-9 pr-3 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full h-12 pl-9 pr-3 text-sm bg-muted/50 border border-border/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-primary transition-all duration-200"
           />
         </div>
         <Button
@@ -125,7 +125,7 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
       </div>
 
       {/* Logs Table */}
-      <div className="bg-card rounded-lg border border-border overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border overflow-hidden">
         <table className="w-full">
           <thead className="bg-muted/50">
             <tr>
@@ -143,7 +143,7 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
                   <span className="text-sm font-medium text-foreground">{log.user}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className={`inline-flex px-2 py-0.5 rounded text-xs font-medium ${
+                  <span className={`inline-flex px-2 py-0.5 rounded-lg text-xs font-medium ${
                     actionColors[log.action] || 'bg-muted text-muted-foreground'
                   }`}>
                     {log.action}
@@ -156,7 +156,7 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
                   <span className="text-sm text-muted-foreground">{formatDate(log.timestamp)}</span>
                 </td>
                 <td className="px-4 py-3">
-                  <code className="text-xs bg-muted px-2 py-0.5 rounded font-mono">{log.ip}</code>
+                  <code className="text-xs bg-muted px-2 py-0.5 rounded-lg font-mono">{log.ip}</code>
                 </td>
               </tr>
             ))}
@@ -174,13 +174,13 @@ export const AuditLogsPanel: React.FC<AuditLogsPanelProps> = ({
       <div className="flex items-center justify-between text-xs text-muted-foreground pt-2">
         <span>Showing 1–{filteredLogs.length} of 2,847 events</span>
         <div className="flex items-center gap-2">
-          <button disabled className="px-2 py-1 rounded border border-border text-muted-foreground/50">Previous</button>
-          <span className="px-2 py-1 rounded bg-primary/10 text-primary font-medium">1</span>
-          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">2</button>
-          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">3</button>
+          <button disabled className="px-2 py-1 rounded-lg border border-border text-muted-foreground/50">Previous</button>
+          <span className="px-2 py-1 rounded-lg bg-primary/10 text-primary font-medium">1</span>
+          <button className="px-2 py-1 rounded-lg border border-border hover:bg-muted transition-all duration-200">2</button>
+          <button className="px-2 py-1 rounded-lg border border-border hover:bg-muted transition-all duration-200">3</button>
           <span>...</span>
-          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">57</button>
-          <button className="px-2 py-1 rounded border border-border hover:bg-muted transition-colors">Next</button>
+          <button className="px-2 py-1 rounded-lg border border-border hover:bg-muted transition-all duration-200">57</button>
+          <button className="px-2 py-1 rounded-lg border border-border hover:bg-muted transition-all duration-200">Next</button>
         </div>
       </div>
     </motion.div>

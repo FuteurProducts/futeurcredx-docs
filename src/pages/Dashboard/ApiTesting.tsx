@@ -266,7 +266,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       setRequestBody('')
                     }
                   }}
-                  className="w-full h-12 px-4 pr-10 bg-card border border-border rounded-xl text-foreground text-[0.9375rem] font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer"
+                  className="w-full h-12 px-4 pr-10 bg-muted/50 border border-border/50 rounded-xl text-foreground text-[0.9375rem] font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer transition-all duration-200"
                 >
                   {endpoints.map((ep) => (
                     <option key={ep.path} value={ep.path}>
@@ -327,7 +327,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     <select
                       value={selectedApiKey}
                       onChange={(e) => setSelectedApiKey(e.target.value)}
-                      className="w-full h-12 px-4 bg-card border border-border rounded-xl text-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer"
+                      className="w-full h-12 px-4 bg-muted/50 border border-border/50 rounded-xl text-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent appearance-none cursor-pointer transition-all duration-200"
                     >
                       <option value="">Select an API key...</option>
                       {apiKeys.map((key: any) => (
@@ -352,7 +352,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                       value={manualApiKey}
                       onChange={(e) => setManualApiKey(e.target.value)}
                       placeholder="Paste your API key here..."
-                      className="w-full h-12 px-4 pr-12 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full h-12 px-4 pr-12 bg-muted/50 border border-border/50 rounded-xl text-foreground placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                     />
                     <button
                       onClick={() => setShowManualKey(!showManualKey)}
@@ -422,7 +422,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                           value={paramValues[param.name] || ''}
                       onChange={(e) => setParamValues(prev => ({ ...prev, [param.name]: e.target.value }))}
                       placeholder={`${param.name} (${param.type})`}
-                      className="w-full h-12 px-4 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full h-12 px-4 bg-muted/50 border border-border/50 rounded-xl text-foreground placeholder:text-muted-foreground text-[0.9375rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
                     />
                     <p className="mt-1 text-[0.75rem] text-muted-foreground">{param.description}</p>
                       </div>
@@ -439,7 +439,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
                     onChange={(e) => setRequestBody(e.target.value)}
                     placeholder="Enter JSON request body..."
                   rows={5}
-                  className="w-full p-4 bg-zinc-900 dark:bg-zinc-950 border border-zinc-800 rounded-xl text-success placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                  className="w-full p-4 bg-muted/50 border border-border/50 rounded-xl text-success placeholder:text-muted-foreground font-mono text-[0.8125rem] focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none transition-all duration-200"
                   />
                 </div>
               )}
@@ -448,7 +448,7 @@ const ApiTesting: React.FC<ApiTestingProps> = ({ apiKeys }) => {
               <Button
                 onClick={handleSendRequest}
                 disabled={loading || (selectedEndpoint.protected && !activeKey)}
-                className="w-full h-14 rounded-xl font-bold text-[0.9375rem]"
+                className="w-full h-14 rounded-xl font-bold text-[0.9375rem] transition-all duration-200"
               >
                 {loading ? (
                 <>
