@@ -3,8 +3,11 @@ export { BulkActionsToolbar } from './BulkActionsToolbar';
 export { ApplicationPipelineView, type PipelineApplication } from './ApplicationPipelineView';
 export { AIDecisioningPanel } from './AIDecisioningPanel';
 export { PortfolioSegmentCard, PORTFOLIO_SEGMENTS } from './PortfolioSegmentCard';
-export { 
-  UnderwritingMetricsCard, 
-  DEFAULT_UNDERWRITING_METRICS, 
-  DAILY_STATS_METRICS 
+export {
+  UnderwritingMetricsCard,
+  DEFAULT_UNDERWRITING_METRICS,
+  DAILY_STATS_METRICS
 } from './UnderwritingMetricsCard';
+export { CaseStatusStepper, SignalRow, PolicyCheckRow } from './CaseSubComponents';
+export { CaseQueueSidebar } from './CaseQueueSidebar';
+export { CaseDetailView } from './CaseDetailView';
