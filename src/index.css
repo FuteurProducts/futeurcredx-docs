@@ -110,10 +110,14 @@
     --s-subtle: rgba(123, 123, 123, 0.1);
     --s-stroke2: var(--shade-08);
 
-    /* Shadows - Enhanced for visibility */
-    --shadow-widget: 0px 5px 1.5px -4px rgba(8, 8, 8, 0.15), 0px 6px 4px -4px rgba(8, 8, 8, 0.1), 0px 12px 24px -8px rgba(8, 8, 8, 0.12);
-    --shadow-depth: 0px 8px 24px -4px rgba(8, 8, 8, 0.18), 0px 16px 32px -8px rgba(8, 8, 8, 0.14), 0px 6px 4px -4px rgba(8, 8, 8, 0.08);
-    --shadow-dropdown: 0px 4px 16px 0px rgba(0, 0, 0, 0.12), 0px 24px 24px -16px rgba(8, 8, 8, 0.08), 0px 8px 16px 0px rgba(8, 8, 8, 0.06);
+    /* Shadows - Core 2.0 Premium Values */
+    --shadow-widget: 0 2px 8px rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.06);
+    --shadow-depth: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-dropdown: 0 12px 48px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.08);
+    --shadow-menu: 0 4px 16px rgba(0,0,0,0.1);
+    --shadow-press: inset 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-glow-primary: 0 0 24px rgba(59,130,246,0.4);
+    --shadow-glow-success: 0 0 24px rgba(16,185,129,0.4);
   }
 
   .dark {
@@ -194,9 +198,12 @@
     --s-subtle: #1e1e1e;
     --s-stroke2: #282828;
 
-    /* Dark mode shadows with inset glow - Enhanced for visibility */
-    --shadow-widget: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0px 8px 16px -4px rgba(0, 0, 0, 0.4), 0px 4px 8px -2px rgba(0, 0, 0, 0.3);
-    --shadow-depth: inset 0 0 0 1px rgba(255, 255, 255, 0.1), 0px 12px 24px -4px rgba(0, 0, 0, 0.5), 0px 8px 16px -2px rgba(0, 0, 0, 0.4);
+    /* Dark mode shadows - Core 2.0 Premium Values */
+    --shadow-widget: 0 2px 8px rgba(0,0,0,0.2), 0 4px 24px rgba(0,0,0,0.3);
+    --shadow-depth: 0 8px 32px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2);
+    --shadow-dropdown: 0 12px 48px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3);
+    --shadow-menu: 0 4px 16px rgba(0,0,0,0.3);
+    --shadow-press: inset 0 2px 4px rgba(0,0,0,0.3);
   }
 }
 
@@ -302,6 +309,19 @@
 
   .card-accent-warning {
     @apply border-l-4 border-l-warning bg-gradient-to-r from-warning/5 to-transparent;
+  }
+
+  /* Glass utility with premium backdrop blur */
+  .glass {
+    background: hsl(var(--card) / 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--border) / 0.06);
+  }
+
+  .dark .glass {
+    background: hsl(var(--card) / 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.06);
   }
 }
 

@@ -615,15 +615,15 @@ const Dashboard: React.FC = () => {
                   w-full flex items-center rounded-xl text-left transition-all duration-200 group
                   ${sidebarCollapsed ? 'justify-center p-3' : 'gap-3 px-3 py-3'}
                   ${isActive
-                    ? 'bg-gradient-to-r from-white/10 to-white/5 shadow-lg shadow-black/20'
-                    : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                    ? 'bg-gradient-to-r from-primary/15 to-transparent border-l-2 border-primary shadow-lg shadow-primary/10'
+                    : 'text-slate-400 hover:bg-white/8 hover:text-white'
                   }
                 `}
               >
                 <div className={`
                   w-9 h-9 flex items-center justify-center shrink-0 rounded-lg transition-all duration-200
                   ${isActive
-                    ? `bg-gradient-to-br ${gradientClass} shadow-lg`
+                    ? `bg-gradient-to-br ${gradientClass} shadow-lg drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]`
                     : `bg-white/5 group-hover:bg-gradient-to-br group-hover:${gradientClass}`
                   }
                 `}>
@@ -670,10 +670,10 @@ const Dashboard: React.FC = () => {
 
         {/* Header - Fixed/Sticky with premium gradient */}
         <header
-          className="sticky top-0 z-[100] bg-gradient-to-r from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 border-b border-border/50 shrink-0"
+          className="sticky top-0 z-[100] bg-background/95 backdrop-blur-xl border-b border-border/50 shrink-0"
         >
-          <div 
-            className="flex items-center h-16 lg:h-20 mx-auto px-4 lg:px-10"
+          <div
+            className="flex items-center h-18 lg:h-22 mx-auto px-4 lg:px-10"
           >
             {/* Left: Hamburger (mobile) + Logo (mobile) / Back + Title (desktop) */}
             <div className="flex items-center mr-auto gap-3">
@@ -791,7 +791,7 @@ const Dashboard: React.FC = () => {
                     />
                     
                     {/* Dropdown */}
-                    <div className="absolute right-0 top-full mt-2 z-[160] w-72 bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
+                    <div className="absolute right-0 top-full mt-2 z-[160] w-72 bg-card/95 backdrop-blur-xl rounded-3xl shadow-[var(--shadow-dropdown)] border border-white/[0.08] overflow-hidden">
                       {/* User Info */}
                       <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">
@@ -818,7 +818,7 @@ const Dashboard: React.FC = () => {
                           href="https://www.lumiq.ai/contact"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors"
+                          className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-colors duration-150"
                           onClick={() => setAccountMenuOpen(false)}
                         >
                           <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
@@ -833,7 +833,7 @@ const Dashboard: React.FC = () => {
                             setActiveTab('notifications');
                             setAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors text-left"
+                          className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-colors duration-150 text-left"
                         >
                           <Bell className="w-6 h-6 text-muted-foreground" />
                           <span className="text-[0.9375rem] font-semibold text-foreground">Notifications</span>
@@ -845,7 +845,7 @@ const Dashboard: React.FC = () => {
                           tabIndex={0}
                           onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
                           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setTheme(resolvedTheme === 'dark' ? 'light' : 'dark'); }}
-                          className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-muted transition-colors cursor-pointer"
+                          className="flex items-center justify-between px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-colors duration-150 cursor-pointer"
                         >
                           <div className="flex items-center gap-4">
                             {resolvedTheme === 'dark' ? (
@@ -868,7 +868,7 @@ const Dashboard: React.FC = () => {
 
                         {/* Log out */}
                         <SignOutButton>
-                          <button className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted transition-colors text-left">
+                          <button className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-colors duration-150 text-left">
                             <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.75} viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
@@ -885,9 +885,9 @@ const Dashboard: React.FC = () => {
         </header>
 
         {/* Main Content - scrollable area below sticky header with premium background */}
-        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-900 dark:via-slate-800/50 dark:to-slate-900 relative">
+        <main className="flex-1 p-4 lg:p-8 overflow-y-auto bg-background relative">
           {/* Subtle grid pattern overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-30 dark:opacity-10" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-20 dark:opacity-[0.04]" />
           <motion.div
             key={activeTab}
             initial={{ opacity: 0, y: 10 }}
