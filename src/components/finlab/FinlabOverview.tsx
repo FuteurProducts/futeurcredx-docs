@@ -8,7 +8,6 @@ import { getDashboardKPIs } from "@/services/dashboardMetrics";
 import { logger } from "@/utils/logger";
 import { getEnrichedBusiness } from "@/data/demoData";
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
-import { DemoMetaBadge } from '@/components/shared/DemoMetaBadge';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 
 // Import enterprise components for bank staff monitoring SMB customers

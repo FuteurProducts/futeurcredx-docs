@@ -84,7 +84,7 @@ const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { getToken } = useAuth();
-  const { toast } = useToast();
+  const { toast: _toast } = useToast();
   const { resolvedTheme, setTheme } = useTheme();
   const { currentEnvironment, switchEnvironment } = useEnvironment();
 

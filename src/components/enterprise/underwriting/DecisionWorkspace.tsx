@@ -7,7 +7,6 @@ import {
   AlertCircle,
   CheckCircle,
   MessageSquare,
-  Send,
 } from 'lucide-react';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 

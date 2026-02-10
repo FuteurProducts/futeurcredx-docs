@@ -7,7 +7,8 @@ import { Clock, Database, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { BffResponse } from '@/services/bff';
 
-type BffResponseMeta = BffResponse<unknown>['meta'];
+type BffResponseMeta = Partial<Pick<BffResponse<unknown>['meta'], 'requestId'>> &
+  Omit<BffResponse<unknown>['meta'], 'requestId'>;
 
 interface DataLineageFooterProps {
   meta: BffResponseMeta;

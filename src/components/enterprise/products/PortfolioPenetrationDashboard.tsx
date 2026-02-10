@@ -16,7 +16,7 @@ import {
   mockSegmentPenetration,
   mockProductCrossSellFunnel,
 } from './mockData';
-import type { ProductsFilters, PenetrationByProduct, SegmentPenetration } from './types';
+import type { ProductsFilters } from './types';
 
 interface PortfolioPenetrationDashboardProps {
   filters: ProductsFilters;

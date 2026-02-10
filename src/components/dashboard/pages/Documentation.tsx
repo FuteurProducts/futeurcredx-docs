@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Book, ChevronRight, Search, ExternalLink, Copy, Check, ChevronDown } from 'lucide-react';
+import { Book, ChevronRight, Search, Copy, Check, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 // ---------------------------------------------------------------------------

@@ -11,243 +11,12 @@ import {
   type CustomerFilters,
   type CustomerEntity,
 } from '@/components/enterprise/customer';
-
-// Mock data for the enterprise customer system
-const mockCustomers: CustomerEntity[] = [
-  {
-    id: '1',
-    businessName: 'Apex Construction LLC',
-    industry: 'Construction',
-    naicsCode: '236220',
-    segment: 'small',
-    region: 'Northeast',
-    branch: 'NYC Downtown',
-    rhs: 88,
-    rhsChange: 12,
-    primaryProduct: 'LOC',
-    riskTier: 'low',
-    relationshipStage: 'growing',
-    lastActivity: '2024-01-15',
-    assignedRM: 'Sarah Chen',
-    totalExposure: 485000,
-    depositBalance: 485000,
-    productCount: 4,
-  },
-  {
-    id: '2',
-    businessName: 'Metro Logistics Inc',
-    industry: 'Transportation',
-    naicsCode: '484110',
-    segment: 'mid-market',
-    region: 'Midwest',
-    branch: 'Chicago Central',
-    rhs: 72,
-    rhsChange: 0,
-    primaryProduct: 'Equipment Loan',
-    riskTier: 'medium',
-    relationshipStage: 'mature',
-    lastActivity: '2024-01-12',
-    assignedRM: 'Michael Ross',
-    totalExposure: 1250000,
-    depositBalance: 1250000,
-    productCount: 6,
-  },
-  {
-    id: '3',
-    businessName: 'Sunrise Medical Group',
-    industry: 'Healthcare',
-    naicsCode: '621111',
-    segment: 'small',
-    region: 'West',
-    branch: 'LA Westside',
-    rhs: 45,
-    rhsChange: -8,
-    primaryProduct: 'Credit Card',
-    riskTier: 'high',
-    relationshipStage: 'at-risk',
-    lastActivity: '2024-01-08',
-    assignedRM: 'Jennifer Liu',
-    totalExposure: 125000,
-    depositBalance: 125000,
-    productCount: 2,
-  },
-  {
-    id: '4',
-    businessName: 'TechStart Solutions',
-    industry: 'Technology',
-    naicsCode: '541511',
-    segment: 'micro',
-    region: 'West',
-    branch: 'SF Financial',
-    rhs: 91,
-    rhsChange: 15,
-    primaryProduct: 'Checking',
-    riskTier: 'low',
-    relationshipStage: 'new',
-    lastActivity: '2024-01-18',
-    assignedRM: 'David Park',
-    totalExposure: 78000,
-    depositBalance: 78000,
-    productCount: 3,
-  },
-  {
-    id: '5',
-    businessName: 'Green Valley Farms',
-    industry: 'Agriculture',
-    naicsCode: '111000',
-    segment: 'small',
-    region: 'Midwest',
-    branch: 'Des Moines',
-    rhs: 67,
-    rhsChange: 2,
-    primaryProduct: 'SBA Loan',
-    riskTier: 'medium',
-    relationshipStage: 'mature',
-    lastActivity: '2024-01-10',
-    assignedRM: 'Robert Miller',
-    totalExposure: 340000,
-    depositBalance: 340000,
-    productCount: 5,
-  },
-  {
-    id: '6',
-    businessName: 'Coastal Hospitality Group',
-    industry: 'Hospitality',
-    naicsCode: '721110',
-    segment: 'mid-market',
-    region: 'Southeast',
-    branch: 'Miami Beach',
-    rhs: 79,
-    rhsChange: 6,
-    primaryProduct: 'CRE Loan',
-    riskTier: 'low',
-    relationshipStage: 'growing',
-    lastActivity: '2024-01-16',
-    assignedRM: 'Maria Santos',
-    totalExposure: 2100000,
-    depositBalance: 2100000,
-    productCount: 7,
-  },
-  {
-    id: '7',
-    businessName: 'Urban Retail Partners',
-    industry: 'Retail',
-    naicsCode: '445110',
-    segment: 'small',
-    region: 'Northeast',
-    branch: 'Boston Downtown',
-    rhs: 54,
-    rhsChange: -5,
-    primaryProduct: 'Merchant Services',
-    riskTier: 'high',
-    relationshipStage: 'at-risk',
-    lastActivity: '2024-01-05',
-    assignedRM: 'Thomas Wright',
-    totalExposure: 95000,
-    depositBalance: 95000,
-    productCount: 3,
-  },
-  {
-    id: '8',
-    businessName: 'Pacific Manufacturing Co',
-    industry: 'Manufacturing',
-    naicsCode: '332710',
-    segment: 'mid-market',
-    region: 'West',
-    branch: 'Seattle Industrial',
-    rhs: 83,
-    rhsChange: 7,
-    primaryProduct: 'Equipment Loan',
-    riskTier: 'low',
-    relationshipStage: 'mature',
-    lastActivity: '2024-01-17',
-    assignedRM: 'Lisa Chang',
-    totalExposure: 1850000,
-    depositBalance: 1850000,
-    productCount: 8,
-  },
-];
-
-const mockHealthSummary = {
-  avgRHS: 74,
-  rhsTrend: 2.3,
-  growingPercentage: 28,
-  growingTrend: 4.1,
-  atRiskPercentage: 12,
-  atRiskTrend: -1.8,
-  crossSellPenetration: 42,
-  crossSellTrend: 3.2,
-  topOpportunities: [
-    { id: '1', businessName: 'Apex Construction LLC', opportunity: 'LOC Expansion', estimatedValue: 2400000 },
-    { id: '2', businessName: 'Metro Logistics Inc', opportunity: 'Merchant Services', estimatedValue: 890000 },
-    { id: '3', businessName: 'Pacific Manufacturing Co', opportunity: 'Equipment Refinancing', estimatedValue: 1100000 },
-  ],
-  rhsTrendData: [
-    { date: 'Jul', value: 68 },
-    { date: 'Aug', value: 70 },
-    { date: 'Sep', value: 71 },
-    { date: 'Oct', value: 72 },
-    { date: 'Nov', value: 73 },
-    { date: 'Dec', value: 74 },
-  ],
-};
-
-const mockLifecycleStages = [
-  { id: 'prospect' as const, label: 'Prospect', count: 342, avgRHS: 0, avgRevenue: 0, avgProductCount: 0, trend: 5.2 },
-  { id: 'new' as const, label: 'New', count: 186, avgRHS: 68, avgRevenue: 45000, avgProductCount: 1.8, trend: 12.4 },
-  { id: 'growing' as const, label: 'Growing', count: 524, avgRHS: 82, avgRevenue: 125000, avgProductCount: 3.2, trend: 8.1 },
-  { id: 'mature' as const, label: 'Mature', count: 1247, avgRHS: 76, avgRevenue: 285000, avgProductCount: 4.8, trend: 2.3 },
-  { id: 'at-risk' as const, label: 'At Risk', count: 89, avgRHS: 48, avgRevenue: 95000, avgProductCount: 2.1, trend: -15.2 },
-];
-
-const mockRecommendations = [
-  {
-    id: '1',
-    type: 'loc-increase' as const,
-    title: 'Increase Line of Credit by 60%',
-    description: 'Based on strong cash flow and low utilization, recommend increasing LOC from $75K to $120K.',
-    rationale: [
-      'Cash flow stability improved 23% YoY',
-      'Current LOC utilization at 28% (well below 50% threshold)',
-      'Deposit balance grew 15% last quarter',
-    ],
-    confidenceScore: 92,
-    riskAdjustedConfidence: 87,
-    estimatedRevenueImpact: 45000,
-    priority: 'high' as const,
-    expiresIn: '5 days',
-  },
-  {
-    id: '2',
-    type: 'pre-qualify' as const,
-    title: 'Pre-qualify for Equipment Loan',
-    description: 'Customer profile matches equipment financing criteria for construction industry.',
-    rationale: [
-      'Industry sector showing strong growth',
-      'Credit score in top quartile',
-      'No existing equipment financing',
-    ],
-    confidenceScore: 85,
-    riskAdjustedConfidence: 78,
-    estimatedRevenueImpact: 28000,
-    priority: 'medium' as const,
-  },
-  {
-    id: '3',
-    type: 'merchant-migration' as const,
-    title: 'Propose Merchant Services Migration',
-    description: 'Currently using third-party processor. Strong candidate for migration.',
-    rationale: [
-      'Monthly transaction volume of $125K',
-      'Can reduce fees by 0.15%',
-      'Already has checking relationship',
-    ],
-    confidenceScore: 79,
-    riskAdjustedConfidence: 72,
-    estimatedRevenueImpact: 18000,
-    priority: 'medium' as const,
-  },
-];
+import {
+  MOCK_CUSTOMERS,
+  MOCK_HEALTH_SUMMARY,
+  MOCK_LIFECYCLE_STAGES,
+  MOCK_RECOMMENDATIONS,
+} from '@/data/customerPageDemoData';
 
 const Customer: React.FC = () => {
   const [filters, setFilters] = useState<CustomerFilters>({
@@ -268,7 +37,7 @@ const Customer: React.FC = () => {
   const [showDossier, setShowDossier] = useState(false);
   const [dossierCustomer, setDossierCustomer] = useState<CustomerEntity | null>(null);
 
-  const selectedCustomer = mockCustomers.find(c => c.id === selectedCustomerId);
+  const selectedCustomer = MOCK_CUSTOMERS.find(c => c.id === selectedCustomerId);
 
   const handleFiltersChange = (newFilters: CustomerFilters) => {
     setFilters(newFilters);
@@ -279,10 +48,10 @@ const Customer: React.FC = () => {
   };
 
   const handleSelectAll = () => {
-    if (selectedIds.length === mockCustomers.length) {
+    if (selectedIds.length === MOCK_CUSTOMERS.length) {
       setSelectedIds([]);
     } else {
-      setSelectedIds(mockCustomers.map(c => c.id));
+      setSelectedIds(MOCK_CUSTOMERS.map(c => c.id));
     }
   };
 
@@ -333,7 +102,7 @@ const Customer: React.FC = () => {
   };
 
   // Filter customers based on current filters
-  const filteredCustomers = mockCustomers.filter((c) => {
+  const filteredCustomers = MOCK_CUSTOMERS.filter((c) => {
     if (filters.segment.length > 0 && !filters.segment.includes(c.segment)) return false;
     if (filters.relationshipStage.length > 0 && !filters.relationshipStage.includes(c.relationshipStage)) return false;
     if (filters.region.length > 0 && !filters.region.some(r => c.region.toLowerCase().includes(r.toLowerCase()))) return false;
@@ -454,7 +223,7 @@ const Customer: React.FC = () => {
     ],
   } : null;
 
-  const totalClients = mockLifecycleStages.reduce((sum, stage) => sum + stage.count, 0);
+  const totalClients = MOCK_LIFECYCLE_STAGES.reduce((sum, stage) => sum + stage.count, 0);
 
   return (
     <div className="space-y-6">
@@ -462,14 +231,14 @@ const Customer: React.FC = () => {
       <CustomerGlobalControls filters={filters} onFiltersChange={handleFiltersChange} />
 
       {/* Lifecycle Pipeline */}
-      <LifecyclePipeline 
-        stages={mockLifecycleStages} 
+      <LifecyclePipeline
+        stages={MOCK_LIFECYCLE_STAGES}
         onStageClick={handleStageClick}
         totalClients={totalClients}
       />
 
       {/* Relationship Health Summary */}
-      <RelationshipHealthSummary data={mockHealthSummary} onDrilldown={handleDrilldown} />
+      <RelationshipHealthSummary data={MOCK_HEALTH_SUMMARY} onDrilldown={handleDrilldown} />
 
       {/* Main Content Area */}
       <div className="grid grid-cols-12 gap-6">
@@ -500,7 +269,7 @@ const Customer: React.FC = () => {
           ) : (
             <div className="bg-card rounded-xl border border-border p-8 h-full flex items-center justify-center min-h-[400px]">
               <div className="text-center text-muted-foreground">
-                <div className="text-4xl mb-3">👈</div>
+                <div className="text-4xl mb-3">&#x1F448;</div>
                 <p className="font-medium">Select a customer</p>
                 <p className="text-sm">View engagement details and product footprint</p>
               </div>
@@ -511,15 +280,15 @@ const Customer: React.FC = () => {
         {/* Right: Next Best Actions */}
         <div className="col-span-12 xl:col-span-3">
           {selectedCustomer ? (
-            <NextBestActions 
-              recommendations={mockRecommendations}
+            <NextBestActions
+              recommendations={MOCK_RECOMMENDATIONS}
               onAssignTask={handleAssignTask}
               onDismiss={handleDismissRecommendation}
             />
           ) : (
             <div className="bg-card rounded-xl border border-border p-8 h-full flex items-center justify-center min-h-[400px]">
               <div className="text-center text-muted-foreground">
-                <div className="text-4xl mb-3">🎯</div>
+                <div className="text-4xl mb-3">&#x1F3AF;</div>
                 <p className="font-medium">AI Recommendations</p>
                 <p className="text-sm">Select a customer to see actions</p>
               </div>
@@ -530,7 +299,7 @@ const Customer: React.FC = () => {
 
       {/* Peer Benchmarking - Shows when customer selected */}
       {peerData && (
-        <PeerBenchmarking 
+        <PeerBenchmarking
           currentBusiness={peerData.currentBusiness}
           peerGroup={peerData.peerGroup}
           metrics={peerData.metrics}
@@ -540,8 +309,8 @@ const Customer: React.FC = () => {
 
       {/* Customer Dossier Modal */}
       {showDossier && dossierData && (
-        <CustomerDossier 
-          customer={dossierData} 
+        <CustomerDossier
+          customer={dossierData}
           onClose={handleCloseDossier}
           onAddNote={handleAddNote}
         />
