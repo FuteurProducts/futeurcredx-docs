@@ -5,21 +5,21 @@ import { useUser, useAuth } from '@/contexts/AuthContext'
 import SignOutButton from '@/components/SignOutButton'
 import { ApiConsole } from '@/components/api-console';
 import {
-  Home, Lightbulb, FileText, Eye, Briefcase,
-  KeyRound, Link2, TrendingUp, Package, Building2,
+  Home, Lightbulb, FileText, Eye, Layers,
+  KeyRound, Link2, Megaphone, Package, Building2,
   BarChart3, SlidersHorizontal, Bell, Book,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 import type { ApiStats, ApiKey } from '@/types';
-import Analytics from '@/pages/Dashboard/Analytics';
 import Users from '@/pages/Dashboard/Users';
 import Products from '@/pages/Dashboard/Products';
 import Reports from '@/pages/Dashboard/Reports';
-import CreditIntelligence from '@/pages/Dashboard/CreditIntelligence';
-import UnderwritingAssistant from '@/pages/Dashboard/UnderwritingAssistant';
-import Risk from '@/pages/Dashboard/Risk';
-import Customer from '@/pages/Dashboard/Customer';
+import CreditIntelligence from '@/components/dashboard/pages/CreditIntelligence';
+import UnderwritingQueue from '@/components/dashboard/pages/UnderwritingQueue';
+import Risk from '@/components/dashboard/pages/Risk';
+import Campaigns from '@/components/dashboard/pages/Campaigns';
+import SegmentExplorer from '@/components/dashboard/pages/SegmentExplorer';
 import Notifications from '@/pages/Dashboard/Notifications';
 import { PartnerPortalEnterprise } from '@/components/partner-portal';
 import Settings from '@/pages/Dashboard/Settings';
@@ -66,10 +66,10 @@ const navigation: { id: string; title: string; icon: LucideIcon }[] = [
   { id: 'credit-intel', title: 'Credit Intelligence', icon: Lightbulb },
   { id: 'underwriting', title: 'Underwriting', icon: FileText },
   { id: 'risk', title: 'Risk', icon: Eye },
-  { id: 'customer', title: 'Customer', icon: Briefcase },
+  { id: 'campaigns', title: 'Campaigns', icon: Megaphone },
+  { id: 'segments', title: 'Segment Explorer', icon: Layers },
   { id: 'api-keys', title: 'API Console', icon: KeyRound },
   { id: 'partner-portal', title: 'Partner Portal', icon: Link2 },
-  { id: 'analytics', title: 'Analytics', icon: TrendingUp },
   { id: 'products', title: 'Products', icon: Package },
   { id: 'users', title: 'Businesses', icon: Building2 },
   { id: 'reports', title: 'Reports', icon: BarChart3 },
@@ -497,9 +497,7 @@ const Dashboard: React.FC = () => {
   }
 
   const currentTitle = (
-    activeTab === 'customer'
-      ? 'Customer Engagement'
-      : navigation.find(n => n.id === activeTab)?.title || 'Dashboard'
+    navigation.find(n => n.id === activeTab)?.title || 'Dashboard'
   )
 
 
@@ -920,11 +918,11 @@ const Dashboard: React.FC = () => {
           )}
 
             {activeTab === 'credit-intel' && <CreditIntelligence />}
-            {activeTab === 'underwriting' && <UnderwritingAssistant />}
+            {activeTab === 'underwriting' && <UnderwritingQueue />}
             {activeTab === 'risk' && <Risk />}
-            {activeTab === 'customer' && <Customer />}
+            {activeTab === 'campaigns' && <Campaigns />}
+            {activeTab === 'segments' && <SegmentExplorer />}
             {activeTab === 'partner-portal' && <PartnerPortalEnterprise />}
-            {activeTab === 'analytics' && <Analytics />}
             {activeTab === 'products' && <Products />}
             {activeTab === 'users' && <Users />}
             {activeTab === 'reports' && <Reports />}
