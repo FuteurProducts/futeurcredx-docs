@@ -1,0 +1,671 @@
+{
+  "bank": "chase",
+  "research_date": "2026-02-11",
+  "bank_config": {
+    "name": "Chase for Business",
+    "display_name": "Chase",
+    "legal_name": "JPMorgan Chase Bank, N.A.",
+    "primary_color": "#117ACA",
+    "secondary_color": "#004B87",
+    "accent_color": "#211E1E"
+  },
+  "products": [
+    {
+      "id": "business-complete-checking",
+      "name": "Chase Business Complete Banking",
+      "category": "deposit",
+      "credit_range": null,
+      "target_segment": "small_business_startups",
+      "annual_fee": 0,
+      "monthly_fee": 15,
+      "monthly_fee_waiver": "$2,000 minimum daily balance or linked Chase Private Client Checking",
+      "key_features": [
+        "No minimum opening deposit",
+        "Unlimited fee-free electronic and debit card transactions",
+        "Up to 250 fee-free deposited items per month",
+        "$20,000 in fee-free cash deposits per month",
+        "No overdraft fee unless overdrawn by more than $50",
+        "24-hour grace period for overdrafts beyond $50",
+        "Access to 14,000 Chase ATMs and 5,000 branches",
+        "Zelle payments included",
+        "Free digital invoicing solution",
+        "Tap to Pay on iPhone via Chase QuickAccept"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity or sole proprietorship",
+        "EIN or SSN for sole proprietors",
+        "US-based business"
+      ],
+      "cross_sell_from": ["new_business_formation"],
+      "cross_sell_to": ["ink-business-unlimited", "business-line-of-credit"],
+      "conversion_rate_benchmark": 0.08
+    },
+    {
+      "id": "performance-business-checking",
+      "name": "Chase Performance Business Checking",
+      "category": "deposit",
+      "credit_range": null,
+      "target_segment": "growing_businesses",
+      "annual_fee": 0,
+      "monthly_fee": 40,
+      "monthly_fee_waiver": "$35,000 average daily balance across linked business accounts",
+      "key_features": [
+        "Unlimited electronic transactions",
+        "250 fee-free teller/paper transactions per month",
+        "$20,000 in fee-free cash deposits per month",
+        "Access to 14,000 Chase ATMs and 5,000 branches",
+        "Advanced digital banking tools",
+        "Business debit card with employee cards available"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity",
+        "EIN required",
+        "US-based business"
+      ],
+      "cross_sell_from": ["business-complete-checking"],
+      "cross_sell_to": ["ink-business-preferred", "business-line-of-credit"],
+      "conversion_rate_benchmark": 0.05
+    },
+    {
+      "id": "platinum-business-checking",
+      "name": "Chase Platinum Business Checking",
+      "category": "deposit",
+      "credit_range": null,
+      "target_segment": "established_high_volume",
+      "annual_fee": 0,
+      "monthly_fee": 95,
+      "monthly_fee_waiver": "$100,000 combined average daily balance OR $50,000 balance + linked Chase Private Client Checking",
+      "key_features": [
+        "Unlimited electronic transactions",
+        "500 fee-free teller/paper transactions per month",
+        "$25,000 in fee-free cash deposits per month",
+        "Premium relationship management",
+        "Access to 14,000 Chase ATMs and 5,000 branches",
+        "Priority customer service",
+        "Enhanced fraud protection"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity",
+        "EIN required",
+        "Higher revenue requirements",
+        "US-based business"
+      ],
+      "cross_sell_from": ["performance-business-checking"],
+      "cross_sell_to": ["ink-business-premier", "sba-loans"],
+      "conversion_rate_benchmark": 0.04
+    },
+    {
+      "id": "business-total-savings",
+      "name": "Chase Business Total Savings",
+      "category": "deposit",
+      "credit_range": null,
+      "target_segment": "small_business",
+      "annual_fee": 0,
+      "monthly_fee": 10,
+      "monthly_fee_waiver": "$1,000 average balance or linked qualifying account",
+      "key_features": [
+        "Interest-earning account",
+        "Up to 15 fee-free deposited items per month",
+        "$5,000 in fee-free cash deposits per month",
+        "Autosave automatic transfers",
+        "Online and mobile banking access",
+        "Relationship rates available with qualifying checking"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity or sole proprietorship",
+        "US-based business"
+      ],
+      "cross_sell_from": ["business-complete-checking"],
+      "cross_sell_to": ["business-premier-savings"],
+      "conversion_rate_benchmark": 0.12
+    },
+    {
+      "id": "business-premier-savings",
+      "name": "Chase Business Premier Savings",
+      "category": "deposit",
+      "credit_range": null,
+      "target_segment": "established_businesses",
+      "annual_fee": 0,
+      "monthly_fee": 20,
+      "monthly_fee_waiver": "$25,000 average balance or linked qualifying account",
+      "key_features": [
+        "Enhanced interest rates",
+        "Higher allowance for deposited items",
+        "Higher cash deposit limits",
+        "Relationship rates with qualifying checking",
+        "Autosave automatic transfers",
+        "Advanced online and mobile banking"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity",
+        "EIN required",
+        "US-based business"
+      ],
+      "cross_sell_from": ["performance-business-checking", "platinum-business-checking"],
+      "cross_sell_to": ["business-cds"],
+      "conversion_rate_benchmark": 0.06
+    },
+    {
+      "id": "ink-business-unlimited",
+      "name": "Ink Business Unlimited Credit Card",
+      "category": "credit_card",
+      "credit_range": {
+        "min": 5000,
+        "max": 50000
+      },
+      "target_segment": "small_business_everyday",
+      "annual_fee": 0,
+      "key_features": [
+        "Unlimited 1.5% cash back on every purchase",
+        "$750 bonus after $6,000 spend in first 3 months",
+        "No annual fee",
+        "Employee cards at no additional cost",
+        "Purchase protection and extended warranty",
+        "Cell phone protection up to $600",
+        "0% intro APR on purchases for 12 months"
+      ],
+      "eligibility_criteria": [
+        "Good to excellent credit (FICO 670+)",
+        "At least 1 year in business",
+        "Annual revenue varies by applicant",
+        "US-based business"
+      ],
+      "cross_sell_from": ["business-complete-checking", "new_business_formation"],
+      "cross_sell_to": ["ink-business-preferred", "business-line-of-credit"],
+      "conversion_rate_benchmark": 0.15
+    },
+    {
+      "id": "ink-business-cash",
+      "name": "Ink Business Cash Credit Card",
+      "category": "credit_card",
+      "credit_range": {
+        "min": 5000,
+        "max": 50000
+      },
+      "target_segment": "small_business_category_spenders",
+      "annual_fee": 0,
+      "key_features": [
+        "5% cash back on first $25,000 spent in combined categories (office supplies, internet/cable/phone, gas stations)",
+        "2% cash back on first $25,000 at gas stations and restaurants",
+        "1% cash back on all other purchases",
+        "Up to $750 bonus ($350 after $3K spend in 3 months + $400 after $6K spend in 6 months)",
+        "No annual fee",
+        "0% intro APR on purchases for 12 months"
+      ],
+      "eligibility_criteria": [
+        "Good to excellent credit (FICO 670+)",
+        "At least 1 year in business",
+        "US-based business"
+      ],
+      "cross_sell_from": ["business-complete-checking"],
+      "cross_sell_to": ["ink-business-preferred"],
+      "conversion_rate_benchmark": 0.12
+    },
+    {
+      "id": "ink-business-preferred",
+      "name": "Ink Business Preferred Credit Card",
+      "category": "credit_card",
+      "credit_range": {
+        "min": 10000,
+        "max": 500000
+      },
+      "target_segment": "established_high_spend",
+      "annual_fee": 95,
+      "key_features": [
+        "3X points on first $150,000 in combined travel, shipping, internet/cable/phone, and advertising purchases",
+        "90,000 bonus points after $8,000 spend in first 3 months",
+        "Points worth 25% more when redeemed for travel through Chase Ultimate Rewards",
+        "Cell phone protection up to $600",
+        "Purchase protection and extended warranty",
+        "Trip cancellation/interruption insurance",
+        "Primary auto rental collision damage waiver"
+      ],
+      "eligibility_criteria": [
+        "Excellent credit (FICO 720+)",
+        "At least 2 years in business",
+        "Strong annual revenue ($250K+)",
+        "US-based business"
+      ],
+      "cross_sell_from": ["performance-business-checking", "ink-business-unlimited"],
+      "cross_sell_to": ["ink-business-premier", "sba-loans"],
+      "conversion_rate_benchmark": 0.03
+    },
+    {
+      "id": "ink-business-premier",
+      "name": "Ink Business Premier Credit Card",
+      "category": "credit_card",
+      "credit_range": {
+        "min": 10000,
+        "max": 100000
+      },
+      "target_segment": "high_spend_businesses",
+      "annual_fee": 195,
+      "key_features": [
+        "2.5% cash back on every purchase of $5,000 or more",
+        "2% cash back on all other business purchases",
+        "$1,000 bonus after $10,000 spend in first 3 months",
+        "Flexible spending limit (charge card model)",
+        "Must pay balance in full each month",
+        "Cell phone protection up to $1,000",
+        "Purchase protection and extended warranty",
+        "Primary auto rental collision damage waiver"
+      ],
+      "eligibility_criteria": [
+        "Excellent credit (FICO 740+)",
+        "At least 2 years in business",
+        "High annual revenue ($500K+)",
+        "Strong cash flow to pay balance monthly",
+        "US-based business"
+      ],
+      "cross_sell_from": ["platinum-business-checking", "ink-business-preferred"],
+      "cross_sell_to": ["term-loans"],
+      "conversion_rate_benchmark": 0.02
+    },
+    {
+      "id": "business-line-of-credit",
+      "name": "Chase Business Line of Credit",
+      "category": "line_of_credit",
+      "credit_range": {
+        "min": 10000,
+        "max": 500000
+      },
+      "target_segment": "established_businesses",
+      "annual_fee": 200,
+      "annual_fee_details": "$200 or 0.25% of approved line (whichever is greater, max $750); waived after year 1 if 40%+ utilization",
+      "key_features": [
+        "Revolving credit access up to $500,000",
+        "Draw funds as needed, pay interest only on what you use",
+        "Variable interest rates based on creditworthiness",
+        "No origination fee for lines under $500K",
+        "Annual fee waived after year 1 with 40%+ utilization",
+        "Flexible repayment terms",
+        "Online account management"
+      ],
+      "eligibility_criteria": [
+        "At least 2 years in business",
+        "Same majority ownership for 2+ years",
+        "Strong credit history",
+        "Stable revenue and cash flow",
+        "US-based business"
+      ],
+      "cross_sell_from": ["performance-business-checking", "ink-business-preferred"],
+      "cross_sell_to": ["term-loans", "equipment-financing"],
+      "conversion_rate_benchmark": 0.04
+    },
+    {
+      "id": "commercial-line-of-credit",
+      "name": "Chase Commercial Line of Credit",
+      "category": "line_of_credit",
+      "credit_range": {
+        "min": 500000,
+        "max": 5000000
+      },
+      "target_segment": "large_businesses",
+      "annual_fee": 0,
+      "origination_fee": "0.15% of line amount (max $3,000)",
+      "key_features": [
+        "Large credit lines over $500,000",
+        "2-year revolving term",
+        "Variable interest rates",
+        "Origination fee 0.15% (max $3,000)",
+        "Dedicated relationship manager",
+        "Treasury management integration"
+      ],
+      "eligibility_criteria": [
+        "At least 3 years in business",
+        "Strong financial statements",
+        "High annual revenue ($2M+)",
+        "Excellent credit profile",
+        "US-based business"
+      ],
+      "cross_sell_from": ["platinum-business-checking"],
+      "cross_sell_to": ["commercial-real-estate-loans"],
+      "conversion_rate_benchmark": 0.02
+    },
+    {
+      "id": "sba-7a-loan",
+      "name": "SBA 7(a) Loan",
+      "category": "sba_loan",
+      "credit_range": {
+        "min": 50000,
+        "max": 5000000
+      },
+      "target_segment": "growing_businesses",
+      "annual_fee": 0,
+      "key_features": [
+        "Up to $5 million loan amount",
+        "SBA guarantee reduces lender risk",
+        "Flexible use: equipment, inventory, working capital, expansion, debt consolidation",
+        "Fixed and variable interest rate options",
+        "Up to 25 years for commercial real estate",
+        "Up to 10 years for other purposes",
+        "Chase is SBA Preferred Lender for faster approvals"
+      ],
+      "eligibility_criteria": [
+        "At least 2 years in business",
+        "Good to excellent credit",
+        "Strong financial statements",
+        "Business purpose qualifies under SBA guidelines",
+        "US-based small business",
+        "Owner equity investment required"
+      ],
+      "cross_sell_from": ["performance-business-checking", "ink-business-preferred"],
+      "cross_sell_to": ["business-line-of-credit"],
+      "conversion_rate_benchmark": 0.03
+    },
+    {
+      "id": "sba-504-loan",
+      "name": "SBA 504 Loan",
+      "category": "sba_loan",
+      "credit_range": {
+        "min": 100000,
+        "max": 5500000
+      },
+      "target_segment": "real_estate_equipment",
+      "annual_fee": 0,
+      "key_features": [
+        "Up to $5.5 million for commercial real estate or equipment",
+        "Long-term fixed-rate financing",
+        "Structured with 50% conventional loan, 40% SBA-backed loan, 10% down payment",
+        "Lower down payment than conventional loans",
+        "Up to 25 year terms",
+        "Promotes economic development and job creation"
+      ],
+      "eligibility_criteria": [
+        "At least 2 years in business",
+        "Good credit history",
+        "Purchase of fixed assets (real estate, equipment)",
+        "Owner-occupied property (51%+ occupancy)",
+        "US-based small business",
+        "Job creation or retention goals"
+      ],
+      "cross_sell_from": ["platinum-business-checking", "sba-7a-loan"],
+      "cross_sell_to": ["commercial-real-estate-loans"],
+      "conversion_rate_benchmark": 0.02
+    },
+    {
+      "id": "sba-express-line",
+      "name": "SBA Express Line of Credit",
+      "category": "sba_loan",
+      "credit_range": {
+        "min": 25000,
+        "max": 500000
+      },
+      "target_segment": "small_business_fast_access",
+      "annual_fee": 0,
+      "key_features": [
+        "Up to $500,000 line of credit",
+        "Faster SBA approval process",
+        "Revolving credit access",
+        "7-year term with annual renewals",
+        "Variable interest rates",
+        "Flexible use for working capital needs"
+      ],
+      "eligibility_criteria": [
+        "At least 2 years in business",
+        "Good credit (FICO 680+)",
+        "Annual revenue requirements vary",
+        "SBA size standards apply",
+        "US-based business"
+      ],
+      "cross_sell_from": ["business-complete-checking", "performance-business-checking"],
+      "cross_sell_to": ["sba-7a-loan"],
+      "conversion_rate_benchmark": 0.04
+    },
+    {
+      "id": "term-loan",
+      "name": "Chase Business Term Loan",
+      "category": "term_loan",
+      "credit_range": {
+        "min": 25000,
+        "max": 500000
+      },
+      "target_segment": "established_businesses",
+      "annual_fee": 0,
+      "key_features": [
+        "Fixed loan amounts up to $500,000",
+        "Fixed and variable interest rate options",
+        "Terms up to 10 years",
+        "Predictable monthly payments",
+        "Use for equipment, expansion, working capital",
+        "Apply in-branch or through business relationship manager"
+      ],
+      "eligibility_criteria": [
+        "At least 2 years in business",
+        "Good credit history",
+        "Strong revenue and cash flow",
+        "Business purpose required",
+        "US-based business"
+      ],
+      "cross_sell_from": ["performance-business-checking", "business-line-of-credit"],
+      "cross_sell_to": ["equipment-financing"],
+      "conversion_rate_benchmark": 0.03
+    },
+    {
+      "id": "equipment-financing",
+      "name": "Chase Equipment Financing",
+      "category": "equipment_financing",
+      "credit_range": {
+        "min": 25000,
+        "max": 1000000
+      },
+      "target_segment": "equipment_purchase",
+      "annual_fee": 0,
+      "key_features": [
+        "Financing for business equipment purchase or refinancing",
+        "Equipment serves as collateral",
+        "Terms aligned with equipment useful life",
+        "Fixed and variable rates available",
+        "100% financing available for qualified borrowers",
+        "Fast approval process"
+      ],
+      "eligibility_criteria": [
+        "At least 2 years in business",
+        "Good credit",
+        "Equipment must be for business use",
+        "Equipment appraisal may be required",
+        "US-based business"
+      ],
+      "cross_sell_from": ["term-loan", "sba-7a-loan"],
+      "cross_sell_to": ["business-line-of-credit"],
+      "conversion_rate_benchmark": 0.04
+    },
+    {
+      "id": "chase-quickaccept",
+      "name": "Chase QuickAccept",
+      "category": "merchant_services",
+      "credit_range": null,
+      "target_segment": "small_mobile_businesses",
+      "annual_fee": 0,
+      "hardware_cost": "$49 base, $99 card reader, or $129 bundle",
+      "key_features": [
+        "Flat-rate pricing: 2.6% + 10¢ for card present",
+        "3.5% + 10¢ for keyed-in transactions",
+        "Accepts all major cards and digital wallets",
+        "Tap to Pay on iPhone (no hardware needed)",
+        "Same-day deposits with Chase business checking (no fee)",
+        "No monthly fees or long-term contracts",
+        "Mobile app for payment processing"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity or sole proprietorship",
+        "US-based business",
+        "Chase business checking account recommended"
+      ],
+      "cross_sell_from": ["business-complete-checking"],
+      "cross_sell_to": ["chase-payment-solutions"],
+      "conversion_rate_benchmark": 0.18
+    },
+    {
+      "id": "chase-payment-solutions",
+      "name": "Chase Payment Solutions",
+      "category": "merchant_services",
+      "credit_range": null,
+      "target_segment": "established_omnichannel",
+      "annual_fee": 0,
+      "key_features": [
+        "Full merchant services suite",
+        "In-store, online, and mobile payment acceptance",
+        "Standard rates: 2.6% + 10¢ card present, 2.9% + 25¢ e-commerce",
+        "Advanced analytics and reporting",
+        "Customer insights and sales trends",
+        "PCI compliance support",
+        "HIPAA-compliant solution (InstaMed) for healthcare",
+        "Integration with business checking for fast deposits",
+        "24/7 customer support"
+      ],
+      "eligibility_criteria": [
+        "Valid business entity",
+        "Established business with processing history",
+        "US-based business",
+        "Underwriting approval required"
+      ],
+      "cross_sell_from": ["performance-business-checking", "chase-quickaccept"],
+      "cross_sell_to": ["business-line-of-credit"],
+      "conversion_rate_benchmark": 0.06
+    }
+  ],
+  "strategy": {
+    "priorities": [
+      "Digital transformation with $18B technology investment in 2025",
+      "AI integration across all processes (trading, research, customer service)",
+      "Cloud-first infrastructure (80% apps migrated, 90% analytics in cloud)",
+      "Small business market dominance with 4.4M clients",
+      "Branch network expansion in new markets",
+      "Omnichannel digital-physical 'flywheel' strategy",
+      "Enhanced payment solutions and merchant services",
+      "Employee ownership and small business community support"
+    ],
+    "recent_initiatives": [
+      "Digital invoicing solution for Business Complete Banking customers (May 2024)",
+      "Tap to Pay on iPhone via Chase QuickAccept (2024)",
+      "Ink Business Premier credit card launch (2024)",
+      "$1.3M in grants for Boston small businesses (June 2025)",
+      "Coaching for Impact program expansion to 82 consultants in 38 cities",
+      "Fintech data access agreements with Plaid, Yodlee, Morningstar, Akoya",
+      "Special Purpose Credit Program for underserved areas",
+      "J.P. Morgan Access and Chase Connect ranked #1 in digital transformation study"
+    ],
+    "technology_investments": [
+      "$17B technology budget in 2024, $18B in 2025",
+      "AI embedded in all processes with 50%+ employee daily usage",
+      "Cloud migration: 80% of apps, 90% of analytics data",
+      "Fintech Forward Programme accelerator for emerging innovations",
+      "Enhanced digital banking platforms rated #1 for small business",
+      "Advanced payment processing and merchant analytics",
+      "API ecosystem with hundreds of third-party integrations",
+      "Cybersecurity and fraud prevention infrastructure"
+    ],
+    "ceo_quotes": [
+      "AI will be embedded in every one of the bank's processes, including trading, research, equity hedging and customer service. - Jamie Dimon",
+      "Companies that invest during times of stress and uncertainty will likely emerge stronger, faster, and more capable than those that retreat. - Jamie Dimon",
+      "What matters most is hiring people who are resilient, curious, and capable of navigating ambiguity. Those are the ones who thrive when things get tough. - Jamie Dimon",
+      "You can't run a business as if you know the future—you need to be agile, efficient, and ready to pivot when conditions change. - Jamie Dimon"
+    ],
+    "partnership_strategy": [
+      "Fintech ecosystem with 95%+ of data pull agreements signed",
+      "Strategic partnerships with payment processors and technology firms",
+      "Payments Partnership team for global fintech engagement",
+      "12-week accelerator programs for emerging fintechs",
+      "Banking-as-a-Service capabilities for fintech integration"
+    ]
+  },
+  "competitive": {
+    "market_share_ranking": 1,
+    "market_share_details": {
+      "small_business_clients": "4.4 million (70% consider Chase their primary bank)",
+      "total_business_clients": "6 million small businesses",
+      "retail_deposit_share": "11.3% nationally (goal: 15%)",
+      "total_assets_market_share": "8.56%",
+      "sba_lending": "1,900+ SBA 7(a) loans approved in FY2025, totaling $590.5M",
+      "population_coverage": "68% of U.S. population via branch network"
+    },
+    "advantages": [
+      "Largest branch network: 5,000 branches, 14,000+ ATMs across 48 states",
+      "Market leadership in small business banking with 4.4M clients",
+      "Digital excellence: #1 rankings in online banking and digital transformation",
+      "Integrated omnichannel 'flywheel' strategy (digital + physical)",
+      "SBA Preferred Lender status for faster loan approvals",
+      "Comprehensive product suite from deposits to merchant services",
+      "Technology leadership with $18B annual investment",
+      "Strong brand recognition and trust",
+      "Same-day deposits for merchant services with Chase checking",
+      "Extensive payment acceptance network (50%+ of U.S. merchants)"
+    ],
+    "weaknesses": [
+      "Higher monthly fees compared to online-only competitors",
+      "Strict balance requirements to waive fees",
+      "In-person application requirements for some loan products",
+      "Longer underwriting timelines compared to fintech lenders",
+      "Limited business savings account interest rates",
+      "Complex fee structures on some products",
+      "High annual fees on premium credit cards"
+    ],
+    "key_competitors": [
+      "Wells Fargo",
+      "Bank of America",
+      "U.S. Bank",
+      "PNC Bank",
+      "Capital One",
+      "Live Oak Bank (SBA lending leader)",
+      "Huntington Bank",
+      "Fintech lenders (28% of new originations)",
+      "Square/Block",
+      "Stripe",
+      "Brex",
+      "Ramp"
+    ],
+    "fintech_threats": [
+      "Fintech lenders now capture 28% of new small business loan originations (up from 19% in 2016)",
+      "Faster approval processes by fintechs (hours vs. days/weeks for banks)",
+      "Alternative credit assessment models (cash flow analysis vs. credit scores)",
+      "Lower operational costs enable competitive pricing",
+      "Superior user experience and mobile-first design",
+      "Specialized vertical solutions for specific industries",
+      "Embedded finance through software platforms",
+      "However: Chase charging fintech firms for data access shifts power dynamic back to banks"
+    ],
+    "competitive_response": [
+      "Signed data access agreements with major fintechs, charging for API access",
+      "Launched digital-first products like Tap to Pay on iPhone",
+      "Invested heavily in AI and automation to match fintech speed",
+      "Enhanced digital banking platforms to #1 rankings",
+      "Maintained branch network as competitive advantage for deposits and trust",
+      "Leveraged scale to offer competitive merchant services pricing",
+      "Built fintech partnership ecosystem rather than pure competition"
+    ]
+  },
+  "sources": [
+    "https://www.chase.com/business",
+    "https://www.chase.com/business/banking/checking",
+    "https://creditcards.chase.com/business-credit-cards/ink",
+    "https://www.chase.com/business/banking/loans",
+    "https://www.chase.com/business/banking/loans/business-line-of-credit",
+    "https://www.chase.com/business/banking/loans/sba-financing",
+    "https://www.chase.com/business/payments",
+    "https://www.nerdwallet.com/reviews/small-business/chase-business-loans",
+    "https://www.nerdwallet.com/reviews/small-business/chase-business-checking",
+    "https://media.chase.com/news/chase-announces-new-digital-products-to-help-small-businesses-grow",
+    "https://media.chase.com/news/jpmc-strengthens-commitment-to-bostons-small-businesses",
+    "https://www.jpmorgan.com/about-us/corporate-news/2025/2025-business-leaders-outlook",
+    "https://finance.yahoo.com/news/jpmorgan-chase-digital-transformation-strategy-080400648.html",
+    "https://thefinancialbrand.com/news/banking-trends-strategies/5-key-points-from-jpmorgan-chase-2024-investor-day-178422",
+    "https://www.jpmorganchase.com/ir/annual-report/2024/ar-ceo-letters",
+    "https://www.cnbc.com/2025/11/14/jpmorgan-chase-fintech-fees.html",
+    "https://thefinancialbrand.com/news/banking-trends-strategies/chase-sets-ambitious-consumer-banking-growth-at-investor-day-189444",
+    "https://www.popularfintech.com/p/small-business-big-opportunity-square-stripe-ramp-brex",
+    "https://www.schemecolor.com/chase-bank-logo.php",
+    "https://upgradedpoints.com/finance/chase-business-checking-accounts/",
+    "https://www.business.com/reviews/chase-merchant-services/",
+    "https://www.sbalenders.com/top-sba-lenders/",
+    "https://wallethub.com/edu/cc/business-credit-card-statistics/142187"
+  ],
+  "research_notes": {
+    "data_quality": "High - verified against official Chase.com sources and recent financial publications",
+    "product_verification": "All products verified as current offerings as of February 2026",
+    "conversion_benchmarks": "Industry estimates based on financial services averages; actual Chase rates are proprietary",
+    "market_position": "Chase is the clear market leader in small business banking with significant advantages in scale, technology, and distribution",
+    "strategic_direction": "Heavy investment in digital transformation while maintaining branch network as competitive moat; AI integration across all processes; fintech partnership rather than pure competition",
+    "competitive_landscape": "Traditional banks losing share to fintechs (28% of new originations) but Chase responding with technology investments and data access monetization"
+  }
+}

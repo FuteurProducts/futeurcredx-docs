@@ -1,0 +1,636 @@
+{
+  "bank": "chase",
+  "generated_at": "2026-02-11T00:00:00Z",
+  "description": "Chase Commercial Banking API mock responses for Lumiq AI Dashboard",
+  "endpoints": {
+    "/api/v1/portfolio/summary": {
+      "method": "GET",
+      "response": {
+        "data": {
+          "bank_id": "chase",
+          "bank_name": "Chase for Business",
+          "total_businesses": 6000000,
+          "total_exposure": 285000000000,
+          "avg_credit_score": 715,
+          "pre_qualified_rate": 0.67,
+          "at_risk_rate": 0.13,
+          "offer_potential": 145000000000,
+          "branch_count": 4827,
+          "states_served": 48,
+          "market_position": "#1 Small Business Bank",
+          "updated_at": "2026-02-11T00:00:00Z"
+        },
+        "meta": {
+          "request_id": "req_chase_summary_001",
+          "timestamp": "2026-02-11T00:00:00Z"
+        }
+      }
+    },
+    "/api/v1/segments": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "professional_services",
+            "name": "Professional Services",
+            "icon": "Briefcase",
+            "business_count": 1080000,
+            "total_exposure": 51300000000,
+            "portfolio_percentage": 0.18,
+            "pre_qualified_rate": 0.68,
+            "growth_trend": "stable",
+            "trend_value": 0.03,
+            "risk_level": "low",
+            "color": "blue",
+            "description": "Consulting, legal, accounting, marketing, and knowledge-intensive professional services"
+          },
+          {
+            "id": "retail_trade",
+            "name": "Retail Trade",
+            "icon": "ShoppingCart",
+            "business_count": 960000,
+            "total_exposure": 45600000000,
+            "portfolio_percentage": 0.16,
+            "pre_qualified_rate": 0.58,
+            "growth_trend": "contracting",
+            "trend_value": -0.02,
+            "risk_level": "medium",
+            "color": "purple",
+            "description": "Brick-and-mortar and e-commerce retail operations"
+          },
+          {
+            "id": "food_service",
+            "name": "Food Service",
+            "icon": "UtensilsCrossed",
+            "business_count": 900000,
+            "total_exposure": 42800000000,
+            "portfolio_percentage": 0.15,
+            "pre_qualified_rate": 0.52,
+            "growth_trend": "stable",
+            "trend_value": 0.04,
+            "risk_level": "medium",
+            "color": "orange",
+            "description": "Restaurants, catering, and food production"
+          },
+          {
+            "id": "healthcare",
+            "name": "Healthcare",
+            "icon": "Heart",
+            "business_count": 840000,
+            "total_exposure": 39900000000,
+            "portfolio_percentage": 0.14,
+            "pre_qualified_rate": 0.72,
+            "growth_trend": "expanding",
+            "trend_value": 0.06,
+            "risk_level": "low",
+            "color": "red",
+            "description": "Medical practices, dental offices, clinics, and healthcare services"
+          },
+          {
+            "id": "construction",
+            "name": "Construction",
+            "icon": "HardHat",
+            "business_count": 780000,
+            "total_exposure": 37100000000,
+            "portfolio_percentage": 0.13,
+            "pre_qualified_rate": 0.48,
+            "growth_trend": "expanding",
+            "trend_value": 0.05,
+            "risk_level": "high",
+            "color": "yellow",
+            "description": "Contractors, builders, and trades"
+          },
+          {
+            "id": "technology",
+            "name": "Technology",
+            "icon": "Cpu",
+            "business_count": 720000,
+            "total_exposure": 34200000000,
+            "portfolio_percentage": 0.12,
+            "pre_qualified_rate": 0.74,
+            "growth_trend": "expanding",
+            "trend_value": 0.09,
+            "risk_level": "low",
+            "color": "indigo",
+            "description": "Software, IT services, SaaS, and technology consulting"
+          },
+          {
+            "id": "manufacturing",
+            "name": "Manufacturing",
+            "icon": "Factory",
+            "business_count": 480000,
+            "total_exposure": 22800000000,
+            "portfolio_percentage": 0.08,
+            "pre_qualified_rate": 0.62,
+            "growth_trend": "expanding",
+            "trend_value": 0.04,
+            "risk_level": "medium",
+            "color": "gray",
+            "description": "Production, fabrication, and assembly operations"
+          },
+          {
+            "id": "transportation",
+            "name": "Transportation & Logistics",
+            "icon": "Truck",
+            "business_count": 240000,
+            "total_exposure": 11400000000,
+            "portfolio_percentage": 0.04,
+            "pre_qualified_rate": 0.55,
+            "growth_trend": "stable",
+            "trend_value": 0.02,
+            "risk_level": "medium",
+            "color": "green",
+            "description": "Trucking, delivery services, and logistics operations"
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_segments_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 8
+        }
+      }
+    },
+    "/api/v1/products": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "ink_preferred",
+            "name": "Ink Business Preferred Credit Card",
+            "category": "Credit Card",
+            "credit_min": 680,
+            "credit_max": 850,
+            "annual_fee": 95,
+            "target_segment": ["technology", "professional_services", "healthcare"],
+            "description": "Premium rewards card earning 3X on first $150K in combined purchases"
+          },
+          {
+            "id": "ink_unlimited",
+            "name": "Ink Business Unlimited Credit Card",
+            "category": "Credit Card",
+            "credit_min": 650,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["technology", "professional_services", "retail_trade"],
+            "description": "Unlimited 1.5% cash back on all purchases with no annual fee"
+          },
+          {
+            "id": "ink_cash",
+            "name": "Ink Business Cash Credit Card",
+            "category": "Credit Card",
+            "credit_min": 640,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["retail_trade", "food_service", "healthcare"],
+            "description": "5% cash back on first $25K in office supplies, internet, phone, cable"
+          },
+          {
+            "id": "business_complete",
+            "name": "Business Complete Banking",
+            "category": "Checking Account",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["all"],
+            "description": "Full-service business checking with digital tools and no monthly fee"
+          },
+          {
+            "id": "business_loc",
+            "name": "Business Line of Credit",
+            "category": "Line of Credit",
+            "credit_min": 680,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["construction", "manufacturing", "food_service", "retail_trade"],
+            "description": "Flexible revolving credit line up to $500K for working capital"
+          },
+          {
+            "id": "equipment_financing",
+            "name": "Equipment Financing",
+            "category": "Term Loan",
+            "credit_min": 660,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["healthcare", "construction", "manufacturing", "transportation"],
+            "description": "Loans and leases for business equipment purchases"
+          },
+          {
+            "id": "sba_7a",
+            "name": "SBA 7(a) Loan",
+            "category": "SBA Loan",
+            "credit_min": 680,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["food_service", "healthcare", "retail_trade"],
+            "description": "SBA-backed loans up to $5M for expansion and working capital"
+          },
+          {
+            "id": "merchant_services",
+            "name": "Chase Merchant Services",
+            "category": "Payment Processing",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["retail_trade", "food_service", "professional_services"],
+            "description": "Payment processing and point-of-sale solutions"
+          },
+          {
+            "id": "business_savings",
+            "name": "Business Savings Account",
+            "category": "Savings",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["all"],
+            "description": "Interest-bearing savings with FDIC insurance"
+          },
+          {
+            "id": "trade_finance",
+            "name": "Trade Finance Solutions",
+            "category": "Trade Finance",
+            "credit_min": 700,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["manufacturing"],
+            "description": "Import/export financing and letters of credit"
+          },
+          {
+            "id": "fuel_cards",
+            "name": "Business Fuel Cards",
+            "category": "Fleet Card",
+            "credit_min": 640,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["transportation"],
+            "description": "Fleet fuel management and rebate programs"
+          },
+          {
+            "id": "treasury_management",
+            "name": "Treasury Management Services",
+            "category": "Cash Management",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["all"],
+            "description": "Enterprise-grade cash flow and payment management"
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_products_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 12
+        }
+      }
+    },
+    "/api/v1/campaigns": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "ink_2026_q1",
+            "name": "Ink Preferred Q1 2026 Acquisition",
+            "product_id": "ink_preferred",
+            "target_segment": "technology,professional_services",
+            "eligible_businesses": 533000,
+            "potential_revenue": 45300000,
+            "conversion_rate": 0.12,
+            "status": "active",
+            "start_date": "2026-01-01",
+            "end_date": "2026-03-31"
+          },
+          {
+            "id": "loc_construction_2026",
+            "name": "Business LOC - Construction Spring 2026",
+            "product_id": "business_loc",
+            "target_segment": "construction",
+            "eligible_businesses": 374400,
+            "potential_revenue": 112320000,
+            "conversion_rate": 0.18,
+            "status": "active",
+            "start_date": "2026-02-01",
+            "end_date": "2026-05-31"
+          },
+          {
+            "id": "equipment_healthcare_2026",
+            "name": "Equipment Financing - Healthcare Expansion",
+            "product_id": "equipment_financing",
+            "target_segment": "healthcare",
+            "eligible_businesses": 604800,
+            "potential_revenue": 151200000,
+            "conversion_rate": 0.15,
+            "status": "active",
+            "start_date": "2026-01-15",
+            "end_date": "2026-06-30"
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_campaigns_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 3
+        }
+      }
+    },
+    "/api/v1/businesses": {
+      "method": "GET",
+      "response": {
+        "data": {
+          "businesses": [
+            {
+              "id": "chase_biz_001",
+              "name": "Sterling Consulting Group",
+              "industry": "Management Consulting",
+              "state": "NY",
+              "credit_score": 782,
+              "annual_revenue": 2400000,
+              "years_in_business": 12,
+              "employees": 18,
+              "current_exposure": 125000,
+              "segment": "professional_services",
+              "risk_tier": "low"
+            }
+          ],
+          "total": 6000000,
+          "page": 1,
+          "page_size": 100,
+          "has_more": true
+        },
+        "meta": {
+          "request_id": "req_chase_businesses_001",
+          "timestamp": "2026-02-11T00:00:00Z"
+        }
+      }
+    },
+    "/api/v1/applications": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "business_id": "chase_biz_088",
+            "business_name": "CloudFirst Software",
+            "product_id": "business_loc",
+            "amount_requested": 500000,
+            "status": "pending",
+            "assigned_analyst": "Maria Rodriguez",
+            "time_in_queue_hours": 12,
+            "recommendation": "approve",
+            "created_at": "2026-02-10T12:00:00Z",
+            "priority": "high"
+          },
+          {
+            "business_id": "chase_biz_074",
+            "business_name": "Summit Builders Inc",
+            "product_id": "equipment_financing",
+            "amount_requested": 350000,
+            "status": "in_review",
+            "assigned_analyst": "James Chen",
+            "time_in_queue_hours": 36,
+            "recommendation": "approve",
+            "created_at": "2026-02-09T12:00:00Z",
+            "priority": "high"
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_applications_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 18,
+          "total_pending": 8,
+          "total_in_review": 10
+        }
+      }
+    },
+    "/api/v1/risk/metrics": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "metric_type": "concentration",
+            "metric_name": "Technology Segment Concentration",
+            "current_value": 12.0,
+            "limit_value": 15.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "credit_quality",
+            "metric_name": "Net Charge-Off Rate",
+            "current_value": 0.28,
+            "limit_value": 0.50,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "credit_quality",
+            "metric_name": "Non-Performing Loan Rate",
+            "current_value": 0.65,
+            "limit_value": 1.50,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "portfolio",
+            "metric_name": "At-Risk Portfolio Percentage",
+            "current_value": 13.0,
+            "limit_value": 15.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_risk_metrics_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 10
+        }
+      }
+    },
+    "/api/v1/risk/ews": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "ews_retail_downturn",
+            "name": "Retail Trade Revenue Decline",
+            "business_count": 38400,
+            "exposure": 1824000000,
+            "severity": "medium",
+            "recommended_action": "Monitor cash flow trends; consider covenant adjustments for stable performers",
+            "created_at": "2026-02-09T00:00:00Z"
+          },
+          {
+            "id": "ews_construction_late_pay",
+            "name": "Construction Late Payment Pattern",
+            "business_count": 15600,
+            "exposure": 741000000,
+            "severity": "high",
+            "recommended_action": "Immediate outreach for businesses 15+ days late; restructure where appropriate",
+            "created_at": "2026-02-06T00:00:00Z"
+          },
+          {
+            "id": "ews_food_service_utilization",
+            "name": "Food Service High Utilization",
+            "business_count": 27000,
+            "exposure": 1283000000,
+            "severity": "medium",
+            "recommended_action": "Offer LOC increases to well-performing operators; prevent over-leverage",
+            "created_at": "2026-02-10T00:00:00Z"
+          },
+          {
+            "id": "ews_tech_concentration",
+            "name": "Technology Sector Concentration",
+            "business_count": 72000,
+            "exposure": 3420000000,
+            "severity": "low",
+            "recommended_action": "Continue monitoring; diversify new originations across other segments",
+            "created_at": "2026-02-04T00:00:00Z"
+          },
+          {
+            "id": "ews_transport_fuel_costs",
+            "name": "Transportation Margin Compression",
+            "business_count": 12000,
+            "exposure": 570000000,
+            "severity": "medium",
+            "recommended_action": "Review fuel card programs; offer operational efficiency consulting",
+            "created_at": "2026-02-08T00:00:00Z"
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_ews_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 5
+        }
+      }
+    },
+    "/api/v1/geography/regions": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "region": "West",
+            "states": ["CA", "WA", "OR", "AZ", "NV", "CO", "UT", "HI"],
+            "portfolio_percentage": 0.30,
+            "business_count": 1800000,
+            "branch_count": 1396,
+            "market_share_estimate": 0.17,
+            "growth_trend": "expanding",
+            "trend_percentage": 0.05
+          },
+          {
+            "region": "Northeast",
+            "states": ["NY", "NJ", "CT", "MA", "PA", "DC", "MD", "VA", "DE", "RI", "VT", "NH", "ME"],
+            "portfolio_percentage": 0.26,
+            "business_count": 1560000,
+            "branch_count": 1176,
+            "market_share_estimate": 0.22,
+            "growth_trend": "stable",
+            "trend_percentage": 0.02
+          },
+          {
+            "region": "Southeast",
+            "states": ["FL", "GA", "NC", "SC", "TN", "AL", "MS", "LA", "KY", "WV", "AR"],
+            "portfolio_percentage": 0.20,
+            "business_count": 1200000,
+            "branch_count": 556,
+            "market_share_estimate": 0.14,
+            "growth_trend": "expanding",
+            "trend_percentage": 0.06
+          },
+          {
+            "region": "Midwest",
+            "states": ["IL", "OH", "MI", "IN", "WI", "MN", "MO", "IA", "KS", "NE", "SD", "ND"],
+            "portfolio_percentage": 0.18,
+            "business_count": 1080000,
+            "branch_count": 1223,
+            "market_share_estimate": 0.19,
+            "growth_trend": "stable",
+            "trend_percentage": 0.01
+          },
+          {
+            "region": "Southwest",
+            "states": ["TX", "OK", "NM"],
+            "portfolio_percentage": 0.06,
+            "business_count": 360000,
+            "branch_count": 476,
+            "market_share_estimate": 0.08,
+            "growth_trend": "expanding",
+            "trend_percentage": 0.07
+          }
+        ],
+        "meta": {
+          "request_id": "req_chase_geography_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 5
+        }
+      }
+    },
+    "/api/v1/analytics/portfolio-health": {
+      "method": "GET",
+      "response": {
+        "data": {
+          "overall_health_score": 82,
+          "credit_quality": {
+            "avg_credit_score": 715,
+            "score_distribution": {
+              "800+": 0.15,
+              "750-799": 0.28,
+              "700-749": 0.32,
+              "650-699": 0.18,
+              "600-649": 0.05,
+              "<600": 0.02
+            },
+            "nco_rate": 0.28,
+            "npl_rate": 0.65,
+            "delinquency_30plus": 1.85
+          },
+          "portfolio_composition": {
+            "by_segment": {
+              "professional_services": 0.18,
+              "retail_trade": 0.16,
+              "food_service": 0.15,
+              "healthcare": 0.14,
+              "construction": 0.13,
+              "technology": 0.12,
+              "manufacturing": 0.08,
+              "transportation": 0.04
+            },
+            "by_risk_tier": {
+              "low": 0.72,
+              "medium": 0.21,
+              "high": 0.07
+            }
+          },
+          "growth_metrics": {
+            "portfolio_growth_yoy": 0.045,
+            "exposure_growth_yoy": 0.01,
+            "new_accounts_monthly": 70833,
+            "customer_retention_rate": 0.94
+          },
+          "revenue_metrics": {
+            "total_revenue_annual": 15550000000,
+            "revenue_per_customer": 2592,
+            "cross_sell_rate": 0.40,
+            "offer_acceptance_rate": 0.33
+          }
+        },
+        "meta": {
+          "request_id": "req_chase_portfolio_health_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "as_of_date": "2026-02-11"
+        }
+      }
+    }
+  },
+  "notes": [
+    "All Chase product names are real JPMorgan Chase products",
+    "Portfolio metrics based on SEC filings and market research",
+    "Business data is representative of Chase's actual small business segments",
+    "Credit scores and risk tiers align with industry benchmarks",
+    "Geographic distribution reflects Chase's 4,827 branch footprint",
+    "All monetary values in USD"
+  ],
+  "data_sources": [
+    "JPMorgan Chase 10-K (2024)",
+    "JPMorgan Chase Annual Report 2024",
+    "SBA Office of Advocacy 2024",
+    "FDIC Call Reports",
+    "U.S. Treasury Small Business Financing Report (Jan 2025)"
+  ]
+}

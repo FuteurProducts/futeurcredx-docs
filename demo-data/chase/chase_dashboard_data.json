@@ -1,0 +1,1606 @@
+{
+  "bank": "chase",
+  "generated_date": "2026-02-11",
+  "metadata": {
+    "synthesizer": "CHASE-SYNTH-1",
+    "data_sources": [
+      "chase_quantitative.json",
+      "chase_segments.json",
+      "JPMorgan Chase 10-K (2024)",
+      "JPMorgan Chase Annual Report 2024",
+      "JPMorgan Chase Investor Day Presentations",
+      "SBA Office of Advocacy 2024-2025 Small Business Profiles",
+      "U.S. Treasury: Financing Small Business (January 2025)",
+      "FDIC Branch Data",
+      "Web research: Chase business products 2026"
+    ],
+    "methodology": "Synthesized from comprehensive quantitative metrics, industry/geographic segmentation research, and real Chase product offerings. All data internally consistent with 6.0M businesses served and $650B portfolio exposure."
+  },
+  "bank_config": {
+    "name": "JPMorgan Chase & Co.",
+    "display_name": "Chase",
+    "logo_url": "/assets/banks/chase-logo.svg",
+    "primary_color": "#117ACA",
+    "secondary_color": "#0B5394",
+    "branch_count": 4827,
+    "states_served": 48,
+    "total_assets_billions": 4000.0,
+    "market_position": "#1 U.S. bank by assets and deposits; #1 small business bank nationally",
+    "tagline": "America's #1 Small Business Bank"
+  },
+  "portfolio_summary": {
+    "total_businesses": 6000000,
+    "total_businesses_formatted": "6.0M",
+    "total_exposure": 650000000000,
+    "total_exposure_billions": 650.0,
+    "total_exposure_formatted": "$650.0B",
+    "avg_exposure_per_business": 108333,
+    "avg_exposure_per_business_formatted": "$108.3K",
+    "avg_credit_score": 71.4,
+    "avg_credit_score_formatted": "71.4",
+    "pre_qualified_count": 4020000,
+    "pre_qualified_rate": 67.0,
+    "pre_qualified_rate_formatted": "67.0%",
+    "at_risk_count": 780000,
+    "at_risk_exposure": 84500000000,
+    "at_risk_rate": 13.0,
+    "at_risk_rate_formatted": "13.0%",
+    "offer_potential": 145000000000,
+    "offer_potential_billions": 145.0,
+    "offer_potential_formatted": "$145.0B",
+    "trend": {
+      "portfolio_growth_yoy": 4.5,
+      "exposure_growth_yoy": 1.0,
+      "credit_quality": "stable",
+      "nco_rate": 0.28,
+      "npl_rate": 0.65
+    },
+    "kpis": [
+      {
+        "id": "total-businesses",
+        "label": "Total Businesses",
+        "value": "6.0M",
+        "raw_value": 6000000,
+        "format": "number",
+        "trend": {
+          "direction": "up",
+          "value": 4.5,
+          "label": "+4.5% YoY"
+        },
+        "status": "positive"
+      },
+      {
+        "id": "total-exposure",
+        "label": "Total Exposure",
+        "value": "$650.0B",
+        "raw_value": 650000000000,
+        "format": "currency",
+        "trend": {
+          "direction": "up",
+          "value": 1.0,
+          "label": "+1.0% YoY"
+        },
+        "status": "positive"
+      },
+      {
+        "id": "avg-credit-score",
+        "label": "Avg Credit Score",
+        "value": "71.4",
+        "raw_value": 71.4,
+        "format": "score",
+        "trend": {
+          "direction": "stable",
+          "value": 0.3,
+          "label": "+0.3 pts"
+        },
+        "status": "neutral"
+      },
+      {
+        "id": "pre-qualified-rate",
+        "label": "Pre-Qualified Rate",
+        "value": "67.0%",
+        "raw_value": 67.0,
+        "format": "percent",
+        "trend": {
+          "direction": "up",
+          "value": 1.2,
+          "label": "+1.2pp YoY"
+        },
+        "status": "positive"
+      },
+      {
+        "id": "at-risk-exposure",
+        "label": "At-Risk Exposure",
+        "value": "$84.5B",
+        "raw_value": 84500000000,
+        "format": "currency",
+        "trend": {
+          "direction": "stable",
+          "value": 0.1,
+          "label": "+0.1% YoY"
+        },
+        "status": "warning"
+      },
+      {
+        "id": "offer-potential",
+        "label": "Offer Potential",
+        "value": "$145.0B",
+        "raw_value": 145000000000,
+        "format": "currency",
+        "trend": {
+          "direction": "up",
+          "value": 8.7,
+          "label": "+8.7% YoY"
+        },
+        "status": "positive"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "id": "professional_services",
+      "name": "Professional Services",
+      "icon": "Briefcase",
+      "business_count": 1080000,
+      "total_exposure": 116640000000,
+      "avg_exposure": 108000,
+      "pre_qualified_rate": 68.0,
+      "avg_credit_score": 73.5,
+      "trend": {
+        "direction": "stable",
+        "value": 3.0,
+        "label": "+3.0% growth"
+      },
+      "trend_value": 3.0,
+      "color": "blue",
+      "risk_level": "low",
+      "default_rate": 1.8,
+      "description": "Consulting, legal, accounting, marketing, and other knowledge-intensive professional services. High knowledge intensity with stable cash flows.",
+      "key_products": [
+        "Ink Business Preferred® Credit Card",
+        "Business Line of Credit",
+        "Chase Business Complete Banking®"
+      ]
+    },
+    {
+      "id": "retail_trade",
+      "name": "Retail Trade",
+      "icon": "ShoppingCart",
+      "business_count": 960000,
+      "total_exposure": 104000000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 58.0,
+      "avg_credit_score": 69.2,
+      "trend": {
+        "direction": "down",
+        "value": -2.0,
+        "label": "-2.0% contraction"
+      },
+      "trend_value": -2.0,
+      "color": "purple",
+      "risk_level": "medium",
+      "default_rate": 3.2,
+      "description": "Brick-and-mortar and e-commerce retail operations. Mixed fortunes with e-commerce growth offsetting physical store challenges.",
+      "key_products": [
+        "Chase Merchant Services®",
+        "Ink Business Preferred® Credit Card",
+        "Business Line of Credit"
+      ]
+    },
+    {
+      "id": "food_service",
+      "name": "Food Service & Restaurants",
+      "icon": "UtensilsCrossed",
+      "business_count": 900000,
+      "total_exposure": 97500000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 52.0,
+      "avg_credit_score": 66.8,
+      "trend": {
+        "direction": "stable",
+        "value": 4.0,
+        "label": "+4.0% recovery"
+      },
+      "trend_value": 4.0,
+      "color": "orange",
+      "risk_level": "medium",
+      "default_rate": 3.8,
+      "description": "Restaurants, catering, and food production. Full-service restaurants led SBA 7(a) loans in 2024 with $419.4M in funding. High operational intensity.",
+      "key_products": [
+        "Business Line of Credit",
+        "Equipment Financing",
+        "Chase Merchant Services®"
+      ]
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare Services",
+      "icon": "Heart",
+      "business_count": 840000,
+      "total_exposure": 91000000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 72.0,
+      "avg_credit_score": 76.1,
+      "trend": {
+        "direction": "up",
+        "value": 6.0,
+        "label": "+6.0% growth"
+      },
+      "trend_value": 6.0,
+      "color": "red",
+      "risk_level": "low",
+      "default_rate": 1.5,
+      "description": "Medical practices, dental offices, clinics, and healthcare services. Growing sector driven by demographic aging and equipment needs.",
+      "key_products": [
+        "Business Line of Credit",
+        "Equipment Financing",
+        "SBA 7(a) Loans"
+      ]
+    },
+    {
+      "id": "construction",
+      "name": "Construction & Trades",
+      "icon": "HardHat",
+      "business_count": 780000,
+      "total_exposure": 84500000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 48.0,
+      "avg_credit_score": 64.5,
+      "trend": {
+        "direction": "up",
+        "value": 5.0,
+        "label": "+5.0% expansion"
+      },
+      "trend_value": 5.0,
+      "color": "yellow",
+      "risk_level": "high",
+      "default_rate": 4.2,
+      "description": "Contractors, builders, and trades. Resurgent amid on-shoring subsidies. Top risks include labor shortages, high interest rates, and project disputes.",
+      "key_products": [
+        "Business Line of Credit",
+        "Equipment Financing",
+        "SBA 7(a) Loans"
+      ]
+    },
+    {
+      "id": "technology",
+      "name": "Technology Services",
+      "icon": "Cpu",
+      "business_count": 720000,
+      "total_exposure": 78000000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 74.0,
+      "avg_credit_score": 78.9,
+      "trend": {
+        "direction": "up",
+        "value": 9.0,
+        "label": "+9.0% rapid growth"
+      },
+      "trend_value": 9.0,
+      "color": "indigo",
+      "risk_level": "low",
+      "default_rate": 2.2,
+      "description": "Software, IT services, SaaS, and technology consulting. Fast-growing sector with strong fundamentals and low physical capital requirements.",
+      "key_products": [
+        "Ink Business Preferred® Credit Card",
+        "Business Line of Credit",
+        "Chase Business Complete Banking®"
+      ]
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing",
+      "icon": "Factory",
+      "business_count": 480000,
+      "total_exposure": 52000000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 62.0,
+      "avg_credit_score": 72.4,
+      "trend": {
+        "direction": "up",
+        "value": 4.0,
+        "label": "+4.0% on-shoring boost"
+      },
+      "trend_value": 4.0,
+      "color": "gray",
+      "risk_level": "medium",
+      "default_rate": 2.8,
+      "description": "Production, fabrication, and assembly operations. Growing with on-shoring subsidies, requiring machinery leases and factory retrofits for automation.",
+      "key_products": [
+        "Business Line of Credit",
+        "Equipment Financing",
+        "Trade Finance Solutions"
+      ]
+    },
+    {
+      "id": "transportation",
+      "name": "Transportation & Logistics",
+      "icon": "Truck",
+      "business_count": 240000,
+      "total_exposure": 26000000000,
+      "avg_exposure": 108333,
+      "pre_qualified_rate": 55.0,
+      "avg_credit_score": 68.7,
+      "trend": {
+        "direction": "stable",
+        "value": 2.0,
+        "label": "+2.0% steady"
+      },
+      "trend_value": 2.0,
+      "color": "green",
+      "risk_level": "medium",
+      "default_rate": 3.5,
+      "description": "Trucking, delivery services, and logistics operations. Equipment-intensive with moderate risk profile and stable growth.",
+      "key_products": [
+        "Equipment Financing",
+        "Business Line of Credit",
+        "Business Fuel Cards"
+      ]
+    }
+  ],
+  "risk_metrics": {
+    "concentration": {
+      "industry": [
+        {
+          "name": "Professional Services",
+          "business_count": 1080000,
+          "exposure": 116640000000,
+          "percentage": 17.9,
+          "limit": 20.0,
+          "status": "within"
+        },
+        {
+          "name": "Retail Trade",
+          "business_count": 960000,
+          "exposure": 104000000000,
+          "percentage": 16.0,
+          "limit": 20.0,
+          "status": "within"
+        },
+        {
+          "name": "Food Service",
+          "business_count": 900000,
+          "exposure": 97500000000,
+          "percentage": 15.0,
+          "limit": 20.0,
+          "status": "within"
+        },
+        {
+          "name": "Healthcare",
+          "business_count": 840000,
+          "exposure": 91000000000,
+          "percentage": 14.0,
+          "limit": 20.0,
+          "status": "within"
+        }
+      ],
+      "geographic": [
+        {
+          "region": "West",
+          "business_count": 1800000,
+          "exposure": 195000000000,
+          "percentage": 30.0,
+          "limit": 35.0,
+          "status": "within"
+        },
+        {
+          "region": "Northeast",
+          "business_count": 1560000,
+          "exposure": 169000000000,
+          "percentage": 26.0,
+          "limit": 35.0,
+          "status": "within"
+        },
+        {
+          "region": "Southeast",
+          "business_count": 1200000,
+          "exposure": 130000000000,
+          "percentage": 20.0,
+          "limit": 35.0,
+          "status": "within"
+        }
+      ],
+      "single_borrower": {
+        "limit": 5000000000,
+        "current": 3200000000,
+        "percentage": 64.0,
+        "status": "within"
+      }
+    },
+    "ews_clusters": [
+      {
+        "id": "ews_revenue_decline",
+        "type": "Revenue Decline >20%",
+        "severity": "critical",
+        "business_count": 1420,
+        "total_exposure": 187000000,
+        "avg_exposure": 131690,
+        "top_industries": [
+          {
+            "name": "Retail Trade",
+            "count": 347
+          },
+          {
+            "name": "Food Service",
+            "count": 298
+          },
+          {
+            "name": "Transportation",
+            "count": 213
+          }
+        ],
+        "recommended_action": "Immediate outreach with restructuring options; consider loan modifications"
+      },
+      {
+        "id": "ews_payment_stress",
+        "type": "Payment Delinquency 30+ days",
+        "severity": "critical",
+        "business_count": 892,
+        "total_exposure": 124000000,
+        "avg_exposure": 139013,
+        "top_industries": [
+          {
+            "name": "Construction",
+            "count": 245
+          },
+          {
+            "name": "Food Service",
+            "count": 187
+          },
+          {
+            "name": "Retail Trade",
+            "count": 169
+          }
+        ],
+        "recommended_action": "Collections workflow with hardship program enrollment"
+      },
+      {
+        "id": "ews_industry_headwind",
+        "type": "Industry Headwind Alert",
+        "severity": "warning",
+        "business_count": 2840,
+        "total_exposure": 341000000,
+        "avg_exposure": 120070,
+        "top_industries": [
+          {
+            "name": "Retail Trade",
+            "count": 1124
+          },
+          {
+            "name": "Food Service",
+            "count": 687
+          },
+          {
+            "name": "Transportation",
+            "count": 498
+          }
+        ],
+        "recommended_action": "Enhanced monitoring; proactive product cross-sell to stabilize relationships"
+      },
+      {
+        "id": "ews_geographic_risk",
+        "type": "Geographic Risk Concentration",
+        "severity": "medium",
+        "business_count": 3780,
+        "total_exposure": 456000000,
+        "avg_exposure": 120635,
+        "top_regions": [
+          {
+            "name": "California",
+            "count": 1304
+          },
+          {
+            "name": "Florida",
+            "count": 814
+          },
+          {
+            "name": "New York",
+            "count": 702
+          }
+        ],
+        "recommended_action": "Diversification strategy for high-concentration states"
+      }
+    ]
+  },
+  "campaigns": [
+    {
+      "id": "camp_q1_healthcare_loc",
+      "product_name": "Business Line of Credit",
+      "target_segment": "Healthcare Services",
+      "eligible_businesses": 604800,
+      "potential_revenue": 87400000,
+      "conversion_estimate": 14.5,
+      "status": "active",
+      "start_date": "2026-01-15",
+      "end_date": "2026-03-31",
+      "owner": "Northeast Regional Team",
+      "funnel": {
+        "pushed": 8240,
+        "viewed": 5768,
+        "applied": 1236,
+        "approved": 618
+      },
+      "description": "Target healthcare practices with aging equipment needs and post-pandemic expansion capital requirements."
+    },
+    {
+      "id": "camp_q1_tech_term",
+      "product_name": "Business Term Loan",
+      "target_segment": "Technology Services",
+      "eligible_businesses": 532800,
+      "potential_revenue": 124200000,
+      "conversion_estimate": 15.2,
+      "status": "active",
+      "start_date": "2026-01-20",
+      "end_date": "2026-04-15",
+      "owner": "West Coast Commercial",
+      "funnel": {
+        "pushed": 6720,
+        "viewed": 4368,
+        "applied": 963,
+        "approved": 501
+      },
+      "description": "Growth capital for SaaS and IT services companies scaling operations and expanding headcount."
+    },
+    {
+      "id": "camp_q1_retail_equipment",
+      "product_name": "Equipment Financing",
+      "target_segment": "Retail Trade",
+      "eligible_businesses": 556800,
+      "potential_revenue": 56700000,
+      "conversion_estimate": 16.3,
+      "status": "active",
+      "start_date": "2026-02-01",
+      "end_date": "2026-04-30",
+      "owner": "Midwest Business Banking",
+      "funnel": {
+        "pushed": 9350,
+        "viewed": 6158,
+        "applied": 1402,
+        "approved": 687
+      },
+      "description": "Point-of-sale system upgrades, inventory management tech, and fulfillment center equipment for omnichannel retailers."
+    }
+  ],
+  "underwriting_queue": [
+    {
+      "id": "app_001",
+      "business_name": "Pacific Coast Manufacturing Inc",
+      "industry": "Manufacturing",
+      "state": "CA",
+      "product_requested": "Equipment Financing",
+      "amount_requested": 485000,
+      "credit_score": 76.2,
+      "years_in_business": 12,
+      "annual_revenue": 8400000,
+      "employees": 47,
+      "status": "underwriting",
+      "assigned_analyst": "Sarah Chen",
+      "time_in_queue_hours": 14,
+      "signals": {
+        "positive": ["Strong payment history", "Revenue growth 18% YoY", "Low debt-to-income"],
+        "negative": [],
+        "neutral": ["Moderate industry risk"]
+      },
+      "recommendation": "approve"
+    },
+    {
+      "id": "app_002",
+      "business_name": "Empire State Legal Group",
+      "industry": "Professional Services",
+      "state": "NY",
+      "product_requested": "Business Line of Credit",
+      "amount_requested": 275000,
+      "credit_score": 81.4,
+      "years_in_business": 9,
+      "annual_revenue": 3200000,
+      "employees": 18,
+      "status": "pending_documents",
+      "assigned_analyst": "Michael Torres",
+      "time_in_queue_hours": 38,
+      "signals": {
+        "positive": ["Excellent credit history", "Stable revenue", "High professional credentials"],
+        "negative": ["Missing 2025 tax return"],
+        "neutral": []
+      },
+      "recommendation": "conditional_approve"
+    },
+    {
+      "id": "app_003",
+      "business_name": "Lone Star BBQ & Catering",
+      "industry": "Food Service",
+      "state": "TX",
+      "product_requested": "SBA 7(a) Loan",
+      "amount_requested": 320000,
+      "credit_score": 68.9,
+      "years_in_business": 6,
+      "annual_revenue": 1850000,
+      "employees": 28,
+      "status": "underwriting",
+      "assigned_analyst": "Jennifer Martinez",
+      "time_in_queue_hours": 22,
+      "signals": {
+        "positive": ["Strong local reputation", "Growing catering contracts"],
+        "negative": ["High industry risk", "Seasonal revenue volatility"],
+        "neutral": ["Average credit score"]
+      },
+      "recommendation": "review"
+    },
+    {
+      "id": "app_004",
+      "business_name": "Great Lakes Medical Supply",
+      "industry": "Healthcare",
+      "state": "MI",
+      "product_requested": "Business Term Loan",
+      "amount_requested": 420000,
+      "credit_score": 79.3,
+      "years_in_business": 15,
+      "annual_revenue": 6700000,
+      "employees": 34,
+      "status": "approved",
+      "assigned_analyst": "David Kim",
+      "time_in_queue_hours": 8,
+      "signals": {
+        "positive": ["Long operating history", "Strong financials", "Diversified customer base"],
+        "negative": [],
+        "neutral": []
+      },
+      "recommendation": "approve"
+    },
+    {
+      "id": "app_005",
+      "business_name": "Sunshine Retail Collective",
+      "industry": "Retail Trade",
+      "state": "FL",
+      "product_requested": "Business Line of Credit",
+      "amount_requested": 180000,
+      "credit_score": 64.7,
+      "years_in_business": 4,
+      "annual_revenue": 2100000,
+      "employees": 14,
+      "status": "underwriting",
+      "assigned_analyst": "Amanda Wilson",
+      "time_in_queue_hours": 31,
+      "signals": {
+        "positive": ["Growing online presence", "Tourist market exposure"],
+        "negative": ["Below-benchmark credit score", "Short operating history"],
+        "neutral": ["Retail sector headwinds"]
+      },
+      "recommendation": "review"
+    },
+    {
+      "id": "app_006",
+      "business_name": "Rocky Mountain Construction LLC",
+      "industry": "Construction",
+      "state": "CO",
+      "product_requested": "Equipment Financing",
+      "amount_requested": 395000,
+      "credit_score": 71.8,
+      "years_in_business": 8,
+      "annual_revenue": 4900000,
+      "employees": 39,
+      "status": "underwriting",
+      "assigned_analyst": "Robert Jackson",
+      "time_in_queue_hours": 19,
+      "signals": {
+        "positive": ["Strong backlog", "Municipal contracts"],
+        "negative": ["High industry default rate"],
+        "neutral": ["Interest rate sensitivity"]
+      },
+      "recommendation": "conditional_approve"
+    },
+    {
+      "id": "app_007",
+      "business_name": "Boston Tech Consulting Partners",
+      "industry": "Technology Services",
+      "state": "MA",
+      "product_requested": "Business Line of Credit",
+      "amount_requested": 310000,
+      "credit_score": 83.1,
+      "years_in_business": 5,
+      "annual_revenue": 5200000,
+      "employees": 22,
+      "status": "approved",
+      "assigned_analyst": "Emily Nguyen",
+      "time_in_queue_hours": 11,
+      "signals": {
+        "positive": ["Exceptional credit", "High-growth sector", "Strong ARR contracts"],
+        "negative": [],
+        "neutral": []
+      },
+      "recommendation": "approve"
+    },
+    {
+      "id": "app_008",
+      "business_name": "Midwest Transport & Logistics",
+      "industry": "Transportation",
+      "state": "OH",
+      "product_requested": "Equipment Financing",
+      "amount_requested": 540000,
+      "credit_score": 69.4,
+      "years_in_business": 11,
+      "annual_revenue": 6100000,
+      "employees": 31,
+      "status": "underwriting",
+      "assigned_analyst": "Christopher Lee",
+      "time_in_queue_hours": 27,
+      "signals": {
+        "positive": ["Long customer relationships", "Fleet modernization need"],
+        "negative": ["Fuel cost volatility", "Driver shortage concerns"],
+        "neutral": ["Moderate credit score"]
+      },
+      "recommendation": "review"
+    },
+    {
+      "id": "app_009",
+      "business_name": "Garden State Healthcare Associates",
+      "industry": "Healthcare",
+      "state": "NJ",
+      "product_requested": "SBA 7(a) Loan",
+      "amount_requested": 480000,
+      "credit_score": 77.6,
+      "years_in_business": 14,
+      "annual_revenue": 7800000,
+      "employees": 52,
+      "status": "underwriting",
+      "assigned_analyst": "Patricia Brown",
+      "time_in_queue_hours": 16,
+      "signals": {
+        "positive": ["Strong financials", "Aging demographics support growth", "Medicare contracts"],
+        "negative": [],
+        "neutral": ["Regulatory compliance review needed"]
+      },
+      "recommendation": "approve"
+    },
+    {
+      "id": "app_010",
+      "business_name": "Atlanta Culinary Ventures",
+      "industry": "Food Service",
+      "state": "GA",
+      "product_requested": "Business Line of Credit",
+      "amount_requested": 210000,
+      "credit_score": 66.2,
+      "years_in_business": 3,
+      "annual_revenue": 1600000,
+      "employees": 24,
+      "status": "pending_documents",
+      "assigned_analyst": "Marcus Williams",
+      "time_in_queue_hours": 42,
+      "signals": {
+        "positive": ["Strong online reviews", "Growing delivery revenue"],
+        "negative": ["Short operating history", "High food service default rates"],
+        "neutral": ["Missing financial statements"]
+      },
+      "recommendation": "conditional_approve"
+    },
+    {
+      "id": "app_011",
+      "business_name": "Phoenix Auto Service Center",
+      "industry": "Auto Services",
+      "state": "AZ",
+      "product_requested": "Equipment Financing",
+      "amount_requested": 165000,
+      "credit_score": 67.8,
+      "years_in_business": 7,
+      "annual_revenue": 2700000,
+      "employees": 16,
+      "status": "underwriting",
+      "assigned_analyst": "Jessica Rodriguez",
+      "time_in_queue_hours": 25,
+      "signals": {
+        "positive": ["Consistent revenue", "EV certification program"],
+        "negative": ["Below-average credit score", "High auto sector risk"],
+        "neutral": []
+      },
+      "recommendation": "review"
+    },
+    {
+      "id": "app_012",
+      "business_name": "Silicon Valley Software Solutions",
+      "industry": "Technology Services",
+      "state": "CA",
+      "product_requested": "Business Term Loan",
+      "amount_requested": 625000,
+      "credit_score": 85.2,
+      "years_in_business": 6,
+      "annual_revenue": 9100000,
+      "employees": 38,
+      "status": "approved",
+      "assigned_analyst": "Brian Park",
+      "time_in_queue_hours": 9,
+      "signals": {
+        "positive": ["Outstanding credit", "SaaS recurring revenue", "VC backing"],
+        "negative": [],
+        "neutral": []
+      },
+      "recommendation": "approve"
+    },
+    {
+      "id": "app_013",
+      "business_name": "Nashville Music Distribution Co",
+      "industry": "Wholesale & Distribution",
+      "state": "TN",
+      "product_requested": "Business Line of Credit",
+      "amount_requested": 340000,
+      "credit_score": 72.3,
+      "years_in_business": 10,
+      "annual_revenue": 5400000,
+      "employees": 27,
+      "status": "underwriting",
+      "assigned_analyst": "Laura Martinez",
+      "time_in_queue_hours": 18,
+      "signals": {
+        "positive": ["Niche market leader", "Long supplier relationships"],
+        "negative": ["Industry consolidation pressures"],
+        "neutral": ["Music industry volatility"]
+      },
+      "recommendation": "conditional_approve"
+    },
+    {
+      "id": "app_014",
+      "business_name": "Seattle Green Building Contractors",
+      "industry": "Construction",
+      "state": "WA",
+      "product_requested": "SBA 7(a) Loan",
+      "amount_requested": 520000,
+      "credit_score": 74.1,
+      "years_in_business": 9,
+      "annual_revenue": 6800000,
+      "employees": 44,
+      "status": "underwriting",
+      "assigned_analyst": "Kevin Thompson",
+      "time_in_queue_hours": 21,
+      "signals": {
+        "positive": ["Green building specialization", "Government contracts", "LEED certifications"],
+        "negative": ["Construction sector volatility"],
+        "neutral": []
+      },
+      "recommendation": "approve"
+    },
+    {
+      "id": "app_015",
+      "business_name": "Chicago Professional Accounting Group",
+      "industry": "Professional Services",
+      "state": "IL",
+      "product_requested": "Business Line of Credit",
+      "amount_requested": 290000,
+      "credit_score": 80.7,
+      "years_in_business": 18,
+      "annual_revenue": 4100000,
+      "employees": 29,
+      "status": "approved",
+      "assigned_analyst": "Rachel Green",
+      "time_in_queue_hours": 7,
+      "signals": {
+        "positive": ["Excellent credit", "Long operating history", "Stable client base"],
+        "negative": [],
+        "neutral": []
+      },
+      "recommendation": "approve"
+    }
+  ],
+  "filter_options": {
+    "industries": [
+      "Professional Services",
+      "Retail Trade",
+      "Food Service & Restaurants",
+      "Healthcare Services",
+      "Construction & Trades",
+      "Technology Services",
+      "Manufacturing",
+      "Transportation & Logistics"
+    ],
+    "regions": [
+      "West",
+      "Northeast",
+      "Southeast",
+      "Midwest",
+      "Southwest"
+    ],
+    "states": [
+      "CA", "FL", "NY", "TX", "IL", "OH", "NJ", "MI", "GA", "PA",
+      "NC", "VA", "WA", "AZ", "MA", "TN", "IN", "MO", "MD", "WI",
+      "CO", "MN", "SC", "AL", "LA", "OR", "OK", "CT", "UT", "NV"
+    ],
+    "business_sizes": [
+      "Micro (1-9 employees)",
+      "Small (10-49 employees)",
+      "Medium (50-99 employees)",
+      "Large (100+ employees)"
+    ],
+    "products": [
+      "Business Line of Credit",
+      "Business Term Loan",
+      "SBA 7(a) Loan",
+      "SBA 504 Loan",
+      "Equipment Financing",
+      "Ink Business Preferred® Credit Card",
+      "Ink Business Unlimited® Credit Card",
+      "Ink Business Cash® Credit Card",
+      "Chase Business Complete Banking®",
+      "Chase Merchant Services®",
+      "Business Fuel Cards",
+      "Trade Finance Solutions"
+    ],
+    "score_ranges": [
+      { "label": "Excellent (80-100)", "min": 80, "max": 100 },
+      { "label": "Good (70-79)", "min": 70, "max": 79 },
+      { "label": "Fair (60-69)", "min": 60, "max": 69 },
+      { "label": "Poor (50-59)", "min": 50, "max": 59 },
+      { "label": "Very Poor (<50)", "min": 0, "max": 49 }
+    ]
+  },
+  "sample_businesses": [
+    {
+      "id": "biz_001",
+      "name": "Bay Area Tech Consulting LLC",
+      "industry": "Technology Services",
+      "state": "CA",
+      "credit_score": 84.3,
+      "annual_revenue": 4800000,
+      "years_in_business": 7,
+      "employees": 24,
+      "current_exposure": 285000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_002",
+      "name": "Sunshine Medical Associates",
+      "industry": "Healthcare Services",
+      "state": "FL",
+      "credit_score": 78.9,
+      "annual_revenue": 6200000,
+      "years_in_business": 12,
+      "employees": 41,
+      "current_exposure": 420000,
+      "products_held": ["Equipment Financing", "Chase Business Complete Banking®"],
+      "eligible_products": ["Business Line of Credit", "Business Term Loan"]
+    },
+    {
+      "id": "biz_003",
+      "name": "Manhattan Legal Partners",
+      "industry": "Professional Services",
+      "state": "NY",
+      "credit_score": 82.1,
+      "annual_revenue": 3400000,
+      "years_in_business": 15,
+      "employees": 19,
+      "current_exposure": 190000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_004",
+      "name": "Lone Star Construction Group",
+      "industry": "Construction & Trades",
+      "state": "TX",
+      "credit_score": 67.2,
+      "annual_revenue": 5100000,
+      "years_in_business": 9,
+      "employees": 38,
+      "current_exposure": 510000,
+      "products_held": ["Equipment Financing", "Business Line of Credit"],
+      "eligible_products": ["SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_005",
+      "name": "Chicago Gourmet Catering",
+      "industry": "Food Service & Restaurants",
+      "state": "IL",
+      "credit_score": 69.4,
+      "annual_revenue": 1900000,
+      "years_in_business": 6,
+      "employees": 27,
+      "current_exposure": 145000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_006",
+      "name": "Ohio Auto Parts Wholesale",
+      "industry": "Retail Trade",
+      "state": "OH",
+      "credit_score": 71.8,
+      "annual_revenue": 3800000,
+      "years_in_business": 11,
+      "employees": 22,
+      "current_exposure": 310000,
+      "products_held": ["Business Term Loan", "Chase Business Complete Banking®"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_007",
+      "name": "Garden State Retail Co",
+      "industry": "Retail Trade",
+      "state": "NJ",
+      "credit_score": 64.9,
+      "annual_revenue": 2600000,
+      "years_in_business": 5,
+      "employees": 18,
+      "current_exposure": 175000,
+      "products_held": ["Ink Business Cash® Credit Card", "Chase Merchant Services®"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_008",
+      "name": "Great Lakes Manufacturing Inc",
+      "industry": "Manufacturing",
+      "state": "MI",
+      "credit_score": 75.3,
+      "annual_revenue": 9200000,
+      "years_in_business": 18,
+      "employees": 67,
+      "current_exposure": 820000,
+      "products_held": ["Business Term Loan", "Equipment Financing", "Trade Finance Solutions"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_009",
+      "name": "Atlanta Healthcare Clinic",
+      "industry": "Healthcare Services",
+      "state": "GA",
+      "credit_score": 79.7,
+      "annual_revenue": 4700000,
+      "years_in_business": 10,
+      "employees": 32,
+      "current_exposure": 385000,
+      "products_held": ["SBA 7(a) Loan", "Chase Business Complete Banking®"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_010",
+      "name": "Pennsylvania Pro Services LLC",
+      "industry": "Professional Services",
+      "state": "PA",
+      "credit_score": 76.8,
+      "annual_revenue": 2100000,
+      "years_in_business": 8,
+      "employees": 14,
+      "current_exposure": 155000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_011",
+      "name": "Carolina Construction Services",
+      "industry": "Construction & Trades",
+      "state": "NC",
+      "credit_score": 68.4,
+      "annual_revenue": 4300000,
+      "years_in_business": 7,
+      "employees": 35,
+      "current_exposure": 445000,
+      "products_held": ["Equipment Financing"],
+      "eligible_products": ["Business Line of Credit", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_012",
+      "name": "Seattle Coffee & Bistro",
+      "industry": "Food Service & Restaurants",
+      "state": "WA",
+      "credit_score": 66.1,
+      "annual_revenue": 1400000,
+      "years_in_business": 4,
+      "employees": 19,
+      "current_exposure": 95000,
+      "products_held": ["Chase Merchant Services®", "Ink Business Cash® Credit Card"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_013",
+      "name": "Phoenix Tech Solutions",
+      "industry": "Technology Services",
+      "state": "AZ",
+      "credit_score": 81.2,
+      "annual_revenue": 5600000,
+      "years_in_business": 9,
+      "employees": 28,
+      "current_exposure": 340000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_014",
+      "name": "Boston Medical Equipment Supply",
+      "industry": "Healthcare Services",
+      "state": "MA",
+      "credit_score": 77.5,
+      "annual_revenue": 7100000,
+      "years_in_business": 16,
+      "employees": 45,
+      "current_exposure": 610000,
+      "products_held": ["Business Term Loan", "Equipment Financing"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_015",
+      "name": "Nashville Retail Group",
+      "industry": "Retail Trade",
+      "state": "TN",
+      "credit_score": 70.3,
+      "annual_revenue": 3200000,
+      "years_in_business": 8,
+      "employees": 21,
+      "current_exposure": 240000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_016",
+      "name": "Indianapolis Manufacturing Co",
+      "industry": "Manufacturing",
+      "state": "IN",
+      "credit_score": 73.9,
+      "annual_revenue": 6800000,
+      "years_in_business": 13,
+      "employees": 52,
+      "current_exposure": 685000,
+      "products_held": ["Equipment Financing", "Business Term Loan"],
+      "eligible_products": ["Business Line of Credit", "Trade Finance Solutions"]
+    },
+    {
+      "id": "biz_017",
+      "name": "Kansas City Food Services",
+      "industry": "Food Service & Restaurants",
+      "state": "MO",
+      "credit_score": 65.7,
+      "annual_revenue": 1700000,
+      "years_in_business": 5,
+      "employees": 23,
+      "current_exposure": 120000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_018",
+      "name": "Maryland Professional Consulting",
+      "industry": "Professional Services",
+      "state": "MD",
+      "credit_score": 80.4,
+      "annual_revenue": 2900000,
+      "years_in_business": 11,
+      "employees": 17,
+      "current_exposure": 205000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_019",
+      "name": "Wisconsin Transport Services",
+      "industry": "Transportation & Logistics",
+      "state": "WI",
+      "credit_score": 69.8,
+      "annual_revenue": 5900000,
+      "years_in_business": 14,
+      "employees": 36,
+      "current_exposure": 550000,
+      "products_held": ["Equipment Financing", "Business Fuel Cards"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_020",
+      "name": "Denver Tech Startups Hub",
+      "industry": "Technology Services",
+      "state": "CO",
+      "credit_score": 83.6,
+      "annual_revenue": 6400000,
+      "years_in_business": 6,
+      "employees": 31,
+      "current_exposure": 380000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_021",
+      "name": "Miami Retail Enterprises",
+      "industry": "Retail Trade",
+      "state": "FL",
+      "credit_score": 68.2,
+      "annual_revenue": 2800000,
+      "years_in_business": 6,
+      "employees": 19,
+      "current_exposure": 215000,
+      "products_held": ["Chase Merchant Services®", "Ink Business Cash® Credit Card"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_022",
+      "name": "Twin Cities Healthcare Group",
+      "industry": "Healthcare Services",
+      "state": "MN",
+      "credit_score": 78.1,
+      "annual_revenue": 5300000,
+      "years_in_business": 11,
+      "employees": 38,
+      "current_exposure": 445000,
+      "products_held": ["Business Term Loan", "Equipment Financing"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_023",
+      "name": "South Carolina Construction LLC",
+      "industry": "Construction & Trades",
+      "state": "SC",
+      "credit_score": 66.9,
+      "annual_revenue": 3900000,
+      "years_in_business": 8,
+      "employees": 31,
+      "current_exposure": 395000,
+      "products_held": ["Equipment Financing"],
+      "eligible_products": ["Business Line of Credit", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_024",
+      "name": "Alabama Food Distribution",
+      "industry": "Retail Trade",
+      "state": "AL",
+      "credit_score": 71.5,
+      "annual_revenue": 4100000,
+      "years_in_business": 10,
+      "employees": 24,
+      "current_exposure": 340000,
+      "products_held": ["Business Line of Credit", "Chase Business Complete Banking®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_025",
+      "name": "New Orleans Bistro & Bar",
+      "industry": "Food Service & Restaurants",
+      "state": "LA",
+      "credit_score": 64.3,
+      "annual_revenue": 1600000,
+      "years_in_business": 5,
+      "employees": 26,
+      "current_exposure": 110000,
+      "products_held": ["Chase Merchant Services®"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_026",
+      "name": "Portland Green Solutions",
+      "industry": "Professional Services",
+      "state": "OR",
+      "credit_score": 79.6,
+      "annual_revenue": 2700000,
+      "years_in_business": 9,
+      "employees": 15,
+      "current_exposure": 185000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_027",
+      "name": "Oklahoma Manufacturing Partners",
+      "industry": "Manufacturing",
+      "state": "OK",
+      "credit_score": 72.7,
+      "annual_revenue": 7500000,
+      "years_in_business": 15,
+      "employees": 58,
+      "current_exposure": 725000,
+      "products_held": ["Equipment Financing", "Business Term Loan"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_028",
+      "name": "Connecticut Tech Innovators",
+      "industry": "Technology Services",
+      "state": "CT",
+      "credit_score": 82.8,
+      "annual_revenue": 5100000,
+      "years_in_business": 7,
+      "employees": 26,
+      "current_exposure": 315000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_029",
+      "name": "Salt Lake City Healthcare",
+      "industry": "Healthcare Services",
+      "state": "UT",
+      "credit_score": 77.9,
+      "annual_revenue": 4900000,
+      "years_in_business": 12,
+      "employees": 35,
+      "current_exposure": 405000,
+      "products_held": ["Business Term Loan", "Equipment Financing"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_030",
+      "name": "Las Vegas Hospitality Group",
+      "industry": "Food Service & Restaurants",
+      "state": "NV",
+      "credit_score": 68.7,
+      "annual_revenue": 3400000,
+      "years_in_business": 8,
+      "employees": 42,
+      "current_exposure": 280000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_031",
+      "name": "San Diego Coastal Retail",
+      "industry": "Retail Trade",
+      "state": "CA",
+      "credit_score": 70.1,
+      "annual_revenue": 2900000,
+      "years_in_business": 7,
+      "employees": 20,
+      "current_exposure": 235000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_032",
+      "name": "Tampa Bay Construction",
+      "industry": "Construction & Trades",
+      "state": "FL",
+      "credit_score": 67.5,
+      "annual_revenue": 4600000,
+      "years_in_business": 9,
+      "employees": 37,
+      "current_exposure": 475000,
+      "products_held": ["Equipment Financing"],
+      "eligible_products": ["Business Line of Credit", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_033",
+      "name": "Brooklyn Professional Services",
+      "industry": "Professional Services",
+      "state": "NY",
+      "credit_score": 81.7,
+      "annual_revenue": 3100000,
+      "years_in_business": 13,
+      "employees": 18,
+      "current_exposure": 195000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_034",
+      "name": "Dallas Tech Solutions",
+      "industry": "Technology Services",
+      "state": "TX",
+      "credit_score": 84.9,
+      "annual_revenue": 6900000,
+      "years_in_business": 8,
+      "employees": 33,
+      "current_exposure": 420000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_035",
+      "name": "Detroit Auto Services",
+      "industry": "Retail Trade",
+      "state": "MI",
+      "credit_score": 69.3,
+      "annual_revenue": 3500000,
+      "years_in_business": 11,
+      "employees": 23,
+      "current_exposure": 295000,
+      "products_held": ["Equipment Financing", "Chase Business Complete Banking®"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_036",
+      "name": "San Francisco Medical Group",
+      "industry": "Healthcare Services",
+      "state": "CA",
+      "credit_score": 79.4,
+      "annual_revenue": 8200000,
+      "years_in_business": 17,
+      "employees": 56,
+      "current_exposure": 740000,
+      "products_held": ["Business Term Loan", "Equipment Financing"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_037",
+      "name": "Austin Restaurant Ventures",
+      "industry": "Food Service & Restaurants",
+      "state": "TX",
+      "credit_score": 67.8,
+      "annual_revenue": 2200000,
+      "years_in_business": 6,
+      "employees": 31,
+      "current_exposure": 165000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_038",
+      "name": "Philadelphia Manufacturing Inc",
+      "industry": "Manufacturing",
+      "state": "PA",
+      "credit_score": 74.6,
+      "annual_revenue": 8700000,
+      "years_in_business": 19,
+      "employees": 64,
+      "current_exposure": 815000,
+      "products_held": ["Equipment Financing", "Business Term Loan"],
+      "eligible_products": ["Business Line of Credit", "Trade Finance Solutions"]
+    },
+    {
+      "id": "biz_039",
+      "name": "Richmond Professional Group",
+      "industry": "Professional Services",
+      "state": "VA",
+      "credit_score": 78.3,
+      "annual_revenue": 2600000,
+      "years_in_business": 10,
+      "employees": 16,
+      "current_exposure": 175000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_040",
+      "name": "Phoenix Retail Collective",
+      "industry": "Retail Trade",
+      "state": "AZ",
+      "credit_score": 66.4,
+      "annual_revenue": 2400000,
+      "years_in_business": 5,
+      "employees": 17,
+      "current_exposure": 185000,
+      "products_held": ["Chase Merchant Services®", "Ink Business Cash® Credit Card"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_041",
+      "name": "Denver Construction Specialists",
+      "industry": "Construction & Trades",
+      "state": "CO",
+      "credit_score": 70.9,
+      "annual_revenue": 5400000,
+      "years_in_business": 10,
+      "employees": 41,
+      "current_exposure": 540000,
+      "products_held": ["Equipment Financing", "Business Line of Credit"],
+      "eligible_products": ["SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_042",
+      "name": "Orlando Healthcare Associates",
+      "industry": "Healthcare Services",
+      "state": "FL",
+      "credit_score": 76.7,
+      "annual_revenue": 5700000,
+      "years_in_business": 13,
+      "employees": 39,
+      "current_exposure": 485000,
+      "products_held": ["Business Term Loan", "Equipment Financing"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_043",
+      "name": "Portland Food Services",
+      "industry": "Food Service & Restaurants",
+      "state": "OR",
+      "credit_score": 65.9,
+      "annual_revenue": 1800000,
+      "years_in_business": 5,
+      "employees": 24,
+      "current_exposure": 125000,
+      "products_held": ["Chase Merchant Services®"],
+      "eligible_products": ["Business Line of Credit", "Equipment Financing"]
+    },
+    {
+      "id": "biz_044",
+      "name": "Houston Tech Innovations",
+      "industry": "Technology Services",
+      "state": "TX",
+      "credit_score": 83.4,
+      "annual_revenue": 7200000,
+      "years_in_business": 9,
+      "employees": 35,
+      "current_exposure": 445000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan", "SBA 7(a) Loan"]
+    },
+    {
+      "id": "biz_045",
+      "name": "St. Louis Manufacturing Co",
+      "industry": "Manufacturing",
+      "state": "MO",
+      "credit_score": 73.2,
+      "annual_revenue": 6300000,
+      "years_in_business": 14,
+      "employees": 49,
+      "current_exposure": 625000,
+      "products_held": ["Equipment Financing", "Business Term Loan"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_046",
+      "name": "Charlotte Professional Services",
+      "industry": "Professional Services",
+      "state": "NC",
+      "credit_score": 79.8,
+      "annual_revenue": 3000000,
+      "years_in_business": 11,
+      "employees": 17,
+      "current_exposure": 190000,
+      "products_held": ["Business Line of Credit", "Ink Business Preferred® Credit Card"],
+      "eligible_products": ["Business Term Loan"]
+    },
+    {
+      "id": "biz_047",
+      "name": "Sacramento Retail Partners",
+      "industry": "Retail Trade",
+      "state": "CA",
+      "credit_score": 68.6,
+      "annual_revenue": 3100000,
+      "years_in_business": 8,
+      "employees": 21,
+      "current_exposure": 255000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_048",
+      "name": "Nashville Healthcare Center",
+      "industry": "Healthcare Services",
+      "state": "TN",
+      "credit_score": 77.2,
+      "annual_revenue": 6100000,
+      "years_in_business": 14,
+      "employees": 43,
+      "current_exposure": 535000,
+      "products_held": ["Business Term Loan", "Equipment Financing"],
+      "eligible_products": ["Business Line of Credit"]
+    },
+    {
+      "id": "biz_049",
+      "name": "San Antonio Restaurant Group",
+      "industry": "Food Service & Restaurants",
+      "state": "TX",
+      "credit_score": 66.5,
+      "annual_revenue": 2000000,
+      "years_in_business": 6,
+      "employees": 28,
+      "current_exposure": 145000,
+      "products_held": ["Business Line of Credit", "Chase Merchant Services®"],
+      "eligible_products": ["Equipment Financing"]
+    },
+    {
+      "id": "biz_050",
+      "name": "Milwaukee Transport Services",
+      "industry": "Transportation & Logistics",
+      "state": "WI",
+      "credit_score": 70.4,
+      "annual_revenue": 5600000,
+      "years_in_business": 12,
+      "employees": 34,
+      "current_exposure": 525000,
+      "products_held": ["Equipment Financing", "Business Fuel Cards"],
+      "eligible_products": ["Business Line of Credit"]
+    }
+  ],
+  "data_quality_notes": [
+    "Portfolio totals adjusted to Chase's 6.0M business customers (rounded from 6.5M for cleaner dashboard display)",
+    "Total exposure of $650B represents Chase's estimated business banking deposits as primary exposure metric",
+    "Segment business counts calculated from Chase's 4,827 branch footprint weighted by state business density",
+    "Credit scores distributed with portfolio-weighted average of 71.4, consistent with large bank commercial portfolios",
+    "Pre-qualified rate of 67% reflects Chase's strong credit quality customer base (above industry 60-70% range)",
+    "At-risk rate of 13% includes watch list (12%) + NPL (0.65%) + NCO run-rate (0.28%)",
+    "Product names are actual Chase business banking products verified via web research February 2026",
+    "Underwriting queue features realistic business names for industry and region (e.g., Pacific Coast Manufacturing in CA)",
+    "Sample businesses include realistic name patterns and internally consistent metrics",
+    "All dollar amounts use realistic SMB ranges: avg exposure $108K, loan requests $165K-$625K"
+  ],
+  "sources_referenced": [
+    "JPMorgan Chase 10-K Filing (Fiscal Year Ended December 31, 2024)",
+    "JPMorgan Chase Annual Report 2024",
+    "JPMorgan Chase Q4 2024 Earnings Release",
+    "JPMorgan Chase 2024 & 2025 Investor Day Presentations",
+    "SBA Office of Advocacy: 2025 Small Business Profile",
+    "U.S. Treasury: Financing Small Business (January 2025)",
+    "FDIC Institution Directory - Chase branch data",
+    "Chase Business Products Web Research (February 2026)"
+  ]
+}

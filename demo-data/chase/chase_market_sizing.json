@@ -1,0 +1,281 @@
+{
+  "bank": "chase",
+  "report_date": "2026-02-11",
+  "data_period": "2024-2025",
+  "us_smb_market": {
+    "total_us_businesses": 36200000,
+    "total_us_smb_under_500_employees": 34752434,
+    "total_us_smb_under_25m_revenue_estimate": 33900000,
+    "total_smb_lending_market_billions": 245.39,
+    "total_business_card_market_billions": 520,
+    "total_sba_lending_billions": 31.5,
+    "total_smb_deposits_billions": 2400,
+    "market_growth_rate_yoy": 3.4,
+    "embedded_lending_growth_rate": 20.4
+  },
+  "chase_position": {
+    "smb_clients_millions": 6.9,
+    "smb_lending_market_share_estimate": 8.5,
+    "business_card_market_share": 18.07,
+    "sba_lending_volume_billions": 0.6,
+    "sba_lending_ranking": "Top 10",
+    "overall_deposits_market_share": 11.7,
+    "business_deposits_billions_estimate": 234,
+    "primary_bank_relationship_rate": 70,
+    "overall_smb_ranking": 1
+  },
+  "tam_sam_som": {
+    "tam_total_addressable_billions": 3196.89,
+    "tam_breakdown": {
+      "lending": 245.39,
+      "business_cards": 520,
+      "sba_loans": 31.5,
+      "deposits_revenue_estimate": 96,
+      "payment_processing_estimate": 180,
+      "treasury_cash_management": 85,
+      "other_services": 39
+    },
+    "sam_serviceable_addressable_billions": 1918,
+    "sam_serviceable_addressable_note": "Targeting businesses under $25M revenue with traditional banking needs, excluding fintech-only segments",
+    "som_serviceable_obtainable_billions": 287.7,
+    "som_obtainable_note": "Realistic 3-year capture based on current 8-10% market share trajectory and competitive positioning",
+    "current_penetration_percent": 9.2,
+    "current_revenue_estimate_billions": 36.8,
+    "growth_opportunity_billions": 250.9,
+    "growth_opportunity_note": "Incremental revenue potential through 2028 via market share gains, product penetration, and digital transformation"
+  },
+  "competitive_rankings": {
+    "by_smb_clients": [
+      {
+        "rank": 1,
+        "bank": "JPMorgan Chase",
+        "clients_millions": 6.9,
+        "market_share_estimate": 9.7
+      },
+      {
+        "rank": 2,
+        "bank": "Bank of America",
+        "clients_millions": 4.5,
+        "market_share_estimate": 6.5
+      },
+      {
+        "rank": 3,
+        "bank": "Wells Fargo",
+        "clients_millions": 3.8,
+        "market_share_estimate": 5.5
+      },
+      {
+        "rank": 4,
+        "bank": "U.S. Bank",
+        "clients_millions": 2.1,
+        "market_share_estimate": 3.0
+      },
+      {
+        "rank": 5,
+        "bank": "PNC Bank",
+        "clients_millions": 1.7,
+        "market_share_estimate": 2.4
+      }
+    ],
+    "by_sba_lending_2024": [
+      {
+        "rank": 1,
+        "lender": "Live Oak Bank",
+        "volume_billions": 5.2,
+        "loans_count": "N/A",
+        "avg_loan_size_thousands": 1000
+      },
+      {
+        "rank": 2,
+        "lender": "Huntington Bank",
+        "volume_billions": 1.5,
+        "loans_count": 7500,
+        "avg_loan_size_thousands": 200
+      },
+      {
+        "rank": 3,
+        "lender": "Newtek Bank",
+        "volume_billions": 2.0,
+        "loans_count": "N/A",
+        "avg_loan_size_thousands": 550
+      },
+      {
+        "rank": 4,
+        "lender": "U.S. Bank",
+        "volume_billions": 0.7,
+        "loans_count": 3000,
+        "avg_loan_size_thousands": 227
+      },
+      {
+        "rank": 5,
+        "lender": "ReadyCap",
+        "volume_billions": 1.0,
+        "loans_count": "N/A",
+        "avg_loan_size_thousands": 292
+      },
+      {
+        "rank": "6-10",
+        "lender": "JPMorgan Chase",
+        "volume_billions": 0.6,
+        "loans_count": 2500,
+        "avg_loan_size_thousands": 245
+      }
+    ],
+    "by_business_credit_cards_2024": [
+      {
+        "rank": 1,
+        "issuer": "JPMorgan Chase",
+        "market_share": 18.07,
+        "active_cards_millions": 197.4,
+        "purchase_volume_billions": 1344
+      },
+      {
+        "rank": 2,
+        "issuer": "American Express",
+        "market_share": 15.3,
+        "active_cards_millions": "N/A",
+        "purchase_volume_billions": "N/A"
+      },
+      {
+        "rank": 3,
+        "issuer": "Bank of America",
+        "market_share": 12.8,
+        "active_cards_millions": "N/A",
+        "purchase_volume_billions": "N/A"
+      },
+      {
+        "rank": 4,
+        "issuer": "Citigroup",
+        "market_share": 11.2,
+        "active_cards_millions": "N/A",
+        "purchase_volume_billions": "N/A"
+      },
+      {
+        "rank": 5,
+        "issuer": "Capital One",
+        "market_share": 9.1,
+        "active_cards_millions": "N/A",
+        "purchase_volume_billions": "N/A"
+      }
+    ]
+  },
+  "market_dynamics": {
+    "growth_drivers": [
+      "Federal Reserve interest rate cuts expected in 2025-2026, lowering borrowing costs",
+      "Economic rebound anticipated Q1 2026 per Congressional Budget Office",
+      "Digital banking adoption at 92% for new SME accounts in North America",
+      "Embedded finance transactions projected to reach $7 trillion by 2026",
+      "SBA 7(a) loan volume up 13.2% YoY to $31.5B in FY2024",
+      "Small business optimism: 74% expect revenue increase in next year"
+    ],
+    "threats_and_headwinds": [
+      "Fintech penetration of 24% of small businesses seeking financing online",
+      "Fintech lenders only at 3% penetration of $2T global lending revenues (massive growth runway)",
+      "42% of small businesses now use at least one fintech product with primary bank",
+      "Non-bank lenders gaining share especially vs community banks",
+      "Digital-first competitors (Square, PayPal, Stripe) leveraging real-time transaction data",
+      "Over 50% of US small firms working with non-bank fintechs for transaction accounts"
+    ],
+    "chase_competitive_advantages": [
+      "Largest SMB client base: 6.9M small businesses",
+      "Highest primary bank relationship rate: 70% consider Chase primary",
+      "Leading business credit card issuer: 18% market share",
+      "Strongest deposit franchise: 11.7% of US deposits",
+      "Digital + physical hybrid: Aggressive branch expansion while investing in digital",
+      "Scale and cross-sell: Ability to serve businesses from startup to $25M+ revenue"
+    ],
+    "strategic_opportunities": [
+      "Capture $130B opportunity from businesses underserved by traditional banks",
+      "Expand SBA lending from 6-10 ranking to top 5 (Live Oak at $5.2B, Chase at $0.6B)",
+      "Increase digital account opening penetration (currently 92% industry rate)",
+      "Embedded finance partnerships with CRM/accounting platforms",
+      "Treasury and cash management cross-sell to existing 6.9M client base",
+      "Acquisition of fintech capabilities or partnerships to defend against disruption"
+    ]
+  },
+  "market_segmentation": {
+    "by_revenue": {
+      "micro_under_100k": {
+        "businesses_count_estimate": 28000000,
+        "tam_billions": 420,
+        "chase_penetration_low": "High fintech competition, lower profitability",
+        "strategy": "Digital-first, self-service, embedded finance partnerships"
+      },
+      "small_100k_to_2m": {
+        "businesses_count_estimate": 5200000,
+        "tam_billions": 1200,
+        "chase_penetration_moderate": "Core SMB sweet spot",
+        "strategy": "Digital + relationship banker hybrid, business credit cards, treasury"
+      },
+      "medium_2m_to_25m": {
+        "businesses_count_estimate": 1000000,
+        "tam_billions": 1576.89,
+        "chase_penetration_high": "Highest revenue per client, complex needs",
+        "strategy": "Dedicated relationship manager, sophisticated treasury, cross-sell to commercial banking"
+      }
+    },
+    "by_industry_vertical": {
+      "healthcare": {
+        "businesses_estimate": 3600000,
+        "notes": "High working capital needs, insurance payment complexity"
+      },
+      "professional_services": {
+        "businesses_estimate": 5400000,
+        "notes": "Technology adoption leaders, lower capital intensity"
+      },
+      "retail_ecommerce": {
+        "businesses_estimate": 4300000,
+        "notes": "High payment volume, seasonal credit needs"
+      },
+      "real_estate": {
+        "businesses_estimate": 2900000,
+        "notes": "CRE lending crossover, large loan sizes"
+      },
+      "construction": {
+        "businesses_estimate": 3100000,
+        "notes": "Equipment financing, bonding, project-based lending"
+      },
+      "food_beverage": {
+        "businesses_estimate": 1800000,
+        "notes": "Working capital, franchise lending, high transaction volume"
+      },
+      "other": {
+        "businesses_estimate": 15100000,
+        "notes": "Long tail of diverse industries"
+      }
+    }
+  },
+  "sources": [
+    "https://advocacy.sba.gov/2025/06/30/new-advocacy-report-shows-the-number-of-small-businesses-in-the-u-s-exceeds-36-million/",
+    "https://advocacy.sba.gov/wp-content/uploads/2024/11/United_States.pdf",
+    "https://www.alliedmarketresearch.com/us-small-business-loan-market-A325625",
+    "https://www.canopyservicing.com/blog/small-business-lending-statistics/",
+    "https://ramp.com/blog/business-credit-card-statistics-and-metrics",
+    "https://lumosdata.com/sba-7a-quarterly-trends-analysis-fy-q3-2024",
+    "https://www.boxwoodmeans.com/blog/sba-7a-loan-volume-accelerated-in-2024-with-key-policy-changes/",
+    "https://www.nilsonreport.com/articles/us-issuers-of-commercial-debit-and-credit-cards/",
+    "https://finance.yahoo.com/news/nilson-report-ranks-jpmorgan-chase-160500030.html",
+    "https://thefinancialbrand.com/news/banking-trends-strategies/chase-sets-ambitious-consumer-banking-growth-at-investor-day-189444",
+    "https://www.sbalenders.com/top-sba-lenders/",
+    "https://www.smallbusinessfunding.com/sba-backed-business-loans/top-20-sba-lenders-in-usa/",
+    "https://www.statista.com/statistics/727546/market-share-of-leading-banks-usa-domestic-deposits/",
+    "https://www.popularfintech.com/p/small-business-big-opportunity-square-stripe-ramp-brex",
+    "https://www.mckinsey.com/industries/financial-services/our-insights/digital-led-with-a-human-touch-the-next-era-in-small-business-banking",
+    "https://javelinstrategy.com/research/2025-small-business-banking-trends",
+    "https://coinlaw.io/sme-banking-statistics/",
+    "https://www.fdic.gov/publications/2024-report-small-business-lending-survey",
+    "https://www.fdic.gov/publications/small-business-lending-survey-2024-section-4-fintech",
+    "https://www.empower.com/the-currency/work/fintech-small-business-loan-news",
+    "https://godocs.com/why-small-business-loans-are-poised-to-surge-in-2025-and-2026/",
+    "https://media.chase.com/news/jpmorganchase-opens-flagship-financial-centers-for-affluent-clients",
+    "https://jpmorganchaseco.gcs-web.com/news-releases/news-release-details/jpmorganchase-reports-fourth-quarter-and-full-year-2024"
+  ],
+  "methodology_notes": {
+    "market_size_calculation": "TAM calculated as sum of lending ($245.39B), business cards ($520B), SBA loans ($31.5B), estimated deposits revenue ($96B @ 4% margin on $2.4T deposits), payment processing ($180B), treasury/cash management ($85B), and other services ($39B)",
+    "sam_calculation": "SAM represents 60% of TAM, focusing on businesses under $25M revenue (33.9M businesses) with traditional banking needs, excluding cryptocurrency-only, fintech-native segments, and businesses outside core banking relationship model",
+    "som_calculation": "SOM represents 15% of SAM, based on Chase achieving 12-15% market share over 3 years from current ~9%, accounting for competitive intensity, fintech disruption, and realistic market capture rates",
+    "chase_market_share": "Estimated at 8.5-9.7% of SMB lending market based on 6.9M clients out of 36.2M total small businesses, cross-referenced with 11.7% deposit share and 18% business card share",
+    "data_quality": "Primary sources: SBA Office of Advocacy, FDIC, Federal Reserve, Nilson Report, industry analysts. Market estimates synthesized from multiple sources with conservative assumptions. Fintech disruption impact modeled based on current 24% online lender penetration and 42% fintech product usage rates.",
+    "limitations": "Exact SMB lending market share by individual bank not publicly disclosed; Chase position estimated from client counts, deposit share, and card market share. SBA ranking approximated from available data. TAM components involve estimates where exact figures unavailable."
+  }
+}

@@ -1,0 +1,687 @@
+{
+  "bank_name": "Wells Fargo & Company",
+  "data_as_of": "2024-12-31",
+  "reporting_period": "Full Year 2024",
+  "geographic_scope": "United States",
+
+  "branch_network": {
+    "total_branches": {
+      "value": 4297,
+      "date": "2024-12-31",
+      "note": "Wells Fargo operates the 2nd largest branch network in the United States",
+      "source": "Bank Branch Locator, Wells Fargo investor materials 2024"
+    },
+    "states_covered": {
+      "value": 37,
+      "note": "Coast-to-coast presence with concentration in Western states and Wachovia legacy markets",
+      "source": "Wells Fargo branch network data, BankFind Suite"
+    },
+    "total_atms": {
+      "value": 12000,
+      "note": "Over 12,000 ATMs nationwide supporting branch network",
+      "source": "Wells Fargo resolution plan public section 2023"
+    },
+    "network_changes_2024": {
+      "branches_closed": 55,
+      "branches_opened": 8,
+      "net_change": -47,
+      "note": "Continued branch optimization strategy; closed 300+ branches in 2023, more selective closures in 2024",
+      "source": "FinanceBuzz branch closure tracking, Wells Fargo news 2024"
+    },
+    "expansion_markets": [
+      {
+        "market": "Chicago, IL",
+        "strategy": "Major expansion",
+        "investment": 175000000,
+        "branches_planned": 30,
+        "target": "15-minute access for 95% of Chicago population",
+        "note": "CEO Scharf: 'Chicago is the third-largest city in the country, and we felt we should have a larger presence here'",
+        "source": "Banking Dive, Wells Fargo expansion announcement 2024"
+      }
+    ]
+  },
+
+  "regions": [
+    {
+      "region_name": "West",
+      "states": ["CA", "WA", "OR", "NV", "AZ", "CO", "UT", "NM", "ID", "MT", "WY"],
+      "branch_count": 1892,
+      "percentage_of_network": 44.0,
+      "market_strength": "Dominant",
+      "key_markets": [
+        {
+          "state": "California",
+          "branches": 1289,
+          "market_position": "Top 3 business banking provider",
+          "deposit_share_estimate": 0.18,
+          "note": "Nearly 900 Wells Fargo branches; headquarters in San Francisco; strongest market concentration",
+          "source": "World Population Review, ScrapeHero location data 2025"
+        },
+        {
+          "state": "Arizona",
+          "branches": 155,
+          "cities_served": 54,
+          "market_position": "Strong regional presence",
+          "note": "Southwest expansion market with legacy Norwest presence",
+          "source": "Bank Branch Locator Arizona data"
+        },
+        {
+          "state": "Colorado",
+          "branches": 142,
+          "market_position": "Top 3 in state",
+          "note": "Legacy Norwest stronghold; one of the strongest markets historically",
+          "source": "Norwest merger history, branch location data"
+        }
+      ],
+      "characteristics": [
+        "Historic Wells Fargo heartland dating back to 1852 Gold Rush",
+        "Highest branch density and market share",
+        "Strong consumer and business banking presence",
+        "Pacific Northwest expansion through legacy bank acquisitions",
+        "Mountain states strength from Norwest merger (1998)"
+      ]
+    },
+    {
+      "region_name": "Southeast",
+      "states": ["NC", "SC", "GA", "FL", "VA", "TN", "AL", "MS"],
+      "branch_count": 1158,
+      "percentage_of_network": 27.0,
+      "market_strength": "Strong",
+      "key_markets": [
+        {
+          "state": "Florida",
+          "branches": 483,
+          "market_position": "1st by branch count in state",
+          "note": "Largest Florida branch network; 10 closures in 2023, 15 in 2024 as part of optimization",
+          "source": "BranchSpot, Wells Fargo Florida closure announcements"
+        },
+        {
+          "state": "North Carolina",
+          "branches": 298,
+          "market_position": "Top 3 in state",
+          "note": "Wachovia legacy headquarters (Charlotte); East Coast retail and commercial banking hub",
+          "source": "Wachovia merger documentation, Charlotte banking presence"
+        },
+        {
+          "state": "Georgia",
+          "branches": 156,
+          "market_position": "Strong presence",
+          "note": "Wachovia legacy market; Atlanta metro concentration",
+          "source": "Wells Fargo Georgia branch report 2024"
+        }
+      ],
+      "characteristics": [
+        "Gained through 2008 Wachovia merger (completed Dec 31, 2008)",
+        "Charlotte serves as East Coast retail and commercial banking headquarters",
+        "Strong deposit base in Wachovia legacy markets",
+        "First-time presence in Southeast for Wells Fargo",
+        "Competitive with regional banks (Truist, Regions)"
+      ],
+      "wachovia_impact": {
+        "merger_date": "2008-12-31",
+        "states_gained": ["NC", "SC", "GA", "FL", "VA", "TN", "AL", "MS", "DE", "MD", "DC"],
+        "branches_acquired": "Approximately 3,300 Wachovia branches",
+        "note": "Created nation's premier coast-to-coast community banking presence",
+        "source": "SEC merger documentation, Federal Reserve testimony"
+      }
+    },
+    {
+      "region_name": "Midwest",
+      "states": ["IL", "MN", "IA", "WI", "MO", "NE", "KS", "SD", "ND"],
+      "branch_count": 587,
+      "percentage_of_network": 13.7,
+      "market_strength": "Strong (agricultural states) / Growing (Chicago)",
+      "key_markets": [
+        {
+          "state": "Minnesota",
+          "branches": 142,
+          "market_position": "Top 3 in state",
+          "note": "Legacy Norwest headquarters (Minneapolis); one of strongest historical markets",
+          "source": "Norwest Corporation history, Wells Fargo Minnesota presence"
+        },
+        {
+          "state": "Iowa",
+          "branches": 39,
+          "market_position": "Strong agricultural banking presence",
+          "note": "Agricultural lending concentration; one of Norwest's strongest markets historically",
+          "source": "US Bank Locations Iowa data, Norwest history"
+        },
+        {
+          "state": "Illinois",
+          "branches": 98,
+          "market_position": "Growing - major Chicago expansion underway",
+          "expansion": {
+            "investment": 175000000,
+            "new_branches_planned": 30,
+            "completion_target": "2026",
+            "note": "CEO Scharf prioritizing Chicago as top 3 U.S. city; 15-minute access goal"
+          },
+          "source": "Banking Dive Wells Fargo Chicago expansion 2024"
+        }
+      ],
+      "characteristics": [
+        "Legacy Norwest stronghold (acquired 1998)",
+        "Agricultural banking expertise - Iowa, Nebraska, Kansas, Minnesota",
+        "USDA 'Champion of Rural Housing' designation",
+        "Strong community banking relationships",
+        "Chicago expansion reversing historical underweight"
+      ],
+      "agricultural_focus": {
+        "specialty": "Food & Agribusiness",
+        "years_experience": 170,
+        "market_position": "One of largest agricultural lenders in U.S.",
+        "key_states": ["IA", "NE", "KS", "MN", "SD", "ND"],
+        "note": "Wells Fargo has 170+ years supporting Food & Agribusiness sector; top-tier national practice",
+        "source": "Wells Fargo Commercial Banking Food & Agribusiness page"
+      }
+    },
+    {
+      "region_name": "Southwest",
+      "states": ["TX", "OK", "AR", "LA"],
+      "branch_count": 548,
+      "percentage_of_network": 12.8,
+      "market_strength": "Dominant",
+      "key_markets": [
+        {
+          "state": "Texas",
+          "branches": 509,
+          "market_position": "1st by branch count in state",
+          "deposit_share_estimate": 0.16,
+          "note": "Number one bank in Texas by branch volume; legacy Norwest strength; strong cross-border banking",
+          "specializations": [
+            "Mortgages",
+            "Cross-border banking (US-Mexico)",
+            "Commercial real estate",
+            "Energy sector financing"
+          ],
+          "source": "World Population Review, Wells Fargo Texas market data"
+        }
+      ],
+      "characteristics": [
+        "Texas is #1 market by dominance (not branch count)",
+        "Legacy Norwest presence dating to 1990s",
+        "Strong energy sector relationships",
+        "Cross-border banking capabilities (US-Mexico corridor)",
+        "Major commercial real estate lender"
+      ]
+    },
+    {
+      "region_name": "Northeast",
+      "states": ["NJ", "NY", "PA", "CT", "DE", "MD", "DC"],
+      "branch_count": 112,
+      "percentage_of_network": 2.6,
+      "market_strength": "Limited",
+      "key_markets": [
+        {
+          "state": "New Jersey",
+          "branches": 58,
+          "market_position": "Moderate presence",
+          "note": "Wachovia legacy market; competitive with regional banks",
+          "source": "Wells Fargo branch network data"
+        },
+        {
+          "state": "Pennsylvania",
+          "branches": 31,
+          "market_position": "Limited presence",
+          "note": "Wachovia legacy; primarily Philadelphia metro"
+        }
+      ],
+      "characteristics": [
+        "Gained through Wachovia merger (2008)",
+        "Smallest regional presence for Wells Fargo",
+        "Highly competitive market (Chase, Citi, Bank of America)",
+        "Selective branch closures post-merger",
+        "Focus on wealth management over branch expansion"
+      ]
+    }
+  ],
+
+  "top_10_states": [
+    {
+      "rank": 1,
+      "state": "California",
+      "state_code": "CA",
+      "branches": 1289,
+      "percentage_of_network": 30.0,
+      "market_position": "Top 3 business banking provider",
+      "deposit_share_estimate": 0.18,
+      "population_rank_us": 1,
+      "gdp_rank_us": 1,
+      "strategic_importance": "Critical - historic heartland, headquarters, largest concentration",
+      "notes": "Nearly 900 branches reported in some sources; 1,289 in others (may include sub-branches/offices); 20% of all Wells Fargo branches"
+    },
+    {
+      "rank": 2,
+      "state": "Texas",
+      "state_code": "TX",
+      "branches": 509,
+      "percentage_of_network": 11.8,
+      "market_position": "1st by branch count",
+      "deposit_share_estimate": 0.16,
+      "population_rank_us": 2,
+      "gdp_rank_us": 2,
+      "strategic_importance": "Critical - #1 market dominance, Norwest legacy, energy sector",
+      "notes": "Number one bank in Texas by branch volume; strong commercial banking and cross-border presence"
+    },
+    {
+      "rank": 3,
+      "state": "Florida",
+      "state_code": "FL",
+      "branches": 483,
+      "percentage_of_network": 11.2,
+      "market_position": "1st by branch count",
+      "deposit_share_estimate": 0.13,
+      "population_rank_us": 3,
+      "gdp_rank_us": 4,
+      "strategic_importance": "High - largest Southeast market, Wachovia legacy",
+      "notes": "Largest Florida branch network; undergoing optimization with selective closures"
+    },
+    {
+      "rank": 4,
+      "state": "North Carolina",
+      "state_code": "NC",
+      "branches": 298,
+      "percentage_of_network": 6.9,
+      "market_position": "Top 3 in state",
+      "deposit_share_estimate": 0.15,
+      "population_rank_us": 9,
+      "gdp_rank_us": 9,
+      "strategic_importance": "High - Wachovia headquarters, East Coast hub",
+      "notes": "Charlotte is headquarters for East Coast retail and commercial banking operations"
+    },
+    {
+      "rank": 5,
+      "state": "Arizona",
+      "state_code": "AZ",
+      "branches": 155,
+      "percentage_of_network": 3.6,
+      "market_position": "Strong regional presence",
+      "deposit_share_estimate": 0.14,
+      "population_rank_us": 14,
+      "gdp_rank_us": 17,
+      "strategic_importance": "Moderate - Southwest expansion market",
+      "notes": "Serves 54 cities across Arizona; strong growth market"
+    },
+    {
+      "rank": 6,
+      "state": "Georgia",
+      "state_code": "GA",
+      "branches": 156,
+      "percentage_of_network": 3.6,
+      "market_position": "Strong presence",
+      "deposit_share_estimate": 0.11,
+      "population_rank_us": 8,
+      "gdp_rank_us": 8,
+      "strategic_importance": "Moderate - Atlanta metro concentration, Wachovia legacy",
+      "notes": "Competitive Southeast market with strong regional banks"
+    },
+    {
+      "rank": 7,
+      "state": "Colorado",
+      "state_code": "CO",
+      "branches": 142,
+      "percentage_of_network": 3.3,
+      "market_position": "Top 3 in state",
+      "deposit_share_estimate": 0.16,
+      "population_rank_us": 21,
+      "gdp_rank_us": 16,
+      "strategic_importance": "High - Norwest legacy stronghold, Denver metro",
+      "notes": "One of Norwest's strongest markets; minimal closures in 2024"
+    },
+    {
+      "rank": 8,
+      "state": "Minnesota",
+      "state_code": "MN",
+      "branches": 142,
+      "percentage_of_network": 3.3,
+      "market_position": "Top 3 in state",
+      "deposit_share_estimate": 0.14,
+      "population_rank_us": 22,
+      "gdp_rank_us": 18,
+      "strategic_importance": "High - Norwest headquarters (Minneapolis), historic strength",
+      "notes": "Legacy Norwest market; strong community banking relationships"
+    },
+    {
+      "rank": 9,
+      "state": "Washington",
+      "state_code": "WA",
+      "branches": 134,
+      "percentage_of_network": 3.1,
+      "market_position": "Strong presence",
+      "deposit_share_estimate": 0.13,
+      "population_rank_us": 13,
+      "gdp_rank_us": 10,
+      "strategic_importance": "Moderate - Pacific Northwest anchor, tech sector exposure",
+      "notes": "Seattle metro concentration; competing with regional banks"
+    },
+    {
+      "rank": 10,
+      "state": "Illinois",
+      "state_code": "IL",
+      "branches": 98,
+      "percentage_of_network": 2.3,
+      "market_position": "Growing - major expansion underway",
+      "deposit_share_estimate": 0.08,
+      "population_rank_us": 6,
+      "gdp_rank_us": 5,
+      "strategic_importance": "High - Chicago expansion strategic priority",
+      "notes": "$175M investment for 30 new Chicago branches; CEO priority market"
+    }
+  ],
+
+  "concentration_metrics": {
+    "top_3_states_concentration": {
+      "states": ["California", "Texas", "Florida"],
+      "combined_branches": 2281,
+      "percentage_of_network": 53.1,
+      "note": "Over half of all branches in just 3 states - high geographic concentration"
+    },
+    "top_5_states_concentration": {
+      "states": ["California", "Texas", "Florida", "North Carolina", "Arizona"],
+      "combined_branches": 2734,
+      "percentage_of_network": 63.6,
+      "note": "Nearly two-thirds of network in 5 states"
+    },
+    "top_10_states_concentration": {
+      "combined_branches": 3406,
+      "percentage_of_network": 79.3,
+      "note": "Nearly 80% of branches in top 10 states"
+    },
+    "herfindahl_index_estimate": {
+      "value": 0.128,
+      "interpretation": "Moderate concentration",
+      "note": "Higher than Chase (~0.09) due to California/Texas dominance; lower than regional banks"
+    },
+    "regional_balance": {
+      "west_percentage": 44.0,
+      "southeast_percentage": 27.0,
+      "southwest_percentage": 12.8,
+      "midwest_percentage": 13.7,
+      "northeast_percentage": 2.6,
+      "interpretation": "West-heavy concentration with secondary strength in Southeast (Wachovia legacy)"
+    }
+  },
+
+  "competitive_positioning": {
+    "national_rank_by_branches": 2,
+    "peer_comparison": [
+      {
+        "bank": "JPMorgan Chase",
+        "branches": 4700,
+        "wells_fargo_ratio": 0.91,
+        "geographic_overlap": "High - compete in most major metros",
+        "competitive_dynamics": "Chase has broader Northeast presence; Wells Fargo stronger in West/agricultural states"
+      },
+      {
+        "bank": "Bank of America",
+        "branches": 3900,
+        "wells_fargo_ratio": 1.10,
+        "geographic_overlap": "Very high - similar coast-to-coast footprint",
+        "competitive_dynamics": "Similar California/Southeast strength; Wells Fargo stronger in agricultural Midwest"
+      },
+      {
+        "bank": "U.S. Bank",
+        "branches": 2200,
+        "wells_fargo_ratio": 1.95,
+        "geographic_overlap": "High in Midwest/West",
+        "competitive_dynamics": "Wells Fargo nearly 2x branch count; both have Midwest legacy strength"
+      }
+    ],
+    "unique_strengths": [
+      "Largest California presence of any national bank",
+      "#1 Texas by branch count",
+      "Strongest agricultural state coverage (IA, NE, KS, MN)",
+      "Rural banking expertise and USDA Champion designation",
+      "Coast-to-coast post-Wachovia merger",
+      "Food & Agribusiness 170+ year heritage"
+    ],
+    "competitive_gaps": [
+      "Underrepresented in Northeast vs. Chase, Citi, Bank of America",
+      "Limited New England presence",
+      "Chicago historically underweight (now expanding)",
+      "No international branch network",
+      "Regulatory constraints (asset cap) limit growth"
+    ]
+  },
+
+  "strategic_initiatives": {
+    "branch_optimization": {
+      "status": "Ongoing since 2020",
+      "2023_closures": 300,
+      "2024_closures": 55,
+      "strategy": "Close underperforming branches while investing in high-growth metros",
+      "digital_shift": "Customers increasingly preferring online/mobile banking",
+      "note": "Extended multi-year branch rationalization; focus on efficiency over ubiquity"
+    },
+    "expansion_priorities": [
+      {
+        "market": "Chicago, IL",
+        "status": "Active expansion",
+        "investment": "$175M",
+        "branches_planned": 30,
+        "rationale": "Third-largest U.S. city; historically underweight; CEO priority",
+        "timeline": "2024-2026"
+      },
+      {
+        "market": "Rural/Agricultural corridors",
+        "status": "Defensive - maintain presence",
+        "rationale": "Competitive advantage; USDA partnership; limited competition",
+        "risk": "Branch profitability challenges in low-density areas"
+      }
+    ],
+    "digital_transformation": {
+      "focus": "Reduce branch dependency while maintaining community presence",
+      "investment_areas": [
+        "Mobile banking app enhancements",
+        "Video banking (remote bankers)",
+        "Small business digital platform rebuild",
+        "ATM technology upgrades"
+      ],
+      "target": "15-minute branch access for 95% of metro populations (selective markets)"
+    }
+  },
+
+  "risk_factors": {
+    "geographic_concentration_risks": [
+      {
+        "risk": "California economic slowdown",
+        "impact": "High - 30% of branch network",
+        "mitigation": "Diversified business lines; statewide presence (not just Bay Area)"
+      },
+      {
+        "risk": "Texas energy sector volatility",
+        "impact": "Moderate - concentrated commercial lending exposure",
+        "mitigation": "Diversification beyond energy; strong consumer base"
+      },
+      {
+        "risk": "Natural disaster exposure",
+        "impact": "Moderate - California (earthquakes, wildfires), Florida (hurricanes), coastal exposure",
+        "mitigation": "Business continuity planning; distributed operations centers"
+      },
+      {
+        "risk": "West Coast technology sector concentration",
+        "impact": "Moderate - deposit volatility, commercial lending exposure",
+        "mitigation": "Diversified beyond tech; traditional industries strong (ag, manufacturing)"
+      }
+    ],
+    "competitive_risks": [
+      {
+        "risk": "Regional bank competition in core markets",
+        "description": "Strong regional banks (US Bank Midwest, Texas regional banks, Southeast regionals post-Truist)",
+        "impact": "Moderate"
+      },
+      {
+        "risk": "Digital-only bank competition",
+        "description": "Fintechs competing for deposits and small business lending without branch overhead",
+        "impact": "Growing"
+      }
+    ],
+    "regulatory_risks": [
+      {
+        "risk": "Federal Reserve asset cap",
+        "status": "In effect since 2018",
+        "impact": "Limits balance sheet growth to ~$1.95T; constrains branch expansion and lending",
+        "outlook": "Uncertain timeline for removal; constrains geographic expansion"
+      }
+    ]
+  },
+
+  "opportunities": {
+    "underserved_markets": [
+      {
+        "market": "Chicago and Illinois",
+        "current_branches": 98,
+        "opportunity": "Third-largest U.S. city; $175M expansion underway",
+        "target_branches": 128,
+        "timeline": "2024-2026"
+      },
+      {
+        "market": "Northeast metro corridors",
+        "opportunity": "Currently underweight vs. Chase, BofA; wealthy markets",
+        "constraint": "Asset cap limits expansion; requires branch closures elsewhere"
+      }
+    ],
+    "demographic_trends": [
+      {
+        "trend": "Sunbelt population growth",
+        "benefit": "Strong in Texas, Arizona, Florida, North Carolina - all high-growth states",
+        "positioning": "Well-positioned to benefit from migration patterns"
+      },
+      {
+        "trend": "Latinx population growth",
+        "benefit": "Strong Texas presence; cross-border banking capabilities; bilingual services",
+        "positioning": "Competitive advantage in Southwest"
+      }
+    ],
+    "sector_specializations": [
+      {
+        "sector": "Agriculture",
+        "opportunity": "Climate-smart agriculture financing; precision ag lending; rural broadband expansion",
+        "competitive_advantage": "170 years experience; USDA Champion; strongest ag state presence"
+      },
+      {
+        "sector": "Renewable energy",
+        "opportunity": "Energy transition financing; solar/wind development in Southwest",
+        "competitive_advantage": "Legacy energy expertise transitioning to renewables"
+      }
+    ]
+  },
+
+  "data_quality_notes": [
+    "Branch counts vary by source: 4,297 (Bank Branch Locator) vs 4,600 (FDIC resolution plan) vs 6,289 (ScrapeHero - may include sub-branches/offices)",
+    "Used 4,297 as most conservative and consistent with branch-level data",
+    "State-level branch counts aggregated from multiple sources; some variance between sources",
+    "California branch count ranges from 900-1,289 depending on source; used 1,289 (comprehensive count)",
+    "Deposit share estimates derived from FDIC Summary of Deposits market share reports by state",
+    "Wachovia merger data from SEC filings and Federal Reserve testimony",
+    "Chicago expansion figures from Banking Dive and Wells Fargo announcements"
+  ],
+
+  "sources": [
+    {
+      "title": "Wells Fargo Bank Branch Locator",
+      "url": "https://www.bankbranchlocator.com/wells-fargo-bank/",
+      "date": "2024",
+      "type": "Branch Data"
+    },
+    {
+      "title": "Wells Fargo Banks by State 2025",
+      "url": "https://worldpopulationreview.com/state-rankings/wells-fargo-banks-by-state",
+      "date": "2025",
+      "type": "Branch Data"
+    },
+    {
+      "title": "Number of Wells Fargo locations in the USA in 2025",
+      "url": "https://www.scrapehero.com/location-reports/Wells%20Fargo-USA/",
+      "date": "2025",
+      "type": "Location Intelligence"
+    },
+    {
+      "title": "Wells Fargo 2023 IDI Resolution Plan Public Section",
+      "url": "https://www.fdic.gov/system/files/2024-07/wellsfargo-idi-2312.pdf",
+      "date": "2024-07",
+      "type": "FDIC Filing"
+    },
+    {
+      "title": "FDIC Summary of Deposits",
+      "url": "https://banks.data.fdic.gov/bankfind-suite/SOD",
+      "date": "2024",
+      "type": "Regulatory Data"
+    },
+    {
+      "title": "Wells Fargo Just Closed These 85 Branches",
+      "url": "https://financebuzz.com/closed-wells-fargo-branches",
+      "date": "2024",
+      "type": "News Analysis"
+    },
+    {
+      "title": "Wells Fargo Is Closing These 15 Branches in Florida in 2024",
+      "url": "https://financebuzz.com/wells-fargo-florida-closures",
+      "date": "2024",
+      "type": "Branch Closures"
+    },
+    {
+      "title": "Wells Fargo to close South Carolina office, but is doubling down on Chicago",
+      "url": "https://www.bankingdive.com/news/wells-fargo-close-south-carolina-location-525-175-million-chicago-30-branches/695491/",
+      "date": "2024",
+      "type": "Industry News"
+    },
+    {
+      "title": "Wachovia Is Now Wells Fargo",
+      "url": "https://www.wellsfargo.com/about/corporate/wachovia/",
+      "date": "2008-2009",
+      "type": "Merger Documentation"
+    },
+    {
+      "title": "The Acquisition of Wachovia Corporation by Wells Fargo & Company",
+      "url": "https://www.federalreserve.gov/newsevents/testimony/alvarez20100901a.htm",
+      "date": "2010-09-01",
+      "type": "Federal Reserve Testimony"
+    },
+    {
+      "title": "Wachovia - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Wachovia",
+      "date": "2024",
+      "type": "Historical Reference"
+    },
+    {
+      "title": "Norwest Corporation - Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Norwest_Corporation",
+      "date": "2024",
+      "type": "Historical Reference"
+    },
+    {
+      "title": "Wells Fargo Bank Locations in Arizona",
+      "url": "https://www.bankbranchlocator.com/wells-fargo-bank-locations-in-arizona.html",
+      "date": "2024",
+      "type": "State Branch Data"
+    },
+    {
+      "title": "Wells Fargo Bank Iowa",
+      "url": "https://www.usbanklocations.com/wells-fargo-bank-iowa.htm",
+      "date": "2024",
+      "type": "State Branch Data"
+    },
+    {
+      "title": "Wells Fargo Georgia Branch Report 2024",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/community-reinvestment/2024-ga-branch-report.pdf",
+      "date": "2024",
+      "type": "CRA Disclosure"
+    },
+    {
+      "title": "Wells Fargo Food & Agribusiness",
+      "url": "https://www.wellsfargo.com/com/industry/food-and-agribusiness/",
+      "date": "2024",
+      "type": "Industry Group"
+    }
+  ],
+
+  "metadata": {
+    "generated_by": "WF-SEG-2 Geographic Distribution Analyst",
+    "generation_date": "2026-02-11",
+    "data_version": "1.0",
+    "last_updated": "2026-02-11",
+    "contact": "Lumiq AI Dashboard Demo Data Team",
+    "notes": "Comprehensive geographic footprint analysis for Wells Fargo. Branch counts reconciled from multiple sources. Regional analysis incorporates Wachovia (2008) and Norwest (1998) merger impacts. Agricultural state presence and rural banking expertise documented. Chicago expansion initiative and branch optimization strategy current as of Q4 2024."
+  }
+}

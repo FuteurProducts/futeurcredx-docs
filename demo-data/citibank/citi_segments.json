@@ -1,0 +1,250 @@
+{
+  "bank": "Citibank",
+  "metadata": {
+    "source": "Citigroup 10-K filings, commercial banking reports, FDIC branch data 2024-2025",
+    "generatedAt": "2026-02-11",
+    "notes": "Citi has a concentrated US footprint (648 branches in 13 states) focused on major financial centers. Post-2021 consumer banking restructuring, commercial bank serves ~14K clients with strong international capabilities. Client base skews toward larger SMBs ($5M-$25M revenue) with cross-border needs.",
+    "totalClients": 450000,
+    "commercialClients": 14000,
+    "avgRevenuePerClient": "$8.2M",
+    "geographicMarkets": 17
+  },
+  "industrySegments": [
+    {
+      "segmentId": "tech",
+      "name": "Technology",
+      "description": "Digital, technology, and communications companies. Strong presence in SF Bay Area and NYC tech hubs.",
+      "clientCount": 68000,
+      "percentOfTotal": 15.1,
+      "avgCreditLimit": 285000,
+      "avgUtilization": 0.52,
+      "avgCreditScore": 712,
+      "defaultRate": 0.018,
+      "keyMetrics": {
+        "avgRevenue": "$12.5M",
+        "avgEmployees": 48,
+        "growthRate": 0.14,
+        "internationalTrade": 0.38
+      },
+      "notes": "Citi's strongest SMB vertical. Concentrated in SF Bay Area (40%), NYC (35%), Seattle (15%). Higher credit limits reflect international payment flows and working capital needs for cross-border operations."
+    },
+    {
+      "segmentId": "prof-services",
+      "name": "Professional Services",
+      "description": "Legal, accounting, consulting, financial advisory firms. High concentration in major metros.",
+      "clientCount": 72000,
+      "percentOfTotal": 16.0,
+      "avgCreditLimit": 245000,
+      "avgUtilization": 0.45,
+      "avgCreditScore": 728,
+      "defaultRate": 0.012,
+      "keyMetrics": {
+        "avgRevenue": "$9.8M",
+        "avgEmployees": 34,
+        "growthRate": 0.09,
+        "internationalTrade": 0.22
+      },
+      "notes": "Second-largest segment. NYC dominates (50%), followed by DC (20%), Chicago (15%). Includes law firms, consulting firms, accounting practices. Strong credit profile, stable cash flows."
+    },
+    {
+      "segmentId": "healthcare",
+      "name": "Healthcare & Life Sciences",
+      "description": "Medical practices, clinics, biotech, medical device distributors, health services.",
+      "clientCount": 63000,
+      "percentOfTotal": 14.0,
+      "avgCreditLimit": 265000,
+      "avgUtilization": 0.58,
+      "avgCreditScore": 695,
+      "defaultRate": 0.025,
+      "keyMetrics": {
+        "avgRevenue": "$8.9M",
+        "avgEmployees": 52,
+        "growthRate": 0.11,
+        "internationalTrade": 0.18
+      },
+      "notes": "Strong in SF (biotech/medical devices), NYC (healthcare services), Miami (medical tourism/imports). Higher utilization reflects equipment financing and inventory for distributors."
+    },
+    {
+      "segmentId": "retail",
+      "name": "Retail & E-Commerce",
+      "description": "Specialty retail, e-commerce, import/export retail, luxury goods.",
+      "clientCount": 81000,
+      "percentOfTotal": 18.0,
+      "avgCreditLimit": 195000,
+      "avgUtilization": 0.64,
+      "avgCreditScore": 682,
+      "defaultRate": 0.032,
+      "keyMetrics": {
+        "avgRevenue": "$7.2M",
+        "avgEmployees": 28,
+        "growthRate": 0.08,
+        "internationalTrade": 0.45
+      },
+      "notes": "Largest segment by client count. Heavy e-commerce/import focus (45% have international trade). NYC (25%), LA (22%), Miami (18%), SF (12%). Trade finance is key differentiator."
+    },
+    {
+      "segmentId": "manufacturing",
+      "name": "Manufacturing & Distribution",
+      "description": "Light manufacturing, importers, distributors with international supply chains.",
+      "clientCount": 54000,
+      "percentOfTotal": 12.0,
+      "avgCreditLimit": 320000,
+      "avgUtilization": 0.61,
+      "avgCreditScore": 688,
+      "defaultRate": 0.028,
+      "keyMetrics": {
+        "avgRevenue": "$11.2M",
+        "avgEmployees": 58,
+        "growthRate": 0.06,
+        "internationalTrade": 0.56
+      },
+      "notes": "Highest avg credit limits due to working capital for inventory/receivables. 56% have international supply chains. LA/Long Beach port access (30%), Chicago (25%), NYC (20%)."
+    },
+    {
+      "segmentId": "real-estate",
+      "name": "Real Estate & Property Services",
+      "description": "Commercial real estate, property management, REITs, development firms.",
+      "clientCount": 45000,
+      "percentOfTotal": 10.0,
+      "avgCreditLimit": 380000,
+      "avgUtilization": 0.55,
+      "avgCreditScore": 702,
+      "defaultRate": 0.024,
+      "keyMetrics": {
+        "avgRevenue": "$9.5M",
+        "avgEmployees": 22,
+        "growthRate": 0.05,
+        "internationalTrade": 0.08
+      },
+      "notes": "Highest avg credit limits reflect property/project financing. NYC (40%), Miami (20%), SF (15%), LA (12%). Mix of commercial landlords, property managers, small developers."
+    },
+    {
+      "segmentId": "food-bev",
+      "name": "Food Service & Hospitality",
+      "description": "Restaurants, hotels, catering, specialty food importers in metro areas.",
+      "clientCount": 36000,
+      "percentOfTotal": 8.0,
+      "avgCreditLimit": 145000,
+      "avgUtilization": 0.68,
+      "avgCreditScore": 668,
+      "defaultRate": 0.041,
+      "keyMetrics": {
+        "avgRevenue": "$5.8M",
+        "avgEmployees": 32,
+        "growthRate": 0.04,
+        "internationalTrade": 0.14
+      },
+      "notes": "Smallest segment for Citi - not a strategic focus. Concentrated in tourist/business hubs: Miami (28%), NYC (26%), SF (18%), Chicago (14%). Higher default rate typical for sector."
+    },
+    {
+      "segmentId": "other",
+      "name": "Other Industries",
+      "description": "Transportation, construction, agriculture, utilities, services not elsewhere classified.",
+      "clientCount": 31000,
+      "percentOfTotal": 6.9,
+      "avgCreditLimit": 175000,
+      "avgUtilization": 0.56,
+      "avgCreditScore": 675,
+      "defaultRate": 0.035,
+      "keyMetrics": {
+        "avgRevenue": "$6.8M",
+        "avgEmployees": 38,
+        "growthRate": 0.03,
+        "internationalTrade": 0.12
+      },
+      "notes": "Catch-all for industries outside core focus. Includes logistics (especially international freight), professional services not in main category, specialized B2B services."
+    }
+  ],
+  "geographicDistribution": [
+    {
+      "regionId": "northeast",
+      "name": "Northeast",
+      "states": ["NY", "CT", "NJ", "PA", "MA", "DC"],
+      "clientCount": 198000,
+      "percentOfTotal": 44.0,
+      "branches": 385,
+      "keyMetros": ["New York City", "Washington DC", "Boston"],
+      "avgCreditLimit": 265000,
+      "avgUtilization": 0.54,
+      "notes": "Dominant region. NYC metro alone represents ~35% of total US clients. Strong in professional services (law, finance, consulting), tech (fintech/adtech), healthcare. DC presence serves government contractors and policy/lobbying firms."
+    },
+    {
+      "regionId": "west",
+      "name": "West",
+      "states": ["CA", "WA", "OR", "NV"],
+      "clientCount": 108000,
+      "percentOfTotal": 24.0,
+      "branches": 180,
+      "keyMetros": ["San Francisco Bay Area", "Los Angeles", "San Diego", "Seattle"],
+      "avgCreditLimit": 285000,
+      "avgUtilization": 0.56,
+      "notes": "Second-largest region. SF Bay Area is tech/biotech hub (40% of West region clients). LA serves entertainment, import/retail, manufacturing. Strong trade finance presence at LA/Long Beach port. Seattle tech corridor growing."
+    },
+    {
+      "regionId": "southeast",
+      "name": "Southeast",
+      "states": ["FL", "GA", "NC", "VA"],
+      "clientCount": 81000,
+      "percentOfTotal": 18.0,
+      "branches": 52,
+      "keyMetros": ["Miami", "Atlanta"],
+      "avgCreditLimit": 235000,
+      "avgUtilization": 0.58,
+      "notes": "Miami is critical international gateway (Latin America). Strong in trade finance, import/export, healthcare (medical tourism), hospitality. Limited branch presence outside Miami metro. Atlanta serves as Southeast commercial hub."
+    },
+    {
+      "regionId": "midwest",
+      "name": "Midwest",
+      "states": ["IL", "OH", "MI", "IN", "WI", "MN"],
+      "clientCount": 45000,
+      "percentOfTotal": 10.0,
+      "branches": 26,
+      "keyMetros": ["Chicago"],
+      "avgCreditLimit": 245000,
+      "avgUtilization": 0.52,
+      "notes": "Almost entirely Chicago metro (90%). Serves financial services, professional services, manufacturing with international supply chains. Limited presence outside Chicago - no retail branches in other Midwest cities."
+    },
+    {
+      "regionId": "southwest",
+      "name": "Southwest",
+      "states": ["TX", "AZ", "NM", "OK"],
+      "clientCount": 18000,
+      "percentOfTotal": 4.0,
+      "branches": 5,
+      "keyMetros": ["Dallas", "Houston"],
+      "avgCreditLimit": 220000,
+      "avgUtilization": 0.51,
+      "notes": "Minimal branch presence - mostly commercial/private banking relationships in Dallas and Houston. Serves energy sector suppliers, professional services, some tech (Austin area). Not a strategic retail banking market for Citi."
+    }
+  ],
+  "creditProfile": {
+    "overallAvgScore": 695,
+    "overallDefaultRate": 0.026,
+    "avgCreditLimit": 255000,
+    "avgUtilization": 0.56,
+    "notes": "Higher credit limits and lower default rates than industry average reflect Citi's focus on larger SMBs ($5M+ revenue) with established operations and international business. Stronger underwriting criteria and relationship banking model."
+  },
+  "competitivePosition": {
+    "strengths": [
+      "Global network and international banking capabilities",
+      "Trade finance and supply chain solutions",
+      "Technology and professional services expertise",
+      "Strong presence in top-tier metros (NYC, SF, Miami)",
+      "Digital banking and treasury management platforms"
+    ],
+    "weaknesses": [
+      "Limited geographic coverage (only 13 states with branches)",
+      "Minimal presence in secondary markets",
+      "Smaller overall SMB client base vs Chase/Wells/BofA",
+      "Less competitive in traditional Main Street banking",
+      "Higher minimum relationship sizes ($3M+ revenue typically)"
+    ],
+    "differentiators": [
+      "International capabilities (94 countries with presence)",
+      "Trade finance expertise and products",
+      "Cross-border payment solutions",
+      "Treasury and working capital optimization",
+      "Industry specialization (6 'super sectors')"
+    ]
+  }
+}

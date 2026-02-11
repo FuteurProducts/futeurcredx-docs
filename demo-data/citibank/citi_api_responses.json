@@ -1,0 +1,986 @@
+{
+  "bank": "Citibank",
+  "generatedAt": "2026-02-11T00:00:00.000Z",
+  "source": "CITI-SYNTH-2 Generator",
+  "description": "Production-ready API response templates for Citibank commercial banking products and services. Uses real Citi product names: CitiBusiness credit cards, Citi commercial loans, Citi Treasury & Trade Solutions.",
+
+  "products": {
+    "creditCards": [
+      {
+        "id": "citi-aadvantage-world-elite",
+        "name": "Citi AAdvantage Business World Elite Mastercard",
+        "brand": "Mastercard World Elite",
+        "network": "Mastercard",
+        "category": "premium_rewards",
+        "annualFee": 99,
+        "annualFeeWaiver": "First 12 months",
+        "creditScoreRequired": "Excellent (760+)",
+        "targetSegment": "mid-market",
+        "rewardsProgram": {
+          "type": "airline_miles",
+          "partner": "American Airlines AAdvantage",
+          "earnRate": {
+            "americanAirlines": "2x miles per $1",
+            "telecom": "2x miles per $1",
+            "gasSations": "2x miles per $1 (first $6,000/year)",
+            "otherPurchases": "1x mile per $1"
+          },
+          "signUpBonus": "65,000 bonus miles after $4,000 spend in first 4 months",
+          "additionalPerks": [
+            "First checked bag free on AA domestic flights",
+            "Priority boarding on AA flights",
+            "No foreign transaction fees",
+            "25% savings on AA inflight food/beverage"
+          ]
+        },
+        "introAPR": null,
+        "regularAPR": "21.49% - 26.49% variable",
+        "foreignTransactionFee": 0,
+        "keyFeatures": [
+          "Global acceptance with World Elite Mastercard",
+          "Travel and emergency assistance services",
+          "Purchase protection and extended warranty",
+          "Employee cards at no additional cost",
+          "Integration with Citi Treasury & Trade Solutions"
+        ],
+        "bestFor": "Businesses with significant AA travel spend and international operations",
+        "estimatedApprovalTime": "7-10 business days"
+      },
+      {
+        "id": "citi-business-aadvantage-platinum",
+        "name": "CitiBusiness AAdvantage Platinum Select Mastercard",
+        "brand": "Mastercard",
+        "network": "Mastercard",
+        "category": "airline_rewards",
+        "annualFee": 0,
+        "annualFeeWaiver": null,
+        "creditScoreRequired": "Good (700+)",
+        "targetSegment": "small",
+        "rewardsProgram": {
+          "type": "airline_miles",
+          "partner": "American Airlines AAdvantage",
+          "earnRate": {
+            "americanAirlines": "2x miles per $1",
+            "officeSupplyStores": "2x miles per $1",
+            "gasSations": "2x miles per $1 (first $6,000/year)",
+            "otherPurchases": "1x mile per $1"
+          },
+          "signUpBonus": "50,000 bonus miles after $3,000 spend in first 3 months",
+          "additionalPerks": [
+            "First checked bag free on AA domestic flights",
+            "Priority boarding on AA flights",
+            "No foreign transaction fees"
+          ]
+        },
+        "introAPR": null,
+        "regularAPR": "20.49% - 25.49% variable",
+        "foreignTransactionFee": 0,
+        "keyFeatures": [
+          "No annual fee",
+          "Employee cards at no additional cost",
+          "Fraud liability protection",
+          "Online account management and reporting",
+          "Citi Mobile app integration"
+        ],
+        "bestFor": "Small businesses with AA travel needs and no annual fee preference",
+        "estimatedApprovalTime": "7-10 business days"
+      },
+      {
+        "id": "citi-businesscard",
+        "name": "Citi BusinessCard",
+        "brand": "Mastercard",
+        "network": "Mastercard",
+        "category": "cash_back",
+        "annualFee": 0,
+        "annualFeeWaiver": null,
+        "creditScoreRequired": "Good (680+)",
+        "targetSegment": "small",
+        "rewardsProgram": {
+          "type": "cash_back",
+          "earnRate": {
+            "officeSupplyStores": "2% cash back",
+            "gasSations": "2% cash back (first $6,000/year)",
+            "restaurants": "2% cash back",
+            "otherPurchases": "1% cash back"
+          },
+          "signUpBonus": "$200 cash back after $2,000 spend in first 3 months",
+          "redemptionOptions": [
+            "Statement credit",
+            "Check",
+            "ThankYou Points transfer"
+          ]
+        },
+        "introAPR": "0% on purchases and balance transfers for 9 months",
+        "regularAPR": "19.49% - 24.49% variable",
+        "foreignTransactionFee": 3,
+        "keyFeatures": [
+          "No annual fee",
+          "Simple cash back rewards",
+          "Year-end summary for tax reporting",
+          "Employee cards at no additional cost",
+          "Citi Mobile app and online account management",
+          "Purchase protection and extended warranty"
+        ],
+        "bestFor": "Small businesses seeking straightforward cash back with no annual fee",
+        "estimatedApprovalTime": "7-10 business days"
+      },
+      {
+        "id": "citi-costco-business",
+        "name": "Costco Anywhere Visa Business Card by Citi",
+        "brand": "Visa",
+        "network": "Visa",
+        "category": "warehouse_rewards",
+        "annualFee": 0,
+        "annualFeeWaiver": null,
+        "creditScoreRequired": "Good (700+)",
+        "targetSegment": "small",
+        "eligibilityRequirement": "Costco Business membership required",
+        "rewardsProgram": {
+          "type": "cash_back",
+          "earnRate": {
+            "gasAndEV": "4% cash back on gas and EV charging (first $7,000/year)",
+            "travel": "3% cash back on travel",
+            "restaurants": "3% cash back on restaurants",
+            "costco": "2% cash back on Costco and Costco.com purchases",
+            "otherPurchases": "1% cash back"
+          },
+          "redemption": "Annual reward certificate redeemable at Costco"
+        },
+        "introAPR": null,
+        "regularAPR": "20.49% - 25.49% variable",
+        "foreignTransactionFee": 0,
+        "keyFeatures": [
+          "No annual fee (Costco membership required)",
+          "High cash back on gas and travel",
+          "No foreign transaction fees",
+          "Employee cards at no additional cost",
+          "Auto rental collision damage waiver",
+          "Travel and emergency assistance"
+        ],
+        "bestFor": "Costco business members with significant gas and travel spend",
+        "estimatedApprovalTime": "7-10 business days"
+      }
+    ],
+
+    "depositAccounts": [
+      {
+        "id": "citi-business-streamlined-checking",
+        "name": "CitiBusiness Streamlined Checking",
+        "category": "business_checking",
+        "monthlyFee": 15,
+        "feeWaiver": "$5,000 average collected balance",
+        "features": {
+          "transactionsIncluded": 250,
+          "cashDepositLimit": 10000,
+          "atmAccess": "60,000+ fee-free ATMs (Citi + MoneyPass network)",
+          "branchAccess": "600+ branch locations across 13 states",
+          "digitalBanking": true,
+          "mobileBanking": true,
+          "onlineWireTransfers": true,
+          "checkDeposit": "Remote deposit capture available",
+          "overdraftProtection": "Optional overdraft line of credit"
+        },
+        "targetSegment": "small",
+        "bestFor": "Small businesses with moderate transaction volume",
+        "integrations": [
+          "QuickBooks",
+          "Xero",
+          "CitiDirect BE",
+          "Citi Treasury & Trade Solutions"
+        ]
+      },
+      {
+        "id": "citi-business-flexible-checking",
+        "name": "CitiBusiness Flexible Checking",
+        "category": "business_checking",
+        "monthlyFee": "Variable based on usage",
+        "feeWaiver": null,
+        "pricingModel": "Pay-per-use",
+        "features": {
+          "transactionsIncluded": "Unlimited with per-transaction fee",
+          "cashDepositLimit": "No limit",
+          "atmAccess": "60,000+ fee-free ATMs (Citi + MoneyPass network)",
+          "branchAccess": "600+ branch locations",
+          "digitalBanking": true,
+          "mobileBanking": true,
+          "treasuryIntegration": "Full CitiDirect BE integration",
+          "cashManagement": "Advanced cash management tools"
+        },
+        "targetSegment": "growing",
+        "bestFor": "Businesses with fluctuating transaction volumes",
+        "integrations": [
+          "QuickBooks",
+          "Xero",
+          "CitiDirect BE",
+          "Citi Treasury & Trade Solutions",
+          "SAP",
+          "Oracle Financials"
+        ]
+      },
+      {
+        "id": "citi-business-analyzed-checking",
+        "name": "CitiBusiness Analyzed Checking",
+        "category": "cash_management",
+        "monthlyFee": "Earnings credit allowance",
+        "feeWaiver": "Fees offset by earnings credits on balances",
+        "features": {
+          "transactionsIncluded": "Unlimited",
+          "analyzeAccountStructure": true,
+          "earningsCredit": "Earnings credit to offset service fees",
+          "treasuryIntegration": "Full CitiDirect BE integration",
+          "cashManagement": "Advanced cash management and liquidity tools",
+          "sweepAccounts": "Automated sweep to investment accounts",
+          "realTimeReporting": true
+        },
+        "targetSegment": "mid-market",
+        "bestFor": "Mid-market companies with complex treasury needs and high balances",
+        "integrations": [
+          "CitiDirect BE",
+          "Citi Treasury & Trade Solutions",
+          "SAP",
+          "Oracle Financials",
+          "Bloomberg Terminal"
+        ]
+      },
+      {
+        "id": "citi-business-interest-checking",
+        "name": "CitiBusiness Interest Checking",
+        "category": "interest_checking",
+        "monthlyFee": "Varies",
+        "feeWaiver": "Varies by balance tier",
+        "features": {
+          "earnInterest": true,
+          "tieredRates": "Interest rates increase with balance tiers",
+          "transactionsIncluded": "Varies by tier",
+          "atmAccess": "60,000+ fee-free ATMs",
+          "branchAccess": "600+ branch locations",
+          "digitalBanking": true,
+          "mobileBanking": true
+        },
+        "targetSegment": "established",
+        "bestFor": "Businesses maintaining significant operating balances",
+        "integrations": [
+          "QuickBooks",
+          "CitiDirect BE"
+        ]
+      },
+      {
+        "id": "citi-business-savings",
+        "name": "CitiBusiness Savings Account",
+        "category": "business_savings",
+        "monthlyFee": 15,
+        "feeWaiver": "$15,000 average monthly balance",
+        "features": {
+          "earnInterest": true,
+          "tieredRates": "Competitive interest rates",
+          "atmAccess": "60,000+ fee-free ATMs for balance inquiries",
+          "digitalBanking": true,
+          "mobileBanking": true,
+          "linkedChecking": "Link to CitiBusiness Checking for transfers"
+        },
+        "targetSegment": "all",
+        "bestFor": "Business savings and emergency funds",
+        "integrations": [
+          "CitiBusiness Checking accounts",
+          "CitiDirect BE"
+        ]
+      }
+    ],
+
+    "lendingProducts": [
+      {
+        "id": "citi-business-line-of-credit",
+        "name": "Citi Business Line of Credit",
+        "category": "line_of_credit",
+        "loanAmountRange": {
+          "min": 10000,
+          "max": 500000
+        },
+        "term": "Revolving",
+        "creditScoreRequired": "Good (680+)",
+        "interestRate": "Variable, starting at Prime + 2.5%",
+        "features": {
+          "drawPeriod": "Ongoing revolving access",
+          "repaymentFlexibility": "Pay interest only or principal + interest",
+          "noDrawFee": true,
+          "onlineBanking": "Manage draws and payments online",
+          "quickAccess": "Draw funds via check, transfer, or CitiDirect"
+        },
+        "targetSegment": "small",
+        "bestFor": "Working capital, cash flow management, seasonal needs",
+        "approvalTime": "15 days for credit approval (loans up to $10M)",
+        "fundingTime": "30 days for funding",
+        "eligibility": [
+          "2+ years in business",
+          "Minimum $250K annual revenue",
+          "US-based business",
+          "Good credit history"
+        ]
+      },
+      {
+        "id": "citi-equipment-financing",
+        "name": "Citi Equipment Financing",
+        "category": "equipment_financing",
+        "loanAmountRange": {
+          "min": 25000,
+          "max": 5000000
+        },
+        "term": "2-7 years",
+        "creditScoreRequired": "Good (700+)",
+        "interestRate": "Fixed or variable, competitive rates",
+        "features": {
+          "financesEquipment": "Vehicles, machinery, technology, medical equipment",
+          "upTo100Percent": "Finance up to 100% of equipment cost",
+          "taxBenefits": "Potential Section 179 deduction",
+          "flexiblePayments": "Seasonal or annual payment options available",
+          "fastApproval": "Quick approval process"
+        },
+        "targetSegment": "mid-market",
+        "bestFor": "Equipment purchases, technology upgrades, fleet acquisition",
+        "approvalTime": "15 days for credit approval",
+        "fundingTime": "30 days for funding",
+        "eligibility": [
+          "3+ years in business",
+          "Minimum $500K annual revenue",
+          "Strong credit profile",
+          "Equipment serves as collateral"
+        ]
+      },
+      {
+        "id": "citi-commercial-real-estate",
+        "name": "Citi Commercial Real Estate Financing",
+        "category": "commercial_real_estate",
+        "loanAmountRange": {
+          "min": 500000,
+          "max": 50000000
+        },
+        "term": "5-25 years",
+        "creditScoreRequired": "Excellent (740+)",
+        "interestRate": "Fixed or variable rates based on credit profile",
+        "features": {
+          "propertyTypes": "Office, retail, industrial, multifamily, hospitality",
+          "loanToValue": "Up to 80% LTV",
+          "debtServiceCoverage": "Minimum 1.25x DSCR",
+          "globalCapabilities": "Cross-border real estate financing available",
+          "relationshipPricing": "Better rates for full relationship clients"
+        },
+        "targetSegment": "mid-market",
+        "bestFor": "Property acquisition, refinancing, construction",
+        "approvalTime": "30-45 days",
+        "fundingTime": "45-60 days",
+        "eligibility": [
+          "Strong credit profile",
+          "Experienced property ownership/management",
+          "Adequate liquidity and net worth",
+          "Professional property management for larger deals"
+        ]
+      },
+      {
+        "id": "citi-sba-loans",
+        "name": "Citi SBA Loans (7(a) and 504)",
+        "category": "sba_loans",
+        "loanAmountRange": {
+          "min": 50000,
+          "max": 5000000
+        },
+        "term": "Up to 25 years (real estate), 10 years (equipment), 7 years (working capital)",
+        "creditScoreRequired": "Good (680+)",
+        "interestRate": "Variable or fixed, based on SBA maximums",
+        "features": {
+          "sbaGuarantee": "SBA guarantee up to 85% (7(a)) or 90% (504)",
+          "lowerDownPayment": "As low as 10% down",
+          "longerTerms": "Extended repayment periods",
+          "flexibleUse": "Real estate, equipment, working capital, acquisition",
+          "citiExpertise": "Experienced SBA lending team"
+        },
+        "targetSegment": "small",
+        "bestFor": "Real estate purchase, equipment, business acquisition, expansion",
+        "approvalTime": "30-45 days",
+        "fundingTime": "45-90 days",
+        "eligibility": [
+          "US-based for-profit business",
+          "Meet SBA size standards",
+          "Demonstrate need and use of funds",
+          "Good credit and character",
+          "Owner equity injection required"
+        ]
+      }
+    ],
+
+    "treasuryAndTradeProducts": [
+      {
+        "id": "citi-treasury-trade-solutions",
+        "name": "Citi Treasury & Trade Solutions (TTS)",
+        "category": "treasury_management",
+        "description": "World's leading treasury and trade solutions provider processing nearly $5 trillion in flows daily",
+        "targetSegment": "mid-market",
+        "services": {
+          "cashManagement": {
+            "name": "Global Cash Management",
+            "features": [
+              "Multi-currency accounts in 140+ currencies",
+              "Real-time liquidity management",
+              "Automated cash concentration and sweeps",
+              "Cross-border pooling",
+              "Global account structures"
+            ]
+          },
+          "payments": {
+            "name": "Global Payments",
+            "features": [
+              "Domestic and international wires",
+              "ACH payments and collections",
+              "Same-day and next-day clearing",
+              "SWIFT network access",
+              "API integration for payment initiation",
+              "Named World's Best Corporate Payments Bank 2025 by Euromoney"
+            ]
+          },
+          "tradeFinance": {
+            "name": "Trade Finance & Supply Chain",
+            "features": [
+              "Letters of credit (import/export)",
+              "Trade loans and working capital",
+              "Supply chain finance programs",
+              "Documentary collections",
+              "Bank guarantees and standby letters of credit",
+              "Commodity finance"
+            ]
+          },
+          "foreignExchange": {
+            "name": "Foreign Exchange Services",
+            "features": [
+              "500+ currency pairs",
+              "Competitive FX rates",
+              "Hedging and risk management",
+              "Forward contracts and options",
+              "Real-time FX rate alerts",
+              "24/7 global FX trading desk"
+            ]
+          },
+          "receivables": {
+            "name": "Receivables Management",
+            "features": [
+              "Lockbox services",
+              "Electronic receivables",
+              "Remote deposit capture",
+              "Integrated receivables",
+              "B2B payment acceptance"
+            ]
+          },
+          "liquidity": {
+            "name": "Liquidity Management",
+            "features": [
+              "Investment solutions",
+              "Money market accounts",
+              "Sweep accounts",
+              "Overnight investments",
+              "Yield enhancement strategies"
+            ]
+          }
+        },
+        "platform": {
+          "name": "CitiDirect BE (Banking Electronic)",
+          "description": "Award-winning digital banking platform",
+          "features": [
+            "Real-time account information and reporting",
+            "Integrated payment initiation",
+            "Global transaction services",
+            "API connectivity",
+            "Mobile app (iOS and Android)",
+            "Multi-factor authentication and security",
+            "AI-powered analytics and insights",
+            "Customizable dashboards"
+          ],
+          "availability": "Rolled out to 8 countries, serving 57% of Citi commercial client base"
+        },
+        "bestFor": "Mid-market and large businesses with international operations, cross-border payments, trade finance needs, and complex treasury requirements",
+        "pricing": "Relationship-based pricing",
+        "onboarding": "Dedicated relationship manager and implementation team"
+      },
+      {
+        "id": "citi-commercial-cards",
+        "name": "Citi Commercial Cards",
+        "category": "commercial_cards",
+        "description": "Corporate payment solutions for larger organizations",
+        "targetSegment": "mid-market",
+        "cardTypes": [
+          {
+            "name": "Corporate Card",
+            "description": "Employee spending cards with centralized billing",
+            "features": [
+              "Centralized billing to company",
+              "Spending controls and limits",
+              "Integrated expense management",
+              "Real-time transaction data",
+              "Rewards programs available"
+            ]
+          },
+          {
+            "name": "Purchasing Card (P-Card)",
+            "description": "Streamline procurement and supplier payments",
+            "features": [
+              "Higher credit limits",
+              "Enhanced reporting and controls",
+              "Supplier acceptance worldwide",
+              "Level 2/3 data capture for tax",
+              "Reduce invoice processing costs"
+            ]
+          },
+          {
+            "name": "Virtual Cards",
+            "description": "One-time use virtual card numbers for secure payments",
+            "features": [
+              "Single-use card numbers",
+              "Enhanced security",
+              "Automated reconciliation",
+              "Supplier payments",
+              "Travel and event bookings"
+            ]
+          }
+        ],
+        "integrations": [
+          "SAP Concur",
+          "Coupa",
+          "Oracle ERP",
+          "NetSuite",
+          "Custom API integration"
+        ],
+        "bestFor": "Mid-market and enterprise businesses seeking to optimize procurement, employee expenses, and supplier payments"
+      },
+      {
+        "id": "citi-merchant-services",
+        "name": "Citi Merchant Services",
+        "category": "payment_processing",
+        "description": "Payment acceptance solutions for businesses",
+        "targetSegment": "small",
+        "services": {
+          "cardAcceptance": [
+            "Credit and debit card processing",
+            "EMV chip card acceptance",
+            "Contactless and mobile payments",
+            "E-commerce payment gateway",
+            "Recurring billing"
+          ],
+          "equipment": [
+            "Point-of-sale terminals",
+            "Mobile card readers",
+            "Virtual terminals",
+            "Integrated POS systems"
+          ],
+          "security": [
+            "PCI compliance support",
+            "Fraud detection and prevention",
+            "Secure tokenization",
+            "End-to-end encryption"
+          ],
+          "reporting": [
+            "Real-time transaction reporting",
+            "Sales analytics",
+            "Chargeback management",
+            "Integration with accounting software"
+          ]
+        },
+        "pricing": "Competitive interchange-plus or flat-rate pricing",
+        "bestFor": "Retail, restaurant, e-commerce, and service businesses"
+      }
+    ],
+
+    "industrySpecializedPackages": [
+      {
+        "id": "citi-healthcare-professionals",
+        "name": "CitiBusiness Solutions for Healthcare Professionals",
+        "category": "industry_package",
+        "targetIndustries": ["Medical practices", "Dental offices", "Veterinary clinics", "Healthcare services"],
+        "benefits": {
+          "checking": "Waived monthly maintenance fees on CitiBusiness Checking",
+          "merchantServices": "Discounted rates on merchant services",
+          "savings": "Better APY on business savings and money market accounts",
+          "loans": "Reduced fees and better rates on term loans",
+          "advisory": "Industry-specific financial advisory services",
+          "cards": "Exclusive credit card offers"
+        },
+        "eligibility": "Healthcare professionals (MD, DO, DDS, DVM, etc.) with valid license",
+        "additionalServices": [
+          "Medical equipment financing",
+          "Practice acquisition loans",
+          "Receivables management for insurance payments",
+          "Payroll services"
+        ]
+      },
+      {
+        "id": "citi-legal-professionals",
+        "name": "CitiBusiness Solutions for Legal Professionals",
+        "category": "industry_package",
+        "targetIndustries": ["Law firms", "Solo practitioners", "Legal services"],
+        "benefits": {
+          "iolaAccounts": "Unlimited sub-accounts for IOLTA/IOLA",
+          "freeWires": "Unlimited free wires on IOLTA/IOLA accounts",
+          "checkScanner": "Free check scanner for remote deposit",
+          "compliance": "Specialized compliance support for legal trust accounts",
+          "advisory": "Industry-specific financial advisory",
+          "reporting": "Enhanced reporting for client trust accounting"
+        },
+        "eligibility": "Licensed attorneys and law firms",
+        "additionalServices": [
+          "Law firm lines of credit",
+          "Case cost financing",
+          "Commercial real estate loans for office space"
+        ]
+      },
+      {
+        "id": "citi-business-preferred",
+        "name": "CitiBusiness Preferred Banking",
+        "category": "relationship_package",
+        "targetIndustries": ["General businesses not qualifying for industry-specific packages"],
+        "benefits": {
+          "depositRates": "Better rates on deposit products",
+          "lendingDiscounts": "Discounts on lending products and services",
+          "relationshipManager": "Dedicated relationship manager",
+          "priorityService": "Priority customer service",
+          "waivedFees": "Waived or reduced banking fees",
+          "rewardsBonus": "Enhanced rewards on credit cards"
+        },
+        "eligibility": "Businesses maintaining significant balances and relationships with Citi",
+        "relationshipThreshold": "$100,000+ combined average balances or $50,000+ annual borrowing"
+      }
+    ],
+
+    "privateBank": [
+      {
+        "id": "citi-private-bank-business",
+        "name": "Citi Private Bank for Business Owners",
+        "category": "private_banking",
+        "description": "Integrated wealth and business banking for high-net-worth business owners",
+        "minimumRelationship": "$5,000,000",
+        "services": {
+          "businessBanking": [
+            "Integrated business and personal banking",
+            "Premium business banking products",
+            "Commercial lending and financing",
+            "Treasury and trade solutions",
+            "Succession planning"
+          ],
+          "wealthManagement": [
+            "Investment management and advisory",
+            "Trust and estate planning",
+            "Tax-efficient strategies",
+            "Philanthropic advisory",
+            "Family office services"
+          ],
+          "global": [
+            "Cross-border banking",
+            "International investment opportunities",
+            "Foreign exchange and hedging",
+            "Global real estate financing",
+            "Immigration and visa services"
+          ]
+        },
+        "dedicatedTeam": {
+          "privatebanker": "Dedicated private banker",
+          "investmentCounselor": "Investment counselor",
+          "creditSpecialist": "Credit specialist",
+          "trustOfficer": "Trust and estate planning officer"
+        },
+        "bestFor": "High-net-worth business owners seeking integrated business and personal wealth management"
+      }
+    ]
+  },
+
+  "sampleAPIResponses": {
+    "businessScoreResponse": {
+      "success": true,
+      "data": {
+        "businessId": "c4000000-0000-4000-a000-000000000001",
+        "businessName": "Apex Global Fintech LLC",
+        "score": 815,
+        "scoreType": "EXPERIAN",
+        "scoreRange": {
+          "min": 0,
+          "max": 850
+        },
+        "riskTier": "low",
+        "factors": [
+          "Strong payment history",
+          "Low utilization",
+          "International trade experience"
+        ],
+        "pullDate": "2026-02-11T09:30:00.000Z",
+        "metadata": {
+          "annualRevenue": 18500000,
+          "employeeCount": 85,
+          "yearsInBusiness": 11,
+          "city": "New York",
+          "state": "NY",
+          "industry": "Fintech",
+          "internationalOperations": true
+        }
+      },
+      "meta": {
+        "requestId": "req_citi_001",
+        "timestamp": "2026-02-11T09:30:15.000Z"
+      }
+    },
+
+    "productRecommendationsResponse": {
+      "success": true,
+      "data": {
+        "businessId": "c4000000-0000-4000-a000-000000000001",
+        "businessName": "Apex Global Fintech LLC",
+        "recommendations": [
+          {
+            "productId": "citi-aadvantage-world-elite",
+            "productName": "Citi AAdvantage Business World Elite Mastercard",
+            "category": "credit_card",
+            "fitScore": 96,
+            "reason": "Premium credit profile with international focus",
+            "estimatedCreditLimit": 75000,
+            "estimatedAPR": "21.49%",
+            "keyBenefits": [
+              "2x miles on AA travel",
+              "No foreign transaction fees",
+              "World Elite benefits"
+            ]
+          },
+          {
+            "productId": "citi-treasury-trade-solutions",
+            "productName": "Citi Treasury & Trade Solutions",
+            "category": "treasury",
+            "fitScore": 94,
+            "reason": "International operations require treasury management",
+            "keyBenefits": [
+              "Multi-currency accounts",
+              "Global payments",
+              "FX risk management",
+              "Trade finance"
+            ],
+            "estimatedMonthlyCost": 250
+          },
+          {
+            "productId": "citi-business-line-of-credit",
+            "productName": "Citi Business Line of Credit",
+            "category": "lending",
+            "fitScore": 92,
+            "reason": "Excellent for trade finance and working capital",
+            "estimatedCreditLine": 500000,
+            "estimatedRate": "Prime + 2.5%",
+            "keyBenefits": [
+              "Flexible access to funds",
+              "Pay interest only on drawn amount",
+              "Integrate with treasury platform"
+            ]
+          }
+        ],
+        "scoreSnapshot": 815,
+        "expiresAt": "2026-08-11T00:00:00.000Z",
+        "generatedAt": "2026-02-11T09:31:00.000Z"
+      },
+      "meta": {
+        "requestId": "req_citi_002",
+        "timestamp": "2026-02-11T09:31:15.000Z"
+      }
+    },
+
+    "portfolioSummaryResponse": {
+      "success": true,
+      "data": {
+        "portfolioId": "c2000000-0000-4000-a000-000000000001",
+        "portfolioName": "Global Commercial Portfolio",
+        "portfolioCode": "CITI-GLOBAL",
+        "summary": {
+          "totalBusinesses": 45,
+          "totalExposure": 975000000,
+          "averageExposure": 21666667,
+          "averageCreditScore": 802,
+          "riskDistribution": {
+            "low": 42,
+            "medium": 3,
+            "high": 0
+          },
+          "segmentDistribution": {
+            "mid-market": 34,
+            "small": 11
+          },
+          "geographicDistribution": {
+            "NYC": 16,
+            "SF_Bay": 9,
+            "Miami": 7,
+            "Chicago": 5,
+            "LA": 5,
+            "Other": 3
+          },
+          "industryDistribution": {
+            "professional_services": 8,
+            "technology": 7,
+            "healthcare": 6,
+            "manufacturing": 5,
+            "trade_import_export": 9,
+            "real_estate": 3,
+            "hospitality": 2,
+            "other": 5
+          }
+        },
+        "performance": {
+          "defaultRate": 0.022,
+          "delinquencyRate30Plus": 0.011,
+          "averageUtilization": 0.54,
+          "netChargeOffRate": 0.018
+        },
+        "alerts": {
+          "active": 5,
+          "critical": 0,
+          "high": 2,
+          "medium": 3,
+          "low": 0
+        }
+      },
+      "meta": {
+        "requestId": "req_citi_003",
+        "timestamp": "2026-02-11T10:00:00.000Z"
+      }
+    },
+
+    "ewsAlertResponse": {
+      "success": true,
+      "data": {
+        "alertId": "cc000000-0000-4000-a000-000000000004",
+        "tenantId": "c1000000-0000-4000-a000-000000000001",
+        "portfolioId": "c2000000-0000-4000-a000-000000000001",
+        "businessId": "c4000000-0000-4000-a000-000000000029",
+        "businessName": "Fort Lauderdale Yacht Services",
+        "alertType": "SCORE_DROP",
+        "severity": "HIGH",
+        "message": "Luxury market exposure — score below 700",
+        "previousScore": 710,
+        "currentScore": 680,
+        "scoreDrop": 30,
+        "recommendations": [
+          "Review account activity and recent financials",
+          "Consider temporary credit line reduction",
+          "Schedule relationship manager check-in",
+          "Monitor for additional negative indicators"
+        ],
+        "createdAt": "2026-02-06T10:00:00.000Z",
+        "status": "active",
+        "assignedTo": "c0000001-0000-4000-a000-000000000003",
+        "priority": "high"
+      },
+      "meta": {
+        "requestId": "req_citi_004",
+        "timestamp": "2026-02-11T10:30:00.000Z"
+      }
+    },
+
+    "auditEventResponse": {
+      "success": true,
+      "data": {
+        "eventId": "cb000000-0000-4000-a000-000000000001",
+        "tenantId": "c1000000-0000-4000-a000-000000000001",
+        "userId": "c0000001-0000-4000-a000-000000000001",
+        "userName": "Patricia Chen",
+        "action": "SCORE_PULL",
+        "resourceType": "business",
+        "resourceId": "c4000000-0000-4000-a000-000000000001",
+        "resourceName": "Apex Global Fintech LLC",
+        "details": {
+          "score": 815,
+          "scoreType": "EXPERIAN",
+          "tradeFinance": true
+        },
+        "ipAddress": "10.20.30.40",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+        "createdAt": "2026-02-11T09:30:00.000Z",
+        "sessionId": "sess_citi_abc123"
+      },
+      "meta": {
+        "requestId": "req_citi_005",
+        "timestamp": "2026-02-11T11:00:00.000Z"
+      }
+    }
+  },
+
+  "errorResponses": {
+    "invalidBusinessId": {
+      "success": false,
+      "error": {
+        "code": "BUSINESS_NOT_FOUND",
+        "message": "Business with ID 'invalid-id' not found in portfolio",
+        "details": {
+          "businessId": "invalid-id",
+          "portfolioId": "c2000000-0000-4000-a000-000000000001"
+        }
+      },
+      "meta": {
+        "requestId": "req_citi_err_001",
+        "timestamp": "2026-02-11T12:00:00.000Z"
+      }
+    },
+
+    "insufficientPermissions": {
+      "success": false,
+      "error": {
+        "code": "INSUFFICIENT_PERMISSIONS",
+        "message": "User does not have permission to perform this action",
+        "details": {
+          "userId": "c0000001-0000-4000-a000-000000000005",
+          "requiredRole": "analyst",
+          "currentRole": "viewer",
+          "action": "SCORE_PULL"
+        }
+      },
+      "meta": {
+        "requestId": "req_citi_err_002",
+        "timestamp": "2026-02-11T12:15:00.000Z"
+      }
+    },
+
+    "rateLimitExceeded": {
+      "success": false,
+      "error": {
+        "code": "RATE_LIMIT_EXCEEDED",
+        "message": "API rate limit exceeded. Please try again later.",
+        "details": {
+          "limit": 1000,
+          "remaining": 0,
+          "resetAt": "2026-02-11T13:00:00.000Z"
+        }
+      },
+      "meta": {
+        "requestId": "req_citi_err_003",
+        "timestamp": "2026-02-11T12:30:00.000Z"
+      }
+    }
+  },
+
+  "webhookPayloads": {
+    "scoreUpdated": {
+      "event": "business.score.updated",
+      "eventId": "evt_citi_001",
+      "timestamp": "2026-02-11T14:00:00.000Z",
+      "data": {
+        "businessId": "c4000000-0000-4000-a000-000000000006",
+        "businessName": "Brooklyn E-Commerce Collective",
+        "previousScore": 745,
+        "currentScore": 720,
+        "scoreType": "EXPERIAN",
+        "change": -25,
+        "triggerAlert": true
+      }
+    },
+
+    "applicationSubmitted": {
+      "event": "application.submitted",
+      "eventId": "evt_citi_002",
+      "timestamp": "2026-02-11T14:30:00.000Z",
+      "data": {
+        "applicationId": "app_citi_001",
+        "businessId": "c4000000-0000-4000-a000-000000000012",
+        "businessName": "SoHo Fashion Imports",
+        "productId": "citi-aadvantage-world-elite",
+        "productName": "Citi AAdvantage Business World Elite Mastercard",
+        "status": "SUBMITTED",
+        "submittedAt": "2026-02-11T14:30:00.000Z"
+      }
+    }
+  }
+}

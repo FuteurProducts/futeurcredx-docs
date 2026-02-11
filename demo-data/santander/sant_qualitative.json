@@ -1,0 +1,943 @@
+{
+  "bankName": "Santander Bank",
+  "brandIdentity": {
+    "fullName": "Santander Bank, N.A.",
+    "parentCompany": "Banco Santander, S.A.",
+    "marketPosition": "Regional bank with global capabilities",
+    "primaryColor": "#EC0000",
+    "primaryColorName": "Santander Red",
+    "secondaryColors": {
+      "white": "#FFFFFF",
+      "blue": "#005EB8"
+    },
+    "brandAttributes": [
+      "Simple",
+      "Personal",
+      "Fair",
+      "Community-focused",
+      "Internationally connected"
+    ],
+    "tagline": "Banking made simple, personal and fair"
+  },
+  "marketPresence": {
+    "totalAssets": 225000000000,
+    "totalDeposits": 97000000000,
+    "netLoans": 124000000000,
+    "branchCount": 600,
+    "atmCount": null,
+    "geographicFootprint": [
+      "CT",
+      "DE",
+      "FL",
+      "MA",
+      "NH",
+      "NJ",
+      "NY",
+      "PA",
+      "RI"
+    ],
+    "primaryMarkets": [
+      "Northeast corridor",
+      "Select Florida markets (Miami-Dade, Broward, Monroe, parts of Collier)"
+    ],
+    "marketShare": "Regional leader in Northeast business banking",
+    "globalReach": {
+      "parentMarkets": 10,
+      "clientsWorldwide": 173000000,
+      "tradingCenters": [
+        "New York",
+        "London",
+        "Madrid",
+        "Hong Kong",
+        "Latin America"
+      ]
+    }
+  },
+  "strategicPositioning": {
+    "vision": "Be the best commercial bank for small and mid-size businesses in the Northeast",
+    "mission": "Help people and businesses prosper through simple, personal and fair banking",
+    "corePillars": [
+      "Digital transformation and automation",
+      "Community reinvestment and economic inclusion",
+      "Hispanic and Latino business support",
+      "Treasury and cash management innovation",
+      "Sustainable finance and ESG leadership"
+    ],
+    "competitiveAdvantages": [
+      "SBA Preferred Lender status (faster in-house decisions)",
+      "50+ years equipment and vehicle financing expertise",
+      "Global parent network for international banking needs",
+      "Focused Northeast presence with deep community ties",
+      "Advanced treasury management platform (Treasury Fusion, Cash Nexus)",
+      "Simplified product portfolio vs. mega-banks"
+    ],
+    "targetSegments": [
+      "Hispanic and Latino-owned businesses",
+      "Small businesses with annual revenues under $5M",
+      "Mid-size commercial clients ($5M-$50M revenue)",
+      "Community development and nonprofit organizations",
+      "Businesses requiring international trade finance"
+    ]
+  },
+  "productCatalog": {
+    "deposit": [
+      {
+        "productId": "SANT-DEP-001",
+        "productName": "Basic Business Checking",
+        "category": "Checking",
+        "description": "Entry-level business checking designed for startups and businesses with low transaction volume",
+        "keyFeatures": [
+          "Low monthly maintenance fee",
+          "Online and mobile banking included",
+          "Business debit Mastercard with automatic rebates",
+          "Mobile check deposit",
+          "Basic transaction allowance",
+          "Check order discounts"
+        ],
+        "fees": {
+          "monthlyFee": "Varies by tier",
+          "transactionFees": "After free allowance",
+          "cashDepositFee": "Free up to $10,000 per cycle"
+        },
+        "targetCustomer": "Startups and low-volume businesses",
+        "eligibility": "Must open in-branch"
+      },
+      {
+        "productId": "SANT-DEP-002",
+        "productName": "Business Checking",
+        "category": "Checking",
+        "description": "Mid-tier business checking for growing businesses with moderate transaction volumes",
+        "keyFeatures": [
+          "Up to 300 free basic transactions per cycle",
+          "Online and mobile banking",
+          "Business debit Mastercard",
+          "Mobile check deposit",
+          "25% discount on first business check order",
+          "Cash deposit processing up to $10,000 no fee",
+          "ACH payments and wire transfers",
+          "Customizable account alerts"
+        ],
+        "fees": {
+          "monthlyFee": "Waivable with balance requirements",
+          "transactionFees": "After 300 free transactions",
+          "wireFee": "Standard rates apply"
+        },
+        "targetCustomer": "Growing small businesses",
+        "eligibility": "Must open in-branch"
+      },
+      {
+        "productId": "SANT-DEP-003",
+        "productName": "Business Checking Plus",
+        "category": "Checking",
+        "description": "Premium business checking for high-volume businesses requiring advanced features",
+        "keyFeatures": [
+          "Up to 750 free basic transactions per cycle",
+          "Advanced online and mobile banking",
+          "Business debit Mastercard",
+          "Mobile check deposit",
+          "Enhanced cash management tools",
+          "Treasury Fusion integration (ERP connectivity)",
+          "Multi-user access with permission controls",
+          "Dedicated relationship manager support"
+        ],
+        "fees": {
+          "monthlyFee": "Higher tier with value-add services",
+          "transactionFees": "After 750 free transactions",
+          "advancedFeatures": "May require additional fees"
+        },
+        "targetCustomer": "High-volume businesses and commercial clients",
+        "eligibility": "Must open in-branch"
+      },
+      {
+        "productId": "SANT-DEP-004",
+        "productName": "Business Money Market Savings",
+        "category": "Savings",
+        "description": "Interest-bearing money market account for business cash reserves",
+        "keyFeatures": [
+          "Competitive tiered interest rates",
+          "Minimum $50 to open",
+          "$10 monthly fee (waivable)",
+          "Fee waiver with Business Checking account or $1,000 average daily balance",
+          "Interest accrues daily, credited monthly",
+          "Online and mobile access",
+          "Linked to business checking for sweep options"
+        ],
+        "fees": {
+          "monthlyFee": "$10 (waivable)",
+          "minimumBalance": "$1,000 to waive fee"
+        },
+        "targetCustomer": "Businesses seeking liquidity with earnings",
+        "eligibility": "Available in 9-state footprint"
+      },
+      {
+        "productId": "SANT-DEP-005",
+        "productName": "Business Certificates of Deposit",
+        "category": "Time Deposit",
+        "description": "Fixed-rate CDs for business cash management and reserves",
+        "keyFeatures": [
+          "Competitive fixed APY rates",
+          "Terms from 6 months to multiple years",
+          "$500 minimum deposit",
+          "FDIC insured up to limits",
+          "Automatic renewal options",
+          "Early withdrawal penalties apply",
+          "Laddering strategies available"
+        ],
+        "fees": {
+          "minimumDeposit": "$500",
+          "earlyWithdrawalPenalty": "Varies by term"
+        },
+        "targetCustomer": "Businesses with surplus cash seeking guaranteed returns",
+        "eligibility": "Must open in-branch in eligible states"
+      }
+    ],
+    "credit": [
+      {
+        "productId": "SANT-CRD-001",
+        "productName": "Business Line of Credit",
+        "category": "Revolving Credit",
+        "description": "Flexible revolving credit line for working capital and cash flow management",
+        "keyFeatures": [
+          "$10,000 - $500,000 credit limits",
+          "Short-term working capital funding",
+          "Finance receivables and purchase inventory",
+          "Alleviate seasonal cash flow shortages",
+          "Take advantage of growth opportunities",
+          "Draw and repay as needed",
+          "Interest charged only on outstanding balance",
+          "Fee waiver for Santander Business Checking customers"
+        ],
+        "fees": {
+          "annualFee": "$250",
+          "originationFee": "$250 (waived with Santander Business Checking)",
+          "interestRate": "Variable, based on creditworthiness"
+        },
+        "targetCustomer": "Small businesses needing flexible working capital",
+        "eligibility": "Must be located in CT, DE, MA, NH, NJ, NY, PA, or RI"
+      },
+      {
+        "productId": "SANT-CRD-002",
+        "productName": "Business Term Loan",
+        "category": "Installment Loan",
+        "description": "Fixed-rate term loan for business expansion, acquisition, or large capital purchases",
+        "keyFeatures": [
+          "$10,000 - $1,000,000 loan amounts",
+          "Fixed or variable interest rate options",
+          "Predictable monthly payments",
+          "Terms up to 10 years (varies by use)",
+          "Fund business expansion or acquisition",
+          "Purchase equipment or real estate",
+          "Refinance existing debt",
+          "Relationship-based pricing available"
+        ],
+        "fees": {
+          "originationFee": "Varies",
+          "prepaymentPenalty": "May apply depending on term"
+        },
+        "targetCustomer": "Businesses with significant capital needs",
+        "eligibility": "Generally requires 2+ years in business"
+      },
+      {
+        "productId": "SANT-CRD-003",
+        "productName": "SBA 7(a) Loan",
+        "category": "SBA Loan",
+        "description": "SBA-guaranteed loans with lower down payments and longer terms for qualified small businesses",
+        "keyFeatures": [
+          "Preferred SBA Lender status (faster in-house decisions)",
+          "SBA Express loans and standard 7(a) up to $5M",
+          "Smaller down payments than conventional loans",
+          "Longer repayment terms (lower monthly payments)",
+          "Support for startups (13-24 months in business may qualify)",
+          "Working capital, equipment, real estate eligible uses",
+          "SBA guarantee reduces lender risk",
+          "Competitive interest rates"
+        ],
+        "fees": {
+          "sbaGuaranteeFee": "Paid by borrower per SBA guidelines",
+          "closingCosts": "Standard commercial loan closing costs"
+        },
+        "targetCustomer": "Small businesses needing affordable long-term financing",
+        "eligibility": "SBA size standards apply; 13-24 months in business may qualify"
+      },
+      {
+        "productId": "SANT-CRD-004",
+        "productName": "SBA Express Line of Credit",
+        "category": "SBA Loan",
+        "description": "SBA-backed revolving credit line with expedited approval for qualified businesses",
+        "keyFeatures": [
+          "Up to $500,000 credit line",
+          "Faster SBA Express approval process",
+          "Revolving credit structure",
+          "Lower down payment requirements",
+          "Flexible draw and repayment",
+          "Working capital and seasonal needs",
+          "In-house decision authority at Santander"
+        ],
+        "fees": {
+          "annualFee": "Varies",
+          "sbaGuaranteeFee": "Per SBA guidelines"
+        },
+        "targetCustomer": "Small businesses seeking SBA-backed flexibility",
+        "eligibility": "SBA eligibility requirements"
+      },
+      {
+        "productId": "SANT-CRD-005",
+        "productName": "Equipment Financing",
+        "category": "Secured Loan",
+        "description": "Financing for business equipment and machinery purchases with up to 100% financing",
+        "keyFeatures": [
+          "100% financing available for established businesses (2+ years)",
+          "80% financing for businesses under 2 years old",
+          "Available for businesses with revenue up to $5M annually",
+          "Finance vehicles, machinery, technology, office equipment",
+          "Equipment serves as collateral",
+          "Fixed payment schedule",
+          "Preserve working capital",
+          "Tax benefits through depreciation"
+        ],
+        "fees": {
+          "downPayment": "0-20% depending on business age",
+          "originationFee": "Varies"
+        },
+        "targetCustomer": "Businesses needing machinery, vehicles, or equipment",
+        "eligibility": "Annual revenue up to $5M; 2+ years preferred for 100% financing"
+      },
+      {
+        "productId": "SANT-CRD-006",
+        "productName": "Commercial Real Estate Mortgage",
+        "category": "Commercial Real Estate",
+        "description": "Financing for purchasing, renovating, or refinancing owner-occupied commercial properties",
+        "keyFeatures": [
+          "Up to 80% LTV (loan-to-value)",
+          "Owner-occupied commercial real estate only",
+          "Purchase, refinance, or renovate eligible uses",
+          "Loans under $1M never have balloon payments",
+          "Fixed or variable rate options",
+          "Terms up to 20-25 years",
+          "Commercial property appraisal required",
+          "Competitive rates for qualified borrowers"
+        ],
+        "fees": {
+          "closingCosts": "Standard commercial mortgage closing costs",
+          "appraisalFee": "Required, paid by borrower"
+        },
+        "targetCustomer": "Businesses purchasing or refinancing owner-occupied properties",
+        "eligibility": "Owner-occupied only; strong financials required"
+      },
+      {
+        "productId": "SANT-CRD-007",
+        "productName": "Commercial Vehicle Financing",
+        "category": "Vehicle Financing",
+        "description": "Specialized financing for commercial fleets, specialty vehicles, and municipal vehicles with 50 years of experience",
+        "keyFeatures": [
+          "50+ years of commercial vehicle financing expertise",
+          "Corporate and government employer fleet vehicles",
+          "Specialty vehicles (ambulances, tow trucks, utility vehicles)",
+          "Municipal vehicle financing",
+          "Competitive rates and flexible terms",
+          "Customized financing solutions for fleet needs",
+          "Trade-in and upgrade programs",
+          "Full-service fleet management support"
+        ],
+        "fees": {
+          "downPayment": "Varies by vehicle type and creditworthiness",
+          "originationFee": "Competitive market rates"
+        },
+        "targetCustomer": "Businesses with fleet needs, municipalities, specialty vehicle operators",
+        "eligibility": "Commercial use vehicles only"
+      },
+      {
+        "productId": "SANT-CRD-008",
+        "productName": "Small Business Vehicle Financing (Santander Consumer)",
+        "category": "Vehicle Financing",
+        "description": "Dealership-based vehicle financing for small businesses with fleets under 10 vehicles",
+        "keyFeatures": [
+          "Available at automotive dealerships nationwide (2024 expansion)",
+          "Fleets under 10 vehicles (small franchises, startups)",
+          "Apply at point of sale at participating dealers",
+          "Comprehensive vehicle financing options",
+          "Competitive rates for qualified businesses",
+          "Fast approval process",
+          "Supports small business growth and mobility"
+        ],
+        "fees": {
+          "downPayment": "Dealer and credit-dependent",
+          "interestRate": "Competitive market rates"
+        },
+        "targetCustomer": "Startups and small franchises with under 10 vehicles",
+        "eligibility": "Small business with fewer than 10 vehicles in fleet"
+      },
+      {
+        "productId": "SANT-CRD-009",
+        "productName": "Healthcare Equipment Financing",
+        "category": "Specialized Financing",
+        "description": "Dedicated equipment financing for healthcare providers and medical practices",
+        "keyFeatures": [
+          "Specialized for healthcare equipment and technology",
+          "Medical practice expansion financing",
+          "Diagnostic and treatment equipment",
+          "IT and EMR system financing",
+          "Flexible terms tailored to healthcare revenue cycles",
+          "Up to 100% financing for qualified practices",
+          "Tax advantages through equipment depreciation"
+        ],
+        "fees": {
+          "downPayment": "0-20% based on creditworthiness",
+          "originationFee": "Competitive"
+        },
+        "targetCustomer": "Medical practices, dental offices, healthcare providers",
+        "eligibility": "Licensed healthcare providers with revenue up to $5M"
+      }
+    ],
+    "cards": [
+      {
+        "productId": "SANT-CARD-001",
+        "productName": "Business Debit Mastercard",
+        "category": "Debit Card",
+        "description": "Business debit card with automatic rebates on all purchases, included with business checking accounts",
+        "keyFeatures": [
+          "Automatic rebates on purchases",
+          "No annual fee (included with checking)",
+          "EMV chip security",
+          "Swipe card acceptance",
+          "Online and mobile banking integration",
+          "Transaction alerts and controls",
+          "Employee cards available"
+        ],
+        "fees": {
+          "annualFee": "$0 (included with business checking)",
+          "foreignTransactionFee": "Standard Mastercard rates"
+        },
+        "targetCustomer": "All business checking account holders",
+        "eligibility": "Must have Santander Business Checking account"
+      },
+      {
+        "productId": "SANT-CARD-002",
+        "productName": "Commercial Card Solutions",
+        "category": "Corporate Card",
+        "description": "Corporate card programs for mid-size and larger commercial clients with enhanced controls and reporting",
+        "keyFeatures": [
+          "Purchasing and travel card programs",
+          "Spend controls and employee limits",
+          "Enhanced reporting and expense management",
+          "Integration with accounting systems",
+          "Fraud protection and monitoring",
+          "Dedicated commercial card support",
+          "Rebates and rewards programs available"
+        ],
+        "fees": {
+          "programFees": "Varies by card volume and features",
+          "annualCardFee": "Competitive commercial rates"
+        },
+        "targetCustomer": "Mid-size to large commercial clients",
+        "eligibility": "Commercial banking relationship required"
+      }
+    ],
+    "treasuryServices": [
+      {
+        "productId": "SANT-TREAS-001",
+        "productName": "Treasury Fusion",
+        "category": "Treasury Management",
+        "description": "Digital banking solution integrating banking data directly to ERP systems for seamless account reconciliation",
+        "keyFeatures": [
+          "Direct ERP integration (SAP, Oracle, Microsoft Dynamics, QuickBooks)",
+          "Real-time account information syncing",
+          "Automated account reconciliation",
+          "Streamlined daily cash management",
+          "Reduces manual data entry and errors",
+          "Multi-account and multi-entity support",
+          "Customizable data feeds",
+          "Secure API connectivity"
+        ],
+        "fees": {
+          "setupFee": "Varies by complexity",
+          "monthlyFee": "Based on transaction volume"
+        },
+        "targetCustomer": "Mid-size businesses with ERP systems",
+        "eligibility": "Commercial banking relationship required"
+      },
+      {
+        "productId": "SANT-TREAS-002",
+        "productName": "Santander Cash Nexus (via CIB)",
+        "category": "Global Treasury",
+        "description": "Global treasury management platform for multi-country operations with centralized cash management",
+        "keyFeatures": [
+          "Centralized treasury management across countries and currencies",
+          "Single point of entry for global operations",
+          "Real-time visibility into cash positions worldwide",
+          "Liquidity optimization and pooling",
+          "Multi-currency management",
+          "Global payment initiation",
+          "Processed over 425 billion euros in past 4 years",
+          "85% customer base growth in 4 years"
+        ],
+        "fees": {
+          "enterprisePricing": "Custom based on global footprint"
+        },
+        "targetCustomer": "Large commercial clients with international operations",
+        "eligibility": "Santander CIB relationship; multi-country operations"
+      },
+      {
+        "productId": "SANT-TREAS-003",
+        "productName": "Business Online Banking",
+        "category": "Digital Banking",
+        "description": "Comprehensive online banking platform for account management, payments, and cash flow monitoring",
+        "keyFeatures": [
+          "Account balance and transaction history",
+          "ACH payments and wire transfers",
+          "Bill pay and vendor payments",
+          "Mobile check deposit",
+          "Transfer funds between accounts",
+          "Multi-user access with permission levels",
+          "Customizable alerts (deposits, debits, low balance, wires)",
+          "Check image viewing",
+          "Stop payment requests",
+          "Statement download and archiving"
+        ],
+        "fees": {
+          "monthlyFee": "Included with business checking",
+          "transactionFees": "Per service pricing for wires, ACH"
+        },
+        "targetCustomer": "All business banking clients",
+        "eligibility": "Business checking account required"
+      },
+      {
+        "productId": "SANT-TREAS-004",
+        "productName": "Business Mobile Banking App",
+        "category": "Mobile Banking",
+        "description": "Full-featured mobile app for on-the-go business banking and cash management",
+        "keyFeatures": [
+          "Mobile check deposit (photo capture)",
+          "Account balances and transaction history",
+          "Fund transfers between accounts",
+          "Bill pay and payments",
+          "Mobile alerts and notifications",
+          "Secure biometric login (fingerprint, Face ID)",
+          "Multi-factor authentication",
+          "Wire transfer initiation (2025 rollout)",
+          "ATM and branch locator"
+        ],
+        "fees": {
+          "monthlyFee": "$0 (included with business checking)"
+        },
+        "targetCustomer": "All business banking clients",
+        "eligibility": "Business checking account required; iOS or Android device"
+      },
+      {
+        "productId": "SANT-TREAS-005",
+        "productName": "Digital Checks",
+        "category": "Payments",
+        "description": "Secure electronic check payment system launched in 2024 for faster, more secure business payments",
+        "keyFeatures": [
+          "Electronic check payments (no physical check required)",
+          "Faster processing than paper checks",
+          "Enhanced security vs. traditional checks",
+          "Lower cost per transaction",
+          "Audit trail and tracking",
+          "Integration with online banking",
+          "Reduce fraud risk",
+          "Environmentally friendly (paperless)"
+        ],
+        "fees": {
+          "perCheckFee": "Lower than traditional check processing"
+        },
+        "targetCustomer": "Businesses transitioning to digital payments",
+        "eligibility": "Business online banking required"
+      },
+      {
+        "productId": "SANT-TREAS-006",
+        "productName": "ACH Payments and Collections",
+        "category": "Payments",
+        "description": "Automated Clearing House payment processing for payroll, vendor payments, and customer collections",
+        "keyFeatures": [
+          "Payroll direct deposit",
+          "Vendor and supplier payments",
+          "Customer billing and collections",
+          "Same-day ACH options",
+          "Batch payment processing",
+          "ACH positive pay fraud protection",
+          "Payment scheduling and recurring payments",
+          "Detailed reporting and reconciliation"
+        ],
+        "fees": {
+          "perTransactionFee": "Competitive ACH pricing",
+          "monthlyServiceFee": "Varies by volume"
+        },
+        "targetCustomer": "Businesses with recurring payment needs",
+        "eligibility": "Business checking account required"
+      },
+      {
+        "productId": "SANT-TREAS-007",
+        "productName": "Wire Transfer Services",
+        "category": "Payments",
+        "description": "Domestic and international wire transfer services for time-sensitive payments",
+        "keyFeatures": [
+          "Domestic wire transfers (same-day)",
+          "International wire transfers",
+          "Secure online initiation",
+          "Multi-level approval workflows",
+          "Wire fraud protection and verification",
+          "Recurring wire templates",
+          "Detailed tracking and confirmation",
+          "Beneficiary management"
+        ],
+        "fees": {
+          "domesticWireFee": "Standard per-wire pricing",
+          "internationalWireFee": "Higher fee for international wires"
+        },
+        "targetCustomer": "Businesses needing same-day or international transfers",
+        "eligibility": "Business checking account required"
+      }
+    ],
+    "merchantServices": [
+      {
+        "productId": "SANT-MERCH-001",
+        "productName": "Santander Merchant Services (powered by Clover)",
+        "category": "Payment Processing",
+        "description": "Comprehensive payment processing solutions powered by Clover POS and First Data, accepting all payment types",
+        "keyFeatures": [
+          "Accept EMV chip cards and swipe cards (all major brands)",
+          "In-store, online, and mobile payment acceptance",
+          "Clover POS system integration",
+          "Inventory management",
+          "Customer engagement tools",
+          "Business insights and reporting",
+          "End-to-end encryption and tokenization",
+          "Fraud protection (Fiserv security)",
+          "Multiple POS hardware options"
+        ],
+        "fees": {
+          "processingFees": "Competitive interchange-plus or flat rate pricing",
+          "equipmentCosts": "Varies by Clover hardware selection",
+          "monthlyFee": "Service plan dependent"
+        },
+        "targetCustomer": "Retail, restaurant, and service businesses accepting card payments",
+        "eligibility": "Business account required; credit check may apply"
+      }
+    ],
+    "international": [
+      {
+        "productId": "SANT-INTL-001",
+        "productName": "International Trade Finance",
+        "category": "Trade Finance",
+        "description": "Comprehensive trade finance solutions including letters of credit, supply chain finance, and export financing",
+        "keyFeatures": [
+          "Standby letters of credit",
+          "Documentary letters of credit",
+          "Supply chain finance and receivables finance",
+          "Pre-export financing (raw materials, inventory, equipment)",
+          "Export & Credit Agency (ECA) finance",
+          "Political and commercial risk mitigation",
+          "Trade loans for imports and exports",
+          "Multilateral agency partnerships"
+        ],
+        "fees": {
+          "issuanceFees": "Varies by transaction type and size",
+          "adviceCommission": "Standard trade finance fees"
+        },
+        "targetCustomer": "Importers, exporters, and businesses with international supply chains",
+        "eligibility": "Commercial banking relationship required"
+      },
+      {
+        "productId": "SANT-INTL-002",
+        "productName": "Foreign Exchange (FX) Services",
+        "category": "FX Services",
+        "description": "Foreign currency exchange and hedging services in most major currencies via global trading desks",
+        "keyFeatures": [
+          "Spot FX in most major currencies",
+          "Forward contracts and options",
+          "Variable-date forwards",
+          "Dynamic FX rates customizable per client",
+          "Transparent FX rate information",
+          "Cross-currency payment capabilities (up to 37 currencies)",
+          "Global trading desk access (NY, London, Madrid, Hong Kong, LatAm)",
+          "Hedge foreign exchange risk"
+        ],
+        "fees": {
+          "spreadMarkup": "Competitive FX spreads",
+          "hedgingFees": "Varies by instrument and volume"
+        },
+        "targetCustomer": "Businesses with international payments or FX exposure",
+        "eligibility": "Commercial banking relationship required"
+      },
+      {
+        "productId": "SANT-INTL-003",
+        "productName": "International Desk Services",
+        "category": "Relationship Services",
+        "description": "Multilingual international banking specialists connecting US businesses to Santander's global network",
+        "keyFeatures": [
+          "Multilingual relationship managers",
+          "Access to Santander teams in 10 core global markets",
+          "International account opening support",
+          "Cross-border banking coordination",
+          "Global trade transaction simplification",
+          "Personalized service for international banking needs",
+          "Global corporate capabilities",
+          "Foreign investor support (inbound to US)"
+        ],
+        "fees": {
+          "relationshipFee": "Included with commercial banking relationship"
+        },
+        "targetCustomer": "Businesses with international operations or foreign parent companies",
+        "eligibility": "Commercial banking relationship"
+      }
+    ]
+  },
+  "digitalTransformation": {
+    "initiatives": [
+      {
+        "name": "Openbank US Launch",
+        "description": "Nationwide digital-only bank launched October 2024, expanding consumer banking nationwide",
+        "status": "Active",
+        "timeline": "Full-service digital bank by end of 2025",
+        "impact": "Low-cost deposit gathering to fund auto-loan portfolio and business lending"
+      },
+      {
+        "name": "Treasury Management Automation",
+        "description": "Expanded digital cash management solutions with focus on automation, speed, and security",
+        "status": "Ongoing",
+        "timeline": "2024-2025",
+        "impact": "Reduced cost to serve, improved client experience, faster processing"
+      },
+      {
+        "name": "Mobile Banking Enhancement",
+        "description": "Mobile check deposit, wire transfers, and enhanced mobile features rolling out 2025",
+        "status": "In Progress",
+        "timeline": "2025",
+        "impact": "Improved mobile capabilities for business clients"
+      },
+      {
+        "name": "Cloud Migration (CIB Gravity Platform)",
+        "description": "First major bank to digitize core banking with in-house software on Google Cloud",
+        "status": "Completed (CIB)",
+        "timeline": "2023-2024",
+        "impact": "1M+ accounting operations daily, 500K+ treasury operations daily, hours to deploy new features vs. weeks"
+      }
+    ]
+  },
+  "communityCommitment": {
+    "planName": "Santander US Community Plan 2023-2025",
+    "totalCommitment": 13600000000,
+    "breakdown": {
+      "communityReinvestment": 4600000000,
+      "sustainableFinance": 9000000000,
+      "smallBusinessLending": 1500000000,
+      "communityDevelopmentLending": 1800000000
+    },
+    "hispanicLatinoCommunityFocus": [
+      "$1M investment in Community First Fund Federal Credit Union (Latino/Black community expansion in Philadelphia)",
+      "Concilio Latino Capacity Building program (cultural intelligence training)",
+      "Hispanic and Latino business owner targeted support",
+      "Community development in underserved Latino communities"
+    ],
+    "2024Investments": {
+      "totalInvested": 13000000,
+      "organizationsSupported": 360,
+      "focusAreas": [
+        "Economic inclusion",
+        "Small business support",
+        "Community development",
+        "Nonprofit capacity building"
+      ]
+    }
+  },
+  "competitiveAnalysis": {
+    "vsChase": {
+      "advantages": [
+        "More personalized Northeast regional focus vs. national scale",
+        "Simpler product suite (less overwhelming)",
+        "SBA Preferred Lender with in-house decisions",
+        "Strong Hispanic/Latino community ties",
+        "Global parent for international banking (Santander > JPM in some markets)"
+      ],
+      "disadvantages": [
+        "Much smaller branch network (600 vs 4,900)",
+        "Limited geographic footprint (9 states vs nationwide)",
+        "Fewer digital features and innovation",
+        "Smaller balance sheet and lending capacity",
+        "Less brand recognition nationally"
+      ]
+    },
+    "vsWellsFargo": {
+      "advantages": [
+        "Better reputation (Wells Fargo scandal recovery ongoing)",
+        "Stronger Northeast presence in key markets",
+        "More competitive business checking fees (easier to waive)",
+        "SBA Preferred Lender status",
+        "International banking through global parent"
+      ],
+      "disadvantages": [
+        "Much smaller scale (600 branches vs 4,100)",
+        "Limited geographic reach",
+        "Fewer product options",
+        "Less ATM availability",
+        "Smaller commercial lending capacity"
+      ]
+    },
+    "regionalStrength": {
+      "description": "Santander dominates in Northeast corridor where it has deep branch penetration and community ties",
+      "keyMarkets": [
+        "Massachusetts (strong presence)",
+        "Connecticut (acquiring Webster Financial to become #2 foreign-owned bank in US)",
+        "New Jersey and Pennsylvania (competitive positions)",
+        "Select Florida markets (Miami-Dade, Broward)"
+      ]
+    }
+  },
+  "targetIndustries": [
+    {
+      "industry": "Healthcare Services",
+      "rationale": "Specialized equipment financing, strong qualification rates, stable revenue profiles",
+      "products": [
+        "Term Loan",
+        "Equipment Financing",
+        "Line of Credit",
+        "Healthcare Equipment Financing"
+      ]
+    },
+    {
+      "industry": "Professional Services",
+      "rationale": "High concentration in Northeast markets, lower risk profiles, working capital needs",
+      "products": [
+        "Line of Credit",
+        "Business Checking Plus",
+        "Treasury Fusion"
+      ]
+    },
+    {
+      "industry": "Construction & Trades",
+      "rationale": "Equipment financing expertise, Northeast construction market strength",
+      "products": [
+        "Equipment Financing",
+        "Line of Credit",
+        "Commercial Vehicle Financing",
+        "SBA 7(a)"
+      ]
+    },
+    {
+      "industry": "Retail & E-Commerce",
+      "rationale": "Merchant services integration, inventory financing, seasonal working capital",
+      "products": [
+        "Line of Credit",
+        "Merchant Services",
+        "Equipment Financing",
+        "Business Checking"
+      ]
+    },
+    {
+      "industry": "Hispanic/Latino-Owned Businesses (Cross-Industry)",
+      "rationale": "Strategic community commitment, cultural alignment, underserved market opportunity",
+      "products": [
+        "All small business products",
+        "International Desk for US-LatAm trade",
+        "Community development lending"
+      ]
+    },
+    {
+      "industry": "Transportation & Logistics",
+      "rationale": "50 years commercial vehicle financing expertise, fleet management",
+      "products": [
+        "Commercial Vehicle Financing",
+        "Small Business Vehicle Financing",
+        "Equipment Financing",
+        "Line of Credit"
+      ]
+    }
+  ],
+  "riskAppetite": {
+    "preferredProfiles": [
+      "Established businesses (2+ years operating history preferred)",
+      "Owner-occupied commercial real estate",
+      "Healthcare and professional services (lower default rates)",
+      "Businesses in 9-state footprint (direct market knowledge)",
+      "SBA-eligible small businesses (guarantee reduces risk)",
+      "Hispanic/Latino-owned businesses (mission alignment)"
+    ],
+    "cautionaryProfiles": [
+      "Startups under 13 months (limited SBA exception)",
+      "Non-owner-occupied CRE (not offered)",
+      "Businesses outside 9-state footprint (limited exceptions)",
+      "High-risk industries (case-by-case)",
+      "Speculative real estate development"
+    ],
+    "concentrationLimits": {
+      "industryMax": "15% per industry",
+      "geographicMax": "Monitor Northeast exposure given footprint concentration",
+      "singleBorrowerMax": "Varies by relationship and collateral"
+    }
+  },
+  "pricingStrategy": {
+    "philosophy": "Simple, personal, and fair pricing with relationship-based incentives",
+    "feeWaivers": [
+      "Business Checking origination fee waived for existing checking customers",
+      "Money Market monthly fee waived with checking relationship or balance",
+      "Check order discounts for account holders",
+      "Merchant services discounts for banking clients"
+    ],
+    "competitivePositioning": "Mid-market pricing (not lowest, not highest) with value through service and simplicity",
+    "relationshipPricing": "Tiered pricing based on total relationship (deposits + lending + treasury services)"
+  },
+  "salesChannels": {
+    "primary": [
+      {
+        "channel": "Branch Network",
+        "description": "600 branches across 9 states; all business accounts must open in-branch",
+        "strength": "Personal relationship building, complex product sales",
+        "limitation": "Geographic constraint, appointment required"
+      },
+      {
+        "channel": "Business Relationship Managers",
+        "description": "Dedicated RMs for mid-size and larger commercial clients",
+        "strength": "Deep relationships, consultative selling, treasury solutions",
+        "limitation": "Limited RM capacity, focused on larger clients"
+      },
+      {
+        "channel": "Online and Mobile Banking",
+        "description": "Digital account management and service delivery (not account opening)",
+        "strength": "24/7 access, convenience for existing clients",
+        "limitation": "Cannot open accounts digitally; service-only for now"
+      }
+    ],
+    "partnerships": [
+      {
+        "partner": "Clover / First Data / Fiserv",
+        "productArea": "Merchant Services",
+        "value": "Best-in-class POS technology without building in-house"
+      },
+      {
+        "partner": "Automotive Dealers (Santander Consumer)",
+        "productArea": "Small Business Vehicle Financing",
+        "value": "Point-of-sale financing for small fleet buyers nationwide"
+      },
+      {
+        "partner": "SBA",
+        "productArea": "SBA Preferred Lender",
+        "value": "In-house credit decisions, faster approvals than non-preferred lenders"
+      }
+    ]
+  },
+  "complianceAndRegulation": {
+    "primaryRegulator": "Office of the Comptroller of the Currency (OCC)",
+    "fdicInsured": true,
+    "sbaPreferredLender": true,
+    "bsaAmlProgram": "Enhanced due to size and international parent",
+    "cra": {
+      "rating": "Monitor through OCC",
+      "communityPlan": "2023-2025 Community Plan with $4.6B reinvestment commitment demonstrates CRA focus"
+    },
+    "internationalCompliance": "Enhanced due diligence for international banking services (OFAC, trade finance)"
+  },
+  "dataSource": "Public web research conducted February 2026",
+  "lastUpdated": "2026-02-11",
+  "researchSources": [
+    "https://www.santanderbank.com/business",
+    "https://www.santanderbank.com/commercial",
+    "https://www.santanderus.com (press releases)",
+    "Santander US Community Plan 2023-2025 public documentation",
+    "Treasury Fusion and Cash Nexus product announcements",
+    "Openbank US launch October 2024",
+    "SBA Preferred Lender public listings",
+    "Commercial vehicle financing program materials",
+    "Merchant services partnership with Clover/First Data"
+  ]
+}

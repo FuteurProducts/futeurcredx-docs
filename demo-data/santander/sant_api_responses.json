@@ -1,0 +1,689 @@
+{
+  "bank": "Santander Bank",
+  "bank_code": "SANT",
+  "generated_date": "2026-02-11",
+  "description": "API responses for Santander Bank demo - Regional powerhouse in Northeast US with 401 branches, $225B assets, strong Hispanic/Latino community focus, leading multifamily CRE lender ($13.5B portfolio)",
+
+  "tenant_info": {
+    "id": "10000000-0000-4000-a000-000000000002",
+    "name": "Santander Bank",
+    "slug": "santander-bank",
+    "clerkOrgId": "org_2santander001",
+    "primaryColor": "#EC0000",
+    "headquarters": "Boston, MA",
+    "branches": 401,
+    "states_served": ["MA", "NY", "NJ", "PA", "CT", "RI", "NH", "DE"],
+    "business_customers": 180000,
+    "total_assets": 225000000000,
+    "specialization": "Community banking, multifamily real estate, Hispanic/Latino businesses, SBA lending"
+  },
+
+  "portfolio": {
+    "id": "20000000-0000-4000-a000-000000000002",
+    "tenantId": "10000000-0000-4000-a000-000000000002",
+    "name": "Santander Northeast SMB Portfolio",
+    "code": "SANT-NE-SMB",
+    "total_businesses": 68500,
+    "total_exposure": 5800000000,
+    "avg_credit_score": 72.1,
+    "qualification_rate": 0.358,
+    "geographic_concentration": {
+      "northeast": 0.635,
+      "description": "High concentration in 8 Northeast states reflecting regional strategy"
+    },
+    "industry_focus": [
+      "Real Estate Services (21.4% exposure, multifamily CRE leader)",
+      "Professional Services (Boston/NYC concentration)",
+      "Healthcare Services (dense Northeast market)",
+      "Restaurants & Food (strong Hispanic/Latino presence)"
+    ]
+  },
+
+  "api_responses": {
+    "GET /api/v1/tenants/:tenantId": {
+      "success": true,
+      "data": {
+        "id": "10000000-0000-4000-a000-000000000002",
+        "name": "Santander Bank",
+        "slug": "santander-bank",
+        "clerkOrgId": "org_2santander001",
+        "createdAt": "2024-01-15T00:00:00.000Z",
+        "updatedAt": "2026-02-11T00:00:00.000Z",
+        "settings": {
+          "brandColor": "#EC0000",
+          "logoUrl": "https://www.santanderbank.com/logo.svg",
+          "contactEmail": "business@santanderbank.com",
+          "phone": "1-877-768-2265",
+          "ewsThresholds": {
+            "criticalScore": 550,
+            "highRiskScore": 600,
+            "monitoringScore": 650
+          },
+          "defaultPortfolio": "20000000-0000-4000-a000-000000000002"
+        }
+      },
+      "meta": {
+        "requestId": "req_sant_001",
+        "timestamp": "2026-02-11T10:00:00.000Z"
+      }
+    },
+
+    "GET /api/v1/portfolios/:portfolioId": {
+      "success": true,
+      "data": {
+        "id": "20000000-0000-4000-a000-000000000002",
+        "tenantId": "10000000-0000-4000-a000-000000000002",
+        "name": "Santander Northeast SMB Portfolio",
+        "code": "SANT-NE-SMB",
+        "createdAt": "2024-01-15T00:00:00.000Z",
+        "updatedAt": "2026-02-11T00:00:00.000Z",
+        "metrics": {
+          "totalBusinesses": 68500,
+          "totalExposure": 5800000000,
+          "avgCreditScore": 72.1,
+          "qualificationRate": 35.8,
+          "atRiskCount": 8845,
+          "atRiskPercentage": 12.9
+        },
+        "segmentation": {
+          "preQualified": {
+            "count": 24513,
+            "percentage": 35.8,
+            "exposure": 3596000000
+          },
+          "atRisk": {
+            "count": 8845,
+            "percentage": 12.9,
+            "exposure": 812000000
+          },
+          "needsMonitoring": {
+            "count": 10960,
+            "percentage": 16.0,
+            "exposure": 928000000
+          },
+          "growth": {
+            "count": 24182,
+            "percentage": 35.3,
+            "exposure": 464000000
+          }
+        }
+      },
+      "meta": {
+        "requestId": "req_sant_002",
+        "timestamp": "2026-02-11T10:00:00.000Z"
+      }
+    },
+
+    "GET /api/v1/portfolios/:portfolioId/businesses": {
+      "success": true,
+      "data": [
+        {
+          "id": "40000000-0000-4000-a000-000000100001",
+          "name": "Boston Harbor Seafood Distributors",
+          "city": "Boston",
+          "state": "MA",
+          "naicsCode": "311710",
+          "industry": "Food Processing & Distribution",
+          "annualRevenue": 4200000,
+          "riskTier": "low",
+          "segment": "small",
+          "ownerName": "Miguel Santos",
+          "empCount": 38,
+          "yearFounded": 2014,
+          "creditScore": 755,
+          "scoreType": "EXPERIAN",
+          "exposure": 850000,
+          "qualifiedProducts": ["Business Rewards Visa", "Line of Credit", "Equipment Financing"]
+        },
+        {
+          "id": "40000000-0000-4000-a000-000000100002",
+          "name": "Bay State Healthcare Partners",
+          "city": "Worcester",
+          "state": "MA",
+          "naicsCode": "621111",
+          "industry": "Healthcare Services",
+          "annualRevenue": 6800000,
+          "riskTier": "low",
+          "segment": "mid-market",
+          "ownerName": "Priya Patel",
+          "empCount": 85,
+          "yearFounded": 2016,
+          "creditScore": 805,
+          "scoreType": "EQUIFAX_ONESCORE",
+          "exposure": 1450000,
+          "qualifiedProducts": ["Corporate Rewards Card", "Term Loan", "Line of Credit", "SBA 7(a)"]
+        },
+        {
+          "id": "40000000-0000-4000-a000-000000100003",
+          "name": "La Familia Bakery & Cafe",
+          "city": "Springfield",
+          "state": "MA",
+          "naicsCode": "722515",
+          "industry": "Restaurants & Food Services",
+          "annualRevenue": 850000,
+          "riskTier": "medium",
+          "segment": "micro",
+          "ownerName": "Carmen Diaz",
+          "empCount": 12,
+          "yearFounded": 2022,
+          "creditScore": 625,
+          "scoreType": "EXPERIAN",
+          "exposure": 180000,
+          "qualifiedProducts": ["Small Business Starter Card", "Equipment Financing"]
+        },
+        {
+          "id": "40000000-0000-4000-a000-000000100009",
+          "name": "Manhattan Multifamily Properties LLC",
+          "city": "New York",
+          "state": "NY",
+          "naicsCode": "531110",
+          "industry": "Real Estate Services",
+          "annualRevenue": 18200000,
+          "riskTier": "low",
+          "segment": "mid-market",
+          "ownerName": "David Cohen",
+          "empCount": 48,
+          "yearFounded": 2012,
+          "creditScore": 850,
+          "scoreType": "EXPERIAN",
+          "exposure": 12500000,
+          "qualifiedProducts": ["Commercial Real Estate", "Term Loan", "Corporate Rewards Card"],
+          "specialNotes": "Leading multifamily real estate client - Santander's core competency"
+        },
+        {
+          "id": "40000000-0000-4000-a000-000000100010",
+          "name": "Queens Latino Business Services",
+          "city": "Queens",
+          "state": "NY",
+          "naicsCode": "561110",
+          "industry": "Administrative & Support Services",
+          "annualRevenue": 1400000,
+          "riskTier": "medium",
+          "segment": "small",
+          "ownerName": "Rosa Martinez",
+          "empCount": 16,
+          "yearFounded": 2021,
+          "creditScore": 655,
+          "scoreType": "EQUIFAX_ONESCORE",
+          "exposure": 285000,
+          "qualifiedProducts": ["Line of Credit", "SBA Express"],
+          "specialNotes": "Hispanic/Latino-owned business - Santander's focus market"
+        }
+      ],
+      "meta": {
+        "requestId": "req_sant_003",
+        "timestamp": "2026-02-11T10:00:00.000Z",
+        "pagination": {
+          "total": 68500,
+          "page": 1,
+          "pageSize": 5,
+          "totalPages": 13700
+        }
+      }
+    },
+
+    "GET /api/v1/businesses/:businessId/score": {
+      "success": true,
+      "data": {
+        "id": "60000000-0000-4000-a000-000000100001",
+        "businessId": "40000000-0000-4000-a000-000000100001",
+        "score": 755,
+        "type": "EXPERIAN",
+        "pullDate": "2026-02-11T00:00:00.000Z",
+        "factors": [
+          {
+            "name": "Payment history",
+            "impact": "positive",
+            "description": "Excellent track record of on-time payments"
+          },
+          {
+            "name": "Credit utilization",
+            "impact": "neutral",
+            "description": "Utilization at 42% - below threshold"
+          },
+          {
+            "name": "Trade references",
+            "impact": "positive",
+            "description": "Strong vendor payment history"
+          }
+        ],
+        "trend": {
+          "direction": "stable",
+          "change": 5,
+          "period": "90_days"
+        },
+        "riskTier": "low",
+        "metadata": {
+          "bureau": "Experian",
+          "reportId": "EXP-2026-02-11-755001"
+        }
+      },
+      "meta": {
+        "requestId": "req_sant_004",
+        "timestamp": "2026-02-11T10:00:00.000Z"
+      }
+    },
+
+    "GET /api/v1/businesses/:businessId/recommendations": {
+      "success": true,
+      "data": {
+        "id": "70000000-0000-4000-a000-000000100001",
+        "businessId": "40000000-0000-4000-a000-000000100001",
+        "scoreSnapshot": 755,
+        "recommendations": [
+          {
+            "cardId": "50000000-0000-4000-a000-000000000001",
+            "name": "Business Rewards Visa",
+            "fitScore": 82,
+            "reason": "Good credit profile with strong payment history",
+            "estimatedLimit": 50000,
+            "annualFee": 0,
+            "rewardRate": "1.5% on all purchases"
+          },
+          {
+            "cardId": "50000000-0000-4000-a000-000000000003",
+            "name": "Business Cash Back Card",
+            "fitScore": 78,
+            "reason": "Fits operational spending patterns for food distribution",
+            "estimatedLimit": 35000,
+            "annualFee": 0,
+            "rewardRate": "2% on dining and gas, 1% other"
+          }
+        ],
+        "expiresAt": "2026-08-11T00:00:00.000Z",
+        "createdAt": "2026-02-11T00:00:00.000Z"
+      },
+      "meta": {
+        "requestId": "req_sant_005",
+        "timestamp": "2026-02-11T10:00:00.000Z"
+      }
+    },
+
+    "GET /api/v1/portfolios/:portfolioId/analytics": {
+      "success": true,
+      "data": {
+        "portfolioId": "20000000-0000-4000-a000-000000000002",
+        "summary": {
+          "totalBusinesses": 68500,
+          "totalExposure": 5800000000,
+          "avgCreditScore": 72.1,
+          "qualificationRate": 35.8,
+          "atRiskExposure": 812000000,
+          "atRiskPercentage": 14.0
+        },
+        "industryBreakdown": [
+          {
+            "industry": "Real Estate Services",
+            "businessCount": 4200,
+            "exposure": 1240000000,
+            "exposurePercentage": 21.4,
+            "avgScore": 74.8,
+            "qualRate": 39.4,
+            "notes": "Dominant multifamily CRE focus - $13.5B total CRE portfolio"
+          },
+          {
+            "industry": "Professional Services",
+            "businessCount": 11200,
+            "exposure": 520000000,
+            "exposurePercentage": 9.0,
+            "avgScore": 75.8,
+            "qualRate": 41.3,
+            "notes": "Strong in Boston/NYC legal, consulting, accounting"
+          },
+          {
+            "industry": "Healthcare Services",
+            "businessCount": 9800,
+            "exposure": 680000000,
+            "exposurePercentage": 11.7,
+            "avgScore": 79.2,
+            "qualRate": 44.7,
+            "notes": "Dense Northeast healthcare market"
+          },
+          {
+            "industry": "Restaurants & Food",
+            "businessCount": 10500,
+            "exposure": 380000000,
+            "exposurePercentage": 6.6,
+            "avgScore": 66.4,
+            "qualRate": 30.2,
+            "notes": "Strong Hispanic/Latino-owned restaurant presence"
+          },
+          {
+            "industry": "Construction & Trades",
+            "businessCount": 7800,
+            "exposure": 820000000,
+            "exposurePercentage": 14.1,
+            "avgScore": 69.7,
+            "qualRate": 33.1,
+            "notes": "Northeast urban redevelopment, multifamily construction"
+          }
+        ],
+        "geographicBreakdown": [
+          {
+            "region": "Northeast",
+            "states": ["MA", "NY", "NJ", "PA", "CT", "RI", "NH", "DE"],
+            "businessCount": 43519,
+            "exposure": 3712000000,
+            "percentage": 63.5,
+            "avgScore": 74.2,
+            "notes": "Core Santander footprint, former Sovereign Bank territory"
+          },
+          {
+            "region": "Southeast",
+            "states": ["FL"],
+            "businessCount": 11338,
+            "exposure": 1044000000,
+            "percentage": 18.0,
+            "avgScore": 71.8,
+            "notes": "Florida expansion market, Miami commercial banking"
+          },
+          {
+            "region": "Other",
+            "states": ["TX", "OH", "IL", "MI", "CA"],
+            "businessCount": 13643,
+            "exposure": 1044000000,
+            "percentage": 18.5,
+            "avgScore": 70.8,
+            "notes": "Limited presence outside Northeast/Southeast"
+          }
+        ],
+        "riskDistribution": [
+          {
+            "tier": "LOW",
+            "count": 28110,
+            "percentage": 41.0,
+            "exposure": 2494000000,
+            "avgScore": 84.8
+          },
+          {
+            "tier": "MODERATE",
+            "count": 19110,
+            "percentage": 27.9,
+            "exposure": 1798000000,
+            "avgScore": 73.2
+          },
+          {
+            "tier": "ELEVATED",
+            "count": 12435,
+            "percentage": 18.2,
+            "exposure": 1044000000,
+            "avgScore": 64.7
+          },
+          {
+            "tier": "HIGH",
+            "count": 6850,
+            "percentage": 10.0,
+            "exposure": 406000000,
+            "avgScore": 53.1
+          },
+          {
+            "tier": "CRITICAL",
+            "count": 1995,
+            "percentage": 2.9,
+            "exposure": 58000000,
+            "avgScore": 39.2
+          }
+        ],
+        "trends": {
+          "quarterOverQuarter": {
+            "businessCount": 3.1,
+            "exposure": 4.2,
+            "avgScore": 0.4,
+            "qualificationRate": 1.8
+          },
+          "topGrowingSegments": [
+            "Technology Services (+6.4%)",
+            "Healthcare Services (+5.1%)",
+            "Real Estate Services (+4.2%)"
+          ],
+          "decliningSegments": [
+            "Restaurants & Food (-0.8%)",
+            "Auto Services (-1.2%)"
+          ]
+        }
+      },
+      "meta": {
+        "requestId": "req_sant_006",
+        "timestamp": "2026-02-11T10:00:00.000Z"
+      }
+    },
+
+    "GET /api/v1/portfolios/:portfolioId/ews-alerts": {
+      "success": true,
+      "data": [
+        {
+          "id": "c0000000-0000-4000-a000-000000100001",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "portfolioId": "20000000-0000-4000-a000-000000000002",
+          "businessId": "40000000-0000-4000-a000-000000100003",
+          "businessName": "La Familia Bakery & Cafe",
+          "alertType": "SCORE_DROP",
+          "severity": "MEDIUM",
+          "message": "Score declined 40 points in 90 days",
+          "previousScore": 665,
+          "currentScore": 625,
+          "createdAt": "2026-02-08T10:00:00.000Z",
+          "acknowledged": false
+        },
+        {
+          "id": "c0000000-0000-4000-a000-000000100002",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "portfolioId": "20000000-0000-4000-a000-000000000002",
+          "businessId": "40000000-0000-4000-a000-000000100015",
+          "businessName": "Long Island Food Truck Collective",
+          "alertType": "SCORE_DROP",
+          "severity": "HIGH",
+          "message": "Score below minimum underwriting threshold",
+          "previousScore": 590,
+          "currentScore": 540,
+          "createdAt": "2026-02-09T10:00:00.000Z",
+          "acknowledged": false
+        },
+        {
+          "id": "c0000000-0000-4000-a000-000000100003",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "portfolioId": "20000000-0000-4000-a000-000000000002",
+          "businessId": "40000000-0000-4000-a000-000000100022",
+          "businessName": "Camden Community Development Corp",
+          "alertType": "DELINQUENCY",
+          "severity": "CRITICAL",
+          "message": "Payment 60+ days past due on trade line",
+          "previousScore": 600,
+          "currentScore": 555,
+          "createdAt": "2026-02-10T10:00:00.000Z",
+          "acknowledged": false
+        },
+        {
+          "id": "c0000000-0000-4000-a000-000000100004",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "portfolioId": "20000000-0000-4000-a000-000000000002",
+          "businessId": "40000000-0000-4000-a000-000000100032",
+          "businessName": "Portsmouth Marine Supply",
+          "alertType": "UTILIZATION",
+          "severity": "MEDIUM",
+          "message": "Credit utilization exceeded 85% on revolving lines",
+          "previousScore": 680,
+          "currentScore": 650,
+          "createdAt": "2026-02-11T10:00:00.000Z",
+          "acknowledged": false
+        }
+      ],
+      "meta": {
+        "requestId": "req_sant_007",
+        "timestamp": "2026-02-11T10:00:00.000Z",
+        "pagination": {
+          "total": 4,
+          "page": 1,
+          "pageSize": 10
+        }
+      }
+    },
+
+    "GET /api/v1/audit-events": {
+      "success": true,
+      "data": [
+        {
+          "id": "b0000000-0000-4000-a000-000000100001",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "userId": "30000000-0000-4000-a000-000000000010",
+          "userName": "Carlos Rodriguez",
+          "action": "SCORE_PULL",
+          "resourceType": "business",
+          "resourceId": "40000000-0000-4000-a000-000000100001",
+          "details": {
+            "score": 755,
+            "type": "EXPERIAN",
+            "businessName": "Boston Harbor Seafood Distributors"
+          },
+          "ipAddress": "192.168.2.100",
+          "createdAt": "2026-02-11T09:15:00.000Z"
+        },
+        {
+          "id": "b0000000-0000-4000-a000-000000100002",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "userId": "30000000-0000-4000-a000-000000000011",
+          "userName": "Maria Lopez",
+          "action": "SCORE_PULL",
+          "resourceType": "business",
+          "resourceId": "40000000-0000-4000-a000-000000100009",
+          "details": {
+            "score": 850,
+            "type": "EXPERIAN",
+            "businessName": "Manhattan Multifamily Properties LLC"
+          },
+          "ipAddress": "192.168.2.105",
+          "createdAt": "2026-02-11T10:20:00.000Z"
+        },
+        {
+          "id": "b0000000-0000-4000-a000-000000100003",
+          "tenantId": "10000000-0000-4000-a000-000000000002",
+          "userId": "30000000-0000-4000-a000-000000000010",
+          "userName": "Carlos Rodriguez",
+          "action": "OFFER_GENERATED",
+          "resourceType": "business",
+          "resourceId": "40000000-0000-4000-a000-000000100002",
+          "details": {
+            "cards": 2,
+            "businessName": "Bay State Healthcare Partners"
+          },
+          "ipAddress": "192.168.2.100",
+          "createdAt": "2026-02-11T09:16:00.000Z"
+        }
+      ],
+      "meta": {
+        "requestId": "req_sant_008",
+        "timestamp": "2026-02-11T10:00:00.000Z",
+        "pagination": {
+          "total": 10,
+          "page": 1,
+          "pageSize": 3
+        }
+      }
+    },
+
+    "POST /api/v1/batch-jobs": {
+      "success": true,
+      "data": {
+        "id": "a0000000-0000-4000-a000-000000100001",
+        "portfolioId": "20000000-0000-4000-a000-000000000002",
+        "tenantId": "10000000-0000-4000-a000-000000000002",
+        "submittedBy": "30000000-0000-4000-a000-000000000010",
+        "status": "PROCESSING",
+        "totalCount": 15,
+        "processedCount": 0,
+        "failedCount": 0,
+        "startedAt": "2026-02-11T10:30:00.000Z",
+        "completedAt": null,
+        "estimatedCompletionTime": "2026-02-11T10:35:00.000Z",
+        "createdAt": "2026-02-11T10:30:00.000Z"
+      },
+      "meta": {
+        "requestId": "req_sant_009",
+        "timestamp": "2026-02-11T10:30:00.000Z"
+      }
+    }
+  },
+
+  "sample_dashboards": {
+    "executive_summary": {
+      "kpis": [
+        {
+          "label": "Total Portfolio",
+          "value": 68500,
+          "format": "number",
+          "trend": "+3.1%",
+          "status": "positive"
+        },
+        {
+          "label": "Total Exposure",
+          "value": 5800000000,
+          "format": "currency",
+          "trend": "+4.2%",
+          "status": "positive"
+        },
+        {
+          "label": "Avg Credit Score",
+          "value": 72.1,
+          "format": "score",
+          "trend": "+0.4pts",
+          "status": "neutral"
+        },
+        {
+          "label": "Qualification Rate",
+          "value": 35.8,
+          "format": "percent",
+          "trend": "+1.8pp",
+          "status": "positive"
+        },
+        {
+          "label": "At-Risk Businesses",
+          "value": 8845,
+          "format": "number",
+          "trend": "-3.8%",
+          "status": "warning",
+          "subtitle": "12.9% of portfolio"
+        },
+        {
+          "label": "Offer Pipeline",
+          "value": 1240000000,
+          "format": "currency",
+          "trend": "+9.4%",
+          "status": "positive"
+        }
+      ]
+    }
+  },
+
+  "documentation": {
+    "data_notes": [
+      "Santander Bank is 1/5 the size of JPMorgan Chase but holds Top 3-5 positions in Northeast states",
+      "Total business customers: 180,000 (vs Chase 287,000)",
+      "High Northeast concentration: 63.5% of portfolio in 8 states (MA, NY, NJ, PA, CT, RI, NH, DE)",
+      "Smaller average business size: higher concentration under $5M revenue",
+      "Community banking focus: serves more underserved communities, startups, Hispanic/Latino-owned businesses",
+      "Pre-Qualified rate 35.8% (vs Chase 37%) reflects tighter regional market and smaller scale",
+      "At-Risk rate 12.9% higher than Chase (9%) due to mission-driven lending to underserved segments",
+      "Leading multifamily CRE lender: $13.5B portfolio with NYC rent-controlled focus",
+      "SBA Preferred Lender: $250M annual volume",
+      "Cultivate Small Business program: 736 entrepreneurs served, $2.4M deployed"
+    ],
+    "market_differentiators": [
+      "Regional powerhouse vs national footprint (401 branches vs 4,700+ Chase)",
+      "Hispanic/Latino business community relationships and specialized programs",
+      "Multifamily real estate expertise ($13.5B portfolio)",
+      "Strong professional services in Boston/NYC",
+      "Healthcare concentration in dense Northeast markets",
+      "Restaurant sector elevated due to community focus",
+      "Technology sector smaller (minimal West Coast presence)",
+      "Manufacturing sector smaller (minimal Midwest presence)"
+    ],
+    "assumptions": [
+      "Total businesses 68,500 scaled from 180K customer base (regional vs 287K national)",
+      "Northeast concentration 63.5% based on 401 branch distribution (88% in 8 states)",
+      "Real estate exposure heavily weighted due to $13.5B multifamily CRE portfolio",
+      "Professional Services elevated due to Boston/NYC market density",
+      "Restaurant segment elevated due to Hispanic/Latino community focus",
+      "At-Risk percentage 12.9% reflects community banking mission (higher than national banks)"
+    ]
+  }
+}

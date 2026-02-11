@@ -1,0 +1,137 @@
+{
+  "bank": "Wells Fargo",
+  "totalBusinessCustomers": 3300000,
+  "generatedDate": "2026-02-11",
+  "dataSource": "Wells Fargo 10-K 2024, FDIC data, commercial banking disclosures",
+  "notes": [
+    "Wells Fargo serves ~3.3M small and business banking customers",
+    "Nation's largest agricultural lender with strong rural market penetration",
+    "Geographic strength in West Coast, Southeast (Wachovia legacy), and agricultural states",
+    "~4,500 branches across 36 states (vs Chase's ~4,700)",
+    "Stronger in Manufacturing, Construction, Agriculture vs Chase",
+    "Weaker in Technology despite SF HQ (less Silicon Valley penetration)"
+  ],
+  "industrySegments": {
+    "Technology": {
+      "percentage": 10.5,
+      "customerCount": 346500,
+      "notes": "Growing focus with 20% team expansion in 2024, but historically weaker than Chase in tech"
+    },
+    "Professional Services": {
+      "percentage": 11.8,
+      "customerCount": 389400,
+      "notes": "Specialized coverage for professional services firms"
+    },
+    "Manufacturing": {
+      "percentage": 14.2,
+      "customerCount": 468600,
+      "notes": "Strong manufacturing presence, especially Midwest; top-tier national practice"
+    },
+    "Retail Trade": {
+      "percentage": 12.3,
+      "customerCount": 405900,
+      "notes": "Retail and e-commerce coverage across all markets"
+    },
+    "Healthcare": {
+      "percentage": 11.0,
+      "customerCount": 363000,
+      "notes": "Specialized healthcare coverage; growing sector focus"
+    },
+    "Construction": {
+      "percentage": 15.5,
+      "customerCount": 511500,
+      "notes": "Strongest among major banks; significant construction lending presence"
+    },
+    "Food Service": {
+      "percentage": 10.2,
+      "customerCount": 336600,
+      "notes": "Includes Food & Agribusiness group; nation's largest agricultural lender"
+    },
+    "Transportation": {
+      "percentage": 14.5,
+      "customerCount": 478500,
+      "notes": "Strong commercial auto and logistics coverage; includes agricultural transport"
+    }
+  },
+  "industrySegmentValidation": {
+    "totalPercentage": 100.0,
+    "totalCustomerCount": 3300000,
+    "calculation": "10.5 + 11.8 + 14.2 + 12.3 + 11.0 + 15.5 + 10.2 + 14.5 = 100.0"
+  },
+  "geographicDistribution": {
+    "West": {
+      "percentage": 32.5,
+      "customerCount": 1072500,
+      "states": ["CA", "WA", "OR", "NV", "AZ", "CO", "ID", "UT", "HI", "AK", "MT", "WY"],
+      "keyMarkets": ["San Francisco", "Los Angeles", "Seattle", "Phoenix", "Denver"],
+      "branchCount": 1400,
+      "notes": "Historic stronghold; HQ in San Francisco; ~812+ branches in CA alone"
+    },
+    "Northeast": {
+      "percentage": 15.2,
+      "customerCount": 501600,
+      "states": ["NY", "NJ", "PA", "CT", "MA", "MD", "DC"],
+      "keyMarkets": ["New York City", "Philadelphia", "Boston"],
+      "branchCount": 550,
+      "notes": "Smaller presence than Chase; ~214 branches in NJ"
+    },
+    "Southeast": {
+      "percentage": 26.8,
+      "customerCount": 884400,
+      "states": ["NC", "SC", "FL", "GA", "VA", "TN", "AL", "LA"],
+      "keyMarkets": ["Charlotte", "Miami", "Tampa", "Atlanta"],
+      "branchCount": 1250,
+      "notes": "Strong Wachovia legacy; ~483 FL branches, ~216 NC branches"
+    },
+    "Midwest": {
+      "percentage": 13.0,
+      "customerCount": 429000,
+      "states": ["MN", "WI", "IA", "IL", "IN", "OH", "MI", "MO", "ND", "SD", "NE", "KS"],
+      "keyMarkets": ["Minneapolis", "Chicago", "Des Moines"],
+      "branchCount": 650,
+      "notes": "Strong agricultural and manufacturing lending; rural market penetration"
+    },
+    "Southwest": {
+      "percentage": 12.5,
+      "customerCount": 412500,
+      "states": ["TX", "OK", "NM"],
+      "keyMarkets": ["Houston", "Dallas", "Austin", "San Antonio"],
+      "branchCount": 650,
+      "notes": "Major TX presence with ~474 branches; strong energy sector ties"
+    }
+  },
+  "geographicValidation": {
+    "totalPercentage": 100.0,
+    "totalCustomerCount": 3300000,
+    "totalBranchCount": 4500,
+    "calculation": "32.5 + 15.2 + 26.8 + 13.0 + 12.5 = 100.0"
+  },
+  "keyDifferentiators": [
+    "Nation's largest agricultural lender with 170+ years in Food & Agribusiness",
+    "Strongest construction lending among major banks",
+    "Deep rural and small-town market penetration",
+    "Wachovia merger (2008) created strong Southeast corridor presence",
+    "More evenly distributed industry mix vs Chase's tech-heavy portfolio",
+    "West Coast dominance (32.5% of customers) vs Chase's Northeast focus",
+    "Specialized teams: agribusiness, beverage distribution, commercial auto, gaming",
+    "Growing technology banking but historically weaker than Chase/Silicon Valley Bank"
+  ],
+  "industryStrengthComparison": {
+    "strongerThanChase": ["Construction", "Manufacturing", "Food Service/Agriculture", "Transportation"],
+    "weakerThanChase": ["Technology", "Professional Services"],
+    "similar": ["Healthcare", "Retail Trade"]
+  },
+  "geographicStrengthComparison": {
+    "strongerThanChase": ["West", "Southeast", "Midwest"],
+    "weakerThanChase": ["Northeast"],
+    "similar": ["Southwest"]
+  },
+  "referenceSources": [
+    "Wells Fargo 2024 10-K Annual Report",
+    "Wells Fargo 4Q24 Quarterly Supplement",
+    "FDIC Summary of Deposits 2024",
+    "Wells Fargo Commercial Banking Industry Pages",
+    "Banking Dive: Wells Fargo SMB Strategy 2024",
+    "Wells Fargo Technology Banking Team Expansion Announcement 2025"
+  ]
+}

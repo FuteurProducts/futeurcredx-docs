@@ -1,0 +1,611 @@
+{
+  "bank": "Citibank",
+  "parent": "Citigroup Inc.",
+  "legalName": "Citibank, N.A.",
+  "established": 1812,
+  "headquarters": "New York, NY",
+  "asOf": "2026-02-11",
+  "source": "CITI-QUAL Intelligence Analyst",
+
+  "brand": {
+    "name": "Citi",
+    "tagline": "Banking on Progress",
+    "positioning": "The World's Most Global Bank",
+    "colors": {
+      "primary": "#003A72",
+      "primaryName": "Ateneo Blue (Citi Blue)",
+      "accent": "#DB230B",
+      "accentName": "Maximum Red"
+    },
+    "description": "Citi positions itself as the world's most global bank with unmatched international reach, serving clients who need cross-border capabilities, treasury solutions, and trade finance expertise. Unlike retail-focused competitors, Citi emphasizes its institutional strength and global network."
+  },
+
+  "strategicPosition": {
+    "overview": "Under CEO Jane Fraser's transformation, Citigroup has restructured away from retail/SMB toward serving institutional clients and 'connected' high-value businesses with cross-border needs. The bank processes nearly $5 trillion in flows daily through its Treasury and Trade Solutions (TTS) division.",
+    "keyStrengths": [
+      "Global network spanning 160 countries and 140 currencies",
+      "Market-leading Treasury and Trade Solutions (TTS) processing ~$3 trillion daily",
+      "Named World's Best Corporate Payments Bank 2025 by Euromoney",
+      "Strong foreign exchange capabilities with 500+ currency pairs",
+      "Digital-first commercial banking platform (CitiDirect) with AI integration",
+      "Cross-border expertise for multinational and growing mid-market firms"
+    ],
+    "marketFocus": [
+      "Middle market companies ($10M-$3B revenue) going global",
+      "Multinational corporations needing treasury solutions",
+      "Businesses with international trade and FX requirements",
+      "Commercial real estate financing",
+      "High-net-worth business owners (Citi Private Bank)",
+      "Industry-specific: Healthcare professionals, Legal professionals"
+    ],
+    "competitivePosition": {
+      "rank": "3rd largest U.S. bank by assets ($1.84T as of Sept 2025)",
+      "vsChase": "Chase has 4,700 branches vs Citi's 600+ branches, but Citi offers superior international capabilities, better savings rates, and no overdraft fees since 2022. Citi focuses on global commercial clients; Chase dominates domestic SMB.",
+      "uniqueDifferentiator": "Only major U.S. bank with truly global treasury, trade, and FX infrastructure serving 160 countries"
+    },
+    "2025Transformation": [
+      "Integration of retail banking into Wealth division",
+      "Commercial Bank digitalization: 15-day credit approval, 30-day funding for loans up to $10M",
+      "CitiDirect Commercial Banking platform rolled out to 8 countries, serving 57% of commercial client base",
+      "AI deployment: 150,000+ employees using Citi AI tools by June 2025",
+      "Target: 10%+ return on equity by 2026",
+      "Revenue growth: Record revenues in 2025 across all five business lines"
+    ]
+  },
+
+  "products": {
+    "checking": [
+      {
+        "name": "CitiBusiness Streamlined Checking",
+        "type": "Basic Business Checking",
+        "monthlyFee": 15,
+        "feeWaiver": "$5,000 average collected balance",
+        "features": [
+          "250 transactions per month included",
+          "$10,000 cash deposit limit per month",
+          "Access to 60,000+ fee-free ATMs (Citi + MoneyPass)",
+          "600+ branch locations",
+          "Online and mobile banking"
+        ],
+        "bestFor": "Small businesses with moderate transaction volume"
+      },
+      {
+        "name": "CitiBusiness Flexible Checking",
+        "type": "Flexible Business Checking",
+        "monthlyFee": "Variable based on usage",
+        "features": [
+          "Pay-per-use pricing model",
+          "Scalable for growing businesses",
+          "Full suite of business banking services",
+          "Integration with treasury management"
+        ],
+        "bestFor": "Businesses with fluctuating transaction volumes"
+      },
+      {
+        "name": "CitiBusiness Analyzed Checking",
+        "type": "Cash Management Checking",
+        "monthlyFee": "Earnings credit allowance",
+        "features": [
+          "Analyzed account structure",
+          "Earnings credit to offset fees",
+          "Advanced cash management tools",
+          "Suitable for high-volume businesses"
+        ],
+        "bestFor": "Mid-market companies with complex treasury needs"
+      },
+      {
+        "name": "CitiBusiness Interest Checking",
+        "type": "Interest-Bearing Business Checking",
+        "monthlyFee": "Varies",
+        "features": [
+          "Earn interest on deposits",
+          "Tiered interest rates",
+          "Business banking services included"
+        ],
+        "bestFor": "Businesses maintaining significant balances"
+      }
+    ],
+
+    "industryPackages": [
+      {
+        "name": "CitiBusiness Solutions for HealthCare Professionals",
+        "target": "Medical, dental, veterinary practices",
+        "benefits": [
+          "Waived monthly maintenance fees on checking",
+          "Discounted merchant services",
+          "Better APY on money market accounts",
+          "Reduced fees on term loans",
+          "Industry-specific financial advisory"
+        ]
+      },
+      {
+        "name": "CitiBusiness Solutions for Legal Professionals",
+        "target": "Law firms, solo practitioners",
+        "benefits": [
+          "Unlimited sub-accounts for IOLTA/IOLA",
+          "Unlimited free wires on IOLTA/IOLA accounts",
+          "Free check scanner",
+          "Specialized compliance support"
+        ]
+      },
+      {
+        "name": "CitiBusiness Preferred Banking",
+        "target": "General businesses not qualifying for industry packages",
+        "benefits": [
+          "Better rates on deposit products",
+          "Discounts on lending products and services",
+          "Dedicated relationship manager",
+          "Priority customer service"
+        ]
+      }
+    ],
+
+    "creditCards": [
+      {
+        "name": "Citi AAdvantage Business World Elite Mastercard",
+        "brand": "Mastercard World Elite",
+        "annualFee": 99,
+        "annualFeeWaiver": "First 12 months",
+        "rewards": {
+          "americanAirlines": "2x miles per $1",
+          "carRentals": "2x miles per $1",
+          "gasStations": "2x miles per $1",
+          "other": "1x miles per $1"
+        },
+        "features": [
+          "Companion Certificate for domestic travel after $30,000+ annual spend",
+          "First checked bag free on American Airlines (cardholder + 4 companions)",
+          "Priority boarding on American Airlines",
+          "25% savings on in-flight food and beverage purchases",
+          "Travel insurance protections (reinstated 2025)",
+          "Extended warranty protection",
+          "No foreign transaction fees"
+        ],
+        "bestFor": "Businesses with frequent American Airlines travel"
+      },
+      {
+        "name": "Costco Anywhere Visa Business Card by Citi",
+        "brand": "Visa",
+        "annualFee": 0,
+        "annualFeeNote": "Requires paid Costco membership",
+        "rewards": {
+          "restaurants": "3% cash back",
+          "travel": "3% cash back on eligible travel",
+          "gas": "4% cash back on first $7,000/year, then 1%",
+          "evCharging": "4% cash back on first $7,000/year combined with gas, then 1%",
+          "costco": "2% cash back on Costco and Costco.com purchases",
+          "other": "1% cash back"
+        },
+        "features": [
+          "No foreign transaction fees",
+          "Worldwide car rental insurance",
+          "Worldwide travel accident insurance",
+          "Damage & theft purchase protection (120 days)",
+          "Citi Quick Lock for instant card freezing",
+          "Fraud early warning monitoring",
+          "Citi Entertainment presale access"
+        ],
+        "bestFor": "Businesses shopping at Costco with travel and fuel expenses"
+      }
+    ],
+
+    "lending": [
+      {
+        "name": "Business Term Loans",
+        "type": "Fixed-term financing",
+        "amountRange": "Up to $10M via digital platform",
+        "features": [
+          "Digital credit application (live in US, Canada, India, Singapore, Hong Kong, Brazil)",
+          "Average 15 business days approval",
+          "Average 30 business days funding",
+          "Working capital, equipment, expansion financing",
+          "Industry-specific fee reductions for healthcare/legal"
+        ]
+      },
+      {
+        "name": "Business Lines of Credit",
+        "type": "Revolving credit",
+        "amountRange": "Up to $10M via digital platform",
+        "features": [
+          "Flexible draw and repayment",
+          "Cash flow management",
+          "Seasonal business support",
+          "Digital application and approval process"
+        ]
+      },
+      {
+        "name": "Commercial Real Estate Loans",
+        "type": "CRE financing",
+        "purpose": [
+          "Purchase business facilities",
+          "Renovate existing properties",
+          "Refinance existing mortgages"
+        ],
+        "features": [
+          "Structured financing across all CRE asset classes",
+          "Retail, industrial, office, hospitality, data center financing",
+          "Citi led $8.6B+ CRE transactions in APAC YTD 2025",
+          "Commercial mortgage installment loans"
+        ]
+      },
+      {
+        "name": "Affordable Housing Finance (Citi Community Capital)",
+        "type": "Specialized CRE",
+        "target": "Non-profit and for-profit affordable housing developers, CDFIs",
+        "features": [
+          "Construction, rehabilitation, refinance, acquisition financing",
+          "Highly structured transactions",
+          "Government agency partnerships"
+        ]
+      },
+      {
+        "name": "Commercial Cards",
+        "type": "Corporate card programs",
+        "features": [
+          "Employee spending controls",
+          "Expense management integration",
+          "Included in Digital Credit Application platform"
+        ]
+      }
+    ],
+
+    "treasuryAndTradeSolutions": [
+      {
+        "name": "Cash Management Solutions",
+        "category": "Treasury Services",
+        "components": [
+          "Receivables management",
+          "Payments processing",
+          "Commercial cards",
+          "Liquidity and investments",
+          "Channel services"
+        ],
+        "platforms": [
+          "CitiDirect Commercial Banking (57% of client base using)",
+          "CitiConnect (single connectivity window for payment, collection, trade, card products)",
+          "CitiDirect BE Cash Concentration (24/7 global pooling visibility)"
+        ]
+      },
+      {
+        "name": "Liquidity Management Services",
+        "category": "Treasury Services",
+        "products": [
+          "7-Day Sweeps (cash concentration 7 days/week, US and South Korea)",
+          "Cross-Currency Sweeps (automate FX conversion + cash concentration)",
+          "Cash concentration structures",
+          "Target balancing accounts",
+          "Notional pooling",
+          "Multi-bank liquidity structures"
+        ],
+        "coverage": "Available across 120+ countries"
+      },
+      {
+        "name": "Receivables Finance",
+        "category": "Working Capital",
+        "description": "Convert unpaid invoices into immediate cash",
+        "scale": "$120B+ throughput in 2022",
+        "coverage": "55+ countries",
+        "platform": "Digital accounts receivables finance platform",
+        "modules": [
+          "Citi One Receivables: Present",
+          "Citi One Receivables: Collect",
+          "Citi One Receivables: Reconcile & Report"
+        ]
+      },
+      {
+        "name": "Trade Finance Solutions",
+        "category": "Global Trade",
+        "products": [
+          "Import Letters of Credit",
+          "Export Letters of Credit",
+          "Standby Letters of Credit (bid and performance)",
+          "Letters of Guarantee",
+          "Documentary Collections (fully digitized)",
+          "Electronic Trade Loan Facilities",
+          "Sustainable Trade and Working Capital Loans (launched 2022)"
+        ],
+        "platform": "Trade Advisor via CitiDirect (real-time LC status)",
+        "coverage": "Over 120 countries"
+      },
+      {
+        "name": "Foreign Exchange (FX) Services",
+        "category": "Markets & FX",
+        "coverage": "130 currencies, ~80 countries, 500+ currency pairs",
+        "platforms": [
+          "CitiFX (digital FX in 120+ countries, 24/5 coverage)",
+          "CitiFX Pulse (real-time spot, forward, NDF, swap pricing in 400+ pairs)",
+          "Citi Velocity Trading (unified FX process management)",
+          "Citi InstantFX (lock pricing in multiple currencies)"
+        ],
+        "capabilities": [
+          "Hedging currency cash flows",
+          "Managing international investments",
+          "FX risk management",
+          "Intercompany flows",
+          "FX payments automation"
+        ]
+      },
+      {
+        "name": "Citi Token Services",
+        "category": "Digital Assets",
+        "description": "Blockchain and smart contract solutions for institutional clients",
+        "useCases": [
+          "Digital cash management",
+          "Trade finance digitization",
+          "Collateral mobility"
+        ],
+        "status": "Pilot stage"
+      }
+    ],
+
+    "payments": [
+      {
+        "name": "Domestic Wire Transfers",
+        "fees": {
+          "citigold": "Free",
+          "privateBanking": "Free",
+          "priority": "$25 outgoing, free incoming",
+          "standard": "$35 outgoing, $15 incoming"
+        }
+      },
+      {
+        "name": "International Wire Transfers",
+        "fees": {
+          "citigold": "Free",
+          "privateBanking": "Free",
+          "globalExecutive": "Free",
+          "priority": "$25 outgoing, free incoming",
+          "standard": "$35 outgoing, $15 incoming"
+        },
+        "additionalCosts": [
+          "FX markup on currency conversion",
+          "Intermediary bank charges ($20-$50 typical)"
+        ],
+        "timing": "Same-day if submitted before 6:00 PM ET",
+        "freeOption": "Citibank Global Transfers (between Citi accounts only)"
+      },
+      {
+        "name": "ACH Payments",
+        "features": [
+          "Batch processing",
+          "Integration with payroll",
+          "Vendor payments"
+        ]
+      },
+      {
+        "name": "Citi Merchant Services",
+        "provider": "Partnership with First Data (Fiserv)",
+        "scale": "20B+ transactions processed annually",
+        "capabilities": [
+          "In-store payment processing",
+          "Online payments (Clover Online, Payeezy Gateway)",
+          "Mobile payments",
+          "Contactless payment acceptance",
+          "Check and gift card processing"
+        ],
+        "hardware": [
+          "Clover Flex",
+          "Clover Go",
+          "Clover Mini",
+          "Clover Station"
+        ],
+        "appEcosystem": "400+ apps for POS enhancements"
+      }
+    ],
+
+    "digitalBanking": [
+      {
+        "name": "CitiDirect Commercial Banking",
+        "description": "Market-leading digital client platform",
+        "deployment": "Live in US, UK, Canada, Australia, Brazil, Hong Kong, India, Singapore",
+        "adoption": "57% of commercial banking client base",
+        "features": [
+          "AI-powered workflows (385K document intelligence uses)",
+          "Virtual assistant tools",
+          "GenAI developer toolkit (220K automated code reviews)",
+          "Strategic FinTech partnerships",
+          "Unified view across treasury, trade, payments, FX"
+        ]
+      },
+      {
+        "name": "Digital Credit Application",
+        "loanSize": "Up to $10M",
+        "approvalTime": "Average 15 business days",
+        "fundingTime": "Average 30 business days",
+        "products": [
+          "Revolving credit",
+          "Term loans",
+          "Commercial cards",
+          "Letters of credit"
+        ],
+        "markets": "US, Canada, India, Singapore, Hong Kong, Brazil (expanding to ~20% of eligible clients)"
+      },
+      {
+        "name": "Citi Mobile App",
+        "features": [
+          "Business account management",
+          "Mobile check deposit",
+          "Card controls (Citi Quick Lock)",
+          "Real-time alerts",
+          "Fraud monitoring"
+        ]
+      }
+    ],
+
+    "specializedServices": [
+      {
+        "name": "Citi Private Bank for Entrepreneurs",
+        "target": "Business owners, entrepreneurs, high-net-worth individuals",
+        "services": [
+          "Integrated business and personal banking",
+          "Investment finance and lending",
+          "Succession planning",
+          "Trust and estate services",
+          "Art and collectibles financing"
+        ]
+      },
+      {
+        "name": "Securities Services",
+        "description": "Custody, asset servicing, collateral mobility for institutional investors",
+        "note": "Separate from commercial banking but part of Citi ecosystem"
+      }
+    ]
+  },
+
+  "feesAndPricing": {
+    "checkingFees": {
+      "streamlined": {
+        "monthly": 15,
+        "waiver": "$5,000 average collected balance",
+        "transactions": "250 included",
+        "cashDeposit": "$10,000/month included"
+      }
+    },
+    "overdraft": {
+      "fee": 0,
+      "note": "Citi eliminated overdraft fees in 2022"
+    },
+    "atmFees": {
+      "citiAtm": "Free",
+      "moneypass": "Free (60,000 ATMs)",
+      "outOfNetwork": "Varies by account"
+    },
+    "bonuses": {
+      "businessChecking": {
+        "tier1": "$300 for $5,000 deposit",
+        "tier2": "Up to $2,000 for $200,000 deposit",
+        "note": "Tiered sign-up bonuses available"
+      }
+    }
+  },
+
+  "accessibility": {
+    "branchStates": [
+      "California",
+      "Florida",
+      "Illinois",
+      "New York",
+      "Texas",
+      "Maryland",
+      "Nevada",
+      "Virginia",
+      "Connecticut",
+      "New Jersey",
+      "Washington, D.C."
+    ],
+    "branchCount": "600+",
+    "atmCount": "60,000+ (Citi + MoneyPass)",
+    "limitations": [
+      "Business accounts available in only 10 states + DC",
+      "Must visit branch to open business account (no online opening)",
+      "Limited domestic footprint vs. Chase, BofA"
+    ],
+    "strengths": [
+      "Unmatched international presence (160 countries)",
+      "Strong digital platform for clients outside branch states",
+      "24/7 digital banking access"
+    ]
+  },
+
+  "targetCustomer": {
+    "idealProfile": [
+      "Mid-market companies ($10M-$3B revenue) expanding internationally",
+      "Businesses with cross-border payments and FX needs",
+      "Importers and exporters requiring trade finance",
+      "Companies needing sophisticated treasury management",
+      "Healthcare and legal professionals",
+      "High-value businesses in major metro markets (NY, CA, FL, IL, TX)",
+      "Companies with Costco memberships (for business card)",
+      "Frequent American Airlines business travelers"
+    ],
+    "notIdealFor": [
+      "Pure SMBs without international needs",
+      "Businesses outside 10-state footprint needing frequent branch access",
+      "Companies seeking extensive domestic-only branch network",
+      "Startups under $10M revenue (post-2022 middle market exit)"
+    ]
+  },
+
+  "competitiveAdvantages": [
+    "Only U.S. bank with true global treasury infrastructure (160 countries, 140 currencies)",
+    "Market-leading TTS division processing $3 trillion daily",
+    "Best-in-class FX services (500+ currency pairs, 24/5 coverage)",
+    "Advanced digital lending (15-day approval, 30-day funding)",
+    "No overdraft fees since 2022",
+    "Superior international wire transfer capabilities",
+    "Named World's Best Corporate Payments Bank 2025",
+    "AI-driven commercial banking platform (150K employees using AI tools)",
+    "Strong trade finance digitization (electronic LCs, documentary collections)",
+    "Cross-currency liquidity management (unique offering)"
+  ],
+
+  "strategicChallenges": [
+    "Limited domestic branch footprint (600 vs Chase's 4,700)",
+    "Business accounts only in 10 states + DC",
+    "Must visit branch to open account (no online opening)",
+    "Exited middle-market banking in 2022 (refocusing on $10M+ revenue)",
+    "Smaller business credit card portfolio vs. competitors",
+    "Less consumer/SMB brand recognition vs. Chase, BofA"
+  ],
+
+  "2025KeyInitiatives": [
+    "Digital Credit Application expansion (targeting 20%+ adoption in eligible markets)",
+    "CitiDirect Commercial Banking rollout (57% adoption, expanding globally)",
+    "AI tool deployment (150K+ employees onboarded by June 2025)",
+    "Commercial real estate growth (strong APAC momentum)",
+    "Cross-currency sweep expansion",
+    "Sustainable trade finance product suite",
+    "Integration of retail into Wealth division",
+    "10%+ ROE target by 2026"
+  ],
+
+  "leadershipVision": {
+    "ceo": "Jane Fraser (first female CEO of major U.S. bank)",
+    "vision": "Transform Citi into a simpler, safer, more focused bank serving institutional clients and connected high-value businesses",
+    "quote": "The relentless execution of our strategy is driving strong top-line growth. With record revenues and positive operating leverage for each of our five businesses, 2025 was a year of significant progress.",
+    "strategic Pillars": [
+      "Simplification (exiting retail/SMB, integrating divisions)",
+      "Digitalization (AI, CitiDirect, digital lending)",
+      "Global connectivity (serving clients going global)",
+      "Treasury leadership (double down on TTS dominance)",
+      "Efficiency ($1B efficiency push)"
+    ]
+  },
+
+  "industryCitations": [
+    {
+      "award": "World's Best Corporate Payments Bank 2025",
+      "source": "Euromoney",
+      "url": "https://www.euromoney.com/article/8ijl8uvr2bk0wk4g84sw0wggw/corporate-banking/the-worlds-best-corporate-payments-bank-2025-citi/"
+    },
+    {
+      "award": "Banker of the Year 2025",
+      "recipient": "Jane Fraser",
+      "source": "Euromoney",
+      "url": "https://www.euromoney.com/article/8x6kmtasovgokko408co4coo4/awards/awards-for-excellence/banker-of-the-year-2025-citis-jane-fraser/"
+    },
+    {
+      "ranking": "3rd largest U.S. bank by consolidated assets",
+      "assets": "$1,844.2B",
+      "source": "Federal Reserve",
+      "asOf": "September 30, 2025"
+    }
+  ],
+
+  "notablePartners": [
+    "American Airlines (co-branded AAdvantage business card)",
+    "Costco (co-branded business card)",
+    "First Data/Fiserv (merchant services)",
+    "Clover (POS hardware and software)",
+    "Apollo (co-launched $25B private credit lending program)"
+  ],
+
+  "analystNotes": {
+    "positioning": "Citi is NOT a retail SMB bank like Chase. It's a global institutional bank that serves mid-market+ companies with cross-border needs. The 2022 exit from middle-market banking redefined the target as $10M+ revenue businesses going international.",
+    "productStrategy": "Product lineup reflects global positioning: fewer credit cards (only 2 business cards vs. Chase's 6+), but unmatched trade finance, FX, and treasury solutions. This is by design—Citi competes on sophistication, not breadth.",
+    "digitalLeadership": "CitiDirect and digital lending put Citi ahead of most competitors in commercial banking digitalization. 15-day approval for $10M loans is industry-leading.",
+    "brandPerception": "Less visible to small businesses due to limited branch network and lack of online account opening. But for companies needing global capabilities, Citi is often the only viable U.S. bank option.",
+    "futureOutlook": "Jane Fraser's transformation is paying off—record revenues in 2025, positive operating leverage across all five businesses. If they hit the 10% ROE target in 2026, the stock will likely re-rate. Commercial Bank is key growth driver alongside Wealth.",
+    "clientFit": "Ideal for Lumiq portfolio companies that are: (1) $10M+ revenue, (2) importing/exporting, (3) operating in multiple currencies, (4) needing sophisticated cash management, or (5) located in Citi's 10-state footprint and value global capabilities over branch count."
+  }
+}

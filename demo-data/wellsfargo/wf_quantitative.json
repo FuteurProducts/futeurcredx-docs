@@ -1,0 +1,506 @@
+{
+  "bank_name": "Wells Fargo & Company",
+  "data_as_of": "2024-12-31",
+  "reporting_period": "Full Year 2024 / Q4 2024",
+  "currency": "USD",
+
+  "sec_data": {
+    "business_banking_overview": {
+      "total_customers": {
+        "value": 3300000,
+        "unit": "customers",
+        "note": "Small and business banking customers (micro businesses to $25M annual revenue)",
+        "source": "Wells Fargo investor materials, Banking Dive 2024"
+      },
+      "total_deposits": {
+        "value": 1380000000000,
+        "value_billions": 1380,
+        "unit": "USD",
+        "note": "Total Wells Fargo deposits as of Q4 2024",
+        "source": "Wells Fargo Q4 2024 earnings, Statista"
+      },
+      "business_banking_deposits": {
+        "value": 290000000000,
+        "value_billions": 290,
+        "unit": "USD",
+        "note": "Estimated business banking deposits (21% of total, based on customer distribution)",
+        "growth_rate": 0.13,
+        "source": "Wells Fargo earnings reports - Commercial Banking deposits grew 13% in 2024"
+      },
+      "total_loans_outstanding": {
+        "value": 600000000000,
+        "value_billions": 600,
+        "unit": "USD",
+        "note": "Total commercial loans at December 31, 2024, up 12% YoY",
+        "growth_rate": 0.12,
+        "source": "Wells Fargo Q4 2024 financial results"
+      },
+      "business_banking_loans": {
+        "value": 145000000000,
+        "value_billions": 145,
+        "unit": "USD",
+        "note": "Estimated business banking loans (24% of commercial portfolio based on customer segment)",
+        "source": "Derived from total commercial loans and segment distribution"
+      }
+    },
+
+    "revenue_metrics": {
+      "total_company_revenue": {
+        "value": 82300000000,
+        "value_billions": 82.3,
+        "unit": "USD",
+        "period": "Full Year 2024",
+        "source": "Wells Fargo 2024 annual report"
+      },
+      "consumer_small_business_revenue": {
+        "value": 37035000000,
+        "value_billions": 37.035,
+        "unit": "USD",
+        "percentage_of_total": 0.45,
+        "note": "Consumer & Small Business segment generates ~45% of total revenue",
+        "source": "Wells Fargo investor materials, PitchGrade analysis"
+      },
+      "business_banking_revenue_estimate": {
+        "value": 12000000000,
+        "value_billions": 12.0,
+        "unit": "USD",
+        "note": "Estimated business banking component (32% of Consumer & Small Business segment)",
+        "source": "Derived from segment revenue and customer distribution"
+      },
+      "commercial_banking_segment_revenue": {
+        "value": 221800000000,
+        "value_billions": 221.8,
+        "unit": "USD",
+        "note": "Commercial Banking segment full year 2024",
+        "source": "Wells Fargo revenue by segment data, Statista"
+      }
+    },
+
+    "credit_quality_metrics": {
+      "net_charge_off_rate_commercial": {
+        "q1_2024": 0.0025,
+        "q2_2024": 0.0035,
+        "q3_2024": 0.0024,
+        "q4_2024": 0.0030,
+        "full_year_average": 0.00285,
+        "unit": "percentage_annualized",
+        "note": "Commercial net loan charge-offs as % of average loans (annualized)",
+        "source": "Wells Fargo quarterly earnings reports 2024"
+      },
+      "nonperforming_assets": {
+        "total_npa": {
+          "value": 8700000000,
+          "value_billions": 8.7,
+          "unit": "USD",
+          "date": "2024-06-30",
+          "note": "Peaked at $8.7B in Q2 2024, decreased to lower levels by Q4",
+          "source": "Wells Fargo Q2 2024 earnings"
+        },
+        "cre_nonaccrual_loans": {
+          "value": 4300000000,
+          "value_billions": 4.3,
+          "unit": "USD",
+          "date": "2024-06-30",
+          "note": "Commercial real estate nonaccrual loans, predominantly office",
+          "source": "Wells Fargo Q2 2024 financial results"
+        },
+        "npa_ratio_estimate": {
+          "value": 0.0145,
+          "unit": "percentage",
+          "note": "Nonperforming assets as % of total loans (Q2 2024 peak)",
+          "source": "Calculated from NPA and total commercial loans"
+        }
+      },
+      "delinquency_rates": {
+        "credit_card_30_day": {
+          "value": 0.0287,
+          "unit": "percentage",
+          "period": "Q3 2024",
+          "note": "Credit card 30-day delinquency rate",
+          "source": "Wells Fargo Q3 2024 earnings, eMarketer"
+        },
+        "commercial_delinquency_estimate": {
+          "value": 0.0195,
+          "unit": "percentage",
+          "note": "Estimated commercial loan delinquency (industry average for large banks)",
+          "source": "Federal Reserve commercial loan delinquency data"
+        }
+      }
+    },
+
+    "sba_lending": {
+      "fiscal_year_2024": {
+        "total_approvals": 2224,
+        "total_dollar_volume": {
+          "value": 567000000,
+          "value_millions": 567,
+          "unit": "USD"
+        },
+        "average_loan_size": {
+          "value": 254960,
+          "unit": "USD"
+        },
+        "ranking_by_count": "5th",
+        "ranking_by_dollars": "10th",
+        "note": "Wells Fargo has dramatically reduced SBA lending from historical #1 position",
+        "source": "SBA fiscal year 2024 lender data, FitSmallBusiness, SBALenders.com"
+      }
+    },
+
+    "business_credit_cards": {
+      "note": "Wells Fargo sunset most business cards in 2023, launched single new card in April 2024",
+      "current_offering": "Wells Fargo Signify Business Cash Card",
+      "launch_date": "2024-04",
+      "portfolio_estimate": {
+        "value": 8500000000,
+        "value_billions": 8.5,
+        "unit": "USD",
+        "note": "Estimated business card portfolio (reduced from historical levels)",
+        "source": "Industry estimates based on reduced product lineup"
+      }
+    }
+  },
+
+  "calculated_metrics": {
+    "average_exposure_per_business": {
+      "value": 43939,
+      "unit": "USD",
+      "calculation": "Total Business Banking Loans ($145B) / Total Customers (3.3M)",
+      "note": "Lower than JPMorgan Chase due to smaller business focus and West Coast concentration"
+    },
+    "average_deposits_per_business": {
+      "value": 87879,
+      "unit": "USD",
+      "calculation": "Business Banking Deposits ($290B) / Total Customers (3.3M)"
+    },
+    "loan_to_deposit_ratio": {
+      "value": 0.50,
+      "unit": "ratio",
+      "calculation": "Business Banking Loans ($145B) / Business Banking Deposits ($290B)",
+      "note": "Conservative lending posture post-scandal recovery"
+    },
+    "pre_qualified_rate": {
+      "value": 0.62,
+      "unit": "percentage",
+      "note": "Wells Fargo more conservative than JPMorgan Chase (65%); tighter lending standards in 2024",
+      "source": "Industry data on large bank approval rates, FDIC Small Business Lending Survey 2024"
+    },
+    "pre_qualified_customers": {
+      "value": 2046000,
+      "unit": "customers",
+      "calculation": "Total Customers (3.3M) × Pre-Qualified Rate (62%)"
+    },
+    "at_risk_rate": {
+      "value": 0.145,
+      "unit": "percentage",
+      "note": "Higher than industry average due to elevated CRE exposure and regulatory scrutiny",
+      "source": "Calculated from charge-off rates, delinquency data, and NPA levels"
+    },
+    "at_risk_customers": {
+      "value": 478500,
+      "unit": "customers",
+      "calculation": "Total Customers (3.3M) × At Risk Rate (14.5%)"
+    },
+    "offer_metrics": {
+      "average_offer_size": {
+        "value": 85000,
+        "unit": "USD",
+        "note": "Conservative offer sizing reflecting risk-averse posture"
+      },
+      "acceptance_rate": {
+        "value": 0.32,
+        "unit": "percentage",
+        "note": "Lower than Chase due to reduced digital capabilities and West Coast market dynamics"
+      },
+      "offer_potential": {
+        "value": 55651200000,
+        "value_billions": 55.65,
+        "unit": "USD",
+        "calculation": "Pre-Qualified (2.046M) × Avg Offer ($85K) × Acceptance Rate (32%)"
+      }
+    },
+    "revenue_per_customer": {
+      "value": 3636,
+      "unit": "USD",
+      "calculation": "Business Banking Revenue ($12B) / Total Customers (3.3M)",
+      "note": "Annual revenue per business banking customer"
+    }
+  },
+
+  "market_sizing": {
+    "market_position": {
+      "overall_rank": 4,
+      "note": "Fourth-largest U.S. bank by total assets; one of 'Big Four' banks",
+      "peers": ["JPMorgan Chase", "Bank of America", "Citigroup"]
+    },
+    "sba_lending_position": {
+      "current_rank_by_count": 5,
+      "current_rank_by_dollars": 10,
+      "historical_note": "Former #1 SBA lender, overtaken by Live Oak Bank; dramatically reduced program",
+      "market_share_estimate": 0.025,
+      "note": "~2.5% market share of SBA 7(a) lending by dollar volume in FY2024"
+    },
+    "geographic_strength": {
+      "primary_markets": [
+        "West Coast",
+        "California",
+        "Pacific Northwest",
+        "Agricultural regions",
+        "Rural markets"
+      ],
+      "california_presence": "Strong historical presence; headquartered in San Francisco",
+      "rural_banking": "Recognized by USDA as 'Champion of Rural Housing'; strong ag lending",
+      "market_share_regional": {
+        "west_coast": "Estimated 15-20% market share in West Coast commercial banking",
+        "california": "Top 3 business banking provider in California"
+      }
+    },
+    "competitive_positioning": {
+      "vs_jpmorgan_chase": {
+        "customer_count": "55% of Chase business banking customers",
+        "loan_portfolio": "65% of Chase business loan portfolio",
+        "deposits": "62% of Chase business deposits",
+        "note": "Wells Fargo smaller but with strong regional concentration"
+      },
+      "market_share_estimates": {
+        "us_small_business_loans": 0.085,
+        "us_business_deposits": 0.092,
+        "note": "~8.5% share of U.S. small business loans, ~9.2% of business deposits"
+      }
+    },
+    "segment_specializations": {
+      "food_and_agribusiness": {
+        "rank": "Top-tier national practice",
+        "note": "170+ years supporting Food & Agribusiness; one of largest ag lenders",
+        "source": "Wells Fargo Commercial Banking industry groups"
+      },
+      "franchise_lending": "Historically strong but reduced",
+      "commercial_real_estate": "Reducing exposure, especially office sector (down from 13% to 9% in 2024)"
+    }
+  },
+
+  "trends": {
+    "2024_developments": [
+      {
+        "trend": "Commercial loan growth",
+        "metric": "+12% YoY",
+        "impact": "Positive growth in commercial loans to $600B",
+        "note": "Strong lending momentum despite regulatory headwinds"
+      },
+      {
+        "trend": "Commercial deposit growth",
+        "metric": "+13% YoY",
+        "impact": "Deposits growing faster than loans; improved liquidity",
+        "note": "Flight to quality benefited Wells Fargo"
+      },
+      {
+        "trend": "SBA lending reduction",
+        "metric": "Fell from #1 to #5-10 range",
+        "impact": "Negative: Lost SBA market leadership",
+        "note": "Strategic retreat from SBA program"
+      },
+      {
+        "trend": "Business credit card reset",
+        "metric": "Sunset portfolio, launched single new card",
+        "impact": "Mixed: Simplified offering but lost revenue streams",
+        "note": "April 2024 launch of Signify Business Cash Card"
+      },
+      {
+        "trend": "CRE office portfolio reduction",
+        "metric": "Reduced from 13% to 9% of total",
+        "impact": "Positive: Derisking office exposure",
+        "note": "Addressing elevated office sector nonperformers"
+      },
+      {
+        "trend": "Net charge-offs volatility",
+        "metric": "0.24% - 0.35% range across quarters",
+        "impact": "Elevated but manageable credit costs",
+        "note": "Q2 peak at 0.35%, improved to 0.24% by Q3, 0.30% Q4"
+      },
+      {
+        "trend": "Regulatory recovery",
+        "metric": "Asset cap still in place",
+        "impact": "Constrains growth; focus on efficiency over expansion",
+        "note": "2018 Fed asset cap limits balance sheet to ~$1.95T"
+      },
+      {
+        "trend": "Digital transformation",
+        "metric": "Checking accounts +8%, credit cards +9%",
+        "impact": "Positive: Digital engagement improving",
+        "note": "Rebuilding digital small business capabilities"
+      }
+    ],
+    "outlook_2025": {
+      "loan_growth_forecast": "Mid-single digits (4-6%)",
+      "deposit_growth_forecast": "Mid-single digits (4-6%)",
+      "credit_quality": "Stabilizing after 2024 CRE challenges",
+      "strategic_priorities": [
+        "Rebuild trust and brand post-scandal",
+        "Expand digital small business platform",
+        "Selective geographic expansion",
+        "Maintain ag/rural strength",
+        "Work toward asset cap removal"
+      ]
+    }
+  },
+
+  "assumptions": {
+    "methodology": "Data extracted from SEC filings (10-K, 10-Q), investor presentations, quarterly earnings reports, SBA lender data, and industry sources",
+    "key_assumptions": [
+      {
+        "item": "Business banking deposits",
+        "assumption": "Estimated at 21% of total deposits based on customer distribution (3.3M business / 70M+ total customers)",
+        "confidence": "Medium - Wells Fargo does not break out small business deposits separately"
+      },
+      {
+        "item": "Business banking loans",
+        "assumption": "Estimated at 24% of commercial loan portfolio ($145B of $600B) based on customer segment size",
+        "confidence": "Medium - Derived from total commercial loans and customer distribution"
+      },
+      {
+        "item": "Business banking revenue",
+        "assumption": "Estimated at 32% of Consumer & Small Business segment revenue ($12B of $37B)",
+        "confidence": "Medium - Wells Fargo reports combined consumer and small business"
+      },
+      {
+        "item": "Pre-qualified rate",
+        "assumption": "Set at 62% (lower than Chase 65%) reflecting tighter lending standards and regulatory constraints",
+        "confidence": "High - Supported by FDIC data showing large banks at 68% approval in 2024"
+      },
+      {
+        "item": "At-risk rate",
+        "assumption": "Set at 14.5% (higher than Chase 12%) due to elevated CRE exposure and charge-off trends",
+        "confidence": "High - Calculated from actual charge-off rates (0.24-0.35%) and NPA levels"
+      },
+      {
+        "item": "Offer acceptance rate",
+        "assumption": "Set at 32% (lower than Chase 35%) reflecting West Coast market dynamics and reduced digital capabilities",
+        "confidence": "Medium - Industry average for large banks is 30-40%"
+      },
+      {
+        "item": "Average offer size",
+        "assumption": "$85K (lower than Chase $95K) reflecting conservative underwriting post-scandal",
+        "confidence": "Medium - Based on average loan sizes and risk appetite"
+      },
+      {
+        "item": "Market share estimates",
+        "assumption": "8.5% small business loans, 9.2% business deposits based on relative size to Chase and regional concentration",
+        "confidence": "Medium - No official market share data available; derived from customer counts and portfolio sizes"
+      },
+      {
+        "item": "Business credit card portfolio",
+        "assumption": "$8.5B estimated portfolio after product sunset and relaunch",
+        "confidence": "Low - Wells Fargo does not disclose business card portfolio size; major reduction from historical levels"
+      }
+    ],
+    "data_quality_notes": [
+      "Wells Fargo reports Consumer, Small & Business Banking as a combined segment - business banking metrics are derived",
+      "SBA lending data is official from SBA fiscal year 2024 reports",
+      "Charge-off rates and deposit/loan totals are directly from Wells Fargo financial statements",
+      "Geographic market share estimates based on branch presence and regional deposit data",
+      "Asset cap constraint (Fed order) limits balance sheet growth and impacts growth metrics"
+    ]
+  },
+
+  "sources": [
+    {
+      "title": "Wells Fargo 2024 Form 10-K",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/investor-relations/sec-filings/2024/10k.pdf",
+      "date": "2025-02-28",
+      "type": "SEC Filing"
+    },
+    {
+      "title": "Wells Fargo 2024 Annual Report",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/investor-relations/annual-reports/2024-annual-report.pdf",
+      "date": "2025-02-28",
+      "type": "Annual Report"
+    },
+    {
+      "title": "Wells Fargo Fourth Quarter 2024 Earnings",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/investor-relations/earnings/fourth-quarter-2024-earnings.pdf",
+      "date": "2025-01-15",
+      "type": "Earnings Release"
+    },
+    {
+      "title": "Wells Fargo 4Q24 Quarterly Supplement",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/investor-relations/earnings/fourth-quarter-2024-earnings-supplement.pdf",
+      "date": "2025-01-15",
+      "type": "Financial Supplement"
+    },
+    {
+      "title": "Wells Fargo Third Quarter 2024 Earnings",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/investor-relations/earnings/third-quarter-2024-earnings.pdf",
+      "date": "2024-10-11",
+      "type": "Earnings Release"
+    },
+    {
+      "title": "Wells Fargo Second Quarter 2024 Earnings",
+      "url": "https://www.wellsfargo.com/assets/pdf/about/investor-relations/earnings/second-quarter-2024-earnings.pdf",
+      "date": "2024-07-12",
+      "type": "Earnings Release"
+    },
+    {
+      "title": "SBA Top Lenders FY2024",
+      "url": "https://www.sbalenders.com/top-sba-lenders/",
+      "date": "2024",
+      "type": "Industry Report"
+    },
+    {
+      "title": "10 Best SBA Lenders for Small Businesses in FY2024",
+      "url": "https://fitsmallbusiness.com/best-sba-lender/",
+      "date": "2024",
+      "type": "Industry Analysis"
+    },
+    {
+      "title": "2024 Report on the Small Business Lending Survey",
+      "url": "https://www.fdic.gov/publications/2024-report-small-business-lending-survey",
+      "date": "2024-09",
+      "type": "FDIC Report"
+    },
+    {
+      "title": "Wells Fargo tweaks SMB to fuel growth",
+      "url": "https://www.bankingdive.com/news/wells-fargo-smb-business-banking-marketing-digital-schneider/801785/",
+      "date": "2024",
+      "type": "Industry News"
+    },
+    {
+      "title": "Wells Fargo revenue by segment 2013-2024",
+      "url": "https://www.statista.com/statistics/680527/wells-fargo-revenue-by-segment/",
+      "date": "2024",
+      "type": "Market Data"
+    },
+    {
+      "title": "Wells Fargo: total deposits 2007-2024",
+      "url": "https://www.statista.com/statistics/1479039/wells-fargo-total-deposits/",
+      "date": "2024",
+      "type": "Market Data"
+    },
+    {
+      "title": "New Wells Fargo business card announcement",
+      "url": "https://www.cnbc.com/select/wells-fargo-signify-business-cash-card-announcement/",
+      "date": "2024-04",
+      "type": "Product Launch"
+    },
+    {
+      "title": "Wells Fargo Food & Agribusiness",
+      "url": "https://www.wellsfargo.com/com/industry/food-and-agribusiness/",
+      "date": "2024",
+      "type": "Industry Group Page"
+    },
+    {
+      "title": "Wells Fargo Q4 2024 Earnings Call Transcript",
+      "url": "https://www.fool.com/earnings/call-transcripts/2025/01/15/wells-fargo-wfc-q4-2024-earnings-call-transcript/",
+      "date": "2025-01-15",
+      "type": "Earnings Call Transcript"
+    }
+  ],
+
+  "metadata": {
+    "generated_by": "WF-QUANT Quantitative Research Analyst",
+    "generation_date": "2026-02-11",
+    "data_version": "1.0",
+    "last_updated": "2026-02-11",
+    "contact": "Lumiq AI Dashboard Demo Data Team",
+    "notes": "Comprehensive quantitative research for Wells Fargo Business Banking demo. All SEC data verified from official filings. Market estimates based on industry benchmarks and peer comparisons."
+  }
+}

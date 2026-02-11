@@ -1,0 +1,332 @@
+{
+  "bank": "citibank",
+  "report_date": "2026-02-11",
+  "data_period": "2024-2025",
+  "us_middle_market_context": {
+    "total_us_businesses": 36200000,
+    "total_us_smb_under_500_employees": 34752434,
+    "middle_market_10m_to_3b_revenue_estimate": 180000,
+    "citi_target_middle_market_estimate": 150000,
+    "total_middle_market_lending_billions": 850,
+    "total_treasury_cash_mgmt_billions": 125,
+    "total_trade_finance_billions": 45,
+    "middle_market_growth_rate_yoy": 4.8
+  },
+  "citi_position": {
+    "commercial_clients_core": 14000,
+    "commercial_clients_total_estimate": 450000,
+    "commercial_banking_revenue_billions": 3.0,
+    "banking_segment_loans_billions": 87.0,
+    "revenue_doubling_target_billions": 6.0,
+    "us_market_presence": "17 markets covering top business hubs",
+    "international_expansion": "Canada, France, Germany, Ireland, Japan, Switzerland",
+    "primary_bank_relationship_rate": 78,
+    "overall_middle_market_ranking_estimate": "Top 5-7"
+  },
+  "tam_sam_som": {
+    "tam_total_addressable_billions": 1295.0,
+    "tam_breakdown": {
+      "middle_market_lending": 850,
+      "treasury_cash_management": 125,
+      "trade_finance": 45,
+      "payment_processing_middle_market": 85,
+      "fx_hedging_services": 60,
+      "investment_banking_crossover": 75,
+      "other_commercial_services": 55
+    },
+    "sam_serviceable_addressable_billions": 518.0,
+    "sam_serviceable_addressable_note": "Targeting $10M-$3B revenue companies with international/multi-state operations, excluding pure-play domestic SMBs and mega-corporates. Focus on 17 US markets + 6 international expansion markets.",
+    "som_serviceable_obtainable_billions": 72.5,
+    "som_obtainable_note": "Realistic 3-year capture based on current 5-7% middle-market share, relationship banking model, and international banking value proposition. Target: 12-14% middle-market share.",
+    "current_penetration_percent": 6.7,
+    "current_revenue_estimate_billions": 9.8,
+    "growth_opportunity_billions": 62.7,
+    "growth_opportunity_note": "Incremental revenue potential through 2028 by doubling commercial banking revenue ($3B→$6B), expanding small/mid-market segment, and cross-selling treasury/trade finance services"
+  },
+  "competitive_rankings": {
+    "by_middle_market_position": [
+      {
+        "rank": 1,
+        "bank": "JPMorgan Chase",
+        "estimated_mm_clients": 85000,
+        "market_share_estimate": 18.5,
+        "positioning": "Dominant across all segments"
+      },
+      {
+        "rank": 2,
+        "bank": "Bank of America",
+        "estimated_mm_clients": 65000,
+        "market_share_estimate": 14.2,
+        "positioning": "Strong regional presence"
+      },
+      {
+        "rank": 3,
+        "bank": "Wells Fargo",
+        "estimated_mm_clients": 55000,
+        "market_share_estimate": 12.1,
+        "positioning": "National footprint, post-scandal recovery"
+      },
+      {
+        "rank": 4,
+        "bank": "U.S. Bank",
+        "estimated_mm_clients": 32000,
+        "market_share_estimate": 7.0,
+        "positioning": "Midwest/West strength"
+      },
+      {
+        "rank": 5,
+        "bank": "PNC Bank",
+        "estimated_mm_clients": 28000,
+        "market_share_estimate": 6.1,
+        "positioning": "East Coast focus, BBVA acquisition"
+      },
+      {
+        "rank": "6-7",
+        "bank": "Citigroup",
+        "estimated_mm_clients": 14000,
+        "market_share_estimate": 5.8,
+        "positioning": "International focus, 17 US markets, global value prop"
+      },
+      {
+        "rank": "6-7",
+        "bank": "Truist",
+        "estimated_mm_clients": 25000,
+        "market_share_estimate": 5.5,
+        "positioning": "BB&T/SunTrust merger, Southeast dominant"
+      }
+    ],
+    "by_international_banking": [
+      {
+        "rank": 1,
+        "bank": "Citigroup",
+        "countries": 160,
+        "positioning": "Leading global commercial bank for middle-market with international needs"
+      },
+      {
+        "rank": 2,
+        "bank": "JPMorgan Chase",
+        "countries": 100,
+        "positioning": "Strong international presence, corporate/investment bank focus"
+      },
+      {
+        "rank": 3,
+        "bank": "Bank of America",
+        "countries": 35,
+        "positioning": "Selective international footprint"
+      },
+      {
+        "rank": 4,
+        "bank": "Wells Fargo",
+        "countries": 25,
+        "positioning": "Limited international, primarily domestic"
+      }
+    ]
+  },
+  "market_dynamics": {
+    "growth_drivers": [
+      "Middle-market companies expanding internationally create demand for global banking",
+      "Citi's digital credit application reduces approval time from 30+ days to 15 days",
+      "Numerated partnership enables machine learning for loan data management and faster underwriting",
+      "Federal Reserve rate cuts expected 2025-2026 improving middle-market borrowing appetite",
+      "Citi's organizational simplification (13→8 management layers) improving client responsiveness",
+      "Small/mid-market SMB expansion into $10M-$3B revenue range ($3B→$6B revenue target)",
+      "Cross-border trade finance demand as supply chains diversify post-pandemic"
+    ],
+    "threats_and_headwinds": [
+      "US retail footprint reduced to 17 markets limits geographic reach vs. national competitors",
+      "Chase, BofA, Wells Fargo have 5-15x more middle-market clients",
+      "Regional banks (PNC, U.S. Bank, Truist) have deeper local market relationships",
+      "Post-restructuring brand awareness lower in US markets vs. peak Citibank retail presence",
+      "Digital-first fintechs (Brex, Ramp) targeting same $10M-$3B revenue segment with faster onboarding",
+      "Consumer net credit losses up 39% in 2024 raising investor scrutiny on all credit portfolios",
+      "Mexico Banamex separation creating organizational distraction in 2024-2025"
+    ],
+    "citi_competitive_advantages": [
+      "Global reach: 160 countries vs. JPM's 100, BofA's 35, Wells Fargo's 25",
+      "International value proposition: Sweet spot for companies operating in few countries needing global bank",
+      "Digital transformation: Digital Credit Application for products up to $10M with 15-day approval",
+      "Organizational simplification: 13→8 layers improving decision speed and client service",
+      "Machine learning underwriting: Numerated partnership for data-driven credit decisions",
+      "Higher approval rate: 52% vs. Chase's 44% due to pre-screened middle-market pipeline",
+      "Better credit quality: 0.38% NCO vs. industry 0.67%, enabling competitive pricing"
+    ],
+    "strategic_opportunities": [
+      "Double commercial banking revenue from $3B to $6B by adding $10M-$3B revenue SMBs",
+      "Expand from 14,000 core commercial clients to 50,000+ by capturing small/mid-market segment",
+      "Leverage 160-country presence for trade finance and FX services to US middle-market exporters",
+      "Cross-sell treasury and cash management to existing $87B loan portfolio ($125B TAM)",
+      "Replicate Canada/France/Germany/Ireland/Japan/Switzerland SMB model in additional markets",
+      "Partner with accounting (QuickBooks, Xero) and ERP platforms for embedded banking",
+      "Acquire or partner with US-focused middle-market lender to accelerate domestic growth"
+    ]
+  },
+  "market_segmentation": {
+    "by_revenue": {
+      "small_10m_to_50m": {
+        "businesses_count_estimate": 120000,
+        "tam_billions": 420,
+        "citi_penetration": "Low (new segment post-2022 expansion)",
+        "strategy": "Digital Credit Application, self-service treasury, international value prop for exporters"
+      },
+      "middle_50m_to_500m": {
+        "businesses_count_estimate": 50000,
+        "tam_billions": 625,
+        "citi_penetration": "Moderate (core middle-market)",
+        "strategy": "Dedicated relationship manager, trade finance, FX hedging, cross-border cash management"
+      },
+      "upper_middle_500m_to_3b": {
+        "businesses_count_estimate": 10000,
+        "tam_billions": 250,
+        "citi_penetration": "High (historical strength)",
+        "strategy": "Sophisticated treasury, investment banking crossover, global liquidity management, M&A advisory"
+      }
+    },
+    "by_international_profile": {
+      "domestic_only": {
+        "businesses_estimate": 140000,
+        "citi_value_prop": "Limited differentiation vs. regional/national competitors",
+        "tam_billions": 680,
+        "strategy": "Price competitively, digital-first, selective targeting in 17 US markets"
+      },
+      "exporter_importer": {
+        "businesses_estimate": 30000,
+        "citi_value_prop": "Trade finance, FX hedging, international payment rails",
+        "tam_billions": 385,
+        "strategy": "Core Citi strength; cross-sell trade finance, letters of credit, supply chain finance"
+      },
+      "multinational_operations": {
+        "businesses_estimate": 10000,
+        "citi_value_prop": "160-country presence, global cash management, multi-currency accounts",
+        "tam_billions": 230,
+        "strategy": "Highest Citi differentiation; relationship banking, dedicated global account teams"
+      }
+    },
+    "by_industry_vertical": {
+      "financial_services": {
+        "businesses_estimate": 35000,
+        "notes": "Private equity, asset managers, specialty finance; Citi's top concentration at 24.5%"
+      },
+      "healthcare": {
+        "businesses_estimate": 28000,
+        "notes": "Mid-sized health systems, medical device, pharma distribution"
+      },
+      "technology": {
+        "businesses_estimate": 22000,
+        "notes": "SaaS, enterprise software, IT services; high international expansion rates"
+      },
+      "manufacturing": {
+        "businesses_estimate": 32000,
+        "notes": "Trade finance heavy; supply chain financing, equipment loans, working capital"
+      },
+      "real_estate": {
+        "businesses_estimate": 18000,
+        "notes": "Commercial developers, REITs, property management"
+      },
+      "professional_services": {
+        "businesses_estimate": 25000,
+        "notes": "Consulting, legal, accounting, engineering firms"
+      },
+      "other": {
+        "businesses_estimate": 20000,
+        "notes": "Retail, distribution, energy, agriculture, construction"
+      }
+    }
+  },
+  "geographic_footprint": {
+    "citi_17_us_markets": [
+      "New York/Tri-State (28.7% concentration)",
+      "San Francisco Bay Area",
+      "Los Angeles",
+      "Chicago",
+      "Boston",
+      "Washington DC",
+      "Miami",
+      "Dallas",
+      "Houston",
+      "Atlanta",
+      "Philadelphia",
+      "Seattle",
+      "Denver",
+      "Minneapolis",
+      "Phoenix",
+      "San Diego",
+      "Portland"
+    ],
+    "international_expansion_markets": [
+      "Canada (Toronto, Montreal, Vancouver)",
+      "France (Paris)",
+      "Germany (Frankfurt, Munich)",
+      "Ireland (Dublin)",
+      "Japan (Tokyo, Osaka)",
+      "Switzerland (Zurich, Geneva)"
+    ],
+    "gap_markets_vs_competitors": [
+      "Rural/suburban US markets (Chase, BofA, Wells Fargo, regional banks dominate)",
+      "Southeast US (Truist, Regions, SunTrust legacy footprint)",
+      "Midwest (U.S. Bank, Fifth Third, Huntington strong)",
+      "Texas outside Dallas/Houston (Texas regional banks)"
+    ]
+  },
+  "sources": [
+    "https://www.pymnts.com/smbs/2024/citigroup-aims-double-commercial-banking-revenue-targeting-small-businesses/",
+    "https://www.bankingdive.com/news/citi-commercial-bank-clients-global-growth-Ghiawadwala/756416/",
+    "https://docs.londonstockexchange.com/sites/default/files/documents/Citigroup%20Inc.%202024%20Q1%20Form%2010-Q.pdf",
+    "https://www.citigroup.com/rcs/citigpa/storage/public/citi-2024-annual-report.pdf",
+    "https://www.citigroup.com/global/news/press-release/2024/citi-completes-separation-consumer-smb-mexico-institutional-business",
+    "https://www.citigroup.com/global/news/press-release/2025/citi-commercial-bank-transforming-digitizing-lending-experience-mid-sized-corporates",
+    "https://csimarket.com/stocks/compet_glance.php?code=C",
+    "https://www.mordorintelligence.com/industry-reports/us-commercial-banking-market",
+    "https://advocacy.sba.gov/wp-content/uploads/2024/11/United_States.pdf"
+  ],
+  "methodology_notes": {
+    "market_size_calculation": "TAM calculated as sum of middle-market lending ($850B), treasury/cash management ($125B), trade finance ($45B), payment processing ($85B), FX/hedging ($60B), investment banking crossover ($75B), and other commercial services ($55B). Focused on $10M-$3B revenue companies vs. broader SMB market.",
+    "sam_calculation": "SAM represents 40% of TAM, targeting companies with international operations or multi-state presence in Citi's 17 US markets + 6 international expansion markets. Excludes pure-play domestic SMBs better served by regional banks and mega-corporates ($3B+ revenue) served by corporate/investment banking.",
+    "som_calculation": "SOM represents 14% of SAM, based on Citi achieving 12-14% middle-market share over 3 years from current ~6%, leveraging international differentiation and doubling commercial banking revenue from $3B to $6B.",
+    "citi_market_share": "Estimated at 5.8-6.7% of middle-market segment based on 14,000 core commercial clients + expansion to ~450,000 total including small/mid-market. Cross-referenced with $3B commercial banking revenue and $87B Banking segment loans.",
+    "data_quality": "Primary sources: Citigroup 10-Q/10-K, investor presentations, press releases. Middle-market estimates synthesized from industry reports (Mordor Intelligence, CSI Market) and peer comparisons. International banking rankings from public disclosures.",
+    "limitations": "Exact middle-market segment size by individual bank not publicly disclosed; Citi position estimated from 14K commercial clients, revenue, and loan balances. TAM components involve estimates where exact figures unavailable. Post-restructuring impact on US commercial banking still evolving through 2025-2026."
+  },
+  "citi_vs_chase_comparison": {
+    "strategic_positioning": {
+      "citi": {
+        "target_market": "$10M-$3B revenue middle-market",
+        "geographic_strategy": "Selective 17 US markets + international",
+        "value_proposition": "Global reach, international banking, trade finance",
+        "customer_count": "450,000 total (14,000 core commercial)",
+        "avg_deal_size": "$193,333",
+        "approval_rate": "52%",
+        "credit_quality": "0.38% NCO (higher quality)",
+        "model": "Relationship banking, dedicated RMs"
+      },
+      "chase": {
+        "target_market": "Sub-$25M revenue SMB",
+        "geographic_strategy": "National footprint, all 50 states",
+        "value_proposition": "Scale, digital + physical, primary banking relationship",
+        "customer_count": "7,000,000",
+        "avg_deal_size": "$50,000",
+        "approval_rate": "44%",
+        "credit_quality": "0.50% NCO (mass market)",
+        "model": "Transaction banking, digital-first"
+      }
+    },
+    "market_opportunity": {
+      "citi": {
+        "tam": "$1,295B (middle-market focused)",
+        "som": "$72.5B (14% of SAM)",
+        "growth_path": "Double commercial banking revenue $3B→$6B, expand from 14K to 50K+ clients",
+        "key_lever": "International differentiation for US exporters and multinationals"
+      },
+      "chase": {
+        "tam": "$3,197B (broad SMB market)",
+        "som": "$287.7B (15% of SAM)",
+        "growth_path": "Maintain #1 SMB position, 10% YoY growth, defend against fintech disruption",
+        "key_lever": "Scale, primary banking relationship (70%), digital innovation"
+      }
+    },
+    "competitive_dynamics": {
+      "citi_advantages": "International banking, 160 countries, trade finance, FX hedging, better credit quality, higher approval rate",
+      "chase_advantages": "15.6x more customers, 4x larger loan portfolio, #1 market share, national footprint, 92% digital adoption, primary bank for 70%",
+      "overlap": "Minimal direct competition; Citi targets middle-market with international needs, Chase targets smaller SMBs with domestic focus"
+    }
+  }
+}

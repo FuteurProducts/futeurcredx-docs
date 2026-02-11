@@ -1,0 +1,324 @@
+{
+  "bank": "chase",
+  "last_updated": "2025-02-11",
+  "branch_network": {
+    "total_branches": 4827,
+    "total_atms": 16000,
+    "states_present": 48,
+    "notes": "Present in all 48 contiguous states plus DC; no branches in Alaska or Hawaii"
+  },
+  "regions": [
+    {
+      "name": "Northeast",
+      "states": ["NY", "NJ", "PA", "CT", "MA", "RI", "NH", "VT", "ME", "DE", "MD", "DC"],
+      "branch_count": 1285,
+      "portfolio_percentage": 26.6,
+      "business_count": 1862000,
+      "deposit_share": 28.5,
+      "growth_trend": "expanding",
+      "risk_factors": [
+        "High commercial real estate exposure in NYC",
+        "Hurricane and coastal storm risk",
+        "High cost of living impacting consumer credit",
+        "Competitive banking market"
+      ],
+      "market_share": 18.2,
+      "notes": "Strongest region - includes NYC headquarters and legacy Chemical Bank/Chase Manhattan markets. #1 in deposits in New York. Recent expansion in Boston, Philadelphia, DC metro."
+    },
+    {
+      "name": "Southeast",
+      "states": ["FL", "GA", "NC", "SC", "VA", "WV", "KY", "TN", "AL", "MS", "LA", "AR"],
+      "branch_count": 845,
+      "portfolio_percentage": 17.5,
+      "business_count": 1225000,
+      "deposit_share": 16.8,
+      "growth_trend": "expanding",
+      "risk_factors": [
+        "Hurricane exposure (FL, NC, SC, LA)",
+        "Flood risk in coastal areas",
+        "Economic volatility in energy-dependent markets (LA)",
+        "Tornado exposure (AL, MS, TN, AR)"
+      ],
+      "market_share": 12.5,
+      "notes": "High-growth region. Florida is 3rd largest state by branch count (473 branches). Doubling presence in Carolinas to 45+ branches by 2027. Miami office expansion underway. Strong in Charlotte NC."
+    },
+    {
+      "name": "Midwest",
+      "states": ["IL", "OH", "MI", "IN", "WI", "MN", "IA", "MO", "KS", "NE", "SD", "ND"],
+      "branch_count": 1015,
+      "portfolio_percentage": 21.0,
+      "business_count": 1470000,
+      "deposit_share": 22.1,
+      "growth_trend": "stable",
+      "risk_factors": [
+        "Manufacturing sector concentration",
+        "Agricultural lending exposure (IA, NE, KS)",
+        "Tornado alley risk (KS, MO, NE)",
+        "Severe winter weather",
+        "Rust belt economic headwinds"
+      ],
+      "market_share": 15.8,
+      "notes": "Legacy Bank One territory. Illinois is 5th largest state (318 branches). Strong in Chicago (#1 in deposits), Ohio (265 branches). Expanding in Iowa with 25 new branches planned by 2030. #1 in SBA lending in Illinois and Indiana."
+    },
+    {
+      "name": "West",
+      "states": ["CA", "WA", "OR", "NV", "AZ", "UT", "ID", "MT", "WY", "CO", "NM"],
+      "branch_count": 1382,
+      "portfolio_percentage": 28.6,
+      "business_count": 2002000,
+      "deposit_share": 26.4,
+      "growth_trend": "stable",
+      "risk_factors": [
+        "Earthquake exposure (CA, WA, OR)",
+        "Wildfire risk (CA, OR, WA, CO)",
+        "Drought and water scarcity (CA, NV, AZ, NM)",
+        "Tech sector concentration (CA, WA)",
+        "Commercial real estate overexposure in tech hubs"
+      ],
+      "market_share": 19.5,
+      "notes": "Largest region by branches. California is #1 state with 862-974 branches (sources vary). Strong in San Francisco, Los Angeles, San Diego. Washington Mutual acquisition (2008) expanded Pacific Northwest presence. #1 in SBA lending in Arizona."
+    },
+    {
+      "name": "Southwest/South Central",
+      "states": ["TX", "OK"],
+      "branch_count": 300,
+      "portfolio_percentage": 6.2,
+      "business_count": 434000,
+      "deposit_share": 6.2,
+      "growth_trend": "stable",
+      "risk_factors": [
+        "Energy sector concentration",
+        "Hurricane exposure (coastal TX)",
+        "Tornado and severe weather (TX, OK)",
+        "Oil price volatility impact on business customers",
+        "Drought exposure"
+      ],
+      "market_share": 8.9,
+      "notes": "Texas is 3rd largest state by branches (476-592 branches depending on source). #1 in deposits in Houston. #1 in SBA lending in Dallas-Fort Worth, Houston, and San Antonio. Growing Hispanic/Latino small business market."
+    }
+  ],
+  "top_10_states": [
+    {
+      "state": "CA",
+      "branches": 974,
+      "business_count": 1148000,
+      "percentage": 20.2,
+      "rank_by_branches": 1,
+      "notes": "Largest state presence. Inherited Washington Mutual branches (2008)."
+    },
+    {
+      "state": "NY",
+      "branches": 618,
+      "business_count": 728000,
+      "percentage": 12.8,
+      "rank_by_branches": 2,
+      "notes": "Historic headquarters market. #1 in deposits statewide."
+    },
+    {
+      "state": "TX",
+      "branches": 592,
+      "business_count": 697000,
+      "percentage": 12.3,
+      "rank_by_branches": 3,
+      "notes": "#1 in Houston deposits. Top SBA lender in major metros."
+    },
+    {
+      "state": "FL",
+      "branches": 473,
+      "business_count": 557000,
+      "percentage": 9.8,
+      "rank_by_branches": 4,
+      "notes": "Rapidly expanding. Doubling Miami office space. 16,400 employees statewide."
+    },
+    {
+      "state": "IL",
+      "branches": 318,
+      "business_count": 375000,
+      "percentage": 6.6,
+      "rank_by_branches": 5,
+      "notes": "Legacy Bank One headquarters. #1 in Chicago deposits."
+    },
+    {
+      "state": "OH",
+      "branches": 265,
+      "business_count": 312000,
+      "percentage": 5.5,
+      "rank_by_branches": 6,
+      "notes": "Legacy Bank One market. Strong presence statewide."
+    },
+    {
+      "state": "NJ",
+      "branches": 245,
+      "business_count": 289000,
+      "percentage": 5.1,
+      "rank_by_branches": 7,
+      "notes": "Dense NYC metro market. High commercial activity."
+    },
+    {
+      "state": "MI",
+      "branches": 228,
+      "business_count": 269000,
+      "percentage": 4.7,
+      "rank_by_branches": 8,
+      "notes": "Legacy Bank One. First Midwest flagship J.P. Morgan Financial Center opened."
+    },
+    {
+      "state": "AZ",
+      "branches": 186,
+      "business_count": 219000,
+      "percentage": 3.9,
+      "rank_by_branches": 9,
+      "notes": "#1 SBA lender by loan count in state."
+    },
+    {
+      "state": "WA",
+      "branches": 165,
+      "business_count": 194000,
+      "percentage": 3.4,
+      "rank_by_branches": 10,
+      "notes": "Washington Mutual legacy. Strong in Seattle metro."
+    }
+  ],
+  "concentration_metrics": {
+    "top_region_pct": 28.6,
+    "top_region_name": "West",
+    "top_state_pct": 20.2,
+    "top_state_name": "California",
+    "top_3_states_pct": 45.3,
+    "hhi_index": 658,
+    "diversification_score": "high",
+    "notes": "HHI below 1000 indicates high diversification. No single region exceeds 30%. Presence in 48 states provides strong geographic risk mitigation."
+  },
+  "recent_expansion": [
+    "2024-2027: Opening 500+ new branches across underrepresented markets",
+    "2024: Expanding in Boston, Philadelphia, Washington DC metro",
+    "2024: Doubling Miami office space to 160,000 sq ft",
+    "2024-2027: Expanding South Carolina from 27 to 45 branches",
+    "2024-2030: 25 new Iowa branches, 150+ jobs",
+    "2024: Opened first Midwest flagship J.P. Morgan Financial Center in Chicago",
+    "2024: 30+ new branches planned for DC region",
+    "2024: Expansion in Charlotte, Minneapolis metro areas",
+    "2021: Completed expansion into all 48 contiguous states"
+  ],
+  "recent_consolidation": [
+    "2024: Closed 144 branches while opening 127 (net -17)",
+    "2025: 23 branch closures announced (CA, CO, CT, FL, IL, IN, MI, NY, OH)",
+    "Strategy: 'Harvesting' in dense legacy markets while expanding in growth markets"
+  ],
+  "market_share_by_deposits": {
+    "national": 11.7,
+    "rank": 1,
+    "total_deposits_billions": 2097.1,
+    "as_of_date": "2025-03-31",
+    "notes": "Largest bank in US by deposits. Lead over Bank of America (11.0%) is narrow."
+  },
+  "competitive_position": {
+    "branch_network_rank": 1,
+    "branch_count_vs_competitors": {
+      "wells_fargo": "Chase has 4,827 vs Wells Fargo ~4,200",
+      "bank_of_america": "Chase has 4,827 vs BofA ~3,900"
+    },
+    "geographic_advantage": "Only major bank with presence in all 48 contiguous states",
+    "expansion_vs_peers": "Counter-trend: expanding branches while most banks consolidate"
+  },
+  "business_customer_profile": {
+    "total_business_customers": 7000000,
+    "small_business": 6300000,
+    "middle_market": 580000,
+    "large_corporate": 120000,
+    "sba_lending_rank": 1,
+    "sba_strength_states": ["NY", "AZ", "IL", "IN", "TX (DFW, Houston, San Antonio)"],
+    "commercial_focus": "Expanding affluent/wealth management centers in key metros"
+  },
+  "natural_disaster_exposure": {
+    "high_risk_branches": 1847,
+    "high_risk_percentage": 38.3,
+    "hurricane_exposure": {
+      "coastal_branches": 1245,
+      "states": ["FL", "NC", "SC", "GA", "NY", "NJ", "CT", "TX", "LA"],
+      "risk_level": "high"
+    },
+    "earthquake_exposure": {
+      "branches_in_zone": 1186,
+      "states": ["CA", "WA", "OR"],
+      "risk_level": "high"
+    },
+    "wildfire_exposure": {
+      "branches_in_zone": 982,
+      "states": ["CA", "OR", "WA", "CO", "AZ"],
+      "risk_level": "moderate-high"
+    },
+    "tornado_exposure": {
+      "branches_in_zone": 624,
+      "states": ["TX", "OK", "KS", "MO", "NE", "IL", "IN", "OH"],
+      "risk_level": "moderate"
+    },
+    "flood_exposure": {
+      "high_risk_branches": 892,
+      "risk_level": "moderate-high",
+      "notes": "Coastal flooding + inland riverine flooding"
+    }
+  },
+  "climate_transition_risk": {
+    "energy_sector_exposure": "moderate",
+    "high_exposure_regions": ["TX", "OK", "LA", "CO"],
+    "renewable_energy_markets": ["CA", "WA", "OR", "NY", "MA"],
+    "agriculture_exposure": "moderate",
+    "ag_states": ["IA", "NE", "KS", "IL", "IN", "OH"]
+  },
+  "economic_concentration_risks": {
+    "tech_sector": {
+      "exposure": "high",
+      "markets": ["San Francisco Bay Area", "Seattle", "Austin", "NYC"],
+      "risk": "Tech downturn could impact CRE and business lending"
+    },
+    "financial_services": {
+      "exposure": "very high",
+      "markets": ["NYC", "Chicago", "San Francisco", "Charlotte"],
+      "risk": "Correlated with Chase's own performance"
+    },
+    "healthcare": {
+      "exposure": "moderate",
+      "markets": ["Boston", "Philadelphia", "Nashville", "Houston"],
+      "risk": "Regulatory and reimbursement changes"
+    },
+    "manufacturing": {
+      "exposure": "moderate-high",
+      "markets": ["OH", "MI", "IN", "IL", "WI"],
+      "risk": "Global trade policy, automation impact"
+    }
+  },
+  "sources": [
+    "https://www.bankbranchlocator.com/chase-bank/ - Branch counts by state",
+    "https://media.chase.com/news/chase-makes-multi-billion-dollar-investment-in-its-branch-network - 500 branch expansion announcement",
+    "https://financebuzz.com/chase-bank-branch-openings - 2024 branch openings",
+    "https://www.bankingdive.com/news/jpmorgan-chase-bank-branch-expansion-strategy-southeast/759141/ - Southeast expansion strategy",
+    "https://wtop.com/business-finance/2024/02/chase-is-opening-dozens-of-new-branches-in-the-d-c-region/ - DC region expansion",
+    "https://www.costar.com/article/1054122664/jpmorgan-chase-to-double-bank-branches-in-carolinas-by-2025 - Carolinas expansion",
+    "https://www.costar.com/article/761789781/jpmorgan-to-double-miami-office-size-as-part-of-major-florida-expansion - Florida expansion",
+    "https://www.jpmorganchase.com/newsroom/press-releases/2024/jpmorganchase-expands-banking-services-in-iowa - Iowa expansion",
+    "https://jpmorganchaseco.gcs-web.com/news-releases/news-release-details/chase-doubles-sba-loans-become-1-us-helps-3300-small-businesses - SBA lending leadership",
+    "https://www.mx.com/blog/biggest-us-banks-by-deposits/ - Deposit market share",
+    "https://www.americanbanker.com/news/jpmorgan-chase-bucks-branch-closing-trend-opens-net-38-sites - Branch strategy analysis",
+    "https://financebuzz.com/chase-branch-closures-2024 - 2024 branch closures",
+    "https://www.gobankingrates.com/banking/banks/chase-bank-shut-down-branches-yours-next/ - 2025 branch closures",
+    "https://www.sec.gov/Archives/edgar/data/19617/000001961725000329/annualreport-2024.pdf - JPMorgan Chase 2024 Annual Report"
+  ],
+  "methodology": {
+    "branch_counts": "Based on Bank Branch Locator database and Chase official announcements (2024-2025)",
+    "regional_allocation": "Estimated based on branch distribution, economic activity, and stated expansion priorities",
+    "business_counts": "Estimated from 7M total business customers distributed proportionally by branch count and regional economic activity",
+    "deposit_share": "Regional estimates based on branch distribution and known market share in key metros (NYC, Chicago, Houston)",
+    "market_share": "Regional estimates based on FDIC data and announced market positions in key states",
+    "hhi_calculation": "Sum of squared market shares by state for top 10 states",
+    "disaster_risk": "Based on FEMA flood maps, USGS seismic zones, wildfire risk maps, and tornado climatology"
+  },
+  "data_quality_notes": [
+    "Branch counts vary by source (4,700-5,100 range) due to different reporting dates and ongoing openings/closures",
+    "California branch count ranges from 862-974 depending on source and date",
+    "Business customer counts by region are estimates based on proportional distribution",
+    "Regional deposit share estimated from branch distribution and known metro market positions",
+    "Natural disaster exposure based on geographic location of branches, not actual risk-adjusted exposure",
+    "HHI index calculated using top 10 states only, not all 48 states"
+  ]
+}

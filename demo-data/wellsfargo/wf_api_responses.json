@@ -1,0 +1,870 @@
+{
+  "bank": "wellsfargo",
+  "generated_at": "2026-02-11T00:00:00Z",
+  "description": "Wells Fargo Commercial Banking API mock responses for Lumiq AI Dashboard",
+  "endpoints": {
+    "/api/v1/portfolio/summary": {
+      "method": "GET",
+      "response": {
+        "data": {
+          "bank_id": "wellsfargo",
+          "bank_name": "Wells Fargo Business Banking",
+          "total_businesses": 3300000,
+          "total_exposure": 670000000000,
+          "total_loans": 360000000000,
+          "total_deposits": 310000000000,
+          "avg_credit_score": 698,
+          "pre_qualified_rate": 0.65,
+          "at_risk_rate": 0.13,
+          "approval_rate": 0.62,
+          "nco_rate": 0.0027,
+          "npl_rate": 0.0058,
+          "branch_count": 4500,
+          "states_served": 36,
+          "market_position": "#1 SBA Lender, #1 Agricultural Lender",
+          "updated_at": "2026-02-11T00:00:00Z"
+        },
+        "meta": {
+          "request_id": "req_wf_summary_001",
+          "timestamp": "2026-02-11T00:00:00Z"
+        }
+      }
+    },
+    "/api/v1/segments": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "construction",
+            "name": "Construction",
+            "icon": "HardHat",
+            "business_count": 511500,
+            "total_exposure": 103850450000,
+            "portfolio_percentage": 0.155,
+            "pre_qualified_rate": 0.48,
+            "growth_trend": "expanding",
+            "trend_value": 0.063,
+            "risk_level": "high",
+            "color": "yellow",
+            "avg_score": 685,
+            "nco_rate": 0.0042,
+            "description": "Strongest among major banks; significant construction lending presence"
+          },
+          {
+            "id": "transportation",
+            "name": "Transportation & Logistics",
+            "icon": "Truck",
+            "business_count": 478500,
+            "total_exposure": 97169850000,
+            "portfolio_percentage": 0.145,
+            "pre_qualified_rate": 0.55,
+            "growth_trend": "expanding",
+            "trend_value": 0.071,
+            "risk_level": "medium",
+            "color": "green",
+            "avg_score": 690,
+            "nco_rate": 0.0025,
+            "description": "Strong commercial auto and logistics coverage; includes agricultural transport"
+          },
+          {
+            "id": "manufacturing",
+            "name": "Manufacturing",
+            "icon": "Factory",
+            "business_count": 468600,
+            "total_exposure": 95139600000,
+            "portfolio_percentage": 0.142,
+            "pre_qualified_rate": 0.62,
+            "growth_trend": "expanding",
+            "trend_value": 0.052,
+            "risk_level": "medium",
+            "color": "gray",
+            "avg_score": 692,
+            "nco_rate": 0.0032,
+            "description": "Strong manufacturing presence, especially Midwest; top-tier national practice"
+          },
+          {
+            "id": "retail_trade",
+            "name": "Retail Trade",
+            "icon": "ShoppingCart",
+            "business_count": 405900,
+            "total_exposure": 82389870000,
+            "portfolio_percentage": 0.123,
+            "pre_qualified_rate": 0.55,
+            "growth_trend": "contracting",
+            "trend_value": -0.048,
+            "risk_level": "medium",
+            "color": "purple",
+            "avg_score": 695,
+            "nco_rate": 0.0035,
+            "description": "Retail and e-commerce coverage across all markets"
+          },
+          {
+            "id": "professional_services",
+            "name": "Professional Services",
+            "icon": "Briefcase",
+            "business_count": 389400,
+            "total_exposure": 79060200000,
+            "portfolio_percentage": 0.118,
+            "pre_qualified_rate": 0.68,
+            "growth_trend": "expanding",
+            "trend_value": 0.079,
+            "risk_level": "low",
+            "color": "blue",
+            "avg_score": 708,
+            "nco_rate": 0.0015,
+            "description": "Specialized coverage for professional services firms"
+          },
+          {
+            "id": "healthcare",
+            "name": "Healthcare",
+            "icon": "Heart",
+            "business_count": 363000,
+            "total_exposure": 73699890000,
+            "portfolio_percentage": 0.110,
+            "pre_qualified_rate": 0.72,
+            "growth_trend": "expanding",
+            "trend_value": 0.086,
+            "risk_level": "low",
+            "color": "red",
+            "avg_score": 710,
+            "nco_rate": 0.0018,
+            "description": "Specialized healthcare coverage; growing sector focus"
+          },
+          {
+            "id": "technology",
+            "name": "Technology",
+            "icon": "Cpu",
+            "business_count": 346500,
+            "total_exposure": 70350000000,
+            "portfolio_percentage": 0.105,
+            "pre_qualified_rate": 0.74,
+            "growth_trend": "expanding",
+            "trend_value": 0.124,
+            "risk_level": "low",
+            "color": "indigo",
+            "avg_score": 715,
+            "nco_rate": 0.0016,
+            "description": "Growing focus with 20% team expansion in 2024, but historically weaker than Chase in tech"
+          },
+          {
+            "id": "food_service_agriculture",
+            "name": "Food Service & Agriculture",
+            "icon": "Wheat",
+            "business_count": 336600,
+            "total_exposure": 68340098000,
+            "portfolio_percentage": 0.102,
+            "pre_qualified_rate": 0.58,
+            "growth_trend": "stable",
+            "trend_value": 0.057,
+            "risk_level": "medium",
+            "color": "orange",
+            "avg_score": 688,
+            "nco_rate": 0.0028,
+            "description": "Nation's largest agricultural lender; 170+ years in Food & Agribusiness"
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_segments_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 8
+        }
+      }
+    },
+    "/api/v1/products": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "businessline_loc",
+            "name": "BusinessLine Line of Credit",
+            "category": "Line of Credit",
+            "credit_min": 680,
+            "credit_max": 850,
+            "annual_fee": 95,
+            "target_segment": ["technology", "professional_services", "healthcare", "retail_trade"],
+            "description": "Revolving credit line $10K-$100K with flexible draw and repayment"
+          },
+          {
+            "id": "prime_loc",
+            "name": "Prime Line of Credit",
+            "category": "Line of Credit",
+            "credit_min": 700,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["technology", "professional_services", "manufacturing"],
+            "description": "Premium revolving credit line $100K-$500K for established businesses"
+          },
+          {
+            "id": "small_biz_advantage_loc",
+            "name": "Small Business Advantage Line of Credit",
+            "category": "Line of Credit",
+            "credit_min": 660,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["retail_trade", "food_service_agriculture", "construction"],
+            "description": "Entry-level revolving credit line up to $50K for newer businesses"
+          },
+          {
+            "id": "sba_7a",
+            "name": "SBA 7(a) Loan",
+            "category": "SBA Loan",
+            "credit_min": 660,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["food_service_agriculture", "manufacturing", "healthcare", "construction"],
+            "description": "SBA-backed loans up to $5M for expansion, equipment, and working capital"
+          },
+          {
+            "id": "sba_504",
+            "name": "SBA 504 Loan",
+            "category": "SBA Loan",
+            "credit_min": 680,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["manufacturing", "construction", "healthcare"],
+            "description": "SBA 504 loans for commercial real estate and major equipment"
+          },
+          {
+            "id": "equipment_financing",
+            "name": "Equipment Financing",
+            "category": "Term Loan",
+            "credit_min": 670,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["manufacturing", "transportation", "construction", "healthcare"],
+            "description": "Loans and leases for business equipment, vehicles, and machinery"
+          },
+          {
+            "id": "cre_loan",
+            "name": "Commercial Real Estate Loan",
+            "category": "Commercial Mortgage",
+            "credit_min": 700,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["construction", "manufacturing", "professional_services"],
+            "description": "Commercial property acquisition, construction, and refinancing"
+          },
+          {
+            "id": "commercial_auto",
+            "name": "Commercial Auto Financing",
+            "category": "Fleet Finance",
+            "credit_min": 650,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["transportation", "construction", "food_service_agriculture"],
+            "description": "Fleet vehicle financing and leasing for commercial operations"
+          },
+          {
+            "id": "working_capital",
+            "name": "Working Capital Loan",
+            "category": "Term Loan",
+            "credit_min": 660,
+            "credit_max": 850,
+            "annual_fee": 0,
+            "target_segment": ["manufacturing", "retail_trade", "construction", "transportation"],
+            "description": "Short-term financing for day-to-day operational needs and cash flow management"
+          },
+          {
+            "id": "business_checking",
+            "name": "Wells Fargo Business Checking",
+            "category": "Checking Account",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["all"],
+            "description": "Full-service business checking with digital banking and treasury management"
+          },
+          {
+            "id": "business_savings",
+            "name": "Wells Fargo Business Market Rate Savings",
+            "category": "Savings",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["all"],
+            "description": "Interest-bearing business savings with FDIC insurance and tiered rates"
+          },
+          {
+            "id": "merchant_services",
+            "name": "Wells Fargo Merchant Services",
+            "category": "Payment Processing",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["retail_trade", "food_service_agriculture", "healthcare"],
+            "description": "Payment processing, point-of-sale, and e-commerce payment solutions"
+          },
+          {
+            "id": "treasury_management",
+            "name": "Treasury Management Services",
+            "category": "Cash Management",
+            "credit_min": 0,
+            "credit_max": 1000,
+            "annual_fee": 0,
+            "target_segment": ["all"],
+            "description": "Enterprise-grade cash flow, payables, receivables, and liquidity management"
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_products_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 13
+        }
+      }
+    },
+    "/api/v1/campaigns": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "camp_wf_businessline_q1",
+            "name": "BusinessLine LOC Spring 2026",
+            "product_id": "businessline_loc",
+            "target_segment": "technology,professional_services,healthcare",
+            "eligible_businesses": 285000,
+            "potential_revenue": 588370000,
+            "conversion_rate": 0.0708,
+            "status": "active",
+            "start_date": "2026-01-15",
+            "end_date": "2026-03-31"
+          },
+          {
+            "id": "camp_wf_sba_7a_rural",
+            "name": "SBA 7(a) Rural Growth Initiative",
+            "product_id": "sba_7a",
+            "target_segment": "food_service_agriculture,manufacturing,construction",
+            "eligible_businesses": 125000,
+            "potential_revenue": 1250865000,
+            "conversion_rate": 0.036,
+            "status": "active",
+            "start_date": "2025-10-01",
+            "end_date": "2026-09-30"
+          },
+          {
+            "id": "camp_wf_equipment_q4",
+            "name": "Commercial Equipment Finance Q4",
+            "product_id": "equipment_financing",
+            "target_segment": "manufacturing,transportation,construction,healthcare",
+            "eligible_businesses": 142000,
+            "potential_revenue": 2139900000,
+            "conversion_rate": 0.04,
+            "status": "active",
+            "start_date": "2025-11-01",
+            "end_date": "2026-02-28"
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_campaigns_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 3
+        }
+      }
+    },
+    "/api/v1/businesses": {
+      "method": "GET",
+      "response": {
+        "data": {
+          "businesses": [
+            {
+              "id": "biz_wf_001",
+              "name": "AgriTech Farms Co-op",
+              "industry": "Food Service & Agriculture",
+              "state": "IA",
+              "credit_score": 708,
+              "annual_revenue": 12500000,
+              "years_in_business": 32,
+              "employees": 78,
+              "current_exposure": 2850000,
+              "segment": "food_service_agriculture",
+              "risk_tier": "low"
+            },
+            {
+              "id": "biz_wf_002",
+              "name": "Bay Area Cloud Services",
+              "industry": "Technology",
+              "state": "CA",
+              "credit_score": 742,
+              "annual_revenue": 8200000,
+              "years_in_business": 7,
+              "employees": 42,
+              "current_exposure": 375000,
+              "segment": "technology",
+              "risk_tier": "low"
+            },
+            {
+              "id": "biz_wf_003",
+              "name": "Lone Star Construction Group",
+              "industry": "Construction",
+              "state": "TX",
+              "credit_score": 695,
+              "annual_revenue": 18400000,
+              "years_in_business": 14,
+              "employees": 125,
+              "current_exposure": 4250000,
+              "segment": "construction",
+              "risk_tier": "medium"
+            },
+            {
+              "id": "biz_wf_004",
+              "name": "Emerald City Legal Services",
+              "industry": "Professional Services",
+              "state": "WA",
+              "credit_score": 725,
+              "annual_revenue": 3600000,
+              "years_in_business": 19,
+              "employees": 22,
+              "current_exposure": 150000,
+              "segment": "professional_services",
+              "risk_tier": "low"
+            },
+            {
+              "id": "biz_wf_005",
+              "name": "Sunbelt Medical Equipment",
+              "industry": "Healthcare",
+              "state": "FL",
+              "credit_score": 715,
+              "annual_revenue": 6800000,
+              "years_in_business": 11,
+              "employees": 35,
+              "current_exposure": 1950000,
+              "segment": "healthcare",
+              "risk_tier": "low"
+            },
+            {
+              "id": "biz_wf_006",
+              "name": "Midwest Precision Manufacturing",
+              "industry": "Manufacturing",
+              "state": "OH",
+              "credit_score": 702,
+              "annual_revenue": 24600000,
+              "years_in_business": 28,
+              "employees": 186,
+              "current_exposure": 5600000,
+              "segment": "manufacturing",
+              "risk_tier": "medium"
+            },
+            {
+              "id": "biz_wf_007",
+              "name": "Pacific Logistics Solutions",
+              "industry": "Transportation & Logistics",
+              "state": "CA",
+              "credit_score": 698,
+              "annual_revenue": 15200000,
+              "years_in_business": 16,
+              "employees": 94,
+              "current_exposure": 3450000,
+              "segment": "transportation",
+              "risk_tier": "medium"
+            },
+            {
+              "id": "biz_wf_008",
+              "name": "Queen City Retail Partners",
+              "industry": "Retail Trade",
+              "state": "NC",
+              "credit_score": 688,
+              "annual_revenue": 4200000,
+              "years_in_business": 9,
+              "employees": 28,
+              "current_exposure": 125000,
+              "segment": "retail_trade",
+              "risk_tier": "medium"
+            }
+          ],
+          "total": 3300000,
+          "page": 1,
+          "page_size": 100,
+          "has_more": true
+        },
+        "meta": {
+          "request_id": "req_wf_businesses_001",
+          "timestamp": "2026-02-11T00:00:00Z"
+        }
+      }
+    },
+    "/api/v1/applications": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "business_id": "app_wf_20260211_002",
+            "business_name": "Midwest Grain Cooperative",
+            "product_id": "sba_7a",
+            "amount_requested": 1250000,
+            "status": "in_review",
+            "assigned_analyst": "Michael Torres",
+            "time_in_queue_hours": 72,
+            "recommendation": "approve",
+            "created_at": "2026-02-08T00:00:00Z",
+            "priority": "high"
+          },
+          {
+            "business_id": "app_wf_20260211_004",
+            "business_name": "TechBridge Consulting Group",
+            "product_id": "prime_loc",
+            "amount_requested": 250000,
+            "status": "pending",
+            "assigned_analyst": "David Kim",
+            "time_in_queue_hours": 8,
+            "recommendation": "approve",
+            "created_at": "2026-02-11T00:00:00Z",
+            "priority": "high"
+          },
+          {
+            "business_id": "app_wf_20260211_006",
+            "business_name": "Gulf Coast Logistics Partners",
+            "product_id": "equipment_financing",
+            "amount_requested": 850000,
+            "status": "in_review",
+            "assigned_analyst": "Michael Torres",
+            "time_in_queue_hours": 120,
+            "recommendation": "approve",
+            "created_at": "2026-02-06T00:00:00Z",
+            "priority": "high"
+          },
+          {
+            "business_id": "app_wf_20260211_014",
+            "business_name": "Sunshine Medical Clinics",
+            "product_id": "sba_7a",
+            "amount_requested": 1800000,
+            "status": "in_review",
+            "assigned_analyst": "Sarah Chen",
+            "time_in_queue_hours": 144,
+            "recommendation": "approve",
+            "created_at": "2026-02-05T00:00:00Z",
+            "priority": "high"
+          },
+          {
+            "business_id": "app_wf_20260211_001",
+            "business_name": "Cascade Timber Solutions",
+            "product_id": "equipment_financing",
+            "amount_requested": 385000,
+            "status": "pending",
+            "assigned_analyst": "Sarah Chen",
+            "time_in_queue_hours": 48,
+            "recommendation": "approve",
+            "created_at": "2026-02-09T00:00:00Z",
+            "priority": "medium"
+          },
+          {
+            "business_id": "app_wf_20260211_009",
+            "business_name": "Ironwood Construction LLC",
+            "product_id": "equipment_financing",
+            "amount_requested": 675000,
+            "status": "in_review",
+            "assigned_analyst": "Sarah Chen",
+            "time_in_queue_hours": 72,
+            "recommendation": "conditional",
+            "created_at": "2026-02-08T00:00:00Z",
+            "priority": "medium"
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_applications_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 15,
+          "total_pending": 7,
+          "total_in_review": 4,
+          "total_conditional": 2,
+          "total_active_applications": 42800
+        }
+      }
+    },
+    "/api/v1/risk/metrics": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "metric_type": "concentration",
+            "metric_name": "Construction Segment Concentration",
+            "current_value": 15.5,
+            "limit_value": 18.0,
+            "status": "watch",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "concentration",
+            "metric_name": "California Geographic Concentration",
+            "current_value": 24.6,
+            "limit_value": 30.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "credit_quality",
+            "metric_name": "Net Charge-Off Rate",
+            "current_value": 0.27,
+            "limit_value": 0.50,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "credit_quality",
+            "metric_name": "Non-Performing Loan Rate",
+            "current_value": 0.58,
+            "limit_value": 1.50,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "credit_quality",
+            "metric_name": "Delinquency Rate (30+ Days)",
+            "current_value": 1.13,
+            "limit_value": 2.50,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "portfolio",
+            "metric_name": "At-Risk Portfolio Percentage",
+            "current_value": 13.0,
+            "limit_value": 15.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "portfolio",
+            "metric_name": "Loan-to-Deposit Ratio",
+            "current_value": 116.0,
+            "limit_value": 130.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "portfolio",
+            "metric_name": "Provision Coverage Ratio",
+            "current_value": 142.5,
+            "limit_value": 100.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "portfolio",
+            "metric_name": "Average Loan Utilization",
+            "current_value": 68.4,
+            "limit_value": 80.0,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          },
+          {
+            "metric_type": "credit_quality",
+            "metric_name": "Average Debt Service Coverage Ratio",
+            "current_value": 1.48,
+            "limit_value": 1.20,
+            "status": "normal",
+            "updated_at": "2026-02-11T00:00:00Z"
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_risk_metrics_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 10
+        }
+      }
+    },
+    "/api/v1/risk/ews": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "id": "ews_wf_construction_concentration",
+            "name": "Construction Segment Cyclical Exposure",
+            "business_count": 51150,
+            "exposure": 10385045000,
+            "severity": "medium",
+            "recommended_action": "Monitor for cyclical downturn indicators; tighten underwriting on speculative projects; maintain construction reserve at 1.5x baseline",
+            "created_at": "2026-02-09T00:00:00Z"
+          },
+          {
+            "id": "ews_wf_cre_office_nonaccrual",
+            "name": "Office CRE Nonaccrual Trend",
+            "business_count": 8500,
+            "exposure": 4300000000,
+            "severity": "high",
+            "recommended_action": "Immediate review of office CRE portfolio; engage borrowers on property conversion strategies; increase loss reserves for Class B/C office exposure",
+            "created_at": "2026-02-06T00:00:00Z"
+          },
+          {
+            "id": "ews_wf_retail_margin_pressure",
+            "name": "Retail Trade Revenue Softening",
+            "business_count": 32472,
+            "exposure": 6591189600,
+            "severity": "medium",
+            "recommended_action": "Monitor cash flow trends in brick-and-mortar retail; offer e-commerce financing packages to transitioning businesses",
+            "created_at": "2026-02-10T00:00:00Z"
+          },
+          {
+            "id": "ews_wf_ag_commodity_prices",
+            "name": "Agricultural Commodity Price Volatility",
+            "business_count": 26928,
+            "exposure": 5467207840,
+            "severity": "medium",
+            "recommended_action": "Review crop insurance coverage for agricultural borrowers; offer hedging education programs; maintain flexible payment structures for seasonal operations",
+            "created_at": "2026-02-08T00:00:00Z"
+          },
+          {
+            "id": "ews_wf_california_concentration",
+            "name": "California Geographic Concentration",
+            "business_count": 811800,
+            "exposure": 164857400000,
+            "severity": "low",
+            "recommended_action": "Continue monitoring; consistent with historical footprint; diversify new originations to growth states (TX, FL, NC)",
+            "created_at": "2026-02-04T00:00:00Z"
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_ews_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 5
+        }
+      }
+    },
+    "/api/v1/geography/regions": {
+      "method": "GET",
+      "response": {
+        "data": [
+          {
+            "region": "West",
+            "states": ["CA", "WA", "OR", "AZ", "NV", "CO", "UT", "HI", "AK", "ID", "MT", "WY"],
+            "portfolio_percentage": 0.38,
+            "business_count": 1254000,
+            "branch_count": 1890,
+            "market_share_estimate": 0.21,
+            "growth_trend": "stable",
+            "trend_percentage": 0.03
+          },
+          {
+            "region": "Southeast",
+            "states": ["FL", "GA", "NC", "SC", "TN", "AL", "VA", "LA", "MS"],
+            "portfolio_percentage": 0.22,
+            "business_count": 726000,
+            "branch_count": 810,
+            "market_share_estimate": 0.12,
+            "growth_trend": "expanding",
+            "trend_percentage": 0.05
+          },
+          {
+            "region": "Midwest",
+            "states": ["OH", "MI", "IN", "WI", "MN", "MO", "IA", "KS", "NE", "SD", "ND", "IL"],
+            "portfolio_percentage": 0.18,
+            "business_count": 594000,
+            "branch_count": 855,
+            "market_share_estimate": 0.15,
+            "growth_trend": "stable",
+            "trend_percentage": 0.02
+          },
+          {
+            "region": "Southwest",
+            "states": ["TX", "OK", "NM"],
+            "portfolio_percentage": 0.16,
+            "business_count": 528000,
+            "branch_count": 675,
+            "market_share_estimate": 0.14,
+            "growth_trend": "expanding",
+            "trend_percentage": 0.06
+          },
+          {
+            "region": "Northeast",
+            "states": ["NY", "NJ", "CT", "MA", "PA", "DC", "MD"],
+            "portfolio_percentage": 0.06,
+            "business_count": 198000,
+            "branch_count": 270,
+            "market_share_estimate": 0.06,
+            "growth_trend": "contracting",
+            "trend_percentage": -0.01
+          }
+        ],
+        "meta": {
+          "request_id": "req_wf_geography_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "count": 5
+        }
+      }
+    },
+    "/api/v1/analytics/portfolio-health": {
+      "method": "GET",
+      "response": {
+        "data": {
+          "overall_health_score": 82,
+          "credit_quality": {
+            "avg_credit_score": 698,
+            "score_distribution": {
+              "750+": 0.35,
+              "700-749": 0.25,
+              "650-699": 0.20,
+              "600-649": 0.13,
+              "<600": 0.07
+            },
+            "nco_rate": 0.27,
+            "npl_rate": 0.58,
+            "delinquency_30plus": 1.13,
+            "avg_ltv": 62.4,
+            "avg_dscr": 1.48
+          },
+          "portfolio_composition": {
+            "by_segment": {
+              "construction": 0.155,
+              "transportation": 0.145,
+              "manufacturing": 0.142,
+              "retail_trade": 0.123,
+              "professional_services": 0.118,
+              "healthcare": 0.110,
+              "technology": 0.105,
+              "food_service_agriculture": 0.102
+            },
+            "by_risk_tier": {
+              "low": 0.60,
+              "medium": 0.27,
+              "high": 0.13
+            },
+            "by_product_type": {
+              "loans": 0.537,
+              "deposits": 0.463
+            }
+          },
+          "growth_metrics": {
+            "portfolio_growth_yoy": 0.03,
+            "loan_growth_yoy": 0.01,
+            "deposit_growth_yoy": -0.02,
+            "new_accounts_monthly": 42000,
+            "customer_retention_rate": 0.847,
+            "renewal_rate": 0.847
+          },
+          "revenue_metrics": {
+            "total_revenue_annual": 12870000000,
+            "revenue_per_customer": 3900,
+            "cross_sell_rate": 0.35,
+            "offer_acceptance_rate": 0.28,
+            "pre_qualified_rate": 0.65,
+            "market_share_lending": 0.257,
+            "market_share_deposits": 0.091
+          }
+        },
+        "meta": {
+          "request_id": "req_wf_portfolio_health_001",
+          "timestamp": "2026-02-11T00:00:00Z",
+          "as_of_date": "2026-02-11"
+        }
+      }
+    }
+  },
+  "notes": [
+    "All Wells Fargo product names are real Wells Fargo offerings as of 2026",
+    "Portfolio metrics based on Wells Fargo 10-K (2024) and 4Q24 earnings data",
+    "Total exposure of $670B combines deposits ($310B) + loans ($360B)",
+    "Wells Fargo is historically the #1 SBA lender and the nation's largest agricultural lender",
+    "Construction segment at 15.5% reflects Wells Fargo's strongest-in-class position",
+    "NCO rate of 0.27% is the average of actual Q3 (0.24%) and Q4 (0.30%) 2024 data",
+    "Approval rate of 62% reflects conservative post-consent-order posture",
+    "Geographic distribution reflects 4,500 branches across 36 states with West Coast concentration",
+    "Credit scores and risk tiers align with industry benchmarks and SEC filings",
+    "All monetary values in USD"
+  ],
+  "data_sources": [
+    "Wells Fargo 10-K Filing (FY 2024)",
+    "Wells Fargo 4Q24 Earnings Release & Supplement",
+    "Wells Fargo 3Q24 Earnings Release",
+    "SBA Office of Advocacy 2025",
+    "FDIC Call Reports",
+    "U.S. Treasury Small Business Financing Report (Jan 2025)"
+  ]
+}

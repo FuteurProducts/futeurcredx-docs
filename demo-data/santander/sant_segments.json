@@ -1,0 +1,999 @@
+{
+  "bank": "Santander Bank",
+  "totalBusinesses": 68500,
+  "totalExposure": 5800000000,
+  "avgCreditScore": 72.1,
+  "qualificationRate": 35.8,
+  "lastUpdated": "2026-02-11T00:00:00Z",
+  "geographicFootprint": {
+    "description": "Regional powerhouse in Northeast with selective expansion",
+    "branchCount": 408,
+    "primaryStates": [
+      "MA",
+      "NY",
+      "NJ",
+      "PA",
+      "CT",
+      "RI",
+      "NH",
+      "DE",
+      "FL"
+    ],
+    "coreMarkets": [
+      "Boston",
+      "New York City",
+      "Philadelphia",
+      "Hartford",
+      "Providence"
+    ]
+  },
+  "industrySegments": [
+    {
+      "id": "professional",
+      "name": "Professional Services",
+      "icon": "Briefcase",
+      "businessCount": 10800,
+      "totalExposure": 470000000,
+      "qualRate": 41.3,
+      "avgScore": 75.8,
+      "highRiskPct": 5.9,
+      "trend": {
+        "direction": "up",
+        "value": 1.8
+      },
+      "topProducts": [
+        {
+          "name": "Line of Credit",
+          "eligible": 4482
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 3456
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 1944
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 1296
+        }
+      ],
+      "region": {
+        "Northeast": 7020,
+        "Southeast": 1620,
+        "Southwest": 864,
+        "West": 540,
+        "Midwest": 756
+      },
+      "riskDistribution": {
+        "LOW": 4860,
+        "MODERATE": 3348,
+        "ELEVATED": 1836,
+        "HIGH": 540,
+        "CRITICAL": 216
+      },
+      "avgRevenue": 1900000,
+      "avgYearsInBusiness": 10.2,
+      "notes": "Strong in NYC/Boston legal, consulting, accounting firms"
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare Services",
+      "icon": "Heart",
+      "businessCount": 9500,
+      "totalExposure": 615000000,
+      "qualRate": 44.7,
+      "avgScore": 79.2,
+      "highRiskPct": 4.8,
+      "trend": {
+        "direction": "up",
+        "value": 5.1
+      },
+      "topProducts": [
+        {
+          "name": "Term Loan",
+          "eligible": 3990
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 3230
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 1900
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 1520
+        }
+      ],
+      "region": {
+        "Northeast": 6175,
+        "Southeast": 1425,
+        "Midwest": 950,
+        "Southwest": 475,
+        "West": 475
+      },
+      "riskDistribution": {
+        "LOW": 4655,
+        "MODERATE": 3040,
+        "ELEVATED": 1330,
+        "HIGH": 380,
+        "CRITICAL": 95
+      },
+      "avgRevenue": 3300000,
+      "avgYearsInBusiness": 11.8,
+      "notes": "Dense Northeast healthcare market, strong multifamily medical real estate"
+    },
+    {
+      "id": "restaurants",
+      "name": "Restaurants & Food",
+      "icon": "UtensilsCrossed",
+      "businessCount": 10200,
+      "totalExposure": 344000000,
+      "qualRate": 30.2,
+      "avgScore": 66.4,
+      "highRiskPct": 13.8,
+      "trend": {
+        "direction": "down",
+        "value": -0.8
+      },
+      "topProducts": [
+        {
+          "name": "Line of Credit",
+          "eligible": 3060
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 2346
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 2040
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 1224
+        }
+      ],
+      "region": {
+        "Northeast": 6528,
+        "Southeast": 1836,
+        "Southwest": 816,
+        "Midwest": 612,
+        "West": 408
+      },
+      "riskDistribution": {
+        "LOW": 3264,
+        "MODERATE": 3060,
+        "ELEVATED": 2244,
+        "HIGH": 1224,
+        "CRITICAL": 408
+      },
+      "avgRevenue": 1400000,
+      "avgYearsInBusiness": 6.2,
+      "notes": "Strong Hispanic/Latino-owned restaurant presence, NYC/Miami concentration"
+    },
+    {
+      "id": "retail",
+      "name": "Retail & E-Commerce",
+      "icon": "ShoppingBag",
+      "businessCount": 8900,
+      "totalExposure": 506000000,
+      "qualRate": 37.8,
+      "avgScore": 73.6,
+      "highRiskPct": 7.4,
+      "trend": {
+        "direction": "up",
+        "value": 2.6
+      },
+      "topProducts": [
+        {
+          "name": "Line of Credit",
+          "eligible": 3382
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 2759
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 1869
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 1157
+        }
+      ],
+      "region": {
+        "Northeast": 5696,
+        "Southeast": 1602,
+        "Southwest": 712,
+        "Midwest": 534,
+        "West": 356
+      },
+      "riskDistribution": {
+        "LOW": 3827,
+        "MODERATE": 2581,
+        "ELEVATED": 1513,
+        "HIGH": 712,
+        "CRITICAL": 267
+      },
+      "avgRevenue": 2600000,
+      "avgYearsInBusiness": 8.9,
+      "notes": "Dense urban retail corridors in Boston, NYC, Philadelphia"
+    },
+    {
+      "id": "construction",
+      "name": "Construction & Trades",
+      "icon": "HardHat",
+      "businessCount": 7600,
+      "totalExposure": 741000000,
+      "qualRate": 33.1,
+      "avgScore": 69.7,
+      "highRiskPct": 10.2,
+      "trend": {
+        "direction": "up",
+        "value": 2.3
+      },
+      "topProducts": [
+        {
+          "name": "Equipment Financing",
+          "eligible": 2736
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 2432
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 1976
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 1064
+        }
+      ],
+      "region": {
+        "Northeast": 4864,
+        "Southeast": 1520,
+        "Southwest": 532,
+        "Midwest": 456,
+        "West": 228
+      },
+      "riskDistribution": {
+        "LOW": 2736,
+        "MODERATE": 2280,
+        "ELEVATED": 1520,
+        "HIGH": 760,
+        "CRITICAL": 304
+      },
+      "avgRevenue": 4800000,
+      "avgYearsInBusiness": 7.8,
+      "notes": "Strong in Northeast urban redevelopment, multifamily construction"
+    },
+    {
+      "id": "realestate",
+      "name": "Real Estate Services",
+      "icon": "Building2",
+      "businessCount": 4100,
+      "totalExposure": 1120000000,
+      "qualRate": 39.4,
+      "avgScore": 74.8,
+      "highRiskPct": 6.8,
+      "trend": {
+        "direction": "up",
+        "value": 4.2
+      },
+      "topProducts": [
+        {
+          "name": "Term Loan",
+          "eligible": 1599
+        },
+        {
+          "name": "Commercial Real Estate",
+          "eligible": 1353
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 1189
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 738
+        }
+      ],
+      "region": {
+        "Northeast": 2747,
+        "Southeast": 656,
+        "Southwest": 328,
+        "Midwest": 246,
+        "West": 123
+      },
+      "riskDistribution": {
+        "LOW": 1804,
+        "MODERATE": 1271,
+        "ELEVATED": 697,
+        "HIGH": 246,
+        "CRITICAL": 82
+      },
+      "avgRevenue": 13500000,
+      "avgYearsInBusiness": 13.1,
+      "notes": "Dominant in NYC multifamily real estate, $13.5B portfolio, Signature Bank assets"
+    },
+    {
+      "id": "wholesale",
+      "name": "Wholesale & Distribution",
+      "icon": "Package",
+      "businessCount": 4500,
+      "totalExposure": 461000000,
+      "qualRate": 36.5,
+      "avgScore": 72.8,
+      "highRiskPct": 8.1,
+      "trend": {
+        "direction": "stable",
+        "value": 0.4
+      },
+      "topProducts": [
+        {
+          "name": "Line of Credit",
+          "eligible": 1710
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 1440
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 990
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 630
+        }
+      ],
+      "region": {
+        "Northeast": 2970,
+        "Southeast": 675,
+        "Midwest": 405,
+        "Southwest": 270,
+        "West": 180
+      },
+      "riskDistribution": {
+        "LOW": 1800,
+        "MODERATE": 1350,
+        "ELEVATED": 810,
+        "HIGH": 405,
+        "CRITICAL": 135
+      },
+      "avgRevenue": 5200000,
+      "avgYearsInBusiness": 11.4,
+      "notes": "Northeast port proximity, food/beverage distribution strength"
+    },
+    {
+      "id": "technology",
+      "name": "Technology Services",
+      "icon": "Laptop",
+      "businessCount": 3300,
+      "totalExposure": 380000000,
+      "qualRate": 46.8,
+      "avgScore": 82.1,
+      "highRiskPct": 3.2,
+      "trend": {
+        "direction": "up",
+        "value": 6.4
+      },
+      "topProducts": [
+        {
+          "name": "Term Loan",
+          "eligible": 1551
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 1353
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 825
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 495
+        }
+      ],
+      "region": {
+        "Northeast": 2310,
+        "Southeast": 462,
+        "Midwest": 264,
+        "Southwest": 165,
+        "West": 99
+      },
+      "riskDistribution": {
+        "LOW": 1683,
+        "MODERATE": 1089,
+        "ELEVATED": 429,
+        "HIGH": 66,
+        "CRITICAL": 33
+      },
+      "avgRevenue": 5100000,
+      "avgYearsInBusiness": 6.9,
+      "notes": "Boston tech corridor, NYC fintech, smaller than West Coast banks"
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing",
+      "icon": "Factory",
+      "businessCount": 3000,
+      "totalExposure": 560000000,
+      "qualRate": 41.6,
+      "avgScore": 77.3,
+      "highRiskPct": 5.5,
+      "trend": {
+        "direction": "stable",
+        "value": -0.1
+      },
+      "topProducts": [
+        {
+          "name": "Term Loan",
+          "eligible": 1260
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 1080
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 990
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 720
+        }
+      ],
+      "region": {
+        "Northeast": 1830,
+        "Midwest": 600,
+        "Southeast": 330,
+        "Southwest": 150,
+        "West": 90
+      },
+      "riskDistribution": {
+        "LOW": 1350,
+        "MODERATE": 960,
+        "ELEVATED": 510,
+        "HIGH": 150,
+        "CRITICAL": 30
+      },
+      "avgRevenue": 9400000,
+      "avgYearsInBusiness": 15.2,
+      "notes": "Legacy Northeast manufacturing, paper/packaging specialization"
+    },
+    {
+      "id": "transportation",
+      "name": "Transportation & Logistics",
+      "icon": "Truck",
+      "businessCount": 2700,
+      "totalExposure": 308000000,
+      "qualRate": 35.2,
+      "avgScore": 71.4,
+      "highRiskPct": 8.9,
+      "trend": {
+        "direction": "up",
+        "value": 2.7
+      },
+      "topProducts": [
+        {
+          "name": "Equipment Financing",
+          "eligible": 999
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 864
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 756
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 378
+        }
+      ],
+      "region": {
+        "Northeast": 1593,
+        "Southeast": 540,
+        "Midwest": 324,
+        "Southwest": 162,
+        "West": 81
+      },
+      "riskDistribution": {
+        "LOW": 1026,
+        "MODERATE": 810,
+        "ELEVATED": 540,
+        "HIGH": 216,
+        "CRITICAL": 108
+      },
+      "avgRevenue": 5800000,
+      "avgYearsInBusiness": 9.8,
+      "notes": "Northeast corridor logistics, port-related trucking"
+    },
+    {
+      "id": "auto",
+      "name": "Auto Services",
+      "icon": "Car",
+      "businessCount": 2000,
+      "totalExposure": 163000000,
+      "qualRate": 31.9,
+      "avgScore": 68.2,
+      "highRiskPct": 11.4,
+      "trend": {
+        "direction": "down",
+        "value": -1.2
+      },
+      "topProducts": [
+        {
+          "name": "Equipment Financing",
+          "eligible": 640
+        },
+        {
+          "name": "Line of Credit",
+          "eligible": 560
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 480
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 240
+        }
+      ],
+      "region": {
+        "Northeast": 1280,
+        "Southeast": 360,
+        "Midwest": 200,
+        "Southwest": 120,
+        "West": 40
+      },
+      "riskDistribution": {
+        "LOW": 740,
+        "MODERATE": 600,
+        "ELEVATED": 400,
+        "HIGH": 180,
+        "CRITICAL": 80
+      },
+      "avgRevenue": 3100000,
+      "avgYearsInBusiness": 9.4,
+      "notes": "Urban auto repair, collision, Northeast density"
+    },
+    {
+      "id": "other",
+      "name": "Other Services",
+      "icon": "MoreHorizontal",
+      "businessCount": 1900,
+      "totalExposure": 132000000,
+      "qualRate": 33.8,
+      "avgScore": 70.6,
+      "highRiskPct": 9.5,
+      "trend": {
+        "direction": "stable",
+        "value": 0.3
+      },
+      "topProducts": [
+        {
+          "name": "Line of Credit",
+          "eligible": 646
+        },
+        {
+          "name": "Term Loan",
+          "eligible": 551
+        },
+        {
+          "name": "Equipment Financing",
+          "eligible": 418
+        },
+        {
+          "name": "SBA 7(a)",
+          "eligible": 285
+        }
+      ],
+      "region": {
+        "Northeast": 1216,
+        "Southeast": 323,
+        "Midwest": 190,
+        "Southwest": 114,
+        "West": 57
+      },
+      "riskDistribution": {
+        "LOW": 722,
+        "MODERATE": 570,
+        "ELEVATED": 380,
+        "HIGH": 171,
+        "CRITICAL": 57
+      },
+      "avgRevenue": 2300000,
+      "avgYearsInBusiness": 8.1,
+      "notes": "Personal services, entertainment, miscellaneous"
+    }
+  ],
+  "geographicDistribution": [
+    {
+      "region": "Northeast",
+      "states": [
+        "MA",
+        "NY",
+        "NJ",
+        "PA",
+        "CT",
+        "RI",
+        "NH",
+        "DE"
+      ],
+      "businessCount": 43519,
+      "exposure": 3712000000,
+      "avgScore": 74.2,
+      "qualRate": 38.1,
+      "percentOfTotal": 63.5,
+      "notes": "Core Santander footprint, former Sovereign Bank territory"
+    },
+    {
+      "region": "Southeast",
+      "states": [
+        "FL",
+        "MD",
+        "VA",
+        "NC",
+        "SC",
+        "GA"
+      ],
+      "businessCount": 11338,
+      "exposure": 1044000000,
+      "avgScore": 71.8,
+      "qualRate": 35.2,
+      "percentOfTotal": 16.5,
+      "notes": "Florida expansion market, Miami commercial banking"
+    },
+    {
+      "region": "Southwest",
+      "states": [
+        "TX"
+      ],
+      "businessCount": 4247,
+      "exposure": 580000000,
+      "avgScore": 69.7,
+      "qualRate": 33.4,
+      "percentOfTotal": 6.2,
+      "notes": "Texas limited presence, exploration market"
+    },
+    {
+      "region": "Midwest",
+      "states": [
+        "OH",
+        "IL",
+        "MI"
+      ],
+      "businessCount": 5698,
+      "exposure": 348000000,
+      "avgScore": 72.4,
+      "qualRate": 34.8,
+      "percentOfTotal": 8.3,
+      "notes": "Minimal Midwest presence, legacy commercial relationships"
+    },
+    {
+      "region": "West",
+      "states": [
+        "CA"
+      ],
+      "businessCount": 3698,
+      "exposure": 116000000,
+      "avgScore": 73.1,
+      "qualRate": 35.6,
+      "percentOfTotal": 5.4,
+      "notes": "Very limited West Coast presence, Santander CIB relationships only"
+    }
+  ],
+  "riskTierDistribution": [
+    {
+      "tier": "LOW",
+      "count": 28110,
+      "percentage": 41.0,
+      "exposure": 2494000000,
+      "avgScore": 84.8,
+      "color": "bg-green-500"
+    },
+    {
+      "tier": "MODERATE",
+      "count": 19110,
+      "percentage": 27.9,
+      "exposure": 1798000000,
+      "avgScore": 73.2,
+      "color": "bg-blue-500"
+    },
+    {
+      "tier": "ELEVATED",
+      "count": 12435,
+      "percentage": 18.2,
+      "exposure": 1044000000,
+      "avgScore": 64.7,
+      "color": "bg-yellow-500"
+    },
+    {
+      "tier": "HIGH",
+      "count": 6850,
+      "percentage": 10.0,
+      "exposure": 406000000,
+      "avgScore": 53.1,
+      "color": "bg-orange-500"
+    },
+    {
+      "tier": "CRITICAL",
+      "count": 1995,
+      "percentage": 2.9,
+      "exposure": 58000000,
+      "avgScore": 39.2,
+      "color": "bg-red-500"
+    }
+  ],
+  "concentrationMetrics": [
+    {
+      "dimension": "Industry",
+      "segments": [
+        {
+          "name": "Professional Services",
+          "percentage": 16.4,
+          "exposure": 520000000
+        },
+        {
+          "name": "Real Estate Services",
+          "percentage": 21.4,
+          "exposure": 1240000000
+        },
+        {
+          "name": "Restaurants & Food",
+          "percentage": 15.3,
+          "exposure": 380000000
+        },
+        {
+          "name": "Healthcare Services",
+          "percentage": 14.3,
+          "exposure": 680000000
+        },
+        {
+          "name": "Construction & Trades",
+          "percentage": 11.4,
+          "exposure": 820000000
+        },
+        {
+          "name": "Other Industries",
+          "percentage": 21.2,
+          "exposure": 2160000000
+        }
+      ],
+      "threshold": 25.0,
+      "status": "within",
+      "notes": "Real estate concentration reflects $13.5B multifamily CRE strength"
+    },
+    {
+      "dimension": "Geographic",
+      "segments": [
+        {
+          "name": "Northeast",
+          "percentage": 63.5,
+          "exposure": 3712000000
+        },
+        {
+          "name": "Southeast",
+          "percentage": 16.5,
+          "exposure": 1044000000
+        },
+        {
+          "name": "Midwest",
+          "percentage": 8.3,
+          "exposure": 348000000
+        },
+        {
+          "name": "Southwest",
+          "percentage": 6.2,
+          "exposure": 580000000
+        },
+        {
+          "name": "West",
+          "percentage": 5.4,
+          "exposure": 116000000
+        }
+      ],
+      "threshold": 65.0,
+      "status": "approaching",
+      "notes": "Heavy Northeast concentration reflects regional bank strategy"
+    },
+    {
+      "dimension": "Revenue Band",
+      "segments": [
+        {
+          "name": "$0-$1M",
+          "percentage": 21.4,
+          "exposure": 580000000
+        },
+        {
+          "name": "$1M-$2.5M",
+          "percentage": 26.8,
+          "exposure": 1160000000
+        },
+        {
+          "name": "$2.5M-$5M",
+          "percentage": 24.1,
+          "exposure": 1624000000
+        },
+        {
+          "name": "$5M-$10M",
+          "percentage": 17.2,
+          "exposure": 1508000000
+        },
+        {
+          "name": "$10M+",
+          "percentage": 10.5,
+          "exposure": 928000000
+        }
+      ],
+      "threshold": 30.0,
+      "status": "within",
+      "notes": "Higher concentration in smaller businesses than national banks"
+    }
+  ],
+  "portfolioKPIs": [
+    {
+      "id": "total-portfolio",
+      "label": "Total Portfolio",
+      "value": 68500,
+      "format": "number",
+      "trend": {
+        "direction": "up",
+        "value": 3.1,
+        "label": "+3.1% vs last quarter"
+      },
+      "status": "positive",
+      "tooltip": "Total SMB businesses in Santander portfolio",
+      "dataSource": "Portfolio Management System"
+    },
+    {
+      "id": "total-exposure",
+      "label": "Total Exposure",
+      "value": 5800000000,
+      "format": "currency",
+      "trend": {
+        "direction": "up",
+        "value": 4.2,
+        "label": "+4.2% vs last quarter"
+      },
+      "status": "positive",
+      "tooltip": "Total credit exposure across SMB products (excludes CRE portfolio)",
+      "dataSource": "Credit Ledger"
+    },
+    {
+      "id": "qualification-rate",
+      "label": "Qualification Rate",
+      "value": 35.8,
+      "format": "percent",
+      "trend": {
+        "direction": "up",
+        "value": 1.8,
+        "label": "+1.8pp vs last quarter"
+      },
+      "status": "positive",
+      "tooltip": "Percentage qualifying for at least one product",
+      "dataSource": "Underwriting Engine"
+    },
+    {
+      "id": "avg-credit-score",
+      "label": "Avg Credit Score",
+      "value": 72.1,
+      "format": "score",
+      "trend": {
+        "direction": "stable",
+        "value": 0.4,
+        "label": "+0.4pts vs last quarter"
+      },
+      "status": "neutral",
+      "tooltip": "Portfolio-weighted average credit score (0-100)",
+      "dataSource": "Risk Analytics"
+    },
+    {
+      "id": "at-risk-businesses",
+      "label": "At-Risk Businesses",
+      "value": 8845,
+      "format": "number",
+      "trend": {
+        "direction": "down",
+        "value": -3.8,
+        "label": "-3.8% vs last quarter"
+      },
+      "status": "warning",
+      "tooltip": "HIGH or CRITICAL risk tier (12.9% of portfolio)",
+      "dataSource": "Early Warning System"
+    },
+    {
+      "id": "offer-pipeline",
+      "label": "Offer Pipeline",
+      "value": 1240000000,
+      "format": "currency",
+      "trend": {
+        "direction": "up",
+        "value": 9.4,
+        "label": "+9.4% vs last quarter"
+      },
+      "status": "positive",
+      "tooltip": "Pre-qualified offers pending business action",
+      "dataSource": "Offer Management"
+    }
+  ],
+  "keyStrengths": [
+    "Dominant Northeast market position",
+    "Strong multifamily real estate expertise ($13.5B portfolio)",
+    "Hispanic/Latino business community focus",
+    "Community banking relationship model",
+    "Professional services concentration (Boston/NYC)",
+    "Former Signature Bank multifamily assets integration"
+  ],
+  "marketDifferentiators": [
+    "Regional powerhouse vs national footprint",
+    "Higher proportion of businesses under $5M revenue",
+    "Service industry concentration reflecting Northeast economy",
+    "Strong in healthcare, professional services, food service",
+    "Weaker in technology (less West Coast) and manufacturing (less Midwest)",
+    "408 branches (vs 4,700+ Chase)"
+  ],
+  "topStates": {
+    "MA": {
+      "businessCount": 14900,
+      "exposure": 1102000000,
+      "branches": 148,
+      "notes": "Headquarters market, former Sovereign Bank core"
+    },
+    "NY": {
+      "businessCount": 12800,
+      "exposure": 1450000000,
+      "branches": 92,
+      "notes": "NYC multifamily real estate dominance, Signature Bank assets"
+    },
+    "NJ": {
+      "businessCount": 8200,
+      "exposure": 656000000,
+      "branches": 92,
+      "notes": "Dense suburban commercial banking"
+    },
+    "PA": {
+      "businessCount": 4700,
+      "exposure": 329000000,
+      "branches": 46,
+      "notes": "Philadelphia metro concentration"
+    },
+    "CT": {
+      "businessCount": 2400,
+      "exposure": 145000000,
+      "branches": 20,
+      "notes": "Hartford and New Haven markets"
+    }
+  },
+  "dataSource": {
+    "method": "Web search synthesis + FDIC data + Santander public disclosures",
+    "confidence": "High",
+    "lastValidated": "2026-02-11",
+    "sources": [
+      "Santander Bank commercial capabilities website",
+      "FDIC branch location data (408 branches, 9 states)",
+      "Santander US press releases (multifamily portfolio, commercial growth)",
+      "Northeast small business industry distribution (SBA, BLS)",
+      "Santander resolution plan filings"
+    ],
+    "assumptions": [
+      "Total portfolio scaled to 68,500 businesses (regional vs 287K national)",
+      "Northeast concentration 63.5% based on branch distribution and historical Sovereign footprint",
+      "Real estate exposure heavily weighted due to $13.5B multifamily CRE portfolio",
+      "Professional Services elevated due to Boston/NYC market density",
+      "Restaurant segment elevated due to Hispanic/Latino community focus",
+      "Technology segment reduced vs national banks (minimal West Coast presence)",
+      "Manufacturing segment reduced vs national banks (minimal Midwest presence)"
+    ]
+  }
+}

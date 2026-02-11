@@ -1,0 +1,336 @@
+{
+  "bank": "Citigroup Inc. / Citibank N.A.",
+  "report_date": "2025-01-31",
+  "report_type": "Geographic Distribution Analysis",
+  "executive_summary": {
+    "overview": "Citibank operates a focused US branch network of approximately 648-670 locations concentrated in major metropolitan markets, representing a strategic shift from broad geographic coverage to premium positioning in key business hubs. This contrasts sharply with the 4,000+ branch networks of JPMorgan Chase, Bank of America, and Wells Fargo.",
+    "us_branch_count": "648-670 branches (as of 2024-2025)",
+    "us_states_served": "13 states",
+    "rank_by_branch_count": "16th largest US bank by branch count",
+    "strategic_approach": "Major metro concentration rather than broad geographic distribution",
+    "global_presence": "160+ countries and jurisdictions for institutional banking"
+  },
+  "us_branch_network": {
+    "total_branches": {
+      "count_range": "648-670 branches",
+      "source_variations": [
+        "648 branches per Bank Branch Locator",
+        "670 branches per other sources",
+        "663 locations as of July 30, 2024"
+      ],
+      "entity": "Citibank N.A."
+    },
+    "branch_ranking": "16th largest US bank by branch count",
+    "states_served": 13,
+    "branch_network_trend": {
+      "last_12_months_opened": 0,
+      "last_12_months_closed": "Limited closures - minimal net change",
+      "notable_new_openings": [
+        {
+          "location": "Chicago",
+          "significance": "First new Chicago branch in a decade",
+          "year": "2024"
+        }
+      ],
+      "branch_strategy": "Optimize network based on customer behavior shifts to digital banking"
+    },
+    "states_with_highest_branch_concentration": [
+      "California",
+      "New York",
+      "Illinois",
+      "Florida",
+      "District of Columbia"
+    ]
+  },
+  "geographic_distribution_by_major_markets": {
+    "primary_markets": [
+      {
+        "market": "New York City Metro",
+        "state": "New York",
+        "strategic_importance": "Headquarters, highest concentration, primary market",
+        "estimated_branches": "Highest concentration nationally",
+        "market_positioning": "Premium personal banking, commercial banking hub, wealth management center"
+      },
+      {
+        "market": "Los Angeles Metro",
+        "state": "California",
+        "strategic_importance": "Major West Coast hub, international trade gateway",
+        "estimated_branches": "Second highest concentration (California overall has most branches)",
+        "market_positioning": "Commercial banking, international business, wealth management"
+      },
+      {
+        "market": "San Francisco Bay Area",
+        "state": "California",
+        "strategic_importance": "Technology sector hub, venture capital/innovation center",
+        "estimated_branches": "Significant presence",
+        "market_positioning": "Technology/startup banking, commercial banking, wealth management",
+        "recent_activity": "Rhode Island Street branch closure scheduled end of 2024"
+      },
+      {
+        "market": "Chicago Metro",
+        "state": "Illinois",
+        "strategic_importance": "Midwest financial center, corporate headquarters hub",
+        "estimated_branches": "Third highest concentration",
+        "market_positioning": "Commercial banking, corporate banking, middle market focus",
+        "recent_activity": "First new Chicago branch opened in a decade (2024)"
+      },
+      {
+        "market": "Miami Metro",
+        "state": "Florida",
+        "strategic_importance": "Latin America gateway, international banking hub",
+        "estimated_branches": "Strong presence",
+        "market_positioning": "International/cross-border banking, Latin American corporate clients, wealth management"
+      },
+      {
+        "market": "Washington, DC Metro",
+        "state": "District of Columbia",
+        "strategic_importance": "Government contracting, professional services hub",
+        "estimated_branches": "Significant presence",
+        "market_positioning": "Commercial banking, government contractors, professional services"
+      }
+    ],
+    "secondary_markets": [
+      {
+        "market": "Las Vegas",
+        "state": "Nevada",
+        "strategic_importance": "Regional hub",
+        "market_positioning": "Consumer and commercial banking"
+      },
+      {
+        "market": "Sacramento",
+        "state": "California",
+        "strategic_importance": "State capital, government services",
+        "market_positioning": "Commercial banking, government banking"
+      },
+      {
+        "market": "San Diego",
+        "state": "California",
+        "strategic_importance": "Regional Southern California market",
+        "market_positioning": "Commercial banking, cross-border Mexico trade"
+      }
+    ]
+  },
+  "branch_closures_2024": {
+    "closure_strategy": "Optimize branch network based on shifting customer behavior to online banking",
+    "recent_closures": [
+      {
+        "location": "78-09 Metropolitan Avenue, Middle Village, Queens, NY",
+        "closure_date": "June 28, 2024",
+        "redirect_branch": "Ridgewood location",
+        "rationale": "Customer behavior changes and network optimization"
+      },
+      {
+        "location": "New Hyde Park, Long Island, NY",
+        "closure_date": "2024",
+        "rationale": "Network optimization"
+      },
+      {
+        "location": "Rhode Island Street, San Francisco, CA",
+        "closure_date": "End of 2024 (scheduled)",
+        "rationale": "Network optimization"
+      }
+    ],
+    "closure_rationale": "Consumers have continued to shift to online banking where they can still access most banking services even after a branch closes, leading banks to save money by getting rid of certain physical locations",
+    "net_branch_change": "Minimal - selective closures with strategic new openings (e.g., Chicago)"
+  },
+  "broader_us_presence": {
+    "total_offices_and_branches": "Over 1,000 offices and branches combined in the United States",
+    "employees": "More than 82,000 colleagues in the US",
+    "note": "The 1,000+ figure includes all Citi entities, operations, and office locations beyond just Citibank N.A. retail branches"
+  },
+  "geographic_strategy": {
+    "positioning": "Premium bank in major metropolitan markets rather than mass-market national coverage",
+    "target_markets": "Major financial centers, technology hubs, international business gateways",
+    "differentiation_vs_competitors": [
+      {
+        "competitor": "JPMorgan Chase",
+        "their_branches": "~4,700 branches",
+        "citi_strategy": "Cannot compete on branch ubiquity - focus on premium metros and digital banking"
+      },
+      {
+        "competitor": "Bank of America",
+        "their_branches": "~3,900 branches",
+        "citi_strategy": "Differentiate through international capabilities and major metro premium positioning"
+      },
+      {
+        "competitor": "Wells Fargo",
+        "their_branches": "~4,600 branches",
+        "citi_strategy": "Avoid competing for mass-market branch-based banking - focus on commercial and institutional"
+      }
+    ],
+    "strategic_rationale": [
+      "Focus capital on high-value markets with commercial banking and wealth management opportunities",
+      "Leverage digital banking to serve customers outside branch footprint",
+      "Avoid low-margin mass-market retail banking requiring extensive branch networks",
+      "Concentrate resources in markets with significant international business activity"
+    ]
+  },
+  "international_geographic_presence": {
+    "countries_and_jurisdictions": "160+ countries and jurisdictions",
+    "strategic_focus": "Institutional banking, corporate banking, treasury and trade solutions globally",
+    "competitive_advantage": "Most extensive international network among US banks",
+    "key_international_markets": [
+      {
+        "region": "Asia-Pacific",
+        "scope": "12 territories in APAC region",
+        "strategic_importance": "Commercial banking expansion, trade finance corridors",
+        "client_focus": "Medium-sized foreign companies, multinational corporations"
+      },
+      {
+        "region": "Latin America",
+        "strategic_importance": "Institutional banking hub, Mexico institutional operations",
+        "note": "Exited consumer banking in Mexico (Banamex separated), maintaining institutional presence"
+      },
+      {
+        "region": "Europe, Middle East, Africa (EMEA)",
+        "strategic_importance": "Institutional banking, treasury services",
+        "note": "Exited consumer banking in multiple EMEA markets, maintaining institutional presence"
+      }
+    ],
+    "consumer_banking_exits": {
+      "total_markets_exiting": "14 markets outside United States",
+      "completed_exits": "9 markets as of 2024",
+      "regions": "Asia, Europe, Middle East, Africa, Mexico consumer operations",
+      "retained_presence": "Institutional banking, corporate banking, and treasury services remain in most exited consumer markets",
+      "strategic_shift": "Consumer banking only in US home market; institutional banking globally"
+    }
+  },
+  "comparison_to_major_competitors": {
+    "branch_footprint_comparison": [
+      {
+        "bank": "JPMorgan Chase",
+        "us_branches": "~4,700",
+        "states": "48 states",
+        "strategy": "Broad national coverage"
+      },
+      {
+        "bank": "Bank of America",
+        "us_branches": "~3,900",
+        "states": "35+ states",
+        "strategy": "Broad national coverage"
+      },
+      {
+        "bank": "Wells Fargo",
+        "us_branches": "~4,600",
+        "states": "35+ states",
+        "strategy": "Broad national coverage"
+      },
+      {
+        "bank": "Citibank",
+        "us_branches": "648-670",
+        "states": "13 states",
+        "strategy": "Major metro concentration"
+      }
+    ],
+    "international_comparison": [
+      {
+        "bank": "Citibank",
+        "international_scope": "160+ countries - most extensive among US banks",
+        "strategy": "Global institutional banking leader"
+      },
+      {
+        "bank": "JPMorgan Chase",
+        "international_scope": "100+ countries",
+        "strategy": "Strong international presence, primarily institutional"
+      },
+      {
+        "bank": "Bank of America",
+        "international_scope": "35+ countries",
+        "strategy": "Selective international presence"
+      },
+      {
+        "bank": "Wells Fargo",
+        "international_scope": "Limited - primarily US-focused",
+        "strategy": "Minimal international operations"
+      }
+    ]
+  },
+  "target_customer_geographic_profile": {
+    "consumer_banking": {
+      "geographic_target": "Affluent customers in major metropolitan markets",
+      "markets": "NYC, LA, SF, Chicago, Miami, DC, Las Vegas, Sacramento, San Diego",
+      "positioning": "Premium personal banking rather than mass-market coverage",
+      "digital_strategy": "Digital banking platform extends reach beyond physical branch footprint"
+    },
+    "commercial_banking": {
+      "geographic_target": "Major metros with commercial activity concentration + global reach via institutional network",
+      "sweet_spot": "Middle market companies in major metros, especially those with international operations",
+      "competitive_advantage": "Can serve client domestically in key metros AND internationally in 160+ countries"
+    },
+    "wealth_management": {
+      "geographic_target": "High-net-worth individuals in major financial centers globally",
+      "us_focus": "Major metros with wealth concentration",
+      "international_focus": "Global wealth management capabilities in key financial centers worldwide"
+    },
+    "institutional": {
+      "geographic_target": "Global - 160+ countries",
+      "client_profile": "Multinational corporations, financial institutions, public sector entities",
+      "service_delivery": "Combination of local market presence and global platform access"
+    }
+  },
+  "metro_market_strategic_assessment": {
+    "new_york_city": {
+      "importance": "Tier 1 - Corporate headquarters and highest strategic priority",
+      "strengths": "Dominant local presence, wealth management hub, institutional banking center",
+      "client_opportunities": "Financial services firms, professional services, real estate, wealth management"
+    },
+    "los_angeles": {
+      "importance": "Tier 1 - Major West Coast hub",
+      "strengths": "Entertainment industry banking, international trade (Pacific Rim), wealth management",
+      "client_opportunities": "Entertainment/media, technology, international trade companies, high-net-worth individuals"
+    },
+    "san_francisco_bay_area": {
+      "importance": "Tier 1 - Technology and innovation center",
+      "strengths": "Technology sector relationships, venture capital ecosystem access, innovation banking",
+      "client_opportunities": "Technology companies, startups scaling internationally, venture-backed firms"
+    },
+    "chicago": {
+      "importance": "Tier 1 - Midwest commercial hub",
+      "strengths": "Corporate headquarters density, middle market commercial banking",
+      "client_opportunities": "Manufacturing, logistics, professional services, middle market corporates",
+      "recent_investment": "First new branch in a decade signals renewed strategic focus"
+    },
+    "miami": {
+      "importance": "Tier 1 - Latin America gateway",
+      "strengths": "Unmatched for Latin American business connections, cross-border banking hub",
+      "client_opportunities": "Latin American multinationals, cross-border trade, international wealth management",
+      "competitive_advantage": "Historical Citi strength in Latin America provides differentiated positioning"
+    },
+    "washington_dc": {
+      "importance": "Tier 1 - Government and professional services hub",
+      "strengths": "Government contractor banking, professional services concentration",
+      "client_opportunities": "Government contractors, associations, professional services firms, policy-related organizations"
+    }
+  },
+  "geographic_strategy_forward": {
+    "us_footprint": "Maintain focused major metro presence with selective optimization",
+    "growth_approach": "Digital channel expansion to extend reach beyond physical footprint",
+    "branch_strategy": "Quality over quantity - premium locations in key markets rather than broad coverage",
+    "international_strategy": "Maintain institutional banking global leadership in 160+ countries while exiting consumer operations outside US",
+    "investment_priorities": [
+      "Digital banking platform to serve customers nationally regardless of branch proximity",
+      "Major metro branch experience enhancements",
+      "Commercial banking coverage in key business centers",
+      "Global institutional network infrastructure"
+    ]
+  },
+  "key_geographic_findings": [
+    "Citibank operates 648-670 branches in 13 US states, ranking 16th by branch count - dramatically smaller footprint than top 3 US banks with 4,000+ branches each",
+    "Strategic concentration in 6 major metros: NYC, LA, SF, Chicago, Miami, DC - premium positioning rather than mass-market coverage",
+    "Branch network stable with minimal closures and selective new openings (e.g., first new Chicago branch in decade)",
+    "International presence of 160+ countries represents competitive advantage and differentiator vs. domestically-focused competitors",
+    "Exiting consumer banking in 14 international markets while maintaining institutional banking globally aligns with services-led strategy",
+    "Limited US branch footprint is strategic choice enabling focus on high-value markets and avoiding low-margin mass-market retail banking",
+    "Digital banking platform extends effective reach beyond 648-670 physical locations",
+    "Geographic strategy matches overall positioning: premium institutional/commercial bank in key markets rather than ubiquitous retail bank"
+  ],
+  "data_sources": [
+    "Bank Branch Locator databases",
+    "FDIC branch location data",
+    "Citigroup press releases and investor materials",
+    "Branch closure notifications and announcements",
+    "Banking industry geographic distribution analyses",
+    "Competitor branch network comparisons"
+  ],
+  "methodology_notes": "This geographic distribution analysis synthesizes branch location data from multiple sources (Bank Branch Locator, FDIC data, Citigroup official communications) with strategic context from earnings calls and investor presentations. Branch count figures show minor variation across sources (648-670 range) but consistently demonstrate Citi's focused major metro strategy vs. competitors' broad geographic coverage."
+}
