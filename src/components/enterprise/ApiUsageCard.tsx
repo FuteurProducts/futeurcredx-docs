@@ -67,7 +67,7 @@ export const ApiUsageCard: React.FC<ApiUsageCardProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${data.successRate}%` }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className={`h-full rounded-full ${
               data.successRate >= 99 ? "bg-success" :
               data.successRate >= 95 ? "bg-warning" : "bg-destructive"

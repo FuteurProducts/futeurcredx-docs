@@ -405,7 +405,7 @@ export const CredentialsPanel: React.FC = () => {
                       <select
                         value={rotationDays}
                         onChange={(e) => setRotationDays(Number(e.target.value))}
-                        className="text-sm border rounded px-2 py-1"
+                        className="text-sm border border-border rounded px-2 py-1"
                       >
                         <option value={30}>30 days</option>
                         <option value={60}>60 days</option>

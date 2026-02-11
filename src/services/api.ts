@@ -187,12 +187,12 @@ class ApiService {
     try {
       const currentHeaders: Record<string, string> = requestConfig.headers || {};
       const hasAuthorizationHeader = !!currentHeaders['Authorization'];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Clerk global is untyped
       const clerk = (window as any)?.Clerk;
 
       if (!hasAuthorizationHeader && clerk?.session?.getToken) {
         // Prefer a specific JWT template if configured; fall back to default token
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Vite import.meta.env is untyped
         const jwtTemplate = (import.meta as any)?.env?.VITE_CLERK_JWT_TEMPLATE;
         let jwt: string | null = null;
         if (jwtTemplate) {

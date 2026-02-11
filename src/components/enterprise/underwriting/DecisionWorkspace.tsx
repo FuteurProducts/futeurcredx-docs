@@ -277,7 +277,7 @@ export function DecisionWorkspace({ data, onAction, className }: DecisionWorkspa
             rows={4}
             className={cn(
               'w-full rounded-lg border border-border bg-background px-3 py-2',
-              'text-sm text-foreground placeholder:text-muted-foreground',
+              'text-sm text-foreground placeholder-muted-foreground',
               'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-transparent',
               'resize-y',
             )}
@@ -293,7 +293,7 @@ export function DecisionWorkspace({ data, onAction, className }: DecisionWorkspa
               className={cn(
                 'flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5',
                 'text-sm font-medium transition-colors',
-                'disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent',
+                'disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-transparent',
                 borderClass,
                 textClass,
                 hoverClass,

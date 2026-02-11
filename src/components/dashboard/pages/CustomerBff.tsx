@@ -255,12 +255,14 @@ const CustomerBff: React.FC = () => {
           page: currentPage,
           pageSize,
         }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Fallback response shape matches BffListResponse
         { data: FALLBACK_BFF_CUSTOMERS as unknown as SmbEntity[], meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_BFF_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } } as BffListResponse<SmbEntity>,
         'Customer List'
       );
 
       // If we got live BFF data, use it; otherwise use our full 36-record set
       if (source === 'live') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
         const bffCustomers = response.data as unknown as BffCustomerListItem[];
         const adaptedCustomers = adaptBffCustomerList(bffCustomers);
         setCustomers(adaptedCustomers);

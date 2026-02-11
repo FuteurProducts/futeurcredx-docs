@@ -56,8 +56,8 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
     <div className={`p-6 ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl">
-            <Server className="h-5 w-5 text-cyan-600 dark:text-cyan-400" />
+          <div className="p-2 bg-primary/10 rounded-xl">
+            <Server className="h-5 w-5 text-primary" />
           </div>
           <div>
             <h3 className="text-h6 font-semibold text-foreground">System Status</h3>
@@ -91,7 +91,7 @@ export const IntegrationHealthCard: React.FC<IntegrationHealthCardProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${overallUptime}%` }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             className={`h-full rounded-full ${
               overallUptime >= 99.9 ? "bg-success" :
               overallUptime >= 99 ? "bg-warning" : "bg-destructive"

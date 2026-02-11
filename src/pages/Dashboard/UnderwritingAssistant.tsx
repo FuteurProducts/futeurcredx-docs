@@ -85,6 +85,7 @@ const UnderwritingAssistant: React.FC = () => {
           ]);
           // Build business name map
           const nameMap: Record<string, string> = {};
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
           const entities = custsRes.data as unknown as Array<{ id: string; legalName?: string; business_name?: string }>;
           entities.forEach(e => { nameMap[e.id] = e.legalName || e.business_name || ''; });
           return { apps: appsRes.data, nameMap };
@@ -93,7 +94,7 @@ const UnderwritingAssistant: React.FC = () => {
         'Applications Pipeline'
       );
       if (source === 'live' && response.apps.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
         const adapted = adaptApplicationsToPipeline(response.apps as any, response.nameMap);
         setApplications(adapted);
       } else if (source === 'fallback') {

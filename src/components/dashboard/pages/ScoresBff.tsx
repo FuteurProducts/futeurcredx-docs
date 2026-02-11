@@ -107,10 +107,11 @@ const ScoresBff: React.FC = () => {
     try {
       const { data: response, source } = await withFallback(
         () => scoresService.list(portfolioId, { pageSize: 100 }),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Fallback response shape matches BffListResponse
         { data: FALLBACK_SCORES as any, meta: { requestId: 'fallback' } },
         'Score List'
       );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
       const scoreData = response.data as unknown as ScoreRecord[];
       setScores(scoreData);
       setLastUpdated(response.meta?.lastUpdated || new Date().toISOString());
@@ -133,6 +134,7 @@ const ScoresBff: React.FC = () => {
 
     try {
       const response = await customersService.list(portfolioId, { pageSize: 100 });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
       const customerList = (response.data as unknown as Array<{
         id: string;
         businessName: string;

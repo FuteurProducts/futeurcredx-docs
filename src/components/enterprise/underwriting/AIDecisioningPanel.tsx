@@ -334,7 +334,7 @@ export const AIDecisioningPanel: React.FC<AIDecisioningPanelProps> = ({
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${signal.score}%` }}
-                        transition={{ duration: 0.8, delay: i * 0.1 }}
+                        transition={{ duration: 0.2, delay: i * 0.1 }}
                         className={`h-full rounded-full ${
                           signal.status === 'pass' ? 'bg-success' :
                           signal.status === 'warning' ? 'bg-warning' : 'bg-destructive'

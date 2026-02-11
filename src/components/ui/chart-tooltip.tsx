@@ -4,9 +4,14 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
+interface TooltipPayloadEntry {
+  value: number;
+  color?: string;
+}
+
 interface ChartTooltipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: TooltipPayloadEntry[];
   label?: string;
   formatter?: (value: number) => string;
   labelFormatter?: (label: string) => string;

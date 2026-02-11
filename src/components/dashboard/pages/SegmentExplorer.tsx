@@ -623,7 +623,7 @@ const SegmentExplorer: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
         className="flex flex-col gap-1"
       >
         <div className="flex items-center gap-3">
@@ -643,7 +643,7 @@ const SegmentExplorer: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.05 }}
+        transition={{ duration: 0.2, delay: 0.05 }}
         className="rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-6"
       >
         <div className="flex items-center justify-between">
@@ -813,7 +813,7 @@ const SegmentExplorer: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.1 }}
+        transition={{ duration: 0.2, delay: 0.1 }}
         className="rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4"
       >
         <div className="flex items-center justify-between">
@@ -914,7 +914,7 @@ const SegmentExplorer: React.FC = () => {
         ref={businessTableRef}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.15 }}
+        transition={{ duration: 0.2, delay: 0.15 }}
         className="rounded-2xl border border-border/60 p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4"
       >
         <div className="flex items-center justify-between">

@@ -176,7 +176,7 @@ export const FinlabOverview: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
         className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-6 md:p-8 shadow-xl"
       >
         {/* Decorative background elements */}
@@ -249,7 +249,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
+          transition={{ duration: 0.2, delay: 0.1 }}
           className="min-w-0"
         >
           <ConnectedBusinessesCard
@@ -261,7 +261,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.15 }}
+          transition={{ duration: 0.2, delay: 0.15 }}
           className="min-w-0"
         >
           <ApiUsageCard
@@ -273,7 +273,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
+          transition={{ duration: 0.2, delay: 0.2 }}
           className="min-w-0 md:col-span-2 xl:col-span-1"
         >
           <PortfolioHealthCard
@@ -288,7 +288,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.25 }}
+          transition={{ duration: 0.2, delay: 0.25 }}
           className="min-w-0"
         >
           <DataFreshnessCard
@@ -301,7 +301,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
+          transition={{ duration: 0.2, delay: 0.3 }}
           className="min-w-0"
         >
           <RecentActivityFeed
@@ -320,7 +320,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.35 }}
+          transition={{ duration: 0.2, delay: 0.35 }}
           className="min-w-0"
         >
           <WebhookEventsCard
@@ -337,7 +337,7 @@ export const FinlabOverview: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
+          transition={{ duration: 0.2, delay: 0.4 }}
           className="min-w-0"
         >
           <IntegrationHealthCard
@@ -355,7 +355,7 @@ export const FinlabOverview: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.45 }}
+        transition={{ duration: 0.2, delay: 0.45 }}
         className="min-w-0"
       >
         <div className="text-xs text-muted-foreground mb-2">Showing top 25 of 47,500 businesses</div>

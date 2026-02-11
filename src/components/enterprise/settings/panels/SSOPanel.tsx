@@ -127,7 +127,7 @@ export const SSOPanel: React.FC = () => {
                     className={`p-4 rounded-xl border-2 text-center transition-all duration-200 ${
                       ssoConfig.provider === provider
                         ? 'border-primary bg-primary/5'
-                        : 'border-border hover:border-primary/50'
+                        : 'border-border hover:border-primary/50 transition-colors duration-200'
                     }`}
                   >
                     <span className="text-sm font-medium capitalize">
@@ -368,7 +368,7 @@ export const SSOPanel: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between p-4 border rounded-xl">
+                <div className="flex items-center justify-between p-4 border border-border rounded-xl">
                   <div>
                     <Label>Re-auth for Sensitive Actions</Label>
                     <p className="text-xs text-muted-foreground">Require password for PII access</p>

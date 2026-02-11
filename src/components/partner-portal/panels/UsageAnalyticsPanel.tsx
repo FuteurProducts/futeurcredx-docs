@@ -213,7 +213,7 @@ export const UsageAnalyticsPanel: React.FC = () => {
                   key={data.period}
                   initial={{ height: 0 }}
                   animate={{ height: `${height}%` }}
-                  transition={{ delay: index * 0.05, duration: 0.3 }}
+                  transition={{ delay: index * 0.05, duration: 0.2 }}
                   className="flex-1 relative group"
                 >
                   <div className="absolute inset-0 bg-primary/20 rounded-t-md group-hover:bg-primary/30 transition-colors" />

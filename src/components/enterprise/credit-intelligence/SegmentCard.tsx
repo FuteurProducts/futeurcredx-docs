@@ -140,7 +140,7 @@ export function SegmentCard({ segment, onView, index }: SegmentCardProps) {
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${segment.preQualRate * 100}%` }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: index * 0.04 }}
+            transition={{ duration: 0.2, ease: 'easeOut', delay: index * 0.04 }}
             className={cn('h-full rounded-full', getPreQualColor(segment.preQualRate))}
           />
         </div>

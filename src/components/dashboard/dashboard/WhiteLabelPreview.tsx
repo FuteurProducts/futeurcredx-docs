@@ -116,7 +116,7 @@ export function WhiteLabelPreview() {
                 <div className="space-y-2">
                   <div className="h-2 bg-background/50 rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full transition-all duration-1000"
+                      className="h-full rounded-full transition-all duration-200"
                       style={{ backgroundColor: brandColor, width: '72%' }}
                     />
                   </div>

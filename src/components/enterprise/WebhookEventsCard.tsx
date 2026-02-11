@@ -63,8 +63,8 @@ export const WebhookEventsCard: React.FC<WebhookEventsCardProps> = ({
     <div className={`p-6 ${className}`}>
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
-            <Webhook className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-2 bg-primary/10 rounded-xl">
+            <Webhook className="h-5 w-5 text-primary" />
           </div>
           <h3 className="text-h6 font-semibold text-foreground">Webhook Events</h3>
         </div>

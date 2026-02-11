@@ -476,7 +476,7 @@ const ApiPlaygroundPanel: React.FC = () => {
           );
           setStoredCredentials(filtered);
         } catch (e) {
-          console.error('Failed to parse credentials:', e);
+          // Failed to parse credentials from localStorage
         }
       }
 
@@ -490,7 +490,7 @@ const ApiPlaygroundPanel: React.FC = () => {
             setSelectedCredentialId(selected.id || '');
           }
         } catch (e) {
-          console.error('Failed to parse selected key:', e);
+          // Failed to parse selected key from localStorage
         }
       }
 
@@ -501,7 +501,7 @@ const ApiPlaygroundPanel: React.FC = () => {
           const history = JSON.parse(historyJson) as RequestHistoryEntry[];
           setRequestHistory(history.slice(0, 20));
         } catch (e) {
-          console.error('Failed to parse history:', e);
+          // Failed to parse history from localStorage
         }
       }
     };

@@ -43,6 +43,7 @@ export const offersService = {
     });
 
     // Normalize each offer through the normalizer layer
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
     return {
       ...response,
       data: response.data.map((o) => normalizeOffer(o as unknown as Record<string, unknown>)),
@@ -61,6 +62,7 @@ export const offersService = {
       { portfolioId }
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
     return {
       ...response,
       data: normalizeOffer(response.data as unknown as Record<string, unknown>),
@@ -79,6 +81,7 @@ export const offersService = {
       body: request,
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
     return {
       ...response,
       data: normalizeOffer(response.data as unknown as Record<string, unknown>),
@@ -111,6 +114,7 @@ export const offersService = {
       { portfolioId, body: { reason } }
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
     return {
       ...response,
       data: normalizeOffer(response.data as unknown as Record<string, unknown>),

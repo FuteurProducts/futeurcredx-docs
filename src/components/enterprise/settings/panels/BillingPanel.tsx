@@ -105,7 +105,7 @@ export const BillingPanel: React.FC<BillingPanelProps> = ({
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${usagePercentage}%` }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.2 }}
             className={`h-full rounded-full ${
               usagePercentage > 80 ? 'bg-warning' : 'bg-primary'
             }`}

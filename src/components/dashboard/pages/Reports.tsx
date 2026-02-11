@@ -58,6 +58,7 @@ function adaptReportJobToGenerated(job: ReportJob): GeneratedReport {
     status: statusMap[job.status] ?? job.status as GeneratedReport['status'],
     generatedAt: job.completedAt || job.createdAt,
     generatedBy: 'system',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Temporary placeholder for missing fileSize
     fileSize: undefined as unknown as string,
     downloadUrl: job.artifactUrl || '#',
     metadata: {

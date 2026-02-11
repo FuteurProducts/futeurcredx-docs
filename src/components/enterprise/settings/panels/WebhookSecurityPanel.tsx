@@ -105,7 +105,7 @@ export const WebhookSecurityPanel: React.FC = () => {
                   className={`p-4 rounded-xl border-2 text-left transition-all duration-200 ${
                     config.signatureAlgorithm === algo
                       ? 'border-primary bg-primary/5'
-                      : 'border-border hover:border-primary/50'
+                      : 'border-border hover:border-primary/50 transition-colors duration-200'
                   }`}
                 >
                   <span className="font-mono text-sm font-medium uppercase">{algo}</span>
@@ -305,7 +305,7 @@ function verifyWebhook(payload, signature, timestamp, secret) {
                   <label
                     key={event.id}
                     className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200 ${
-                      isAllowed ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted'
+                      isAllowed ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted transition-colors duration-200'
                     }`}
                   >
                     <input

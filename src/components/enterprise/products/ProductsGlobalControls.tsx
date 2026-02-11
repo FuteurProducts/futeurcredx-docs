@@ -85,7 +85,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap transition-all ${
                 isActive
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80 transition-colors duration-200'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -157,7 +157,7 @@ export const ProductsGlobalControls: React.FC<ProductsGlobalControlsProps> = ({
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                 filters.timeWindow === tw.id
                   ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-muted-foreground hover:text-foreground transition-colors duration-200'
               }`}
             >
               {tw.label}

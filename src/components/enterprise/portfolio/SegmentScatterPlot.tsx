@@ -176,6 +176,7 @@ export function SegmentScatterPlot({
           <Tooltip content={<CustomTooltip />} cursor={{ strokeDasharray: '3 3' }} />
           <Scatter
             data={scatterData}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Recharts onClick payload needs conversion
             onClick={(data) => handleClick(data as unknown as ScatterDataPoint)}
           >
             {scatterData.map((entry) => (

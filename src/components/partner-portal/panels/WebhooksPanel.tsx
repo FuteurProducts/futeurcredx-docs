@@ -291,7 +291,7 @@ export const WebhooksPanel: React.FC = () => {
               key={webhook.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-4 rounded-lg border bg-background"
+              className="p-4 rounded-lg border border-border bg-background"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">

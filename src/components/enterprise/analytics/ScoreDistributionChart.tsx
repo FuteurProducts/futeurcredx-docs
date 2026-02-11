@@ -30,8 +30,13 @@ const bucketColors: Record<string, string> = {
   '86-100': 'hsl(var(--info))',
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CustomTooltip = ({ active, payload }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Recharts provides untyped payload
+  payload?: any[];
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload as ScoreBucket;
     return (

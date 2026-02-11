@@ -57,6 +57,7 @@ export const auditService = {
     // Normalize each audit event
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: response.data.map((e) => normalizeAuditEvent(e as unknown as Record<string, unknown>)),
     };
   },

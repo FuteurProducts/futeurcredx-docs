@@ -49,7 +49,7 @@ export const CrossSellFunnel: React.FC<CrossSellFunnelProps> = ({ stages }) => {
               <motion.div
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.3 }}
+                transition={{ delay: index * 0.1, duration: 0.2 }}
                 className="relative"
                 style={{ originX: 0 }}
               >

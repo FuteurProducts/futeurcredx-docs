@@ -49,6 +49,7 @@ export const customersService = {
     });
 
     // Normalize each customer through the normalizer layer
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
     return {
       ...response,
       data: response.data.map((c) => normalizeCustomer(c as unknown as Record<string, unknown>)),
@@ -69,6 +70,7 @@ export const customersService = {
     );
 
     // Normalize the dossier and all nested entities
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
     return {
       ...response,
       data: normalizeCustomerDossier(response.data as unknown as Record<string, unknown>),

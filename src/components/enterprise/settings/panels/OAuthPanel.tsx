@@ -139,7 +139,7 @@ export const OAuthPanel: React.FC = () => {
                 <Label>Scopes</Label>
                 <div className="grid grid-cols-2 gap-2">
                   {availableScopes.map((scope) => (
-                    <label key={scope.id} className="flex items-center gap-2 p-2 rounded border cursor-pointer hover:bg-muted">
+                    <label key={scope.id} className="flex items-center gap-2 p-2 rounded border border-border cursor-pointer hover:bg-muted transition-colors duration-200">
                       <input
                         type="checkbox"
                         checked={newScopes.includes(scope.id)}
@@ -257,7 +257,7 @@ export const OAuthPanel: React.FC = () => {
                     <Button 
                       size="icon" 
                       variant="ghost" 
-                      className="text-destructive hover:text-destructive"
+                      className="text-destructive hover:text-destructive transition-colors duration-200"
                       onClick={() => handleDelete(client.id)}
                     >
                       <Trash2 className="h-4 w-4" />

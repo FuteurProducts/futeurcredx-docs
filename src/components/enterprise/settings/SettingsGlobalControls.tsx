@@ -39,7 +39,7 @@ export const SettingsGlobalControls: React.FC<SettingsGlobalControlsProps> = ({
               className={`px-3 py-1 text-xs font-medium rounded-lg transition-all duration-200 ${
                 environment === 'sandbox'
                   ? 'bg-warning/10 text-warning'
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-muted-foreground hover:text-foreground transition-colors duration-200'
               }`}
             >
               Sandbox
@@ -49,7 +49,7 @@ export const SettingsGlobalControls: React.FC<SettingsGlobalControlsProps> = ({
               className={`px-3 py-1 text-xs font-medium rounded-lg transition-all duration-200 ${
                 environment === 'production'
                   ? 'bg-success/10 text-success'
-                  : 'text-muted-foreground hover:text-foreground'
+                  : 'text-muted-foreground hover:text-foreground transition-colors duration-200'
               }`}
             >
               Production

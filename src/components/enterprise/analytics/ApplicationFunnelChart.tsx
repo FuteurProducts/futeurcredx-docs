@@ -70,7 +70,7 @@ export const ApplicationFunnelChart: React.FC<ApplicationFunnelChartProps> = ({ 
                 <motion.div
                   initial={{ height: 0 }}
                   animate={{ height: `${heightPercent}%` }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  transition={{ delay: index * 0.1, duration: 0.2 }}
                   className={`absolute bottom-0 w-full ${stage.color} rounded-t-xl`}
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">

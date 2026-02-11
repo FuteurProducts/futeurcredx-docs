@@ -182,6 +182,7 @@ const Users = () => {
 
         // Fetch businesses
         const response = await dashboardService.getBusinessInsights(filters);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
         setBusinesses((response.data || []) as unknown as BusinessInsight[]);
 
         // Fetch stats
@@ -190,6 +191,7 @@ const Users = () => {
           setStats(statsResponse);
         } catch {
           // Fallback stats
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
           const allBiz = (response.data || []) as unknown as BusinessInsight[];
           let totalApps = 0;
           allBiz.forEach((b) => {

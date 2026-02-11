@@ -29,7 +29,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
 };
 
 const formatCurrency = (value: number): string => {
@@ -189,7 +189,7 @@ export const PortfolioPenetrationDashboard: React.FC<PortfolioPenetrationDashboa
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${row.penetrationRate}%` }}
-                            transition={{ delay: index * 0.04 + 0.2, duration: 0.5 }}
+                            transition={{ delay: index * 0.04 + 0.2, duration: 0.2 }}
                             className={`h-full rounded-full ${getPenetrationColor(row.penetrationRate)}`}
                           />
                         </div>
@@ -278,7 +278,7 @@ export const PortfolioPenetrationDashboard: React.FC<PortfolioPenetrationDashboa
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${segment.walletShare}%` }}
-                    transition={{ delay: index * 0.1 + 0.4, duration: 0.6 }}
+                    transition={{ delay: index * 0.1 + 0.4, duration: 0.2 }}
                     className={`h-full rounded-full ${getWalletShareColor(segment.walletShare)}`}
                   />
                 </div>

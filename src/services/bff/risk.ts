@@ -36,6 +36,7 @@ export const riskService = {
 
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: normalizeRiskSummary(response.data as unknown as Record<string, unknown>),
     };
   },
@@ -61,6 +62,7 @@ export const riskService = {
     // Normalize each alert through the normalizer layer
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: response.data.map((a) => normalizeEWSAlert(a as unknown as Record<string, unknown>)),
     };
   },
@@ -80,6 +82,7 @@ export const riskService = {
 
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: normalizeEWSAlert(response.data as unknown as Record<string, unknown>),
     };
   },
@@ -99,6 +102,7 @@ export const riskService = {
     return {
       ...response,
       data: Array.isArray(response.data)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
         ? response.data.map((a) => normalizeRiskAggregate(a as unknown as Record<string, unknown>))
         : [],
     };

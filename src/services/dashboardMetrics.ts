@@ -71,6 +71,7 @@ async function fetchLiveTrendData(portfolioId: string): Promise<TrendDataPoint[]
 export async function getDashboardKPIs(portfolioId: string) {
   return withFallback(
     () => fetchLiveKPIs(portfolioId),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Fallback data converted to expected type
     PILOT_METRICS as unknown as DashboardKPIs,
     'Dashboard KPIs'
   );

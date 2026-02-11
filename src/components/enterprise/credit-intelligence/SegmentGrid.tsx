@@ -131,7 +131,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
                 'p-1.5 transition-colors',
                 viewMode === 'grid'
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-card text-muted-foreground hover:bg-accent',
+                  : 'bg-card text-muted-foreground hover:bg-accent transition-colors duration-200',
               )}
               aria-label="Grid view"
             >
@@ -143,7 +143,7 @@ export function SegmentGrid({ onSegmentSelect }: SegmentGridProps) {
                 'p-1.5 transition-colors',
                 viewMode === 'list'
                   ? 'bg-primary text-primary-foreground'
-                  : 'bg-card text-muted-foreground hover:bg-accent',
+                  : 'bg-card text-muted-foreground hover:bg-accent transition-colors duration-200',
               )}
               aria-label="List view"
             >

@@ -520,7 +520,7 @@ const Dashboard: React.FC = () => {
           fixed top-0 left-0 h-full z-50
           bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900
           dark:from-slate-950 dark:via-slate-900 dark:to-slate-950
-          transform transition-all duration-300 ease-in-out
+          transform transition-all duration-200 ease-in-out
           lg:translate-x-0 lg:static lg:z-auto flex flex-col
           border-r border-white/5
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -535,7 +535,7 @@ const Dashboard: React.FC = () => {
               <img
                 src={withBaseUrl('/lumiqlogo.png')}
                 alt="LUMIQ AI"
-                className={`object-contain transition-all duration-300 group-hover:scale-105 ${sidebarCollapsed ? 'w-14 h-14' : 'w-[100px] h-[100px]'}`}
+                className={`object-contain transition-all duration-200 group-hover:scale-105 ${sidebarCollapsed ? 'w-14 h-14' : 'w-[100px] h-[100px]'}`}
                 onError={(e) => {
                   // Fallback if logo fails to load
                   const target = e.target as HTMLImageElement;

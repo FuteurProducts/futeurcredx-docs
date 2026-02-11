@@ -49,6 +49,7 @@ export const applicationsService = {
     // Normalize each application through the normalizer layer
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: response.data.map((a) => normalizeApplication(a as unknown as Record<string, unknown>)),
     };
   },
@@ -67,6 +68,7 @@ export const applicationsService = {
 
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: normalizeApplication(response.data as unknown as Record<string, unknown>),
     };
   },
@@ -85,6 +87,7 @@ export const applicationsService = {
 
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: normalizeApplication(response.data as unknown as Record<string, unknown>),
     };
   },
@@ -112,6 +115,7 @@ export const applicationsService = {
 
     return {
       ...response,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response shape converted to normalizer input
       data: normalizeApplication(response.data as unknown as Record<string, unknown>),
     };
   },

@@ -226,7 +226,7 @@ export const CreditJourneyWidget: React.FC<CreditJourneyWidgetProps> = ({
         <div className="absolute top-5 left-5 right-5 h-1 bg-accent rounded-full" />
         {/* Progress line filled */}
         <div 
-          className="absolute top-5 left-5 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full transition-all duration-500"
+          className="absolute top-5 left-5 h-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full transition-all duration-200"
           style={{ width: `${(data.currentStage / (stages.length - 1)) * 100}%` }}
         />
         

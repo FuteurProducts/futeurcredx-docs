@@ -74,7 +74,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${feature.importance}%` }}
-                  transition={{ delay: index * 0.05 + 0.2, duration: 0.5 }}
+                  transition={{ delay: index * 0.05 + 0.2, duration: 0.2 }}
                   className={`h-full ${barColor} rounded-full`}
                 />
               </div>

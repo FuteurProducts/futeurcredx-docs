@@ -118,7 +118,7 @@ const Index = () => {
         });
       }
       if (trendResult.source === 'live' && trendResult.data.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
         setMockTrendData(trendResult.data as any);
       }
     } catch { /* keep fallbacks */ }

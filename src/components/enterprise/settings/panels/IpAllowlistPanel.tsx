@@ -184,7 +184,7 @@ export const IpAllowlistPanel: React.FC = () => {
                 <Button 
                   size="icon" 
                   variant="ghost" 
-                  className="text-destructive hover:text-destructive"
+                  className="text-destructive hover:text-destructive transition-colors duration-200"
                   onClick={() => handleDelete(entry.id)}
                 >
                   <Trash2 className="h-4 w-4" />

@@ -148,7 +148,7 @@ const ChartTooltipContent = React.forwardRef<
           : itemConfig?.label;
 
       if (labelFormatter) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- labelFormatter accepts untyped Recharts payload
         return <div className={cn("font-medium", labelClassName)}>{labelFormatter(value as string, payload as any)}</div>;
       }
 
@@ -189,6 +189,7 @@ const ChartTooltipContent = React.forwardRef<
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Complex Recharts formatter signature requires type coercion
                   formatter(item.value as number, item.name, item as unknown as Parameters<NonNullable<typeof formatter>>[2], index, payload as unknown as Parameters<NonNullable<typeof formatter>>[4])
                 ) : (
                   <>

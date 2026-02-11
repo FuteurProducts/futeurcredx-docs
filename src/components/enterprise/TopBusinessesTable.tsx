@@ -81,7 +81,7 @@ export const TopBusinessesTable: React.FC<TopBusinessesTableProps> = ({
         className={cn(
           "w-full flex items-center gap-1 transition-colors",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded px-1 py-0.5",
-          "hover:text-foreground",
+          "hover:text-foreground transition-colors duration-200",
           align === "center" ? "justify-center" : align === "right" ? "justify-end" : ""
         )}
       >

@@ -226,8 +226,14 @@ const durationOptions = [
 ];
 
 // Professional tooltip with design system colors
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface CustomTooltipProps {
+  active?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Recharts provides untyped payload
+  payload?: any[];
+  label?: string;
+}
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
@@ -682,8 +688,14 @@ const balanceDurationOptions = [
   { id: "2", title: "Year" },
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BarTooltip = ({ active, payload, label: _label }: any) => {
+interface BarTooltipProps {
+  active?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Recharts provides untyped payload
+  payload?: any[];
+  label?: string;
+}
+
+const BarTooltip = ({ active, payload, label: _label }: BarTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
@@ -907,8 +919,14 @@ interface ApiUsageOverviewProps {
   monthlyData?: { name: string; calls: number }[];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ApiUsageTooltip = ({ active, payload, label }: any) => {
+interface ApiUsageTooltipProps {
+  active?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Recharts provides untyped payload
+  payload?: any[];
+  label?: string;
+}
+
+const ApiUsageTooltip = ({ active, payload, label }: ApiUsageTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
@@ -1607,8 +1625,7 @@ export const ConversionLiftChart: React.FC = () => {
                 return (
                   <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
                     <div className="mb-2 text-xs font-medium text-muted-foreground">{label}</div>
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    {payload.map((entry: any) => (
+                    {payload.map((entry) => (
                       <div key={entry.dataKey} className="flex items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
                           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
@@ -1858,8 +1875,7 @@ export const ApprovalRateTrendChart: React.FC = () => {
                 return (
                   <div className="p-4 bg-popover/95 backdrop-blur-sm border border-border rounded-xl shadow-lg shadow-black/5">
                     <div className="mb-2 text-xs font-medium text-muted-foreground">{label}</div>
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    {payload.map((entry: any, index: number) => (
+                    {payload.map((entry, index: number) => (
                       <div key={index} className="flex items-center justify-between gap-4">
                         <span className="text-sm text-muted-foreground">{entry.name}</span>
                         <span className="text-sm font-semibold text-foreground">

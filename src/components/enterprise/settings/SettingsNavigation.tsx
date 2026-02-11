@@ -105,7 +105,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
                           isActive
                             ? 'bg-primary/10 text-primary font-medium'
-                            : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                            : 'text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200'
                         }`}
                       >
                         <Icon className="h-4 w-4 shrink-0" />

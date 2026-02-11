@@ -28,7 +28,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
 };
 
 const SIGNAL_COLORS: Record<string, string> = {
@@ -162,7 +162,7 @@ export const EligibilityMatrix: React.FC<EligibilityMatrixProps> = ({ filters })
           <div className="relative group">
             <Info className="w-4 h-4 text-muted-foreground cursor-help" />
             <div className="absolute right-0 top-6 z-50 hidden group-hover:block w-72 p-3 bg-popover border border-border rounded-lg shadow-lg">
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <p className="text-xs text-popover-foreground leading-relaxed">
                 This matrix shows the minimum eligibility criteria for each product.
                 Businesses must meet all thresholds and have the required signals
                 active to be pre-qualified. Policy notes indicate special conditions
@@ -293,7 +293,7 @@ export const EligibilityMatrix: React.FC<EligibilityMatrixProps> = ({ filters })
             {filteredRules.length} product{filteredRules.length !== 1 ? 's' : ''} across{' '}
             {groupedByFamily.length} famil{groupedByFamily.length !== 1 ? 'ies' : 'y'}
           </span>
-          <span className="text-[10px] text-muted-foreground/60">
+          <span className="text-[10px] text-muted-foreground">
             Source: Credit Policy &middot; Last reviewed Q4 2025
           </span>
         </div>

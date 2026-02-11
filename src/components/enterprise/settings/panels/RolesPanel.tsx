@@ -70,7 +70,7 @@ export const RolesPanel: React.FC<RolesPanelProps> = ({
                 className={`w-full px-3 py-2 rounded-xl text-sm text-left transition-all duration-200 ${
                   selectedRole === role.role
                     ? 'bg-primary/10 text-primary font-medium'
-                    : 'text-foreground hover:bg-muted'
+                    : 'text-foreground hover:bg-muted transition-colors duration-200'
                 }`}
               >
                 {role.label}

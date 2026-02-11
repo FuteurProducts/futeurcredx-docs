@@ -119,7 +119,7 @@ const UnderwritingQueue: React.FC = () => {
         {sortField === field ? (
           sortDir === 'asc' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />
         ) : (
-          <ArrowUpDown className="h-4 w-4 opacity-30" />
+          <ArrowUpDown className="h-4 w-4 opacity-60" />
         )}
       </div>
     </th>

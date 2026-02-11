@@ -100,9 +100,16 @@ export const ChartGradientDefs: React.FC = () => (
 // CUSTOM TOOLTIP
 // ============================================
 
+interface TooltipPayloadEntry {
+  name?: string;
+  dataKey?: string;
+  value: number;
+  color?: string;
+}
+
 interface ChartTooltipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: TooltipPayloadEntry[];
   label?: string;
   valueFormatter?: (value: number) => string;
   labelFormatter?: (label: string) => string;
@@ -133,7 +140,7 @@ export const ChartTooltip: React.FC<ChartTooltipProps> = ({
         </div>
       )}
       <div className="space-y-1.5">
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry, index) => (
           <div key={index} className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div

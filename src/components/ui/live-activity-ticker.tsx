@@ -75,7 +75,7 @@ export function LiveActivityTicker() {
               initial={{ opacity: 0, height: 0, y: -10 }}
               animate={{ opacity: 1, height: 'auto', y: 0 }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
               className="flex items-center gap-2 py-1.5 text-caption"
             >
               <event.icon className={`w-3.5 h-3.5 ${event.color} shrink-0`} />

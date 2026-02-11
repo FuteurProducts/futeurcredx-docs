@@ -32,7 +32,7 @@ export function MetricCard({ title, value, change, changeType, icon: Icon, accen
   }[accentColor];
 
   return (
-    <Card className={`shadow-sm hover:shadow-md transition-all duration-300 border-l-4 ${accentStyles} overflow-hidden`}>
+    <Card className={`shadow-sm hover:shadow-md transition-all duration-200 border-l-4 ${accentStyles} overflow-hidden`}>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
           <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">{title}</p>

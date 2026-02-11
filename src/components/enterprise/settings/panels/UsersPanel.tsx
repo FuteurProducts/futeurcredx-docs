@@ -257,7 +257,7 @@ export const UsersPanel: React.FC<UsersPanelProps> = ({
                 <Button
                   variant="outline"
                   onClick={() => onRemoveUser(selectedUser.id)}
-                  className="text-destructive border-destructive hover:bg-destructive/10"
+                  className="text-destructive border-destructive hover:bg-destructive/10 transition-colors duration-200"
                 >
                   <Trash2 className="h-4 w-4" />
                   Remove

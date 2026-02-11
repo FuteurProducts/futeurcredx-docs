@@ -67,9 +67,9 @@ export const KPICard: React.FC<KPICardProps> = ({
       className={cn(
         'bg-card rounded-2xl border border-border/60 p-5 h-[160px] flex flex-col',
         'shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-200',
-        onClick && 'cursor-pointer hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 active:translate-y-0',
+        onClick && 'cursor-pointer hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 active:translate-y-0 transition-all duration-200',
         onClick && 'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
-        !onClick && 'hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)]',
+        !onClick && 'hover:shadow-[0_4px_12px_rgba(0,0,0,0.06)] transition-shadow duration-200',
         status && STATUS_ACCENT[status],
         status && 'border-l-[3px]',
         status && `ring-1 ${STATUS_RING[status]}`,

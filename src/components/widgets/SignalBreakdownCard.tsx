@@ -148,7 +148,7 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${getScoreBarWidth(factor.score, factor.maxScore)}%` }}
-                    transition={{ duration: 0.8, delay: 0.1 }}
+                    transition={{ duration: 0.2, delay: 0.1 }}
                     className="h-full rounded-full"
                     style={{ backgroundColor: colors.bg }}
                   />
@@ -255,7 +255,7 @@ export const SignalBreakdownCard: React.FC<SignalBreakdownCardProps> = ({
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${getScoreBarWidth(factor.score, factor.maxScore)}%` }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                    transition={{ duration: 0.2, delay: index * 0.1 }}
                     className="h-full rounded-full"
                     style={{ backgroundColor: colors.bg }}
                   />

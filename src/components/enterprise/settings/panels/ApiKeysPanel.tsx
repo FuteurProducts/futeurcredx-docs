@@ -263,7 +263,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
                             ? env === 'production'
                               ? 'bg-success/10 border-success/20 text-success'
                               : 'bg-warning/10 border-warning/20 text-warning'
-                            : 'bg-background border-border text-muted-foreground hover:border-primary/50'
+                            : 'bg-background border-border text-muted-foreground hover:border-primary/50 transition-colors duration-200'
                         }`}
                       >
                         {env.charAt(0).toUpperCase() + env.slice(1)}

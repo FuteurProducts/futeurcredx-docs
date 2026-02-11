@@ -223,7 +223,7 @@ function ProductEligibility({ segment }: { segment: Segment }) {
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${(p.count / maxCount) * 100}%` }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
                 className="h-full rounded-full bg-primary"
               />
             </div>

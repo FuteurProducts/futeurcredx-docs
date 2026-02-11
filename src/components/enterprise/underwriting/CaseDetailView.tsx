@@ -284,7 +284,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               <button
                 onClick={() => handleAction('recommend_approval')}
                 disabled={!rationale.trim()}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-emerald-300 text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-emerald-300 text-emerald-700 hover:bg-emerald-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
               >
                 <CheckCircle className="h-4 w-4" />
                 Recommend for Approval
@@ -292,7 +292,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               <button
                 onClick={() => handleAction('request_info')}
                 disabled={!rationale.trim()}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-blue-300 text-blue-700 hover:bg-blue-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-blue-300 text-blue-700 hover:bg-blue-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
               >
                 <FileText className="h-4 w-4" />
                 Request Additional Info
@@ -300,7 +300,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               <button
                 onClick={() => handleAction('flag_committee')}
                 disabled={!rationale.trim()}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-amber-300 text-amber-700 hover:bg-amber-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-amber-300 text-amber-700 hover:bg-amber-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
               >
                 <AlertTriangle className="h-4 w-4" />
                 Flag for Committee Review
@@ -308,7 +308,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({ selectedCase }) 
               <button
                 onClick={() => handleAction('recommend_decline')}
                 disabled={!rationale.trim()}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-red-300 text-red-700 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium border border-red-300 text-red-700 hover:bg-red-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
               >
                 <XCircle className="h-4 w-4" />
                 Recommend Decline
