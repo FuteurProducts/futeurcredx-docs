@@ -20,7 +20,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   // ── Deposits (5) ──────────────────────────────────────────────────────────
   {
     id: 'basic-business-checking',
-    name: 'Basic Business Checking',
+    name: 'Santander® Basic Business Checking',
     family: 'Deposits',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -30,7 +30,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-checking',
-    name: 'Business Checking',
+    name: 'Santander® Business Checking',
     family: 'Deposits',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -40,7 +40,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-checking-plus',
-    name: 'Business Checking Plus',
+    name: 'Santander® Business Checking Plus',
     family: 'Deposits',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -50,7 +50,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-money-market-savings',
-    name: 'Business Money Market Savings',
+    name: 'Santander® Business Money Market Savings',
     family: 'Deposits',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -60,7 +60,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-certificates-of-deposit',
-    name: 'Business Certificates of Deposit',
+    name: 'Santander® Business Certificates of Deposit',
     family: 'Deposits',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -72,7 +72,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   // ── Credit Products (9) ───────────────────────────────────────────────────
   {
     id: 'business-line-of-credit',
-    name: 'Business Line of Credit',
+    name: 'Santander® Business Line of Credit',
     family: 'Lines of Credit',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -82,7 +82,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-term-loan',
-    name: 'Business Term Loan',
+    name: 'Santander® Business Term Loan',
     family: 'Term Loans',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -112,7 +112,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'equipment-financing',
-    name: 'Equipment Financing',
+    name: 'Santander® Equipment Financing',
     family: 'Equipment Finance',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -122,7 +122,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'commercial-real-estate-mortgage',
-    name: 'Commercial Real Estate Mortgage',
+    name: 'Santander® Commercial Real Estate Mortgage',
     family: 'Commercial Real Estate',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -132,7 +132,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'commercial-vehicle-financing',
-    name: 'Commercial Vehicle Financing',
+    name: 'Santander® Commercial Vehicle Financing',
     family: 'Commercial Auto',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -142,7 +142,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'small-business-vehicle-financing',
-    name: 'Small Business Vehicle Financing',
+    name: 'Santander® Small Business Vehicle Financing',
     family: 'Commercial Auto',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -152,7 +152,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'healthcare-equipment-financing',
-    name: 'Healthcare Equipment Financing',
+    name: 'Santander® Healthcare Equipment Financing',
     family: 'Equipment Finance',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -164,7 +164,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   // ── Cards (2) ─────────────────────────────────────────────────────────────
   {
     id: 'business-debit-mastercard',
-    name: 'Business Debit Mastercard',
+    name: 'Santander® Business Debit Mastercard',
     family: 'Treasury',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -174,7 +174,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'commercial-card-solutions',
-    name: 'Commercial Card Solutions',
+    name: 'Santander® Commercial Card Solutions',
     family: 'Credit Cards',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -206,7 +206,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-online-banking',
-    name: 'Business Online Banking',
+    name: 'Santander® Business Online Banking',
     family: 'Treasury',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -216,7 +216,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'digital-checks',
-    name: 'Digital Checks',
+    name: 'Santander® Digital Checks',
     family: 'Treasury',
     status: 'Pilot',
     eligibilityTier: 'Tier 2',
@@ -238,7 +238,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   // ── International (2) ─────────────────────────────────────────────────────
   {
     id: 'international-trade-finance',
-    name: 'International Trade Finance',
+    name: 'Santander® International Trade Finance',
     family: 'Treasury',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -248,7 +248,7 @@ export const SANT_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'foreign-exchange-services',
-    name: 'Foreign Exchange (FX) Services',
+    name: 'Santander® Foreign Exchange (FX) Services',
     family: 'Treasury',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -472,12 +472,12 @@ export const SANT_PERFORMANCE_KPIS: ProductKPI[] = [
 
 export const SANT_PENETRATION_BY_PRODUCT: PenetrationByProduct[] = [
   { product: 'Business Checking (All Tiers)', family: 'Deposits', customersHolding: 144000, eligibleCustomers: 170000, penetrationRate: 84.7, crossSellGap: 15.3, revenueOpportunity: 5200000 },
-  { product: 'Business Debit Mastercard', family: 'Treasury', customersHolding: 144000, eligibleCustomers: 170000, penetrationRate: 84.7, crossSellGap: 15.3, revenueOpportunity: 2600000 },
+  { product: 'Santander® Business Debit Mastercard', family: 'Treasury', customersHolding: 144000, eligibleCustomers: 170000, penetrationRate: 84.7, crossSellGap: 15.3, revenueOpportunity: 2600000 },
   { product: 'Santander Merchant Services', family: 'Treasury', customersHolding: 72000, eligibleCustomers: 126000, penetrationRate: 57.1, crossSellGap: 42.9, revenueOpportunity: 54000000 },
   { product: 'Business Savings / Money Market', family: 'Deposits', customersHolding: 63000, eligibleCustomers: 170000, penetrationRate: 37.1, crossSellGap: 62.9, revenueOpportunity: 10700000 },
-  { product: 'Business Line of Credit', family: 'Lines of Credit', customersHolding: 45000, eligibleCustomers: 108000, penetrationRate: 41.7, crossSellGap: 58.3, revenueOpportunity: 63000000 },
+  { product: 'Santander® Business Line of Credit', family: 'Lines of Credit', customersHolding: 45000, eligibleCustomers: 108000, penetrationRate: 41.7, crossSellGap: 58.3, revenueOpportunity: 63000000 },
   { product: 'Equipment Financing (All)', family: 'Equipment Finance', customersHolding: 18000, eligibleCustomers: 63000, penetrationRate: 28.6, crossSellGap: 71.4, revenueOpportunity: 45000000 },
-  { product: 'Business Term Loan', family: 'Term Loans', customersHolding: 14400, eligibleCustomers: 54000, penetrationRate: 26.7, crossSellGap: 73.3, revenueOpportunity: 39600000 },
+  { product: 'Santander® Business Term Loan', family: 'Term Loans', customersHolding: 14400, eligibleCustomers: 54000, penetrationRate: 26.7, crossSellGap: 73.3, revenueOpportunity: 39600000 },
   { product: 'SBA Programs (7a/Express)', family: 'SBA Programs', customersHolding: 7200, eligibleCustomers: 27000, penetrationRate: 26.7, crossSellGap: 73.3, revenueOpportunity: 19800000 },
 ];
 
@@ -500,25 +500,25 @@ export const SANT_PRODUCT_CROSS_SELL_FUNNEL: CrossSellFunnelStage[] = [
 // ============================================
 
 export const SANT_PREQUAL_READINESS: PreQualReadiness[] = [
-  { product: 'Business Line of Credit', likely: 7500, borderline: 3400, unlikely: 1900, total: 12800 },
-  { product: 'Commercial Card Solutions', likely: 12200, borderline: 4300, unlikely: 2300, total: 18800 },
-  { product: 'Business Term Loan', likely: 5200, borderline: 2900, unlikely: 2100, total: 10200 },
+  { product: 'Santander® Business Line of Credit', likely: 7500, borderline: 3400, unlikely: 1900, total: 12800 },
+  { product: 'Santander® Commercial Card Solutions', likely: 12200, borderline: 4300, unlikely: 2300, total: 18800 },
+  { product: 'Santander® Business Term Loan', likely: 5200, borderline: 2900, unlikely: 2100, total: 10200 },
   { product: 'SBA 7(a) Loan', likely: 3400, borderline: 2600, unlikely: 1700, total: 7700 },
-  { product: 'Equipment Financing', likely: 4000, borderline: 2400, unlikely: 1500, total: 7900 },
+  { product: 'Santander® Equipment Financing', likely: 4000, borderline: 2400, unlikely: 1500, total: 7900 },
   { product: 'Santander Merchant Services', likely: 8500, borderline: 3500, unlikely: 1800, total: 13800 },
 ];
 
 export const SANT_PREQUAL_CANDIDATES: PreQualCandidate[] = [
-  { businessName: 'Boston Medical Imaging', industry: 'Healthcare', annualRevenue: 6200000, readinessScore: 94, readiness: 'Likely', topProduct: 'Healthcare Equipment Financing', signals: ['Strong DSCR', 'PAYDEX 86', 'MA Market Leader'] },
-  { businessName: 'Northeast Construction Supply', industry: 'Construction', annualRevenue: 9800000, readinessScore: 90, readiness: 'Likely', topProduct: 'Commercial Real Estate Mortgage', signals: ['Growing Revenue', 'FICO 785', 'Low Leverage'] },
-  { businessName: 'Hartford Auto Fleet', industry: 'Automotive', annualRevenue: 5400000, readinessScore: 87, readiness: 'Likely', topProduct: 'Commercial Vehicle Financing', signals: ['Fleet Growth', 'PAYDEX 81', '50yr Industry Expertise'] },
+  { businessName: 'Boston Medical Imaging', industry: 'Healthcare', annualRevenue: 6200000, readinessScore: 94, readiness: 'Likely', topProduct: 'Santander® Healthcare Equipment Financing', signals: ['Strong DSCR', 'PAYDEX 86', 'MA Market Leader'] },
+  { businessName: 'Northeast Construction Supply', industry: 'Construction', annualRevenue: 9800000, readinessScore: 90, readiness: 'Likely', topProduct: 'Santander® Commercial Real Estate Mortgage', signals: ['Growing Revenue', 'FICO 785', 'Low Leverage'] },
+  { businessName: 'Hartford Auto Fleet', industry: 'Automotive', annualRevenue: 5400000, readinessScore: 87, readiness: 'Likely', topProduct: 'Santander® Commercial Vehicle Financing', signals: ['Fleet Growth', 'PAYDEX 81', '50yr Industry Expertise'] },
   { businessName: 'New England Dental Partners', industry: 'Healthcare', annualRevenue: 3800000, readinessScore: 84, readiness: 'Likely', topProduct: 'SBA 7(a) Loan', signals: ['Stable Cash Flow', 'FICO 765', 'Practice Expansion'] },
-  { businessName: 'Rhode Island Manufacturing Co.', industry: 'Manufacturing', annualRevenue: 11200000, readinessScore: 81, readiness: 'Likely', topProduct: 'Business Line of Credit', signals: ['Strong Revenue', 'PAYDEX 77', 'Treasury Fusion Ready'] },
-  { businessName: 'Connecticut Food Distributors', industry: 'Distribution', annualRevenue: 2600000, readinessScore: 76, readiness: 'Borderline', topProduct: 'Equipment Financing', signals: ['DSCR 1.16', 'FICO 720', 'High Utilization'] },
-  { businessName: 'Worcester Tech Services', industry: 'Technology', annualRevenue: 1400000, readinessScore: 72, readiness: 'Borderline', topProduct: 'Business Term Loan', signals: ['Seasonal Revenue', 'PAYDEX 71', 'Client 4yr'] },
+  { businessName: 'Rhode Island Manufacturing Co.', industry: 'Manufacturing', annualRevenue: 11200000, readinessScore: 81, readiness: 'Likely', topProduct: 'Santander® Business Line of Credit', signals: ['Strong Revenue', 'PAYDEX 77', 'Treasury Fusion Ready'] },
+  { businessName: 'Connecticut Food Distributors', industry: 'Distribution', annualRevenue: 2600000, readinessScore: 76, readiness: 'Borderline', topProduct: 'Santander® Equipment Financing', signals: ['DSCR 1.16', 'FICO 720', 'High Utilization'] },
+  { businessName: 'Worcester Tech Services', industry: 'Technology', annualRevenue: 1400000, readinessScore: 72, readiness: 'Borderline', topProduct: 'Santander® Business Term Loan', signals: ['Seasonal Revenue', 'PAYDEX 71', 'Client 4yr'] },
   { businessName: 'New Hampshire Childcare Group', industry: 'Education', annualRevenue: 920000, readinessScore: 67, readiness: 'Borderline', topProduct: 'SBA Express Line of Credit', signals: ['Growing Revenue', 'FICO 700', 'Short Track Record'] },
-  { businessName: 'Delaware Print Solutions', industry: 'Retail', annualRevenue: 580000, readinessScore: 59, readiness: 'Unlikely', topProduct: 'Business Debit Mastercard', signals: ['Declining Revenue', 'PAYDEX 56', 'High Leverage'] },
-  { businessName: 'Pennsylvania Quick Oil', industry: 'Automotive', annualRevenue: 380000, readinessScore: 53, readiness: 'Unlikely', topProduct: 'Business Debit Mastercard', signals: ['Low DSCR', 'FICO 630', 'Payment Delays'] },
+  { businessName: 'Delaware Print Solutions', industry: 'Retail', annualRevenue: 580000, readinessScore: 59, readiness: 'Unlikely', topProduct: 'Santander® Business Debit Mastercard', signals: ['Declining Revenue', 'PAYDEX 56', 'High Leverage'] },
+  { businessName: 'Pennsylvania Quick Oil', industry: 'Automotive', annualRevenue: 380000, readinessScore: 53, readiness: 'Unlikely', topProduct: 'Santander® Business Debit Mastercard', signals: ['Low DSCR', 'FICO 630', 'Payment Delays'] },
 ];
 
 // ============================================
@@ -526,13 +526,13 @@ export const SANT_PREQUAL_CANDIDATES: PreQualCandidate[] = [
 // ============================================
 
 export const SANT_PRODUCT_PERFORMANCE: ProductPerformanceRow[] = [
-  { product: 'Commercial Card Solutions', family: 'Credit Cards', approvalRate: 74.2, fundingRate: 96.4, avgDealSize: 75000, avgTimeToDecision: 1.1, totalFunded30d: 98000000, yoyGrowth: 12.8 },
-  { product: 'Business Line of Credit', family: 'Lines of Credit', approvalRate: 66.8, fundingRate: 89.2, avgDealSize: 135000, avgTimeToDecision: 3.0, totalFunded30d: 125000000, yoyGrowth: 8.4 },
-  { product: 'Business Term Loan', family: 'Term Loans', approvalRate: 64.2, fundingRate: 87.6, avgDealSize: 185000, avgTimeToDecision: 3.6, totalFunded30d: 96000000, yoyGrowth: 9.8 },
+  { product: 'Santander® Commercial Card Solutions', family: 'Credit Cards', approvalRate: 74.2, fundingRate: 96.4, avgDealSize: 75000, avgTimeToDecision: 1.1, totalFunded30d: 98000000, yoyGrowth: 12.8 },
+  { product: 'Santander® Business Line of Credit', family: 'Lines of Credit', approvalRate: 66.8, fundingRate: 89.2, avgDealSize: 135000, avgTimeToDecision: 3.0, totalFunded30d: 125000000, yoyGrowth: 8.4 },
+  { product: 'Santander® Business Term Loan', family: 'Term Loans', approvalRate: 64.2, fundingRate: 87.6, avgDealSize: 185000, avgTimeToDecision: 3.6, totalFunded30d: 96000000, yoyGrowth: 9.8 },
   { product: 'SBA 7(a) Loan', family: 'SBA Programs', approvalRate: 58.4, fundingRate: 79.8, avgDealSize: 420000, avgTimeToDecision: 13.2, totalFunded30d: 68000000, yoyGrowth: 16.4 },
-  { product: 'Equipment Financing', family: 'Equipment Finance', approvalRate: 72.6, fundingRate: 92.8, avgDealSize: 165000, avgTimeToDecision: 2.5, totalFunded30d: 74000000, yoyGrowth: 11.2 },
-  { product: 'Healthcare Equipment Financing', family: 'Equipment Finance', approvalRate: 76.8, fundingRate: 94.2, avgDealSize: 245000, avgTimeToDecision: 2.2, totalFunded30d: 52000000, yoyGrowth: 14.6 },
-  { product: 'Commercial Vehicle Financing', family: 'Commercial Auto', approvalRate: 70.4, fundingRate: 91.6, avgDealSize: 85000, avgTimeToDecision: 1.8, totalFunded30d: 48000000, yoyGrowth: 10.2 },
+  { product: 'Santander® Equipment Financing', family: 'Equipment Finance', approvalRate: 72.6, fundingRate: 92.8, avgDealSize: 165000, avgTimeToDecision: 2.5, totalFunded30d: 74000000, yoyGrowth: 11.2 },
+  { product: 'Santander® Healthcare Equipment Financing', family: 'Equipment Finance', approvalRate: 76.8, fundingRate: 94.2, avgDealSize: 245000, avgTimeToDecision: 2.2, totalFunded30d: 52000000, yoyGrowth: 14.6 },
+  { product: 'Santander® Commercial Vehicle Financing', family: 'Commercial Auto', approvalRate: 70.4, fundingRate: 91.6, avgDealSize: 85000, avgTimeToDecision: 1.8, totalFunded30d: 48000000, yoyGrowth: 10.2 },
   { product: 'Santander Merchant Services', family: 'Treasury', approvalRate: 90.2, fundingRate: 98.4, avgDealSize: 0, avgTimeToDecision: 0.2, totalFunded30d: 119000000, yoyGrowth: 22.8 },
 ];
 
@@ -550,35 +550,35 @@ export const SANT_PERFORMANCE_APP_FUNNEL: ApplicationFunnelMetrics[] = [
 
 export const SANT_ELIGIBILITY_RULES: EligibilityRule[] = [
   // Deposits
-  { product: 'Basic Business Checking', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: 'No monthly fee; 100 free transactions; $50 min opening deposit; ideal for startups' },
-  { product: 'Business Checking', family: 'Deposits', timeInBusiness: 'Established', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '$15/mo fee waived at $5K min balance; 200 free transactions; online banking included' },
-  { product: 'Business Checking Plus', family: 'Deposits', timeInBusiness: 'Established', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '$25/mo fee waived at $25K min balance; 500 free transactions; dedicated relationship manager' },
-  { product: 'Business Money Market Savings', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '0.10%–3.50% APY tiered; $2.5K min opening; waive fees at $10K min balance; 6 free transactions' },
-  { product: 'Business Certificates of Deposit', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '3mo–5yr terms; 0.50%–5.00% APY; $1K minimum; FDIC insured; early withdrawal penalties' },
+  { product: 'Santander® Basic Business Checking', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: 'No monthly fee; 100 free transactions; $50 min opening deposit; ideal for startups' },
+  { product: 'Santander® Business Checking', family: 'Deposits', timeInBusiness: 'Established', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '$15/mo fee waived at $5K min balance; 200 free transactions; online banking included' },
+  { product: 'Santander® Business Checking Plus', family: 'Deposits', timeInBusiness: 'Established', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '$25/mo fee waived at $25K min balance; 500 free transactions; dedicated relationship manager' },
+  { product: 'Santander® Business Money Market Savings', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '0.10%–3.50% APY tiered; $2.5K min opening; waive fees at $10K min balance; 6 free transactions' },
+  { product: 'Santander® Business Certificates of Deposit', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '3mo–5yr terms; 0.50%–5.00% APY; $1K minimum; FDIC insured; early withdrawal penalties' },
 
   // Credit Products
-  { product: 'Business Line of Credit', family: 'Lines of Credit', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '680+', maxLTV: 'N/A', collateral: 'Blanket UCC', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Utilization Rate'], policyNotes: '$10K–$500K; no origination fee under $500K; annual fee waived yr 1; revolving credit' },
-  { product: 'Business Term Loan', family: 'Term Loans', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.20+', paydex: '65+', fico: '680+', maxLTV: 'N/A', collateral: 'Blanket UCC', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Revenue Trend'], policyNotes: '$10K–$1M; 12–84mo terms; fixed rates; same-day pre-approval available' },
+  { product: 'Santander® Business Line of Credit', family: 'Lines of Credit', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '680+', maxLTV: 'N/A', collateral: 'Blanket UCC', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Utilization Rate'], policyNotes: '$10K–$500K; no origination fee under $500K; annual fee waived yr 1; revolving credit' },
+  { product: 'Santander® Business Term Loan', family: 'Term Loans', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.20+', paydex: '65+', fico: '680+', maxLTV: 'N/A', collateral: 'Blanket UCC', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Revenue Trend'], policyNotes: '$10K–$1M; 12–84mo terms; fixed rates; same-day pre-approval available' },
   { product: 'SBA 7(a) Loan', family: 'SBA Programs', timeInBusiness: '2+ years', annualRevenue: '$250K+', dscr: '1.15+', paydex: '60+', fico: '680+', maxLTV: '85%', collateral: 'Available Assets', guarantor: 'Personal (20%+)', requiredSignals: ['Cash Flow Stability', 'DSCR', 'SBA Eligibility'], policyNotes: 'Up to $5M; 10–25yr terms; Santander is SBA Preferred Lender; low down payments' },
   { product: 'SBA Express Line of Credit', family: 'SBA Programs', timeInBusiness: '2+ years', annualRevenue: 'Varies', dscr: '1.10+', paydex: '60+', fico: '680+', maxLTV: 'N/A', collateral: 'Varies', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'SBA Eligibility'], policyNotes: 'Up to $500K; 7-year term with annual renewals; fast-track SBA approval' },
-  { product: 'Equipment Financing', family: 'Equipment Finance', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '670+', maxLTV: '100%', collateral: 'Equipment', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Equipment Valuation'], policyNotes: '100% financing available; terms aligned to useful life; fast approval' },
-  { product: 'Commercial Real Estate Mortgage', family: 'Commercial Real Estate', timeInBusiness: '3+ years', annualRevenue: '$1M+', dscr: '1.25+', paydex: '72+', fico: '720+', maxLTV: '80%', collateral: 'Real Estate', guarantor: 'Corporate/Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'CRE Track Record', 'Property Valuation'], policyNotes: '$500K+; 5–25yr terms; fixed/adjustable rates; owner-occupied commercial property' },
-  { product: 'Commercial Vehicle Financing', family: 'Commercial Auto', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '680+', maxLTV: '90%', collateral: 'Vehicle', guarantor: 'Personal/Corporate', requiredSignals: ['Cash Flow Stability', 'Fleet Assessment'], policyNotes: '50+ years expertise; trucks/vans/trailers/specialty; 24–84mo terms; competitive rates' },
-  { product: 'Small Business Vehicle Financing', family: 'Commercial Auto', timeInBusiness: '1+ year', annualRevenue: 'Varies', dscr: '1.10+', paydex: '60+', fico: '660+', maxLTV: '90%', collateral: 'Vehicle', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Personal Credit'], policyNotes: 'Powered by Santander Consumer; fleets <10 vehicles; 24–72mo; online application' },
-  { product: 'Healthcare Equipment Financing', family: 'Equipment Finance', timeInBusiness: '2+ years', annualRevenue: '$750K+', dscr: '1.20+', paydex: '68+', fico: '680+', maxLTV: '100%', collateral: 'Medical Equipment', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Equipment Valuation', 'Healthcare License'], policyNotes: 'Specialized medical/dental equipment; terms aligned to tech life cycle; diagnostic/imaging/practice mgmt' },
+  { product: 'Santander® Equipment Financing', family: 'Equipment Finance', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '670+', maxLTV: '100%', collateral: 'Equipment', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Equipment Valuation'], policyNotes: '100% financing available; terms aligned to useful life; fast approval' },
+  { product: 'Santander® Commercial Real Estate Mortgage', family: 'Commercial Real Estate', timeInBusiness: '3+ years', annualRevenue: '$1M+', dscr: '1.25+', paydex: '72+', fico: '720+', maxLTV: '80%', collateral: 'Real Estate', guarantor: 'Corporate/Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'CRE Track Record', 'Property Valuation'], policyNotes: '$500K+; 5–25yr terms; fixed/adjustable rates; owner-occupied commercial property' },
+  { product: 'Santander® Commercial Vehicle Financing', family: 'Commercial Auto', timeInBusiness: '2+ years', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '680+', maxLTV: '90%', collateral: 'Vehicle', guarantor: 'Personal/Corporate', requiredSignals: ['Cash Flow Stability', 'Fleet Assessment'], policyNotes: '50+ years expertise; trucks/vans/trailers/specialty; 24–84mo terms; competitive rates' },
+  { product: 'Santander® Small Business Vehicle Financing', family: 'Commercial Auto', timeInBusiness: '1+ year', annualRevenue: 'Varies', dscr: '1.10+', paydex: '60+', fico: '660+', maxLTV: '90%', collateral: 'Vehicle', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Personal Credit'], policyNotes: 'Powered by Santander Consumer; fleets <10 vehicles; 24–72mo; online application' },
+  { product: 'Santander® Healthcare Equipment Financing', family: 'Equipment Finance', timeInBusiness: '2+ years', annualRevenue: '$750K+', dscr: '1.20+', paydex: '68+', fico: '680+', maxLTV: '100%', collateral: 'Medical Equipment', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Equipment Valuation', 'Healthcare License'], policyNotes: 'Specialized medical/dental equipment; terms aligned to tech life cycle; diagnostic/imaging/practice mgmt' },
 
   // Cards
-  { product: 'Business Debit Mastercard', family: 'Treasury', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Checking Account'], policyNotes: 'Included with all business checking; contactless payment; EMV chip; fraud monitoring; zero liability' },
-  { product: 'Commercial Card Solutions', family: 'Credit Cards', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: 'N/A', paydex: '75+', fico: '740+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Corporate', requiredSignals: ['Cash Flow Stability', 'Revenue Growth', 'Strong Financials'], policyNotes: 'Corporate card programs; centralized billing; spend controls; detailed reporting; Mastercard worldwide' },
+  { product: 'Santander® Business Debit Mastercard', family: 'Treasury', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Checking Account'], policyNotes: 'Included with all business checking; contactless payment; EMV chip; fraud monitoring; zero liability' },
+  { product: 'Santander® Commercial Card Solutions', family: 'Credit Cards', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: 'N/A', paydex: '75+', fico: '740+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Corporate', requiredSignals: ['Cash Flow Stability', 'Revenue Growth', 'Strong Financials'], policyNotes: 'Corporate card programs; centralized billing; spend controls; detailed reporting; Mastercard worldwide' },
 
   // Treasury/Digital
   { product: 'Treasury Fusion', family: 'Treasury', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'ERP System', 'Enterprise Client'], policyNotes: 'ERP integration (SAP/Oracle/QuickBooks); real-time cash positioning; automated reconciliation; custom pricing' },
   { product: 'Santander Cash Nexus', family: 'Treasury', timeInBusiness: '5+ years', annualRevenue: '$50M+', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Global Operations', 'Enterprise Client'], policyNotes: 'Global treasury via CIB; multi-currency; global cash pooling; FX hedging; liquidity management' },
-  { product: 'Business Online Banking', family: 'Treasury', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Checking Account'], policyNotes: 'Free with checking; online/mobile; bill pay; wire/ACH; remote deposit; user access controls; MFA' },
-  { product: 'Digital Checks', family: 'Treasury', timeInBusiness: '1+ year', annualRevenue: 'Varies', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Online Banking'], policyNotes: 'PILOT: Launched 2024; create/send/track digital checks; recipients deposit mobile or print; free' },
+  { product: 'Santander® Business Online Banking', family: 'Treasury', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Checking Account'], policyNotes: 'Free with checking; online/mobile; bill pay; wire/ACH; remote deposit; user access controls; MFA' },
+  { product: 'Santander® Digital Checks', family: 'Treasury', timeInBusiness: '1+ year', annualRevenue: 'Varies', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Santander® Business Online Banking'], policyNotes: 'PILOT: Launched 2024; create/send/track digital checks; recipients deposit mobile or print; free' },
   { product: 'Santander Merchant Services', family: 'Treasury', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Verification'], policyNotes: 'Powered by Clover; 2.5% + $0.15 card present; POS/online/mobile; next-day deposits; no long-term contract' },
 
   // International
-  { product: 'International Trade Finance', family: 'Treasury', timeInBusiness: '5+ years', annualRevenue: '$10M+', dscr: '1.25+', paydex: '75+', fico: '720+', maxLTV: 'Varies', collateral: 'Varies', guarantor: 'Corporate', requiredSignals: ['Cash Flow Stability', 'Import/Export Activity', 'Trade Documentation'], policyNotes: 'Letters of credit; supply chain finance; import/export financing; trade guarantees; Santander global network' },
-  { product: 'Foreign Exchange (FX) Services', family: 'Treasury', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: 'N/A', paydex: '72+', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'Corporate', requiredSignals: ['Identity Verified', 'International Operations', 'Currency Exposure'], policyNotes: 'Competitive FX rates; 150+ currencies; spot/forward/hedging; real-time execution; dedicated FX specialist' },
+  { product: 'Santander® International Trade Finance', family: 'Treasury', timeInBusiness: '5+ years', annualRevenue: '$10M+', dscr: '1.25+', paydex: '75+', fico: '720+', maxLTV: 'Varies', collateral: 'Varies', guarantor: 'Corporate', requiredSignals: ['Cash Flow Stability', 'Import/Export Activity', 'Trade Documentation'], policyNotes: 'Letters of credit; supply chain finance; import/export financing; trade guarantees; Santander global network' },
+  { product: 'Santander® Foreign Exchange (FX) Services', family: 'Treasury', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: 'N/A', paydex: '72+', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'Corporate', requiredSignals: ['Identity Verified', 'International Operations', 'Currency Exposure'], policyNotes: 'Competitive FX rates; 150+ currencies; spot/forward/hedging; real-time execution; dedicated FX specialist' },
 ];

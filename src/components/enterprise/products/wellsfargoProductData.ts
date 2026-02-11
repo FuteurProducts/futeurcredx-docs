@@ -50,7 +50,7 @@ export const WF_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'business-market-rate-savings',
-    name: 'Business Market Rate Savings',
+    name: 'Wells Fargo Business Market Rate Savings',
     family: 'Deposits',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -94,7 +94,7 @@ export const WF_BANK_PRODUCTS: BankProduct[] = [
   // -- Lines of Credit (3) ---------------------------------------------------
   {
     id: 'businessline-credit',
-    name: 'BusinessLine of Credit',
+    name: 'Wells Fargo BusinessLine\u00ae of Credit',
     family: 'Lines of Credit',
     status: 'Active',
     eligibilityTier: 'Tier 2',
@@ -104,7 +104,7 @@ export const WF_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'small-business-advantage-loc',
-    name: 'Small Business Advantage Line of Credit',
+    name: 'Wells Fargo Small Business Advantage\u00ae Line of Credit',
     family: 'Lines of Credit',
     status: 'Active',
     eligibilityTier: 'Tier 3',
@@ -114,7 +114,7 @@ export const WF_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'prime-line-credit',
-    name: 'Prime Line of Credit',
+    name: 'Wells Fargo Prime Line of Credit',
     family: 'Lines of Credit',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -172,7 +172,7 @@ export const WF_BANK_PRODUCTS: BankProduct[] = [
   // -- Commercial Real Estate (1) --------------------------------------------
   {
     id: 'commercial-real-estate',
-    name: 'Commercial Real Estate Financing',
+    name: 'Wells Fargo Commercial Real Estate Financing',
     family: 'Commercial Real Estate',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -194,7 +194,7 @@ export const WF_BANK_PRODUCTS: BankProduct[] = [
   },
   {
     id: 'treasury-management',
-    name: 'Treasury Management Services',
+    name: 'Wells Fargo Treasury Management Services',
     family: 'Treasury',
     status: 'Active',
     eligibilityTier: 'Tier 1',
@@ -420,8 +420,8 @@ export const WF_PENETRATION_BY_PRODUCT: PenetrationByProduct[] = [
   { product: 'Initiate / Navigate / Optimize Business Checking', family: 'Deposits', customersHolding: 2508000, eligibleCustomers: 3000000, penetrationRate: 83.6, crossSellGap: 16.4, revenueOpportunity: 98000000 },
   { product: 'Wells Fargo Signify Business Cash\u2120 Card', family: 'Credit Cards', customersHolding: 1485000, eligibleCustomers: 2640000, penetrationRate: 56.3, crossSellGap: 43.7, revenueOpportunity: 578000000 },
   { product: 'Wells Fargo Merchant Services', family: 'Treasury', customersHolding: 1320000, eligibleCustomers: 2310000, penetrationRate: 57.1, crossSellGap: 42.9, revenueOpportunity: 990000000 },
-  { product: 'Business Market Rate Savings', family: 'Deposits', customersHolding: 1155000, eligibleCustomers: 3000000, penetrationRate: 38.5, crossSellGap: 61.5, revenueOpportunity: 185000000 },
-  { product: 'BusinessLine of Credit', family: 'Lines of Credit', customersHolding: 825000, eligibleCustomers: 1980000, penetrationRate: 41.7, crossSellGap: 58.3, revenueOpportunity: 1155000000 },
+  { product: 'Wells Fargo Business Market Rate Savings', family: 'Deposits', customersHolding: 1155000, eligibleCustomers: 3000000, penetrationRate: 38.5, crossSellGap: 61.5, revenueOpportunity: 185000000 },
+  { product: 'Wells Fargo BusinessLine\u00ae of Credit', family: 'Lines of Credit', customersHolding: 825000, eligibleCustomers: 1980000, penetrationRate: 41.7, crossSellGap: 58.3, revenueOpportunity: 1155000000 },
   { product: 'Wells Fargo Equipment Finance', family: 'Equipment Finance', customersHolding: 335000, eligibleCustomers: 1155000, penetrationRate: 29.0, crossSellGap: 71.0, revenueOpportunity: 820000000 },
   { product: 'FastFlex Small Business Loan', family: 'Term Loans', customersHolding: 264000, eligibleCustomers: 990000, penetrationRate: 26.7, crossSellGap: 73.3, revenueOpportunity: 726000000 },
   { product: 'SBA Programs (7a/504)', family: 'SBA Programs', customersHolding: 132000, eligibleCustomers: 528000, penetrationRate: 25.0, crossSellGap: 75.0, revenueOpportunity: 396000000 },
@@ -446,7 +446,7 @@ export const WF_PRODUCT_CROSS_SELL_FUNNEL: CrossSellFunnelStage[] = [
 // ============================================
 
 export const WF_PREQUAL_READINESS: PreQualReadiness[] = [
-  { product: 'BusinessLine of Credit', likely: 138000, borderline: 62000, unlikely: 34000, total: 234000 },
+  { product: 'Wells Fargo BusinessLine\u00ae of Credit', likely: 138000, borderline: 62000, unlikely: 34000, total: 234000 },
   { product: 'Wells Fargo Signify Business Cash\u2120 Card', likely: 224000, borderline: 78000, unlikely: 42000, total: 344000 },
   { product: 'FastFlex Small Business Loan', likely: 96000, borderline: 54000, unlikely: 38000, total: 188000 },
   { product: 'SBA 7(a) Loan', likely: 62000, borderline: 48000, unlikely: 32000, total: 142000 },
@@ -457,12 +457,12 @@ export const WF_PREQUAL_READINESS: PreQualReadiness[] = [
 export const WF_PREQUAL_CANDIDATES: PreQualCandidate[] = [
   { businessName: 'Sierra Agricultural Supply', industry: 'Agriculture', annualRevenue: 5800000, readinessScore: 94, readiness: 'Likely', topProduct: 'Wells Fargo Equipment Finance', signals: ['Strong DSCR', 'PAYDEX 84', 'Stable Ag Revenue'] },
   { businessName: 'Bay Area Medical Group', industry: 'Healthcare', annualRevenue: 7200000, readinessScore: 91, readiness: 'Likely', topProduct: 'SBA 504 Loan', signals: ['Growing Revenue', 'FICO 790', 'Low Leverage'] },
-  { businessName: 'Golden State Contractors', industry: 'Construction', annualRevenue: 11500000, readinessScore: 87, readiness: 'Likely', topProduct: 'Commercial Real Estate Financing', signals: ['Strong Cash Flow', 'PAYDEX 80', 'CRE Track Record'] },
-  { businessName: 'Heartland Manufacturing Co.', industry: 'Manufacturing', annualRevenue: 4100000, readinessScore: 84, readiness: 'Likely', topProduct: 'BusinessLine of Credit', signals: ['Positive Cash Trend', 'FICO 760', '8yr Track Record'] },
+  { businessName: 'Golden State Contractors', industry: 'Construction', annualRevenue: 11500000, readinessScore: 87, readiness: 'Likely', topProduct: 'Wells Fargo Commercial Real Estate Financing', signals: ['Strong Cash Flow', 'PAYDEX 80', 'CRE Track Record'] },
+  { businessName: 'Heartland Manufacturing Co.', industry: 'Manufacturing', annualRevenue: 4100000, readinessScore: 84, readiness: 'Likely', topProduct: 'Wells Fargo BusinessLine\u00ae of Credit', signals: ['Positive Cash Trend', 'FICO 760', '8yr Track Record'] },
   { businessName: 'Pacific Logistics Partners', industry: 'Transportation', annualRevenue: 9300000, readinessScore: 81, readiness: 'Likely', topProduct: 'Wells Fargo Equipment Finance', signals: ['Fleet Growth', 'PAYDEX 76', 'Strong Revenue'] },
   { businessName: 'Mountain View Dental Care', industry: 'Healthcare', annualRevenue: 2200000, readinessScore: 76, readiness: 'Borderline', topProduct: 'SBA 7(a) Loan', signals: ['DSCR 1.18', 'FICO 715', 'High Utilization'] },
   { businessName: 'Prairie Grain & Feed', industry: 'Agriculture', annualRevenue: 1400000, readinessScore: 72, readiness: 'Borderline', topProduct: 'FastFlex Small Business Loan', signals: ['Seasonal Revenue', 'PAYDEX 70', 'WF Customer 3yr'] },
-  { businessName: 'Sunrise Cafe & Bakery', industry: 'Restaurants', annualRevenue: 780000, readinessScore: 66, readiness: 'Borderline', topProduct: 'Small Business Advantage LOC', signals: ['Growing Revenue', 'FICO 695', 'Short Track Record'] },
+  { businessName: 'Sunrise Cafe & Bakery', industry: 'Restaurants', annualRevenue: 780000, readinessScore: 66, readiness: 'Borderline', topProduct: 'Wells Fargo Small Business Advantage\u00ae LOC', signals: ['Growing Revenue', 'FICO 695', 'Short Track Record'] },
   { businessName: 'Desert Auto Repair', industry: 'Automotive', annualRevenue: 520000, readinessScore: 57, readiness: 'Unlikely', topProduct: 'Signify Business Cash\u2120 Card', signals: ['Declining Revenue', 'PAYDEX 54', 'High Leverage'] },
   { businessName: 'Valley Quick Print', industry: 'Retail', annualRevenue: 340000, readinessScore: 51, readiness: 'Unlikely', topProduct: 'Signify Business Cash\u2120 Card', signals: ['Low DSCR', 'FICO 625', 'Payment Delays'] },
 ];
@@ -474,8 +474,8 @@ export const WF_PREQUAL_CANDIDATES: PreQualCandidate[] = [
 export const WF_PRODUCT_PERFORMANCE: ProductPerformanceRow[] = [
   { product: 'Wells Fargo Signify Business Cash\u2120 Card', family: 'Credit Cards', approvalRate: 72.4, fundingRate: 95.8, avgDealSize: 28000, avgTimeToDecision: 0.4, totalFunded30d: 1680000000, yoyGrowth: 22.4 },
   { product: 'Wells Fargo Business Elite Signature Card', family: 'Credit Cards', approvalRate: 58.6, fundingRate: 94.2, avgDealSize: 85000, avgTimeToDecision: 1.2, totalFunded30d: 920000000, yoyGrowth: 6.8 },
-  { product: 'BusinessLine of Credit', family: 'Lines of Credit', approvalRate: 64.8, fundingRate: 88.2, avgDealSize: 125000, avgTimeToDecision: 3.2, totalFunded30d: 2340000000, yoyGrowth: 7.4 },
-  { product: 'Prime Line of Credit', family: 'Lines of Credit', approvalRate: 68.2, fundingRate: 91.4, avgDealSize: 420000, avgTimeToDecision: 5.1, totalFunded30d: 1560000000, yoyGrowth: 4.8 },
+  { product: 'Wells Fargo BusinessLine\u00ae of Credit', family: 'Lines of Credit', approvalRate: 64.8, fundingRate: 88.2, avgDealSize: 125000, avgTimeToDecision: 3.2, totalFunded30d: 2340000000, yoyGrowth: 7.4 },
+  { product: 'Wells Fargo Prime Line of Credit', family: 'Lines of Credit', approvalRate: 68.2, fundingRate: 91.4, avgDealSize: 420000, avgTimeToDecision: 5.1, totalFunded30d: 1560000000, yoyGrowth: 4.8 },
   { product: 'FastFlex Small Business Loan', family: 'Term Loans', approvalRate: 56.4, fundingRate: 92.8, avgDealSize: 22000, avgTimeToDecision: 0.5, totalFunded30d: 840000000, yoyGrowth: 11.2 },
   { product: 'SBA 7(a) Loan', family: 'SBA Programs', approvalRate: 52.8, fundingRate: 78.4, avgDealSize: 255000, avgTimeToDecision: 14.2, totalFunded30d: 780000000, yoyGrowth: 15.6 },
   { product: 'Wells Fargo Equipment Finance', family: 'Equipment Finance', approvalRate: 70.6, fundingRate: 92.8, avgDealSize: 195000, avgTimeToDecision: 2.8, totalFunded30d: 1120000000, yoyGrowth: 9.4 },
@@ -499,7 +499,7 @@ export const WF_ELIGIBILITY_RULES: EligibilityRule[] = [
   { product: 'Initiate Business Checking', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: '$10/mo fee waived at $500 daily or $1K avg ledger balance; 100 free transactions/cycle' },
   { product: 'Navigate Business Checking', family: 'Deposits', timeInBusiness: 'Established', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: 'Mid-tier pricing with enhanced transaction limits for growing businesses' },
   { product: 'Optimize Business Checking', family: 'Deposits', timeInBusiness: 'Established', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: 'Premium tier with Vantage platform access; treasury management integration; higher balance requirements' },
-  { product: 'Business Market Rate Savings', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: 'Fee waived at $300 daily balance or $25+ auto-transfer from WF checking; 0.25%–2.50% APY' },
+  { product: 'Wells Fargo Business Market Rate Savings', family: 'Deposits', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'OFAC Clear'], policyNotes: 'Fee waived at $300 daily balance or $25+ auto-transfer from WF checking; 0.25%–2.50% APY' },
 
   // Credit Cards
   { product: 'Wells Fargo Signify Business Cash\u2120 Card', family: 'Credit Cards', timeInBusiness: 'Varies', annualRevenue: 'Varies', dscr: 'N/A', paydex: '65+', fico: '670+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Payment Behavior'], policyNotes: 'No annual fee; unlimited 2% cash back; no foreign transaction fee; $500 bonus ($5K spend in 3 months)' },
@@ -507,9 +507,9 @@ export const WF_ELIGIBILITY_RULES: EligibilityRule[] = [
   { product: 'Wells Fargo Business Elite Signature Card', family: 'Credit Cards', timeInBusiness: '2+ years', annualRevenue: '$1M+', dscr: 'N/A', paydex: '75+', fico: '740+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Revenue Growth', 'Strong Cash Flow'], policyNotes: '$125 annual fee (waived yr 1); must have $1M+ annual sales; up to 200 employee cards' },
 
   // Lines of Credit
-  { product: 'BusinessLine of Credit', family: 'Lines of Credit', timeInBusiness: '6+ months', annualRevenue: '$250K+', dscr: '1.15+', paydex: '65+', fico: '680+', maxLTV: 'N/A', collateral: 'Unsecured/Secured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Utilization Rate'], policyNotes: '$5K–$1M; no annual fee yr 1 ($95 for $10K–$25K, $175 for $25K+ after); banker-assisted digital app' },
-  { product: 'Small Business Advantage Line of Credit', family: 'Lines of Credit', timeInBusiness: '<2 years', annualRevenue: 'Varies', dscr: '1.10+', paydex: '58+', fico: '650+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Personal Credit'], policyNotes: '$5K–$100K; 5-year revolving; no annual fee; designed for newer businesses under 2 years old' },
-  { product: 'Prime Line of Credit', family: 'Lines of Credit', timeInBusiness: '3+ years', annualRevenue: '$2M+', dscr: '1.25+', paydex: '72+', fico: '720+', maxLTV: 'N/A', collateral: 'Varies', guarantor: 'Corporate', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Revenue Growth', 'Strong Financials'], policyNotes: '$100K–$1M; relationship-based pricing; treasury management integration available' },
+  { product: 'Wells Fargo BusinessLine\u00ae of Credit', family: 'Lines of Credit', timeInBusiness: '6+ months', annualRevenue: '$250K+', dscr: '1.15+', paydex: '65+', fico: '680+', maxLTV: 'N/A', collateral: 'Unsecured/Secured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Utilization Rate'], policyNotes: '$5K–$1M; no annual fee yr 1 ($95 for $10K–$25K, $175 for $25K+ after); banker-assisted digital app' },
+  { product: 'Wells Fargo Small Business Advantage\u00ae Line of Credit', family: 'Lines of Credit', timeInBusiness: '<2 years', annualRevenue: 'Varies', dscr: '1.10+', paydex: '58+', fico: '650+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'Personal Credit'], policyNotes: '$5K–$100K; 5-year revolving; no annual fee; designed for newer businesses under 2 years old' },
+  { product: 'Wells Fargo Prime Line of Credit', family: 'Lines of Credit', timeInBusiness: '3+ years', annualRevenue: '$2M+', dscr: '1.25+', paydex: '72+', fico: '720+', maxLTV: 'N/A', collateral: 'Varies', guarantor: 'Corporate', requiredSignals: ['Cash Flow Stability', 'DSCR', 'Revenue Growth', 'Strong Financials'], policyNotes: '$100K–$1M; relationship-based pricing; treasury management integration available' },
 
   // Term Loans
   { product: 'FastFlex Small Business Loan', family: 'Term Loans', timeInBusiness: '1+ year', annualRevenue: 'Varies', dscr: '1.10+', paydex: '60+', fico: '660+', maxLTV: 'N/A', collateral: 'Unsecured', guarantor: 'Personal', requiredSignals: ['Cash Flow Stability', 'WF Customer', 'Weekly Repayment Capacity'], policyNotes: '$10K–$35K; 1-year term; 13.99%–22.99% APR; must be existing WF customer; funded next business day' },
@@ -522,9 +522,9 @@ export const WF_ELIGIBILITY_RULES: EligibilityRule[] = [
   { product: 'Wells Fargo Equipment Finance', family: 'Equipment Finance', timeInBusiness: 'Varies', annualRevenue: '$500K+', dscr: '1.15+', paydex: '65+', fico: '670+', maxLTV: '100%', collateral: 'Equipment', guarantor: 'Varies', requiredSignals: ['Cash Flow Stability', 'Equipment Valuation', 'Industry Assessment'], policyNotes: 'Fixed/floating rates; 335K+ customers; $11B+ managed assets; 10+ industry verticals' },
 
   // Commercial Real Estate
-  { product: 'Commercial Real Estate Financing', family: 'Commercial Real Estate', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: '1.25+', paydex: '75+', fico: '720+', maxLTV: '80%', collateral: 'Real Estate', guarantor: 'Corporate/Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'CRE Track Record', 'Property Valuation'], policyNotes: '#2 CRE lender in U.S.; $1M+ loans; multifamily/office/retail/industrial/hospitality; Fannie/Freddie/FHA' },
+  { product: 'Wells Fargo Commercial Real Estate Financing', family: 'Commercial Real Estate', timeInBusiness: '3+ years', annualRevenue: '$5M+', dscr: '1.25+', paydex: '75+', fico: '720+', maxLTV: '80%', collateral: 'Real Estate', guarantor: 'Corporate/Personal', requiredSignals: ['Cash Flow Stability', 'DSCR', 'CRE Track Record', 'Property Valuation'], policyNotes: '#2 CRE lender in U.S.; $1M+ loans; multifamily/office/retail/industrial/hospitality; Fannie/Freddie/FHA' },
 
   // Treasury
   { product: 'Wells Fargo Merchant Services', family: 'Treasury', timeInBusiness: 'Any', annualRevenue: 'Any', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Verification'], policyNotes: '2.2%–3.99% + $0.15–$0.20; $9.99–$24.95/mo; POS + online + phone; next business day funding' },
-  { product: 'Treasury Management Services', family: 'Treasury', timeInBusiness: 'Established', annualRevenue: '$1M+', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Verification', 'Relationship Assessment'], policyNotes: 'Wells Fargo Vantage platform; custom pricing; ACH/wire/multibank reporting; zero balance accounts' },
+  { product: 'Wells Fargo Treasury Management Services', family: 'Treasury', timeInBusiness: 'Established', annualRevenue: '$1M+', dscr: 'N/A', paydex: 'N/A', fico: 'N/A', maxLTV: 'N/A', collateral: 'N/A', guarantor: 'N/A', requiredSignals: ['Identity Verified', 'Business Verification', 'Relationship Assessment'], policyNotes: 'Wells Fargo Vantage platform; custom pricing; ACH/wire/multibank reporting; zero balance accounts' },
 ];
