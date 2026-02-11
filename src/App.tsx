@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useUser } from './contexts/AuthContext'
 import { PortfolioProvider } from './contexts/PortfolioContext'
+import { BankProvider } from './contexts/BankContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { Toaster } from 'react-hot-toast'
 
@@ -68,6 +69,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <ThemeProvider>
+    <BankProvider>
     <BrowserRouter>
       <PortfolioProvider>
         <Toaster position="top-right" />
@@ -178,6 +180,7 @@ function App() {
         </Suspense>
       </PortfolioProvider>
     </BrowserRouter>
+    </BankProvider>
     </ThemeProvider>
   )
 }

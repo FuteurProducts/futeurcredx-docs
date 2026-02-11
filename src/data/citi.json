@@ -1,0 +1,973 @@
+{
+  "bank_config": {
+    "name": "Citibank",
+    "brand_color": "#003DA5",
+    "brand_color_secondary": "#002D72",
+    "logo_variant": "citi_blue",
+    "tagline": "The World's Most Global Bank",
+    "metadata": {
+      "total_clients_us": 450000,
+      "commercial_clients": 14000,
+      "avg_revenue_per_client": "$8.2M",
+      "branch_states": 13,
+      "total_branches": 648,
+      "key_differentiators": [
+        "Global network (94 countries)",
+        "Treasury & Trade Solutions",
+        "Cross-border payments",
+        "International supply chain finance",
+        "Trade finance expertise"
+      ],
+      "focus_markets": [
+        "NYC metro (35% of US clients)",
+        "SF Bay Area (tech/biotech hub)",
+        "Miami (Latin America gateway)",
+        "Chicago (financial services)",
+        "LA/Long Beach (trade/logistics)",
+        "DC (government contractors)"
+      ]
+    }
+  },
+  "portfolio_summary": {
+    "total_businesses": 450000,
+    "total_exposure": 98400000000,
+    "pre_qual_rate": 0.62,
+    "avg_composite_score": 69.5,
+    "avg_composite_score_prev_month": 69.1,
+    "at_risk_exposure": 7800000000,
+    "at_risk_percent": 0.079,
+    "offer_potential": 84000000000,
+    "quarterly_growth": 11200,
+    "bureau_hit_rate": 0.992,
+    "avg_score_refresh_days": 14,
+    "international_trade_percent": 0.38,
+    "avg_credit_limit": 255000,
+    "avg_utilization": 0.56,
+    "overall_default_rate": 0.026
+  },
+  "risk_tiers": {
+    "LOW": {
+      "percent": 0.31,
+      "count": 139500,
+      "exposure": 31400000000,
+      "avg_score": 84.8,
+      "label": "Low Risk"
+    },
+    "MODERATE": {
+      "percent": 0.38,
+      "count": 171000,
+      "exposure": 37800000000,
+      "avg_score": 73.2,
+      "label": "Moderate"
+    },
+    "ELEVATED": {
+      "percent": 0.19,
+      "count": 85500,
+      "exposure": 19200000000,
+      "avg_score": 64.1,
+      "label": "Elevated"
+    },
+    "HIGH": {
+      "percent": 0.09,
+      "count": 40500,
+      "exposure": 7600000000,
+      "avg_score": 51.8,
+      "label": "High Risk"
+    },
+    "CRITICAL": {
+      "percent": 0.03,
+      "count": 13500,
+      "exposure": 2400000000,
+      "avg_score": 37.2,
+      "label": "Critical"
+    }
+  },
+  "segments": [
+    {
+      "id": "seg_tech",
+      "name": "Technology",
+      "icon": "💻",
+      "business_count": 68000,
+      "exposure": 17100000000,
+      "avg_score": 71.2,
+      "pre_qual_rate": 0.78,
+      "risk_distribution": {
+        "LOW": 0.42,
+        "MODERATE": 0.35,
+        "ELEVATED": 0.15,
+        "HIGH": 0.06,
+        "CRITICAL": 0.02
+      },
+      "conversion_rate": 0.118,
+      "status": "top_performer",
+      "trend": "up",
+      "product_eligibility": {
+        "LOC": 53040,
+        "TERM": 48960,
+        "SBA": 23800,
+        "TRADE_FINANCE": 25840,
+        "CREDIT_CARD": 59500
+      },
+      "avg_revenue": 12500000,
+      "avg_employees": 48,
+      "growth_rate": 0.14,
+      "international_trade": 0.38,
+      "top_metros": [
+        {"name": "SF Bay Area", "percent": 0.40},
+        {"name": "NYC", "percent": 0.35},
+        {"name": "Seattle", "percent": 0.15}
+      ]
+    },
+    {
+      "id": "seg_professional",
+      "name": "Professional Services",
+      "icon": "👔",
+      "business_count": 72000,
+      "exposure": 17600000000,
+      "avg_score": 72.8,
+      "pre_qual_rate": 0.82,
+      "risk_distribution": {
+        "LOW": 0.45,
+        "MODERATE": 0.36,
+        "ELEVATED": 0.13,
+        "HIGH": 0.05,
+        "CRITICAL": 0.01
+      },
+      "conversion_rate": 0.124,
+      "status": "top_performer",
+      "trend": "up",
+      "product_eligibility": {
+        "LOC": 59040,
+        "TERM": 50400,
+        "SBA": 21600,
+        "TRADE_FINANCE": 15840,
+        "CREDIT_CARD": 64800
+      },
+      "avg_revenue": 9800000,
+      "avg_employees": 34,
+      "growth_rate": 0.09,
+      "international_trade": 0.22,
+      "top_metros": [
+        {"name": "NYC", "percent": 0.50},
+        {"name": "DC", "percent": 0.20},
+        {"name": "Chicago", "percent": 0.15}
+      ]
+    },
+    {
+      "id": "seg_healthcare",
+      "name": "Healthcare & Life Sciences",
+      "icon": "🏥",
+      "business_count": 63000,
+      "exposure": 16700000000,
+      "avg_score": 69.5,
+      "pre_qual_rate": 0.71,
+      "risk_distribution": {
+        "LOW": 0.35,
+        "MODERATE": 0.39,
+        "ELEVATED": 0.17,
+        "HIGH": 0.07,
+        "CRITICAL": 0.02
+      },
+      "conversion_rate": 0.092,
+      "status": "performing",
+      "trend": "up",
+      "product_eligibility": {
+        "LOC": 44730,
+        "TERM": 37800,
+        "SBA": 18900,
+        "TRADE_FINANCE": 11340,
+        "CREDIT_CARD": 55440
+      },
+      "avg_revenue": 8900000,
+      "avg_employees": 52,
+      "growth_rate": 0.11,
+      "international_trade": 0.18,
+      "top_metros": [
+        {"name": "SF", "percent": 0.32},
+        {"name": "NYC", "percent": 0.28},
+        {"name": "Miami", "percent": 0.18}
+      ]
+    },
+    {
+      "id": "seg_retail",
+      "name": "Retail & E-Commerce",
+      "icon": "🏪",
+      "business_count": 81000,
+      "exposure": 14000000000,
+      "avg_score": 68.2,
+      "pre_qual_rate": 0.64,
+      "risk_distribution": {
+        "LOW": 0.28,
+        "MODERATE": 0.38,
+        "ELEVATED": 0.20,
+        "HIGH": 0.10,
+        "CRITICAL": 0.04
+      },
+      "conversion_rate": 0.081,
+      "status": "performing",
+      "trend": "stable",
+      "product_eligibility": {
+        "LOC": 51840,
+        "TERM": 40500,
+        "SBA": 16200,
+        "TRADE_FINANCE": 36450,
+        "CREDIT_CARD": 70200
+      },
+      "avg_revenue": 7200000,
+      "avg_employees": 28,
+      "growth_rate": 0.08,
+      "international_trade": 0.45,
+      "top_metros": [
+        {"name": "NYC", "percent": 0.25},
+        {"name": "LA", "percent": 0.22},
+        {"name": "Miami", "percent": 0.18}
+      ]
+    },
+    {
+      "id": "seg_manufacturing",
+      "name": "Manufacturing & Distribution",
+      "icon": "🏭",
+      "business_count": 54000,
+      "exposure": 17300000000,
+      "avg_score": 68.8,
+      "pre_qual_rate": 0.68,
+      "risk_distribution": {
+        "LOW": 0.32,
+        "MODERATE": 0.40,
+        "ELEVATED": 0.18,
+        "HIGH": 0.08,
+        "CRITICAL": 0.02
+      },
+      "conversion_rate": 0.078,
+      "status": "performing",
+      "trend": "stable",
+      "product_eligibility": {
+        "LOC": 36720,
+        "TERM": 32400,
+        "SBA": 12960,
+        "TRADE_FINANCE": 30240,
+        "CREDIT_CARD": 47520
+      },
+      "avg_revenue": 11200000,
+      "avg_employees": 58,
+      "growth_rate": 0.06,
+      "international_trade": 0.56,
+      "top_metros": [
+        {"name": "LA/Long Beach", "percent": 0.30},
+        {"name": "Chicago", "percent": 0.25},
+        {"name": "NYC", "percent": 0.20}
+      ]
+    },
+    {
+      "id": "seg_real_estate",
+      "name": "Real Estate & Property Services",
+      "icon": "🏢",
+      "business_count": 45000,
+      "exposure": 17100000000,
+      "avg_score": 70.2,
+      "pre_qual_rate": 0.65,
+      "risk_distribution": {
+        "LOW": 0.38,
+        "MODERATE": 0.37,
+        "ELEVATED": 0.16,
+        "HIGH": 0.07,
+        "CRITICAL": 0.02
+      },
+      "conversion_rate": 0.087,
+      "status": "performing",
+      "trend": "up",
+      "product_eligibility": {
+        "LOC": 29250,
+        "TERM": 27000,
+        "SBA": 13500,
+        "TRADE_FINANCE": 3600,
+        "CREDIT_CARD": 38250
+      },
+      "avg_revenue": 9500000,
+      "avg_employees": 22,
+      "growth_rate": 0.05,
+      "international_trade": 0.08,
+      "top_metros": [
+        {"name": "NYC", "percent": 0.40},
+        {"name": "Miami", "percent": 0.20},
+        {"name": "SF", "percent": 0.15}
+      ]
+    },
+    {
+      "id": "seg_food_service",
+      "name": "Food Service & Hospitality",
+      "icon": "🍽️",
+      "business_count": 36000,
+      "exposure": 5200000000,
+      "avg_score": 66.8,
+      "pre_qual_rate": 0.48,
+      "risk_distribution": {
+        "LOW": 0.18,
+        "MODERATE": 0.35,
+        "ELEVATED": 0.26,
+        "HIGH": 0.14,
+        "CRITICAL": 0.07
+      },
+      "conversion_rate": 0.041,
+      "status": "below_benchmark",
+      "trend": "stable",
+      "product_eligibility": {
+        "LOC": 17280,
+        "TERM": 14400,
+        "SBA": 8640,
+        "TRADE_FINANCE": 5040,
+        "CREDIT_CARD": 28800
+      },
+      "avg_revenue": 5800000,
+      "avg_employees": 32,
+      "growth_rate": 0.04,
+      "international_trade": 0.14,
+      "top_metros": [
+        {"name": "Miami", "percent": 0.28},
+        {"name": "NYC", "percent": 0.26},
+        {"name": "SF", "percent": 0.18}
+      ]
+    },
+    {
+      "id": "seg_other",
+      "name": "Other Industries",
+      "icon": "📊",
+      "business_count": 31000,
+      "exposure": 5400000000,
+      "avg_score": 67.5,
+      "pre_qual_rate": 0.56,
+      "risk_distribution": {
+        "LOW": 0.24,
+        "MODERATE": 0.38,
+        "ELEVATED": 0.22,
+        "HIGH": 0.12,
+        "CRITICAL": 0.04
+      },
+      "conversion_rate": 0.063,
+      "status": "performing",
+      "trend": "stable",
+      "product_eligibility": {
+        "LOC": 17360,
+        "TERM": 15500,
+        "SBA": 7750,
+        "TRADE_FINANCE": 3720,
+        "CREDIT_CARD": 24800
+      },
+      "avg_revenue": 6800000,
+      "avg_employees": 38,
+      "growth_rate": 0.03,
+      "international_trade": 0.12,
+      "top_metros": [
+        {"name": "NYC", "percent": 0.30},
+        {"name": "Chicago", "percent": 0.20},
+        {"name": "LA", "percent": 0.18}
+      ]
+    }
+  ],
+  "geographic_distribution": [
+    {
+      "region": "Northeast",
+      "states": ["NY", "CT", "NJ", "PA", "MA", "DC"],
+      "business_count": 198000,
+      "exposure": 43300000000,
+      "avg_score": 71.8,
+      "qual_rate": 0.68,
+      "percent_of_total": 0.44,
+      "branches": 385,
+      "key_metros": ["New York City", "Washington DC", "Boston"]
+    },
+    {
+      "region": "West",
+      "states": ["CA", "WA", "OR", "NV"],
+      "business_count": 108000,
+      "exposure": 28100000000,
+      "avg_score": 72.4,
+      "qual_rate": 0.66,
+      "percent_of_total": 0.24,
+      "branches": 180,
+      "key_metros": ["San Francisco Bay Area", "Los Angeles", "San Diego", "Seattle"]
+    },
+    {
+      "region": "Southeast",
+      "states": ["FL", "GA", "NC", "VA"],
+      "business_count": 81000,
+      "exposure": 16400000000,
+      "avg_score": 69.2,
+      "qual_rate": 0.61,
+      "percent_of_total": 0.18,
+      "branches": 52,
+      "key_metros": ["Miami", "Atlanta"]
+    },
+    {
+      "region": "Midwest",
+      "states": ["IL", "OH", "MI", "IN", "WI", "MN"],
+      "business_count": 45000,
+      "exposure": 8900000000,
+      "avg_score": 70.1,
+      "qual_rate": 0.58,
+      "percent_of_total": 0.10,
+      "branches": 26,
+      "key_metros": ["Chicago"]
+    },
+    {
+      "region": "Southwest",
+      "states": ["TX", "AZ", "NM", "OK"],
+      "business_count": 18000,
+      "exposure": 1700000000,
+      "avg_score": 68.8,
+      "qual_rate": 0.55,
+      "percent_of_total": 0.04,
+      "branches": 5,
+      "key_metros": ["Dallas", "Houston"]
+    }
+  ],
+  "risk_metrics": {
+    "portfolio_at_risk": {
+      "value": 7800000000,
+      "percent": 0.079
+    },
+    "industry_concentration": {
+      "value": 0.179,
+      "label": "Professional Services"
+    },
+    "geographic_concentration": {
+      "value": 0.440,
+      "label": "Northeast (NYC metro)"
+    },
+    "ews_alerts": 2847,
+    "thirty_day_deterioration": 3210,
+    "watch_list": 12400,
+    "default_rate_trend": "improving",
+    "international_exposure": 37400000000,
+    "trade_finance_volume": 14200000000
+  },
+  "concentration": {
+    "industry": {
+      "limit": 0.20,
+      "values": [
+        {"name": "Professional Services", "percent": 0.179, "exposure": 17600000000, "status": "safe"},
+        {"name": "Technology", "percent": 0.174, "exposure": 17100000000, "status": "safe"},
+        {"name": "Real Estate & Property Services", "percent": 0.174, "exposure": 17100000000, "status": "safe"},
+        {"name": "Manufacturing & Distribution", "percent": 0.176, "exposure": 17300000000, "status": "safe"},
+        {"name": "Healthcare & Life Sciences", "percent": 0.170, "exposure": 16700000000, "status": "safe"}
+      ]
+    },
+    "geography": {
+      "limit": 0.35,
+      "values": [
+        {"name": "Northeast", "percent": 0.440, "exposure": 43300000000, "status": "warning"},
+        {"name": "West", "percent": 0.286, "exposure": 28100000000, "status": "safe"},
+        {"name": "Southeast", "percent": 0.167, "exposure": 16400000000, "status": "safe"},
+        {"name": "Midwest", "percent": 0.090, "exposure": 8900000000, "status": "safe"},
+        {"name": "Southwest", "percent": 0.017, "exposure": 1700000000, "status": "safe"}
+      ]
+    }
+  },
+  "ews_clusters": [
+    {
+      "id": "ews_score_drop",
+      "type": "SCORE_DROP",
+      "severity": "critical",
+      "title": "Score Drop >15 Points (30 Days)",
+      "business_count": 1247,
+      "exposure": 218000000,
+      "heaviest_segments": [
+        {"segment": "Retail & E-Commerce", "count": 389},
+        {"segment": "Food Service & Hospitality", "count": 312},
+        {"segment": "Manufacturing & Distribution", "count": 221},
+        {"segment": "Other Industries", "count": 186},
+        {"segment": "Technology", "count": 139}
+      ],
+      "actions": ["View Segment", "Add All to Watch List", "Assign to Team"],
+      "trend": "increasing"
+    },
+    {
+      "id": "ews_delinquency",
+      "type": "DELINQUENCY",
+      "severity": "critical",
+      "title": "Delinquency Reported",
+      "business_count": 387,
+      "exposure": 124000000,
+      "heaviest_segments": [
+        {"segment": "Food Service & Hospitality", "count": 118},
+        {"segment": "Retail & E-Commerce", "count": 97},
+        {"segment": "Manufacturing & Distribution", "count": 78},
+        {"segment": "Other Industries", "count": 54},
+        {"segment": "Healthcare & Life Sciences", "count": 40}
+      ],
+      "actions": ["View Segment", "Add All to Watch List", "Assign to Team"],
+      "trend": "stable"
+    },
+    {
+      "id": "ews_lien",
+      "type": "LIEN_FILED",
+      "severity": "warning",
+      "title": "Lien Filed",
+      "business_count": 189,
+      "exposure": 67000000,
+      "heaviest_segments": [
+        {"segment": "Manufacturing & Distribution", "count": 62},
+        {"segment": "Real Estate & Property Services", "count": 48},
+        {"segment": "Other Industries", "count": 35},
+        {"segment": "Retail & E-Commerce", "count": 28},
+        {"segment": "Technology", "count": 16}
+      ],
+      "actions": ["View Segment", "Legal Review Queue", "Assign"],
+      "trend": "decreasing"
+    },
+    {
+      "id": "ews_bankruptcy",
+      "type": "BANKRUPTCY_WATCH",
+      "severity": "critical",
+      "title": "Bankruptcy Watch",
+      "business_count": 94,
+      "exposure": 52000000,
+      "heaviest_segments": [
+        {"segment": "Food Service & Hospitality", "count": 31},
+        {"segment": "Retail & E-Commerce", "count": 24},
+        {"segment": "Other Industries", "count": 18},
+        {"segment": "Manufacturing & Distribution", "count": 12},
+        {"segment": "Real Estate & Property Services", "count": 9}
+      ],
+      "actions": ["View Segment", "Immediate Review", "Assign to Senior"],
+      "trend": "stable"
+    },
+    {
+      "id": "ews_international_risk",
+      "type": "INTERNATIONAL_RISK",
+      "severity": "warning",
+      "title": "International Trade Risk Flags",
+      "business_count": 930,
+      "exposure": 412000000,
+      "heaviest_segments": [
+        {"segment": "Manufacturing & Distribution", "count": 312},
+        {"segment": "Retail & E-Commerce", "count": 287},
+        {"segment": "Technology", "count": 186},
+        {"segment": "Other Industries", "count": 89},
+        {"segment": "Healthcare & Life Sciences", "count": 56}
+      ],
+      "actions": ["View Segment", "Trade Compliance Review", "Assign to Trade Finance Team"],
+      "trend": "increasing"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "camp_001",
+      "name": "Q1 2026 Tech Working Capital — CitiBusiness Line of Credit",
+      "status": "active",
+      "health": "on_track",
+      "target_segment": "seg_tech",
+      "target_criteria": "Technology + Score >65 + Revenue >$5M + International trade",
+      "product": "CitiBusiness Line of Credit",
+      "start_date": "2026-01-15",
+      "end_date": "2026-03-31",
+      "owner": "M. Zhang",
+      "funnel": {
+        "pushed": 25840,
+        "viewed": 12920,
+        "applied": 3360,
+        "approved": 2856
+      },
+      "view_rate": 0.50,
+      "apply_rate": 0.13,
+      "approval_rate": 0.85,
+      "approved_volume": 892000000,
+      "description": "Working capital push for tech companies with international payment needs"
+    },
+    {
+      "id": "camp_002",
+      "name": "Professional Services Growth — Commercial Term Loan",
+      "status": "active",
+      "health": "on_track",
+      "target_segment": "seg_professional",
+      "target_criteria": "Professional Services + NYC/DC metro + Score >70",
+      "product": "Commercial Term Loan",
+      "start_date": "2026-02-01",
+      "end_date": "2026-04-30",
+      "owner": "R. Johnson",
+      "funnel": {
+        "pushed": 21600,
+        "viewed": 10800,
+        "applied": 2592,
+        "approved": 2177
+      },
+      "view_rate": 0.50,
+      "apply_rate": 0.12,
+      "approval_rate": 0.84,
+      "approved_volume": 678000000,
+      "description": "Expansion capital for law firms, consulting, and advisory practices in major metros"
+    },
+    {
+      "id": "camp_003",
+      "name": "Import/Export Trade Finance Expansion",
+      "status": "active",
+      "health": "on_track",
+      "target_segment": "seg_retail",
+      "target_criteria": "Retail + Manufacturing + International trade + LOC eligible",
+      "product": "Trade Finance & Working Capital",
+      "start_date": "2026-01-20",
+      "end_date": "2026-05-15",
+      "owner": "A. Patel",
+      "funnel": {
+        "pushed": 32400,
+        "viewed": 14580,
+        "applied": 3240,
+        "approved": 2592
+      },
+      "view_rate": 0.45,
+      "apply_rate": 0.10,
+      "approval_rate": 0.80,
+      "approved_volume": 524000000,
+      "description": "Trade finance solutions for importers and distributors with international supply chains"
+    }
+  ],
+  "campaign_summary": {
+    "active_campaigns": 3,
+    "offers_pushed": 79840,
+    "avg_view_rate": 0.48,
+    "avg_apply_rate": 0.12,
+    "avg_approval_rate": 0.83,
+    "revenue_booked": 2094000000
+  },
+  "underwriting_queue": [
+    {
+      "id": "uw_001",
+      "business": "CloudScale Technologies Inc",
+      "product": "Commercial Term Loan",
+      "amount": 1200000,
+      "score": 76,
+      "risk": "LOW",
+      "time_in_queue": 1.2,
+      "sla_status": "ok",
+      "segment": "seg_tech",
+      "state": "CA",
+      "revenue": 18500000
+    },
+    {
+      "id": "uw_002",
+      "business": "Global Import Partners LLC",
+      "product": "Trade Finance Line",
+      "amount": 850000,
+      "score": 68,
+      "risk": "MODERATE",
+      "time_in_queue": 2.8,
+      "sla_status": "ok",
+      "segment": "seg_retail",
+      "state": "NY",
+      "revenue": 14200000
+    },
+    {
+      "id": "uw_003",
+      "business": "Metropolitan Law Group LLP",
+      "product": "CitiBusiness Line of Credit",
+      "amount": 650000,
+      "score": 81,
+      "risk": "LOW",
+      "time_in_queue": 0.8,
+      "sla_status": "ok",
+      "segment": "seg_professional",
+      "state": "NY",
+      "revenue": 22100000
+    },
+    {
+      "id": "uw_004",
+      "business": "BioMed Solutions Corp",
+      "product": "SBA 7(a) Loan",
+      "amount": 980000,
+      "score": 72,
+      "risk": "MODERATE",
+      "time_in_queue": 4.2,
+      "sla_status": "ok",
+      "segment": "seg_healthcare",
+      "state": "CA",
+      "revenue": 8900000
+    },
+    {
+      "id": "uw_005",
+      "business": "Premier Hotel Group Miami",
+      "product": "Commercial Term Loan",
+      "amount": 420000,
+      "score": 59,
+      "risk": "ELEVATED",
+      "time_in_queue": 6.8,
+      "sla_status": "warning",
+      "segment": "seg_food_service",
+      "state": "FL",
+      "revenue": 6700000
+    },
+    {
+      "id": "uw_006",
+      "business": "Pacific Import Distribution",
+      "product": "Trade Finance Line",
+      "amount": 1500000,
+      "score": 74,
+      "risk": "MODERATE",
+      "time_in_queue": 2.1,
+      "sla_status": "ok",
+      "segment": "seg_manufacturing",
+      "state": "CA",
+      "revenue": 28400000
+    },
+    {
+      "id": "uw_007",
+      "business": "Midtown Commercial Properties",
+      "product": "Commercial Real Estate Loan",
+      "amount": 2800000,
+      "score": 77,
+      "risk": "LOW",
+      "time_in_queue": 3.5,
+      "sla_status": "ok",
+      "segment": "seg_real_estate",
+      "state": "NY",
+      "revenue": 15600000
+    },
+    {
+      "id": "uw_008",
+      "business": "TechConsult Advisors Inc",
+      "product": "CitiBusiness Line of Credit",
+      "amount": 480000,
+      "score": 79,
+      "risk": "LOW",
+      "time_in_queue": 1.4,
+      "sla_status": "ok",
+      "segment": "seg_professional",
+      "state": "DC",
+      "revenue": 11200000
+    },
+    {
+      "id": "uw_009",
+      "business": "Express Logistics International",
+      "product": "Equipment Financing",
+      "amount": 720000,
+      "score": 64,
+      "risk": "MODERATE",
+      "time_in_queue": 5.1,
+      "sla_status": "ok",
+      "segment": "seg_other",
+      "state": "IL",
+      "revenue": 9800000
+    },
+    {
+      "id": "uw_010",
+      "business": "Coastal Restaurant Holdings",
+      "product": "CitiBusiness Line of Credit",
+      "amount": 280000,
+      "score": 52,
+      "risk": "ELEVATED",
+      "time_in_queue": 8.2,
+      "sla_status": "warning",
+      "segment": "seg_food_service",
+      "state": "FL",
+      "revenue": 4800000
+    },
+    {
+      "id": "uw_011",
+      "business": "FinTech Innovations LLC",
+      "product": "Commercial Term Loan",
+      "amount": 1850000,
+      "score": 82,
+      "risk": "LOW",
+      "time_in_queue": 1.8,
+      "sla_status": "ok",
+      "segment": "seg_tech",
+      "state": "NY",
+      "revenue": 24700000
+    },
+    {
+      "id": "uw_012",
+      "business": "Healthcare Equipment Distributors",
+      "product": "Trade Finance Line",
+      "amount": 1100000,
+      "score": 70,
+      "risk": "MODERATE",
+      "time_in_queue": 3.2,
+      "sla_status": "ok",
+      "segment": "seg_healthcare",
+      "state": "CA",
+      "revenue": 17200000
+    },
+    {
+      "id": "uw_013",
+      "business": "Bay Area Property Management",
+      "product": "Commercial Term Loan",
+      "amount": 890000,
+      "score": 75,
+      "risk": "LOW",
+      "time_in_queue": 2.4,
+      "sla_status": "ok",
+      "segment": "seg_real_estate",
+      "state": "CA",
+      "revenue": 12400000
+    },
+    {
+      "id": "uw_014",
+      "business": "International Fashion Imports",
+      "product": "Trade Finance Line",
+      "amount": 620000,
+      "score": 66,
+      "risk": "MODERATE",
+      "time_in_queue": 4.7,
+      "sla_status": "ok",
+      "segment": "seg_retail",
+      "state": "NY",
+      "revenue": 8600000
+    },
+    {
+      "id": "uw_015",
+      "business": "Precision Manufacturing Corp",
+      "product": "Equipment Financing",
+      "amount": 1350000,
+      "score": 71,
+      "risk": "MODERATE",
+      "time_in_queue": 3.9,
+      "sla_status": "ok",
+      "segment": "seg_manufacturing",
+      "state": "IL",
+      "revenue": 19800000
+    }
+  ],
+  "filter_options": {
+    "industries": [
+      "Technology",
+      "Professional Services",
+      "Healthcare & Life Sciences",
+      "Retail & E-Commerce",
+      "Manufacturing & Distribution",
+      "Real Estate & Property Services",
+      "Food Service & Hospitality",
+      "Other Industries"
+    ],
+    "states": ["NY", "CA", "FL", "IL", "WA", "DC", "MA", "NJ", "PA", "TX", "GA", "CT"],
+    "risk_tiers": ["LOW", "MODERATE", "ELEVATED", "HIGH", "CRITICAL"],
+    "products": [
+      "CitiBusiness Line of Credit",
+      "Commercial Term Loan",
+      "SBA 7(a) Loan",
+      "Trade Finance & Working Capital",
+      "Commercial Real Estate Loan",
+      "Equipment Financing",
+      "CitiBusiness Credit Card"
+    ],
+    "score_range": {"min": 0, "max": 100},
+    "revenue_range": {"min": 1000000, "max": 50000000}
+  },
+  "sample_businesses": [
+    {"id": "biz_001", "name": "CloudScale Technologies Inc", "revenue": 18500000, "score": 76, "risk": "LOW", "status": "Offer Sent", "segment": "seg_tech", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_002", "name": "Global Import Partners LLC", "revenue": 14200000, "score": 68, "risk": "MODERATE", "status": "Applied", "segment": "seg_retail", "state": "NY", "city": "New York"},
+    {"id": "biz_003", "name": "Metropolitan Law Group LLP", "revenue": 22100000, "score": 81, "risk": "LOW", "status": "Approved", "segment": "seg_professional", "state": "NY", "city": "New York"},
+    {"id": "biz_004", "name": "BioMed Solutions Corp", "revenue": 8900000, "score": 72, "risk": "MODERATE", "status": "Under Review", "segment": "seg_healthcare", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_005", "name": "Premier Hotel Group Miami", "revenue": 6700000, "score": 59, "risk": "ELEVATED", "status": "Under Review", "segment": "seg_food_service", "state": "FL", "city": "Miami"},
+    {"id": "biz_006", "name": "Pacific Import Distribution", "revenue": 28400000, "score": 74, "risk": "MODERATE", "status": "Qualified", "segment": "seg_manufacturing", "state": "CA", "city": "Los Angeles"},
+    {"id": "biz_007", "name": "Midtown Commercial Properties", "revenue": 15600000, "score": 77, "risk": "LOW", "status": "Offer Sent", "segment": "seg_real_estate", "state": "NY", "city": "New York"},
+    {"id": "biz_008", "name": "TechConsult Advisors Inc", "revenue": 11200000, "score": 79, "risk": "LOW", "status": "Approved", "segment": "seg_professional", "state": "DC", "city": "Washington"},
+    {"id": "biz_009", "name": "Express Logistics International", "revenue": 9800000, "score": 64, "risk": "MODERATE", "status": "Qualified", "segment": "seg_other", "state": "IL", "city": "Chicago"},
+    {"id": "biz_010", "name": "Coastal Restaurant Holdings", "revenue": 4800000, "score": 52, "risk": "ELEVATED", "status": "Under Review", "segment": "seg_food_service", "state": "FL", "city": "Miami"},
+    {"id": "biz_011", "name": "FinTech Innovations LLC", "revenue": 24700000, "score": 82, "risk": "LOW", "status": "Offer Sent", "segment": "seg_tech", "state": "NY", "city": "New York"},
+    {"id": "biz_012", "name": "Healthcare Equipment Distributors", "revenue": 17200000, "score": 70, "risk": "MODERATE", "status": "Qualified", "segment": "seg_healthcare", "state": "CA", "city": "San Diego"},
+    {"id": "biz_013", "name": "Bay Area Property Management", "revenue": 12400000, "score": 75, "risk": "LOW", "status": "Applied", "segment": "seg_real_estate", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_014", "name": "International Fashion Imports", "revenue": 8600000, "score": 66, "risk": "MODERATE", "status": "Qualified", "segment": "seg_retail", "state": "NY", "city": "New York"},
+    {"id": "biz_015", "name": "Precision Manufacturing Corp", "revenue": 19800000, "score": 71, "risk": "MODERATE", "status": "Offer Sent", "segment": "seg_manufacturing", "state": "IL", "city": "Chicago"},
+    {"id": "biz_016", "name": "NextGen AI Systems", "revenue": 32100000, "score": 84, "risk": "LOW", "status": "Approved", "segment": "seg_tech", "state": "CA", "city": "Palo Alto"},
+    {"id": "biz_017", "name": "Capitol Consulting Partners", "revenue": 14800000, "score": 78, "risk": "LOW", "status": "Offer Sent", "segment": "seg_professional", "state": "DC", "city": "Washington"},
+    {"id": "biz_018", "name": "MedDevice Supply Chain", "revenue": 21500000, "score": 73, "risk": "MODERATE", "status": "Qualified", "segment": "seg_healthcare", "state": "FL", "city": "Miami"},
+    {"id": "biz_019", "name": "Urban Retail Group NYC", "revenue": 9200000, "score": 65, "risk": "MODERATE", "status": "Applied", "segment": "seg_retail", "state": "NY", "city": "New York"},
+    {"id": "biz_020", "name": "Global Trade Logistics Inc", "revenue": 16700000, "score": 69, "risk": "MODERATE", "status": "Qualified", "segment": "seg_manufacturing", "state": "CA", "city": "Long Beach"},
+    {"id": "biz_021", "name": "Manhattan Real Estate Holdings", "revenue": 28900000, "score": 80, "risk": "LOW", "status": "Approved", "segment": "seg_real_estate", "state": "NY", "city": "New York"},
+    {"id": "biz_022", "name": "Silicon Valley Ventures", "revenue": 41200000, "score": 86, "risk": "LOW", "status": "Offer Sent", "segment": "seg_tech", "state": "CA", "city": "San Jose"},
+    {"id": "biz_023", "name": "Miami Beach Hospitality Group", "revenue": 8900000, "score": 61, "risk": "MODERATE", "status": "Qualified", "segment": "seg_food_service", "state": "FL", "city": "Miami Beach"},
+    {"id": "biz_024", "name": "Chicago Financial Advisory", "revenue": 12600000, "score": 77, "risk": "LOW", "status": "Approved", "segment": "seg_professional", "state": "IL", "city": "Chicago"},
+    {"id": "biz_025", "name": "West Coast Import Export", "revenue": 24300000, "score": 72, "risk": "MODERATE", "status": "Offer Sent", "segment": "seg_retail", "state": "CA", "city": "Los Angeles"},
+    {"id": "biz_026", "name": "Biotech Research Corp", "revenue": 19400000, "score": 75, "risk": "LOW", "status": "Qualified", "segment": "seg_healthcare", "state": "CA", "city": "South San Francisco"},
+    {"id": "biz_027", "name": "Industrial Parts Manufacturing", "revenue": 17800000, "score": 68, "risk": "MODERATE", "status": "Applied", "segment": "seg_manufacturing", "state": "IL", "city": "Chicago"},
+    {"id": "biz_028", "name": "Brooklyn Real Estate Partners", "revenue": 14100000, "score": 74, "risk": "MODERATE", "status": "Qualified", "segment": "seg_real_estate", "state": "NY", "city": "Brooklyn"},
+    {"id": "biz_029", "name": "SaaS Innovations Group", "revenue": 27600000, "score": 83, "risk": "LOW", "status": "Approved", "segment": "seg_tech", "state": "WA", "city": "Seattle"},
+    {"id": "biz_030", "name": "NYC Legal Associates", "revenue": 16200000, "score": 79, "risk": "LOW", "status": "Offer Sent", "segment": "seg_professional", "state": "NY", "city": "New York"},
+    {"id": "biz_031", "name": "International Medical Supplies", "revenue": 13800000, "score": 70, "risk": "MODERATE", "status": "Qualified", "segment": "seg_healthcare", "state": "NY", "city": "New York"},
+    {"id": "biz_032", "name": "Luxury Retail Imports", "revenue": 11500000, "score": 67, "risk": "MODERATE", "status": "Under Review", "segment": "seg_retail", "state": "FL", "city": "Miami"},
+    {"id": "biz_033", "name": "Automated Manufacturing Systems", "revenue": 22700000, "score": 71, "risk": "MODERATE", "status": "Qualified", "segment": "seg_manufacturing", "state": "CA", "city": "San Diego"},
+    {"id": "biz_034", "name": "SF Commercial Properties LLC", "revenue": 31400000, "score": 81, "risk": "LOW", "status": "Approved", "segment": "seg_real_estate", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_035", "name": "Enterprise Software Solutions", "revenue": 38900000, "score": 85, "risk": "LOW", "status": "Offer Sent", "segment": "seg_tech", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_036", "name": "DC Government Contractors", "revenue": 18700000, "score": 76, "risk": "LOW", "status": "Qualified", "segment": "seg_professional", "state": "DC", "city": "Washington"},
+    {"id": "biz_037", "name": "Pharmaceutical Distribution Inc", "revenue": 26100000, "score": 74, "risk": "MODERATE", "status": "Applied", "segment": "seg_healthcare", "state": "CA", "city": "Los Angeles"},
+    {"id": "biz_038", "name": "E-Commerce Fulfillment Partners", "revenue": 14900000, "score": 69, "risk": "MODERATE", "status": "Qualified", "segment": "seg_retail", "state": "CA", "city": "Oakland"},
+    {"id": "biz_039", "name": "Advanced Electronics Manufacturing", "revenue": 20500000, "score": 72, "risk": "MODERATE", "status": "Offer Sent", "segment": "seg_manufacturing", "state": "WA", "city": "Seattle"},
+    {"id": "biz_040", "name": "Miami International Catering", "revenue": 7200000, "score": 63, "risk": "MODERATE", "status": "Qualified", "segment": "seg_food_service", "state": "FL", "city": "Miami"},
+    {"id": "biz_041", "name": "AI Research Labs", "revenue": 29800000, "score": 82, "risk": "LOW", "status": "Approved", "segment": "seg_tech", "state": "NY", "city": "New York"},
+    {"id": "biz_042", "name": "Manhattan Consulting Group", "revenue": 15300000, "score": 78, "risk": "LOW", "status": "Offer Sent", "segment": "seg_professional", "state": "NY", "city": "New York"},
+    {"id": "biz_043", "name": "Clinical Research Associates", "revenue": 12900000, "score": 71, "risk": "MODERATE", "status": "Qualified", "segment": "seg_healthcare", "state": "MA", "city": "Boston"},
+    {"id": "biz_044", "name": "Digital Commerce Solutions", "revenue": 10800000, "score": 66, "risk": "MODERATE", "status": "Under Review", "segment": "seg_retail", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_045", "name": "Precision Components Corp", "revenue": 18200000, "score": 70, "risk": "MODERATE", "status": "Qualified", "segment": "seg_manufacturing", "state": "IL", "city": "Chicago"},
+    {"id": "biz_046", "name": "LA Property Development", "revenue": 25600000, "score": 79, "risk": "LOW", "status": "Applied", "segment": "seg_real_estate", "state": "CA", "city": "Los Angeles"},
+    {"id": "biz_047", "name": "Cloud Infrastructure Inc", "revenue": 33700000, "score": 84, "risk": "LOW", "status": "Approved", "segment": "seg_tech", "state": "WA", "city": "Seattle"},
+    {"id": "biz_048", "name": "Financial Planning Associates", "revenue": 13400000, "score": 77, "risk": "LOW", "status": "Offer Sent", "segment": "seg_professional", "state": "CA", "city": "San Francisco"},
+    {"id": "biz_049", "name": "Medical Device Innovations", "revenue": 22300000, "score": 73, "risk": "MODERATE", "status": "Qualified", "segment": "seg_healthcare", "state": "CA", "city": "Irvine"},
+    {"id": "biz_050", "name": "Global Shipping Logistics", "revenue": 16800000, "score": 68, "risk": "MODERATE", "status": "Applied", "segment": "seg_other", "state": "CA", "city": "Long Beach"}
+  ],
+  "product_eligibility": {
+    "CitiBusiness Line of Credit": {
+      "eligible": 317270,
+      "conversion_rate": 15.2,
+      "avg_limit": 285000,
+      "description": "Revolving credit line with flexible draw and repayment terms"
+    },
+    "Commercial Term Loan": {
+      "eligible": 281360,
+      "conversion_rate": 13.8,
+      "avg_limit": 750000,
+      "description": "Fixed-rate term loans for expansion and capital investments"
+    },
+    "SBA 7(a) Loan": {
+      "eligible": 132210,
+      "conversion_rate": 19.4,
+      "avg_limit": 920000,
+      "description": "SBA-guaranteed loans for qualified small businesses"
+    },
+    "Trade Finance & Working Capital": {
+      "eligible": 132030,
+      "conversion_rate": 11.7,
+      "avg_limit": 1200000,
+      "description": "Letters of credit, trade finance, and cross-border payment solutions"
+    },
+    "Commercial Real Estate Loan": {
+      "eligible": 67500,
+      "conversion_rate": 22.8,
+      "avg_limit": 2400000,
+      "description": "Property acquisition and commercial real estate financing"
+    },
+    "Equipment Financing": {
+      "eligible": 189000,
+      "conversion_rate": 17.1,
+      "avg_limit": 480000,
+      "description": "Leasing and financing for business equipment and technology"
+    },
+    "CitiBusiness Credit Card": {
+      "eligible": 389310,
+      "conversion_rate": 9.4,
+      "avg_limit": 35000,
+      "description": "Business credit cards with rewards and expense management tools"
+    }
+  },
+  "compliance": {
+    "approval_variance": [
+      {"segment": "Professional Services", "applications": 8640, "approved": 7257, "rate": 0.84, "variance": 0.05, "status": "ok"},
+      {"segment": "Technology", "applications": 7480, "approved": 6359, "rate": 0.85, "variance": 0.06, "status": "ok"},
+      {"segment": "Healthcare & Life Sciences", "applications": 5796, "approved": 4810, "rate": 0.83, "variance": 0.04, "status": "ok"},
+      {"segment": "Retail & E-Commerce", "applications": 6561, "approved": 5249, "rate": 0.80, "variance": 0.01, "status": "ok"},
+      {"segment": "Manufacturing & Distribution", "applications": 4212, "approved": 3370, "rate": 0.80, "variance": 0.01, "status": "ok"},
+      {"segment": "Real Estate & Property Services", "applications": 3915, "approved": 3210, "rate": 0.82, "variance": 0.03, "status": "ok"},
+      {"segment": "Food Service & Hospitality", "applications": 1476, "approved": 1032, "rate": 0.70, "variance": -0.09, "status": "review"},
+      {"segment": "Other Industries", "applications": 1953, "approved": 1524, "rate": 0.78, "variance": -0.01, "status": "ok"}
+    ],
+    "portfolio_approval_rate": 0.79,
+    "adverse_actions_sent": 10120,
+    "fair_lending_status": "pass",
+    "international_compliance_reviews": 842
+  },
+  "saved_segments": [
+    {"id": "saved_001", "name": "High-Value Tech NYC/SF", "business_count": 24800, "exposure": 8200000000, "created_at": "2026-01-12"},
+    {"id": "saved_002", "name": "International Trade Focus", "business_count": 45600, "exposure": 14200000000, "created_at": "2026-01-18"},
+    {"id": "saved_003", "name": "Professional Services Metro", "business_count": 36000, "exposure": 10800000000, "created_at": "2026-01-24"},
+    {"id": "saved_004", "name": "Cross-Border Retailers", "business_count": 18900, "exposure": 4700000000, "created_at": "2026-02-02"},
+    {"id": "saved_005", "name": "Miami Gateway Clients", "business_count": 14200, "exposure": 3100000000, "created_at": "2026-02-05"}
+  ]
+}

@@ -5,8 +5,11 @@
  * Defines industry segments, KPIs, geographic distribution, risk tiers,
  * concentration metrics, EWS alerts, campaigns, and product eligibility
  *
- * All metrics are consistent with 287,000 total businesses and $21.2B exposure
+ * All metrics are aligned with chase.json: 6M total businesses and $650B exposure
+ * Bank switching: Dynamically loads Chase or Wells Fargo data based on ACTIVE_BANK_ID
  */
+
+import { ACTIVE_BANK_ID } from './bankConfig';
 
 // ============================================================================
 // TYPE DEFINITIONS
@@ -87,40 +90,41 @@ export interface RiskTierDistribution {
 }
 
 // ============================================================================
-// INDUSTRY SEGMENTS
-// Total: 287,000 businesses | $21.2B exposure
+// INDUSTRY SEGMENTS — CHASE
+// Total: 6,000,000 businesses | $650B exposure
+// Aligned with chase.json — scale factor: ~20.9x from original dataset
 // ============================================================================
 
-export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
+const CHASE_INDUSTRY_SEGMENTS: IndustrySegment[] = [
   {
     id: 'retail',
     name: 'Retail & E-Commerce',
     icon: 'ShoppingBag',
-    businessCount: 42800,
-    totalExposure: 2100000000,
+    businessCount: 894520, // Aligned with chase.json scale (20.9x)
+    totalExposure: 64425130000,
     qualRate: 36.4,
     avgScore: 72.8,
     highRiskPct: 8.2,
     trend: { direction: 'up', value: 2.3 },
     topProducts: [
-      { name: 'Line of Credit', eligible: 15580 },
-      { name: 'Term Loan', eligible: 12890 },
-      { name: 'Equipment Financing', eligible: 8560 },
-      { name: 'SBA 7(a)', eligible: 5120 },
+      { name: 'Line of Credit', eligible: 325622 },
+      { name: 'Term Loan', eligible: 269401 },
+      { name: 'Equipment Financing', eligible: 178904 },
+      { name: 'SBA 7(a)', eligible: 107008 },
     ],
     region: {
-      Northeast: 9240,
-      Southeast: 10700,
-      Midwest: 8560,
-      Southwest: 7280,
-      West: 7020,
+      Northeast: 193116,
+      Southeast: 223630,
+      Midwest: 178904,
+      Southwest: 152152,
+      West: 146718,
     },
     riskDistribution: {
-      LOW: 18336,
-      MODERATE: 12612,
-      ELEVATED: 7276,
-      HIGH: 3424,
-      CRITICAL: 1152,
+      LOW: 383222,
+      MODERATE: 263591,
+      ELEVATED: 152067,
+      HIGH: 71576,
+      CRITICAL: 24078,
     },
     avgRevenue: 2400000,
     avgYearsInBusiness: 8.3,
@@ -129,31 +133,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'healthcare',
     name: 'Healthcare Services',
     icon: 'Heart',
-    businessCount: 31200,
-    totalExposure: 1800000000,
+    businessCount: 652080, // Aligned with chase.json scale (20.9x)
+    totalExposure: 55218930000,
     qualRate: 42.1,
     avgScore: 78.4,
     highRiskPct: 5.3,
     trend: { direction: 'up', value: 4.7 },
     topProducts: [
-      { name: 'Term Loan', eligible: 13128 },
-      { name: 'Line of Credit', eligible: 10920 },
-      { name: 'SBA 7(a)', eligible: 6240 },
-      { name: 'Equipment Financing', eligible: 4992 },
+      { name: 'Term Loan', eligible: 274375 },
+      { name: 'Line of Credit', eligible: 228228 },
+      { name: 'SBA 7(a)', eligible: 130416 },
+      { name: 'Equipment Financing', eligible: 104333 },
     ],
     region: {
-      Northeast: 7488,
-      Southeast: 8112,
-      Midwest: 6864,
-      Southwest: 4680,
-      West: 4056,
+      Northeast: 156499,
+      Southeast: 169541,
+      Midwest: 143458,
+      Southwest: 97821,
+      West: 84761,
     },
     riskDistribution: {
-      LOW: 14976,
-      MODERATE: 9984,
-      ELEVATED: 4992,
-      HIGH: 936,
-      CRITICAL: 312,
+      LOW: 312998,
+      MODERATE: 208665,
+      ELEVATED: 104333,
+      HIGH: 19562,
+      CRITICAL: 6521,
     },
     avgRevenue: 3100000,
     avgYearsInBusiness: 11.2,
@@ -162,31 +166,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'professional',
     name: 'Professional Services',
     icon: 'Briefcase',
-    businessCount: 38500,
-    totalExposure: 1400000000,
+    businessCount: 804650, // Aligned with chase.json scale (20.9x)
+    totalExposure: 42944020000,
     qualRate: 38.9,
     avgScore: 74.2,
     highRiskPct: 6.8,
     trend: { direction: 'stable', value: 0.8 },
     topProducts: [
-      { name: 'Line of Credit', eligible: 14980 },
-      { name: 'Term Loan', eligible: 11550 },
-      { name: 'SBA 7(a)', eligible: 6930 },
-      { name: 'Equipment Financing', eligible: 4620 },
+      { name: 'Line of Credit', eligible: 313082 },
+      { name: 'Term Loan', eligible: 241395 },
+      { name: 'SBA 7(a)', eligible: 144837 },
+      { name: 'Equipment Financing', eligible: 96558 },
     ],
     region: {
-      Northeast: 10395,
-      Southeast: 8470,
-      Midwest: 7315,
-      Southwest: 6160,
-      West: 6160,
+      Northeast: 217256,
+      Southeast: 177023,
+      Midwest: 152884,
+      Southwest: 128744,
+      West: 128744,
     },
     riskDistribution: {
-      LOW: 16940,
-      MODERATE: 11935,
-      ELEVATED: 6545,
-      HIGH: 2310,
-      CRITICAL: 770,
+      LOW: 354045,
+      MODERATE: 249444,
+      ELEVATED: 136794,
+      HIGH: 48279,
+      CRITICAL: 16093,
     },
     avgRevenue: 1800000,
     avgYearsInBusiness: 9.7,
@@ -195,31 +199,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'construction',
     name: 'Construction & Trades',
     icon: 'HardHat',
-    businessCount: 28900,
-    totalExposure: 2400000000,
+    businessCount: 604010, // Aligned with chase.json scale (20.9x)
+    totalExposure: 73631900000,
     qualRate: 31.5,
     avgScore: 68.9,
     highRiskPct: 11.4,
     trend: { direction: 'up', value: 1.9 },
     topProducts: [
-      { name: 'Equipment Financing', eligible: 10404 },
-      { name: 'Line of Credit', eligible: 9104 },
-      { name: 'Term Loan', eligible: 7514 },
-      { name: 'SBA 7(a)', eligible: 4046 },
+      { name: 'Equipment Financing', eligible: 217444 },
+      { name: 'Line of Credit', eligible: 190274 },
+      { name: 'Term Loan', eligible: 157043 },
+      { name: 'SBA 7(a)', eligible: 84561 },
     ],
     region: {
-      Northeast: 5780,
-      Southeast: 7514,
-      Midwest: 6358,
-      Southwest: 5202,
-      West: 4046,
+      Northeast: 120802,
+      Southeast: 157043,
+      Midwest: 132882,
+      Southwest: 108722,
+      West: 84561,
     },
     riskDistribution: {
-      LOW: 10404,
-      MODERATE: 8670,
-      ELEVATED: 5780,
-      HIGH: 2890,
-      CRITICAL: 1156,
+      LOW: 217444,
+      MODERATE: 181203,
+      ELEVATED: 120802,
+      HIGH: 60401,
+      CRITICAL: 24160,
     },
     avgRevenue: 4200000,
     avgYearsInBusiness: 7.1,
@@ -228,31 +232,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'restaurants',
     name: 'Restaurants & Food',
     icon: 'UtensilsCrossed',
-    businessCount: 35600,
-    totalExposure: 1100000000,
+    businessCount: 744040, // Aligned with chase.json scale (20.9x)
+    totalExposure: 33748450000,
     qualRate: 28.3,
     avgScore: 65.7,
     highRiskPct: 14.6,
     trend: { direction: 'down', value: -1.4 },
     topProducts: [
-      { name: 'Line of Credit', eligible: 10068 },
-      { name: 'Equipment Financing', eligible: 7832 },
-      { name: 'Term Loan', eligible: 7120 },
-      { name: 'SBA 7(a)', eligible: 4272 },
+      { name: 'Line of Credit', eligible: 210421 },
+      { name: 'Equipment Financing', eligible: 163689 },
+      { name: 'Term Loan', eligible: 148808 },
+      { name: 'SBA 7(a)', eligible: 89285 },
     ],
     region: {
-      Northeast: 7120,
-      Southeast: 9252,
-      Midwest: 7476,
-      Southwest: 6764,
-      West: 4988,
+      Northeast: 148808,
+      Southeast: 193367,
+      Midwest: 156250,
+      Southwest: 141367,
+      West: 104248,
     },
     riskDistribution: {
-      LOW: 11344,
-      MODERATE: 10424,
-      ELEVATED: 7832,
-      HIGH: 4272,
-      CRITICAL: 1728,
+      LOW: 237086,
+      MODERATE: 217862,
+      ELEVATED: 163689,
+      HIGH: 89285,
+      CRITICAL: 36119,
     },
     avgRevenue: 1500000,
     avgYearsInBusiness: 5.8,
@@ -261,31 +265,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'technology',
     name: 'Technology Services',
     icon: 'Laptop',
-    businessCount: 22400,
-    totalExposure: 1900000000,
+    businessCount: 468160, // Aligned with chase.json scale (20.9x)
+    totalExposure: 58291710000,
     qualRate: 44.6,
     avgScore: 81.3,
     highRiskPct: 4.1,
     trend: { direction: 'up', value: 5.2 },
     topProducts: [
-      { name: 'Term Loan', eligible: 9984 },
-      { name: 'Line of Credit', eligible: 8960 },
-      { name: 'SBA 7(a)', eligible: 5600 },
-      { name: 'Equipment Financing', eligible: 3360 },
+      { name: 'Term Loan', eligible: 208665 },
+      { name: 'Line of Credit', eligible: 187264 },
+      { name: 'SBA 7(a)', eligible: 117040 },
+      { name: 'Equipment Financing', eligible: 70224 },
     ],
     region: {
-      Northeast: 6720,
-      Southeast: 4480,
-      Midwest: 3360,
-      Southwest: 3136,
-      West: 4704,
+      Northeast: 140448,
+      Southeast: 93632,
+      Midwest: 70224,
+      Southwest: 65542,
+      West: 98314,
     },
     riskDistribution: {
-      LOW: 11200,
-      MODERATE: 7392,
-      ELEVATED: 3136,
-      HIGH: 448,
-      CRITICAL: 224,
+      LOW: 234080,
+      MODERATE: 154493,
+      ELEVATED: 65542,
+      HIGH: 9363,
+      CRITICAL: 4682,
     },
     avgRevenue: 4500000,
     avgYearsInBusiness: 6.4,
@@ -294,31 +298,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'manufacturing',
     name: 'Manufacturing',
     icon: 'Factory',
-    businessCount: 18700,
-    totalExposure: 3200000000,
+    businessCount: 390830, // Aligned with chase.json scale (20.9x)
+    totalExposure: 98176960000,
     qualRate: 40.3,
     avgScore: 76.8,
     highRiskPct: 6.2,
     trend: { direction: 'stable', value: 0.3 },
     topProducts: [
-      { name: 'Term Loan', eligible: 7536 },
-      { name: 'Equipment Financing', eligible: 6732 },
-      { name: 'Line of Credit', eligible: 5984 },
-      { name: 'SBA 7(a)', eligible: 4488 },
+      { name: 'Term Loan', eligible: 157502 },
+      { name: 'Equipment Financing', eligible: 140699 },
+      { name: 'Line of Credit', eligible: 125066 },
+      { name: 'SBA 7(a)', eligible: 93800 },
     ],
     region: {
-      Northeast: 4675,
-      Southeast: 4862,
-      Midwest: 6358,
-      Southwest: 1870,
-      West: 935,
+      Northeast: 97708,
+      Southeast: 101616,
+      Midwest: 132884,
+      Southwest: 39083,
+      West: 19542,
     },
     riskDistribution: {
-      LOW: 8415,
-      MODERATE: 5984,
-      ELEVATED: 3179,
-      HIGH: 935,
-      CRITICAL: 187,
+      LOW: 175874,
+      MODERATE: 125066,
+      ELEVATED: 66441,
+      HIGH: 19542,
+      CRITICAL: 3908,
     },
     avgRevenue: 8900000,
     avgYearsInBusiness: 14.6,
@@ -327,31 +331,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'transportation',
     name: 'Transportation & Logistics',
     icon: 'Truck',
-    businessCount: 15300,
-    totalExposure: 1600000000,
+    businessCount: 319770, // Aligned with chase.json scale (20.9x)
+    totalExposure: 49085040000,
     qualRate: 33.7,
     avgScore: 70.5,
     highRiskPct: 9.8,
     trend: { direction: 'up', value: 2.1 },
     topProducts: [
-      { name: 'Equipment Financing', eligible: 5508 },
-      { name: 'Line of Credit', eligible: 4896 },
-      { name: 'Term Loan', eligible: 4284 },
-      { name: 'SBA 7(a)', eligible: 2142 },
+      { name: 'Equipment Financing', eligible: 115117 },
+      { name: 'Line of Credit', eligible: 102326 },
+      { name: 'Term Loan', eligible: 89535 },
+      { name: 'SBA 7(a)', eligible: 44768 },
     ],
     region: {
-      Northeast: 2754,
-      Southeast: 3825,
-      Midwest: 3672,
-      Southwest: 3213,
-      West: 1836,
+      Northeast: 57559,
+      Southeast: 79943,
+      Midwest: 76752,
+      Southwest: 67151,
+      West: 38365,
     },
     riskDistribution: {
-      LOW: 5814,
-      MODERATE: 4590,
-      ELEVATED: 3060,
-      HIGH: 1224,
-      CRITICAL: 612,
+      LOW: 121513,
+      MODERATE: 95931,
+      ELEVATED: 63954,
+      HIGH: 25582,
+      CRITICAL: 12791,
     },
     avgRevenue: 5400000,
     avgYearsInBusiness: 9.3,
@@ -360,31 +364,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'realestate',
     name: 'Real Estate Services',
     icon: 'Building2',
-    businessCount: 12800,
-    totalExposure: 2800000000,
+    businessCount: 267520, // Aligned with chase.json scale (20.9x)
+    totalExposure: 85920960000,
     qualRate: 37.8,
     avgScore: 73.6,
     highRiskPct: 7.5,
     trend: { direction: 'up', value: 3.4 },
     topProducts: [
-      { name: 'Term Loan', eligible: 4838 },
-      { name: 'Line of Credit', eligible: 4096 },
-      { name: 'SBA 7(a)', eligible: 2816 },
-      { name: 'Equipment Financing', eligible: 1664 },
+      { name: 'Term Loan', eligible: 101114 },
+      { name: 'Line of Credit', eligible: 85606 },
+      { name: 'SBA 7(a)', eligible: 58854 },
+      { name: 'Equipment Financing', eligible: 34778 },
     ],
     region: {
-      Northeast: 3328,
-      Southeast: 2944,
-      Midwest: 2176,
-      Southwest: 2048,
-      West: 2304,
+      Northeast: 69555,
+      Southeast: 61530,
+      Midwest: 45478,
+      Southwest: 42803,
+      West: 48154,
     },
     riskDistribution: {
-      LOW: 5632,
-      MODERATE: 3968,
-      ELEVATED: 2176,
-      HIGH: 768,
-      CRITICAL: 256,
+      LOW: 117709,
+      MODERATE: 82931,
+      ELEVATED: 45478,
+      HIGH: 16051,
+      CRITICAL: 5350,
     },
     avgRevenue: 11200000,
     avgYearsInBusiness: 12.4,
@@ -393,31 +397,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'wholesale',
     name: 'Wholesale & Distribution',
     icon: 'Package',
-    businessCount: 16200,
-    totalExposure: 1500000000,
+    businessCount: 338580, // Aligned with chase.json scale (20.9x)
+    totalExposure: 46018350000,
     qualRate: 35.2,
     avgScore: 71.9,
     highRiskPct: 8.9,
     trend: { direction: 'stable', value: -0.2 },
     topProducts: [
-      { name: 'Line of Credit', eligible: 5702 },
-      { name: 'Term Loan', eligible: 4860 },
-      { name: 'Equipment Financing', eligible: 3564 },
-      { name: 'SBA 7(a)', eligible: 2268 },
+      { name: 'Line of Credit', eligible: 119172 },
+      { name: 'Term Loan', eligible: 101574 },
+      { name: 'Equipment Financing', eligible: 74488 },
+      { name: 'SBA 7(a)', eligible: 47401 },
     ],
     region: {
-      Northeast: 3564,
-      Southeast: 4050,
-      Midwest: 4212,
-      Southwest: 2430,
-      West: 1944,
+      Northeast: 74488,
+      Southeast: 84645,
+      Midwest: 88032,
+      Southwest: 50787,
+      West: 40630,
     },
     riskDistribution: {
-      LOW: 6480,
-      MODERATE: 4860,
-      ELEVATED: 2916,
-      HIGH: 1296,
-      CRITICAL: 648,
+      LOW: 135432,
+      MODERATE: 101574,
+      ELEVATED: 60944,
+      HIGH: 27086,
+      CRITICAL: 13543,
     },
     avgRevenue: 4700000,
     avgYearsInBusiness: 10.8,
@@ -426,31 +430,31 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'auto',
     name: 'Auto Services',
     icon: 'Car',
-    businessCount: 13500,
-    totalExposure: 800000000,
+    businessCount: 282150, // Aligned with chase.json scale (20.9x)
+    totalExposure: 24545940000,
     qualRate: 30.4,
     avgScore: 67.3,
     highRiskPct: 12.1,
     trend: { direction: 'down', value: -0.9 },
     topProducts: [
-      { name: 'Equipment Financing', eligible: 4104 },
-      { name: 'Line of Credit', eligible: 3645 },
-      { name: 'Term Loan', eligible: 3105 },
-      { name: 'SBA 7(a)', eligible: 1620 },
+      { name: 'Equipment Financing', eligible: 85774 },
+      { name: 'Line of Credit', eligible: 76181 },
+      { name: 'Term Loan', eligible: 64895 },
+      { name: 'SBA 7(a)', eligible: 33858 },
     ],
     region: {
-      Northeast: 2835,
-      Southeast: 3510,
-      Midwest: 3240,
-      Southwest: 2295,
-      West: 1620,
+      Northeast: 59252,
+      Southeast: 73356,
+      Midwest: 67716,
+      Southwest: 47969,
+      West: 33858,
     },
     riskDistribution: {
-      LOW: 4995,
-      MODERATE: 4050,
-      ELEVATED: 2700,
-      HIGH: 1215,
-      CRITICAL: 540,
+      LOW: 104394,
+      MODERATE: 84645,
+      ELEVATED: 56430,
+      HIGH: 25401,
+      CRITICAL: 11286,
     },
     avgRevenue: 2900000,
     avgYearsInBusiness: 8.9,
@@ -459,49 +463,49 @@ export const INDUSTRY_SEGMENTS: IndustrySegment[] = [
     id: 'other',
     name: 'Other Services',
     icon: 'MoreHorizontal',
-    businessCount: 11100,
-    totalExposure: 600000000,
+    businessCount: 231990, // Aligned with chase.json scale (20.9x)
+    totalExposure: 18405270000,
     qualRate: 32.1,
     avgScore: 69.8,
     highRiskPct: 10.3,
     trend: { direction: 'stable', value: 0.1 },
     topProducts: [
-      { name: 'Line of Credit', eligible: 3552 },
-      { name: 'Term Loan', eligible: 2997 },
-      { name: 'Equipment Financing', eligible: 2331 },
-      { name: 'SBA 7(a)', eligible: 1665 },
+      { name: 'Line of Credit', eligible: 74236 },
+      { name: 'Term Loan', eligible: 62637 },
+      { name: 'Equipment Financing', eligible: 48718 },
+      { name: 'SBA 7(a)', eligible: 34798 },
     ],
     region: {
-      Northeast: 2442,
-      Southeast: 2775,
-      Midwest: 2331,
-      Southwest: 1998,
-      West: 1554,
+      Northeast: 51036,
+      Southeast: 58000,
+      Midwest: 48718,
+      Southwest: 41757,
+      West: 32479,
     },
     riskDistribution: {
-      LOW: 4218,
-      MODERATE: 3330,
-      ELEVATED: 2220,
-      HIGH: 999,
-      CRITICAL: 333,
+      LOW: 88156,
+      MODERATE: 69597,
+      ELEVATED: 46398,
+      HIGH: 20879,
+      CRITICAL: 6960,
     },
     avgRevenue: 2100000,
     avgYearsInBusiness: 7.6,
   },
 ];
 
-// Validation: Sum should be 287,000
-// 42800 + 31200 + 38500 + 28900 + 35600 + 22400 + 18700 + 15300 + 12800 + 16200 + 13500 + 11100 = 287,000 ✓
+// Validation: Sum should be ~6,000,000 (aligned with chase.json)
+// 894520 + 652080 + 804650 + 604010 + 744040 + 468160 + 390830 + 319770 + 267520 + 338580 + 282150 + 231990 = ~5,998,300 ✓
 
 // ============================================================================
-// PORTFOLIO KPIS
+// PORTFOLIO KPIS — CHASE
 // ============================================================================
 
-export const PORTFOLIO_KPIS: PortfolioKPI[] = [
+const CHASE_PORTFOLIO_KPIS: PortfolioKPI[] = [
   {
     id: 'total-portfolio',
     label: 'Total Portfolio',
-    value: 287000,
+    value: 6000000, // Aligned with chase.json
     format: 'number',
     trend: { direction: 'up', value: 2.4, label: '+2.4% vs last quarter' },
     status: 'positive',
@@ -511,7 +515,7 @@ export const PORTFOLIO_KPIS: PortfolioKPI[] = [
   {
     id: 'total-exposure',
     label: 'Total Exposure',
-    value: 21200000000,
+    value: 650000000000, // Aligned with chase.json ($650B)
     format: 'currency',
     trend: { direction: 'up', value: 3.8, label: '+3.8% vs last quarter' },
     status: 'positive',
@@ -541,7 +545,7 @@ export const PORTFOLIO_KPIS: PortfolioKPI[] = [
   {
     id: 'at-risk-businesses',
     label: 'At-Risk Businesses',
-    value: 18340,
+    value: 383306, // Scaled: 18340 * 20.9
     format: 'number',
     trend: { direction: 'down', value: -4.2, label: '-4.2% vs last quarter' },
     status: 'warning',
@@ -551,7 +555,7 @@ export const PORTFOLIO_KPIS: PortfolioKPI[] = [
   {
     id: 'offer-pipeline',
     label: 'Offer Pipeline',
-    value: 4800000000,
+    value: 147232000000, // Scaled: 4.8B * 30.67 (exposure ratio)
     format: 'currency',
     trend: { direction: 'up', value: 8.7, label: '+8.7% vs last quarter' },
     status: 'positive',
@@ -561,119 +565,121 @@ export const PORTFOLIO_KPIS: PortfolioKPI[] = [
 ];
 
 // ============================================================================
-// GEOGRAPHIC DISTRIBUTION
-// Total: 287,000 businesses | $21.2B exposure
+// GEOGRAPHIC DISTRIBUTION — CHASE
+// Total: 6,000,000 businesses | $650B exposure
+// Aligned with chase.json — scale factor: ~20.9x
 // ============================================================================
 
-export const GEOGRAPHIC_DISTRIBUTION: GeographicDistribution[] = [
+const CHASE_GEOGRAPHIC_DISTRIBUTION: GeographicDistribution[] = [
   {
     region: 'Northeast',
     states: ['CT', 'MA', 'ME', 'NH', 'NJ', 'NY', 'PA', 'RI', 'VT'],
-    businessCount: 67141,
-    exposure: 5100000000,
+    businessCount: 1403247, // Scaled: 67141 * 20.9
+    exposure: 156467190000,
     avgScore: 73.8,
     qualRate: 37.2,
   },
   {
     region: 'Southeast',
     states: ['AL', 'AR', 'DC', 'DE', 'FL', 'GA', 'KY', 'LA', 'MD', 'MS', 'NC', 'SC', 'TN', 'VA', 'WV'],
-    businessCount: 72394,
-    exposure: 4800000000,
+    businessCount: 1513034, // Scaled: 72394 * 20.9
+    exposure: 147232000000,
     avgScore: 70.9,
     qualRate: 34.8,
   },
   {
     region: 'Midwest',
     states: ['IA', 'IL', 'IN', 'KS', 'MI', 'MN', 'MO', 'ND', 'NE', 'OH', 'SD', 'WI'],
-    businessCount: 63742,
-    exposure: 4200000000,
+    businessCount: 1332208, // Scaled: 63742 * 20.9
+    exposure: 128858280000,
     avgScore: 72.1,
     qualRate: 35.6,
   },
   {
     region: 'Southwest',
     states: ['AZ', 'NM', 'OK', 'TX'],
-    businessCount: 47076,
-    exposure: 3600000000,
+    businessCount: 983888, // Scaled: 47076 * 20.9
+    exposure: 110464800000,
     avgScore: 69.4,
     qualRate: 32.9,
   },
   {
     region: 'West',
     states: ['AK', 'CA', 'CO', 'HI', 'ID', 'MT', 'NV', 'OR', 'UT', 'WA', 'WY'],
-    businessCount: 36647,
-    exposure: 3500000000,
+    businessCount: 765922, // Scaled: 36647 * 20.9
+    exposure: 107377730000,
     avgScore: 74.6,
     qualRate: 36.4,
   },
 ];
 
-// Validation: 67141 + 72394 + 63742 + 47076 + 36647 = 287,000 ✓
+// Validation: 1403247 + 1513034 + 1332208 + 983888 + 765922 = 5,998,299 ✓ (~6M)
 
 // ============================================================================
-// RISK TIER DISTRIBUTION
-// Total: 287,000 businesses
+// RISK TIER DISTRIBUTION — CHASE
+// Total: 6,000,000 businesses
+// Aligned with chase.json — scale factor: ~20.9x
 // ============================================================================
 
-export const RISK_TIER_DISTRIBUTION: RiskTierDistribution[] = [
+const CHASE_RISK_TIER_DISTRIBUTION: RiskTierDistribution[] = [
   {
     tier: 'LOW',
-    count: 114800,
+    count: 2399320, // Scaled: 114800 * 20.9
     percentage: 40.0,
-    exposure: 9200000000,
+    exposure: 282328880000,
     avgScore: 84.2,
     color: 'bg-green-500',
   },
   {
     tier: 'MODERATE',
-    count: 80360,
+    count: 1679524, // Scaled: 80360 * 20.9
     percentage: 28.0,
-    exposure: 6500000000,
+    exposure: 199475550000,
     avgScore: 72.8,
     color: 'bg-blue-500',
   },
   {
     tier: 'ELEVATED',
-    count: 51660,
+    count: 1079694, // Scaled: 51660 * 20.9
     percentage: 18.0,
-    exposure: 3800000000,
+    exposure: 116564680000,
     avgScore: 64.3,
     color: 'bg-yellow-500',
   },
   {
     tier: 'HIGH',
-    count: 28700,
+    count: 599830, // Scaled: 28700 * 20.9
     percentage: 10.0,
-    exposure: 1400000000,
+    exposure: 42944020000,
     avgScore: 52.7,
     color: 'bg-orange-500',
   },
   {
     tier: 'CRITICAL',
-    count: 11480,
+    count: 239932, // Scaled: 11480 * 20.9
     percentage: 4.0,
-    exposure: 300000000,
+    exposure: 9203670000,
     avgScore: 38.4,
     color: 'bg-red-500',
   },
 ];
 
-// Validation: 114800 + 80360 + 51660 + 28700 + 11480 = 287,000 ✓
+// Validation: 2399320 + 1679524 + 1079694 + 599830 + 239932 = 5,998,300 ✓ (~6M)
 
 // ============================================================================
-// CONCENTRATION METRICS
+// CONCENTRATION METRICS — CHASE
 // ============================================================================
 
-export const CONCENTRATION_METRICS: ConcentrationMetric[] = [
+const CHASE_CONCENTRATION_METRICS: ConcentrationMetric[] = [
   {
     dimension: 'Industry',
     segments: [
-      { name: 'Retail & E-Commerce', percentage: 14.9, exposure: 2100000000 },
-      { name: 'Healthcare Services', percentage: 10.9, exposure: 1800000000 },
-      { name: 'Professional Services', percentage: 13.4, exposure: 1400000000 },
-      { name: 'Construction & Trades', percentage: 10.1, exposure: 2400000000 },
-      { name: 'Restaurants & Food', percentage: 12.4, exposure: 1100000000 },
-      { name: 'Other Industries', percentage: 38.3, exposure: 12400000000 },
+      { name: 'Retail & E-Commerce', percentage: 14.9, exposure: 64425130000 },
+      { name: 'Healthcare Services', percentage: 10.9, exposure: 55218930000 },
+      { name: 'Professional Services', percentage: 13.4, exposure: 42944020000 },
+      { name: 'Construction & Trades', percentage: 10.1, exposure: 73631900000 },
+      { name: 'Restaurants & Food', percentage: 12.4, exposure: 33748450000 },
+      { name: 'Other Industries', percentage: 38.3, exposure: 380431570000 }, // Scaled: 12.4B * 30.67
     ],
     threshold: 15.0,
     status: 'within',
@@ -681,11 +687,11 @@ export const CONCENTRATION_METRICS: ConcentrationMetric[] = [
   {
     dimension: 'Geographic',
     segments: [
-      { name: 'Northeast', percentage: 23.4, exposure: 5100000000 },
-      { name: 'Southeast', percentage: 25.2, exposure: 4800000000 },
-      { name: 'Midwest', percentage: 22.2, exposure: 4200000000 },
-      { name: 'Southwest', percentage: 16.4, exposure: 3600000000 },
-      { name: 'West', percentage: 12.8, exposure: 3500000000 },
+      { name: 'Northeast', percentage: 23.4, exposure: 156467190000 },
+      { name: 'Southeast', percentage: 25.2, exposure: 147232000000 },
+      { name: 'Midwest', percentage: 22.2, exposure: 128858280000 },
+      { name: 'Southwest', percentage: 16.4, exposure: 110464800000 },
+      { name: 'West', percentage: 12.8, exposure: 107377730000 },
     ],
     threshold: 30.0,
     status: 'within',
@@ -693,11 +699,11 @@ export const CONCENTRATION_METRICS: ConcentrationMetric[] = [
   {
     dimension: 'Revenue Band',
     segments: [
-      { name: '$0-$1M', percentage: 18.5, exposure: 1800000000 },
-      { name: '$1M-$2.5M', percentage: 24.7, exposure: 4200000000 },
-      { name: '$2.5M-$5M', percentage: 22.3, exposure: 5800000000 },
-      { name: '$5M-$10M', percentage: 19.2, exposure: 6100000000 },
-      { name: '$10M+', percentage: 15.3, exposure: 3300000000 },
+      { name: '$0-$1M', percentage: 18.5, exposure: 55218930000 },
+      { name: '$1M-$2.5M', percentage: 24.7, exposure: 128858280000 },
+      { name: '$2.5M-$5M', percentage: 22.3, exposure: 177965320000 },
+      { name: '$5M-$10M', percentage: 19.2, exposure: 187170270000 },
+      { name: '$10M+', percentage: 15.3, exposure: 101205210000 },
     ],
     threshold: 25.0,
     status: 'approaching',
@@ -705,73 +711,73 @@ export const CONCENTRATION_METRICS: ConcentrationMetric[] = [
 ];
 
 // ============================================================================
-// EARLY WARNING SYSTEM ALERT CLUSTERS
+// EARLY WARNING SYSTEM ALERT CLUSTERS — CHASE
 // ============================================================================
 
-export const EWS_ALERT_CLUSTERS: EWSAlertCluster[] = [
+const CHASE_EWS_ALERT_CLUSTERS: EWSAlertCluster[] = [
   {
     type: 'Score Drop >15pts',
     severity: 'critical',
-    businessCount: 847,
-    totalExposure: 142000000,
+    businessCount: 17702, // Scaled: 847 * 20.9
+    totalExposure: 4355180000, // Scaled: 142M * 30.67
     topIndustries: [
-      { name: 'Restaurants & Food', count: 189 },
-      { name: 'Retail & E-Commerce', count: 162 },
-      { name: 'Auto Services', count: 118 },
-      { name: 'Construction & Trades', count: 93 },
-      { name: 'Other', count: 285 },
+      { name: 'Restaurants & Food', count: 3950 },
+      { name: 'Retail & E-Commerce', count: 3386 },
+      { name: 'Auto Services', count: 2466 },
+      { name: 'Construction & Trades', count: 1944 },
+      { name: 'Other', count: 5957 },
     ],
     trend: 'increasing',
   },
   {
     type: 'Delinquency Reported',
     severity: 'critical',
-    businessCount: 234,
-    totalExposure: 67000000,
+    businessCount: 4891, // Scaled: 234 * 20.9
+    totalExposure: 2054890000, // Scaled: 67M * 30.67
     topIndustries: [
-      { name: 'Construction & Trades', count: 58 },
-      { name: 'Restaurants & Food', count: 51 },
-      { name: 'Transportation & Logistics', count: 42 },
-      { name: 'Auto Services', count: 35 },
-      { name: 'Other', count: 48 },
+      { name: 'Construction & Trades', count: 1212 },
+      { name: 'Restaurants & Food', count: 1066 },
+      { name: 'Transportation & Logistics', count: 878 },
+      { name: 'Auto Services', count: 732 },
+      { name: 'Other', count: 1003 },
     ],
     trend: 'stable',
   },
   {
     type: 'Lien Filed',
     severity: 'warning',
-    businessCount: 112,
-    totalExposure: 34000000,
+    businessCount: 2341, // Scaled: 112 * 20.9
+    totalExposure: 1042780000, // Scaled: 34M * 30.67
     topIndustries: [
-      { name: 'Construction & Trades', count: 34 },
-      { name: 'Manufacturing', count: 18 },
-      { name: 'Transportation & Logistics', count: 16 },
-      { name: 'Restaurants & Food', count: 14 },
-      { name: 'Other', count: 30 },
+      { name: 'Construction & Trades', count: 711 },
+      { name: 'Manufacturing', count: 376 },
+      { name: 'Transportation & Logistics', count: 334 },
+      { name: 'Restaurants & Food', count: 293 },
+      { name: 'Other', count: 627 },
     ],
     trend: 'decreasing',
   },
   {
     type: 'Bankruptcy Watch',
     severity: 'critical',
-    businessCount: 54,
-    totalExposure: 28000000,
+    businessCount: 1129, // Scaled: 54 * 20.9
+    totalExposure: 858760000, // Scaled: 28M * 30.67
     topIndustries: [
-      { name: 'Restaurants & Food', count: 15 },
-      { name: 'Retail & E-Commerce', count: 12 },
-      { name: 'Auto Services', count: 9 },
-      { name: 'Construction & Trades', count: 7 },
-      { name: 'Other', count: 11 },
+      { name: 'Restaurants & Food', count: 314 },
+      { name: 'Retail & E-Commerce', count: 251 },
+      { name: 'Auto Services', count: 188 },
+      { name: 'Construction & Trades', count: 146 },
+      { name: 'Other', count: 230 },
     ],
     trend: 'increasing',
   },
 ];
 
 // ============================================================================
-// ACTIVE CAMPAIGNS
+// ACTIVE CAMPAIGNS — CHASE
 // ============================================================================
 
-export const ACTIVE_CAMPAIGNS: CampaignData[] = [
+const CHASE_ACTIVE_CAMPAIGNS: CampaignData[] = [
   {
     id: 'camp-001',
     name: 'Q1 2026 Healthcare LOC Expansion',
@@ -823,10 +829,10 @@ export const ACTIVE_CAMPAIGNS: CampaignData[] = [
 ];
 
 // ============================================================================
-// COMPLETED CAMPAIGNS
+// COMPLETED CAMPAIGNS — CHASE
 // ============================================================================
 
-export const COMPLETED_CAMPAIGNS: CampaignData[] = [
+const CHASE_COMPLETED_CAMPAIGNS: CampaignData[] = [
   {
     id: 'camp-c01',
     name: 'Q4 2025 Holiday Retail LOC',
@@ -1022,39 +1028,148 @@ export const COMPLETED_CAMPAIGNS: CampaignData[] = [
 ];
 
 // ============================================================================
-// PRODUCT ELIGIBILITY
+// PRODUCT ELIGIBILITY — CHASE
 // ============================================================================
 
-export const PRODUCT_ELIGIBILITY: Record<string, { eligible: number; conversionRate: number }> = {
+const CHASE_PRODUCT_ELIGIBILITY: Record<string, { eligible: number; conversionRate: number }> = {
   'Line of Credit': {
-    eligible: 98154,
+    eligible: 2051419, // Scaled: 98154 * 20.9
     conversionRate: 14.2,
   },
   'Term Loan': {
-    eligible: 84809,
+    eligible: 1772508, // Scaled: 84809 * 20.9
     conversionRate: 12.8,
   },
   'Equipment Financing': {
-    eligible: 61939,
+    eligible: 1294525, // Scaled: 61939 * 20.9
     conversionRate: 16.3,
   },
   'SBA 7(a)': {
-    eligible: 43257,
+    eligible: 904071, // Scaled: 43257 * 20.9
     conversionRate: 18.9,
   },
   'Commercial Real Estate': {
-    eligible: 22960,
+    eligible: 479864, // Scaled: 22960 * 20.9
     conversionRate: 22.4,
   },
   'Business Credit Card': {
-    eligible: 126380,
+    eligible: 2641342, // Scaled: 126380 * 20.9
     conversionRate: 8.7,
   },
   'Merchant Cash Advance': {
-    eligible: 34440,
+    eligible: 719796, // Scaled: 34440 * 20.9
     conversionRate: 24.1,
   },
 };
+
+// ============================================================================
+// WELLS FARGO DATA IMPORTS
+// ============================================================================
+
+import {
+  WF_INDUSTRY_SEGMENTS,
+  WF_PORTFOLIO_KPIS,
+  WF_GEOGRAPHIC_DISTRIBUTION,
+  WF_RISK_TIER_DISTRIBUTION,
+  WF_CONCENTRATION_METRICS,
+  WF_EWS_ALERT_CLUSTERS,
+  WF_ACTIVE_CAMPAIGNS,
+  WF_COMPLETED_CAMPAIGNS,
+  WF_PRODUCT_ELIGIBILITY,
+} from './wellsfargoPortfolioSegments';
+
+import {
+  SANT_INDUSTRY_SEGMENTS,
+  SANT_PORTFOLIO_KPIS,
+  SANT_GEOGRAPHIC_DISTRIBUTION,
+  SANT_RISK_TIER_DISTRIBUTION,
+  SANT_CONCENTRATION_METRICS,
+  SANT_EWS_ALERT_CLUSTERS,
+  SANT_ACTIVE_CAMPAIGNS,
+  SANT_COMPLETED_CAMPAIGNS,
+  SANT_PRODUCT_ELIGIBILITY,
+} from './santanderPortfolioSegments';
+
+import {
+  CITI_INDUSTRY_SEGMENTS,
+  CITI_PORTFOLIO_KPIS,
+  CITI_GEOGRAPHIC_DISTRIBUTION,
+  CITI_RISK_TIER_DISTRIBUTION,
+  CITI_CONCENTRATION_METRICS,
+  CITI_EWS_ALERT_CLUSTERS,
+  CITI_ACTIVE_CAMPAIGNS,
+  CITI_COMPLETED_CAMPAIGNS,
+  CITI_PRODUCT_ELIGIBILITY,
+} from './citiPortfolioSegments';
+
+// ============================================================================
+// BANK-SWITCHED EXPORTS
+// Dynamically export data for Chase, Wells Fargo, Santander, or Citi
+// based on ACTIVE_BANK_ID from bankConfig
+// ============================================================================
+
+export const INDUSTRY_SEGMENTS = ({
+  chase: CHASE_INDUSTRY_SEGMENTS,
+  wellsfargo: WF_INDUSTRY_SEGMENTS,
+  santander: SANT_INDUSTRY_SEGMENTS,
+  citi: CITI_INDUSTRY_SEGMENTS,
+} as Record<string, IndustrySegment[]>)[ACTIVE_BANK_ID] ?? CHASE_INDUSTRY_SEGMENTS;
+
+export const PORTFOLIO_KPIS = ({
+  chase: CHASE_PORTFOLIO_KPIS,
+  wellsfargo: WF_PORTFOLIO_KPIS,
+  santander: SANT_PORTFOLIO_KPIS,
+  citi: CITI_PORTFOLIO_KPIS,
+} as Record<string, PortfolioKPI[]>)[ACTIVE_BANK_ID] ?? CHASE_PORTFOLIO_KPIS;
+
+export const GEOGRAPHIC_DISTRIBUTION = ({
+  chase: CHASE_GEOGRAPHIC_DISTRIBUTION,
+  wellsfargo: WF_GEOGRAPHIC_DISTRIBUTION,
+  santander: SANT_GEOGRAPHIC_DISTRIBUTION,
+  citi: CITI_GEOGRAPHIC_DISTRIBUTION,
+} as Record<string, GeographicDistribution[]>)[ACTIVE_BANK_ID] ?? CHASE_GEOGRAPHIC_DISTRIBUTION;
+
+export const RISK_TIER_DISTRIBUTION = ({
+  chase: CHASE_RISK_TIER_DISTRIBUTION,
+  wellsfargo: WF_RISK_TIER_DISTRIBUTION,
+  santander: SANT_RISK_TIER_DISTRIBUTION,
+  citi: CITI_RISK_TIER_DISTRIBUTION,
+} as Record<string, RiskTierDistribution[]>)[ACTIVE_BANK_ID] ?? CHASE_RISK_TIER_DISTRIBUTION;
+
+export const CONCENTRATION_METRICS = ({
+  chase: CHASE_CONCENTRATION_METRICS,
+  wellsfargo: WF_CONCENTRATION_METRICS,
+  santander: SANT_CONCENTRATION_METRICS,
+  citi: CITI_CONCENTRATION_METRICS,
+} as Record<string, ConcentrationMetric[]>)[ACTIVE_BANK_ID] ?? CHASE_CONCENTRATION_METRICS;
+
+export const EWS_ALERT_CLUSTERS = ({
+  chase: CHASE_EWS_ALERT_CLUSTERS,
+  wellsfargo: WF_EWS_ALERT_CLUSTERS,
+  santander: SANT_EWS_ALERT_CLUSTERS,
+  citi: CITI_EWS_ALERT_CLUSTERS,
+} as Record<string, EWSAlertCluster[]>)[ACTIVE_BANK_ID] ?? CHASE_EWS_ALERT_CLUSTERS;
+
+export const ACTIVE_CAMPAIGNS = ({
+  chase: CHASE_ACTIVE_CAMPAIGNS,
+  wellsfargo: WF_ACTIVE_CAMPAIGNS,
+  santander: SANT_ACTIVE_CAMPAIGNS,
+  citi: CITI_ACTIVE_CAMPAIGNS,
+} as Record<string, CampaignData[]>)[ACTIVE_BANK_ID] ?? CHASE_ACTIVE_CAMPAIGNS;
+
+export const COMPLETED_CAMPAIGNS = ({
+  chase: CHASE_COMPLETED_CAMPAIGNS,
+  wellsfargo: WF_COMPLETED_CAMPAIGNS,
+  santander: SANT_COMPLETED_CAMPAIGNS,
+  citi: CITI_COMPLETED_CAMPAIGNS,
+} as Record<string, CampaignData[]>)[ACTIVE_BANK_ID] ?? CHASE_COMPLETED_CAMPAIGNS;
+
+export const PRODUCT_ELIGIBILITY = ({
+  chase: CHASE_PRODUCT_ELIGIBILITY,
+  wellsfargo: WF_PRODUCT_ELIGIBILITY,
+  santander: SANT_PRODUCT_ELIGIBILITY,
+  citi: CITI_PRODUCT_ELIGIBILITY,
+} as Record<string, Record<string, { eligible: number; conversionRate: number }>>)[ACTIVE_BANK_ID] ?? CHASE_PRODUCT_ELIGIBILITY;
 
 // ============================================================================
 // UTILITY FUNCTIONS

@@ -29,14 +29,15 @@ import {
   WEBHOOK_EVENTS,
   WEBHOOK_STATS,
   SYSTEM_SERVICES,
+  formatNumber,
 } from "@/data/demoData";
 
 // Fallback data derived from centralized pilot metrics (used when live data is unavailable)
 const FALLBACK_connectedBusinessesData = {
   totalBusinesses: PILOT_METRICS.totalBusinesses,
   activeConnections: PILOT_METRICS.scoredBusinesses,
-  newThisMonth: 2840,
-  monthlyGrowth: 8.4,
+  newThisMonth: Math.round(PILOT_METRICS.totalBusinesses * PILOT_METRICS.momGrowth / 100 / 12),
+  monthlyGrowth: PILOT_METRICS.momGrowth,
   disconnectedCount: PILOT_METRICS.totalBusinesses - PILOT_METRICS.scoredBusinesses,
   pendingReconnect: 1250,
 };
@@ -55,19 +56,19 @@ const FALLBACK_apiUsageData = {
 const FALLBACK_portfolioHealthData = {
   totalAssessed: PILOT_METRICS.scoredBusinesses,
   segments: [
-    { name: "Low Risk", count: 25976, percentage: 68, color: "hsl(var(--success))" },
-    { name: "Medium Risk", count: 7640, percentage: 20, color: "hsl(var(--warning))" },
-    { name: "High Risk", count: 3820, percentage: 10, color: "hsl(var(--primary-05))" },
-    { name: "Critical", count: 764, percentage: 2, color: "hsl(var(--destructive))" },
+    { name: "Low Risk", count: Math.round(PILOT_METRICS.scoredBusinesses * 0.68), percentage: 68, color: "hsl(var(--success))" },
+    { name: "Medium Risk", count: Math.round(PILOT_METRICS.scoredBusinesses * 0.20), percentage: 20, color: "hsl(var(--warning))" },
+    { name: "High Risk", count: Math.round(PILOT_METRICS.scoredBusinesses * 0.10), percentage: 10, color: "hsl(var(--primary-05))" },
+    { name: "Critical", count: Math.round(PILOT_METRICS.scoredBusinesses * 0.02), percentage: 2, color: "hsl(var(--destructive))" },
   ],
   averageScore: PILOT_METRICS.avgLumiqScore,
   lastUpdated: "2 min ago",
 };
 
 const FALLBACK_dataFreshnessData = {
-  freshCount: 34380,
-  staleCount: 2674,
-  criticalCount: 1146,
+  freshCount: Math.round(PILOT_METRICS.scoredBusinesses * 0.947),
+  staleCount: Math.round(PILOT_METRICS.scoredBusinesses * 0.045),
+  criticalCount: Math.round(PILOT_METRICS.scoredBusinesses * 0.008),
   totalAccounts: PILOT_METRICS.scoredBusinesses,
   avgRefreshTime: "4.2 hours",
   lastBatchRefresh: "12 min ago",
@@ -358,7 +359,7 @@ export const FinlabOverview: React.FC = () => {
         transition={{ duration: 0.2, delay: 0.45 }}
         className="min-w-0"
       >
-        <div className="text-xs text-muted-foreground mb-2">Showing top 25 of 47,500 businesses</div>
+        <div className="text-xs text-muted-foreground mb-2">Showing top 25 of {formatNumber(PILOT_METRICS.totalBusinesses)} businesses</div>
         <TopBusinessesTable
           businesses={topBusinesses}
           onViewBusiness={handleViewBusiness}

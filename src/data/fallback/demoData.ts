@@ -1,75 +1,41 @@
 /**
  * Centralized Demo Data for LUMIQ AI Control Tower
  *
- * All numbers model a realistic 90-day bank pilot with a mid-size US bank.
- * Reference: Plaid, MX, Finicity, Experian PowerCurve integration benchmarks.
- *
- * Pilot parameters:
- * - Partner: Regional bank with ~50K SMB checking accounts
- * - Scope: Business credit scoring + pre-qualification for credit cards & LOC
- * - Duration: 90 days (started Oct 1, current = late January)
- * - Data sources: Experian BizID + Intelliscore, D&B PAYDEX, owner FICO (soft pull)
+ * Data source: Chase demo dataset (6M businesses, $650B exposure).
+ * Loaded from demo-data/chase/chase_dashboard_data.json via chaseDataLoader.
  */
+
+import { ACTIVE_BANK_ID, ACTIVE_BANK_NAME } from '../bankConfig';
+import { CHASE_PILOT_METRICS, CHASE_DEMO_BUSINESSES } from '../chaseDataLoader';
+import { CITI_PILOT_METRICS, CITI_DEMO_BUSINESSES } from '../citiDataLoader';
+import { SANT_PILOT_METRICS, SANT_DEMO_BUSINESSES } from '../santanderDataLoader';
+import { WF_PILOT_METRICS, WF_DEMO_BUSINESSES } from '../wellsfargoDemoData';
 
 // ─── Pilot Configuration ─────────────────────────────────────────────────────
 
+const BANK_CONFIGS: Record<string, { bankId: string; pilotStartDate: string; pilotEndDate: string; pilotDurationDays: number }> = {
+  chase: { bankId: 'CHASE-001', pilotStartDate: '2025-10-01', pilotEndDate: '2026-01-31', pilotDurationDays: 122 },
+  wellsfargo: { bankId: 'WF-001', pilotStartDate: '2025-11-01', pilotEndDate: '2026-02-28', pilotDurationDays: 120 },
+  santander: { bankId: 'SANT-001', pilotStartDate: '2025-12-01', pilotEndDate: '2026-03-31', pilotDurationDays: 121 },
+  citi: { bankId: 'CITI-001', pilotStartDate: '2025-11-15', pilotEndDate: '2026-03-15', pilotDurationDays: 121 },
+};
+
 export const PILOT_CONFIG = {
-  bankName: 'Partner Bank',
-  bankId: 'BANK-001',
-  pilotStartDate: '2025-10-01',
-  pilotEndDate: '2026-01-31',
-  pilotDurationDays: 122,
+  bankName: ACTIVE_BANK_NAME,
+  ...BANK_CONFIGS[ACTIVE_BANK_ID] ?? BANK_CONFIGS.chase,
   environment: 'sandbox' as const,
 };
 
 // ─── Portfolio KPIs ──────────────────────────────────────────────────────────
-// Numbers must be internally consistent across all dashboard pages.
+// Numbers sourced from active bank's demo dataset via loader.
 
-export const PILOT_METRICS = {
-  // Business coverage
-  totalBusinesses: 47500,
-  scoredBusinesses: 38200,
-  scoreCoverage: 80.4,   // scoredBusinesses / totalBusinesses * 100
-
-  // Pre-qualification funnel
-  preQualifiedBusinesses: 12400,
-  preQualRate: 32.5,     // preQualifiedBusinesses / scoredBusinesses * 100
-  applicationsStarted: 3100,
-  applicationConversion: 25.0,  // from pre-qual
-  approved: 2340,
-  approvalRate: 75.5,    // approved / applicationsStarted * 100
-  funded: 2106,
-  fundingRate: 90.0,     // funded / approved * 100
-  ineligible: 9300,      // businesses not meeting minimum criteria
-
-  // Score distribution
-  avgLumiqScore: 72,
-  medianLumiqScore: 74,
-
-  // API performance (90 days)
-  totalApiCalls: 3247000,
-  dailyAvgCalls: 35293,
-  successRate: 99.94,
-  avgLatencyMs: 145,
-  p99LatencyMs: 380,
-  errorCount: 1948,
-
-  // Financial impact
-  avgPreQualLimit: 125000,
-  projectedOriginations: 292500000,  // preQualifiedBusinesses * avgPreQualLimit * some factor
-  avgRevenuePerBusiness: 4250,
-  projectedAnnualRevenue: 9945000,   // approved * avgRevenuePerBusiness
-
-  // Risk metrics
-  delinquencyRate: 1.8,
-  defaultRate: 0.4,
-  portfolioUtilization: 62.5,
-
-  // Growth metrics
-  momGrowth: 12.5,
-  qoqGrowth: 38.2,
-  avgTimeToApproval: 2.3,  // days
+const PILOT_METRICS_MAP: Record<string, typeof CHASE_PILOT_METRICS> = {
+  chase: CHASE_PILOT_METRICS,
+  wellsfargo: WF_PILOT_METRICS,
+  santander: SANT_PILOT_METRICS,
+  citi: CITI_PILOT_METRICS,
 };
+export const PILOT_METRICS = PILOT_METRICS_MAP[ACTIVE_BANK_ID];
 
 // ─── Core Business Entities ──────────────────────────────────────────────────
 // These 10 businesses appear consistently across all dashboard pages.
@@ -96,208 +62,13 @@ export interface DemoBusinessEntity {
   applicationAmount?: number;
 }
 
-export const DEMO_BUSINESSES: DemoBusinessEntity[] = [
-  {
-    id: 'biz-001',
-    name: 'Stellar Dynamics LLC',
-    legalName: 'Stellar Dynamics LLC',
-    industry: 'Technology Services',
-    naicsCode: '541511',
-    city: 'Austin',
-    state: 'TX',
-    annualRevenue: 3400000,
-    employeeCount: 42,
-    yearsInBusiness: 7,
-    lumiqScore: 78,
-    ownerFico: 742,
-    riskTier: 'low',
-    scoreTrend: 'up',
-    trendValue: 3,
-    segment: 'small',
-    hasActiveApplication: true,
-    productType: 'Business Line of Credit',
-    applicationAmount: 250000,
-  },
-  {
-    id: 'biz-002',
-    name: 'Metro Logistics Corp',
-    legalName: 'Metro Logistics Corporation',
-    industry: 'Transportation',
-    naicsCode: '484110',
-    city: 'Dallas',
-    state: 'TX',
-    annualRevenue: 5200000,
-    employeeCount: 82,
-    yearsInBusiness: 15,
-    lumiqScore: 71,
-    ownerFico: 698,
-    riskTier: 'medium',
-    scoreTrend: 'stable',
-    trendValue: 0,
-    segment: 'small',
-    hasActiveApplication: true,
-    productType: 'Working Capital',
-    applicationAmount: 500000,
-  },
-  {
-    id: 'biz-003',
-    name: 'Apex Construction Group',
-    legalName: 'Apex Construction Group Inc.',
-    industry: 'Construction',
-    naicsCode: '236220',
-    city: 'Phoenix',
-    state: 'AZ',
-    annualRevenue: 8100000,
-    employeeCount: 120,
-    yearsInBusiness: 12,
-    lumiqScore: 82,
-    ownerFico: 758,
-    riskTier: 'low',
-    scoreTrend: 'up',
-    trendValue: 4,
-    segment: 'mid-market',
-    hasActiveApplication: true,
-    productType: 'Equipment Financing',
-    applicationAmount: 350000,
-  },
-  {
-    id: 'biz-004',
-    name: 'Sunrise Healthcare Partners',
-    legalName: 'Sunrise Healthcare Partners LLC',
-    industry: 'Healthcare',
-    naicsCode: '621111',
-    city: 'Houston',
-    state: 'TX',
-    annualRevenue: 12500000,
-    employeeCount: 210,
-    yearsInBusiness: 9,
-    lumiqScore: 85,
-    ownerFico: 771,
-    riskTier: 'low',
-    scoreTrend: 'up',
-    trendValue: 2,
-    segment: 'mid-market',
-    hasActiveApplication: false,
-  },
-  {
-    id: 'biz-005',
-    name: 'GreenLeaf Organics',
-    legalName: 'GreenLeaf Organics LLC',
-    industry: 'Agriculture & Food',
-    naicsCode: '111000',
-    city: 'Fresno',
-    state: 'CA',
-    annualRevenue: 1800000,
-    employeeCount: 35,
-    yearsInBusiness: 4,
-    lumiqScore: 65,
-    ownerFico: 672,
-    riskTier: 'medium',
-    scoreTrend: 'down',
-    trendValue: 3,
-    segment: 'micro',
-    hasActiveApplication: true,
-    productType: 'Term Loan',
-    applicationAmount: 75000,
-  },
-  {
-    id: 'biz-006',
-    name: 'Coastal Hospitality Group',
-    legalName: 'Coastal Hospitality Group Inc.',
-    industry: 'Hospitality',
-    naicsCode: '721110',
-    city: 'Miami',
-    state: 'FL',
-    annualRevenue: 4200000,
-    employeeCount: 92,
-    yearsInBusiness: 6,
-    lumiqScore: 58,
-    ownerFico: 648,
-    riskTier: 'high',
-    scoreTrend: 'down',
-    trendValue: 8,
-    segment: 'small',
-    hasActiveApplication: false,
-  },
-  {
-    id: 'biz-007',
-    name: 'Precision Manufacturing Co',
-    legalName: 'Precision Manufacturing Company',
-    industry: 'Manufacturing',
-    naicsCode: '332710',
-    city: 'Detroit',
-    state: 'MI',
-    annualRevenue: 9800000,
-    employeeCount: 175,
-    yearsInBusiness: 22,
-    lumiqScore: 76,
-    ownerFico: 735,
-    riskTier: 'low',
-    scoreTrend: 'stable',
-    trendValue: 1,
-    segment: 'mid-market',
-    hasActiveApplication: false,
-  },
-  {
-    id: 'biz-008',
-    name: 'TechVenture Solutions',
-    legalName: 'TechVenture Solutions Inc.',
-    industry: 'Technology',
-    naicsCode: '541512',
-    city: 'San Francisco',
-    state: 'CA',
-    annualRevenue: 2200000,
-    employeeCount: 28,
-    yearsInBusiness: 3,
-    lumiqScore: 85,
-    ownerFico: 782,
-    riskTier: 'low',
-    scoreTrend: 'up',
-    trendValue: 5,
-    segment: 'small',
-    hasActiveApplication: true,
-    productType: 'Business Credit Card',
-    applicationAmount: 50000,
-  },
-  {
-    id: 'biz-009',
-    name: 'Urban Retail Partners',
-    legalName: 'Urban Retail Partners LP',
-    industry: 'Retail',
-    naicsCode: '445110',
-    city: 'Chicago',
-    state: 'IL',
-    annualRevenue: 950000,
-    employeeCount: 18,
-    yearsInBusiness: 2,
-    lumiqScore: 62,
-    ownerFico: 665,
-    riskTier: 'high',
-    scoreTrend: 'down',
-    trendValue: 4,
-    segment: 'micro',
-    hasActiveApplication: false,
-  },
-  {
-    id: 'biz-010',
-    name: 'Pacific Marine Services',
-    legalName: 'Pacific Marine Services LLC',
-    industry: 'Marine Services',
-    naicsCode: '483211',
-    city: 'Seattle',
-    state: 'WA',
-    annualRevenue: 6700000,
-    employeeCount: 65,
-    yearsInBusiness: 11,
-    lumiqScore: 73,
-    ownerFico: 718,
-    riskTier: 'medium',
-    scoreTrend: 'up',
-    trendValue: 2,
-    segment: 'small',
-    hasActiveApplication: false,
-  },
-];
+const DEMO_BUSINESSES_MAP: Record<string, DemoBusinessEntity[]> = {
+  chase: CHASE_DEMO_BUSINESSES,
+  wellsfargo: WF_DEMO_BUSINESSES,
+  santander: SANT_DEMO_BUSINESSES,
+  citi: CITI_DEMO_BUSINESSES,
+};
+export const DEMO_BUSINESSES: DemoBusinessEntity[] = DEMO_BUSINESSES_MAP[ACTIVE_BANK_ID];
 
 // ─── API Performance Trend Data ──────────────────────────────────────────────
 
