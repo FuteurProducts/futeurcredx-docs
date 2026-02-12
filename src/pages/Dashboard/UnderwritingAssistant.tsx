@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List, Filter, CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { Button } from '@/components/ui/button';
 import {
   ApplicationQueueFilters,
@@ -16,6 +17,7 @@ import {
   DEFAULT_UNDERWRITING_METRICS,
   DAILY_STATS_METRICS,
 } from '@/components/enterprise/underwriting';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { applicationsService, customersService } from '@/services/bff';
 import { adaptApplicationsToPipeline } from '@/adapters/applicationAdapter';
@@ -62,11 +64,12 @@ function formatRelativeTime(isoDate: string): string {
 }
 
 const UnderwritingAssistant: React.FC = () => {
+  const { isDemoMode } = useEnvironment();
   const { portfolioId } = usePortfolio();
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedApp, setSelectedApp] = useState<PipelineApplication | null>(null);
-  const [applications, setApplications] = useState(() => buildFallbackApplications());
+  const [applications, setApplications] = useState(() => isDemoMode ? buildFallbackApplications() : []);
   const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>(
     () => demoDataStore.getApplicationStatusOverrides()
   );
@@ -91,21 +94,22 @@ const UnderwritingAssistant: React.FC = () => {
           return { apps: appsRes.data, nameMap };
         },
         { apps: [], nameMap: {} },
-        'Applications Pipeline'
+        'Applications Pipeline',
+        isDemoMode
       );
       if (source === 'live' && response.apps.length > 0) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
         const adapted = adaptApplicationsToPipeline(response.apps as any, response.nameMap);
         setApplications(adapted);
       } else if (source === 'fallback') {
-        setApplications(buildFallbackApplications());
+        setApplications(isDemoMode ? buildFallbackApplications() : []);
       }
     } catch {
-      setApplications(buildFallbackApplications());
+      setApplications(isDemoMode ? buildFallbackApplications() : []);
     } finally {
       setIsLoadingApps(false);
     }
-  }, [portfolioId]);
+  }, [portfolioId, isDemoMode]);
 
   useEffect(() => {
     fetchApplications();
@@ -243,6 +247,21 @@ const UnderwritingAssistant: React.FC = () => {
   const actionedApplications = filteredApplications.filter(
     app => applicationStatuses[app.id] === 'approved' || applicationStatuses[app.id] === 'declined'
   );
+
+  // Empty state guard for non-demo mode with no data
+  const hasNoData = !isDemoMode && applications.length === 0;
+  if (hasNoData) {
+    return (
+      <div className="p-6">
+        <SandboxEmptyState
+          title="No Underwriting Data"
+          description="Underwriting applications will appear once your API integration is active and applications are submitted."
+          onRetry={fetchApplications}
+          showApiConsoleLink
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

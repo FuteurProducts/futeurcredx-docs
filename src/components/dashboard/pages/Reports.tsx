@@ -5,6 +5,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { reportsService } from '@/services/bff';
 import { withFallback } from '@/utils/withFallback';
@@ -12,6 +13,7 @@ import { useReportPolling } from '@/hooks/useReportPolling';
 import { logger } from '@/utils/logger';
 import { PILOT_CONFIG } from '@/data/demoData';
 import type { ReportJob } from '@/services/bff/types';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 import {
@@ -74,6 +76,7 @@ function adaptReportJobToGenerated(job: ReportJob): GeneratedReport {
 
 const Reports: React.FC = () => {
   const { toast } = useToast();
+  const { isDemoMode } = useEnvironment();
   const { portfolioId } = usePortfolio();
 
   // View state: library or custom builder
@@ -92,8 +95,8 @@ const Reports: React.FC = () => {
   // Selected template for configuration
   const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(null);
 
-  // Reports history — initialised empty; populated from BFF or fallback
-  const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>([]);
+  // Reports history — initialised with demo data in demo mode; populated from BFF otherwise
+  const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>(isDemoMode ? mockGeneratedReports : []);
 
   // Preview drawer state
   const [previewReport, setPreviewReport] = useState<GeneratedReport | null>(null);
@@ -105,16 +108,21 @@ const Reports: React.FC = () => {
   // ---------- Fetch report history from BFF (with fallback) ----------
   const fetchReportHistory = useCallback(async () => {
     if (!portfolioId) return;
-    const result = await withFallback(
-      () =>
-        reportsService
-          .list(portfolioId)
-          .then((r) => (r.data || []).map(adaptReportJobToGenerated)),
-      mockGeneratedReports,
-      'Report History',
-    );
-    setGeneratedReports(result.data);
-  }, [portfolioId]);
+    try {
+      const result = await withFallback(
+        () =>
+          reportsService
+            .list(portfolioId)
+            .then((r) => (r.data || []).map(adaptReportJobToGenerated)),
+        mockGeneratedReports,
+        'Report History',
+        isDemoMode,
+      );
+      setGeneratedReports(result.data);
+    } catch {
+      if (!isDemoMode) setGeneratedReports([]);
+    }
+  }, [portfolioId, isDemoMode]);
 
   // Re-fetch whenever the active portfolio changes
   useEffect(() => {
@@ -274,6 +282,18 @@ const Reports: React.FC = () => {
     localStorage.setItem(`lumiq_custom_report_${name}`, JSON.stringify(blocks));
     toast({ title: "Template saved", description: `"${name}" saved with ${blocks.length} metric blocks.` });
   };
+
+  // Empty state guard: show when not demo mode and no reports exist
+  if (!isDemoMode && generatedReports.length === 0) {
+    return (
+      <SandboxEmptyState
+        title="No Reports"
+        description="Reports will be available once your API integration is configured and data starts flowing."
+        onRetry={fetchReportHistory}
+        showApiConsoleLink
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col h-full bg-muted/30">

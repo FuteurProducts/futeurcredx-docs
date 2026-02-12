@@ -11,6 +11,7 @@ import type { ApiKey as BffApiKey, AuditEvent as BffAuditEvent } from '@/service
 import { withFallback } from '@/utils/withFallback';
 import { demoDataStore } from '@/data/demoDataStore';
 import { PILOT_CONFIG } from '@/data/demoData';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { Button } from '@/components/ui/button';
 import {
   SettingsGlobalControls,
@@ -80,18 +81,18 @@ function adaptBffAuditEvent(event: BffAuditEvent) {
 
 const Settings: React.FC = () => {
   const { toast } = useToast();
-  const { currentEnvironment, switchEnvironment } = useEnvironment();
+  const { currentEnvironment, switchEnvironment, isDemoMode } = useEnvironment();
   const { portfolioId } = usePortfolio();
 
   // Active section state
   const [activeSection, setActiveSection] = useState('users');
 
   // Managed state for settings that persist via localStorage
-  const [users, setUsers] = useState<PlatformUser[]>(mockUsers);
-  const [apiKeys, setApiKeys] = useState(mockApiKeys);
-  const [auditLogs, setAuditLogs] = useState(mockAuditLogs);
-  const [dataSources, setDataSources] = useState(mockDataSources);
-  const [thresholds, setThresholds] = useState(mockAlertThresholds);
+  const [users, setUsers] = useState<PlatformUser[]>(isDemoMode ? mockUsers : []);
+  const [apiKeys, setApiKeys] = useState(isDemoMode ? mockApiKeys : []);
+  const [auditLogs, setAuditLogs] = useState(isDemoMode ? mockAuditLogs : []);
+  const [dataSources, setDataSources] = useState(isDemoMode ? mockDataSources : []);
+  const [thresholds, setThresholds] = useState(isDemoMode ? mockAlertThresholds : []);
 
   // Tenant info from pilot config
   const tenantName = PILOT_CONFIG.bankName;
@@ -101,29 +102,39 @@ const Settings: React.FC = () => {
   // ── BFF data fetching ──────────────────────────────────────────
 
   const fetchApiKeys = useCallback(async () => {
-    const { data } = await withFallback(
-      async () => {
-        const res = await apiKeysService.list();
-        return res.data.map(adaptBffApiKey);
-      },
-      mockApiKeys,
-      'Settings/apiKeys',
-    );
-    setApiKeys(data);
-  }, []);
+    try {
+      const { data } = await withFallback(
+        async () => {
+          const res = await apiKeysService.list();
+          return res.data.map(adaptBffApiKey);
+        },
+        mockApiKeys,
+        'Settings/apiKeys',
+        isDemoMode,
+      );
+      setApiKeys(data);
+    } catch {
+      if (!isDemoMode) setApiKeys([]);
+    }
+  }, [isDemoMode]);
 
   const fetchAuditLogs = useCallback(async () => {
     if (!portfolioId) return;
-    const { data } = await withFallback(
-      async () => {
-        const res = await auditService.list(portfolioId);
-        return res.data.map(adaptBffAuditEvent);
-      },
-      mockAuditLogs,
-      'Settings/auditLogs',
-    );
-    setAuditLogs(data);
-  }, [portfolioId]);
+    try {
+      const { data } = await withFallback(
+        async () => {
+          const res = await auditService.list(portfolioId);
+          return res.data.map(adaptBffAuditEvent);
+        },
+        mockAuditLogs,
+        'Settings/auditLogs',
+        isDemoMode,
+      );
+      setAuditLogs(data);
+    } catch {
+      if (!isDemoMode) setAuditLogs([]);
+    }
+  }, [portfolioId, isDemoMode]);
 
   useEffect(() => {
     fetchApiKeys();
@@ -170,6 +181,7 @@ const Settings: React.FC = () => {
         createdBy: 'analyst@partnerbank.com',
       },
       'Settings/createApiKey',
+      isDemoMode,
     );
     setApiKeys(prev => [newKey, ...prev]);
     toast({
@@ -186,6 +198,7 @@ const Settings: React.FC = () => {
       },
       null,
       'Settings/revokeApiKey',
+      isDemoMode,
     );
     setApiKeys(prev => prev.map(k => k.id === keyId ? { ...k, status: 'revoked' as const } : k));
     toast({
@@ -342,6 +355,20 @@ const Settings: React.FC = () => {
         );
     }
   };
+
+  // Empty state guard: show when not demo mode and no data is available
+  const hasNoData = users.length === 0 && apiKeys.length === 0 && auditLogs.length === 0
+    && dataSources.length === 0 && thresholds.length === 0;
+  if (!isDemoMode && hasNoData) {
+    return (
+      <SandboxEmptyState
+        title="No Settings Data"
+        description="Settings will be available once your API integration is configured and data starts flowing."
+        onRetry={() => { fetchApiKeys(); fetchAuditLogs(); }}
+        showApiConsoleLink
+      />
+    );
+  }
 
   return (
     <div className="flex flex-col h-full bg-muted/30">

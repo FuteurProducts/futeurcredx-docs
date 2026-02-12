@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { scoresService, customersService } from '@/services/bff';
 import type { BffResponse } from '@/services/bff/client';
@@ -56,6 +57,7 @@ import { DEMO_BUSINESSES } from '@/data/demoData';
 import { withFallback } from '@/utils/withFallback';
 import { demoDataStore } from '@/data/demoDataStore';
 import { logger } from '@/utils/logger';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 // Fallback customers derived from centralized business data
 const FALLBACK_CUSTOMERS: CustomerForPull[] = DEMO_BUSINESSES.map((biz, idx) => ({
@@ -86,6 +88,7 @@ const FALLBACK_SCORES: ScoreRecord[] = DEMO_BUSINESSES.filter((_, i) => i < 7).m
 }));
 
 const ScoresBff: React.FC = () => {
+  const { isDemoMode } = useEnvironment();
   const { portfolioId, isLoading: portfolioLoading } = usePortfolio();
   const { emitScoreViewed, emitApplyClicked } = useAuditEmit();
 
@@ -109,7 +112,8 @@ const ScoresBff: React.FC = () => {
         () => scoresService.list(portfolioId, { pageSize: 100 }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Fallback response shape matches BffListResponse
         { data: FALLBACK_SCORES as any, meta: { requestId: 'fallback' } },
-        'Score List'
+        'Score List',
+        isDemoMode,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
       const scoreData = response.data as unknown as ScoreRecord[];
@@ -119,10 +123,15 @@ const ScoresBff: React.FC = () => {
         emitScoreViewed(portfolioId, 'portfolio_list');
       }
     } catch (err) {
-      logger.info('[ScoresBff] BFF unavailable, using fallback scores');
-      setScores(FALLBACK_SCORES);
-      setLastUpdated(new Date().toISOString());
-      setError(null);
+      if (isDemoMode) {
+        logger.info('[ScoresBff] Demo mode — using fallback scores');
+        setScores(FALLBACK_SCORES);
+        setLastUpdated(new Date().toISOString());
+      } else {
+        logger.info('[ScoresBff] BFF unavailable, clearing data');
+        setScores([]);
+        setError(err instanceof Error ? err.message : 'Failed to load scores');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -149,10 +158,15 @@ const ScoresBff: React.FC = () => {
       }));
       setCustomers(customerList);
     } catch (err) {
-      logger.info('[ScoresBff] BFF unavailable, using fallback customers');
-      setCustomers(FALLBACK_CUSTOMERS);
+      if (isDemoMode) {
+        logger.info('[ScoresBff] Demo mode — using fallback customers');
+        setCustomers(FALLBACK_CUSTOMERS);
+      } else {
+        logger.info('[ScoresBff] BFF unavailable, clearing customers');
+        setCustomers([]);
+      }
     }
-  }, [portfolioId]);
+  }, [portfolioId, isDemoMode]);
 
   // Fetch on portfolio change
   useEffect(() => {
@@ -199,7 +213,8 @@ const ScoresBff: React.FC = () => {
           source: 'experian_biz',
         }),
         fallbackResponse,
-        'Score Pull'
+        'Score Pull',
+        isDemoMode,
       );
 
       emitApplyClicked(customerId, 'score_pull');
@@ -265,6 +280,21 @@ const ScoresBff: React.FC = () => {
         <AlertCircle className="h-12 w-12 text-muted-foreground" />
         <p className="text-muted-foreground">Select a portfolio to view scores</p>
         <PortfolioSelector />
+      </div>
+    );
+  }
+
+  // Check if sandbox/production mode has no data
+  const hasNoData = !isDemoMode && scores.length === 0 && customers.length === 0 && !isLoading && !portfolioLoading;
+  if (hasNoData) {
+    return (
+      <div className="space-y-6">
+        <SandboxEmptyState
+          title="No Score Data"
+          description="Credit scores will populate once your API integration is active and bureau connections are configured."
+          onRetry={fetchScores}
+          showApiConsoleLink
+        />
       </div>
     );
   }

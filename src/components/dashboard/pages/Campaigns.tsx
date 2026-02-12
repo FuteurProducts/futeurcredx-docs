@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 
 import { KPICard } from '@/components/enterprise/shared/KPICard';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -47,6 +48,7 @@ import {
   SEGMENTS,
   type Campaign,
 } from '@/data/chaseDemoData';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { useToast } from '@/hooks/use-toast';
 import {
   formatCurrency,
@@ -303,6 +305,7 @@ const MiniBar: React.FC<MiniBarProps> = ({ value, status = 'ok' }) => {
 // ---- Main page component ----
 
 const Campaigns: React.FC = () => {
+  const { isDemoMode } = useEnvironment();
   const { toast } = useToast();
   const [modalOpen, setModalOpen] = useState(false);
   const [newCampaign, setNewCampaign] = useState({
@@ -362,6 +365,19 @@ const Campaigns: React.FC = () => {
       description: 'Drill-down analytics coming soon',
     });
   };
+
+  // Early return for non-demo mode — this page has no BFF integration yet
+  if (!isDemoMode) {
+    return (
+      <div className="p-6">
+        <SandboxEmptyState
+          title="No Campaign Data"
+          description="Campaign analytics will populate once your API integration is active and campaign data flows in."
+          showApiConsoleLink
+        />
+      </div>
+    );
+  }
 
   // KPI threshold calculations
   const viewRateStatus = getThresholdStatus(

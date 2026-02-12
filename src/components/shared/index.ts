@@ -9,3 +9,4 @@ export { BffErrorBoundary, BffErrorDisplay } from './BffErrorBoundary';
 export { SessionTimeoutWarning } from './SessionTimeoutWarning';
 export { DataSourceBadge } from './DataSourceBadge';
 export type { DataSourceMode } from './DataSourceBadge';
+export { SandboxEmptyState } from './SandboxEmptyState';

@@ -123,7 +123,7 @@ export const FinlabOverview: React.FC = () => {
     if (!portfolioId) return;
 
     try {
-      const result = await getDashboardKPIs(portfolioId);
+      const result = await getDashboardKPIs(portfolioId, isDemoMode);
       const kpis = result.data;
 
       if (result.source === 'live') {
@@ -398,14 +398,16 @@ export const FinlabOverview: React.FC = () => {
           transition={{ duration: 0.2, delay: 0.3 }}
           className="min-w-0"
         >
-          <RecentActivityFeed
-            activities={RECENT_ACTIVITIES}
-            onViewAll={() => {
-              toast({ title: "Activity log", description: "Opening Audit Logs in Settings." });
-              navigate(`${basePath}?tab=settings`);
-            }}
-            className="shadow-sm bg-card rounded-2xl border border-border"
-          />
+          {isDemoMode ? (
+            <RecentActivityFeed
+              activities={RECENT_ACTIVITIES}
+              onViewAll={() => {
+                toast({ title: "Activity log", description: "Opening Audit Logs in Settings." });
+                navigate(`${basePath}?tab=settings`);
+              }}
+              className="shadow-sm bg-card rounded-2xl border border-border"
+            />
+          ) : null}
         </motion.div>
       </div>
 
@@ -417,15 +419,17 @@ export const FinlabOverview: React.FC = () => {
           transition={{ duration: 0.2, delay: 0.35 }}
           className="min-w-0"
         >
-          <WebhookEventsCard
-            events={WEBHOOK_EVENTS}
-            stats={WEBHOOK_STATS}
-            onViewLogs={() => {
-              toast({ title: "Webhook logs", description: "Opening Partner Portal webhook logs." });
-              navigate(`${basePath}?tab=partner-portal`);
-            }}
-            className="shadow-sm bg-card rounded-2xl border border-border"
-          />
+          {isDemoMode ? (
+            <WebhookEventsCard
+              events={WEBHOOK_EVENTS}
+              stats={WEBHOOK_STATS}
+              onViewLogs={() => {
+                toast({ title: "Webhook logs", description: "Opening Partner Portal webhook logs." });
+                navigate(`${basePath}?tab=partner-portal`);
+              }}
+              className="shadow-sm bg-card rounded-2xl border border-border"
+            />
+          ) : null}
         </motion.div>
 
         <motion.div
@@ -434,14 +438,16 @@ export const FinlabOverview: React.FC = () => {
           transition={{ duration: 0.2, delay: 0.4 }}
           className="min-w-0"
         >
-          <IntegrationHealthCard
-            services={SYSTEM_SERVICES}
-            overallUptime={99.96}
-            onRefresh={() => {
-              toast({ title: "Status refreshed", description: "All service health checks updated." });
-            }}
-            className="shadow-sm bg-card rounded-2xl border border-border"
-          />
+          {isDemoMode ? (
+            <IntegrationHealthCard
+              services={SYSTEM_SERVICES}
+              overallUptime={99.96}
+              onRefresh={() => {
+                toast({ title: "Status refreshed", description: "All service health checks updated." });
+              }}
+              className="shadow-sm bg-card rounded-2xl border border-border"
+            />
+          ) : null}
         </motion.div>
       </div>
 
@@ -452,13 +458,17 @@ export const FinlabOverview: React.FC = () => {
         transition={{ duration: 0.2, delay: 0.45 }}
         className="min-w-0"
       >
-        <div className="text-xs text-muted-foreground mb-2">Showing top 25 of {formatNumber(PILOT_METRICS.totalBusinesses)} businesses</div>
-        <TopBusinessesTable
-          businesses={topBusinesses}
-          onViewBusiness={handleViewBusiness}
-          onViewAll={handleViewAllBusinesses}
-          className="shadow-lg bg-card rounded-2xl border border-border"
-        />
+        {isDemoMode ? (
+          <>
+            <div className="text-xs text-muted-foreground mb-2">Showing top 25 of {formatNumber(PILOT_METRICS.totalBusinesses)} businesses</div>
+            <TopBusinessesTable
+              businesses={topBusinesses}
+              onViewBusiness={handleViewBusiness}
+              onViewAll={handleViewAllBusinesses}
+              className="shadow-lg bg-card rounded-2xl border border-border"
+            />
+          </>
+        ) : null}
       </motion.div>
 
       {/* Data Source Footer */}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 // Icon component
 const Icon = ({ name, className = "", style }: { name: string; className?: string; style?: React.CSSProperties }) => {
@@ -194,6 +196,21 @@ const Notifications: React.FC = () => {
       )
     );
   };
+
+  // Environment check - must be after all hooks
+  const { isDemoMode } = useEnvironment();
+
+  // Early return for sandbox/production mode
+  if (!isDemoMode) {
+    return (
+      <div className="p-4 lg:p-6">
+        <SandboxEmptyState
+          title="No Notifications"
+          description="Connect to a live API to receive real-time notifications. Alerts and system notifications will appear here once configured."
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

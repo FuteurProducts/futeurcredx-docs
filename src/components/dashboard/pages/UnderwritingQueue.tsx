@@ -22,10 +22,12 @@ import {
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { useAuditEmit } from '@/hooks/useAuditEmit';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { KPICard } from '@/components/enterprise/shared/KPICard';
 import { formatCurrency, formatNumber, formatPercent, getRiskBadgeClass, getSLAIndicator } from '@/lib/formatters';
 import { UNDERWRITING, COMPLIANCE, type UnderwritingQueueItem } from '@/data/chaseDemoData';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 type SortField = 'business' | 'product' | 'amount' | 'score' | 'risk' | 'timeInQueue' | 'slaStatus';
 type SortDir = 'asc' | 'desc';
@@ -36,6 +38,7 @@ const SLA_ORDER: Record<string, number> = { ok: 0, warning: 1, breach: 2 };
 const UnderwritingQueue: React.FC = () => {
   const { toast } = useToast();
   const { emitBulkActionExecuted } = useAuditEmit();
+  const { isDemoMode } = useEnvironment();
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [sortField, setSortField] = useState<SortField>('timeInQueue');
@@ -44,6 +47,20 @@ const UnderwritingQueue: React.FC = () => {
   const [filterRisk, setFilterRisk] = useState<string>('all');
   const [detailItem, setDetailItem] = useState<UnderwritingQueueItem | null>(null);
   const [showRules, setShowRules] = useState(true);
+
+  // Early return for sandbox/production mode — show empty state instead of demo data
+  if (!isDemoMode) {
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-y-auto p-4 lg:p-6">
+          <SandboxEmptyState
+            title="No Underwriting Queue Data"
+            description="Connect to a live API to view underwriting queue and compliance metrics. In demo mode, sample queue data is displayed."
+          />
+        </div>
+      </div>
+    );
+  }
 
   // ── Sorting ───────────────────────────────────────────────────
   const sortedQueue = useMemo(() => {

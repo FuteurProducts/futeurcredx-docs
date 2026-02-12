@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import {
   CustomerGlobalControls,
   RelationshipHealthSummary,
@@ -11,6 +13,7 @@ import {
   type CustomerFilters,
   type CustomerEntity,
 } from '@/components/enterprise/customer';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import {
   MOCK_CUSTOMERS,
   MOCK_HEALTH_SUMMARY,
@@ -19,6 +22,8 @@ import {
 } from '@/data/customerPageDemoData';
 
 const Customer: React.FC = () => {
+  const { isDemoMode } = useEnvironment();
+
   const [filters, setFilters] = useState<CustomerFilters>({
     product: [],
     segment: [],
@@ -224,6 +229,19 @@ const Customer: React.FC = () => {
   } : null;
 
   const totalClients = MOCK_LIFECYCLE_STAGES.reduce((sum, stage) => sum + stage.count, 0);
+
+  // Non-demo mode: no BFF integration yet, show empty state
+  if (!isDemoMode) {
+    return (
+      <div className="p-6">
+        <SandboxEmptyState
+          title="No Customer Data"
+          description="Customer intelligence will populate once your API integration is active and customer data flows in."
+          showApiConsoleLink
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

@@ -12,6 +12,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 
+import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { CredentialsPanel } from './panels/CredentialsPanel';
 import { UsageAnalyticsPanel } from './panels/UsageAnalyticsPanel';
 import { WebhooksPanel } from './panels/WebhooksPanel';
@@ -32,6 +34,26 @@ const tabs = [
 
 const PartnerPortalEnterprise: React.FC = () => {
   const [activeTab, setActiveTab] = useState('credentials');
+  const { isDemoMode } = useEnvironment();
+
+  if (!isDemoMode) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Partner API Portal</h1>
+            <p className="text-muted-foreground">
+              Enterprise integration management for bank partners
+            </p>
+          </div>
+        </div>
+        <SandboxEmptyState
+          title="No Partner Portal Data"
+          description="Connect to a live API to view partner integration data. API credentials, webhooks, and usage analytics will appear here once configured."
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

@@ -15,20 +15,28 @@ export interface FallbackResult<T> {
 /**
  * Attempt a BFF call; fall back to static data if it fails.
  *
- * @param bffCall   - async function that fetches live data
+ * @param bffCall      - async function that fetches live data
  * @param fallbackData - static fallback data returned when bffCall throws
- * @param label     - human-readable label for console logging
+ * @param label        - human-readable label for logging
+ * @param isDemoMode   - when true, silently fall back to demo data;
+ *                       when false (default), log a warning and re-throw
  */
 export async function withFallback<T>(
   bffCall: () => Promise<T>,
   fallbackData: T,
-  label: string
+  label: string,
+  isDemoMode: boolean = false
 ): Promise<FallbackResult<T>> {
   try {
     const data = await bffCall();
     return { data, source: 'live' };
   } catch (err) {
-    logger.warn(`[withFallback] ${label}: BFF unavailable, using fallback data`, err);
-    return { data: fallbackData, source: 'fallback' };
+    if (isDemoMode) {
+      logger.info(`[withFallback] ${label}: demo mode — using fallback data`);
+      return { data: fallbackData, source: 'fallback' };
+    }
+
+    logger.warn(`[withFallback] ${label}: BFF unavailable, re-throwing error`, err);
+    throw err;
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { scoresService } from '@/services/bff';
 import { getDashboardKPIs } from '@/services/dashboardMetrics';
@@ -28,6 +29,7 @@ import {
 } from '@/components/enterprise/analytics';
 import type { AnalyticsFilters, PortfolioKPI, ScoreBucket } from '@/components/enterprise/analytics/types';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 // ============================================
 // MAIN COMPONENT
@@ -35,11 +37,12 @@ import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 
 const Analytics: React.FC = () => {
   const { toast } = useToast();
+  const { isDemoMode } = useEnvironment();
   const { portfolioId } = usePortfolio();
 
-  // Live data state — initialised from mocks, replaced when BFF responds
-  const [portfolioKPIs, setPortfolioKPIs] = useState<PortfolioKPI[]>(mockPortfolioKPIs);
-  const [scoreDistribution, setScoreDistribution] = useState<ScoreBucket[]>(mockScoreDistribution);
+  // Live data state — initialised from mocks in demo, empty otherwise
+  const [portfolioKPIs, setPortfolioKPIs] = useState<PortfolioKPI[]>(isDemoMode ? mockPortfolioKPIs : []);
+  const [scoreDistribution, setScoreDistribution] = useState<ScoreBucket[]>(isDemoMode ? mockScoreDistribution : []);
 
   /**
    * Fetch live KPIs and score distribution from BFF, falling back to mock data.
@@ -47,62 +50,71 @@ const Analytics: React.FC = () => {
   const fetchAnalyticsData = useCallback(async () => {
     if (!portfolioId) return;
 
-    // --- Portfolio KPIs ---
-    const kpiResult = await getDashboardKPIs(portfolioId);
-    if (kpiResult.source === 'live') {
-      const live = kpiResult.data;
-      // Merge live values into the mock template so labels/tooltips/format are preserved
-      setPortfolioKPIs(prev =>
-        prev.map(kpi => {
-          switch (kpi.id) {
-            case 'avg-score':
-              return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LUMIQ AI Signal Engine' };
-            case 'deteriorating-clients':
-              return { ...kpi, value: live.delinquencyRate, lastUpdated: 'just now', dataSource: 'Risk Analytics Engine' };
-            case 'improving-clients':
-              return {
-                ...kpi,
-                value: live.scoreCoverage > 0 ? Math.round(live.preQualRate * 10) / 10 : kpi.value,
-                lastUpdated: 'just now',
-                dataSource: 'Risk Analytics Engine',
-              };
-            case 'score-momentum':
-              return {
-                ...kpi,
-                value: live.momGrowth,
-                lastUpdated: 'just now',
-                dataSource: 'Risk Analytics Engine',
-              };
-            default:
-              return kpi;
-          }
-        }),
+    try {
+      // --- Portfolio KPIs ---
+      const kpiResult = await getDashboardKPIs(portfolioId, isDemoMode);
+      if (kpiResult.source === 'live') {
+        const live = kpiResult.data;
+        // Merge live values into the mock template so labels/tooltips/format are preserved
+        setPortfolioKPIs(prev =>
+          prev.map(kpi => {
+            switch (kpi.id) {
+              case 'avg-score':
+                return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LUMIQ AI Signal Engine' };
+              case 'deteriorating-clients':
+                return { ...kpi, value: live.delinquencyRate, lastUpdated: 'just now', dataSource: 'Risk Analytics Engine' };
+              case 'improving-clients':
+                return {
+                  ...kpi,
+                  value: live.scoreCoverage > 0 ? Math.round(live.preQualRate * 10) / 10 : kpi.value,
+                  lastUpdated: 'just now',
+                  dataSource: 'Risk Analytics Engine',
+                };
+              case 'score-momentum':
+                return {
+                  ...kpi,
+                  value: live.momGrowth,
+                  lastUpdated: 'just now',
+                  dataSource: 'Risk Analytics Engine',
+                };
+              default:
+                return kpi;
+            }
+          }),
+        );
+      }
+
+      // --- Score Distribution ---
+      const distResult = await withFallback(
+        () => scoresService.getDistribution(portfolioId!, 'internal').then(r => r.data),
+        { ranges: [] as { min: number; max: number; count: number }[] },
+        'Risk Indicator Distribution',
+        isDemoMode,
       );
-    }
 
-    // --- Score Distribution ---
-    const distResult = await withFallback(
-      () => scoresService.getDistribution(portfolioId!, 'internal').then(r => r.data),
-      { ranges: [] as { min: number; max: number; count: number }[] },
-      'Risk Indicator Distribution',
-    );
-
-    if (distResult.source === 'live' && distResult.data.ranges.length > 0) {
-      const totalCount = distResult.data.ranges.reduce((sum, r) => sum + r.count, 0);
-      const liveBuckets: ScoreBucket[] = distResult.data.ranges.map(r => ({
-        range: `${r.min}\u2013${r.max}`,
-        min: r.min,
-        max: r.max,
-        count: r.count,
-        percent: totalCount > 0 ? Math.round((r.count / totalCount) * 1000) / 10 : 0,
-        // Estimate exposure proportionally (use mock total as baseline)
-        exposure: totalCount > 0
-          ? Math.round((r.count / totalCount) * 2_000_000_000)
-          : 0,
-      }));
-      setScoreDistribution(liveBuckets);
+      if (distResult.source === 'live' && distResult.data.ranges.length > 0) {
+        const totalCount = distResult.data.ranges.reduce((sum, r) => sum + r.count, 0);
+        const liveBuckets: ScoreBucket[] = distResult.data.ranges.map(r => ({
+          range: `${r.min}\u2013${r.max}`,
+          min: r.min,
+          max: r.max,
+          count: r.count,
+          percent: totalCount > 0 ? Math.round((r.count / totalCount) * 1000) / 10 : 0,
+          // Estimate exposure proportionally (use mock total as baseline)
+          exposure: totalCount > 0
+            ? Math.round((r.count / totalCount) * 2_000_000_000)
+            : 0,
+        }));
+        setScoreDistribution(liveBuckets);
+      }
+    } catch {
+      if (!isDemoMode) {
+        setPortfolioKPIs([]);
+        setScoreDistribution([]);
+      }
+      // demo mode: keep fallbacks (already set via initial state)
     }
-  }, [portfolioId]);
+  }, [portfolioId, isDemoMode]);
 
   // Re-fetch whenever the selected portfolio changes
   useEffect(() => {
@@ -333,6 +345,21 @@ const Analytics: React.FC = () => {
   // ============================================
   // MAIN RENDER
   // ============================================
+
+  // Check if sandbox/production mode has no data
+  const hasNoData = !isDemoMode && portfolioKPIs.length === 0;
+  if (hasNoData) {
+    return (
+      <div className="min-h-screen bg-muted/50 p-6">
+        <SandboxEmptyState
+          title="No Analytics Data"
+          description="Analytics will populate once your API integration is active and scoring data flows in."
+          onRetry={fetchAnalyticsData}
+          showApiConsoleLink
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-muted/50 p-6 space-y-6">

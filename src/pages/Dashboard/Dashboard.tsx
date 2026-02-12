@@ -28,6 +28,7 @@ import Documentation from '@/components/dashboard/pages/Documentation';
 // Import Connected Environment Toggle (uses global context)
 import { ConnectedEnvironmentToggle } from '@/components/widgets';
 import { DataSourceBadge } from '@/components/shared/DataSourceBadge';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { logger } from '@/utils/logger';
 import { useToast } from '@/hooks/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -93,6 +94,7 @@ const Dashboard: React.FC = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { currentEnvironment, switchEnvironment } = useEnvironment();
   const featureFlags = useFeatureFlags();
+  const isDemoMode = currentEnvironment === 'demo';
 
   // Filter navigation based on feature flags (hide API Console in demo mode, etc.)
   const filteredNavigation = navigation.filter(item => {
@@ -933,21 +935,28 @@ const Dashboard: React.FC = () => {
           )}
 
           {activeTab === 'api-keys' && (
-            <ApiConsole
-              apiKeys={apiKeys}
-              isLoadingKeys={isLoadingKeys}
-              error={error}
-              newKeyName={newKeyName}
-              setNewKeyName={setNewKeyName}
-              handleGenerateKey={handleGenerateKey}
-              isGeneratingKey={isGeneratingKey}
-              newlyGeneratedKey={newlyGeneratedKey}
-              setNewlyGeneratedKey={setNewlyGeneratedKey}
-              handleRevokeKey={handleRevokeKey}
-              showApiKey={showApiKey}
-              toggleKeyVisibility={toggleKeyVisibility}
-              formatDate={formatDate}
-            />
+            isDemoMode ? (
+              <ApiConsole
+                apiKeys={apiKeys}
+                isLoadingKeys={isLoadingKeys}
+                error={error}
+                newKeyName={newKeyName}
+                setNewKeyName={setNewKeyName}
+                handleGenerateKey={handleGenerateKey}
+                isGeneratingKey={isGeneratingKey}
+                newlyGeneratedKey={newlyGeneratedKey}
+                setNewlyGeneratedKey={setNewlyGeneratedKey}
+                handleRevokeKey={handleRevokeKey}
+                showApiKey={showApiKey}
+                toggleKeyVisibility={toggleKeyVisibility}
+                formatDate={formatDate}
+              />
+            ) : (
+              <SandboxEmptyState
+                title="No API Keys"
+                description="Connect to a live API to manage API keys. API key creation and management will be available once your integration is configured."
+              />
+            )
           )}
 
             {activeTab === 'credit-intel' && <CreditIntelligence />}

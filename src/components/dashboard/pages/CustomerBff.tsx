@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { usePortfolio } from '@/contexts/PortfolioContext';
 import { customersService } from '@/services/bff';
 import type { BffListResponse } from '@/services/bff/client';
@@ -29,6 +30,7 @@ import { CustomerTableSkeleton, SkeletonCard, SkeletonPanel, MetricSkeleton } fr
 import { EmptyState } from '@/components/ui/empty-state';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
 import { CUSTOMER_DEMO_DATA } from '@/data/customerDemoData';
@@ -212,6 +214,7 @@ function generateRecommendations(
 }
 
 const CustomerBff: React.FC = () => {
+  const { isDemoMode } = useEnvironment();
   const { portfolioId, isLoading: portfolioLoading } = usePortfolio();
   const { emitDossierOpened, emitFilterApplied } = useAuditEmit();
 
@@ -257,7 +260,8 @@ const CustomerBff: React.FC = () => {
         }),
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Fallback response shape matches BffListResponse
         { data: FALLBACK_BFF_CUSTOMERS as unknown as SmbEntity[], meta: { requestId: 'fallback' }, pagination: { total: FALLBACK_BFF_CUSTOMERS.length, page: 1, pageSize: 10, hasMore: false } } as BffListResponse<SmbEntity>,
-        'Customer List'
+        'Customer List',
+        isDemoMode,
       );
 
       // If we got live BFF data, use it; otherwise use our full 36-record set
@@ -278,10 +282,15 @@ const CustomerBff: React.FC = () => {
         setLastUpdated(new Date().toISOString());
       }
     } catch (err) {
-      logger.info('[CustomerBff] BFF unavailable, using fallback data');
-      setCustomers(FALLBACK_CUSTOMERS_FULL);
-      setLastUpdated(new Date().toISOString());
-      setError(null);
+      if (isDemoMode) {
+        logger.info('[CustomerBff] Demo mode — using fallback data');
+        setCustomers(FALLBACK_CUSTOMERS_FULL);
+        setLastUpdated(new Date().toISOString());
+      } else {
+        logger.info('[CustomerBff] BFF unavailable, clearing data');
+        setCustomers([]);
+        setError(err instanceof Error ? err.message : 'Failed to load customer data');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -628,6 +637,21 @@ const CustomerBff: React.FC = () => {
         size="lg"
         className="min-h-[400px]"
       />
+    );
+  }
+
+  // Check if sandbox/production mode has no data
+  const hasNoData = !isDemoMode && customers.length === 0 && !isLoading && !portfolioLoading;
+  if (hasNoData) {
+    return (
+      <div className="space-y-6">
+        <SandboxEmptyState
+          title="No Customer Data"
+          description="Customer data will populate once your API integration is active and customer records are synced."
+          onRetry={fetchCustomers}
+          showApiConsoleLink
+        />
+      </div>
     );
   }
 

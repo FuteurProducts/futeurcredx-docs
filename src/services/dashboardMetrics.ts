@@ -68,33 +68,36 @@ async function fetchLiveTrendData(portfolioId: string): Promise<TrendDataPoint[]
 /**
  * Public API: Get dashboard KPIs with fallback
  */
-export async function getDashboardKPIs(portfolioId: string) {
+export async function getDashboardKPIs(portfolioId: string, isDemoMode: boolean = false) {
   return withFallback(
     () => fetchLiveKPIs(portfolioId),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Fallback data converted to expected type
     PILOT_METRICS as unknown as DashboardKPIs,
-    'Dashboard KPIs'
+    'Dashboard KPIs',
+    isDemoMode
   );
 }
 
 /**
  * Public API: Get conversion trend data with fallback
  */
-export async function getConversionTrend(portfolioId: string) {
+export async function getConversionTrend(portfolioId: string, isDemoMode: boolean = false) {
   return withFallback(
     () => fetchLiveTrendData(portfolioId),
     CONVERSION_TREND_DATA as TrendDataPoint[],
-    'Conversion Trend'
+    'Conversion Trend',
+    isDemoMode
   );
 }
 
 /**
  * Public API: Get API trend data (static for now — would need api_usage_logs aggregation)
  */
-export async function getApiTrendData(_portfolioId: string) {
+export async function getApiTrendData(_portfolioId: string, isDemoMode: boolean = false) {
   return withFallback(
     async () => API_TREND_DATA as ApiTrendDataPoint[],
     API_TREND_DATA as ApiTrendDataPoint[],
-    'API Trend Data'
+    'API Trend Data',
+    isDemoMode
   );
 }

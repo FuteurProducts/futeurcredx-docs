@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import {
   formatCurrency,
   formatNumber,
@@ -48,6 +49,7 @@ import {
 } from '@/data/chaseDemoData';
 import type { EWSCluster, ComplianceStatus } from '@/data/chaseDemoData';
 import { KPICard } from '@/components/enterprise/shared/KPICard';
+import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { RiskDashboardSkeleton } from '@/components/ui/skeletons';
 import { useToast } from '@/hooks/use-toast';
 
@@ -451,6 +453,7 @@ function ComplianceTable({
 
 const Risk: React.FC = () => {
   const { toast } = useToast();
+  const { isDemoMode } = useEnvironment();
   const [isLoading] = useState(false);
   const [ewsSortField, setEwsSortField] = useState<SortField>('exposure');
   const [expandedClusters, setExpandedClusters] = useState<Set<string>>(new Set());
@@ -539,6 +542,19 @@ const Risk: React.FC = () => {
   // Loading state
   if (isLoading) {
     return <RiskDashboardSkeleton />;
+  }
+
+  // Non-demo mode: no BFF integration yet, show empty state
+  if (!isDemoMode) {
+    return (
+      <div className="p-6">
+        <SandboxEmptyState
+          title="No Risk Data"
+          description="Risk analytics will populate once your API integration is active and portfolio data is available."
+          showApiConsoleLink
+        />
+      </div>
+    );
   }
 
   return (
