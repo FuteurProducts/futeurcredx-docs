@@ -8,6 +8,8 @@ import {
   SignedOut,
 } from '@clerk/clerk-react';
 import { setAuthTokenGetter } from '@/services/bff/client';
+import { ACTIVE_BANK_ID } from '@/data/bankConfig';
+import type { BankId } from '@/data/bankConfig';
 
 interface User {
   id: string;
@@ -56,16 +58,50 @@ const FALLBACK_VALUE: AuthContextType = {
 };
 
 // ── Demo Auth Provider ─────────────────────────────────────────────────
-const DEMO_USER: User = {
-  id: 'demo-user-001',
-  email: 'demo@lumiq.ai',
-  firstName: 'Demo',
-  lastName: 'User',
-  fullName: 'Demo User',
-  username: 'demo',
-  imageUrl: '/lumiq-avatar.png',
-  emailAddresses: [{ emailAddress: 'demo@lumiq.ai' }],
+const DEMO_USERS: Record<BankId, User> = {
+  chase: {
+    id: 'demo-chase-001',
+    email: 'sarah.chen@chase.demo',
+    firstName: 'Sarah',
+    lastName: 'Chen',
+    fullName: 'Sarah Chen',
+    username: 'sarah.chen',
+    imageUrl: '/lumiq-avatar.png',
+    emailAddresses: [{ emailAddress: 'sarah.chen@chase.demo' }],
+  },
+  wellsfargo: {
+    id: 'demo-wf-001',
+    email: 'm.torres@wellsfargo.demo',
+    firstName: 'Michael',
+    lastName: 'Torres',
+    fullName: 'Michael Torres',
+    username: 'm.torres',
+    imageUrl: '/lumiq-avatar.png',
+    emailAddresses: [{ emailAddress: 'm.torres@wellsfargo.demo' }],
+  },
+  santander: {
+    id: 'demo-sant-001',
+    email: 'a.garcia@santander.demo',
+    firstName: 'Ana',
+    lastName: 'García',
+    fullName: 'Ana García',
+    username: 'a.garcia',
+    imageUrl: '/lumiq-avatar.png',
+    emailAddresses: [{ emailAddress: 'a.garcia@santander.demo' }],
+  },
+  citi: {
+    id: 'demo-citi-001',
+    email: 'd.park@citi.demo',
+    firstName: 'David',
+    lastName: 'Park',
+    fullName: 'David Park',
+    username: 'd.park',
+    imageUrl: '/lumiq-avatar.png',
+    emailAddresses: [{ emailAddress: 'd.park@citi.demo' }],
+  },
 };
+
+const DEMO_USER: User = DEMO_USERS[ACTIVE_BANK_ID];
 
 const DEMO_TOKEN = 'demo-token-no-validation';
 

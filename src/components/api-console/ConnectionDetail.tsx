@@ -29,7 +29,7 @@ import {
   Zap,
 } from 'lucide-react';
 import type { Connection, ConsentScope } from './types';
-import { mockConsent, mockRateLimits, mockCoverageMetrics, mockHealthMetrics, mockChangeLogs, mockWebhookConfigs, mockWebhookEvents } from './data/mockData';
+import { mockConsent, mockRateLimits, mockCoverageMetrics, mockHealthMetrics, mockChangeLogs, mockWebhookConfigs, mockWebhookEvents } from './data/bankMockData';
 
 interface ConnectionDetailProps {
   connection: Connection;

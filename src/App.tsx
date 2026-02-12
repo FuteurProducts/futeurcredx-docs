@@ -180,8 +180,16 @@ function App() {
               <DocumentationPage />
             </ProtectedRoute>
           } />
-          
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+          {/* Demo mode: URL-isolated bank experiences */}
+          <Route path="/demo/:bankId" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
+
+          {/* Default: redirect to demo/chase for now */}
+          <Route path="/" element={<Navigate to="/demo/chase" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         </Suspense>

@@ -47,7 +47,7 @@ import { ApiConsoleHeader } from './ApiConsoleHeader';
 import { ConnectionDetail } from './ConnectionDetail';
 import { ConnectionCatalog } from './ConnectionCatalog';
 import type { Connection } from './types';
-import { mockConnections, mockIncidents, mockActivityLogs, mockWebhookConfigs } from './data/mockData';
+import { mockConnections, mockIncidents, mockActivityLogs, mockWebhookConfigs } from './data/bankMockData';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
 
 // LocalStorage keys

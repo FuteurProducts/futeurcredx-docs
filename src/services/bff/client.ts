@@ -46,7 +46,8 @@ export interface BffRequestOptions {
 }
 
 // Clerk token getter — injected from AuthContext
-let _getToken: (() => Promise<string | null>) | null = null;
+// Initialize with safe default to prevent race condition on first load
+let _getToken: (() => Promise<string | null>) | null = () => Promise.resolve('demo-init-pending');
 
 /**
  * Set the auth token getter (called once from AuthContext initialization)

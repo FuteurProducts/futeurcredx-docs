@@ -16,8 +16,6 @@ export interface FeatureFlags {
   showBilling: boolean;
   /** Webhook configuration */
   showWebhooks: boolean;
-  /** Bank switcher dropdown in header */
-  showBankSwitcher: boolean;
   /** Demo mode banner */
   showDemoBanner: boolean;
 }
@@ -31,8 +29,6 @@ export function useFeatureFlags(): FeatureFlags {
       showTeamManagement: false,
       showBilling: false,
       showWebhooks: false,
-      // Bank switcher is a dev-only testing tool — never show in production builds
-      showBankSwitcher: import.meta.env.DEV === true,
       showDemoBanner: true,
     };
   }
@@ -43,7 +39,6 @@ export function useFeatureFlags(): FeatureFlags {
       showTeamManagement: false,
       showBilling: false,
       showWebhooks: true,
-      showBankSwitcher: false,
       showDemoBanner: false,
     };
   }
@@ -54,7 +49,6 @@ export function useFeatureFlags(): FeatureFlags {
     showTeamManagement: true,
     showBilling: true,
     showWebhooks: true,
-    showBankSwitcher: false,
     showDemoBanner: false,
   };
 }

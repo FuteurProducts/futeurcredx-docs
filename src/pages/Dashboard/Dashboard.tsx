@@ -33,8 +33,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
-import { BANK_DISPLAY_NAMES, ACTIVE_BANK_ID, ACTIVE_BANK_NAME } from '@/data/bankConfig';
-import type { BankId } from '@/data/bankConfig';
+import { ACTIVE_BANK_NAME } from '@/data/bankConfig';
 
 // Import Finlab Overview
 import { FinlabOverview } from '@/components/finlab';
@@ -745,29 +744,6 @@ const Dashboard: React.FC = () => {
 
             {/* Right: Environment Toggle + Docs + User Info */}
             <div className="flex items-center gap-3 lg:gap-4">
-              {/* Bank Switcher — DEV-only testing tool (never in production builds) */}
-              {import.meta.env.DEV && featureFlags.showBankSwitcher && (
-                <div className="hidden md:flex items-center gap-2">
-                  <Building2 className="w-4 h-4 text-muted-foreground" />
-                  <select
-                    value={ACTIVE_BANK_ID}
-                    onChange={(e) => {
-                      const bankId = e.target.value as BankId;
-                      const url = new URL(window.location.href);
-                      url.searchParams.set('bank', bankId);
-                      window.location.href = url.toString();
-                    }}
-                    className="h-9 rounded-xl border border-dashed border-orange-400/60 bg-orange-50 dark:bg-orange-950/30 px-3 text-sm font-medium text-foreground cursor-pointer hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
-                    aria-label="[DEV] Switch bank demo data"
-                    title="Dev-only: Switch demo bank data"
-                  >
-                    {(Object.entries(BANK_DISPLAY_NAMES) as [BankId, string][]).map(([id, name]) => (
-                      <option key={id} value={id}>{name}</option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
               {/* Sandbox/Production Toggle */}
               <div className="relative z-10 pointer-events-auto">
                 <ConnectedEnvironmentToggle variant="minimal" />
