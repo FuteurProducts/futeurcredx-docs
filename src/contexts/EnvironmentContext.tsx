@@ -71,35 +71,28 @@ const EnvironmentContext = createContext<EnvironmentContextType | undefined>(und
  * never by URL param or localStorage. This prevents ?mode=demo on /dashboard from activating DemoAuthProvider.
  */
 function resolveInitialEnvironment(): Environment {
+  if (typeof window === 'undefined') return 'sandbox';
+
+  const hostname = window.location.hostname;
+  const pathname = window.location.pathname;
+
+  // ── HOSTNAME IS AUTHORITATIVE for deployed environments ──
+  // These checks run FIRST — hostname always wins over pathname/params/localStorage.
+  if (hostname.includes('.demo.')) return 'demo';
+  if (hostname.startsWith('sandbox.')) return 'sandbox';
+  if (hostname.startsWith('app.')) return 'production';
+
+  // ── PATHNAME for localhost development only ──
+  if ((hostname === 'localhost' || hostname === '127.0.0.1') && pathname.startsWith('/demo/')) {
+    return 'demo';
+  }
+
+  // ── URL param / localStorage fallback (non-demo only) ──
   const nonDemoValid: readonly Environment[] = ['sandbox', 'production'];
-  if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname;
-
-    // PATHNAME IS AUTHORITATIVE — /demo/* routes are always demo mode
-    if (window.location.pathname.startsWith('/demo/')) {
-      return 'demo';
-    }
-
-    // SUBDOMAIN IS AUTHORITATIVE for hosted environments
-    // *.demo.futeurcredx.com → demo
-    if (hostname.match(/\.demo\./)) {
-      return 'demo';
-    }
-    // sandbox.futeurcredx.com → sandbox
-    if (hostname.startsWith('sandbox.')) {
-      return 'sandbox';
-    }
-    // app.futeurcredx.com → production
-    if (hostname.startsWith('app.')) {
-      return 'production';
-    }
-
-    // URL param: ?mode=sandbox or ?mode=production (NOT demo — demo is pathname/subdomain only)
-    const urlMode = new URLSearchParams(window.location.search).get('mode');
-    if (urlMode && nonDemoValid.includes(urlMode as Environment)) {
-      localStorage.setItem('lumiq-environment', urlMode);
-      return urlMode as Environment;
-    }
+  const urlMode = new URLSearchParams(window.location.search).get('mode');
+  if (urlMode && nonDemoValid.includes(urlMode as Environment)) {
+    localStorage.setItem('lumiq-environment', urlMode);
+    return urlMode as Environment;
   }
   try {
     const saved = localStorage.getItem('lumiq-environment');

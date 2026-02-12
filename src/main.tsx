@@ -41,19 +41,27 @@ if (!clerkConfigured) {
  * Priority: pathname /demo/* → URL param ?mode=xxx → localStorage → default 'sandbox'
  */
 function resolveInitialMode(): 'demo' | 'sandbox' | 'production' {
-  // 'demo' can ONLY be activated by pathname (/demo/*), never by URL param or localStorage.
-  // This prevents ?mode=demo on /dashboard from activating DemoAuthProvider.
-  const nonDemoValid = ['sandbox', 'production'] as const;
-  if (typeof window !== 'undefined') {
-    // PATHNAME IS AUTHORITATIVE — /demo/* routes are always demo mode
-    if (window.location.pathname.startsWith('/demo/')) {
-      return 'demo';
-    }
+  if (typeof window === 'undefined') return 'sandbox';
 
-    const urlMode = new URLSearchParams(window.location.search).get('mode');
-    if (urlMode && (nonDemoValid as readonly string[]).includes(urlMode)) {
-      return urlMode as typeof nonDemoValid[number];
-    }
+  const hostname = window.location.hostname;
+  const pathname = window.location.pathname;
+
+  // ── HOSTNAME IS AUTHORITATIVE for deployed environments ──
+  // Must match EnvironmentContext.resolveInitialEnvironment() exactly.
+  if (hostname.includes('.demo.')) return 'demo';
+  if (hostname.startsWith('sandbox.')) return 'sandbox';
+  if (hostname.startsWith('app.')) return 'production';
+
+  // ── PATHNAME for localhost development only ──
+  if ((hostname === 'localhost' || hostname === '127.0.0.1') && pathname.startsWith('/demo/')) {
+    return 'demo';
+  }
+
+  // ── URL param / localStorage fallback (non-demo only) ──
+  const nonDemoValid = ['sandbox', 'production'] as const;
+  const urlMode = new URLSearchParams(window.location.search).get('mode');
+  if (urlMode && (nonDemoValid as readonly string[]).includes(urlMode)) {
+    return urlMode as typeof nonDemoValid[number];
   }
   try {
     const saved = localStorage.getItem('lumiq-environment');

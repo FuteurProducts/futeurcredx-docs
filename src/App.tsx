@@ -4,6 +4,7 @@ import { useUser } from './contexts/AuthContext'
 import { useEnvironment } from './contexts/EnvironmentContext'
 import { PortfolioProvider } from './contexts/PortfolioContext'
 import { BankProvider } from './contexts/BankContext'
+import { ACTIVE_BANK_ID } from './data/bankConfig'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import { Toaster } from 'react-hot-toast'
 
@@ -71,6 +72,15 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   return <>{children}</>
+}
+
+/** Environment-aware root redirect: demo → /demo/:bankId, others → /dashboard */
+function RootRedirect() {
+  const { isDemoMode } = useEnvironment()
+  if (isDemoMode) {
+    return <Navigate to={`/demo/${ACTIVE_BANK_ID}`} replace />
+  }
+  return <Navigate to="/dashboard" replace />
 }
 
 function App() {
@@ -188,8 +198,8 @@ function App() {
             </ProtectedRoute>
           } />
 
-          {/* Default: redirect to demo/chase for now */}
-          <Route path="/" element={<Navigate to="/demo/chase" replace />} />
+          {/* Default: environment-aware redirect */}
+          <Route path="/" element={<RootRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         </Suspense>
