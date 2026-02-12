@@ -354,8 +354,8 @@ const Analytics: React.FC = () => {
         <SandboxEmptyState
           title="No Analytics Data"
           description="Analytics will populate once your API integration is active and scoring data flows in."
-          onRetry={fetchAnalyticsData}
-          showApiConsoleLink
+          actionLabel="Retry"
+          onAction={fetchAnalyticsData}
         />
       </div>
     );

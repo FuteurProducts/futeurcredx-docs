@@ -237,7 +237,6 @@ const Customer: React.FC = () => {
         <SandboxEmptyState
           title="No Customer Data"
           description="Customer intelligence will populate once your API integration is active and customer data flows in."
-          showApiConsoleLink
         />
       </div>
     );

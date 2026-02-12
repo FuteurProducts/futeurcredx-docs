@@ -648,8 +648,8 @@ const CustomerBff: React.FC = () => {
         <SandboxEmptyState
           title="No Customer Data"
           description="Customer data will populate once your API integration is active and customer records are synced."
-          onRetry={fetchCustomers}
-          showApiConsoleLink
+          actionLabel="Retry"
+          onAction={fetchCustomers}
         />
       </div>
     );

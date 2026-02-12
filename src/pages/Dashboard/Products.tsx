@@ -69,7 +69,6 @@ const Products: React.FC = () => {
         <SandboxEmptyState
           title="No Product Data"
           description="Product catalog will populate once your API integration is configured and product data is available."
-          showApiConsoleLink
         />
       </div>
     );

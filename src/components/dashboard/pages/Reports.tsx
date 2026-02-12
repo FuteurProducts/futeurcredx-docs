@@ -289,8 +289,8 @@ const Reports: React.FC = () => {
       <SandboxEmptyState
         title="No Reports"
         description="Reports will be available once your API integration is configured and data starts flowing."
-        onRetry={fetchReportHistory}
-        showApiConsoleLink
+        actionLabel="Retry"
+        onAction={fetchReportHistory}
       />
     );
   }

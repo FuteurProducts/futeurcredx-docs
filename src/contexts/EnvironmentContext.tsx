@@ -55,23 +55,46 @@ const defaultProductionConfig: EnvironmentConfig = {
 const EnvironmentContext = createContext<EnvironmentContextType | undefined>(undefined);
 
 /**
- * Resolve initial environment: pathname > URL param > localStorage > default 'sandbox'
- * SECURITY: 'demo' can ONLY be activated by pathname (/demo/*), never by URL param or localStorage.
- * This prevents ?mode=demo on /dashboard from activating DemoAuthProvider.
+ * Resolve initial environment with hostname-aware deployment detection.
+ *
+ * Priority order:
+ * 1. Pathname `/demo/*` → demo (authoritative for demo routes)
+ * 2. Hostname detection:
+ *    - `*.demo.futeurcredx.com` → demo
+ *    - `sandbox.futeurcredx.com` → sandbox
+ *    - `app.futeurcredx.com` → production
+ * 3. URL param `?mode=sandbox|production` → that mode (NOT demo — demo is pathname/subdomain only)
+ * 4. localStorage persisted mode → that mode
+ * 5. Default → sandbox
+ *
+ * SECURITY: 'demo' can ONLY be activated by pathname (/demo/*) or subdomain (*.demo.*),
+ * never by URL param or localStorage. This prevents ?mode=demo on /dashboard from activating DemoAuthProvider.
  */
 function resolveInitialEnvironment(): Environment {
   const nonDemoValid: readonly Environment[] = ['sandbox', 'production'];
   if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+
     // PATHNAME IS AUTHORITATIVE — /demo/* routes are always demo mode
     if (window.location.pathname.startsWith('/demo/')) {
       return 'demo';
     }
 
-    // SUBDOMAIN IS AUTHORITATIVE — *.demo.futeurcredx.com routes are demo mode
-    if (window.location.hostname.match(/\.demo\./)) {
+    // SUBDOMAIN IS AUTHORITATIVE for hosted environments
+    // *.demo.futeurcredx.com → demo
+    if (hostname.match(/\.demo\./)) {
       return 'demo';
     }
+    // sandbox.futeurcredx.com → sandbox
+    if (hostname.startsWith('sandbox.')) {
+      return 'sandbox';
+    }
+    // app.futeurcredx.com → production
+    if (hostname.startsWith('app.')) {
+      return 'production';
+    }
 
+    // URL param: ?mode=sandbox or ?mode=production (NOT demo — demo is pathname/subdomain only)
     const urlMode = new URLSearchParams(window.location.search).get('mode');
     if (urlMode && nonDemoValid.includes(urlMode as Environment)) {
       localStorage.setItem('lumiq-environment', urlMode);

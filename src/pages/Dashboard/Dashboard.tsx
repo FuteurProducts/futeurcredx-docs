@@ -954,7 +954,8 @@ const Dashboard: React.FC = () => {
             ) : (
               <SandboxEmptyState
                 title="No API Keys"
-                description="Connect to a live API to manage API keys. API key creation and management will be available once your integration is configured."
+                description="Create an API key to start integrating with the LUMIQ AI platform."
+                actionLabel="Create API Key"
               />
             )
           )}

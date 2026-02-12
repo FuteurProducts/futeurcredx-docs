@@ -625,7 +625,6 @@ const SegmentExplorer: React.FC = () => {
         <SandboxEmptyState
           title="No Segment Data"
           description="Segment explorer will populate once your API integration is active and customer segments are defined."
-          showApiConsoleLink
         />
       </div>
     );

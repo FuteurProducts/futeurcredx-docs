@@ -256,8 +256,8 @@ const UnderwritingAssistant: React.FC = () => {
         <SandboxEmptyState
           title="No Underwriting Data"
           description="Underwriting applications will appear once your API integration is active and applications are submitted."
-          onRetry={fetchApplications}
-          showApiConsoleLink
+          actionLabel="Retry"
+          onAction={fetchApplications}
         />
       </div>
     );

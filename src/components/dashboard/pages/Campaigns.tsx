@@ -373,7 +373,6 @@ const Campaigns: React.FC = () => {
         <SandboxEmptyState
           title="No Campaign Data"
           description="Campaign analytics will populate once your API integration is active and campaign data flows in."
-          showApiConsoleLink
         />
       </div>
     );

@@ -551,7 +551,6 @@ const Risk: React.FC = () => {
         <SandboxEmptyState
           title="No Risk Data"
           description="Risk analytics will populate once your API integration is active and portfolio data is available."
-          showApiConsoleLink
         />
       </div>
     );

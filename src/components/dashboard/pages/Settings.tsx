@@ -364,8 +364,8 @@ const Settings: React.FC = () => {
       <SandboxEmptyState
         title="No Settings Data"
         description="Settings will be available once your API integration is configured and data starts flowing."
-        onRetry={() => { fetchApiKeys(); fetchAuditLogs(); }}
-        showApiConsoleLink
+        actionLabel="Retry"
+        onAction={() => { fetchApiKeys(); fetchAuditLogs(); }}
       />
     );
   }

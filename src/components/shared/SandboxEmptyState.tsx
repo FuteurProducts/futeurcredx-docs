@@ -1,36 +1,45 @@
 /**
  * SandboxEmptyState
  * Reusable empty state for sandbox/production modes when no data is available.
- * Wraps the base EmptyState component with sandbox-specific defaults.
+ * ALWAYS shows an action button to guide users to the API Console.
  */
 
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Database } from 'lucide-react';
 
 import { EmptyState } from '@/components/ui/empty-state';
 import { cn } from '@/lib/utils';
-import { logger } from '@/utils/logger';
 
 interface SandboxEmptyStateProps {
   title?: string;
   description?: string;
-  showApiConsoleLink?: boolean;
-  onRetry?: () => void;
+  actionLabel?: string;
+  onAction?: () => void;
   className?: string;
 }
 
 const DEFAULT_TITLE = 'No Data Available';
 const DEFAULT_DESCRIPTION =
-  'Connect your API to see live data. In sandbox mode, configure your API keys in Settings to start receiving data.';
+  'Connect your API to see live data. Configure your API keys in the API Console to start receiving data.';
 
 export function SandboxEmptyState({
   title = DEFAULT_TITLE,
   description = DEFAULT_DESCRIPTION,
-  showApiConsoleLink = false,
-  onRetry,
+  actionLabel = 'Open API Console',
+  onAction,
   className,
 }: SandboxEmptyStateProps) {
-  const handleOpenApiConsole = () => {
-    logger.info('[SandboxEmptyState] Navigate to API Console requested');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleAction = () => {
+    if (onAction) {
+      onAction();
+      return;
+    }
+    // Navigate to API Console tab, preserving demo bank path if present
+    const basePath = location.pathname.match(/^\/demo\/[^/]+/)?.[0] || '/dashboard';
+    navigate(`${basePath}?tab=api-keys`);
   };
 
   return (
@@ -38,12 +47,7 @@ export function SandboxEmptyState({
       icon={Database}
       title={title}
       description={description}
-      action={onRetry ? { label: 'Retry', onClick: onRetry } : undefined}
-      secondaryAction={
-        showApiConsoleLink
-          ? { label: 'Open API Console', onClick: handleOpenApiConsole, variant: 'outline' }
-          : undefined
-      }
+      action={{ label: actionLabel, onClick: handleAction }}
       variant="card"
       size="lg"
       className={cn(className)}

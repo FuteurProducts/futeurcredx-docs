@@ -171,8 +171,8 @@ const Index = () => {
         <SandboxEmptyState
           title="No Dashboard Data"
           description="Connect your API and configure your portfolio to see live metrics. Dashboard data will populate automatically once your integration is active."
-          onRetry={loadKPIs}
-          showApiConsoleLink
+          actionLabel="Retry"
+          onAction={loadKPIs}
         />
       </DashboardLayout>
     );

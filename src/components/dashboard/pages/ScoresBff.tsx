@@ -292,8 +292,8 @@ const ScoresBff: React.FC = () => {
         <SandboxEmptyState
           title="No Score Data"
           description="Credit scores will populate once your API integration is active and bureau connections are configured."
-          onRetry={fetchScores}
-          showApiConsoleLink
+          actionLabel="Retry"
+          onAction={fetchScores}
         />
       </div>
     );
