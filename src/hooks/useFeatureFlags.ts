@@ -31,7 +31,8 @@ export function useFeatureFlags(): FeatureFlags {
       showTeamManagement: false,
       showBilling: false,
       showWebhooks: false,
-      showBankSwitcher: true,
+      // Bank switcher is a dev-only testing tool — never show in production builds
+      showBankSwitcher: import.meta.env.DEV === true,
       showDemoBanner: true,
     };
   }

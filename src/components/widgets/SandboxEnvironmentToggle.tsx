@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Beaker, Rocket, AlertTriangle, Check, 
+import {
+  Beaker, Lightbulb, Rocket, AlertTriangle, Check,
   ChevronDown, Shield, RefreshCw, Info
 } from 'lucide-react';
 
@@ -67,6 +67,16 @@ export const SandboxEnvironmentToggle: React.FC<SandboxEnvironmentToggleProps> =
     env === 'sandbox' ? sandboxConfig : productionConfig;
 
   if (variant === 'minimal') {
+    // Demo mode: show a static "Demo" pill — no switching (requires auth provider change)
+    if (currentEnvironment === 'demo') {
+      return (
+        <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium ${className}`}>
+          <Lightbulb className="w-3.5 h-3.5" />
+          Demo
+        </div>
+      );
+    }
+
     return (
       <>
         <div className={`inline-flex items-center gap-1 p-1 bg-muted rounded-full ${className}`}>

@@ -33,7 +33,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
-import { BANK_DISPLAY_NAMES, ACTIVE_BANK_ID } from '@/data/bankConfig';
+import { BANK_DISPLAY_NAMES, ACTIVE_BANK_ID, ACTIVE_BANK_NAME } from '@/data/bankConfig';
 import type { BankId } from '@/data/bankConfig';
 
 // Import Finlab Overview
@@ -669,10 +669,11 @@ const Dashboard: React.FC = () => {
         {currentEnvironment === 'demo' && (
           <div className="sticky top-0 z-20 bg-blue-500 dark:bg-blue-600 text-white px-4 py-1.5 flex items-center justify-center gap-2 text-sm font-medium shrink-0">
             <Lightbulb className="w-4 h-4" />
-            <span>DEMO MODE — Viewing sample data. No authentication required.</span>
+            <span>DEMO MODE — {ACTIVE_BANK_NAME} sample data</span>
+            <span className="mx-1 opacity-50">|</span>
             <button
               onClick={() => switchEnvironment('sandbox')}
-              className="ml-2 underline underline-offset-2 hover:opacity-80 transition-opacity text-sm font-semibold"
+              className="underline underline-offset-2 hover:opacity-80 transition-opacity text-sm font-semibold"
             >
               Switch to Sandbox
             </button>
@@ -744,8 +745,8 @@ const Dashboard: React.FC = () => {
 
             {/* Right: Environment Toggle + Docs + User Info */}
             <div className="flex items-center gap-3 lg:gap-4">
-              {/* Bank Switcher (demo mode only) */}
-              {featureFlags.showBankSwitcher && (
+              {/* Bank Switcher — DEV-only testing tool (never in production builds) */}
+              {import.meta.env.DEV && featureFlags.showBankSwitcher && (
                 <div className="hidden md:flex items-center gap-2">
                   <Building2 className="w-4 h-4 text-muted-foreground" />
                   <select
@@ -756,8 +757,9 @@ const Dashboard: React.FC = () => {
                       url.searchParams.set('bank', bankId);
                       window.location.href = url.toString();
                     }}
-                    className="h-9 rounded-xl border border-border bg-card px-3 text-sm font-medium text-foreground cursor-pointer hover:bg-muted/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    aria-label="Switch bank demo data"
+                    className="h-9 rounded-xl border border-dashed border-orange-400/60 bg-orange-50 dark:bg-orange-950/30 px-3 text-sm font-medium text-foreground cursor-pointer hover:bg-orange-100 dark:hover:bg-orange-950/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
+                    aria-label="[DEV] Switch bank demo data"
+                    title="Dev-only: Switch demo bank data"
                   >
                     {(Object.entries(BANK_DISPLAY_NAMES) as [BankId, string][]).map(([id, name]) => (
                       <option key={id} value={id}>{name}</option>
