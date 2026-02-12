@@ -68,13 +68,12 @@ import {
 import {
   PORTFOLIO_KPIS,
   INDUSTRY_SEGMENTS,
-  CAMPAIGNS as PORTFOLIO_CAMPAIGNS,
+  ACTIVE_CAMPAIGNS as PORTFOLIO_CAMPAIGNS,
   PRODUCT_ELIGIBILITY,
   GEOGRAPHIC_DISTRIBUTION,
   RISK_TIER_DISTRIBUTION,
-  SCORE_MIGRATION,
-  CONCENTRATION_RISKS,
-  EWS_ALERTS,
+  CONCENTRATION_METRICS,
+  EWS_ALERT_CLUSTERS,
 } from './portfolioSegments';
 
 // ─── Risk Intelligence ──────────────────────────────────────────────────────
@@ -289,9 +288,8 @@ export const demoRegistry = {
     productEligibility: PRODUCT_ELIGIBILITY,
     geographicDistribution: GEOGRAPHIC_DISTRIBUTION,
     riskTierDistribution: RISK_TIER_DISTRIBUTION,
-    scoreMigration: SCORE_MIGRATION,
-    concentrationRisks: CONCENTRATION_RISKS,
-    ewsAlerts: EWS_ALERTS,
+    concentrationMetrics: CONCENTRATION_METRICS,
+    ewsAlertClusters: EWS_ALERT_CLUSTERS,
   },
 
   /** Platform settings */

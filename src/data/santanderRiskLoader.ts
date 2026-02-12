@@ -57,7 +57,7 @@ export const SANT_RISK_KPIS = {
   },
   geographicConcentration: {
     value: data.risk_metrics.concentration_metrics.geographic_concentration.percentage / 100,
-    label: data.risk_metrics.concentration_metrics.geographic_concentration.region,
+    label: data.risk_metrics.concentration_metrics.geographic_concentration.highest,
   },
   ewsAlerts:
     data.risk_metrics.early_warning_signals.declining_scores_30d +

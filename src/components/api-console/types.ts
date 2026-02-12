@@ -21,7 +21,7 @@ export type AuthMethod =
   | 'sftp' 
   | 'jwt';
 
-export type Environment = 'sandbox' | 'production';
+export type Environment = 'demo' | 'sandbox' | 'production';
 
 export type SLATier = 'standard' | 'premium' | 'enterprise';
 

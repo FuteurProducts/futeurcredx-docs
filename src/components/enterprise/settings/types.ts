@@ -4,7 +4,7 @@ export type UserRole = 'admin' | 'developer' | 'risk' | 'rm' | 'readonly';
 
 export type UserStatus = 'active' | 'pending' | 'inactive';
 
-export type Environment = 'sandbox' | 'production';
+export type Environment = 'demo' | 'sandbox' | 'production';
 
 export interface PlatformUser {
   id: string;

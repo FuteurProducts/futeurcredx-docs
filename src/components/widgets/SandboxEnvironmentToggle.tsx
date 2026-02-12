@@ -9,7 +9,7 @@ import {
 // ============================================
 // TYPES
 // ============================================
-export type Environment = 'sandbox' | 'production';
+export type Environment = 'demo' | 'sandbox' | 'production';
 
 export interface EnvironmentConfig {
   apiUrl: string;

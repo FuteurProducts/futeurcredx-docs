@@ -154,14 +154,15 @@ const Settings: React.FC = () => {
   const handleCreateApiKey = async (name: string, scopes: string[], env: Environment) => {
     const { data: newKey, source } = await withFallback(
       async () => {
-        const res = await apiKeysService.create({ name, environment: env, scopes });
+        const apiEnv = env === 'demo' ? 'sandbox' : env;
+        const res = await apiKeysService.create({ name, environment: apiEnv, scopes });
         return adaptBffApiKey(res.data);
       },
       {
         id: `key-${Date.now()}`,
         name,
         keyMasked: `sk_${env === 'production' ? 'live' : 'test'}_${'*'.repeat(28)}${Math.random().toString(36).slice(-4)}`,
-        environment: env,
+        environment: env === 'demo' ? 'sandbox' : env,
         scopes,
         createdAt: new Date().toISOString(),
         lastUsed: null as string | null,
