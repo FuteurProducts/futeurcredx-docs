@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect } from 'react';
+import { logger } from '@/utils/logger';
 import {
   useAuth as useClerkAuth,
   useUser as useClerkUser,
@@ -45,10 +46,10 @@ const FALLBACK_VALUE: AuthContextType = {
   isLoaded: true,
   user: null,
   signIn: async () => {
-    console.warn('[Lumiq] Clerk is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in .env to enable sign-in.');
+    logger.warn('[Lumiq] Clerk is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in .env to enable sign-in.');
   },
   signUp: async () => {
-    console.warn('[Lumiq] Clerk is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in .env to enable sign-up.');
+    logger.warn('[Lumiq] Clerk is not configured. Set VITE_CLERK_PUBLISHABLE_KEY in .env to enable sign-up.');
   },
   signOut: async () => {},
   getToken: async () => null,
@@ -80,9 +81,8 @@ const DEMO_AUTH_VALUE: AuthContextType = {
 
 /** Auto-authenticated provider for demo mode. Always signed in with admin role. */
 export const DemoAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  useEffect(() => {
-    setAuthTokenGetter(DEMO_AUTH_VALUE.getToken);
-  }, []);
+  // Set token getter synchronously to avoid race condition with BFF calls
+  setAuthTokenGetter(DEMO_AUTH_VALUE.getToken);
   return (
     <AuthContext.Provider value={DEMO_AUTH_VALUE}>
       {children}

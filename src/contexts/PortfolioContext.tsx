@@ -7,6 +7,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import type { Portfolio } from '@/services/bff/types';
 import { useAuth } from '@/contexts/AuthContext';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import bffClient, { BffResponse } from '@/services/bff/client';
 import { normalizePortfolio } from '@/services/bff/normalizers';
 import { logger } from '@/utils/logger';
@@ -47,6 +48,7 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { isSignedIn, isLoaded } = useAuth();
+  const { isDemoMode } = useEnvironment();
 
   // Fetch accessible portfolios for current user
   const refreshPortfolios = useCallback(async () => {
@@ -54,8 +56,8 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
     setError(null);
 
     try {
-      if (!isSignedIn) {
-        // Not authenticated - use demo portfolio for dev
+      if (isDemoMode || !isSignedIn) {
+        // Demo mode or not authenticated — use demo portfolio
         setPortfolios([DEMO_PORTFOLIO]);
         setPortfolioIdState(DEMO_PORTFOLIO.id);
         setIsLoading(false);
@@ -85,7 +87,7 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [isSignedIn, portfolioId]);
+  }, [isSignedIn, isDemoMode, portfolioId]);
 
   // Load portfolios when auth state is ready
   useEffect(() => {
