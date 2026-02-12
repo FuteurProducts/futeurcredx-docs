@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTheme } from '@/contexts/ThemeContext';
 import {
   CommandDialog,
@@ -48,8 +48,12 @@ interface CommandPaletteProps {
 export function CommandPalette({ onNavigate }: CommandPaletteProps) {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { resolvedTheme, setTheme } = useTheme();
   const { signOut } = useAuth();
+
+  // Derive basePath from current location (preserves /demo/:bankId prefix)
+  const basePath = location.pathname.match(/^\/demo\/[^/]+/)?.[0] || '/dashboard';
 
   // Handle navigation - either use provided callback or navigate directly
   const handleNavigate = useCallback(
@@ -57,11 +61,11 @@ export function CommandPalette({ onNavigate }: CommandPaletteProps) {
       if (onNavigate) {
         onNavigate(tab);
       } else {
-        navigate(`/dashboard?tab=${tab}`);
+        navigate(`${basePath}?tab=${tab}`);
       }
       setOpen(false);
     },
-    [navigate, onNavigate]
+    [navigate, onNavigate, basePath]
   );
 
   // Keyboard shortcut listener

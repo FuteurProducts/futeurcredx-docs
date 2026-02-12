@@ -84,6 +84,9 @@ const navigation: { id: string; title: string; icon: LucideIcon }[] = [
 const Dashboard: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Derive base path from current route — preserves /demo/:bankId prefix
+  const basePath = location.pathname.match(/^\/demo\/[^/]+/)?.[0] || '/dashboard';
   const { user } = useUser();
   const { getToken } = useAuth();
   const { toast: _toast } = useToast();
@@ -133,7 +136,7 @@ const Dashboard: React.FC = () => {
       _setActiveTab('api-keys');
       const params = new URLSearchParams(location.search);
       params.set('tab', 'api-keys');
-      navigate(`/dashboard?${params.toString()}`, { replace: true });
+      navigate(`${basePath}?${params.toString()}`, { replace: true });
     }
     prevEnvironmentRef.current = currentEnvironment;
   }, [currentEnvironment]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -143,7 +146,7 @@ const Dashboard: React.FC = () => {
     _setActiveTab(tab)
     const params = new URLSearchParams(location.search)
     params.set('tab', tab)
-    navigate(`/dashboard?${params.toString()}`, { replace: true })
+    navigate(`${basePath}?${params.toString()}`, { replace: true })
     setSidebarOpen(false) // Close mobile menu when tab changes
   }
 
@@ -470,7 +473,7 @@ const Dashboard: React.FC = () => {
       // Normalize legacy/alias tab names back into the URL
       if (tabParamRaw !== tabParam) {
         params.set('tab', tabParam)
-        navigate(`/dashboard?${params.toString()}`, { replace: true })
+        navigate(`${basePath}?${params.toString()}`, { replace: true })
       }
     }
 

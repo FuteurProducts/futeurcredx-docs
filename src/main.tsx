@@ -38,23 +38,30 @@ if (!clerkConfigured) {
 
 /**
  * Resolve mode before React renders so we can pick the right auth provider.
- * Priority: URL param ?mode=xxx → localStorage → default 'demo'
+ * Priority: pathname /demo/* → URL param ?mode=xxx → localStorage → default 'sandbox'
  */
 function resolveInitialMode(): 'demo' | 'sandbox' | 'production' {
-  const valid = ['demo', 'sandbox', 'production'] as const;
+  // 'demo' can ONLY be activated by pathname (/demo/*), never by URL param or localStorage.
+  // This prevents ?mode=demo on /dashboard from activating DemoAuthProvider.
+  const nonDemoValid = ['sandbox', 'production'] as const;
   if (typeof window !== 'undefined') {
+    // PATHNAME IS AUTHORITATIVE — /demo/* routes are always demo mode
+    if (window.location.pathname.startsWith('/demo/')) {
+      return 'demo';
+    }
+
     const urlMode = new URLSearchParams(window.location.search).get('mode');
-    if (urlMode && valid.includes(urlMode as typeof valid[number])) {
-      return urlMode as typeof valid[number];
+    if (urlMode && (nonDemoValid as readonly string[]).includes(urlMode)) {
+      return urlMode as typeof nonDemoValid[number];
     }
   }
   try {
     const saved = localStorage.getItem('lumiq-environment');
-    if (saved && valid.includes(saved as typeof valid[number])) {
-      return saved as typeof valid[number];
+    if (saved && (nonDemoValid as readonly string[]).includes(saved)) {
+      return saved as typeof nonDemoValid[number];
     }
   } catch { /* restricted storage */ }
-  return 'demo';
+  return 'sandbox';
 }
 
 const initialMode = resolveInitialMode();

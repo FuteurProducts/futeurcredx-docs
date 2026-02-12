@@ -26,15 +26,6 @@ interface EnvironmentContextType {
 }
 
 // ============================================
-// VALID MODES
-// ============================================
-const VALID_ENVIRONMENTS: readonly Environment[] = ['demo', 'sandbox', 'production'];
-
-function isValidEnvironment(value: string): value is Environment {
-  return VALID_ENVIRONMENTS.includes(value as Environment);
-}
-
-// ============================================
 // DEFAULT CONFIGS
 // ============================================
 const defaultDemoConfig: EnvironmentConfig = {
@@ -63,20 +54,30 @@ const defaultProductionConfig: EnvironmentConfig = {
 // ============================================
 const EnvironmentContext = createContext<EnvironmentContextType | undefined>(undefined);
 
-/** Resolve initial environment: URL param > localStorage > default 'demo' */
+/**
+ * Resolve initial environment: pathname > URL param > localStorage > default 'sandbox'
+ * SECURITY: 'demo' can ONLY be activated by pathname (/demo/*), never by URL param or localStorage.
+ * This prevents ?mode=demo on /dashboard from activating DemoAuthProvider.
+ */
 function resolveInitialEnvironment(): Environment {
+  const nonDemoValid: readonly Environment[] = ['sandbox', 'production'];
   if (typeof window !== 'undefined') {
+    // PATHNAME IS AUTHORITATIVE — /demo/* routes are always demo mode
+    if (window.location.pathname.startsWith('/demo/')) {
+      return 'demo';
+    }
+
     const urlMode = new URLSearchParams(window.location.search).get('mode');
-    if (urlMode && isValidEnvironment(urlMode)) {
+    if (urlMode && nonDemoValid.includes(urlMode as Environment)) {
       localStorage.setItem('lumiq-environment', urlMode);
-      return urlMode;
+      return urlMode as Environment;
     }
   }
   try {
     const saved = localStorage.getItem('lumiq-environment');
-    if (saved && isValidEnvironment(saved)) return saved;
+    if (saved && nonDemoValid.includes(saved as Environment)) return saved as Environment;
   } catch { /* restricted storage */ }
-  return 'demo';
+  return 'sandbox';
 }
 
 /** Document title prefix per mode */
@@ -118,7 +119,10 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode }> = ({ childre
 
     // Update environment immediately
     setCurrentEnvironment(env);
-    localStorage.setItem('lumiq-environment', env);
+    // Don't persist 'demo' to localStorage — pathname is authoritative for demo mode
+    if (env !== 'demo') {
+      localStorage.setItem('lumiq-environment', env);
+    }
 
     // Update document title
     document.title = TITLE_MAP[env];
@@ -133,11 +137,15 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode }> = ({ childre
     // Notify listeners
     onSwitchCallbackRef.current?.(env);
 
-    // Auth provider change requires full reload
+    // Auth provider change requires full reload with clean URL
     if (authProviderChanges) {
-      const url = new URL(window.location.href);
-      url.searchParams.set('mode', env);
-      window.location.href = url.toString();
+      if (currentEnvironment === 'demo' && env !== 'demo') {
+        // Leaving demo -> clean redirect to dashboard with new mode
+        window.location.href = `/dashboard?mode=${env}`;
+      } else {
+        // Entering demo -> redirect to demo route with default bank
+        window.location.href = '/demo/chase';
+      }
       return;
     }
 
