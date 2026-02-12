@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { ClerkProvider } from '@clerk/clerk-react'
 import './index.css'
 import App from './App.tsx'
-import { AuthProvider, FallbackAuthProvider, isClerkConfigured } from './contexts/AuthContext'
+import { AuthProvider, DemoAuthProvider, FallbackAuthProvider, isClerkConfigured } from './contexts/AuthContext'
 import { EnvironmentProvider } from './contexts/EnvironmentContext'
 
 // Error boundary to surface runtime crashes visually
@@ -27,31 +27,68 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 
 // Clerk key from .env — set VITE_CLERK_PUBLISHABLE_KEY in .env (or Vercel env vars)
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
-const useClerk = isClerkConfigured(CLERK_PUBLISHABLE_KEY)
+const clerkConfigured = isClerkConfigured(CLERK_PUBLISHABLE_KEY)
 
-if (!useClerk) {
+if (!clerkConfigured) {
   console.warn(
     '[Lumiq] Clerk not configured (missing or placeholder VITE_CLERK_PUBLISHABLE_KEY). ' +
     'App will run in unauthenticated mode. Set a real key in .env to enable sign-in.'
   )
 }
 
+/**
+ * Resolve mode before React renders so we can pick the right auth provider.
+ * Priority: URL param ?mode=xxx → localStorage → default 'demo'
+ */
+function resolveInitialMode(): 'demo' | 'sandbox' | 'production' {
+  const valid = ['demo', 'sandbox', 'production'] as const;
+  if (typeof window !== 'undefined') {
+    const urlMode = new URLSearchParams(window.location.search).get('mode');
+    if (urlMode && valid.includes(urlMode as typeof valid[number])) {
+      return urlMode as typeof valid[number];
+    }
+  }
+  try {
+    const saved = localStorage.getItem('lumiq-environment');
+    if (saved && valid.includes(saved as typeof valid[number])) {
+      return saved as typeof valid[number];
+    }
+  } catch { /* restricted storage */ }
+  return 'demo';
+}
+
+const initialMode = resolveInitialMode();
+
+/**
+ * Wrap App with the correct auth provider based on operating mode.
+ * - demo: DemoAuthProvider (auto signed in, admin RBAC)
+ * - sandbox: Clerk if configured, else FallbackAuthProvider
+ * - production: Clerk if configured, else FallbackAuthProvider
+ */
+function renderAuthWrappedApp(appElement: ReactNode) {
+  if (initialMode === 'demo') {
+    return <DemoAuthProvider>{appElement}</DemoAuthProvider>;
+  }
+
+  if (clerkConfigured) {
+    return (
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} afterSignOutUrl="/">
+        <AuthProvider>{appElement}</AuthProvider>
+      </ClerkProvider>
+    );
+  }
+
+  return <FallbackAuthProvider>{appElement}</FallbackAuthProvider>;
+}
+
 const app = (
   <StrictMode>
     <ErrorBoundary>
       <EnvironmentProvider>
-        <App />
+        {renderAuthWrappedApp(<App />)}
       </EnvironmentProvider>
     </ErrorBoundary>
   </StrictMode>
 )
 
-createRoot(document.getElementById('root')!).render(
-  useClerk ? (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} afterSignOutUrl="/">
-      <AuthProvider>{app}</AuthProvider>
-    </ClerkProvider>
-  ) : (
-    <FallbackAuthProvider>{app}</FallbackAuthProvider>
-  ),
-)
+createRoot(document.getElementById('root')!).render(app)

@@ -14,6 +14,13 @@ export { default as riskService } from './risk';
 export { default as auditService, type ClientAuditEventType } from './audit';
 export { default as apiKeysService } from './apiKeys';
 export { default as batchService } from './batch';
+export { default as campaignsService } from './campaigns';
+export { default as productsService } from './products';
+export { default as underwritingService } from './underwriting';
+export { default as analyticsService } from './analytics';
+export { default as notificationsService } from './notifications';
+export { default as settingsService } from './settings';
+export { default as portfoliosService } from './portfolios';
 
 // Re-export normalizers for direct use
 export {

@@ -54,6 +54,42 @@ const FALLBACK_VALUE: AuthContextType = {
   getToken: async () => null,
 };
 
+// ── Demo Auth Provider ─────────────────────────────────────────────────
+const DEMO_USER: User = {
+  id: 'demo-user-001',
+  email: 'demo@lumiq.ai',
+  firstName: 'Demo',
+  lastName: 'User',
+  fullName: 'Demo User',
+  username: 'demo',
+  imageUrl: '/lumiq-avatar.png',
+  emailAddresses: [{ emailAddress: 'demo@lumiq.ai' }],
+};
+
+const DEMO_TOKEN = 'demo-token-no-validation';
+
+const DEMO_AUTH_VALUE: AuthContextType = {
+  isSignedIn: true,
+  isLoaded: true,
+  user: DEMO_USER,
+  signIn: async () => { /* no-op in demo mode */ },
+  signUp: async () => { /* no-op in demo mode */ },
+  signOut: async () => { /* no-op in demo mode */ },
+  getToken: async () => DEMO_TOKEN,
+};
+
+/** Auto-authenticated provider for demo mode. Always signed in with admin role. */
+export const DemoAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useEffect(() => {
+    setAuthTokenGetter(DEMO_AUTH_VALUE.getToken);
+  }, []);
+  return (
+    <AuthContext.Provider value={DEMO_AUTH_VALUE}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
 /** Use when Clerk is not configured: provides same context with no-auth state so the app still runs. */
 export const FallbackAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   useEffect(() => {

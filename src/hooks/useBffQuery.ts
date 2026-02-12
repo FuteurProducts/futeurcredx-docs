@@ -1,14 +1,22 @@
 /**
  * useBffQuery Hook
- * Generic hook for BFF data fetching with loading/error states
+ * Generic hook for BFF data fetching with loading/error states.
+ *
+ * Supports 3 operating modes via the `demoData` parameter:
+ *   - Demo mode:  returns demoData immediately (no network call, 50-150ms simulated delay)
+ *   - Sandbox:    calls queryFn against sandbox API
+ *   - Production: calls queryFn against production API
  */
 
 import { useState, useEffect, useCallback } from 'react';
 import { usePortfolio } from '@/contexts/PortfolioContext';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 import type { BffError } from '@/services/bff';
 
 interface UseBffQueryOptions<T> {
   queryFn: (portfolioId: string) => Promise<T>;
+  /** Static data returned instantly in demo mode. Must match queryFn's return type. */
+  demoData?: T;
   enabled?: boolean;
   refetchOnPortfolioChange?: boolean;
 }
@@ -18,20 +26,37 @@ interface UseBffQueryResult<T> {
   isLoading: boolean;
   error: BffError | null;
   refetch: () => Promise<void>;
+  /** True when data comes from local demo data instead of API. */
+  isDemoMode: boolean;
 }
 
 export function useBffQuery<T>(
   options: UseBffQueryOptions<T>
 ): UseBffQueryResult<T> {
-  const { queryFn, enabled = true, refetchOnPortfolioChange = true } = options;
+  const { queryFn, demoData, enabled = true, refetchOnPortfolioChange = true } = options;
   const { portfolioId, isLoading: portfolioLoading } = usePortfolio();
+  const { isDemoMode } = useEnvironment();
 
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<BffError | null>(null);
 
   const refetch = useCallback(async () => {
-    if (!portfolioId || !enabled) return;
+    if (!enabled) return;
+
+    // DEMO MODE: return demoData with simulated delay (no network call)
+    if (isDemoMode && demoData !== undefined) {
+      setIsLoading(true);
+      setError(null);
+      // Simulate realistic delay (50-150ms)
+      await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
+      setData(demoData);
+      setIsLoading(false);
+      return;
+    }
+
+    // SANDBOX / PRODUCTION: call real API
+    if (!portfolioId) return;
 
     setIsLoading(true);
     setError(null);
@@ -45,27 +70,28 @@ export function useBffQuery<T>(
     } finally {
       setIsLoading(false);
     }
-  }, [portfolioId, queryFn, enabled]);
+  }, [portfolioId, queryFn, enabled, isDemoMode, demoData]);
 
   // Fetch on mount and portfolio change
   useEffect(() => {
-    if (enabled && portfolioId && !portfolioLoading) {
+    if (enabled && (isDemoMode || (portfolioId && !portfolioLoading))) {
       refetch();
     }
-  }, [enabled, portfolioId, portfolioLoading, refetch]);
+  }, [enabled, portfolioId, portfolioLoading, refetch, isDemoMode]);
 
-  // Refetch when portfolio changes
+  // Refetch when portfolio changes (only in non-demo modes)
   useEffect(() => {
-    if (refetchOnPortfolioChange && portfolioId) {
+    if (!isDemoMode && refetchOnPortfolioChange && portfolioId) {
       refetch();
     }
-  }, [portfolioId, refetchOnPortfolioChange, refetch]);
+  }, [portfolioId, refetchOnPortfolioChange, refetch, isDemoMode]);
 
   return {
     data,
-    isLoading: isLoading || portfolioLoading,
+    isLoading: isLoading || (!isDemoMode && portfolioLoading),
     error,
     refetch,
+    isDemoMode,
   };
 }
 

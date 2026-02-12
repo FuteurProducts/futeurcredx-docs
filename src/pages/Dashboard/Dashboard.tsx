@@ -32,6 +32,9 @@ import { logger } from '@/utils/logger';
 import { useToast } from '@/hooks/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { useFeatureFlags } from '@/hooks/useFeatureFlags';
+import { BANK_DISPLAY_NAMES, ACTIVE_BANK_ID } from '@/data/bankConfig';
+import type { BankId } from '@/data/bankConfig';
 
 // Import Finlab Overview
 import { FinlabOverview } from '@/components/finlab';
@@ -87,6 +90,13 @@ const Dashboard: React.FC = () => {
   const { toast: _toast } = useToast();
   const { resolvedTheme, setTheme } = useTheme();
   const { currentEnvironment, switchEnvironment } = useEnvironment();
+  const featureFlags = useFeatureFlags();
+
+  // Filter navigation based on feature flags (hide API Console in demo mode, etc.)
+  const filteredNavigation = navigation.filter(item => {
+    if (item.id === 'api-keys' && !featureFlags.showApiConsole) return false;
+    return true;
+  });
 
   // State management
   const [apiKeys, setApiKeys] = useState<ApiKey[]>([])
@@ -590,7 +600,7 @@ const Dashboard: React.FC = () => {
         
         {/* Navigation - grows to fill available space */}
         <nav className={`flex-1 space-y-1.5 overflow-y-auto ${sidebarCollapsed ? 'px-2' : 'p-3'}`}>
-          {navigation.map((link, idx) => {
+          {filteredNavigation.map((link, idx) => {
             // Premium icon gradient colors for each nav item
             const iconColors = [
               'from-blue-500 to-indigo-600',      // Dashboard
@@ -655,6 +665,20 @@ const Dashboard: React.FC = () => {
 
       {/* ======================= MAIN CONTENT ======================= */}
       <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        {/* Demo Mode Banner */}
+        {currentEnvironment === 'demo' && (
+          <div className="sticky top-0 z-20 bg-blue-500 dark:bg-blue-600 text-white px-4 py-1.5 flex items-center justify-center gap-2 text-sm font-medium shrink-0">
+            <Lightbulb className="w-4 h-4" />
+            <span>DEMO MODE — Viewing sample data. No authentication required.</span>
+            <button
+              onClick={() => switchEnvironment('sandbox')}
+              className="ml-2 underline underline-offset-2 hover:opacity-80 transition-opacity text-sm font-semibold"
+            >
+              Switch to Sandbox
+            </button>
+          </div>
+        )}
+
         {/* Sandbox Environment Banner */}
         {currentEnvironment === 'sandbox' && (
           <div className="sticky top-0 z-20 bg-amber-500 text-white px-4 py-1.5 flex items-center justify-center gap-2 text-sm font-medium shrink-0">
@@ -720,6 +744,28 @@ const Dashboard: React.FC = () => {
 
             {/* Right: Environment Toggle + Docs + User Info */}
             <div className="flex items-center gap-3 lg:gap-4">
+              {/* Bank Switcher (demo mode only) */}
+              {featureFlags.showBankSwitcher && (
+                <div className="hidden md:flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-muted-foreground" />
+                  <select
+                    value={ACTIVE_BANK_ID}
+                    onChange={(e) => {
+                      const bankId = e.target.value as BankId;
+                      const url = new URL(window.location.href);
+                      url.searchParams.set('bank', bankId);
+                      window.location.href = url.toString();
+                    }}
+                    className="h-9 rounded-xl border border-border bg-card px-3 text-sm font-medium text-foreground cursor-pointer hover:bg-muted/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    aria-label="Switch bank demo data"
+                  >
+                    {(Object.entries(BANK_DISPLAY_NAMES) as [BankId, string][]).map(([id, name]) => (
+                      <option key={id} value={id}>{name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               {/* Sandbox/Production Toggle */}
               <div className="relative z-10 pointer-events-auto">
                 <ConnectedEnvironmentToggle variant="minimal" />

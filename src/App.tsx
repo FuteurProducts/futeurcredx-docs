@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useUser } from './contexts/AuthContext'
+import { useEnvironment } from './contexts/EnvironmentContext'
 import { PortfolioProvider } from './contexts/PortfolioContext'
 import { BankProvider } from './contexts/BankContext'
 import { ThemeProvider } from '@/contexts/ThemeContext'
@@ -42,12 +43,18 @@ const DEV_BYPASS_AUTH = true; // Toggle based on your needs
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isSignedIn, isLoaded } = useUser()
-  
+  const { isDemoMode } = useEnvironment()
+
+  // Demo mode: always allow access (DemoAuthProvider handles auth)
+  if (isDemoMode) {
+    return <>{children}</>
+  }
+
   // Bypass auth in dev mode
   if (DEV_BYPASS_AUTH) {
     return <>{children}</>
   }
-  
+
   if (!isLoaded) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -58,11 +65,11 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
       </div>
     )
   }
-  
+
   if (!isSignedIn) {
     return <Navigate to="/login" replace />
   }
-  
+
   return <>{children}</>
 }
 
