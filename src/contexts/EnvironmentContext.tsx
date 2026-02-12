@@ -67,6 +67,11 @@ function resolveInitialEnvironment(): Environment {
       return 'demo';
     }
 
+    // SUBDOMAIN IS AUTHORITATIVE — *.demo.futeurcredx.com routes are demo mode
+    if (window.location.hostname.match(/\.demo\./)) {
+      return 'demo';
+    }
+
     const urlMode = new URLSearchParams(window.location.search).get('mode');
     if (urlMode && nonDemoValid.includes(urlMode as Environment)) {
       localStorage.setItem('lumiq-environment', urlMode);

@@ -14,7 +14,16 @@ export const VALID_BANK_IDS: readonly BankId[] = ['chase', 'wellsfargo', 'santan
 
 function resolveBankId(): BankId {
   if (typeof window !== 'undefined') {
-    // 1. Route-based: /demo/:bankId
+    // 1. Subdomain-based: chase.demo.futeurcredx.com → 'chase'
+    const subdomainMatch = window.location.hostname.match(/^(chase|wellsfargo|santander|citi)\.demo\./);
+    if (subdomainMatch) {
+      const subBank = subdomainMatch[1].toLowerCase();
+      if (VALID_BANK_IDS.includes(subBank as BankId)) {
+        return subBank as BankId;
+      }
+    }
+
+    // 2. Route-based: /demo/:bankId (localhost development)
     const pathParts = window.location.pathname.split('/');
     const demoIdx = pathParts.indexOf('demo');
     if (demoIdx !== -1 && pathParts[demoIdx + 1]) {
@@ -24,7 +33,7 @@ function resolveBankId(): BankId {
       }
     }
 
-    // 2. Query param: ?bank=xxx (legacy fallback)
+    // 3. Query param: ?bank=xxx (legacy fallback)
     const urlBank = new URLSearchParams(window.location.search).get('bank');
     if (urlBank && VALID_BANK_IDS.includes(urlBank as BankId)) {
       return urlBank as BankId;
