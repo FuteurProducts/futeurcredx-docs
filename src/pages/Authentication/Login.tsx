@@ -46,16 +46,22 @@ export default function Page() {
           }}
         />
 
-        {/* Animated gradient orbs (Sentinel pattern) */}
+        {/* Animated gradient orbs — VISIBLE ambient glow */}
         <motion.div
-          className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.18, 0.1] }}
+          className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-0 left-0 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.14, 0.08] }}
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-violet-500/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* Third orb for depth */}
+        <motion.div
+          className="absolute top-1/2 right-1/4 w-[400px] h-[400px] bg-purple-500/15 rounded-full blur-3xl -translate-y-1/2"
+          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
 
         {/* Content — justify-between pushes logo top, hero center, stats bottom */}
@@ -64,9 +70,10 @@ export default function Page() {
           <FadeIn delay={0.1}>
             <Link to="/" className="inline-block">
               <img
-                src="/lumiq-logo.svg"
+                src="/lumiq-logo-white.png"
                 alt="LUMIQ AI"
                 className="h-14 w-auto"
+                style={{ filter: "drop-shadow(0 0 20px rgba(99,102,241,0.15))" }}
               />
             </Link>
           </FadeIn>
@@ -79,7 +86,10 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              Welcome back to enterprise credit intelligence.
+              Welcome back to{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-purple-400">
+                enterprise credit intelligence.
+              </span>
             </motion.h1>
             <motion.p
               className="text-lg text-slate-400 leading-relaxed"
@@ -129,7 +139,7 @@ export default function Page() {
       <div className="w-full lg:w-1/2 bg-slate-950 flex items-start lg:items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-y-auto">
         {/* Subtle dot pattern */}
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: "radial-gradient(rgba(99,102,241,1) 1px, transparent 1px)",
             backgroundSize: "24px 24px",
@@ -139,10 +149,15 @@ export default function Page() {
         <div className="w-full max-w-md relative z-10">
           {/* Mobile logo */}
           <FadeIn delay={0.05} className="lg:hidden mb-8 flex justify-center">
-            <img src="/lumiq-logo.svg" alt="LUMIQ AI" className="h-10 w-auto" />
+            <img
+              src="/lumiq-logo-white.png"
+              alt="LUMIQ AI"
+              className="h-10 w-auto"
+              style={{ filter: "drop-shadow(0 0 16px rgba(99,102,241,0.15))" }}
+            />
           </FadeIn>
 
-          {/* Secure login badge (Sentinel pattern) */}
+          {/* Secure login badge */}
           <FadeIn delay={0.1}>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-indigo-950/50 border border-indigo-500/20 text-indigo-400 text-xs mb-6 rounded-full">
               <span className="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse" />
@@ -150,8 +165,14 @@ export default function Page() {
             </div>
           </FadeIn>
 
-          {/* Clerk SignIn component */}
-          <FadeIn delay={0.15}>
+          {/* Glassmorphism card wrapper */}
+          <motion.div
+            className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 shadow-2xl shadow-black/25"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.12, ease: "easeOut" }}
+          >
+            {/* Clerk SignIn component */}
             <SignIn
               routing="path"
               path="/sign-in"
@@ -183,9 +204,9 @@ export default function Page() {
                 },
               }}
             />
-          </FadeIn>
+          </motion.div>
 
-          {/* Security badges (Sentinel pattern) */}
+          {/* Security badges */}
           <FadeIn delay={0.25}>
             <div className="mt-6 flex items-center justify-center gap-4 text-xs text-slate-500">
               <div className="flex items-center gap-1.5">
