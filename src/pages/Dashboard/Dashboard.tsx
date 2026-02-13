@@ -543,15 +543,14 @@ const Dashboard: React.FC = () => {
         `}
       >
         {/* Logo & Toggle */}
-        <div className={`${sidebarCollapsed ? 'h-20' : 'h-[140px]'} flex items-center shrink-0 ${sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-6'} border-b border-white/5`}>
+        <div className={`${sidebarCollapsed ? 'h-16' : 'h-20'} flex items-center shrink-0 ${sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-6'} border-b border-white/5`}>
           <Link to="/" className="flex items-center group">
             <div className={`relative ${sidebarCollapsed ? '' : 'p-2'}`}>
               <img
-                src={withBaseUrl('/lumiqlogo.png')}
+                src={withBaseUrl('/lumiq-logo.svg')}
                 alt="LUMIQ AI"
-                className={`object-contain transition-all duration-200 group-hover:scale-105 ${sidebarCollapsed ? 'w-14 h-14' : 'w-[100px] h-[100px]'}`}
+                className={`object-contain transition-all duration-200 group-hover:scale-105 ${sidebarCollapsed ? 'h-8 w-auto' : 'h-12 w-auto'}`}
                 onError={(e) => {
-                  // Fallback if logo fails to load
                   const target = e.target as HTMLImageElement;
                   target.src = withBaseUrl('/lumiqlogo.png');
                 }}
