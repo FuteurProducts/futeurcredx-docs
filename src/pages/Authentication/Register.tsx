@@ -1,248 +1,122 @@
-import { useState, useEffect } from "react"
-import { useUser, useAuth } from "@/contexts/AuthContext"
-import { useNavigate } from "react-router-dom"
-import { Eye, EyeOff, ArrowRight } from "lucide-react"
-import loginIllustration from "../../assets/dashboard-assets/login.png"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { logger } from "@/utils/logger"
+import { SignUp } from "@clerk/clerk-react"
+import { Link } from "react-router-dom"
+import { Shield, Lock, BrainCircuit, CheckCircle2 } from "lucide-react"
 
-const Register: React.FC = () => {
-  const { user, isSignedIn, isLoaded } = useUser()
-  const { signUp } = useAuth()
-  const navigate = useNavigate()
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState("")
+const BENEFITS = [
+  "Portfolio analytics across all SMB segments",
+  "AI-powered credit scoring and risk profiling",
+  "Automated underwriting memo generation",
+  "Real-time early warning system alerts",
+  "Customizable API integration sandbox",
+];
 
-  // Redirect if already signed in
-  useEffect(() => {
-    if (isSignedIn && user) {
-      navigate("/dashboard", { replace: true })
-    }
-  }, [isSignedIn, user, navigate])
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!isLoaded) return
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match")
-      return
-    }
-
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters long")
-      return
-    }
-
-    setIsLoading(true)
-    setError("")
-
-    try {
-      await signUp(email, password)
-      navigate("/dashboard", { replace: true })
-    } catch (err: unknown) {
-      logger.error("Sign up error:", err)
-      setError(err instanceof Error ? err.message : "An error occurred. Please try again.")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
+export default function Page() {
   return (
-    <div className="min-h-screen bg-card flex">
-      {/* Left Side - Illustration */}
-      <div className="hidden lg:flex w-1/2 relative bg-muted items-center justify-center p-12">
-        <div className="w-full max-w-lg">
-          <img 
-            src={loginIllustration} 
-            alt="Signup illustration" 
-            className="w-full h-auto object-contain"
-          />
+    <div className="min-h-screen bg-slate-950 flex">
+      {/* Left Side — Branding Panel */}
+      <div className="hidden lg:flex w-[48%] relative bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 flex-col justify-between p-12 overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-violet-600/8 rounded-full blur-3xl" />
+
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-16">
+            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center">
+              <BrainCircuit className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-xl font-bold text-white tracking-tight">LUMIQ.ai</span>
+          </div>
+
+          <h1 className="text-4xl xl:text-5xl font-bold text-white leading-tight mb-4">
+            Start Building<br />Smarter Lending
+          </h1>
+          <p className="text-lg text-slate-400 leading-relaxed max-w-md mb-10">
+            Get access to the full LUMIQ platform. Set up your sandbox environment and integrate in minutes.
+          </p>
+
+          <div className="space-y-4 mb-12">
+            {BENEFITS.map((benefit) => (
+              <div key={benefit} className="flex items-center gap-3">
+                <CheckCircle2 className="w-5 h-5 text-indigo-400 flex-shrink-0" />
+                <span className="text-slate-300 text-sm">{benefit}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-indigo-600/10 border border-indigo-500/20 rounded-xl p-4 max-w-sm">
+            <p className="text-indigo-300 text-sm font-medium">Free sandbox access included</p>
+            <p className="text-slate-500 text-xs mt-1">No credit card required. Full API access with test data.</p>
+          </div>
+        </div>
+
+        <div className="relative z-10 flex items-center gap-6 pt-8 border-t border-white/10">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Shield className="w-4 h-4" />
+            <span className="text-xs font-medium">SOC 2 Type II</span>
+          </div>
+          <div className="flex items-center gap-2 text-slate-500">
+            <Lock className="w-4 h-4" />
+            <span className="text-xs font-medium">Bank-Grade Encryption</span>
+          </div>
+          <div className="text-xs text-slate-600">ISO 27001 | GDPR</div>
         </div>
       </div>
 
-      {/* Right Side - Signup Form */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-12 py-8 bg-card">
+      {/* Right Side — Clerk SignUp */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 sm:px-12 bg-slate-950">
         <div className="w-full max-w-md">
-          {/* Back to website link */}
-          <div className="mb-6">
-            <a
-              href="/"
-              className="text-muted-foreground text-sm hover:text-foreground transition-colors inline-flex items-center gap-1"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Back to website
-            </a>
+          <div className="lg:hidden flex items-center gap-3 mb-10 justify-center">
+            <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center">
+              <BrainCircuit className="w-5 h-5 text-white" />
+            </div>
+            <span className="text-lg font-bold text-white tracking-tight">LUMIQ.ai</span>
           </div>
 
-          {/* Signup Form Card */}
-          <div className="bg-card rounded-2xl shadow-sm border border-border p-8 sm:p-10">
-            <div className="mb-8">
-              <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2">
-                Get Started Now!
-              </h1>
-              <p className="text-muted-foreground text-sm sm:text-base">
-                Enter your credentials to access your account
-              </p>
-            </div>
+          <SignUp
+            routing="path"
+            path="/sign-up"
+            signInUrl="/sign-in"
+            forceRedirectUrl="/dashboard"
+            appearance={{
+              elements: {
+                rootBox: "w-full",
+                cardBox: "w-full shadow-none",
+                card: "bg-transparent shadow-none p-0 w-full",
+                headerTitle: "text-white text-2xl font-bold",
+                headerSubtitle: "text-slate-400",
+                socialButtonsBlockButton: "bg-slate-800 border-slate-700 text-white hover:bg-slate-700 transition-all duration-200 rounded-xl h-11",
+                socialButtonsBlockButtonText: "text-sm font-medium",
+                dividerLine: "bg-slate-800",
+                dividerText: "text-slate-500",
+                formFieldLabel: "text-slate-300 font-medium text-sm",
+                formFieldInput: "bg-slate-900 border-slate-700 text-white rounded-xl h-12 focus:border-indigo-500 focus:ring-indigo-500/20",
+                formButtonPrimary: "bg-indigo-600 hover:bg-indigo-500 transition-all duration-200 rounded-xl h-11 text-sm font-semibold",
+                footerActionLink: "text-indigo-400 hover:text-indigo-300 font-medium",
+                footerActionText: "text-slate-500",
+                identityPreviewEditButton: "text-indigo-400",
+                formFieldAction: "text-indigo-400 hover:text-indigo-300",
+                alert: "bg-red-950/50 border-red-800 text-red-300",
+                alertText: "text-red-300",
+              },
+            }}
+          />
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Error Message */}
-              {error && (
-                <div className="bg-destructive/10 border-2 border-destructive/20 text-destructive rounded-lg p-4 text-sm">
-                  {error}
-                </div>
-              )}
-
-              {/* Full Name Field */}
-              <div>
-                <label htmlFor="fullName" className="block text-foreground font-medium text-sm mb-2">
-                  Full Name
-                </label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder="Enter your full name"
-                  required
-                  className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 transition-all duration-200 text-sm w-full"
-                />
-              </div>
-
-              {/* Email Field */}
-              <div>
-                <label htmlFor="email" className="block text-foreground font-medium text-sm mb-2">
-                  Email Address
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 transition-all duration-200 text-sm w-full"
-                />
-              </div>
-
-              {/* Password Field */}
-              <div>
-                <label htmlFor="password" className="block text-foreground font-medium text-sm mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="min 8 chars"
-                    required
-                    minLength={8}
-                    className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 pr-10 transition-all duration-200 text-sm w-full"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-5 h-5" />
-                    ) : (
-                      <Eye className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Confirm Password Field */}
-              <div>
-                <label htmlFor="confirmPassword" className="block text-foreground font-medium text-sm mb-2">
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <Input
-                    id="confirmPassword"
-                    type={showConfirmPassword ? "text" : "password"}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm your password"
-                    required
-                    minLength={8}
-                    className="bg-card border-2 border-border text-foreground placeholder-muted-foreground focus:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 rounded-lg py-3 px-4 pr-10 transition-all duration-200 text-sm w-full"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="w-5 h-5" />
-                    ) : (
-                      <Eye className="w-5 h-5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isLoading || !isLoaded}
-                className="bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-200 rounded-lg py-3 px-6 w-full text-sm flex items-center justify-center gap-2 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Creating account...
-                  </>
-                ) : (
-                  <>
-                    Sign Up
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </Button>
-            </form>
-
-            {/* Sign In Link */}
-            <div className="mt-6 text-center">
-              <p className="text-muted-foreground text-sm">
-                Already have an account?{" "}
-                <a
-                  href="/login"
-                  className="text-primary hover:text-primary/80 font-medium transition-colors"
-                >
-                  Sign in
-                </a>
-              </p>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="text-center mt-8">
-            <p className="text-muted-foreground text-xs sm:text-sm">
-              © 2026 LUMIQ AI. All Rights Reserved.
+          <div className="text-center mt-10">
+            <p className="text-slate-600 text-xs">
+              &copy; 2026 LUMIQ AI. All Rights Reserved.
             </p>
+            <div className="flex items-center justify-center gap-4 mt-2">
+              <Link to="/sign-in" className="text-xs text-slate-500 hover:text-indigo-400 transition-colors">
+                Already have an account? Sign in
+              </Link>
+              <span className="text-slate-700">|</span>
+              <a href="https://lumiqai.com/privacy" className="text-xs text-slate-500 hover:text-indigo-400 transition-colors">
+                Privacy
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   )
 }
-
-export default Register
-

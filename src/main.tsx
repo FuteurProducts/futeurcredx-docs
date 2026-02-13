@@ -1,6 +1,7 @@
 import { StrictMode, Component, type ReactNode, type ErrorInfo } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ClerkProvider } from '@clerk/clerk-react'
+import { dark } from '@clerk/themes'
 import './index.css'
 import App from './App.tsx'
 import { AuthProvider, DemoAuthProvider, FallbackAuthProvider, isClerkConfigured } from './contexts/AuthContext'
@@ -87,7 +88,21 @@ function renderAuthWrappedApp(appElement: ReactNode) {
 
   if (clerkConfigured) {
     return (
-      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} afterSignOutUrl="/">
+      <ClerkProvider
+        publishableKey={CLERK_PUBLISHABLE_KEY!}
+        afterSignOutUrl="/sign-in"
+        appearance={{
+          baseTheme: dark,
+          variables: {
+            colorPrimary: '#6366f1',
+            colorBackground: '#020617',
+            colorInputBackground: '#0f172a',
+            colorText: '#f8fafc',
+            colorTextSecondary: '#94a3b8',
+            borderRadius: '0.75rem',
+          },
+        }}
+      >
         <AuthProvider>{appElement}</AuthProvider>
       </ClerkProvider>
     );

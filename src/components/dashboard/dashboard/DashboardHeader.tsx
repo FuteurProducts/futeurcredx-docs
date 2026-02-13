@@ -1,6 +1,9 @@
 import { Bell, Search, User, LayoutDashboard, BarChart3, Users, FileText, TrendingUp, Settings, Sun, Moon, Monitor } from "lucide-react";
 import { toast } from "sonner";
+import { UserButton } from "@clerk/clerk-react";
+import { dark } from "@clerk/themes";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useEnvironment } from "@/contexts/EnvironmentContext";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,7 +18,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ConnectedEnvironmentToggle } from "@/components/widgets";
-import { useUser } from "@/contexts/AuthContext";
+import { useUser, useAuth } from "@/contexts/AuthContext";
+import { isClerkConfigured } from "@/contexts/AuthContext";
 
 interface DashboardHeaderProps {
   showMenu?: boolean;
@@ -30,9 +34,14 @@ const defaultMenu = [
   { title: "Settings", url: "/dashboard?tab=settings", icon: Settings },
 ];
 
+const CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const useClerkUI = isClerkConfigured(CLERK_KEY);
+
 export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
   const { theme, resolvedTheme, setTheme } = useTheme();
+  const { isDemoMode } = useEnvironment();
   const { user } = useUser();
+  const { signOut } = useAuth();
 
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-10 relative overflow-hidden">
@@ -115,27 +124,44 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
           <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
         </Button>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2" aria-label="User menu">
-              <Avatar className="w-8 h-8 ring-2 ring-primary/20">
-                <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-white">
-                  <User className="w-4 h-4" />
-                </AvatarFallback>
-              </Avatar>
-              <span className="text-sm font-medium hidden md:inline">{user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'User'}</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 bg-popover z-50">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">Log out</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {/* User menu: Clerk UserButton for real auth, fallback avatar for demo/no-auth */}
+        {useClerkUI && !isDemoMode ? (
+          <UserButton
+            afterSignOutUrl="/sign-in"
+            appearance={{
+              baseTheme: resolvedTheme === 'dark' ? dark : undefined,
+              elements: {
+                avatarBox: "w-8 h-8 ring-2 ring-primary/20",
+                userButtonPopoverCard: "bg-popover border-border",
+                userButtonPopoverActionButton: "text-foreground hover:bg-accent",
+                userButtonPopoverActionButtonText: "text-foreground",
+                userButtonPopoverFooter: "hidden",
+              },
+            }}
+          />
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="flex items-center gap-2" aria-label="User menu">
+                <Avatar className="w-8 h-8 ring-2 ring-primary/20">
+                  <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-white">
+                    <User className="w-4 h-4" />
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-sm font-medium hidden md:inline">{user?.firstName ? `${user.firstName} ${user.lastName || ''}`.trim() : 'User'}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-popover z-50">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Settings</DropdownMenuItem>
+              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-destructive" onClick={() => signOut()}>Log out</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
       </div>
     </header>
   );

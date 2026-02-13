@@ -68,7 +68,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!isSignedIn) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/sign-in" replace />
   }
 
   return <>{children}</>
@@ -92,8 +92,12 @@ function App() {
         <Toaster position="top-right" />
         <Suspense fallback={<LoadingFallback />}>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* Clerk auth routes (path-based routing) */}
+          <Route path="/sign-in/*" element={<Login />} />
+          <Route path="/sign-up/*" element={<Register />} />
+          {/* Legacy redirects */}
+          <Route path="/login" element={<Navigate to="/sign-in" replace />} />
+          <Route path="/register" element={<Navigate to="/sign-up" replace />} />
           <Route path="/business-signup" element={
             <ProtectedRoute>
               <BusinessSignup />
