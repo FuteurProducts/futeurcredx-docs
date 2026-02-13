@@ -1,10 +1,11 @@
 /**
  * BFF API Client
  * Base client for all Backend-for-Frontend API calls
- * Handles auth (Clerk JWT), tenant isolation, and standardized response envelopes
+ * Handles auth (Clerk JWT + X-API-Key), tenant isolation, and standardized response envelopes
  */
 
 import { computeHasMore } from './normalizers';
+import { getRequestLogStore } from '@/stores/apiRequestLogStore';
 
 // Standard BFF response envelope
 export interface BffResponseMeta {
@@ -45,24 +46,35 @@ export interface BffRequestOptions {
   body?: unknown;
 }
 
-// Clerk token getter — injected from AuthContext
-// Initialize with safe default to prevent race condition on first load
+// ── Auth: Clerk JWT ──────────────────────────────────────────────────────
+// Injected from AuthContext
 let _getToken: (() => Promise<string | null>) | null = () => Promise.resolve('demo-init-pending');
 
-/**
- * Set the auth token getter (called once from AuthContext initialization)
- */
 export function setAuthTokenGetter(getter: () => Promise<string | null>) {
   _getToken = getter;
 }
 
-// Get current session token via Clerk
 async function getAuthToken(): Promise<string | null> {
   if (_getToken) {
     return _getToken();
   }
-  // Fallback: try to import Clerk's useAuth if available in window context
   return null;
+}
+
+// ── Auth: X-API-Key (sandbox mode) ──────────────────────────────────────
+let _apiKey: string | null = null;
+
+/**
+ * Set the active API key for X-API-Key authentication (sandbox mode).
+ * When set, requests use X-API-Key header instead of Authorization: Bearer.
+ */
+export function setApiKey(key: string | null) {
+  _apiKey = key;
+}
+
+/** Get the current API key (non-React). */
+export function getApiKey(): string | null {
+  return _apiKey;
 }
 
 // Build query string from params
@@ -81,11 +93,15 @@ async function request<T>(
 ): Promise<T> {
   const token = await getAuthToken();
 
-  if (!token) {
+  // Determine auth mode: X-API-Key (sandbox) or Bearer token (production)
+  const hasApiKey = Boolean(_apiKey);
+  const hasToken = Boolean(token);
+
+  if (!hasApiKey && !hasToken) {
     throw {
       error: {
         code: 'UNAUTHORIZED',
-        message: 'No active session. Please log in.',
+        message: 'No active session. Please configure an API key or log in.',
       },
       meta: { requestId: crypto.randomUUID() },
     } as BffError;
@@ -110,10 +126,16 @@ async function request<T>(
 
   url += buildQueryString(queryParams);
 
+  // Build headers — X-API-Key takes priority over Bearer token
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`,
   };
+
+  if (hasApiKey) {
+    headers['X-API-Key'] = _apiKey!;
+  } else {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   const fetchOptions: RequestInit = {
     method,
@@ -124,17 +146,29 @@ async function request<T>(
     fetchOptions.body = JSON.stringify(options.body);
   }
 
+  // ── Instrumentation: capture timing ────────────────────────────────
+  const startTime = performance.now();
+
   const response = await fetch(url, fetchOptions);
+  const responseTime = Math.round(performance.now() - startTime);
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => ({
       error: { code: 'UNKNOWN', message: response.statusText },
       meta: { requestId: crypto.randomUUID() },
     }));
+
+    // Log failed request
+    logRequest(method, endpoint, response.status, responseTime, options?.body, JSON.stringify(errorBody), errorBody.error?.message);
+
     throw errorBody as BffError;
   }
 
   const body = await response.json();
+  const bodyStr = JSON.stringify(body);
+
+  // Log successful request
+  logRequest(method, endpoint, response.status, responseTime, options?.body, bodyStr);
 
   // Edge functions / NestJS API wraps responses in { success, data, meta } — unwrap to match BFF types
   if ('success' in body && body.success === true) {
@@ -157,6 +191,32 @@ async function request<T>(
   }
 
   return body as T;
+}
+
+/** Push request entry into the Zustand request log store. */
+function logRequest(
+  method: string,
+  endpoint: string,
+  statusCode: number,
+  responseTime: number,
+  requestBody?: unknown,
+  responseBody?: string,
+  error?: string,
+): void {
+  try {
+    const store = getRequestLogStore();
+    store.addRequest({
+      method,
+      endpoint,
+      statusCode,
+      responseTime,
+      requestBody: requestBody ? JSON.stringify(requestBody) : null,
+      responseBody: responseBody ?? '',
+      error,
+    });
+  } catch {
+    // Store not available — silently ignore
+  }
 }
 
 // Typed request methods

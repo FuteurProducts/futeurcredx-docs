@@ -43,12 +43,16 @@ import {
   Zap,
 } from 'lucide-react';
 
+import { cn } from '@/lib/utils';
 import { ApiConsoleHeader } from './ApiConsoleHeader';
 import { ConnectionDetail } from './ConnectionDetail';
 import { ConnectionCatalog } from './ConnectionCatalog';
 import type { Connection } from './types';
 import { mockConnections, mockIncidents, mockActivityLogs, mockWebhookConfigs } from './data/bankMockData';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { useApiKeyStore } from '@/stores/apiKeyStore';
+import { useRequestLogStore } from '@/stores/apiRequestLogStore';
+import type { RequestLogEntry } from '@/stores/apiRequestLogStore';
 
 // LocalStorage keys
 const STORAGE_KEYS = {
@@ -80,9 +84,10 @@ interface RequestHistoryEntry {
 }
 
 // Error simulation types
-type ErrorSimulation = '200' | '401' | '403' | '429' | '500' | 'timeout';
+type ErrorSimulation = 'live' | '200' | '401' | '403' | '429' | '500' | 'timeout';
 
 const errorSimulations: { value: ErrorSimulation; label: string; icon: React.ReactNode }[] = [
+  { value: 'live', label: 'Live Request (Real API)', icon: <Zap className="w-4 h-4 text-primary" /> },
   { value: '200', label: '200 OK (Demo Data)', icon: <CheckCircle2 className="w-4 h-4 text-success" /> },
   { value: '401', label: '401 Unauthorized', icon: <Ban className="w-4 h-4 text-destructive" /> },
   { value: '403', label: '403 Forbidden', icon: <XCircle className="w-4 h-4 text-destructive" /> },
@@ -220,158 +225,234 @@ export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
   );
 };
 
+// Helper: map a RequestLogEntry to the shape expected by the activity log table
+function mapRequestLogToRow(entry: RequestLogEntry) {
+  return {
+    id: entry.id,
+    timestamp: entry.timestamp,
+    connectionName: 'API Playground',
+    method: entry.method,
+    type: entry.error ? 'error' : 'request',
+    endpoint: entry.endpoint,
+    statusCode: entry.statusCode,
+    duration: entry.responseTime,
+  };
+}
+
 // Activity Log Panel
 const ActivityLogPanel: React.FC = () => {
+  const { isDemoMode } = useEnvironment();
+  const { requests: liveRequests, clearRequests } = useRequestLogStore();
+
+  // In demo mode, show mock data. In sandbox/production, show live request log.
+  const isLive = !isDemoMode;
+
+  const rows = isLive
+    ? liveRequests.map(mapRequestLogToRow)
+    : mockActivityLogs.map((log) => ({
+        id: log.id,
+        timestamp: log.timestamp,
+        connectionName: log.connectionName,
+        method: log.method ?? log.type.toUpperCase(),
+        type: log.type,
+        endpoint: log.endpoint ?? '',
+        statusCode: log.statusCode ?? 0,
+        duration: log.duration,
+      }));
 
   return (
     <div className="bg-card rounded-2xl border border-border overflow-hidden">
       <div className="p-4 border-b border-border flex items-center justify-between">
-        <h3 className="text-lg font-semibold">Activity Log</h3>
-        <span className="text-sm text-muted-foreground">Requests, webhooks, auth events (masked)</span>
+        <div className="flex items-center gap-3">
+          <h3 className="text-lg font-semibold">Activity Log</h3>
+          {isLive && (
+            <Badge variant="default" className="bg-primary/10 text-primary">Live</Badge>
+          )}
+          <Badge variant="secondary">{rows.length}</Badge>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-muted-foreground">
+            {isLive ? 'Live API request history' : 'Requests, webhooks, auth events (masked)'}
+          </span>
+          {isLive && liveRequests.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearRequests}
+              className="text-muted-foreground hover:text-destructive"
+            >
+              <Trash2 className="w-4 h-4 mr-1" />
+              Clear
+            </Button>
+          )}
+        </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-muted/50">
-            <tr>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Time</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Connection</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Type</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Endpoint</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Status</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Duration</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {mockActivityLogs.map((log) => (
-              <tr key={log.id} className="hover:bg-muted/30 transition-colors">
-                <td className="px-4 py-3 text-sm font-mono text-muted-foreground">
-                  {new Date(log.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                </td>
-                <td className="px-4 py-3 text-sm font-medium">{log.connectionName}</td>
-                <td className="px-4 py-3">
-                  <span
-                    className={`px-2 py-1 rounded text-xs font-medium ${
-                      log.type === 'error'
-                        ? 'bg-destructive/10 text-destructive'
-                        : log.type === 'webhook'
-                          ? 'bg-primary/10 text-primary'
-                          : log.type === 'auth'
-                            ? 'bg-warning/10 text-warning'
-                            : 'bg-muted text-muted-foreground'
-                    }`}
-                  >
-                    {log.method || log.type.toUpperCase()}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm font-mono">{log.endpoint}</td>
-                <td className="px-4 py-3">
-                  <span className={`text-sm font-semibold ${(log.statusCode ?? 0) < 300 ? 'text-success' : 'text-destructive'}`}>
-                    {log.statusCode ?? '-'}
-                  </span>
-                </td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">
-                  {typeof log.duration === 'number' ? `${log.duration}ms` : '-'}
-                </td>
+        {rows.length === 0 ? (
+          <div className="p-8 text-center text-muted-foreground">
+            <Activity className="w-8 h-8 mx-auto mb-2 opacity-50" />
+            <p>{isLive ? 'No API requests yet. Use the Playground to make requests.' : 'No activity logs available.'}</p>
+          </div>
+        ) : (
+          <table className="w-full">
+            <thead className="bg-muted/50">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Time</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Connection</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Type</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Endpoint</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold text-muted-foreground uppercase">Duration</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {rows.map((row) => (
+                <tr key={row.id} className="hover:bg-muted/30 transition-colors">
+                  <td className="px-4 py-3 text-sm font-mono text-muted-foreground">
+                    {new Date(row.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-medium">{row.connectionName}</td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={cn(
+                        'px-2 py-1 rounded text-xs font-medium',
+                        row.type === 'error'
+                          ? 'bg-destructive/10 text-destructive'
+                          : row.type === 'webhook'
+                            ? 'bg-primary/10 text-primary'
+                            : row.type === 'auth'
+                              ? 'bg-warning/10 text-warning'
+                              : 'bg-muted text-muted-foreground',
+                      )}
+                    >
+                      {row.method}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-sm font-mono">{row.endpoint}</td>
+                  <td className="px-4 py-3">
+                    <span className={cn('text-sm font-semibold', (row.statusCode ?? 0) < 300 ? 'text-success' : 'text-destructive')}>
+                      {row.statusCode ?? '-'}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">
+                    {typeof row.duration === 'number' ? `${row.duration}ms` : '-'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
 
 // Endpoint definitions for the API Playground
+// These paths are appended to baseUrl (which already includes /dashboard when using VITE_API_URL)
 const playgroundEndpoints = [
-  { id: 'credit-score', method: 'POST', path: '/v1/credit/score', label: 'POST /v1/credit/score - Pull credit score' },
-  { id: 'credit-report', method: 'POST', path: '/v1/credit/report', label: 'POST /v1/credit/report - Pull credit report' },
-  { id: 'business-details', method: 'GET', path: '/v1/businesses/:id', label: 'GET /v1/businesses/:id - Get business details' },
-  { id: 'prequal-check', method: 'POST', path: '/v1/prequal/check', label: 'POST /v1/prequal/check - Run pre-qualification' },
-  { id: 'portfolio-health', method: 'GET', path: '/v1/portfolio/health', label: 'GET /v1/portfolio/health - Portfolio health summary' },
+  { id: 'health', method: 'GET', path: '/health', label: 'GET /dashboard/health - Health check' },
+  { id: 'portfolios', method: 'GET', path: '/portfolios', label: 'GET /dashboard/portfolios - List portfolios' },
+  { id: 'customers', method: 'GET', path: '/customers', label: 'GET /dashboard/customers - List customers' },
+  { id: 'scores-dist', method: 'GET', path: '/scores/distribution', label: 'GET /dashboard/scores/distribution - Score distribution' },
+  { id: 'risk-summary', method: 'GET', path: '/risk/summary', label: 'GET /dashboard/risk/summary - Risk summary' },
+  { id: 'api-keys', method: 'GET', path: '/api-keys', label: 'GET /dashboard/api-keys - List API keys' },
+  { id: 'create-key', method: 'POST', path: '/api-keys', label: 'POST /dashboard/api-keys - Create API key' },
 ] as const;
 
-// Realistic demo responses per endpoint
+// Realistic demo responses per endpoint (shown in demo mode only)
 const endpointResponses: Record<string, object> = {
-  'credit-score': {
-    status: 'success',
+  'health': {
+    success: true,
     data: {
-      business_id: 'biz_test_8f2k9x',
-      business_name: 'Riverside Bakery LLC',
-      scores: [
-        { source: 'experian_biz', score: 72, range: [1, 100], grade: 'B+' },
-        { source: 'fico_sbss', score: 185, range: [0, 300], grade: 'Good' },
+      status: 'ok',
+      timestamp: '2026-02-13T22:18:17.577Z',
+      version: '1.0.0',
+      database: 'connected',
+    },
+  },
+  'portfolios': {
+    success: true,
+    data: [
+      {
+        id: 'pf_test_001',
+        name: 'SMB National Portfolio',
+        code: 'smb-national',
+        businessCount: 200,
+        riskDistribution: { low: 120, medium: 52, high: 23, critical: 5 },
+        avgScore: 68,
+      },
+    ],
+    pagination: { page: 1, pageSize: 25, total: 2 },
+  },
+  'customers': {
+    success: true,
+    data: [
+      {
+        id: 'biz_test_001',
+        name: 'Riverside Bakery LLC',
+        city: 'Sacramento',
+        state: 'CA',
+        annualRevenue: 1250000,
+        riskTier: 'low',
+        latestScore: 74,
+      },
+    ],
+    pagination: { page: 1, pageSize: 25, total: 200 },
+  },
+  'scores-dist': {
+    success: true,
+    data: {
+      distribution: [
+        { bucket: '0-300', count: 5 },
+        { bucket: '301-500', count: 23 },
+        { bucket: '501-700', count: 120 },
+        { bucket: '701-850', count: 52 },
       ],
-      risk_tier: 'low',
-      lumiq_score: 74,
-      pulled_at: '2026-02-02T18:30:00Z',
+      avgScore: 68,
+      totalScored: 200,
     },
   },
-  'credit-report': {
-    status: 'success',
+  'risk-summary': {
+    success: true,
     data: {
-      business_id: 'biz_test_8f2k9x',
-      report_id: 'rpt_test_3m7nq2',
-      trade_lines: 12,
-      derogatory_marks: 0,
-      oldest_account: '2019-03-15',
-      utilization: 0.34,
-      payment_history: { on_time: 142, late_30: 1, late_60: 0, late_90: 0 },
-      public_records: [],
-      generated_at: '2026-02-02T18:30:00Z',
+      avgScore: 68,
+      minScore: 310,
+      maxScore: 820,
+      riskDistribution: { low: 120, medium: 52, high: 23, critical: 5 },
+      topDrivers: ['Revenue decline', 'Payment delinquency', 'Industry risk'],
     },
   },
-  'business-details': {
-    status: 'success',
-    data: {
-      id: 'biz_test_8f2k9x',
-      legal_name: 'Riverside Bakery LLC',
-      dba: 'Riverside Bakery',
-      ein: '**-***4521',
-      industry: 'Food Services',
-      naics_code: '722515',
-      annual_revenue: 1250000,
-      employee_count: 18,
-      years_in_business: 7,
-      state: 'CA',
-      lumiq_score: 74,
-      relationship_stage: 'active',
-    },
+  'api-keys': {
+    success: true,
+    data: [
+      {
+        id: 'key_test_001',
+        name: 'Sandbox Key',
+        keyPrefix: 'sk_test_XrT3...b807',
+        environment: 'development',
+        isActive: true,
+        createdAt: '2026-02-13T00:00:00Z',
+      },
+    ],
+    pagination: { page: 1, pageSize: 25, total: 2 },
   },
-  'prequal-check': {
-    status: 'success',
+  'create-key': {
+    success: true,
     data: {
-      business_id: 'biz_test_8f2k9x',
-      prequal_id: 'pq_test_9k4mv7',
-      qualified: true,
-      max_amount: 150000,
-      term_months: 36,
-      estimated_rate: '7.5% - 9.2%',
-      product_type: 'term_loan',
-      valid_until: '2026-03-02T00:00:00Z',
-      factors: [
-        { factor: 'Strong payment history', impact: 'positive' },
-        { factor: 'Low utilization', impact: 'positive' },
-        { factor: 'Limited time in business', impact: 'neutral' },
-      ],
-    },
-  },
-  'portfolio-health': {
-    status: 'success',
-    data: {
-      portfolio_id: 'pf_test_main',
-      total_businesses: 247,
-      scored_businesses: 238,
-      risk_distribution: { low: 168, moderate: 52, elevated: 15, high: 3 },
-      avg_lumiq_score: 68,
-      delinquency_rate: 0.023,
-      approval_rate: 0.72,
-      last_updated: '2026-02-02T18:00:00Z',
+      id: 'key_test_new',
+      name: 'New Test Key',
+      key: 'sk_test_EXAMPLE_FULL_KEY_ONLY_SHOWN_ONCE',
+      keyPrefix: 'sk_test_EXAM...ONCE',
+      environment: 'development',
+      isActive: true,
+      createdAt: '2026-02-13T22:18:17.577Z',
     },
   },
 };
 
 // Error response templates
 const errorResponses: Record<ErrorSimulation, (endpoint: string) => object> = {
+  'live': () => ({}), // Not used — live requests return real data
   '200': () => ({}), // Not used, actual data returned
   '401': () => ({
     error: {
@@ -414,6 +495,7 @@ const errorResponses: Record<ErrorSimulation, (endpoint: string) => object> = {
 // Helper to get status code for simulation
 const getStatusCode = (simulation: ErrorSimulation): number => {
   const codes: Record<ErrorSimulation, number> = {
+    'live': 200, // placeholder — live requests use the real status
     '200': 200,
     '401': 401,
     '403': 403,
@@ -424,23 +506,45 @@ const getStatusCode = (simulation: ErrorSimulation): number => {
   return codes[simulation];
 };
 
+// Helper: get endpoint-specific request body for live requests
+function getLiveRequestBody(endpointId: string): Record<string, unknown> | null {
+  switch (endpointId) {
+    case 'create-key':
+      return { name: 'Playground Test Key', scopes: ['read', 'write'], expiresInDays: 30 };
+    default:
+      return null;
+  }
+}
+
+// Helper: get endpoint-specific query params for live requests
+// Endpoints that require portfolioId will get a placeholder — the backend returns 422 if missing
+function getLiveQueryParams(endpointId: string): Record<string, string> | null {
+  const needsPortfolio = ['customers', 'scores-dist', 'risk-summary'];
+  if (needsPortfolio.includes(endpointId)) {
+    // User should replace with a real portfolioId from the /portfolios response
+    return { portfolioId: 'replace-with-portfolio-id' };
+  }
+  return null;
+}
+
 // API Playground Panel with full sandbox features
 const ApiPlaygroundPanel: React.FC = () => {
-  const { currentEnvironment } = useEnvironment();
+  const { currentEnvironment, isDemoMode } = useEnvironment();
+  const { apiKey: globalApiKey, setApiKey: setGlobalApiKey } = useApiKeyStore();
   const [selectedEndpointId, setSelectedEndpointId] = useState<string>('credit-score');
   const [response, setResponse] = useState<string | null>(null);
   const [responseTime, setResponseTime] = useState<number | null>(null);
   const [responseStatus, setResponseStatus] = useState<number | null>(null);
   const [isRunning, setIsRunning] = useState(false);
 
-  // API Key state
-  const [apiKey, setApiKey] = useState<string>('');
+  // API Key state — sync with global store for non-demo modes
+  const [apiKey, setApiKey] = useState<string>(globalApiKey ?? '');
   const [selectedCredentialId, setSelectedCredentialId] = useState<string>('');
   const [storedCredentials, setStoredCredentials] = useState<StoredCredential[]>([]);
   const [keyValidation, setKeyValidation] = useState<{ valid: boolean; message: string } | null>(null);
 
-  // Error simulation state
-  const [errorSimulation, setErrorSimulation] = useState<ErrorSimulation>('200');
+  // Error simulation state — default to 'live' in sandbox/production, '200' in demo
+  const [errorSimulation, setErrorSimulation] = useState<ErrorSimulation>(isDemoMode ? '200' : 'live');
 
   // Request history state
   const [requestHistory, setRequestHistory] = useState<RequestHistoryEntry[]>([]);
@@ -459,7 +563,10 @@ const ApiPlaygroundPanel: React.FC = () => {
   const [copiedFetch, setCopiedFetch] = useState(false);
 
   const selectedEndpoint = playgroundEndpoints.find(e => e.id === selectedEndpointId) || playgroundEndpoints[0];
-  const baseUrl = currentEnvironment === 'sandbox' ? 'https://sandbox.lumiqai.com' : 'https://api.lumiqai.com';
+  const apiUrl = import.meta.env.VITE_API_URL as string | undefined;
+  const baseUrl = apiUrl
+    ? `${apiUrl}/dashboard`
+    : (currentEnvironment === 'sandbox' ? 'https://sandbox.lumiqai.com' : 'https://api.lumiqai.com');
 
   // Load stored credentials and selected key on mount
   useEffect(() => {
@@ -560,10 +667,21 @@ const ApiPlaygroundPanel: React.FC = () => {
     }
   };
 
+  // Sync local apiKey with global store changes (e.g. from ApiKeysPanel "Set as Active")
+  useEffect(() => {
+    if (globalApiKey && globalApiKey !== apiKey) {
+      setApiKey(globalApiKey);
+    }
+  }, [globalApiKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Handle manual API key input
   const handleApiKeyChange = (value: string) => {
     setApiKey(value);
     setSelectedCredentialId(''); // Clear selection when manually typing
+    // Sync to global store so BFF client also uses this key
+    if (!isDemoMode) {
+      setGlobalApiKey(value || null);
+    }
     if (value) {
       localStorage.setItem(STORAGE_KEYS.SELECTED_KEY, JSON.stringify({
         id: '',
@@ -576,39 +694,45 @@ const ApiPlaygroundPanel: React.FC = () => {
   // Build curl example with actual API key
   const buildCurlExample = useCallback(() => {
     const ep = selectedEndpoint;
-    const resolvedPath = ep.path.replace(':id', 'biz_test_8f2k9x');
-    const displayKey = apiKey || `lq_test_YOUR_API_KEY`;
+    const resolvedPath = ep.path;
+    const displayKey = apiKey || `sk_test_YOUR_API_KEY`;
+    const queryParams = getLiveQueryParams(selectedEndpointId);
+    const queryStr = queryParams ? `?${new URLSearchParams(queryParams).toString()}` : '';
+    const body = getLiveRequestBody(selectedEndpointId);
 
     if (ep.method === 'GET') {
-      return `curl -X GET "${baseUrl}${resolvedPath}" \\
-  -H "Authorization: Bearer ${displayKey}" \\
+      return `curl -X GET "${baseUrl}${resolvedPath}${queryStr}" \\
+  -H "X-API-Key: ${displayKey}" \\
   -H "Content-Type: application/json"`;
     }
     return `curl -X ${ep.method} "${baseUrl}${resolvedPath}" \\
-  -H "Authorization: Bearer ${displayKey}" \\
+  -H "X-API-Key: ${displayKey}" \\
   -H "Content-Type: application/json" \\
-  -d '{"business_id": "biz_test_8f2k9x"}'`;
-  }, [selectedEndpoint, apiKey, baseUrl]);
+  -d '${JSON.stringify(body || {})}'`;
+  }, [selectedEndpoint, selectedEndpointId, apiKey, baseUrl]);
 
   // Build fetch example
   const buildFetchExample = useCallback(() => {
     const ep = selectedEndpoint;
-    const resolvedPath = ep.path.replace(':id', 'biz_test_8f2k9x');
-    const displayKey = apiKey || `lq_test_YOUR_API_KEY`;
+    const resolvedPath = ep.path;
+    const displayKey = apiKey || `sk_test_YOUR_API_KEY`;
+    const queryParams = getLiveQueryParams(selectedEndpointId);
+    const queryStr = queryParams ? `?${new URLSearchParams(queryParams).toString()}` : '';
+    const body = getLiveRequestBody(selectedEndpointId);
 
     const fetchOptions: { method: string; headers: Record<string, string>; body?: string } = {
       method: ep.method,
       headers: {
-        'Authorization': `Bearer ${displayKey}`,
+        'X-API-Key': displayKey,
         'Content-Type': 'application/json',
       },
     };
 
-    if (ep.method !== 'GET') {
-      fetchOptions.body = JSON.stringify({ business_id: 'biz_test_8f2k9x' });
+    if (ep.method !== 'GET' && body) {
+      fetchOptions.body = JSON.stringify(body);
     }
 
-    return `fetch("${baseUrl}${resolvedPath}", ${JSON.stringify(fetchOptions, null, 2)})
+    return `fetch("${baseUrl}${resolvedPath}${queryStr}", ${JSON.stringify(fetchOptions, null, 2)})
   .then(response => response.json())
   .then(data => console.log(data))
   .catch(error => console.error('Error:', error));`;
@@ -647,12 +771,17 @@ const ApiPlaygroundPanel: React.FC = () => {
     localStorage.removeItem(STORAGE_KEYS.REQUEST_HISTORY);
   };
 
-  // Run request
-  const handleRun = () => {
-    // Validate key first
-    const validation = validateApiKey(apiKey);
-    if (!validation.valid) {
-      setKeyValidation(validation);
+  // Run request — live fetch for sandbox/production, simulated for demo
+  const handleRun = async () => {
+    // Live requests in non-demo mode skip format validation (real keys may differ)
+    if (errorSimulation !== 'live' || isDemoMode) {
+      const validation = validateApiKey(apiKey);
+      if (!validation.valid) {
+        setKeyValidation(validation);
+        return;
+      }
+    } else if (!apiKey) {
+      setKeyValidation({ valid: false, message: 'API key is required for live requests' });
       return;
     }
 
@@ -664,7 +793,72 @@ const ApiPlaygroundPanel: React.FC = () => {
     const ep = selectedEndpoint;
     const resolvedPath = ep.path.replace(':id', 'biz_test_8f2k9x');
 
-    // Determine delay based on simulation
+    // ── LIVE REQUEST: real fetch to the backend ──
+    if (errorSimulation === 'live' && !isDemoMode) {
+      // Build endpoint-specific request body and query params
+      const liveRequestBody = getLiveRequestBody(selectedEndpointId);
+      const queryParams = getLiveQueryParams(selectedEndpointId);
+      const queryStr = queryParams ? `?${new URLSearchParams(queryParams).toString()}` : '';
+      const liveUrl = `${baseUrl}${resolvedPath}${queryStr}`;
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'X-API-Key': apiKey,
+      };
+      const fetchOptions: RequestInit = {
+        method: ep.method,
+        headers,
+      };
+      if (ep.method !== 'GET' && liveRequestBody) {
+        fetchOptions.body = JSON.stringify(liveRequestBody);
+      }
+
+      const startTime = performance.now();
+      try {
+        const res = await fetch(liveUrl, fetchOptions);
+        const elapsed = Math.round(performance.now() - startTime);
+        const body = await res.json().catch(() => ({ error: 'Failed to parse response' }));
+        const responseJson = JSON.stringify(body, null, 2);
+
+        setResponse(responseJson);
+        setResponseTime(elapsed);
+        setResponseStatus(res.status);
+
+        // Add to local history
+        addToHistory({
+          timestamp: new Date().toISOString(),
+          endpoint: resolvedPath,
+          method: ep.method,
+          statusCode: res.status,
+          responseTime: elapsed,
+          requestBody: liveRequestBody ? JSON.stringify(liveRequestBody) : null,
+          responseBody: responseJson,
+        });
+      } catch (err) {
+        const elapsed = Math.round(performance.now() - startTime);
+        const errorMessage = err instanceof Error ? err.message : 'Network error';
+        const errorJson = JSON.stringify({ error: { code: 'NETWORK_ERROR', message: errorMessage } }, null, 2);
+
+        setResponse(errorJson);
+        setResponseTime(elapsed);
+        setResponseStatus(0);
+
+        addToHistory({
+          timestamp: new Date().toISOString(),
+          endpoint: resolvedPath,
+          method: ep.method,
+          statusCode: 0,
+          responseTime: elapsed,
+          requestBody: liveRequestBody ? JSON.stringify(liveRequestBody) : null,
+          responseBody: errorJson,
+          simulatedError: 'network',
+        });
+      } finally {
+        setIsRunning(false);
+      }
+      return;
+    }
+
+    // ── SIMULATED REQUEST: demo data or error simulation ──
     const delay = errorSimulation === 'timeout' ? 3000 : Math.floor(Math.random() * 171) + 80;
 
     setTimeout(() => {
@@ -924,7 +1118,9 @@ const ApiPlaygroundPanel: React.FC = () => {
               </SelectContent>
             </Select>
             <p className="text-xs text-muted-foreground mt-1">
-              Simulate different API responses to test your error handling
+              {errorSimulation === 'live' && !isDemoMode
+                ? 'Sends real requests to the backend API'
+                : 'Simulate different API responses to test your error handling'}
             </p>
           </div>
         </div>
@@ -1020,10 +1216,13 @@ const ApiPlaygroundPanel: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-semibold">Response</h3>
-                {currentEnvironment === 'sandbox' && response && (
+                {errorSimulation === 'live' && !isDemoMode && response && (
+                  <Badge variant="default" className="bg-primary/10 text-primary">Live</Badge>
+                )}
+                {currentEnvironment === 'sandbox' && errorSimulation !== 'live' && response && (
                   <Badge variant="warning">Sandbox</Badge>
                 )}
-                {errorSimulation !== '200' && response && (
+                {errorSimulation !== '200' && errorSimulation !== 'live' && response && (
                   <Badge variant="destructive">Simulated Error</Badge>
                 )}
               </div>
@@ -1216,8 +1415,14 @@ const ApiPlaygroundPanel: React.FC = () => {
 };
 
 // API Keys Panel
-const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }) => {
+const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
+  apiKeys = [],
+  isLoadingKeys,
+  newlyGeneratedKey,
+  setNewlyGeneratedKey,
+}) => {
   const { currentEnvironment } = useEnvironment();
+  const { apiKey: activeApiKey, setApiKey: setActiveApiKey } = useApiKeyStore();
 
   const filteredKeys = apiKeys.filter((key) => {
     // Match by environment field
@@ -1228,12 +1433,63 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }
     return false;
   });
 
+  /** Check if a key is the currently active key by comparing the prefix. */
+  const isActiveKey = (key: ApiKey): boolean => {
+    if (!activeApiKey) return false;
+    // If we have the full key, compare directly
+    if (key.key && activeApiKey === key.key) return true;
+    // Compare prefix
+    if (key.keyPrefix && activeApiKey.startsWith(key.keyPrefix)) return true;
+    return false;
+  };
+
+  const handleSetActive = (fullKey: string) => {
+    setActiveApiKey(fullKey);
+    toast.success('API key set as active for playground requests');
+  };
+
   const envLabel = currentEnvironment === 'sandbox' ? 'sandbox' : 'production';
 
   return (
     <div className="bg-card rounded-2xl border border-border p-6">
       <h3 className="text-lg font-semibold mb-4">API Keys & OAuth Clients</h3>
       <p className="text-sm text-muted-foreground mb-6">Manage your API keys and OAuth client credentials for secure access.</p>
+
+      {/* Newly generated key banner */}
+      {newlyGeneratedKey && (
+        <div className="mb-4 p-4 bg-success/10 border border-success/20 rounded-xl space-y-3">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-success" />
+            <span className="font-semibold text-success">Key Created: {newlyGeneratedKey.name}</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Copy this key now -- it will not be shown again.
+          </p>
+          <code className="block bg-muted px-3 py-2 rounded-lg text-sm font-mono break-all">
+            {newlyGeneratedKey.key}
+          </code>
+          <div className="flex items-center gap-2">
+            <Button
+              size="sm"
+              variant="default"
+              onClick={() => {
+                handleSetActive(newlyGeneratedKey.key);
+                setNewlyGeneratedKey?.(null);
+              }}
+            >
+              <Zap className="w-4 h-4 mr-1" />
+              Set as Active
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setNewlyGeneratedKey?.(null)}
+            >
+              Dismiss
+            </Button>
+          </div>
+        </div>
+      )}
 
       {isLoadingKeys ? (
         <div className="space-y-3">
@@ -1243,15 +1499,44 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({ apiKeys = [], isLoadingKeys }
         </div>
       ) : (
         <div className="space-y-3">
-          {filteredKeys.length > 0 ? filteredKeys.map((key) => (
-            <div key={key.id} className="flex items-center justify-between p-4 bg-muted rounded-xl">
-              <div>
-                <span className="font-medium">{key.name}</span>
-                <span className="ml-2 text-xs text-muted-foreground">{key.environment || 'development'}</span>
+          {filteredKeys.length > 0 ? filteredKeys.map((key) => {
+            const active = isActiveKey(key);
+            return (
+              <div
+                key={key.id}
+                className={cn(
+                  'flex items-center justify-between p-4 rounded-xl transition-all duration-200',
+                  active ? 'bg-primary/5 border border-primary/20' : 'bg-muted',
+                )}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{key.name}</span>
+                  <span className="text-xs text-muted-foreground">{key.environment || 'development'}</span>
+                  {active && (
+                    <Badge variant="default" className="bg-primary/10 text-primary text-xs">
+                      Active
+                    </Badge>
+                  )}
+                </div>
+                <div className="flex items-center gap-3">
+                  <code className="text-sm font-mono text-muted-foreground">
+                    sk_...{key.key?.slice(-4) || '****'}
+                  </code>
+                  {key.key && !active && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleSetActive(key.key!)}
+                      className="text-xs"
+                    >
+                      <Zap className="w-3 h-3 mr-1" />
+                      Set as Active
+                    </Button>
+                  )}
+                </div>
               </div>
-              <code className="text-sm font-mono text-muted-foreground">sk_...{key.key?.slice(-4) || '****'}</code>
-            </div>
-          )) : (
+            );
+          }) : (
             <p className="text-center py-8 text-muted-foreground">No API keys yet. Generate one above.</p>
           )}
           <p className="text-xs text-muted-foreground text-center pt-2">

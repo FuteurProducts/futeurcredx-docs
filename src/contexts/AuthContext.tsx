@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { logger } from '@/utils/logger';
 import {
   useAuth as useClerkAuth,
@@ -7,7 +7,8 @@ import {
   SignedIn,
   SignedOut,
 } from '@clerk/clerk-react';
-import { setAuthTokenGetter } from '@/services/bff/client';
+import { setAuthTokenGetter, setApiKey } from '@/services/bff/client';
+import { useApiKeyStore } from '@/stores/apiKeyStore';
 import { ACTIVE_BANK_ID } from '@/data/bankConfig';
 import type { BankId } from '@/data/bankConfig';
 
@@ -126,17 +127,66 @@ export const DemoAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
-/** Use when Clerk is not configured: provides same context with no-auth state so the app still runs. */
+/**
+ * Use when Clerk is not configured: sandbox/production with X-API-Key auth.
+ *
+ * When an API key is stored (via API Console), this provider:
+ * 1. Sets `isSignedIn: true` so ProtectedRoute allows access
+ * 2. Injects the API key into the BFF client via `setApiKey()`
+ * 3. Subscribes to API key changes so they propagate immediately
+ */
 export const FallbackAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const storedApiKey = useApiKeyStore((s) => s.apiKey);
+  const [authValue, setAuthValue] = useState<AuthContextType>(() => buildFallbackAuthValue(storedApiKey));
+
+  // Wire the API key into the BFF client whenever it changes
   useEffect(() => {
+    setApiKey(storedApiKey);
     setAuthTokenGetter(FALLBACK_VALUE.getToken);
+    setAuthValue(buildFallbackAuthValue(storedApiKey));
+  }, [storedApiKey]);
+
+  // Subscribe to Zustand store changes outside React (for BFF client sync)
+  useEffect(() => {
+    const unsub = useApiKeyStore.subscribe((state) => {
+      setApiKey(state.apiKey);
+    });
+    return unsub;
   }, []);
+
   return (
-    <AuthContext.Provider value={FALLBACK_VALUE}>
+    <AuthContext.Provider value={authValue}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+/** Build auth context value based on whether an API key is configured. */
+function buildFallbackAuthValue(apiKey: string | null): AuthContextType {
+  if (apiKey) {
+    return {
+      isSignedIn: true,
+      isLoaded: true,
+      user: {
+        id: 'sandbox-user',
+        email: 'sandbox@lumiqai.com',
+        firstName: 'Sandbox',
+        lastName: 'User',
+        fullName: 'Sandbox User',
+        username: 'sandbox',
+        imageUrl: '/lumiq-avatar.png',
+      },
+      signIn: FALLBACK_VALUE.signIn,
+      signUp: FALLBACK_VALUE.signUp,
+      signOut: async () => {
+        useApiKeyStore.getState().clearApiKey();
+        setApiKey(null);
+      },
+      getToken: async () => null,
+    };
+  }
+  return FALLBACK_VALUE;
+}
 
 function mapClerkUser(clerkUser: ReturnType<typeof useClerkUser>['user']): User | null {
   if (!clerkUser) return null;

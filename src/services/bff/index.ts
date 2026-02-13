@@ -3,7 +3,7 @@
  * Centralized export for all BFF API services
  */
 
-export { default as bffClient, type BffResponse, type BffListResponse, type BffError, type BffRequestOptions, setAuthTokenGetter } from './client';
+export { default as bffClient, type BffResponse, type BffListResponse, type BffError, type BffRequestOptions, setAuthTokenGetter, setApiKey, getApiKey } from './client';
 
 export { default as customersService } from './customers';
 export { default as scoresService } from './scores';
