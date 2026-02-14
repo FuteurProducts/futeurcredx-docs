@@ -1414,6 +1414,47 @@ const ApiPlaygroundPanel: React.FC = () => {
   );
 };
 
+// Bootstrap Key Section — lets user paste an existing API key to unblock first-key creation
+const BootstrapKeySection: React.FC<{ onSetActive: (key: string) => void; envLabel: string }> = ({ onSetActive, envLabel }) => {
+  const [pasteKey, setPasteKey] = useState('');
+
+  const handleActivate = () => {
+    const trimmed = pasteKey.trim();
+    if (!trimmed) return;
+    onSetActive(trimmed);
+    setPasteKey('');
+    toast.success('API key activated. You can now generate new keys.');
+  };
+
+  return (
+    <div className="mb-6 p-4 bg-warning/5 border border-warning/20 rounded-xl">
+      <div className="flex items-center gap-2 mb-2">
+        <AlertTriangle className="w-4 h-4 text-warning" />
+        <span className="text-sm font-semibold">No Active API Key</span>
+      </div>
+      <p className="text-xs text-muted-foreground mb-3">
+        To create new keys, paste an existing {envLabel} API key below. This authenticates your session with the backend.
+      </p>
+      <div className="flex gap-3">
+        <Input
+          type="password"
+          placeholder={`Paste your ${envLabel === 'sandbox' ? 'sk_test_...' : 'sk_live_...'} key`}
+          value={pasteKey}
+          onChange={(e) => setPasteKey(e.target.value)}
+          className="flex-1 font-mono"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && pasteKey.trim()) handleActivate();
+          }}
+        />
+        <Button onClick={handleActivate} disabled={!pasteKey.trim()} variant="outline">
+          <Key className="w-4 h-4 mr-2" />
+          Activate
+        </Button>
+      </div>
+    </div>
+  );
+};
+
 // API Keys Panel
 const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
   apiKeys = [],
@@ -1501,6 +1542,11 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
           </div>
         )}
       </div>
+
+      {/* Bootstrap: paste an existing API key when no keys are stored */}
+      {!activeApiKey && filteredKeys.length === 0 && !newlyGeneratedKey && (
+        <BootstrapKeySection onSetActive={handleSetActive} envLabel={envLabel} />
+      )}
 
       {/* Newly generated key banner */}
       {newlyGeneratedKey && (

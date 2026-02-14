@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useCallback, useState } from 'react';
 import { logger } from '@/utils/logger';
 import {
   useAuth as useClerkAuth,
@@ -210,9 +210,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const user = mapClerkUser(clerkUser || null);
 
+  // ── Ref to always hold the LATEST clerkGetToken ──
+  // This prevents stale closure bugs. The ref is updated on every render,
+  // so the stable getToken callback always calls the most current Clerk function.
+  const clerkGetTokenRef = useRef(clerkGetToken);
+  clerkGetTokenRef.current = clerkGetToken;
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const signIn = async (_email: string, _password: string) => {
-    // Clerk handles sign-in via its own UI components (SignIn, RedirectToSignIn)
     clerk.redirectToSignIn();
   };
 
@@ -227,18 +232,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await clerk.signOut();
   };
 
-  const getToken = async (): Promise<string | null> => {
+  // Stable token getter — always calls the latest clerkGetToken via ref
+  const getToken = useCallback(async (): Promise<string | null> => {
     try {
-      return await clerkGetToken();
+      const token = await clerkGetTokenRef.current();
+      return token;
     } catch {
       return null;
     }
-  };
+  }, []);
 
-  // Inject Clerk token getter into BFF client (fallback when no API key is set)
+  // Inject Clerk token getter into BFF client ONCE (stable via useCallback)
   useEffect(() => {
     setAuthTokenGetter(getToken);
-  }, [clerkGetToken]);
+  }, [getToken]);
 
   // Wire API key from store into BFF client (takes priority over Clerk JWT)
   useEffect(() => {

@@ -47,8 +47,8 @@ export interface BffRequestOptions {
 }
 
 // ── Auth: Clerk JWT ──────────────────────────────────────────────────────
-// Injected from AuthContext
-let _getToken: (() => Promise<string | null>) | null = () => Promise.resolve('demo-init-pending');
+// Injected from AuthContext. Starts null — AuthProvider sets the real getter on mount.
+let _getToken: (() => Promise<string | null>) | null = null;
 
 export function setAuthTokenGetter(getter: () => Promise<string | null>) {
   _getToken = getter;
@@ -98,10 +98,13 @@ async function request<T>(
   const hasToken = Boolean(token);
 
   if (!hasApiKey && !hasToken) {
+    const hint = !_getToken
+      ? 'Auth not initialized — token getter not set. Refresh the page.'
+      : 'Clerk session returned no token. Try signing out and back in, or set an API key in the API Console.';
     throw {
       error: {
         code: 'UNAUTHORIZED',
-        message: 'No active session. Please configure an API key or log in.',
+        message: hint,
       },
       meta: { requestId: crypto.randomUUID() },
     } as BffError;
