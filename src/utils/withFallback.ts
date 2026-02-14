@@ -33,10 +33,9 @@ export async function withFallback<T>(
   } catch (err) {
     if (isDemoMode) {
       logger.info(`[withFallback] ${label}: demo mode — using fallback data`);
-      return { data: fallbackData, source: 'fallback' };
+    } else {
+      logger.warn(`[withFallback] ${label}: BFF call failed, using fallback data`, err);
     }
-
-    logger.warn(`[withFallback] ${label}: BFF unavailable, re-throwing error`, err);
-    throw err;
+    return { data: fallbackData, source: 'fallback' };
   }
 }

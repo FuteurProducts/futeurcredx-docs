@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line } from 'recharts';
 import dashboardService from '@/services/dashboardService';
 import { logger } from '@/utils/logger';
@@ -25,8 +24,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
-
 // Lucide icons
 import {
   Search,
@@ -163,21 +160,6 @@ const Users = () => {
   // Animated counts
   const animatedTotalBusinesses = useCountUp(stats?.totalBusinesses || 0, 1500);
   const animatedTotalApplications = useCountUp(stats?.totalApplications || 0, 1500);
-
-  // Environment check - must be after all hooks
-  const { isDemoMode } = useEnvironment();
-
-  // Early return for sandbox/production mode
-  if (!isDemoMode) {
-    return (
-      <div className="p-4 lg:p-6">
-        <SandboxEmptyState
-          title="No Business Data"
-          description="Connect to a live API to view business portfolio data. Business details and scoring will appear here once your API integration is configured."
-        />
-      </div>
-    );
-  }
 
   // Fetch data
   useEffect(() => {

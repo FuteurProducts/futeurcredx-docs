@@ -11,14 +11,12 @@ import { motion } from 'framer-motion';
 
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import {
   CreditKPIRow,
   ScoreDistribution,
   SegmentDrillDown,
   SegmentGrid,
 } from '@/components/enterprise/credit-intelligence';
-import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { PORTFOLIO } from '@/data/chaseDemoData';
 import { formatNumber } from '@/lib/formatters';
 
@@ -33,8 +31,6 @@ const CreditIntelligence: React.FC = () => {
   const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(
     null,
   );
-  const { isDemoMode } = useEnvironment();
-
   const handleSegmentSelect = (segmentId: string) => {
     setSelectedSegmentId(segmentId);
   };
@@ -43,19 +39,8 @@ const CreditIntelligence: React.FC = () => {
     setSelectedSegmentId(null);
   };
 
-  // Early return for sandbox/production mode — show empty state instead of demo data
-  if (!isDemoMode) {
-    return (
-      <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-y-auto p-4 lg:p-6">
-          <SandboxEmptyState
-            title="No Credit Intelligence Data"
-            description="Connect to a live API to view credit intelligence metrics. In demo mode, sample portfolio data is displayed."
-          />
-        </div>
-      </div>
-    );
-  }
+  // Note: Credit Intelligence currently uses demo data in all modes.
+  // Real API integration (GET /scores/distribution) is a future enhancement.
 
   return (
     <div className="flex flex-col h-full">
