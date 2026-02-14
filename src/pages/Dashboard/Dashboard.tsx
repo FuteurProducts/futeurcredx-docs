@@ -12,6 +12,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 
 import type { ApiStats, ApiKey } from '@/types';
+import { apiKeysService } from '@/services/bff/apiKeys';
 import Users from '@/pages/Dashboard/Users';
 import Products from '@/pages/Dashboard/Products';
 import Reports from '@/pages/Dashboard/Reports';
@@ -28,7 +29,7 @@ import Documentation from '@/components/dashboard/pages/Documentation';
 // Import Connected Environment Toggle (uses global context)
 import { ConnectedEnvironmentToggle } from '@/components/widgets';
 import { DataSourceBadge } from '@/components/shared/DataSourceBadge';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
+
 import { logger } from '@/utils/logger';
 import { useToast } from '@/hooks/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -94,7 +95,7 @@ const Dashboard: React.FC = () => {
   const { resolvedTheme, setTheme } = useTheme();
   const { currentEnvironment, switchEnvironment } = useEnvironment();
   const featureFlags = useFeatureFlags();
-  const isDemoMode = currentEnvironment === 'demo';
+
 
   // Filter navigation based on feature flags (hide API Console in demo mode, etc.)
   const filteredNavigation = navigation.filter(item => {
@@ -168,81 +169,42 @@ const Dashboard: React.FC = () => {
     }
   }
 
-  // Fetch all API keys for authenticated user
+  // Fetch all API keys for authenticated user via BFF client
   const fetchApiKeys = async () => {
     try {
-      const token = await getBackendToken()
-      
-      if (!token) {
-        setError('No authentication token available. Please sign in again.')
-        setIsLoadingKeys(false)
-        return
-      }
+      const result = await apiKeysService.list();
+      const bffKeys = result.data || [];
+      const keys: ApiKey[] = bffKeys.map((k) => ({
+        id: k.id,
+        name: k.name,
+        keyPrefix: k.keyPrefix,
+        createdAt: k.createdAt,
+        isActive: k.isActive,
+        environment: k.environment,
+        scopes: k.scopes || [],
+        lastUsedAt: k.lastUsedAt,
+        expiresAt: k.expiresAt,
+      }));
+      setApiKeys(keys);
+      const keyStats: ApiKeyStats[] = keys.map((key) => ({
+        keyId: key.id,
+        keyName: key.name,
+        callsUsed: 0,
+        lastUsed: key.lastUsedAt || null,
+        isActive: key.isActive !== false,
+        environment: key.environment || 'development'
+      }));
 
-      const apiUrl = '/api/v1/api-keys'
-      
-      const response = await fetch(apiUrl, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
-        const keys = data.apiKeys || [];
-        setApiKeys(keys);
-        const keyStats: ApiKeyStats[] = keys.map((key: ApiKey) => ({
-          keyId: key.id,
-          keyName: key.name,
-          callsUsed: key.usageCount || key.callsUsed || 0,
-          lastUsed: key.lastUsedAt || key.lastUsed || null,
-          isActive: key.isActive !== false,
-          environment: key.environment || 'development'
-        }));
-        
-        const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
-        setApiStats(prevStats => ({
-          ...prevStats,
-          totalCalls: totalCallsFromKeys,
-          keyStats: keyStats,
-        }));
-        setError('')
-      } else {
-        if (response.status === 401) {
-          setError('Authentication failed. Your session may have expired.')
-          setApiKeys([])
-        } else {
-          setError(`API Error: ${response.status}`)
-        }
-      }
+      const totalCallsFromKeys = keyStats.reduce((sum, key) => sum + key.callsUsed, 0);
+      setApiStats(prevStats => ({
+        ...prevStats,
+        totalCalls: totalCallsFromKeys,
+        keyStats: keyStats,
+      }));
+      setError('')
     } catch (error) {
       logger.error('[Dashboard] Error fetching API keys:', error)
-      // Sandbox mode fallback — provide professional demo keys
-      setApiKeys([
-        {
-          id: 'sandbox-prod-001',
-          name: 'Production Key',
-          key: 'lq_live_****************************7x9m',
-          keyPrefix: 'lq_live_',
-          createdAt: '2026-01-15T00:00:00Z',
-          lastUsed: '2026-01-31T14:30:00Z',
-          callsUsed: 2847,
-          isActive: true,
-          environment: 'production',
-        },
-        {
-          id: 'sandbox-test-001',
-          name: 'Sandbox Test Key',
-          key: 'lq_test_****************************3k2p',
-          keyPrefix: 'lq_test_',
-          createdAt: '2026-01-20T00:00:00Z',
-          lastUsed: '2026-01-31T10:15:00Z',
-          callsUsed: 892,
-          isActive: true,
-          environment: 'sandbox',
-        },
-      ] as ApiKey[])
+      setApiKeys([])
       setError('')
     } finally {
       setIsLoadingKeys(false)
@@ -342,88 +304,51 @@ const Dashboard: React.FC = () => {
     await fetchApiStats(true);
   };
 
-  // Generate new API key
+  // Generate new API key via BFF client (uses X-API-Key auth automatically)
   const handleGenerateKey = async () => {
     if (!newKeyName.trim()) return
-    
+
     setIsGeneratingKey(true)
     setError('')
-    
-    try {
-      const token = await getBackendToken()
-      
-      if (!token) {
-        setError('No authentication token available.')
-        return
-      }
-      
-      const baseUrl = '/api/v1/api-keys'
-      const requestPayload: { name: string } = { name: newKeyName.trim() }
-      
-      const response = await fetch(baseUrl, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestPayload),
-      })
 
-      if (response.ok) {
-          const newKey = await response.json()
-          const apiKeyData = newKey.apiKey || newKey
-          
-          if (!apiKeyData || typeof apiKeyData !== 'object' || !apiKeyData.name) {
-          setError('Invalid response format from server')
-            return
-          }
-          
-          const validatedKey = {
-            id: apiKeyData.id || `temp-${Date.now()}`,
-          name: apiKeyData.name,
-          key: apiKeyData.key || apiKeyData.apiKey || 'key-not-provided',
-          keyPrefix: apiKeyData.keyPrefix || null,
-          createdAt: apiKeyData.createdAt || new Date().toISOString(),
-          lastUsed: apiKeyData.lastUsed || null,
-          callsUsed: apiKeyData.callsUsed || 0,
-            isActive: apiKeyData.isActive !== undefined ? apiKeyData.isActive : true,
-            environment: apiKeyData.environment || 'development',
-            ...apiKeyData,
-        }
-        
-        if (validatedKey.key) {
-            setNewlyGeneratedKey({
-              id: validatedKey.id,
-            key: validatedKey.key,
-              name: validatedKey.name
-            })
-          }
-          
-        setApiKeys(prev => [...prev, validatedKey])
-          setNewKeyName('')
-        setError('')
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        setError(errorData.error || `Server Error: ${response.status}`)
-      }
-    } catch (error) {
-      logger.error('[Dashboard] Failed to generate API key:', error)
-      // Sandbox mode — generate locally
-      const sandboxKey = {
-        id: `sandbox-${Date.now()}`,
+    try {
+      const result = await apiKeysService.create({
         name: newKeyName.trim(),
-        key: `lq_test_${Array.from({length: 28}, () => 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)]).join('')}`,
-        keyPrefix: 'lq_test_',
-        createdAt: new Date().toISOString(),
-        lastUsed: null,
-        callsUsed: 0,
-        isActive: true,
         environment: 'sandbox',
+        scopes: ['read', 'write'],
+        expiresInDays: 30,
+      });
+
+      const created = result.data;
+      // The create response may include the full key as `keyValue` — only available once
+      const rawData = result.data as unknown as Record<string, string>;
+      const fullKey = rawData.keyValue || rawData.key || '';
+
+      if (fullKey) {
+        setNewlyGeneratedKey({
+          id: created.id,
+          key: fullKey,
+          name: created.name,
+        });
+      }
+
+      const newKey: ApiKey = {
+        id: created.id,
+        name: created.name,
+        key: fullKey,
+        keyPrefix: created.keyPrefix,
+        createdAt: created.createdAt,
+        isActive: created.isActive,
+        environment: created.environment,
+        scopes: created.scopes || [],
       };
-      setNewlyGeneratedKey({ id: sandboxKey.id, key: sandboxKey.key, name: sandboxKey.name });
-      setApiKeys(prev => [...prev, sandboxKey as ApiKey]);
+      setApiKeys(prev => [...prev, newKey]);
       setNewKeyName('');
       setError('');
+    } catch (error) {
+      logger.error('[Dashboard] Failed to generate API key:', error);
+      const bffErr = error as { error?: { message?: string } };
+      setError(bffErr?.error?.message || 'Failed to create API key. Ensure an API key is set as active.');
     } finally {
       setIsGeneratingKey(false)
     }
@@ -432,35 +357,17 @@ const Dashboard: React.FC = () => {
   // Revoke API key
   const handleRevokeKey = async (keyId: string) => {
     try {
-      const token = await getBackendToken()
-      const baseUrl = '/api/v1/api-keys'
-      const response = await fetch(`${baseUrl}/${keyId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
-
-      if (response.ok) {
-        const keyToDelete = apiKeys.find(key => key.id === keyId);
-        if (keyToDelete) {
-          setDeletedKeys(prev => [...prev, { ...keyToDelete, isActive: false }]);
-        }
-        setApiKeys(prev => prev.filter(key => key.id !== keyId))
-        setError('')
-      } else {
-        setError('Failed to revoke API key')
-      }
-    } catch (error) {
-      logger.error('[Dashboard] Error revoking API key:', error)
-      // Sandbox mode — silently remove the key locally
+      await apiKeysService.revoke(keyId);
       const keyToDelete = apiKeys.find(key => key.id === keyId);
       if (keyToDelete) {
         setDeletedKeys(prev => [...prev, { ...keyToDelete, isActive: false }]);
       }
       setApiKeys(prev => prev.filter(key => key.id !== keyId))
       setError('')
+    } catch (error) {
+      logger.error('[Dashboard] Error revoking API key:', error)
+      const bffErr = error as { error?: { message?: string } };
+      setError(bffErr?.error?.message || 'Failed to revoke API key. Ensure an API key is set as active.');
     }
   }
 
@@ -934,7 +841,6 @@ const Dashboard: React.FC = () => {
           )}
 
           {activeTab === 'api-keys' && (
-            isDemoMode ? (
               <ApiConsole
                 apiKeys={apiKeys}
                 isLoadingKeys={isLoadingKeys}
@@ -950,13 +856,6 @@ const Dashboard: React.FC = () => {
                 toggleKeyVisibility={toggleKeyVisibility}
                 formatDate={formatDate}
               />
-            ) : (
-              <SandboxEmptyState
-                title="No API Keys"
-                description="Create an API key to start integrating with the LUMIQ AI platform."
-                actionLabel="Create API Key"
-              />
-            )
           )}
 
             {activeTab === 'credit-intel' && <CreditIntelligence />}

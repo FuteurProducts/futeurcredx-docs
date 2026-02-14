@@ -625,18 +625,18 @@ const ApiPlaygroundPanel: React.FC = () => {
     const trimmedKey = key.trim();
 
     if (currentEnvironment === 'sandbox') {
-      if (trimmedKey.startsWith('lq_live_') || trimmedKey.startsWith('lq_prod_')) {
-        return { valid: false, message: 'Warning: Production key detected in sandbox mode. Use a sandbox key (lq_test_...)' };
+      if (trimmedKey.startsWith('sk_live_') || trimmedKey.startsWith('lq_live_') || trimmedKey.startsWith('lq_prod_')) {
+        return { valid: false, message: 'Warning: Production key detected in sandbox mode. Use a sandbox key (sk_test_...)' };
       }
-      if (!trimmedKey.startsWith('lq_test_')) {
-        return { valid: false, message: 'Sandbox keys must start with lq_test_' };
+      if (!trimmedKey.startsWith('sk_test_') && !trimmedKey.startsWith('lq_test_')) {
+        return { valid: false, message: 'Sandbox keys must start with sk_test_' };
       }
     } else {
-      if (trimmedKey.startsWith('lq_test_')) {
-        return { valid: false, message: 'Warning: Sandbox key detected in production mode. Use a production key (lq_live_...)' };
+      if (trimmedKey.startsWith('sk_test_') || trimmedKey.startsWith('lq_test_')) {
+        return { valid: false, message: 'Warning: Sandbox key detected in production mode. Use a production key (sk_live_...)' };
       }
-      if (!trimmedKey.startsWith('lq_live_') && !trimmedKey.startsWith('lq_prod_')) {
-        return { valid: false, message: 'Production keys must start with lq_live_ or lq_prod_' };
+      if (!trimmedKey.startsWith('sk_live_') && !trimmedKey.startsWith('lq_live_') && !trimmedKey.startsWith('lq_prod_')) {
+        return { valid: false, message: 'Production keys must start with sk_live_' };
       }
     }
 

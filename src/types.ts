@@ -17,8 +17,8 @@ export interface ApiKey {
   scopes: string[];
   expiresInDays?: number;
   expiresAt?: string;
-  ipWhitelist: string[];
-  geoRestrictions: string[];
+  ipWhitelist?: string[];
+  geoRestrictions?: string[];
   message?: string | null;
 }
 
