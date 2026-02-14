@@ -132,7 +132,8 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
               baseTheme: resolvedTheme === 'dark' ? dark : undefined,
               elements: {
                 avatarBox: "w-8 h-8 ring-2 ring-primary/20",
-                userButtonPopoverCard: "bg-popover border-border",
+                userButtonPopoverCard: { zIndex: 9999, backgroundColor: 'hsl(var(--popover))', borderColor: 'hsl(var(--border))' },
+                userButtonPopoverRootBox: { zIndex: 9999 },
                 userButtonPopoverActionButton: "text-foreground hover:bg-accent",
                 userButtonPopoverActionButtonText: "text-foreground",
                 userButtonPopoverFooter: "hidden",

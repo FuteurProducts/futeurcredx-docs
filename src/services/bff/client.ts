@@ -98,9 +98,11 @@ async function request<T>(
   const hasToken = Boolean(token);
 
   if (!hasApiKey && !hasToken) {
-    const hint = !_getToken
-      ? 'Auth not initialized — token getter not set. Refresh the page.'
-      : 'Clerk session returned no token. Try signing out and back in, or set an API key in the API Console.';
+    const hint = `Auth failed: apiKey=${hasApiKey ? 'SET' : 'NULL'}, jwt=${hasToken ? 'SET' : 'NULL'}, tokenGetter=${typeof _getToken === 'function' ? 'FUNCTION' : 'NULL'}. ${
+      !_getToken
+        ? 'Auth not initialized — token getter not set. Refresh the page.'
+        : 'Clerk session returned no token. Try signing out and back in, or set an API key in the API Console.'
+    }`;
     throw {
       error: {
         code: 'UNAUTHORIZED',

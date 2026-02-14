@@ -1543,8 +1543,8 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
         )}
       </div>
 
-      {/* Bootstrap: paste an existing API key when no keys are stored */}
-      {!activeApiKey && filteredKeys.length === 0 && !newlyGeneratedKey && (
+      {/* Bootstrap: paste an existing API key when none is active */}
+      {!activeApiKey && !newlyGeneratedKey && (
         <BootstrapKeySection onSetActive={handleSetActive} envLabel={envLabel} />
       )}
 

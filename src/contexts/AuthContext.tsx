@@ -235,9 +235,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Stable token getter — always calls the latest clerkGetToken via ref
   const getToken = useCallback(async (): Promise<string | null> => {
     try {
-      const token = await clerkGetTokenRef.current();
+      const fn = clerkGetTokenRef.current;
+      if (!fn) {
+        logger.error('[AUTH] clerkGetTokenRef.current is null/undefined');
+        return null;
+      }
+      const token = await fn();
+      if (!token) {
+        logger.error('[AUTH] clerkGetToken() returned null — session may not be loaded');
+      }
       return token;
-    } catch {
+    } catch (err) {
+      logger.error('[AUTH] clerkGetToken() threw:', err);
       return null;
     }
   }, []);

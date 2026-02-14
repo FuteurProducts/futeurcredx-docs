@@ -347,8 +347,8 @@ const Dashboard: React.FC = () => {
       setError('');
     } catch (error) {
       logger.error('[Dashboard] Failed to generate API key:', error);
-      const bffErr = error as { error?: { message?: string }; message?: string };
-      const msg = bffErr?.error?.message || bffErr?.message || 'Failed to create API key. Set an API key as active in the Playground tab, or sign out and back in.';
+      const bffErr = error as { error?: { code?: string; message?: string }; message?: string };
+      const msg = bffErr?.error?.message || bffErr?.message || 'Unknown error creating API key.';
       setError(msg);
     } finally {
       setIsGeneratingKey(false)

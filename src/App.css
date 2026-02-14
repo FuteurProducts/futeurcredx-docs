@@ -1,1 +1,8 @@
 /* App-level overrides — kept minimal; Tailwind handles most styling */
+
+/* Clerk UserButton popover — ensure it renders above all dashboard elements */
+.cl-userButtonPopoverCard,
+.cl-popoverBox,
+.cl-userButtonPopoverRootBox {
+  z-index: 9999 !important;
+}
