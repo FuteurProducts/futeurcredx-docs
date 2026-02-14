@@ -1661,6 +1661,44 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
           </p>
         </div>
       )}
+
+      {/* Debug diagnostics panel */}
+      <ApiDiagnosticsPanel activeApiKey={activeApiKey} />
+    </div>
+  );
+};
+
+// Diagnostics panel — shows protocol mismatch and auth state
+const ApiDiagnosticsPanel: React.FC<{ activeApiKey: string | null }> = ({ activeApiKey }) => {
+  const apiUrl = (import.meta.env.VITE_API_URL as string) || 'not set';
+  const dashboardOrigin = typeof window !== 'undefined' ? window.location.origin : 'unknown';
+  const apiProtocol = apiUrl.startsWith('https') ? 'HTTPS' : apiUrl.startsWith('http') ? 'HTTP' : 'unknown';
+  const dashProtocol = dashboardOrigin.startsWith('https') ? 'HTTPS' : 'HTTP';
+  const isMixed = dashProtocol === 'HTTPS' && apiProtocol === 'HTTP';
+
+  return (
+    <div className="mt-6 p-3 bg-muted/30 rounded-xl border border-border/50 text-xs font-mono space-y-1">
+      <div className="flex items-center gap-2 mb-1">
+        <AlertTriangle className="w-3 h-3 text-muted-foreground" />
+        <span className="font-semibold text-muted-foreground uppercase tracking-wider text-[10px]">Diagnostics</span>
+      </div>
+      <div className="text-muted-foreground">
+        <span className="text-foreground/60">API URL:</span> {apiUrl}
+      </div>
+      <div className="text-muted-foreground">
+        <span className="text-foreground/60">Dashboard:</span> {dashboardOrigin}
+      </div>
+      <div className="text-muted-foreground">
+        <span className="text-foreground/60">Protocol:</span> Dashboard={dashProtocol}, API={apiProtocol}
+        {isMixed && (
+          <span className="ml-2 text-destructive font-semibold">MIXED CONTENT — browser will block HTTP requests from HTTPS page</span>
+        )}
+        {!isMixed && <span className="ml-2 text-success">OK</span>}
+      </div>
+      <div className="text-muted-foreground">
+        <span className="text-foreground/60">Auth:</span>{' '}
+        {activeApiKey ? `API Key active (${activeApiKey.slice(0, 12)}...)` : 'No API key — using Clerk JWT fallback'}
+      </div>
     </div>
   );
 };

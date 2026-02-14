@@ -152,7 +152,32 @@ async function request<T>(
   // ── Instrumentation: capture timing ────────────────────────────────
   const startTime = performance.now();
 
-  const response = await fetch(url, fetchOptions);
+  let response: Response;
+  try {
+    response = await fetch(url, fetchOptions);
+  } catch (networkErr) {
+    const elapsed = Math.round(performance.now() - startTime);
+    const rawMsg = networkErr instanceof Error ? networkErr.message : String(networkErr);
+
+    // Detect mixed content (HTTPS page → HTTP API)
+    const isMixed = typeof window !== 'undefined'
+      && window.location.protocol === 'https:'
+      && url.startsWith('http://');
+    const diagnostic = isMixed
+      ? `Mixed content blocked: Dashboard is HTTPS but API URL is HTTP (${url.split('/').slice(0, 3).join('/')}). The browser refuses to send HTTP requests from an HTTPS page.`
+      : `Network error: ${rawMsg}`;
+
+    logRequest(method, endpoint, 0, elapsed, options?.body, diagnostic, rawMsg);
+
+    throw {
+      error: {
+        code: 'NETWORK_ERROR',
+        message: `[${method} ${endpoint}] ${diagnostic}`,
+        details: { url, rawError: rawMsg, authMode: hasApiKey ? 'api-key' : 'bearer-jwt' },
+      },
+      meta: { requestId: crypto.randomUUID() },
+    } as BffError;
+  }
   const responseTime = Math.round(performance.now() - startTime);
 
   if (!response.ok) {
