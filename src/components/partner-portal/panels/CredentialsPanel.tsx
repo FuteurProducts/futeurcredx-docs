@@ -7,7 +7,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Key, Copy, Eye, EyeOff, Plus, Trash2, Shield, Clock, RefreshCw,
-  Lock, Globe, Calendar, Settings, Info
+  Lock, Globe, Calendar, Settings, Info, AlertTriangle
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,9 @@ import { useToast } from '@/hooks/use-toast';
 import type { ApiCredential, EnvironmentType, AuthMethod } from '../types';
 import { mockCredentials } from '../mockData';
 import { useAuditEmit } from '@/hooks/useAuditEmit';
+import { apiKeysService } from '@/services/bff/apiKeys';
+import type { ApiKey } from '@/services/bff/types';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
 
 const AVAILABLE_SCOPES = [
   { id: 'customers:read', label: 'Read Customers', category: 'Customers' },
@@ -36,46 +39,75 @@ const AVAILABLE_SCOPES = [
   { id: 'webhooks:manage', label: 'Manage Webhooks', category: 'Webhooks' },
 ];
 
-const CREDENTIALS_STORAGE_KEY = 'lumiqai-sandbox-credentials';
-
-function loadCredentialsFromStorage(): ApiCredential[] | null {
-  try {
-    const stored = localStorage.getItem(CREDENTIALS_STORAGE_KEY);
-    if (stored) {
-      const parsed = JSON.parse(stored) as ApiCredential[];
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
-      }
-    }
-  } catch {
-    // Corrupted storage; fall through to default
-  }
-  return null;
-}
-
-function saveCredentialsToStorage(credentials: ApiCredential[]) {
-  try {
-    localStorage.setItem(CREDENTIALS_STORAGE_KEY, JSON.stringify(credentials));
-  } catch {
-    // Storage full or unavailable; fail silently
-  }
+function mapBffKeyToCredential(key: ApiKey): ApiCredential {
+  return {
+    id: key.id,
+    name: key.name,
+    keyPrefix: key.keyPrefix,
+    fullKey: undefined,
+    environment: key.environment === 'development' ? 'sandbox' : 'production',
+    authMethod: 'api_key',
+    scopes: key.scopes ?? [],
+    ipWhitelist: [],
+    rateLimitPerMinute: key.environment === 'production' ? 1000 : 100,
+    status: key.isActive ? 'active' : 'revoked',
+    createdAt: key.createdAt,
+    createdBy: key.createdBy,
+    lastUsedAt: key.lastUsedAt ?? null,
+    expiresAt: key.expiresAt ?? null,
+    rotationPolicy: {
+      enabled: false,
+      intervalDays: 90,
+      lastRotatedAt: null,
+      nextRotationAt: null,
+      notifyDaysBefore: 14,
+    },
+  };
 }
 
 export const CredentialsPanel: React.FC = () => {
   const { toast } = useToast();
   const { emit } = useAuditEmit();
-  const [credentials, setCredentials] = useState<ApiCredential[]>(
-    () => loadCredentialsFromStorage() ?? mockCredentials
-  );
+  const { isDemoMode } = useEnvironment();
+  const [credentials, setCredentials] = useState<ApiCredential[]>(mockCredentials);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [revealedKeys, setRevealedKeys] = useState<Set<string>>(new Set());
   const [, setSelectedCredential] = useState<ApiCredential | null>(null);
   const autoHideTimers = React.useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
-  // Persist credentials to localStorage whenever they change
+  // Fetch real API keys from server on mount
   useEffect(() => {
-    saveCredentialsToStorage(credentials);
-  }, [credentials]);
+    if (isDemoMode) {
+      setIsLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    const fetchKeys = async () => {
+      try {
+        setIsLoading(true);
+        const result = await apiKeysService.list();
+        if (cancelled) return;
+        const realKeys = (result.data || []).map(mapBffKeyToCredential);
+        if (realKeys.length > 0) {
+          setCredentials(realKeys);
+        }
+        // else keep mockCredentials as fallback
+        setLoadError(null);
+      } catch {
+        if (!cancelled) {
+          setLoadError('Failed to load API keys from server');
+          // Keep mockCredentials as fallback — don't clear
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    };
+    fetchKeys();
+    return () => { cancelled = true; };
+  }, [isDemoMode]);
   
   // Create form state
   const [newKeyName, setNewKeyName] = useState('');
@@ -429,27 +461,56 @@ export const CredentialsPanel: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Sandbox Notice */}
+      {/* Environment Notice */}
       <div className="flex items-start gap-3 p-3 rounded-lg bg-chart-4/5 border border-chart-4/20">
         <Info className="h-4 w-4 text-chart-4 mt-0.5 shrink-0" />
         <p className="text-sm text-muted-foreground">
-          <span className="font-medium text-chart-4">Sandbox Mode</span> -- All credentials generated here are client-side test keys with the{' '}
-          <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono">lq_test_</code> prefix.
-          They are persisted in your browser's local storage and are not valid for production API calls.
+          {isDemoMode ? (
+            <>
+              <span className="font-medium text-chart-4">Sandbox Mode</span> — All credentials generated here are client-side test keys with the{' '}
+              <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono">lq_test_</code> prefix.
+              They are persisted in your browser's local storage and are not valid for production API calls.
+            </>
+          ) : (
+            <>
+              <span className="font-medium text-chart-4">Connected to API Backend</span> — Keys shown here are real API keys managed by the server.
+              Client-created test keys (with <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono">lq_test_</code> prefix) can still be generated for local testing.
+            </>
+          )}
         </p>
       </div>
 
+      {/* Error Banner */}
+      {loadError && (
+        <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/20">
+          <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-destructive">Connection Error</span> — {loadError}. Showing cached data.
+          </p>
+        </div>
+      )}
+
+      {/* Loading Skeleton */}
+      {isLoading && (
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-24 bg-muted/50 rounded-lg animate-pulse" />
+          ))}
+        </div>
+      )}
+
       {/* Credentials List */}
-      <Tabs defaultValue="all" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="all">All ({credentials.length})</TabsTrigger>
-          <TabsTrigger value="production">
-            Production ({credentials.filter(c => c.environment === 'production').length})
-          </TabsTrigger>
-          <TabsTrigger value="sandbox">
-            Sandbox ({credentials.filter(c => c.environment === 'sandbox').length})
-          </TabsTrigger>
-        </TabsList>
+      {!isLoading && (
+        <Tabs defaultValue="all" className="space-y-4">
+          <TabsList>
+            <TabsTrigger value="all">All ({credentials.length})</TabsTrigger>
+            <TabsTrigger value="production">
+              Production ({credentials.filter(c => c.environment === 'production').length})
+            </TabsTrigger>
+            <TabsTrigger value="sandbox">
+              Sandbox ({credentials.filter(c => c.environment === 'sandbox').length})
+            </TabsTrigger>
+          </TabsList>
 
         {['all', 'production', 'sandbox'].map((tab) => (
           <TabsContent key={tab} value={tab} className="space-y-3">
@@ -558,7 +619,8 @@ export const CredentialsPanel: React.FC = () => {
               ))}
           </TabsContent>
         ))}
-      </Tabs>
+        </Tabs>
+      )}
 
       {/* Rate Limit Info */}
       <Card>
@@ -573,9 +635,9 @@ export const CredentialsPanel: React.FC = () => {
                 <span className="font-medium">Sandbox</span>
               </div>
               <div className="text-sm text-muted-foreground space-y-1">
+                <p>10 requests/second</p>
                 <p>100 requests/minute</p>
-                <p>10,000 requests/day</p>
-                <p>100,000 requests/month</p>
+                <p>1,000 requests/hour</p>
               </div>
             </div>
             <div className="p-4 bg-muted/50 rounded-lg">
@@ -584,9 +646,9 @@ export const CredentialsPanel: React.FC = () => {
                 <span className="font-medium">Production</span>
               </div>
               <div className="text-sm text-muted-foreground space-y-1">
-                <p>1,000 requests/minute</p>
-                <p>100,000 requests/day</p>
-                <p>2,000,000 requests/month</p>
+                <p>10 requests/second</p>
+                <p>100 requests/minute</p>
+                <p>1,000 requests/hour</p>
               </div>
             </div>
           </div>

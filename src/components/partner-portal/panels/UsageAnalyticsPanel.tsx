@@ -12,12 +12,113 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { useRequestLogStore, type RequestLogEntry } from '@/stores/apiRequestLogStore';
 import {
   mockUsageMetrics,
   mockEndpointUsage,
   mockUsageByPeriod,
   mockQuotaInfo,
 } from '../mockData';
+import type { UsageMetrics, EndpointUsage, UsageByPeriod, QuotaInfo } from '../types';
+
+function computePercentile(sortedValues: number[], percentile: number): number {
+  if (sortedValues.length === 0) return 0;
+  const index = Math.ceil((percentile / 100) * sortedValues.length) - 1;
+  return sortedValues[Math.max(0, index)];
+}
+
+function computeMetricsFromLog(requests: RequestLogEntry[]): UsageMetrics {
+  if (requests.length === 0) {
+    return {
+      totalRequests: 0,
+      successfulRequests: 0,
+      failedRequests: 0,
+      successRate: 100,
+      avgLatencyMs: 0,
+      p50LatencyMs: 0,
+      p95LatencyMs: 0,
+      p99LatencyMs: 0,
+      rateLimitHits: 0,
+    };
+  }
+
+  const successful = requests.filter(r => r.statusCode < 400).length;
+  const failed = requests.filter(r => r.statusCode >= 400).length;
+  const rateLimitHits = requests.filter(r => r.statusCode === 429).length;
+
+  const latencies = requests.map(r => r.responseTime).sort((a, b) => a - b);
+  const avgLatency = Math.round(latencies.reduce((sum, l) => sum + l, 0) / latencies.length);
+
+  return {
+    totalRequests: requests.length,
+    successfulRequests: successful,
+    failedRequests: failed,
+    successRate: requests.length > 0 ? Math.round((successful / requests.length) * 1000) / 10 : 100,
+    avgLatencyMs: avgLatency,
+    p50LatencyMs: computePercentile(latencies, 50),
+    p95LatencyMs: computePercentile(latencies, 95),
+    p99LatencyMs: computePercentile(latencies, 99),
+    rateLimitHits,
+  };
+}
+
+function computeEndpointBreakdown(requests: RequestLogEntry[]): EndpointUsage[] {
+  const byEndpoint = new Map<string, RequestLogEntry[]>();
+  for (const req of requests) {
+    const key = `${req.method} ${req.endpoint}`;
+    const list = byEndpoint.get(key) || [];
+    list.push(req);
+    byEndpoint.set(key, list);
+  }
+
+  return Array.from(byEndpoint.entries())
+    .map(([key, reqs]) => {
+      const [method, ...endpointParts] = key.split(' ');
+      const endpoint = endpointParts.join(' ');
+      const successful = reqs.filter(r => r.statusCode < 400).length;
+      const avgLatency = Math.round(reqs.reduce((sum, r) => sum + r.responseTime, 0) / reqs.length);
+
+      // Group error codes
+      const errorMap = new Map<number, number>();
+      for (const r of reqs) {
+        if (r.statusCode >= 400) {
+          errorMap.set(r.statusCode, (errorMap.get(r.statusCode) || 0) + 1);
+        }
+      }
+
+      return {
+        endpoint,
+        method: method as 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
+        count: reqs.length,
+        successRate: Math.round((successful / reqs.length) * 1000) / 10,
+        avgLatencyMs: avgLatency,
+        errorCodes: Array.from(errorMap.entries()).map(([code, count]) => ({ code, count })),
+      };
+    })
+    .sort((a, b) => b.count - a.count);
+}
+
+function computeVolumeByPeriod(requests: RequestLogEntry[]): UsageByPeriod[] {
+  const byDate = new Map<string, RequestLogEntry[]>();
+  for (const req of requests) {
+    const date = new Date(req.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const list = byDate.get(date) || [];
+    list.push(req);
+    byDate.set(date, list);
+  }
+
+  return Array.from(byDate.entries()).map(([period, reqs]) => {
+    const successful = reqs.filter(r => r.statusCode < 400).length;
+    const avgLatency = Math.round(reqs.reduce((sum, r) => sum + r.responseTime, 0) / reqs.length);
+    return {
+      period,
+      requests: reqs.length,
+      successRate: Math.round((successful / reqs.length) * 100),
+      avgLatency,
+    };
+  });
+}
 
 const MetricCard: React.FC<{
   title: string;
@@ -53,6 +154,40 @@ export const UsageAnalyticsPanel: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('7d');
   const [selectedEnvironment, setSelectedEnvironment] = useState<'all' | 'production' | 'sandbox'>('all');
 
+  const { isDemoMode } = useEnvironment();
+  const { requests: liveRequests } = useRequestLogStore();
+
+  // In demo mode or when no live data exists, fall back to mock data
+  const hasLiveData = !isDemoMode && liveRequests.length > 0;
+
+  const metrics = hasLiveData ? computeMetricsFromLog(liveRequests) : mockUsageMetrics;
+  const endpointUsage = hasLiveData ? computeEndpointBreakdown(liveRequests) : mockEndpointUsage;
+  const usageByPeriod = hasLiveData ? computeVolumeByPeriod(liveRequests) : mockUsageByPeriod;
+
+  // Compute real quota usage from recent requests
+  const now = Date.now();
+  const requestsLastMinute = hasLiveData
+    ? liveRequests.filter(r => now - new Date(r.timestamp).getTime() < 60_000).length
+    : 0;
+  const requestsLastHour = hasLiveData
+    ? liveRequests.filter(r => now - new Date(r.timestamp).getTime() < 3_600_000).length
+    : 0;
+
+  const realQuotaInfo: QuotaInfo[] = [
+    {
+      environment: 'sandbox',
+      requestsPerMinute: 100,
+      requestsPerDay: 1000,      // Used as "per hour" display
+      requestsPerMonth: Math.max(liveRequests.length, 100),    // Session total
+      usedThisMinute: requestsLastMinute,
+      usedToday: requestsLastHour,
+      usedThisMonth: liveRequests.length,
+      resetTime: new Date(now + 60_000).toISOString(),
+    },
+  ];
+
+  const quotaInfo = hasLiveData ? realQuotaInfo : mockQuotaInfo;
+
   const formatNumber = (num: number) => {
     if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
     if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
@@ -78,9 +213,17 @@ export const UsageAnalyticsPanel: React.FC = () => {
       {/* Header with Filters */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold">Usage Analytics</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-semibold">Usage Analytics</h2>
+            {hasLiveData && (
+              <Badge variant="default" className="bg-primary/10 text-primary">Live</Badge>
+            )}
+          </div>
           <p className="text-sm text-muted-foreground">
-            Real-time API usage metrics and performance insights
+            {hasLiveData
+              ? 'Live API usage metrics from this session'
+              : 'Real-time API usage metrics and performance insights'
+            }
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -119,31 +262,31 @@ export const UsageAnalyticsPanel: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           title="Total API Calls"
-          value={formatNumber(mockUsageMetrics.totalRequests)}
+          value={formatNumber(metrics.totalRequests)}
           subtitle="This period"
           icon={<BarChart3 className="h-8 w-8" />}
           trend={{ value: 12.5, direction: 'up' }}
         />
         <MetricCard
           title="Success Rate"
-          value={`${mockUsageMetrics.successRate}%`}
-          subtitle={`${formatNumber(mockUsageMetrics.failedRequests)} failed`}
+          value={`${metrics.successRate}%`}
+          subtitle={`${formatNumber(metrics.failedRequests)} failed`}
           icon={<CheckCircle className="h-8 w-8" />}
-          color={getSuccessRateColor(mockUsageMetrics.successRate)}
+          color={getSuccessRateColor(metrics.successRate)}
         />
         <MetricCard
           title="Avg Latency"
-          value={`${mockUsageMetrics.avgLatencyMs}ms`}
-          subtitle={`P95: ${mockUsageMetrics.p95LatencyMs}ms`}
+          value={`${metrics.avgLatencyMs}ms`}
+          subtitle={`P95: ${metrics.p95LatencyMs}ms`}
           icon={<Clock className="h-8 w-8" />}
-          color={getLatencyColor(mockUsageMetrics.avgLatencyMs)}
+          color={getLatencyColor(metrics.avgLatencyMs)}
         />
         <MetricCard
           title="Rate Limit Hits"
-          value={mockUsageMetrics.rateLimitHits}
+          value={metrics.rateLimitHits}
           subtitle="429 responses"
           icon={<AlertTriangle className="h-8 w-8" />}
-          color={mockUsageMetrics.rateLimitHits > 100 ? 'text-destructive' : 'text-chart-4'}
+          color={metrics.rateLimitHits > 100 ? 'text-destructive' : 'text-chart-4'}
         />
       </div>
 
@@ -155,7 +298,7 @@ export const UsageAnalyticsPanel: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {mockQuotaInfo.map((quota) => (
+            {quotaInfo.map((quota) => (
               <div key={quota.environment} className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className={`w-3 h-3 rounded-full ${
@@ -163,7 +306,7 @@ export const UsageAnalyticsPanel: React.FC = () => {
                   }`} />
                   <span className="font-medium capitalize">{quota.environment}</span>
                 </div>
-                
+
                 <div className="space-y-3">
                   <div>
                     <div className="flex justify-between text-sm mb-1">
@@ -174,18 +317,18 @@ export const UsageAnalyticsPanel: React.FC = () => {
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-muted-foreground">Daily</span>
+                      <span className="text-muted-foreground">{hasLiveData ? 'Per Hour' : 'Daily'}</span>
                       <span>{formatNumber(quota.usedToday)} / {formatNumber(quota.requestsPerDay)}</span>
                     </div>
                     <Progress value={(quota.usedToday / quota.requestsPerDay) * 100} className="h-2" />
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-muted-foreground">Monthly</span>
+                      <span className="text-muted-foreground">{hasLiveData ? 'Session Total' : 'Monthly'}</span>
                       <span>{formatNumber(quota.usedThisMonth)} / {formatNumber(quota.requestsPerMonth)}</span>
                     </div>
-                    <Progress 
-                      value={(quota.usedThisMonth / quota.requestsPerMonth) * 100} 
+                    <Progress
+                      value={(quota.usedThisMonth / quota.requestsPerMonth) * 100}
                       className="h-2"
                     />
                   </div>
@@ -204,8 +347,8 @@ export const UsageAnalyticsPanel: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="h-64 flex items-end gap-2">
-            {mockUsageByPeriod.map((data, index) => {
-              const maxRequests = Math.max(...mockUsageByPeriod.map(d => d.requests));
+            {usageByPeriod.map((data, index) => {
+              const maxRequests = Math.max(...usageByPeriod.map(d => d.requests));
               const height = (data.requests / maxRequests) * 100;
               
               return (
@@ -263,9 +406,9 @@ export const UsageAnalyticsPanel: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {mockEndpointUsage.map((endpoint, index) => (
+                {endpointUsage.map((endpoint, index) => (
                   <motion.tr
-                    key={endpoint.endpoint}
+                    key={`${endpoint.method}-${endpoint.endpoint}`}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
@@ -326,10 +469,10 @@ export const UsageAnalyticsPanel: React.FC = () => {
         <CardContent>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { label: 'P50 (Median)', value: mockUsageMetrics.p50LatencyMs },
-              { label: 'Average', value: mockUsageMetrics.avgLatencyMs },
-              { label: 'P95', value: mockUsageMetrics.p95LatencyMs },
-              { label: 'P99', value: mockUsageMetrics.p99LatencyMs },
+              { label: 'P50 (Median)', value: metrics.p50LatencyMs },
+              { label: 'Average', value: metrics.avgLatencyMs },
+              { label: 'P95', value: metrics.p95LatencyMs },
+              { label: 'P99', value: metrics.p99LatencyMs },
             ].map((metric) => (
               <div key={metric.label} className="text-center p-4 bg-muted/50 rounded-lg">
                 <p className="text-sm text-muted-foreground">{metric.label}</p>

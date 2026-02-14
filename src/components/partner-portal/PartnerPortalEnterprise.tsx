@@ -3,14 +3,17 @@
  * Bank-grade API integration management hub
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Key, BarChart3, Webhook, FlaskConical, Shield, Activity, Book,
-  CheckCircle
+  CheckCircle, AlertCircle
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import bffClient from '@/services/bff/client';
+import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { cn } from '@/lib/utils';
 
 import { CredentialsPanel } from './panels/CredentialsPanel';
 import { UsageAnalyticsPanel } from './panels/UsageAnalyticsPanel';
@@ -32,6 +35,30 @@ const tabs = [
 
 const PartnerPortalEnterprise: React.FC = () => {
   const [activeTab, setActiveTab] = useState('credentials');
+  const { isDemoMode } = useEnvironment();
+  const [apiStatus, setApiStatus] = useState<'checking' | 'operational' | 'error'>(
+    isDemoMode ? 'operational' : 'checking'
+  );
+
+  useEffect(() => {
+    if (isDemoMode) {
+      return;
+    }
+
+    let cancelled = false;
+    const checkHealth = async () => {
+      try {
+        await bffClient.get('/health');
+        if (!cancelled) setApiStatus('operational');
+      } catch {
+        if (!cancelled) setApiStatus('error');
+      }
+    };
+    checkHealth();
+    // Re-check every 30 seconds
+    const interval = setInterval(checkHealth, 30_000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, [isDemoMode]);
 
   return (
     <div className="space-y-6">
@@ -43,9 +70,22 @@ const PartnerPortalEnterprise: React.FC = () => {
             Enterprise integration management for bank partners
           </p>
         </div>
-        <Badge className="bg-chart-2/10 text-chart-2 border-chart-2/20">
-          <CheckCircle className="h-4 w-4 mr-1" />
-          API Status: Operational
+        <Badge className={cn(
+          apiStatus === 'operational'
+            ? 'bg-chart-2/10 text-chart-2 border-chart-2/20'
+            : apiStatus === 'error'
+              ? 'bg-destructive/10 text-destructive border-destructive/20'
+              : 'bg-muted/50 text-muted-foreground border-border'
+        )}>
+          {apiStatus === 'operational' ? (
+            <CheckCircle className="h-4 w-4 mr-1" />
+          ) : apiStatus === 'error' ? (
+            <AlertCircle className="h-4 w-4 mr-1" />
+          ) : (
+            <Activity className="h-4 w-4 mr-1 animate-pulse" />
+          )}
+          {apiStatus === 'operational' ? 'API Status: Operational' :
+           apiStatus === 'error' ? 'API Status: Error' : 'Checking...'}
         </Badge>
       </div>
 
