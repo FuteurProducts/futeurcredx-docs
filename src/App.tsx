@@ -39,8 +39,8 @@ const LoadingFallback = () => (
 );
 
 // DEV/DEMO MODE: Bypass authentication for demo deployments or local development
-// Set to true to access the dashboard without Clerk sign-in (useful for demos with sample data)
-const DEV_BYPASS_AUTH = true; // Toggle based on your needs
+// Demo sites bypass auth via DemoAuthProvider; sandbox/production use Clerk login wall.
+const DEV_BYPASS_AUTH = false;
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isSignedIn, isLoaded } = useUser()

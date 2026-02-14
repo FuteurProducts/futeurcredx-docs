@@ -77,22 +77,17 @@ const initialMode = resolveInitialMode();
 
 /**
  * Wrap App with the correct auth provider based on operating mode.
- * - demo: DemoAuthProvider (auto signed in, admin RBAC)
- * - sandbox: FallbackAuthProvider (X-API-Key auth — backend expects this, not Clerk JWT)
- * - production: Clerk if configured, else FallbackAuthProvider
+ * - demo: DemoAuthProvider (auto signed in, admin RBAC, local mock data)
+ * - sandbox/production: Clerk auth (real login wall) + X-API-Key for BFF data calls
  */
 function renderAuthWrappedApp(appElement: ReactNode) {
   if (initialMode === 'demo') {
     return <DemoAuthProvider>{appElement}</DemoAuthProvider>;
   }
 
-  // Sandbox MUST use FallbackAuthProvider: the NestJS backend validates
-  // sandbox requests via X-API-Key header (AuthGuard passthrough → TenantGuard).
-  // Using Clerk here would send a Bearer JWT the backend can't validate.
-  if (initialMode === 'sandbox') {
-    return <FallbackAuthProvider>{appElement}</FallbackAuthProvider>;
-  }
-
+  // Sandbox + Production: Clerk handles the login wall.
+  // After sign-in, user sets an API key in API Console for BFF data access.
+  // BFF client uses X-API-Key when available, falls back to Clerk JWT.
   if (clerkConfigured) {
     return (
       <ClerkProvider

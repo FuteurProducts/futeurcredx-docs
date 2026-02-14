@@ -206,6 +206,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { isSignedIn, isLoaded, getToken: clerkGetToken } = useClerkAuth();
   const { user: clerkUser } = useClerkUser();
   const clerk = useClerk();
+  const storedApiKey = useApiKeyStore((s) => s.apiKey);
 
   const user = mapClerkUser(clerkUser || null);
 
@@ -221,6 +222,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    useApiKeyStore.getState().clearApiKey();
+    setApiKey(null);
     await clerk.signOut();
   };
 
@@ -232,10 +235,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Inject token getter into BFF client so it can authenticate requests
+  // Inject Clerk token getter into BFF client (fallback when no API key is set)
   useEffect(() => {
     setAuthTokenGetter(getToken);
   }, [clerkGetToken]);
+
+  // Wire API key from store into BFF client (takes priority over Clerk JWT)
+  useEffect(() => {
+    setApiKey(storedApiKey);
+  }, [storedApiKey]);
+
+  // Subscribe to Zustand store changes outside React (for BFF client sync)
+  useEffect(() => {
+    const unsub = useApiKeyStore.subscribe((state) => {
+      setApiKey(state.apiKey);
+    });
+    return unsub;
+  }, []);
 
   return (
     <AuthContext.Provider
