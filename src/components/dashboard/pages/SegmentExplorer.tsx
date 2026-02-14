@@ -20,7 +20,6 @@ import {
   X,
 } from 'lucide-react';
 
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -39,7 +38,6 @@ import {
   SEGMENTS,
 } from '@/data/chaseDemoData';
 import type { RiskTier, SampleBusiness, SavedSegment } from '@/data/chaseDemoData';
-import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { useToast } from '@/hooks/use-toast';
 import { useAnimatedNumber } from '@/hooks/useAnimatedNumber';
 import {
@@ -356,7 +354,6 @@ function sortBusinesses(
 // ── Main Component ───────────────────────────────────────────────
 
 const SegmentExplorer: React.FC = () => {
-  const { isDemoMode } = useEnvironment();
   const { toast } = useToast();
   const businessTableRef = useRef<HTMLDivElement>(null);
 
@@ -617,18 +614,6 @@ const SegmentExplorer: React.FC = () => {
       <ArrowDownAZ className="inline h-4 w-4 ml-1" />
     );
   };
-
-  // Early return for non-demo mode — this page has no BFF integration yet
-  if (!isDemoMode) {
-    return (
-      <div className="p-6">
-        <SandboxEmptyState
-          title="No Segment Data"
-          description="Segment explorer will populate once your API integration is active and customer segments are defined."
-        />
-      </div>
-    );
-  }
 
   // ── Render ───────────────────────────────────────────────────
 

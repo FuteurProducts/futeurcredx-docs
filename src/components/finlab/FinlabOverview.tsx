@@ -104,18 +104,18 @@ export const FinlabOverview: React.FC = () => {
   // Derive basePath from current URL — preserves bank context in /demo/:bank routes (Segment workspace pattern)
   const basePath = location.pathname.match(/^\/demo\/[^/]+/)?.[0] || '/dashboard';
 
-  // State for card data — only use fallback data in demo mode
+  // State for card data — start with fallback, upgrade to live when API responds
   const [connectedBusinessesData, setConnectedBusinessesData] = useState(
-    () => isDemoMode ? FALLBACK_connectedBusinessesData : null
+    () => FALLBACK_connectedBusinessesData
   );
   const [apiUsageData, setApiUsageData] = useState(
-    () => isDemoMode ? FALLBACK_apiUsageData : null
+    () => FALLBACK_apiUsageData
   );
   const [portfolioHealthData, setPortfolioHealthData] = useState(
-    () => isDemoMode ? FALLBACK_portfolioHealthData : null
+    () => FALLBACK_portfolioHealthData
   );
   const [dataFreshnessData, setDataFreshnessData] = useState(
-    () => isDemoMode ? FALLBACK_dataFreshnessData : null
+    () => FALLBACK_dataFreshnessData
   );
 
   // Fetch live KPIs and map them onto card data shapes
@@ -182,16 +182,8 @@ export const FinlabOverview: React.FC = () => {
         });
       }
     } catch (err) {
-      if (isDemoMode) {
-        logger.warn('[FinlabOverview] Failed to load live data, keeping demo fallback', err);
-      } else {
-        logger.warn('[FinlabOverview] Failed to load live data, no API configured', err);
-        // In sandbox/production, clear stale data — don't fake success
-        setConnectedBusinessesData(null);
-        setApiUsageData(null);
-        setPortfolioHealthData(null);
-        setDataFreshnessData(null);
-      }
+      logger.warn('[FinlabOverview] Failed to load live data, keeping fallback', err);
+      // Keep fallback data — withFallback handles graceful degradation
     }
   }, [portfolioId, isDemoMode]);
 
@@ -220,48 +212,6 @@ export const FinlabOverview: React.FC = () => {
     toast({ title: "View all businesses", description: "Opening full portfolio list." });
     navigate(`${basePath}?tab=customer`);
   };
-
-  // Sandbox/Production with no data — show honest empty state (Stripe pattern: no silent fallbacks)
-  if (!isDemoMode && !connectedBusinessesData && !apiUsageData && !portfolioHealthData && !dataFreshnessData) {
-    return (
-      <div className="space-y-6 md:space-y-8 w-full overflow-hidden relative">
-        <BankDisclaimer compact />
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 p-6 md:p-8 shadow-xl"
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#fff1_1px,transparent_1px),linear-gradient(to_bottom,#fff1_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-2xl md:text-3xl font-bold text-white">SMB Portfolio Overview</h1>
-              <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/30 backdrop-blur-sm">
-                {currentEnvironment.toUpperCase()}
-              </span>
-            </div>
-            <p className="text-base md:text-lg text-blue-100 mt-2 max-w-2xl">
-              Connect to the {currentEnvironment === 'sandbox' ? 'Sandbox' : 'Production'} API to view live portfolio data
-            </p>
-          </div>
-        </motion.div>
-
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <div className="w-16 h-16 rounded-2xl bg-muted/50 flex items-center justify-center mb-6">
-            <svg className="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </div>
-          <h3 className="text-lg font-semibold text-foreground mb-2">No Data Available</h3>
-          <p className="text-sm text-muted-foreground text-center max-w-md">
-            {currentEnvironment === 'sandbox'
-              ? 'Configure your Sandbox API connection to see test portfolio data. API calls in sandbox mode are not billed.'
-              : 'Connect to the Production API to view live portfolio metrics.'}
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6 md:space-y-8 w-full overflow-hidden relative">
@@ -398,16 +348,14 @@ export const FinlabOverview: React.FC = () => {
           transition={{ duration: 0.2, delay: 0.3 }}
           className="min-w-0"
         >
-          {isDemoMode ? (
-            <RecentActivityFeed
-              activities={RECENT_ACTIVITIES}
-              onViewAll={() => {
-                toast({ title: "Activity log", description: "Opening Audit Logs in Settings." });
-                navigate(`${basePath}?tab=settings`);
-              }}
-              className="shadow-sm bg-card rounded-2xl border border-border"
-            />
-          ) : null}
+          <RecentActivityFeed
+            activities={RECENT_ACTIVITIES}
+            onViewAll={() => {
+              toast({ title: "Activity log", description: "Opening Audit Logs in Settings." });
+              navigate(`${basePath}?tab=settings`);
+            }}
+            className="shadow-sm bg-card rounded-2xl border border-border"
+          />
         </motion.div>
       </div>
 
@@ -419,17 +367,15 @@ export const FinlabOverview: React.FC = () => {
           transition={{ duration: 0.2, delay: 0.35 }}
           className="min-w-0"
         >
-          {isDemoMode ? (
-            <WebhookEventsCard
-              events={WEBHOOK_EVENTS}
-              stats={WEBHOOK_STATS}
-              onViewLogs={() => {
-                toast({ title: "Webhook logs", description: "Opening Partner Portal webhook logs." });
-                navigate(`${basePath}?tab=partner-portal`);
-              }}
-              className="shadow-sm bg-card rounded-2xl border border-border"
-            />
-          ) : null}
+          <WebhookEventsCard
+            events={WEBHOOK_EVENTS}
+            stats={WEBHOOK_STATS}
+            onViewLogs={() => {
+              toast({ title: "Webhook logs", description: "Opening Partner Portal webhook logs." });
+              navigate(`${basePath}?tab=partner-portal`);
+            }}
+            className="shadow-sm bg-card rounded-2xl border border-border"
+          />
         </motion.div>
 
         <motion.div
@@ -438,16 +384,14 @@ export const FinlabOverview: React.FC = () => {
           transition={{ duration: 0.2, delay: 0.4 }}
           className="min-w-0"
         >
-          {isDemoMode ? (
-            <IntegrationHealthCard
-              services={SYSTEM_SERVICES}
-              overallUptime={99.96}
-              onRefresh={() => {
-                toast({ title: "Status refreshed", description: "All service health checks updated." });
-              }}
-              className="shadow-sm bg-card rounded-2xl border border-border"
-            />
-          ) : null}
+          <IntegrationHealthCard
+            services={SYSTEM_SERVICES}
+            overallUptime={99.96}
+            onRefresh={() => {
+              toast({ title: "Status refreshed", description: "All service health checks updated." });
+            }}
+            className="shadow-sm bg-card rounded-2xl border border-border"
+          />
         </motion.div>
       </div>
 
@@ -458,17 +402,15 @@ export const FinlabOverview: React.FC = () => {
         transition={{ duration: 0.2, delay: 0.45 }}
         className="min-w-0"
       >
-        {isDemoMode ? (
-          <>
-            <div className="text-xs text-muted-foreground mb-2">Showing top 25 of {formatNumber(PILOT_METRICS.totalBusinesses)} businesses</div>
-            <TopBusinessesTable
-              businesses={topBusinesses}
-              onViewBusiness={handleViewBusiness}
-              onViewAll={handleViewAllBusinesses}
-              className="shadow-lg bg-card rounded-2xl border border-border"
-            />
-          </>
-        ) : null}
+        <>
+          <div className="text-xs text-muted-foreground mb-2">Showing top 25 of {formatNumber(PILOT_METRICS.totalBusinesses)} businesses</div>
+          <TopBusinessesTable
+            businesses={topBusinesses}
+            onViewBusiness={handleViewBusiness}
+            onViewAll={handleViewAllBusinesses}
+            className="shadow-lg bg-card rounded-2xl border border-border"
+          />
+        </>
       </motion.div>
 
       {/* Data Source Footer */}

@@ -11,7 +11,6 @@ import type { ApiKey as BffApiKey, AuditEvent as BffAuditEvent } from '@/service
 import { withFallback } from '@/utils/withFallback';
 import { demoDataStore } from '@/data/demoDataStore';
 import { PILOT_CONFIG } from '@/data/demoData';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { Button } from '@/components/ui/button';
 import {
   SettingsGlobalControls,
@@ -88,12 +87,12 @@ const Settings: React.FC = () => {
   // Active section state
   const [activeSection, setActiveSection] = useState('users');
 
-  // Managed state for settings that persist via localStorage
-  const [users, setUsers] = useState<PlatformUser[]>(isDemoMode ? mockUsers : []);
-  const [apiKeys, setApiKeys] = useState(isDemoMode ? mockApiKeys : []);
-  const [auditLogs, setAuditLogs] = useState(isDemoMode ? mockAuditLogs : []);
-  const [dataSources, setDataSources] = useState(isDemoMode ? mockDataSources : []);
-  const [thresholds, setThresholds] = useState(isDemoMode ? mockAlertThresholds : []);
+  // Managed state for settings — initialised with mock data for fallback
+  const [users, setUsers] = useState<PlatformUser[]>(mockUsers);
+  const [apiKeys, setApiKeys] = useState(mockApiKeys);
+  const [auditLogs, setAuditLogs] = useState(mockAuditLogs);
+  const [dataSources, setDataSources] = useState(mockDataSources);
+  const [thresholds, setThresholds] = useState(mockAlertThresholds);
 
   // Tenant info from pilot config
   const tenantName = PILOT_CONFIG.bankName;
@@ -115,7 +114,7 @@ const Settings: React.FC = () => {
       );
       setApiKeys(data);
     } catch {
-      if (!isDemoMode) setApiKeys([]);
+      // Keep fallback data
     }
   }, [isDemoMode]);
 
@@ -133,7 +132,7 @@ const Settings: React.FC = () => {
       );
       setAuditLogs(data);
     } catch {
-      if (!isDemoMode) setAuditLogs([]);
+      // Keep fallback data
     }
   }, [portfolioId, isDemoMode]);
 
@@ -356,20 +355,6 @@ const Settings: React.FC = () => {
         );
     }
   };
-
-  // Empty state guard: show when not demo mode and no data is available
-  const hasNoData = users.length === 0 && apiKeys.length === 0 && auditLogs.length === 0
-    && dataSources.length === 0 && thresholds.length === 0;
-  if (!isDemoMode && hasNoData) {
-    return (
-      <SandboxEmptyState
-        title="No Settings Data"
-        description="Settings will be available once your API integration is configured and data starts flowing."
-        actionLabel="Retry"
-        onAction={() => { fetchApiKeys(); fetchAuditLogs(); }}
-      />
-    );
-  }
 
   return (
     <div className="flex flex-col h-full bg-muted/30">

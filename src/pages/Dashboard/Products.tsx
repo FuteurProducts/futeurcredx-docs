@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { useToast } from '@/hooks/use-toast';
 import {
   ProductsGlobalControls,
@@ -11,7 +10,6 @@ import {
   EligibilityMatrix,
   mockBankProducts,
 } from '@/components/enterprise/products';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import type { ProductsFilters } from '@/components/enterprise/products/types';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 
@@ -21,7 +19,6 @@ import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 
 const Products: React.FC = () => {
   const { toast } = useToast();
-  const { isDemoMode } = useEnvironment();
 
   const [filters, setFilters] = useState<ProductsFilters>({
     viewMode: 'shelf',
@@ -61,18 +58,6 @@ const Products: React.FC = () => {
         return <ProductShelfGrid products={mockBankProducts} filters={filters} />;
     }
   };
-
-  // Non-demo mode: no BFF integration yet, show empty state
-  if (!isDemoMode) {
-    return (
-      <div className="p-6">
-        <SandboxEmptyState
-          title="No Product Data"
-          description="Product catalog will populate once your API integration is configured and product data is available."
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-muted/50 p-6 space-y-6">

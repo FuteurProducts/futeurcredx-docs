@@ -57,7 +57,6 @@ import { DEMO_BUSINESSES } from '@/data/demoData';
 import { withFallback } from '@/utils/withFallback';
 import { demoDataStore } from '@/data/demoDataStore';
 import { logger } from '@/utils/logger';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 // Fallback customers derived from centralized business data
 const FALLBACK_CUSTOMERS: CustomerForPull[] = DEMO_BUSINESSES.map((biz, idx) => ({
@@ -280,21 +279,6 @@ const ScoresBff: React.FC = () => {
         <AlertCircle className="h-12 w-12 text-muted-foreground" />
         <p className="text-muted-foreground">Select a portfolio to view scores</p>
         <PortfolioSelector />
-      </div>
-    );
-  }
-
-  // Check if sandbox/production mode has no data
-  const hasNoData = !isDemoMode && scores.length === 0 && customers.length === 0 && !isLoading && !portfolioLoading;
-  if (hasNoData) {
-    return (
-      <div className="space-y-6">
-        <SandboxEmptyState
-          title="No Score Data"
-          description="Credit scores will populate once your API integration is active and bureau connections are configured."
-          actionLabel="Retry"
-          onAction={fetchScores}
-        />
       </div>
     );
   }

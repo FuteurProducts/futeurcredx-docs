@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LayoutGrid, List, Filter, CheckCircle2, XCircle, RotateCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { Button } from '@/components/ui/button';
 import {
   ApplicationQueueFilters,
@@ -69,7 +68,7 @@ const UnderwritingAssistant: React.FC = () => {
   const [viewMode, setViewMode] = useState<'table' | 'cards'>('table');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedApp, setSelectedApp] = useState<PipelineApplication | null>(null);
-  const [applications, setApplications] = useState(() => isDemoMode ? buildFallbackApplications() : []);
+  const [applications, setApplications] = useState(() => buildFallbackApplications());
   const [applicationStatuses, setApplicationStatuses] = useState<Record<string, string>>(
     () => demoDataStore.getApplicationStatusOverrides()
   );
@@ -102,10 +101,10 @@ const UnderwritingAssistant: React.FC = () => {
         const adapted = adaptApplicationsToPipeline(response.apps as any, response.nameMap);
         setApplications(adapted);
       } else if (source === 'fallback') {
-        setApplications(isDemoMode ? buildFallbackApplications() : []);
+        setApplications(buildFallbackApplications());
       }
     } catch {
-      setApplications(isDemoMode ? buildFallbackApplications() : []);
+      setApplications(buildFallbackApplications());
     } finally {
       setIsLoadingApps(false);
     }
@@ -247,21 +246,6 @@ const UnderwritingAssistant: React.FC = () => {
   const actionedApplications = filteredApplications.filter(
     app => applicationStatuses[app.id] === 'approved' || applicationStatuses[app.id] === 'declined'
   );
-
-  // Empty state guard for non-demo mode with no data
-  const hasNoData = !isDemoMode && applications.length === 0;
-  if (hasNoData) {
-    return (
-      <div className="p-6">
-        <SandboxEmptyState
-          title="No Underwriting Data"
-          description="Underwriting applications will appear once your API integration is active and applications are submitted."
-          actionLabel="Retry"
-          onAction={fetchApplications}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">

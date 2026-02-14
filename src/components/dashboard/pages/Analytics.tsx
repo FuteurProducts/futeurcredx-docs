@@ -29,7 +29,6 @@ import {
 } from '@/components/enterprise/analytics';
 import type { AnalyticsFilters, PortfolioKPI, ScoreBucket } from '@/components/enterprise/analytics/types';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 // ============================================
 // MAIN COMPONENT
@@ -40,9 +39,9 @@ const Analytics: React.FC = () => {
   const { isDemoMode } = useEnvironment();
   const { portfolioId } = usePortfolio();
 
-  // Live data state — initialised from mocks in demo, empty otherwise
-  const [portfolioKPIs, setPortfolioKPIs] = useState<PortfolioKPI[]>(isDemoMode ? mockPortfolioKPIs : []);
-  const [scoreDistribution, setScoreDistribution] = useState<ScoreBucket[]>(isDemoMode ? mockScoreDistribution : []);
+  // Live data state — initialised from mocks for fallback
+  const [portfolioKPIs, setPortfolioKPIs] = useState<PortfolioKPI[]>(mockPortfolioKPIs);
+  const [scoreDistribution, setScoreDistribution] = useState<ScoreBucket[]>(mockScoreDistribution);
 
   /**
    * Fetch live KPIs and score distribution from BFF, falling back to mock data.
@@ -108,11 +107,7 @@ const Analytics: React.FC = () => {
         setScoreDistribution(liveBuckets);
       }
     } catch {
-      if (!isDemoMode) {
-        setPortfolioKPIs([]);
-        setScoreDistribution([]);
-      }
-      // demo mode: keep fallbacks (already set via initial state)
+      // Keep fallback data — withFallback handles graceful degradation
     }
   }, [portfolioId, isDemoMode]);
 
@@ -345,21 +340,6 @@ const Analytics: React.FC = () => {
   // ============================================
   // MAIN RENDER
   // ============================================
-
-  // Check if sandbox/production mode has no data
-  const hasNoData = !isDemoMode && portfolioKPIs.length === 0;
-  if (hasNoData) {
-    return (
-      <div className="min-h-screen bg-muted/50 p-6">
-        <SandboxEmptyState
-          title="No Analytics Data"
-          description="Analytics will populate once your API integration is active and scoring data flows in."
-          actionLabel="Retry"
-          onAction={fetchAnalyticsData}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-muted/50 p-6 space-y-6">

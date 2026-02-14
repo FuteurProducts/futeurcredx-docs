@@ -29,7 +29,6 @@ import { useEnvironment } from "@/contexts/EnvironmentContext";
 import { usePortfolio } from "@/contexts/PortfolioContext";
 import { getDashboardKPIs, getConversionTrend } from "@/services/dashboardMetrics";
 import { DataSourceBadge } from "@/components/shared/DataSourceBadge";
-import { SandboxEmptyState } from "@/components/shared/SandboxEmptyState";
 
 import { PILOT_METRICS, CONVERSION_TREND_DATA } from "@/data/demoData";
 
@@ -75,24 +74,17 @@ const FALLBACK_PREDICTIVE = {
   marketingQualifiedOpportunities: 4200,
 };
 
-const EMPTY_COUNTS = { totalBusinesses: 0, businessesWithCredit: 0, applicationsStarted: 0, approved: 0, ineligible: 0 };
-const EMPTY_FUNNEL = { applicationConversionRate: 0, approvalRate: 0, ineligibleRatio: 0, creditActivationRate: 0 };
-const EMPTY_PRODUCT = { avgTimeToApproval: 0, avgCreditLimit: 0, applicationDropoffRate: 0, reApplicationRate: 0 };
-const EMPTY_RISK = { delinquencyRate: 0, defaultRate: 0, portfolioUtilizationRate: 0 };
-const EMPTY_REVENUE = { arpb: 0, revenuePerApprovedAccount: 0, momGrowthRate: 0, qoqGrowthRate: 0 };
-const EMPTY_PREDICTIVE = { projectedApprovalVolume6m: 0, projectedConversionLift: 0, marketingQualifiedOpportunities: 0 };
-
 const Index = () => {
   const { portfolioId } = usePortfolio();
   const { isDemoMode } = useEnvironment();
   const [isLoading, setIsLoading] = useState(true);
-  const [mockCounts, setMockCounts] = useState(isDemoMode ? FALLBACK_COUNTS : EMPTY_COUNTS);
-  const [mockFunnelMetrics, setMockFunnelMetrics] = useState(isDemoMode ? FALLBACK_FUNNEL : EMPTY_FUNNEL);
-  const [mockProductMetrics] = useState(isDemoMode ? FALLBACK_PRODUCT : EMPTY_PRODUCT);
-  const [mockRiskMetrics, setMockRiskMetrics] = useState(isDemoMode ? FALLBACK_RISK : EMPTY_RISK);
-  const [mockRevenueMetrics] = useState(isDemoMode ? FALLBACK_REVENUE : EMPTY_REVENUE);
-  const [mockPredictiveMetrics] = useState(isDemoMode ? FALLBACK_PREDICTIVE : EMPTY_PREDICTIVE);
-  const [mockTrendData, setMockTrendData] = useState(isDemoMode ? CONVERSION_TREND_DATA : []);
+  const [mockCounts, setMockCounts] = useState(FALLBACK_COUNTS);
+  const [mockFunnelMetrics, setMockFunnelMetrics] = useState(FALLBACK_FUNNEL);
+  const [mockProductMetrics] = useState(FALLBACK_PRODUCT);
+  const [mockRiskMetrics, setMockRiskMetrics] = useState(FALLBACK_RISK);
+  const [mockRevenueMetrics] = useState(FALLBACK_REVENUE);
+  const [mockPredictiveMetrics] = useState(FALLBACK_PREDICTIVE);
+  const [mockTrendData, setMockTrendData] = useState(CONVERSION_TREND_DATA);
   const [dataSource, setDataSource] = useState<'live' | 'fallback' | 'demo'>(isDemoMode ? 'demo' : 'fallback');
 
   const loadKPIs = useCallback(async () => {
@@ -132,11 +124,7 @@ const Index = () => {
         setMockTrendData(trendResult.data as any);
       }
     } catch {
-      if (!isDemoMode) {
-        setMockCounts(EMPTY_COUNTS);
-        setMockTrendData([]);
-      }
-      // demo mode: keep fallbacks (already set via initial state)
+      // Keep fallback data — withFallback handles graceful degradation
     }
     setIsLoading(false);
   }, [portfolioId, isDemoMode]);
@@ -159,21 +147,6 @@ const Index = () => {
           </div>
           <ChartSkeleton />
         </div>
-      </DashboardLayout>
-    );
-  }
-
-  // Check if sandbox/production mode has no data
-  const hasNoData = !isDemoMode && mockCounts.totalBusinesses === 0 && !isLoading;
-  if (hasNoData) {
-    return (
-      <DashboardLayout>
-        <SandboxEmptyState
-          title="No Dashboard Data"
-          description="Connect your API and configure your portfolio to see live metrics. Dashboard data will populate automatically once your integration is active."
-          actionLabel="Retry"
-          onAction={loadKPIs}
-        />
       </DashboardLayout>
     );
   }

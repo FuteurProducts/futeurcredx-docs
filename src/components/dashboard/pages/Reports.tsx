@@ -13,7 +13,6 @@ import { useReportPolling } from '@/hooks/useReportPolling';
 import { logger } from '@/utils/logger';
 import { PILOT_CONFIG } from '@/data/demoData';
 import type { ReportJob } from '@/services/bff/types';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
 import {
@@ -95,8 +94,8 @@ const Reports: React.FC = () => {
   // Selected template for configuration
   const [selectedTemplate, setSelectedTemplate] = useState<ReportTemplate | null>(null);
 
-  // Reports history — initialised with demo data in demo mode; populated from BFF otherwise
-  const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>(isDemoMode ? mockGeneratedReports : []);
+  // Reports history — initialised with mock data for fallback
+  const [generatedReports, setGeneratedReports] = useState<GeneratedReport[]>(mockGeneratedReports);
 
   // Preview drawer state
   const [previewReport, setPreviewReport] = useState<GeneratedReport | null>(null);
@@ -120,7 +119,7 @@ const Reports: React.FC = () => {
       );
       setGeneratedReports(result.data);
     } catch {
-      if (!isDemoMode) setGeneratedReports([]);
+      // Keep fallback data
     }
   }, [portfolioId, isDemoMode]);
 
@@ -282,18 +281,6 @@ const Reports: React.FC = () => {
     localStorage.setItem(`lumiq_custom_report_${name}`, JSON.stringify(blocks));
     toast({ title: "Template saved", description: `"${name}" saved with ${blocks.length} metric blocks.` });
   };
-
-  // Empty state guard: show when not demo mode and no reports exist
-  if (!isDemoMode && generatedReports.length === 0) {
-    return (
-      <SandboxEmptyState
-        title="No Reports"
-        description="Reports will be available once your API integration is configured and data starts flowing."
-        actionLabel="Retry"
-        onAction={fetchReportHistory}
-      />
-    );
-  }
 
   return (
     <div className="flex flex-col h-full bg-muted/30">

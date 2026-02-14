@@ -30,7 +30,6 @@ import { CustomerTableSkeleton, SkeletonCard, SkeletonPanel, MetricSkeleton } fr
 import { EmptyState } from '@/components/ui/empty-state';
 import { DataLineageFooter } from '@/components/shared/DataLineageFooter';
 import { BankDisclaimer } from '@/components/shared/BankDisclaimer';
-import { SandboxEmptyState } from '@/components/shared/SandboxEmptyState';
 
 import { DEMO_BUSINESSES, getEnrichedBusiness } from '@/data/demoData';
 import { CUSTOMER_DEMO_DATA } from '@/data/customerDemoData';
@@ -637,21 +636,6 @@ const CustomerBff: React.FC = () => {
         size="lg"
         className="min-h-[400px]"
       />
-    );
-  }
-
-  // Check if sandbox/production mode has no data
-  const hasNoData = !isDemoMode && customers.length === 0 && !isLoading && !portfolioLoading;
-  if (hasNoData) {
-    return (
-      <div className="space-y-6">
-        <SandboxEmptyState
-          title="No Customer Data"
-          description="Customer data will populate once your API integration is active and customer records are synced."
-          actionLabel="Retry"
-          onAction={fetchCustomers}
-        />
-      </div>
     );
   }
 
