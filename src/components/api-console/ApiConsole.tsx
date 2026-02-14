@@ -531,7 +531,7 @@ function getLiveQueryParams(endpointId: string): Record<string, string> | null {
 const ApiPlaygroundPanel: React.FC = () => {
   const { currentEnvironment, isDemoMode } = useEnvironment();
   const { apiKey: globalApiKey, setApiKey: setGlobalApiKey } = useApiKeyStore();
-  const [selectedEndpointId, setSelectedEndpointId] = useState<string>('credit-score');
+  const [selectedEndpointId, setSelectedEndpointId] = useState<string>('health');
   const [response, setResponse] = useState<string | null>(null);
   const [responseTime, setResponseTime] = useState<number | null>(null);
   const [responseStatus, setResponseStatus] = useState<number | null>(null);
@@ -578,8 +578,8 @@ const ApiPlaygroundPanel: React.FC = () => {
           const creds = JSON.parse(credentialsJson) as StoredCredential[];
           const filtered = creds.filter(c =>
             currentEnvironment === 'sandbox'
-              ? c.environment === 'sandbox' || c.keyPrefix?.startsWith('lq_test_')
-              : c.environment === 'production' || c.keyPrefix?.startsWith('lq_live_')
+              ? c.environment === 'sandbox' || c.keyPrefix?.startsWith('sk_test_') || c.keyPrefix?.startsWith('lq_test_')
+              : c.environment === 'production' || c.keyPrefix?.startsWith('sk_live_') || c.keyPrefix?.startsWith('lq_live_')
           );
           setStoredCredentials(filtered);
         } catch (e) {
@@ -1050,7 +1050,7 @@ const ApiPlaygroundPanel: React.FC = () => {
               <label className="text-sm font-medium text-muted-foreground">Enter API Key</label>
               <Input
                 type="password"
-                placeholder={currentEnvironment === 'sandbox' ? 'lq_test_...' : 'lq_live_...'}
+                placeholder={currentEnvironment === 'sandbox' ? 'sk_test_...' : 'sk_live_...'}
                 value={apiKey}
                 onChange={(e) => handleApiKeyChange(e.target.value)}
                 className="font-mono"
@@ -1418,8 +1418,14 @@ const ApiPlaygroundPanel: React.FC = () => {
 const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
   apiKeys = [],
   isLoadingKeys,
+  error,
+  newKeyName = '',
+  setNewKeyName,
+  handleGenerateKey,
+  isGeneratingKey,
   newlyGeneratedKey,
   setNewlyGeneratedKey,
+  handleRevokeKey,
 }) => {
   const { currentEnvironment } = useEnvironment();
   const { apiKey: activeApiKey, setApiKey: setActiveApiKey } = useApiKeyStore();
@@ -1428,17 +1434,15 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
     // Match by environment field
     if (key.environment === currentEnvironment) return true;
     // Fallback: match by key prefix
-    if (currentEnvironment === 'sandbox' && key.keyPrefix?.startsWith('lq_test_')) return true;
-    if (currentEnvironment === 'production' && (key.keyPrefix?.startsWith('lq_live_') || key.keyPrefix?.startsWith('lq_prod_'))) return true;
+    if (currentEnvironment === 'sandbox' && (key.keyPrefix?.startsWith('sk_test_') || key.keyPrefix?.startsWith('lq_test_'))) return true;
+    if (currentEnvironment === 'production' && (key.keyPrefix?.startsWith('sk_live_') || key.keyPrefix?.startsWith('lq_live_') || key.keyPrefix?.startsWith('lq_prod_'))) return true;
     return false;
   });
 
   /** Check if a key is the currently active key by comparing the prefix. */
   const isActiveKey = (key: ApiKey): boolean => {
     if (!activeApiKey) return false;
-    // If we have the full key, compare directly
     if (key.key && activeApiKey === key.key) return true;
-    // Compare prefix
     if (key.keyPrefix && activeApiKey.startsWith(key.keyPrefix)) return true;
     return false;
   };
@@ -1454,6 +1458,49 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
     <div className="bg-card rounded-2xl border border-border p-6">
       <h3 className="text-lg font-semibold mb-4">API Keys & OAuth Clients</h3>
       <p className="text-sm text-muted-foreground mb-6">Manage your API keys and OAuth client credentials for secure access.</p>
+
+      {/* Create API Key form */}
+      <div className="mb-6 p-4 bg-muted/50 rounded-xl border border-border">
+        <div className="flex items-center gap-2 mb-3">
+          <Key className="w-4 h-4 text-primary" />
+          <span className="text-sm font-semibold">Generate New API Key</span>
+        </div>
+        <div className="flex gap-3">
+          <Input
+            placeholder="Key name (e.g. My Sandbox Key)"
+            value={newKeyName}
+            onChange={(e) => setNewKeyName?.(e.target.value)}
+            className="flex-1"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && newKeyName.trim()) {
+                handleGenerateKey?.();
+              }
+            }}
+          />
+          <Button
+            onClick={handleGenerateKey}
+            disabled={isGeneratingKey || !newKeyName.trim()}
+          >
+            {isGeneratingKey ? (
+              <>
+                <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <Zap className="w-4 h-4 mr-2" />
+                Generate Key
+              </>
+            )}
+          </Button>
+        </div>
+        {error && (
+          <div className="mt-2 flex items-center gap-2 text-xs text-destructive">
+            <AlertCircle className="w-3 h-3" />
+            {error}
+          </div>
+        )}
+      </div>
 
       {/* Newly generated key banner */}
       {newlyGeneratedKey && (
@@ -1478,11 +1525,22 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
               }}
             >
               <Zap className="w-4 h-4 mr-1" />
-              Set as Active
+              Set as Active & Copy
             </Button>
             <Button
               size="sm"
               variant="outline"
+              onClick={async () => {
+                await navigator.clipboard.writeText(newlyGeneratedKey.key);
+                toast.success('API key copied to clipboard');
+              }}
+            >
+              <Copy className="w-4 h-4 mr-1" />
+              Copy Key
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
               onClick={() => setNewlyGeneratedKey?.(null)}
             >
               Dismiss
@@ -1520,7 +1578,7 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
                 </div>
                 <div className="flex items-center gap-3">
                   <code className="text-sm font-mono text-muted-foreground">
-                    sk_...{key.key?.slice(-4) || '****'}
+                    {key.keyPrefix || `sk_...${key.key?.slice(-4) || '****'}`}
                   </code>
                   {key.key && !active && (
                     <Button
@@ -1533,11 +1591,24 @@ const ApiKeysPanel: React.FC<ApiConsoleProps> = ({
                       Set as Active
                     </Button>
                   )}
+                  {handleRevokeKey && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleRevokeKey(key.id)}
+                      className="text-xs text-muted-foreground hover:text-destructive"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  )}
                 </div>
               </div>
             );
           }) : (
-            <p className="text-center py-8 text-muted-foreground">No API keys yet. Generate one above.</p>
+            <div className="text-center py-8 text-muted-foreground">
+              <Key className="w-8 h-8 mx-auto mb-2 opacity-50" />
+              <p>No API keys yet. Use the form above to generate one.</p>
+            </div>
           )}
           <p className="text-xs text-muted-foreground text-center pt-2">
             Showing {envLabel} keys. Switch environment to see other keys.
