@@ -41,6 +41,7 @@ import {
   mockAuditLogs,
   mockAlertThresholds,
   mockBillingInfo,
+  type ApiKey,
   type Environment,
   type PlatformUser,
   type RolePermissions,
@@ -50,12 +51,12 @@ import {
 // ── BFF → UI adapters ──────────────────────────────────────────────
 
 /** Map a BFF ApiKey to the UI ApiKey shape used by ApiKeysPanel */
-function adaptBffApiKey(bffKey: BffApiKey) {
+function adaptBffApiKey(bffKey: BffApiKey): ApiKey {
   return {
     id: bffKey.id,
     name: bffKey.name,
     keyMasked: bffKey.keyPrefix + '****...',
-    environment: bffKey.environment,
+    environment: (bffKey.environment === 'development' ? 'sandbox' : bffKey.environment) as Environment,
     scopes: bffKey.scopes || [],
     createdAt: bffKey.createdAt,
     lastUsed: bffKey.lastUsedAt || null,
@@ -165,7 +166,7 @@ const Settings: React.FC = () => {
   const handleCreateApiKey = async (name: string, scopes: string[], env: Environment) => {
     const { data: newKey, source } = await withFallback(
       async () => {
-        const apiEnv = env === 'demo' ? 'sandbox' : env;
+        const apiEnv = env === 'production' ? 'production' : 'development';
         const res = await apiKeysService.create({ name, environment: apiEnv, scopes });
         return adaptBffApiKey(res.data);
       },
@@ -173,7 +174,7 @@ const Settings: React.FC = () => {
         id: `key-${Date.now()}`,
         name,
         keyMasked: `sk_${env === 'production' ? 'live' : 'test'}_${'*'.repeat(28)}${Math.random().toString(36).slice(-4)}`,
-        environment: env === 'demo' ? 'sandbox' : env,
+        environment: env === 'production' ? 'production' as const : 'sandbox' as const,
         scopes,
         createdAt: new Date().toISOString(),
         lastUsed: null as string | null,

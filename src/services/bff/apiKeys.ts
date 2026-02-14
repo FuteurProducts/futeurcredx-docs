@@ -7,7 +7,7 @@ import bffClient, { BffResponse, BffListResponse } from './client';
 import type { ApiKey, CreateApiKeyRequest, ApiKeyUsage } from './types';
 
 export interface ApiKeyFilters {
-  environment?: 'sandbox' | 'production';
+  environment?: 'development' | 'production';
   isActive?: boolean;
 }
 

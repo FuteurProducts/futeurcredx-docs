@@ -252,7 +252,7 @@ export interface ApiKey {
   tenantId: string;
   name: string;
   keyPrefix: string;
-  environment: 'sandbox' | 'production';
+  environment: 'development' | 'production';
   scopes?: string[];
   isActive: boolean;
   lastUsedAt?: string;
@@ -263,7 +263,7 @@ export interface ApiKey {
 
 export interface CreateApiKeyRequest {
   name: string;
-  environment: 'sandbox' | 'production';
+  environment: 'development' | 'production';
   scopes?: string[];
   expiresInDays?: number;
 }

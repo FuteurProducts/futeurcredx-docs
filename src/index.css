@@ -351,3 +351,15 @@
 .animate-pulse-subtle {
   animation: pulse-subtle 2s ease-in-out infinite;
 }
+
+/* Clerk UserButton dropdown z-index fix — multiple selectors for specificity */
+.cl-userButtonPopoverCard,
+.cl-popoverBox,
+.cl-userButtonPopoverRootBox,
+.cl-userButtonPopoverActions,
+.cl-userButtonPopover,
+div[class*="cl-userButton"] > div,
+div[class*="cl-popover"] {
+  z-index: 99999 !important;
+  position: relative !important;
+}

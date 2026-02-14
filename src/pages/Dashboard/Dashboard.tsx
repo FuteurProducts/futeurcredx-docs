@@ -314,7 +314,7 @@ const Dashboard: React.FC = () => {
     try {
       const result = await apiKeysService.create({
         name: newKeyName.trim(),
-        environment: 'sandbox',
+        environment: 'development',
         scopes: ['read', 'write'],
         expiresInDays: 30,
       });
@@ -345,10 +345,26 @@ const Dashboard: React.FC = () => {
       setApiKeys(prev => [...prev, newKey]);
       setNewKeyName('');
       setError('');
-    } catch (error) {
+    } catch (error: unknown) {
       logger.error('[Dashboard] Failed to generate API key:', error);
-      const bffErr = error as { error?: { code?: string; message?: string }; message?: string };
-      const msg = bffErr?.error?.message || bffErr?.message || 'Unknown error creating API key.';
+      let msg = 'Unknown error creating API key.';
+      if (error && typeof error === 'object') {
+        const e = error as Record<string, unknown>;
+        // Try every possible error shape
+        const shapes = [
+          (e.error as Record<string, unknown>)?.message,
+          e.message,
+          (e.error as Record<string, unknown>)?.code,
+          e.statusCode,
+          e.status,
+        ].filter(Boolean);
+        if (shapes.length > 0) {
+          msg = shapes.join(' | ');
+        } else {
+          // Last resort — stringify the entire error
+          try { msg = JSON.stringify(error); } catch { msg = String(error); }
+        }
+      }
       setError(msg);
     } finally {
       setIsGeneratingKey(false)
@@ -609,7 +625,7 @@ const Dashboard: React.FC = () => {
 
         {/* Header - Fixed/Sticky with premium gradient */}
         <header
-          className="sticky top-0 z-10 bg-background/95 backdrop-blur-xl border-b border-border/50 shrink-0"
+          className="sticky top-0 z-[100] bg-background border-b border-border/50 shrink-0"
         >
           <div
             className="flex items-center h-18 lg:h-22 mx-auto px-4 lg:px-10"
