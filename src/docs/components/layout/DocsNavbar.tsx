@@ -41,11 +41,18 @@ export function DocsNavbar({ onMenuToggle }: DocsNavbarProps) {
         <a
           href="/"
           className="flex items-center gap-2.5"
-          aria-label="FuteurCredX Docs home"
+          aria-label="LumiqAI Docs home"
         >
-          <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-lg font-bold text-transparent">
-            FuteurCredX
-          </span>
+          <img
+            src="/lumiq-logo.svg"
+            alt="LumiqAI"
+            className="h-8 w-auto"
+            onError={(e) => {
+              const target = e.currentTarget;
+              target.onerror = null;
+              target.src = '/lumiqlogo.png';
+            }}
+          />
           <span className="rounded-md bg-blue-500/15 px-2 py-0.5 text-xs font-medium text-blue-400">
             Docs
           </span>

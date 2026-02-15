@@ -131,9 +131,11 @@ export function DocsFooter() {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-gray-800 pt-8 md:flex-row">
           <div className="flex items-center gap-3">
-            <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-lg font-bold text-transparent">
-              FuteurCredX
-            </span>
+            <img
+              src="/lumiq-logo.svg"
+              alt="LumiqAI"
+              className="h-6 w-auto opacity-60"
+            />
             <span className="text-xs text-gray-600">|</span>
             <span className="text-xs text-gray-500">
               Developer Documentation
