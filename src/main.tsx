@@ -1,4 +1,4 @@
-import { StrictMode, Component, type ReactNode, type ErrorInfo } from 'react'
+import { StrictMode, Component, lazy, Suspense, type ReactNode, type ErrorInfo } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ClerkProvider } from '@clerk/clerk-react'
 import { dark } from '@clerk/themes'
@@ -6,6 +6,9 @@ import './index.css'
 import App from './App.tsx'
 import { AuthProvider, DemoAuthProvider, FallbackAuthProvider, isClerkConfigured } from './contexts/AuthContext'
 import { EnvironmentProvider } from './contexts/EnvironmentContext'
+
+// Lazy-load DocsApp — only loaded when hostname is docs.*
+const DocsApp = lazy(() => import('./docs/DocsApp'))
 
 // Error boundary to surface runtime crashes visually
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
@@ -141,14 +144,53 @@ function renderAuthWrappedApp(appElement: ReactNode) {
   return <FallbackAuthProvider>{appElement}</FallbackAuthProvider>;
 }
 
-const app = (
-  <StrictMode>
-    <ErrorBoundary>
-      <EnvironmentProvider>
-        {renderAuthWrappedApp(<App />)}
-      </EnvironmentProvider>
-    </ErrorBoundary>
-  </StrictMode>
-)
+/**
+ * Hostname-based routing: docs.futeurcredx.com gets the documentation portal,
+ * everything else gets the dashboard app. Also supports localhost ?docs param.
+ */
+function isDocsHost(): boolean {
+  if (typeof window === 'undefined') return false;
+  const hostname = window.location.hostname;
+  // Production: docs.futeurcredx.com or docs.lumiq.ai
+  if (hostname.startsWith('docs.')) return true;
+  // Local dev: localhost:8080?docs or localhost:8080/docs-preview
+  if ((hostname === 'localhost' || hostname === '127.0.0.1') &&
+      (new URLSearchParams(window.location.search).has('docs') ||
+       window.location.pathname.startsWith('/docs-preview'))) {
+    return true;
+  }
+  return false;
+}
 
-createRoot(document.getElementById('root')!).render(app)
+const root = createRoot(document.getElementById('root')!);
+
+if (isDocsHost()) {
+  // Documentation portal — no auth, no environment context needed
+  root.render(
+    <StrictMode>
+      <ErrorBoundary>
+        <Suspense fallback={
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#030712' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ width: 32, height: 32, border: '2px solid #6366f1', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto' }} />
+              <p style={{ marginTop: 12, fontSize: 14, color: '#9ca3af' }}>Loading docs...</p>
+            </div>
+          </div>
+        }>
+          <DocsApp />
+        </Suspense>
+      </ErrorBoundary>
+    </StrictMode>
+  );
+} else {
+  // Dashboard app — full auth + environment context
+  root.render(
+    <StrictMode>
+      <ErrorBoundary>
+        <EnvironmentProvider>
+          {renderAuthWrappedApp(<App />)}
+        </EnvironmentProvider>
+      </ErrorBoundary>
+    </StrictMode>
+  );
+}
