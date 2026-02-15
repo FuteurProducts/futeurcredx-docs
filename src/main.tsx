@@ -15,10 +15,38 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
   render() {
     if (this.state.error) {
       return (
-        <div style={{ padding: 32, fontFamily: 'monospace', color: '#ff4444', background: '#1a1a1a', minHeight: '100vh' }}>
-          <h1>React Error</h1>
-          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{this.state.error.message}</pre>
-          <pre style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: 12, color: '#999', marginTop: 16 }}>{this.state.error.stack}</pre>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column' as const,
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          background: '#0f172a',
+          color: '#e2e8f0',
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+          padding: '2rem',
+          textAlign: 'center' as const,
+        }}>
+          <img src="/lumiq-logo.svg" alt="LumiqAI" style={{ height: '48px', marginBottom: '2rem', opacity: 0.8 }} />
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '0.5rem' }}>Something went wrong</h1>
+          <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginBottom: '1.5rem', maxWidth: '400px' }}>
+            An unexpected error occurred. Please refresh the page to continue.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              background: '#3b82f6',
+              color: 'white',
+              border: 'none',
+              padding: '0.625rem 1.5rem',
+              borderRadius: '0.5rem',
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+            }}
+          >
+            Refresh Page
+          </button>
         </div>
       );
     }

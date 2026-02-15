@@ -5,8 +5,8 @@
 
 import React, { useState } from 'react';
 import {
-  Book, Code, Copy, ChevronRight, ExternalLink,
-  Terminal, FileJson
+  Book, Code, Copy, ChevronRight,
+  Terminal
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -179,18 +179,9 @@ print(response.json())`;
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" asChild>
-            <a href="https://docs.lumiq.ai" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Full Docs
-            </a>
-          </Button>
-          <Button variant="outline" asChild>
-            <a href="https://api.lumiq.ai/v2/openapi.json" target="_blank" rel="noopener noreferrer">
-              <FileJson className="h-4 w-4 mr-2" />
-              OpenAPI Spec
-            </a>
-          </Button>
+          <Badge variant="secondary" className="text-xs">
+            Base URL: /v2
+          </Badge>
         </div>
       </div>
 
