@@ -262,14 +262,14 @@ export default function Quickstart() {
       <Callout type="tip" title="Next Steps">
         You have successfully made your first API calls. Now explore the full{' '}
         <Link
-          to="/docs/api-reference"
+          to="/api-reference"
           className="font-medium text-emerald-400 underline decoration-emerald-400/30 hover:decoration-emerald-400"
         >
           API Reference
         </Link>{' '}
         for all available endpoints, or try the{' '}
         <Link
-          to="/docs/sandbox"
+          to="/sandbox"
           className="font-medium text-emerald-400 underline decoration-emerald-400/30 hover:decoration-emerald-400"
         >
           Sandbox
@@ -280,7 +280,7 @@ export default function Quickstart() {
       {/* CTA */}
       <div className="flex justify-center">
         <Link
-          to="/docs/api-reference"
+          to="/api-reference"
           className={cn(
             'inline-flex items-center gap-2 rounded-xl px-6 py-3',
             'bg-gradient-to-r from-blue-600 to-indigo-600',

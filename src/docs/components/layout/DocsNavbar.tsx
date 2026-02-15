@@ -1,5 +1,4 @@
-import { ExternalLink, Github, Menu, Moon, Search, Sun } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import { ExternalLink, Github, Menu, Search } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -11,11 +10,6 @@ interface DocsNavbarProps {
 
 export function DocsNavbar({ onMenuToggle }: DocsNavbarProps) {
   const { setSearchOpen } = useDocsContext();
-  const [darkMode, setDarkMode] = useState(true);
-
-  const toggleTheme = useCallback(() => {
-    setDarkMode((prev) => !prev);
-  }, []);
 
   return (
     <header
@@ -45,7 +39,7 @@ export function DocsNavbar({ onMenuToggle }: DocsNavbarProps) {
 
         {/* Logo */}
         <a
-          href="/docs"
+          href="/"
           className="flex items-center gap-2.5"
           aria-label="FuteurCredX Docs home"
         >
@@ -58,7 +52,7 @@ export function DocsNavbar({ onMenuToggle }: DocsNavbarProps) {
         </a>
       </div>
 
-      {/* Right: Search, theme, links */}
+      {/* Right: Search, links */}
       <div className="flex items-center gap-2">
         {/* Search trigger */}
         <button
@@ -91,24 +85,6 @@ export function DocsNavbar({ onMenuToggle }: DocsNavbarProps) {
           aria-label="Search documentation"
         >
           <Search className="h-5 w-5" />
-        </button>
-
-        {/* Theme toggle */}
-        <button
-          type="button"
-          onClick={toggleTheme}
-          className={cn(
-            'rounded-lg p-2 text-gray-400 hover:text-white',
-            'transition-colors duration-200',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50',
-          )}
-          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          {darkMode ? (
-            <Sun className="h-5 w-5" aria-hidden="true" />
-          ) : (
-            <Moon className="h-5 w-5" aria-hidden="true" />
-          )}
         </button>
 
         {/* Dashboard link */}

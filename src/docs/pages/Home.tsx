@@ -17,7 +17,7 @@ const featureCards: FeatureCard[] = [
     title: 'Quickstart',
     description: 'Get your first API call running in 5 minutes',
     icon: Rocket,
-    href: '/docs/quickstart',
+    href: '/quickstart',
     iconGradient: 'from-orange-500 to-amber-500',
     borderHover: 'hover:border-orange-500/40',
   },
@@ -25,7 +25,7 @@ const featureCards: FeatureCard[] = [
     title: 'API Reference',
     description: 'Complete endpoint documentation with examples',
     icon: Code,
-    href: '/docs/api-reference',
+    href: '/api-reference',
     iconGradient: 'from-blue-500 to-cyan-500',
     borderHover: 'hover:border-blue-500/40',
   },
@@ -33,7 +33,7 @@ const featureCards: FeatureCard[] = [
     title: 'Sandbox',
     description: 'Explore real data from 4 bank tenants',
     icon: FlaskConical,
-    href: '/docs/sandbox',
+    href: '/sandbox',
     iconGradient: 'from-emerald-500 to-teal-500',
     borderHover: 'hover:border-emerald-500/40',
   },
@@ -50,25 +50,25 @@ const quickLinks: QuickLink[] = [
   {
     title: 'Authentication',
     description: 'API keys, JWTs, and security best practices',
-    href: '/docs/authentication',
+    href: '/authentication',
     icon: Shield,
   },
   {
     title: 'Error Reference',
     description: 'HTTP status codes and troubleshooting',
-    href: '/docs/errors',
+    href: '/errors',
     icon: BookOpen,
   },
   {
     title: 'Data Models',
     description: 'Schemas for businesses, scores, and more',
-    href: '/docs/data-models',
+    href: '/data-models',
     icon: Code,
   },
   {
     title: 'FAQ',
     description: 'Frequently asked questions',
-    href: '/docs/faq',
+    href: '/faq',
     icon: HelpCircle,
   },
 ];
@@ -93,7 +93,7 @@ export default function Home() {
         </p>
         <div className="mt-8">
           <Link
-            to="/docs/quickstart"
+            to="/quickstart"
             className={cn(
               'inline-flex items-center gap-2 rounded-xl px-6 py-3',
               'bg-gradient-to-r from-blue-600 to-indigo-600',

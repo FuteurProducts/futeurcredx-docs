@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
 
+import { DocsFooter } from '@/docs/components/layout/DocsFooter';
 import { DocsNavbar } from '@/docs/components/layout/DocsNavbar';
 import { Sidebar } from '@/docs/components/layout/Sidebar';
 import { SearchSpotlight } from '@/docs/components/search/SearchSpotlight';
@@ -43,6 +44,8 @@ export function DocsLayout() {
           </div>
         </main>
       </div>
+
+      <DocsFooter />
 
       <SearchSpotlight isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>

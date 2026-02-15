@@ -43,35 +43,35 @@ interface NavItem {
 }
 
 const apiReferenceChildren: NavItem[] = [
-  { label: 'Health', path: '/docs/api-reference#health', icon: Activity },
-  { label: 'Portfolios', path: '/docs/api-reference#portfolios', icon: Layers },
-  { label: 'Businesses', path: '/docs/api-reference#businesses', icon: Users },
-  { label: 'Credit Scores', path: '/docs/api-reference#credit-scores', icon: CreditCard },
-  { label: 'Risk', path: '/docs/api-reference#risk', icon: ShieldAlert },
-  { label: 'Underwriting', path: '/docs/api-reference#underwriting', icon: Scale },
-  { label: 'Analytics', path: '/docs/api-reference#analytics', icon: BarChart3 },
-  { label: 'API Keys', path: '/docs/api-reference#api-keys', icon: Key },
-  { label: 'Reports', path: '/docs/api-reference#reports', icon: FileText },
-  { label: 'Audit', path: '/docs/api-reference#audit', icon: Clock },
-  { label: 'Webhooks', path: '/docs/api-reference#webhooks-api', icon: Webhook },
+  { label: 'Health', path: '/api-reference#health', icon: Activity },
+  { label: 'Portfolios', path: '/api-reference#portfolios', icon: Layers },
+  { label: 'Businesses', path: '/api-reference#businesses', icon: Users },
+  { label: 'Credit Scores', path: '/api-reference#credit-scores', icon: CreditCard },
+  { label: 'Risk', path: '/api-reference#risk', icon: ShieldAlert },
+  { label: 'Underwriting', path: '/api-reference#underwriting', icon: Scale },
+  { label: 'Analytics', path: '/api-reference#analytics', icon: BarChart3 },
+  { label: 'API Keys', path: '/api-reference#api-keys', icon: Key },
+  { label: 'Reports', path: '/api-reference#reports', icon: FileText },
+  { label: 'Audit', path: '/api-reference#audit', icon: Clock },
+  { label: 'Webhooks', path: '/api-reference#webhooks-api', icon: Webhook },
 ];
 
 const navItems: NavItem[] = [
-  { label: 'Home', path: '/docs', icon: Home },
-  { label: 'Quickstart', path: '/docs/quickstart', icon: Zap },
-  { label: 'Authentication', path: '/docs/authentication', icon: Shield },
+  { label: 'Home', path: '/', icon: Home },
+  { label: 'Quickstart', path: '/quickstart', icon: Zap },
+  { label: 'Authentication', path: '/authentication', icon: Shield },
   {
     label: 'API Reference',
-    path: '/docs/api-reference',
+    path: '/api-reference',
     icon: BookOpen,
     children: apiReferenceChildren,
   },
-  { label: 'Sandbox', path: '/docs/sandbox', icon: Box },
-  { label: 'Errors', path: '/docs/errors', icon: MessageSquare },
-  { label: 'Data Models', path: '/docs/data-models', icon: Server },
-  { label: 'Webhooks', path: '/docs/webhooks', icon: Webhook },
-  { label: 'Changelog', path: '/docs/changelog', icon: Settings },
-  { label: 'FAQ', path: '/docs/faq', icon: HelpCircle },
+  { label: 'Sandbox', path: '/sandbox', icon: Box },
+  { label: 'Errors', path: '/errors', icon: MessageSquare },
+  { label: 'Data Models', path: '/data-models', icon: Server },
+  { label: 'Webhooks', path: '/webhooks', icon: Webhook },
+  { label: 'Changelog', path: '/changelog', icon: Settings },
+  { label: 'FAQ', path: '/faq', icon: HelpCircle },
 ];
 
 interface NavLinkItemProps {

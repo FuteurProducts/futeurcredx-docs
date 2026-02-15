@@ -364,7 +364,7 @@ export default function Authentication() {
       {/* CTA */}
       <div className="flex justify-center pt-4">
         <Link
-          to="/docs/api-reference"
+          to="/api-reference"
           className={cn(
             'inline-flex items-center gap-2 rounded-xl px-6 py-3',
             'bg-gradient-to-r from-blue-600 to-indigo-600',
