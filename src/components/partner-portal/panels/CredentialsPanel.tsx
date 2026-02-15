@@ -47,7 +47,12 @@ function mapBffKeyToCredential(key: ApiKey): ApiCredential {
     fullKey: undefined,
     environment: key.environment === 'development' ? 'sandbox' : 'production',
     authMethod: 'api_key',
-    scopes: key.scopes ?? [],
+    scopes: Array.isArray(key.scopes)
+      ? key.scopes
+      : typeof key.scopes === 'string'
+        // API may return scopes as comma-separated string at runtime
+        ? (key.scopes as unknown as string).split(',').map((s: string) => s.trim())
+        : [],
     ipWhitelist: [],
     rateLimitPerMinute: key.environment === 'production' ? 1000 : 100,
     status: key.isActive ? 'active' : 'revoked',
@@ -577,10 +582,10 @@ export const CredentialsPanel: React.FC = () => {
                           </div>
                         )}
                         <div className="flex gap-1 mt-2">
-                          {cred.scopes.slice(0, 4).map((scope) => (
+                          {(Array.isArray(cred.scopes) ? cred.scopes : []).slice(0, 4).map((scope) => (
                             <Badge key={scope} variant="secondary" className="text-xs">{scope}</Badge>
                           ))}
-                          {cred.scopes.length > 4 && (
+                          {Array.isArray(cred.scopes) && cred.scopes.length > 4 && (
                             <Badge variant="secondary" className="text-xs">+{cred.scopes.length - 4} more</Badge>
                           )}
                         </div>
