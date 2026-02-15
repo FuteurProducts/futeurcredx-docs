@@ -35,7 +35,10 @@ import { useToast } from '@/hooks/use-toast';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
 import { useFeatureFlags } from '@/hooks/useFeatureFlags';
+import { useApiKeyStore } from '@/stores/apiKeyStore';
+import { usePortfolio } from '@/contexts/PortfolioContext';
 import { ACTIVE_BANK_NAME } from '@/data/bankConfig';
+import { ApiKeyOnboarding } from '@/components/onboarding/ApiKeyOnboarding';
 
 // Import Finlab Overview
 import { FinlabOverview } from '@/components/finlab';
@@ -90,10 +93,10 @@ const Dashboard: React.FC = () => {
   // Derive base path from current route — preserves /demo/:bankId prefix
   const basePath = location.pathname.match(/^\/demo\/[^/]+/)?.[0] || '/dashboard';
   const { user } = useUser();
-  const { getToken } = useAuth();
+  const { getToken, jwtAuthWorks } = useAuth();
   const { toast: _toast } = useToast();
   const { resolvedTheme, setTheme } = useTheme();
-  const { currentEnvironment, switchEnvironment } = useEnvironment();
+  const { currentEnvironment, switchEnvironment, isDemoMode } = useEnvironment();
   const featureFlags = useFeatureFlags();
 
 
@@ -438,6 +441,16 @@ const Dashboard: React.FC = () => {
     navigation.find(n => n.id === activeTab)?.title || 'Dashboard'
   )
 
+  // ── Onboarding gate: signed in + not demo + no API key + no JWT auth → show setup screen ──
+  const activeApiKey = useApiKeyStore((s) => s.apiKey);
+  const { portfolio: currentPortfolio } = usePortfolio();
+
+  if (!isDemoMode && !activeApiKey && !jwtAuthWorks) {
+    return <ApiKeyOnboarding />;
+  }
+
+  // Dynamic bank/portfolio name for headers
+  const activeBankName = currentPortfolio?.name || ACTIVE_BANK_NAME;
 
     return (
     <div className="flex h-screen overflow-hidden bg-muted">
@@ -765,6 +778,9 @@ const Dashboard: React.FC = () => {
                             <div className="text-[0.875rem] text-muted-foreground truncate">
                               @{user?.username || user?.emailAddresses?.[0]?.emailAddress?.split('@')[0] || 'username'}
                             </div>
+                            {activeBankName && !isDemoMode && (
+                              <div className="text-xs text-primary/80 mt-0.5 truncate">{activeBankName}</div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -823,6 +839,20 @@ const Dashboard: React.FC = () => {
                             <div className={`absolute left-1 top-1 w-5 h-5 bg-card rounded-full shadow transition-transform ${resolvedTheme === 'dark' ? 'translate-x-5' : 'translate-x-0'}`} />
                           </div>
                         </div>
+
+                        {/* Switch API Key (sandbox only) */}
+                        {!isDemoMode && activeApiKey && (
+                          <button
+                            onClick={() => {
+                              useApiKeyStore.getState().clearApiKey();
+                              setAccountMenuOpen(false);
+                            }}
+                            className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-muted/50 transition-colors duration-150 text-left"
+                          >
+                            <KeyRound className="w-6 h-6 text-muted-foreground" />
+                            <span className="text-[0.9375rem] font-semibold text-foreground">Switch API Key</span>
+                          </button>
+                        )}
 
                         {/* Log out */}
                         <SignOutButton>

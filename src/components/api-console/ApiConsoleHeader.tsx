@@ -13,6 +13,7 @@ interface ApiConsoleHeaderProps {
   incidents: IncidentAlert[];
   timeRange: string;
   onTimeRangeChange: (range: string) => void;
+  bankName?: string;
 }
 
 const timeRanges = [
@@ -27,6 +28,7 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
   switchEnvironment: onEnvironmentChange,
   timeRange,
   onTimeRangeChange,
+  bankName = 'Sandbox',
 }) => {
   return (
     <div className="bg-card rounded-2xl border border-border p-5 mb-6">
@@ -60,10 +62,10 @@ export const ApiConsoleHeader: React.FC<ApiConsoleHeaderProps> = ({
           {/* Divider */}
           <div className="w-px h-8 bg-border" />
 
-          {/* Organization Label (static) */}
+          {/* Organization Label (dynamic from portfolio) */}
           <div className="flex items-center gap-2 px-3 py-2">
             <Building2 className="w-4 h-4 text-muted-foreground" />
-            <span className="text-sm font-medium">Chase SMB National</span>
+            <span className="text-sm font-medium">{bankName}</span>
           </div>
         </div>
 

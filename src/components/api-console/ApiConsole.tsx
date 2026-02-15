@@ -50,6 +50,7 @@ import { ConnectionCatalog } from './ConnectionCatalog';
 import type { Connection } from './types';
 import { mockConnections, mockIncidents, mockActivityLogs, mockWebhookConfigs } from './data/bankMockData';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { usePortfolio } from '@/contexts/PortfolioContext';
 import { useApiKeyStore } from '@/stores/apiKeyStore';
 import { useRequestLogStore } from '@/stores/apiRequestLogStore';
 import type { RequestLogEntry } from '@/stores/apiRequestLogStore';
@@ -133,6 +134,8 @@ interface ApiConsoleProps {
 
 export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
   const { currentEnvironment, switchEnvironment } = useEnvironment();
+  const { portfolio } = usePortfolio();
+  const consoleBankName = portfolio?.name || 'Sandbox';
   const [timeRange, setTimeRange] = useState('24h');
   const [selectedConnection, setSelectedConnection] = useState<Connection | null>(null);
   const [activeTab, setActiveTab] = useState(currentEnvironment === 'sandbox' ? 'playground' : 'connections');
@@ -155,6 +158,7 @@ export const ApiConsole: React.FC<ApiConsoleProps> = (props) => {
           incidents={mockIncidents}
           timeRange={timeRange}
           onTimeRangeChange={setTimeRange}
+          bankName={consoleBankName}
         />
         <ConnectionDetail
           connection={selectedConnection}

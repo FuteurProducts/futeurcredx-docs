@@ -31,6 +31,8 @@ interface AuthContextType {
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   getToken: () => Promise<string | null>;
+  /** True when Clerk JWT alone resolves a tenant on the API (no API key needed). */
+  jwtAuthWorks: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -56,6 +58,7 @@ const FALLBACK_VALUE: AuthContextType = {
   },
   signOut: async () => {},
   getToken: async () => null,
+  jwtAuthWorks: false,
 };
 
 // ── Demo Auth Provider ─────────────────────────────────────────────────
@@ -114,6 +117,7 @@ const DEMO_AUTH_VALUE: AuthContextType = {
   signUp: async () => { /* no-op in demo mode */ },
   signOut: async () => { /* no-op in demo mode */ },
   getToken: async () => DEMO_TOKEN,
+  jwtAuthWorks: false,
 };
 
 /** Auto-authenticated provider for demo mode. Always signed in with admin role. */
@@ -183,6 +187,7 @@ function buildFallbackAuthValue(apiKey: string | null): AuthContextType {
         setApiKey(null);
       },
       getToken: async () => null,
+      jwtAuthWorks: false,
     };
   }
   return FALLBACK_VALUE;
@@ -207,6 +212,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { user: clerkUser } = useClerkUser();
   const clerk = useClerk();
   const storedApiKey = useApiKeyStore((s) => s.apiKey);
+  const [jwtAuthWorks, setJwtAuthWorks] = useState(false);
+  const jwtProbeAttemptedRef = useRef(false);
 
   const user = mapClerkUser(clerkUser || null);
 
@@ -269,6 +276,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return unsub;
   }, []);
 
+  // ── Smart auth detection: probe API with JWT to check if tenant is wired ──
+  // When user signs in via Clerk but has no API key, try fetching /portfolios
+  // with just the JWT. If it works, the Clerk org is wired to a tenant.
+  useEffect(() => {
+    if (!isSignedIn || !isLoaded || storedApiKey || jwtProbeAttemptedRef.current) return;
+    jwtProbeAttemptedRef.current = true;
+
+    const probeJwtAuth = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      if (!apiUrl) return;
+
+      try {
+        const token = await getToken();
+        if (!token) return;
+
+        const response = await fetch(`${apiUrl}/dashboard/portfolios`, {
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+
+        if (response.ok) {
+          const body = await response.json();
+          if (body.success && Array.isArray(body.data) && body.data.length > 0) {
+            logger.info('[AUTH] JWT auth works — Clerk org wired to tenant, skipping API key onboarding');
+            setJwtAuthWorks(true);
+          }
+        }
+      } catch {
+        // JWT probe failed — user needs API key
+      }
+    };
+
+    probeJwtAuth();
+  }, [isSignedIn, isLoaded, storedApiKey, getToken]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -279,6 +320,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signUp,
         signOut,
         getToken,
+        jwtAuthWorks,
       }}
     >
       {children}
