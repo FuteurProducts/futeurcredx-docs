@@ -4,10 +4,11 @@
  * All BFF calls require portfolioId - this context provides it globally
  */
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useRef, ReactNode } from 'react';
 import type { Portfolio } from '@/services/bff/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { useEnvironment } from '@/contexts/EnvironmentContext';
+import { useApiKeyStore } from '@/stores/apiKeyStore';
 import bffClient, { BffResponse } from '@/services/bff/client';
 import { normalizePortfolio } from '@/services/bff/normalizers';
 import { logger } from '@/utils/logger';
@@ -49,9 +50,11 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
   const [error, setError] = useState<string | null>(null);
   const { isSignedIn, isLoaded } = useAuth();
   const { isDemoMode } = useEnvironment();
+  const apiKey = useApiKeyStore((s) => s.apiKey);
+  const prevApiKeyRef = useRef<string | null>(apiKey);
 
   // Fetch accessible portfolios for current user
-  const refreshPortfolios = useCallback(async () => {
+  const refreshPortfolios = useCallback(async (forceReselect = false) => {
     setIsLoading(true);
     setError(null);
 
@@ -73,8 +76,8 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
 
       setPortfolios(mappedPortfolios);
 
-      // Auto-select first portfolio if none selected
-      if (mappedPortfolios.length > 0 && !portfolioId) {
+      // Auto-select first portfolio if none selected or if forced (API key change)
+      if (mappedPortfolios.length > 0 && (forceReselect || !portfolioId)) {
         setPortfolioIdState(mappedPortfolios[0].id);
       }
     } catch (err) {
@@ -95,6 +98,17 @@ export function PortfolioProvider({ children }: PortfolioProviderProps) {
       refreshPortfolios();
     }
   }, [isLoaded, refreshPortfolios]);
+
+  // Re-fetch portfolios when API key changes (switching banks)
+  useEffect(() => {
+    if (apiKey !== prevApiKeyRef.current) {
+      prevApiKeyRef.current = apiKey;
+      if (apiKey && isLoaded) {
+        logger.info('[PortfolioContext] API key changed, refreshing portfolios');
+        refreshPortfolios(true);
+      }
+    }
+  }, [apiKey, isLoaded, refreshPortfolios]);
 
   // Persist selected portfolio to localStorage
   useEffect(() => {
