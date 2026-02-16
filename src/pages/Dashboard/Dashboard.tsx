@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useUser, useAuth } from '@/contexts/AuthContext'
@@ -131,6 +132,27 @@ const Dashboard: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [accountMenuOpen, setAccountMenuOpen] = useState(false)
+  const accountMenuTriggerRef = useRef<HTMLButtonElement>(null)
+  const [accountMenuPos, setAccountMenuPos] = useState<React.CSSProperties>({})
+
+  // Compute dropdown position when menu opens (portal needs fixed coords)
+  const updateAccountMenuPos = useCallback(() => {
+    const trigger = accountMenuTriggerRef.current;
+    if (!trigger) return;
+    const rect = trigger.getBoundingClientRect();
+    setAccountMenuPos({
+      top: rect.bottom + 8,
+      right: Math.max(8, window.innerWidth - rect.right),
+    });
+  }, []);
+
+  useEffect(() => {
+    if (accountMenuOpen) {
+      updateAccountMenuPos();
+      window.addEventListener('resize', updateAccountMenuPos);
+      return () => window.removeEventListener('resize', updateAccountMenuPos);
+    }
+  }, [accountMenuOpen, updateAccountMenuPos]);
 
   // Track previous environment to detect sandbox entry
   const prevEnvironmentRef = useRef<string>(currentEnvironment);
@@ -729,8 +751,9 @@ const Dashboard: React.FC = () => {
               <div className="hidden md:block w-px h-8 bg-border" />
 
               {/* User Account Dropdown */}
-              <div className="relative">
+              <div>
                 <button
+                  ref={accountMenuTriggerRef}
                   onClick={() => setAccountMenuOpen(!accountMenuOpen)}
                   className="flex items-center gap-3 px-2 py-1 -mx-2 rounded-xl hover:bg-card/50 transition-colors"
                 >
@@ -743,26 +766,29 @@ const Dashboard: React.FC = () => {
                       {user?.emailAddresses?.[0]?.emailAddress || ''}
                     </div>
                   </div>
-                  
+
                   {/* Avatar */}
-                  <img 
+                  <img
                     src={user?.imageUrl || '/lumiq-avatar.png'}
                     alt="Avatar"
                     className="w-12 h-12 rounded-full object-cover border-2 border-transparent hover:border-primary transition-colors"
                   />
                 </button>
 
-                {/* Account Dropdown Menu */}
-                {accountMenuOpen && (
+                {/* Account Dropdown Menu — portaled to document.body to escape overflow-hidden + stacking contexts */}
+                {accountMenuOpen && createPortal(
                   <>
                     {/* Backdrop */}
                     <div
-                      className="fixed inset-0 z-40"
+                      className="fixed inset-0 z-[9998]"
                       onClick={() => setAccountMenuOpen(false)}
                     />
 
                     {/* Dropdown */}
-                    <div className="absolute right-0 top-full mt-2 z-50 w-72 bg-card/95 backdrop-blur-xl rounded-3xl shadow-[var(--shadow-dropdown)] border border-white/[0.08] overflow-hidden">
+                    <div
+                      className="fixed z-[9999] w-72 bg-card/95 backdrop-blur-xl rounded-3xl shadow-[var(--shadow-dropdown)] border border-white/[0.08] overflow-hidden"
+                      style={accountMenuPos}
+                    >
                       {/* User Info */}
                       <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">
@@ -865,7 +891,8 @@ const Dashboard: React.FC = () => {
               </SignOutButton>
             </div>
           </div>
-                  </>
+                  </>,
+                  document.body,
                 )}
         </div>
       </div>

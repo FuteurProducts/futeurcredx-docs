@@ -44,7 +44,7 @@ export function DashboardHeader({ showMenu = false }: DashboardHeaderProps) {
   const { signOut } = useAuth();
 
   return (
-    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-10 relative overflow-hidden">
+    <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6 sticky top-0 z-40 relative">
       {/* Subtle gradient accent at top of header */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-accent to-primary" />
 
