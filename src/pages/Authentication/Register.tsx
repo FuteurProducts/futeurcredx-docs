@@ -140,7 +140,7 @@ export default function Page() {
               <Lock className="w-4 h-4" />
               <span className="text-xs font-medium">AES-256 + TLS 1.3 Encryption</span>
             </div>
-            <div className="text-xs text-slate-600">ISO 27001-Aligned | GDPR Framework</div>
+            <div className="text-xs text-slate-600">Enterprise Security Standards | GDPR Framework</div>
           </div>
         </div>
       </div>
