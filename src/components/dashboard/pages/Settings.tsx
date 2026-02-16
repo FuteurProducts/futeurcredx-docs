@@ -172,7 +172,7 @@ const Settings: React.FC = () => {
       {
         id: `key-${Date.now()}`,
         name,
-        keyMasked: `sk_${env === 'production' ? 'live' : 'test'}_${'*'.repeat(28)}${Math.random().toString(36).slice(-4)}`,
+        keyMasked: `sk_${env === 'production' ? 'live' : 'test'}_${'*'.repeat(28)}${crypto.randomUUID().replace(/-/g, '').slice(-4)}`,
         environment: env === 'production' ? 'production' as const : 'sandbox' as const,
         scopes,
         createdAt: new Date().toISOString(),
@@ -208,7 +208,7 @@ const Settings: React.FC = () => {
   };
 
   const handleRotateApiKey = (keyId: string) => {
-    setApiKeys(prev => prev.map(k => k.id === keyId ? { ...k, keyMasked: `sk_live_${'*'.repeat(28)}${Math.random().toString(36).slice(-4)}`, lastUsed: null } : k));
+    setApiKeys(prev => prev.map(k => k.id === keyId ? { ...k, keyMasked: `sk_live_${'*'.repeat(28)}${crypto.randomUUID().replace(/-/g, '').slice(-4)}`, lastUsed: null } : k));
     toast({ title: "Key rotated", description: "New key generated. Previous key will expire in 24h." });
   };
 

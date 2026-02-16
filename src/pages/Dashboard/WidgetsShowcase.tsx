@@ -117,7 +117,7 @@ const WidgetsShowcase = () => {
       id: Date.now().toString(),
       url: data.url,
       events: data.events,
-      secretKey: `whsec_${Math.random().toString(36).substring(7)}`,
+      secretKey: `whsec_${crypto.randomUUID().replace(/-/g, '').substring(0, 32)}`,
       isActive: true,
       createdAt: new Date().toISOString().split('T')[0],
       failureCount: 0,

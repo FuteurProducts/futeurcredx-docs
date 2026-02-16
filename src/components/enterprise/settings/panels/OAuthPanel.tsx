@@ -58,8 +58,8 @@ export const OAuthPanel: React.FC = () => {
     const newClient: OAuthClientLocal = {
       id: `oauth-${Date.now()}`,
       name: newName,
-      clientId: `client_${Math.random().toString(36).substring(2, 15)}`,
-      clientSecret: `secret_${Math.random().toString(36).substring(2, 30)}`,
+      clientId: `client_${crypto.randomUUID().replace(/-/g, '').substring(0, 13)}`,
+      clientSecret: `secret_${crypto.randomUUID().replace(/-/g, '')}${crypto.randomUUID().replace(/-/g, '').substring(0, 8)}`,
       redirectUris: newRedirectUris.split('\n').filter(uri => uri.trim()),
       scopes: newScopes,
       status: 'active',
@@ -82,7 +82,7 @@ export const OAuthPanel: React.FC = () => {
   const handleRotateSecret = (clientId: string) => {
     setClients(clients.map(c => {
       if (c.id === clientId) {
-        return { ...c, clientSecret: `secret_${Math.random().toString(36).substring(2, 30)}` };
+        return { ...c, clientSecret: `secret_${crypto.randomUUID().replace(/-/g, '')}${crypto.randomUUID().replace(/-/g, '').substring(0, 8)}` };
       }
       return c;
     }));

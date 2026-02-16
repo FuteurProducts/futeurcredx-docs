@@ -159,7 +159,7 @@ const PartnerPortal: React.FC = () => {
     }
 
     const prefix = newKeyEnv === 'production' ? 'lq_prod_' : 'lq_test_';
-    const randomPart = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const randomPart = crypto.randomUUID().replace(/-/g, '').substring(0, 24);
     const fullKey = prefix + randomPart;
     const maskedKey = prefix + '****' + randomPart.slice(-4);
 
