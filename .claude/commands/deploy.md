@@ -10,3 +10,49 @@ DEPLOY WORKFLOW — Follow these steps:
 5. WAIT: Sleep 150 seconds for Vercel build.
 6. VERIFY: Curl all 10 routes on docs.futeurcredx.com. All must return 200. Check security headers. Check cache headers to confirm new deploy is live.
 7. REPORT: Show pass/fail for each route. If any fail, diagnose and fix.
+
+8. CHANGELOG (runs after deploy is verified live):
+
+   a. Get the diff since the last changelog entry:
+      LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || git rev-list --max-parents=0 HEAD)
+      DIFF=$(git log $LAST_TAG..HEAD --pretty=format:"%s" --no-merges)
+      FILES_CHANGED=$(git diff --stat $LAST_TAG..HEAD -- src/ | tail -1)
+
+   b. Generate a bank-facing changelog entry using this prompt internally:
+
+      "You are writing a changelog entry for LumiqAI, a credit analytics platform used by banks like JPMorgan Chase, Wells Fargo, Santander, and Citibank. Your audience is a bank CTO or integration engineer.
+
+      Here are the raw git commits since the last release:
+      $DIFF
+
+      Files changed: $FILES_CHANGED
+
+      Write a changelog entry with:
+      - A date and professional title (e.g. 'Security & Compliance Update', 'API Accuracy Release', 'Platform Reliability Update')
+      - 3-7 bullet points describing changes FROM THE BANK'S PERSPECTIVE
+      - NO git hashes, NO file names, NO internal framework names (no PrismJS, no Vite, no Tailwind)
+      - NO jargon. A bank compliance officer should understand every line.
+      - Group related changes (don't list 42 brand fixes individually — say 'Brand consistency standardized across all platform surfaces')
+      - Highlight security improvements, compliance changes, data accuracy fixes, and new capabilities
+      - Use language like: 'Enhanced', 'Improved', 'Resolved', 'Added', 'Upgraded'
+      - If a change affects API behavior, mention the endpoint
+      - If a change affects data accuracy, explain what was wrong and what's now correct
+      - Skip purely cosmetic changes unless they affect the bank-facing demo experience
+
+      Return ONLY a JSON object:
+      {
+        \"version\": \"X.Y.Z\",
+        \"date\": \"YYYY-MM-DD\",
+        \"title\": \"Short Professional Title\",
+        \"category\": \"security|compliance|api|platform|data\",
+        \"highlights\": [\"bullet 1\", \"bullet 2\", ...],
+        \"banksAffected\": [\"all\"] or [\"chase\", \"santander\"] if specific
+      }"
+
+   c. Parse the JSON response and prepend the new entry to src/docs/data/changelog.ts
+
+   d. Rebuild and redeploy with the updated changelog included (repeat steps 1-7).
+
+   e. Tag the release:
+      git tag -a "v$VERSION" -m "$TITLE"
+      git push --tags
