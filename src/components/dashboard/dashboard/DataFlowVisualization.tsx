@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 const flowSteps = [
   { icon: Building2, label: 'SMB Customer', color: 'text-info', bgColor: 'bg-info/10' },
   { icon: Database, label: 'Experian Data', color: 'text-[var(--primary-04)]', bgColor: 'bg-[var(--primary-04)]/10' },
-  { icon: Sparkles, label: 'LUMIQ AI API', color: 'text-[var(--primary-03)]', bgColor: 'bg-[var(--primary-03)]/10' },
+  { icon: Sparkles, label: 'LumiqAI API', color: 'text-[var(--primary-03)]', bgColor: 'bg-[var(--primary-03)]/10' },
   { icon: Building2, label: 'Your Bank App', color: 'text-success', bgColor: 'bg-success/10' },
 ];
 
@@ -62,16 +62,16 @@ export function DataFlowVisualization() {
 
           <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/10">
             <div className="text-center">
-              <p className="text-2xl font-bold text-primary">12ms</p>
-              <p className="text-xs text-muted-foreground">Avg Processing Time</p>
+              <p className="text-2xl font-bold text-primary">&lt;200ms</p>
+              <p className="text-xs text-muted-foreground">Avg Response Time</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-success">99.99%</p>
-              <p className="text-xs text-muted-foreground">Data Accuracy</p>
+              <p className="text-2xl font-bold text-success">Validated</p>
+              <p className="text-xs text-muted-foreground">Data Integrity</p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold text-[var(--primary-04)]">2.4M</p>
-              <p className="text-xs text-muted-foreground">Requests/Day</p>
+              <p className="text-2xl font-bold text-[var(--primary-04)]">Scalable</p>
+              <p className="text-xs text-muted-foreground">Request Capacity</p>
             </div>
           </div>
         </div>

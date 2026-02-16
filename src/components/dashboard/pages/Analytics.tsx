@@ -59,7 +59,7 @@ const Analytics: React.FC = () => {
           prev.map(kpi => {
             switch (kpi.id) {
               case 'avg-score':
-                return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LUMIQ AI Signal Engine' };
+                return { ...kpi, value: live.avgLumiqScore, lastUpdated: 'just now', dataSource: 'LumiqAI Signal Engine' };
               case 'deteriorating-clients':
                 return { ...kpi, value: live.delinquencyRate, lastUpdated: 'just now', dataSource: 'Risk Analytics Engine' };
               case 'improving-clients':
@@ -358,7 +358,7 @@ const Analytics: React.FC = () => {
         <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full bg-primary" />
-            Data Sources: LUMIQ AI Signal Engine, Portfolio Analytics, Risk Engine
+            Data Sources: LumiqAI Signal Engine, Portfolio Analytics, Risk Engine
           </span>
           <span>|</span>
           <span>Last Updated: {new Date().toLocaleTimeString()}</span>

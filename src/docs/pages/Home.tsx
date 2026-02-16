@@ -172,8 +172,8 @@ export default function Home() {
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {[
-              { label: 'Businesses Monitored', value: '50,000+' },
-              { label: 'API Uptime', value: '99.9%' },
+              { label: 'Business Monitoring', value: 'Scalable' },
+              { label: 'API Infrastructure', value: 'High Availability' },
               { label: 'Avg Response Time', value: '<200ms' },
             ].map((stat) => (
               <div

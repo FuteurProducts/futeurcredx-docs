@@ -16,17 +16,17 @@ const installExamples: Record<string, string> = {
 
 const authExamples: Record<string, string> = {
   curl: `curl -H "X-API-Key: sk_test_YOUR_KEY" \\
-  https://api.sandbox.futeurcredx.com/api/v1/health`,
+  https://api.sandbox.futeurcredx.com/api/v1/dashboard/health`,
   python: `import requests
 
 headers = {"X-API-Key": "sk_test_YOUR_KEY"}
 response = requests.get(
-    "https://api.sandbox.futeurcredx.com/api/v1/health",
+    "https://api.sandbox.futeurcredx.com/api/v1/dashboard/health",
     headers=headers,
 )
 print(response.json())`,
   node: `const response = await fetch(
-  "https://api.sandbox.futeurcredx.com/api/v1/health",
+  "https://api.sandbox.futeurcredx.com/api/v1/dashboard/health",
   {
     headers: { "X-API-Key": "sk_test_YOUR_KEY" },
   }
@@ -37,28 +37,25 @@ console.log(data);`,
 
 const listBusinessesExamples: Record<string, string> = {
   curl: `curl -H "X-API-Key: sk_test_YOUR_KEY" \\
-  -H "X-Portfolio-Id: portfolio_chase_001" \\
-  "https://api.sandbox.futeurcredx.com/api/v1/customers?limit=5"`,
+  "https://api.sandbox.futeurcredx.com/api/v1/dashboard/customers?portfolioId=YOUR_PORTFOLIO_ID&pageSize=5"`,
   python: `import requests
 
-headers = {
-    "X-API-Key": "sk_test_YOUR_KEY",
-    "X-Portfolio-Id": "portfolio_chase_001",
-}
+headers = {"X-API-Key": "sk_test_YOUR_KEY"}
 response = requests.get(
-    "https://api.sandbox.futeurcredx.com/api/v1/customers",
+    "https://api.sandbox.futeurcredx.com/api/v1/dashboard/customers",
     headers=headers,
-    params={"limit": 5},
+    params={"portfolioId": "YOUR_PORTFOLIO_ID", "pageSize": 5},
 )
 businesses = response.json()
 print(f"Found {len(businesses['data'])} businesses")`,
-  node: `const response = await fetch(
-  "https://api.sandbox.futeurcredx.com/api/v1/customers?limit=5",
+  node: `const params = new URLSearchParams({
+  portfolioId: "YOUR_PORTFOLIO_ID",
+  pageSize: "5",
+});
+const response = await fetch(
+  \`https://api.sandbox.futeurcredx.com/api/v1/dashboard/customers?\${params}\`,
   {
-    headers: {
-      "X-API-Key": "sk_test_YOUR_KEY",
-      "X-Portfolio-Id": "portfolio_chase_001",
-    },
+    headers: { "X-API-Key": "sk_test_YOUR_KEY" },
   }
 );
 const { data } = await response.json();
@@ -67,33 +64,44 @@ console.log(\`Found \${data.length} businesses\`);`,
 
 const creditScoreExamples: Record<string, string> = {
   curl: `curl -H "X-API-Key: sk_test_YOUR_KEY" \\
-  -H "X-Portfolio-Id: portfolio_chase_001" \\
-  "https://api.sandbox.futeurcredx.com/api/v1/customers/biz_001/credit-score"`,
+  "https://api.sandbox.futeurcredx.com/api/v1/dashboard/scores?portfolioId=YOUR_PORTFOLIO_ID&pageSize=5"`,
   python: `response = requests.get(
-    "https://api.sandbox.futeurcredx.com/api/v1/customers/biz_001/credit-score",
-    headers=headers,
+    "https://api.sandbox.futeurcredx.com/api/v1/dashboard/scores",
+    headers={"X-API-Key": "sk_test_YOUR_KEY"},
+    params={"portfolioId": "YOUR_PORTFOLIO_ID", "pageSize": 5},
 )
-score = response.json()["data"]
-print(f"Credit Score: {score['score']} ({score['trend']})")`,
-  node: `const scoreRes = await fetch(
-  "https://api.sandbox.futeurcredx.com/api/v1/customers/biz_001/credit-score",
+scores = response.json()["data"]
+for s in scores:
+    print(f"{s['businessName']}: Score {s['score']} ({s['riskTier']})")`,
+  node: `const params = new URLSearchParams({
+  portfolioId: "YOUR_PORTFOLIO_ID",
+  pageSize: "5",
+});
+const scoreRes = await fetch(
+  \`https://api.sandbox.futeurcredx.com/api/v1/dashboard/scores?\${params}\`,
   {
-    headers: {
-      "X-API-Key": "sk_test_YOUR_KEY",
-      "X-Portfolio-Id": "portfolio_chase_001",
-    },
+    headers: { "X-API-Key": "sk_test_YOUR_KEY" },
   }
 );
-const { data: score } = await scoreRes.json();
-console.log(\`Credit Score: \${score.score} (\${score.trend})\`);`,
+const { data: scores } = await scoreRes.json();
+scores.forEach((s) =>
+  console.log(\`\${s.businessName}: Score \${s.score} (\${s.riskTier})\`)
+);`,
 };
 
 const healthResponse = JSON.stringify(
   {
-    status: 'ok',
-    version: '1.0.0',
-    environment: 'sandbox',
-    timestamp: '2026-02-15T12:00:00.000Z',
+    success: true,
+    data: {
+      status: 'ok',
+      timestamp: '2026-02-15T12:00:00.000Z',
+      version: '1.0.0',
+    },
+    error: null,
+    meta: {
+      dataSources: ['prisma'],
+      lastUpdated: '2026-02-15T12:00:00.000Z',
+    },
   },
   null,
   2,
@@ -101,16 +109,29 @@ const healthResponse = JSON.stringify(
 
 const businessesResponse = JSON.stringify(
   {
+    success: true,
     data: [
       {
-        id: 'biz_001',
-        name: 'Acme Supply Co',
+        id: 'biz_01HQ3V7K8M2N4P5R6S7T8U9V0W',
+        name: 'Apex Manufacturing LLC',
         industry: 'Manufacturing',
-        creditScore: 742,
+        annualRevenue: 12500000,
+        employeeCount: 85,
+        creditScore: 78,
         riskTier: 'low',
+        state: 'OH',
+        city: 'Columbus',
       },
     ],
-    meta: { total: 1243, page: 1, limit: 5 },
+    error: null,
+    meta: {
+      page: 1,
+      pageSize: 5,
+      total: 6000000,
+      totalPages: 1200000,
+      dataSources: ['prisma'],
+      lastUpdated: '2026-02-15T12:00:00.000Z',
+    },
   },
   null,
   2,
@@ -118,17 +139,24 @@ const businessesResponse = JSON.stringify(
 
 const creditScoreResponse = JSON.stringify(
   {
-    data: {
-      businessId: 'biz_001',
-      score: 742,
-      previousScore: 728,
-      trend: 'improving',
-      factors: [
-        'Strong payment history',
-        'Low credit utilization',
-        'Established business age',
-      ],
-      updatedAt: '2026-02-14T08:30:00.000Z',
+    success: true,
+    data: [
+      {
+        businessId: 'biz_01HQ3V7K8M2N4P5R6S7T8U9V0W',
+        businessName: 'Apex Manufacturing LLC',
+        score: 78,
+        riskTier: 'low',
+        lastUpdated: '2026-02-14T10:00:00.000Z',
+      },
+    ],
+    error: null,
+    meta: {
+      page: 1,
+      pageSize: 5,
+      total: 6000000,
+      totalPages: 1200000,
+      dataSources: ['prisma'],
+      lastUpdated: '2026-02-15T12:00:00.000Z',
     },
   },
   null,
@@ -220,9 +248,9 @@ export default function Quickstart() {
             Fetch businesses from your portfolio. All data endpoints require
             a{' '}
             <code className="rounded bg-gray-800 px-1.5 py-0.5 text-sm text-blue-300">
-              X-Portfolio-Id
+              portfolioId
             </code>{' '}
-            header to scope data to the correct tenant.
+            query parameter to scope data to the correct tenant.
           </p>
           <CodeBlock
             code={listBusinessesExamples}
@@ -239,11 +267,11 @@ export default function Quickstart() {
         {/* Step 4: Get Credit Score */}
         <section id="step-4">
           <h2 className="mb-4 text-xl font-semibold text-white">
-            Step 4: Fetch a Credit Score
+            Step 4: List Credit Scores
           </h2>
           <p className="mb-4 text-gray-400">
-            Retrieve the credit score for a specific business, including
-            historical trend and contributing factors.
+            Retrieve credit scores for businesses in your portfolio, including
+            the current score and risk tier for each business.
           </p>
           <CodeBlock
             code={creditScoreExamples}

@@ -16,7 +16,7 @@ import type {
 export const mockConnections: Connection[] = [
   {
     id: 'conn-lumiqai-001',
-    name: 'LUMIQAI API',
+    name: 'LumiqAI API',
     type: 'internal',
     status: 'connected',
     authMethod: 'api-key',
@@ -363,7 +363,7 @@ export const mockChangeLogs: ChangeLogEntry[] = [
     userId: 'user-001',
     userName: 'John Smith',
     action: 'key_rotated',
-    description: 'LUMIQAI API key rotated as per security policy',
+    description: 'LumiqAI API key rotated as per security policy',
   },
 ];
 

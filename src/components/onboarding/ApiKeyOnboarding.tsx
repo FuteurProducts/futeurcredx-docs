@@ -222,7 +222,7 @@ export function ApiKeyOnboarding() {
 
         {/* Footer */}
         <p className="text-center text-xs text-muted-foreground mt-6">
-          &copy; 2026 LUMIQ AI. All Rights Reserved.
+          &copy; 2026 FuteurCredX. All rights reserved.
         </p>
       </div>
     </div>

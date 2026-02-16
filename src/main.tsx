@@ -7,6 +7,52 @@ import App from './App.tsx'
 import { AuthProvider, DemoAuthProvider, FallbackAuthProvider, isClerkConfigured } from './contexts/AuthContext'
 import { EnvironmentProvider } from './contexts/EnvironmentContext'
 
+// ============================================
+// EARLY HEAD TAG SETUP — runs before React renders
+// Sets document.title, meta description, og:title, og:description
+// based on hostname so the correct metadata is present immediately.
+// ============================================
+;(function setHeadMetadata() {
+  const hostname = window.location.hostname;
+
+  // ── Document title ──
+  if (hostname.startsWith('docs.') || hostname.startsWith('docs-')) {
+    document.title = 'FuteurCredX Docs — LumiqAI API Documentation';
+  } else if (hostname.startsWith('chase.demo.') || hostname.startsWith('chase-demo.')) {
+    document.title = 'Chase Demo — LumiqAI Dashboard';
+  } else if (hostname.match(/^wells-?fargo\.demo\./)) {
+    document.title = 'Wells Fargo Demo — LumiqAI Dashboard';
+  } else if (hostname.startsWith('santander.demo.')) {
+    document.title = 'Santander Demo — LumiqAI Dashboard';
+  } else if (hostname.match(/^citi(bank)?\.demo\./)) {
+    document.title = 'Citibank Demo — LumiqAI Dashboard';
+  } else if (hostname.includes('sandbox')) {
+    document.title = 'LumiqAI Dashboard — Sandbox';
+  } else if (hostname.startsWith('app.')) {
+    document.title = 'LumiqAI Dashboard';
+  } else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    document.title = 'LumiqAI Dashboard — Dev';
+  } else {
+    document.title = 'LumiqAI Dashboard';
+  }
+
+  // ── Meta description ──
+  const isDocsHostname = hostname.startsWith('docs.');
+  const descContent = isDocsHostname
+    ? 'Developer documentation for the LumiqAI credit analytics API. Quickstart guides, API reference, and integration tutorials.'
+    : 'LumiqAI by FuteurCredX — Enterprise credit analytics, risk scoring, and business intelligence for financial institutions.';
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) {
+    metaDesc.setAttribute('content', descContent);
+  }
+
+  // ── OG tags ──
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogTitle) ogTitle.setAttribute('content', document.title);
+  if (ogDesc) ogDesc.setAttribute('content', descContent);
+})();
+
 // Lazy-load DocsApp — only loaded when hostname is docs.*
 const DocsApp = lazy(() => import('./docs/DocsApp'))
 

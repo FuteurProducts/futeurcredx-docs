@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Shield, AlertTriangle, CheckCircle, Download,
-  ExternalLink, Search, Database, Lock, Eye, Calendar
+  Search, Database, Lock, Eye, Calendar
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,9 +23,9 @@ import {
 import type { ComplianceFramework } from '../types';
 
 const frameworkLabels: Record<ComplianceFramework, { name: string; description: string }> = {
-  SOC2: { name: 'SOC 2 Type II', description: 'Service Organization Control' },
-  GDPR: { name: 'GDPR', description: 'EU General Data Protection Regulation' },
-  CCPA: { name: 'CCPA', description: 'California Consumer Privacy Act' },
+  SOC2: { name: 'SOC 2 Type II (In Progress)', description: 'Service Organization Control — Roadmap Active' },
+  GDPR: { name: 'GDPR Framework Alignment', description: 'EU General Data Protection Regulation' },
+  CCPA: { name: 'CCPA-Ready Practices', description: 'California Consumer Privacy Act' },
   PCI_DSS: { name: 'PCI DSS', description: 'Payment Card Industry Data Security' },
   FFIEC: { name: 'FFIEC', description: 'Federal Financial Institutions Examination' },
   OCC: { name: 'OCC', description: 'Office of the Comptroller of the Currency' },
@@ -145,13 +145,9 @@ export const CompliancePanel: React.FC = () => {
                             <Badge variant="destructive">{status.findings.length}</Badge>
                           </div>
                         )}
-                        {status.certificateUrl && (
-                          <Button variant="link" className="p-0 h-auto text-sm" asChild>
-                            <a href={status.certificateUrl} target="_blank" rel="noopener noreferrer">
-                              View Certificate <ExternalLink className="h-4 w-4 ml-1" />
-                            </a>
-                          </Button>
-                        )}
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Compliance documentation available upon request — contact security@futeurcredx.com
+                        </p>
                       </div>
                     </CardContent>
                   </Card>

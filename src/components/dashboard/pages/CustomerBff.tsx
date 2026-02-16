@@ -774,7 +774,7 @@ const CustomerBff: React.FC = () => {
       <DataLineageFooter
         meta={{
           lastUpdated: lastUpdated || new Date().toISOString(),
-          dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
+          dataSources: ['LumiqAI Signal Engine', 'Bureau Data Feed'],
         }}
       />
     </div>

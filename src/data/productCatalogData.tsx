@@ -6,7 +6,7 @@
 // TYPES
 // ============================================
 
-export type ProductStatus = 'GA' | 'Beta' | 'Coming Soon';
+export type ProductStatus = 'GA' | 'Beta' | 'Preview';
 export type ProductCategory = 'Credit' | 'Identity' | 'Banking' | 'Compliance';
 
 export interface Product {
@@ -163,7 +163,7 @@ export const PRODUCTS: Product[] = [
     description: 'Automate Know Your Business checks with entity verification, beneficial ownership, and regulatory screening.',
     color: 'purple',
     icon: 'shield',
-    status: 'Coming Soon',
+    status: 'Preview',
     category: 'Compliance',
     details: {
       features: [
@@ -220,7 +220,7 @@ export const COLOR_CLASSES: Record<Product['color'], { bg: string; border: strin
 export const STATUS_CONFIG: Record<ProductStatus, { variant: 'success' | 'warning' | 'secondary'; label: string }> = {
   GA: { variant: 'success', label: 'GA' },
   Beta: { variant: 'warning', label: 'Beta' },
-  'Coming Soon': { variant: 'secondary', label: 'Coming Soon' },
+  'Preview': { variant: 'secondary', label: 'Preview' },
 };
 
 export const CATEGORIES: Array<{ label: string; value: ProductCategory | 'All' }> = [

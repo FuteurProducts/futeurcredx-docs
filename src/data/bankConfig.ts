@@ -12,14 +12,31 @@ export type BankId = 'chase' | 'wellsfargo' | 'santander' | 'citi';
 
 export const VALID_BANK_IDS: readonly BankId[] = ['chase', 'wellsfargo', 'santander', 'citi'];
 
+/**
+ * Hostname alias map — maps non-canonical subdomain prefixes to canonical BankId.
+ * Handles inconsistencies between marketing sites and demo subdomains:
+ *   - Marketing: wells-fargo.futeurcredx.com  vs  Demo: wellsfargo.demo.futeurcredx.com
+ *   - Marketing: citibank.futeurcredx.com     vs  Demo: citi.demo.futeurcredx.com
+ */
+const HOSTNAME_BANK_ALIASES: Record<string, BankId> = {
+  'chase': 'chase',
+  'wellsfargo': 'wellsfargo',
+  'wells-fargo': 'wellsfargo',
+  'santander': 'santander',
+  'citi': 'citi',
+  'citibank': 'citi',
+};
+
 function resolveBankId(): BankId {
   if (typeof window !== 'undefined') {
     // 1. Subdomain-based: chase.demo.futeurcredx.com → 'chase'
-    const subdomainMatch = window.location.hostname.match(/^(chase|wellsfargo|santander|citi)\.demo\./);
+    //    Also handles aliases: wells-fargo.demo.* → wellsfargo, citibank.demo.* → citi
+    const subdomainMatch = window.location.hostname.match(/^([a-z-]+)\.demo\./);
     if (subdomainMatch) {
-      const subBank = subdomainMatch[1].toLowerCase();
-      if (VALID_BANK_IDS.includes(subBank as BankId)) {
-        return subBank as BankId;
+      const alias = subdomainMatch[1].toLowerCase();
+      const resolved = HOSTNAME_BANK_ALIASES[alias];
+      if (resolved) {
+        return resolved;
       }
     }
 

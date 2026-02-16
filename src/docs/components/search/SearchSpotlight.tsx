@@ -11,6 +11,8 @@ import {
 
 import { cn } from '@/lib/utils';
 
+import { endpoints } from '@/docs/data/endpoints';
+
 interface SearchItem {
   id: string;
   title: string;
@@ -124,9 +126,16 @@ export function SearchSpotlight({ isOpen, onClose }: SearchSpotlightProps) {
   const fuse = useMemo(() => {
     const allItems: SearchItem[] = [...staticPages];
 
-    // When endpoint data modules exist, they would be merged here:
-    // import { endpoints } from '@/docs/data/endpoints';
-    // endpoints.forEach(ep => allItems.push({ id: ep.id, title: ep.title, ... }));
+    // Index API endpoints for search
+    endpoints.forEach((ep) => {
+      allItems.push({
+        id: `ep-${ep.id}`,
+        title: `${ep.method} ${ep.path}`,
+        description: ep.title,
+        path: `/api-reference#${ep.id}`,
+        section: 'API Reference',
+      });
+    });
 
     return new Fuse(allItems, {
       keys: ['title', 'description', 'path'],

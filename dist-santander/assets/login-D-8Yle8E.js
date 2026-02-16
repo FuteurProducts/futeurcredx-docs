@@ -1,0 +1,1 @@
+var e=`/assets/login-BBrfetGT.png`;export{e as t};

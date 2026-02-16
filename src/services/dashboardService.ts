@@ -269,7 +269,8 @@ class DashboardService {
   }
 
   /**
-   * Get application statistics
+   * Get application statistics.
+   * Gracefully returns empty defaults if the /recommendations endpoint returns 500.
    */
   async getApplicationStats(): Promise<Record<string, unknown>> {
     try {
@@ -279,12 +280,19 @@ class DashboardService {
       return (response.data?.data as Record<string, unknown>) || response.data;
     } catch (error: unknown) {
       logger.error('Failed to fetch application stats:', error);
+      // Graceful degradation: return empty stats so UI does not crash
+      const apiError = error as { status?: number };
+      if (apiError.status === 500) {
+        logger.warn('[dashboardService] /recommendations/applications/stats returned 500 — using empty defaults');
+        return { totalBusinesses: 0, totalApplications: 0, approved: 0, declined: 0, pending: 0 };
+      }
       throw this.handleApiKeyError(error);
     }
   }
 
   /**
-   * Get applications for a specific business
+   * Get applications for a specific business.
+   * Gracefully returns empty array if the /recommendations endpoint returns 500.
    */
   async getBusinessApplications(businessId: string): Promise<Record<string, unknown>[]> {
     try {
@@ -292,6 +300,11 @@ class DashboardService {
       return response.data.data || [];
     } catch (error: unknown) {
       logger.error('Failed to fetch business applications:', error);
+      const apiError = error as { status?: number };
+      if (apiError.status === 500) {
+        logger.warn(`[dashboardService] /recommendations/${businessId}/applications returned 500 — using empty array`);
+        return [];
+      }
       throw this.handleApiKeyError(error);
     }
   }

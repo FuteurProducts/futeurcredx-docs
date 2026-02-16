@@ -69,9 +69,24 @@ function getSegment(revenue?: number): 'micro' | 'small' | 'mid-market' {
 }
 
 // Risk tier from risk class or score
+// Handles both LUMIQ (0-100) and FICO (300-850) scales
 function getRiskTier(riskClass?: string, score?: number): 'low' | 'medium' | 'high' {
-  if (riskClass === 'low' || (score && score >= 720)) return 'low';
-  if (riskClass === 'high' || (score && score < 650)) return 'high';
+  if (riskClass === 'low' || riskClass === 'minimal') return 'low';
+  if (riskClass === 'high' || riskClass === 'critical') return 'high';
+  if (riskClass === 'medium' || riskClass === 'moderate') return 'medium';
+  // Fallback: derive from score
+  if (score != null) {
+    if (score <= 100) {
+      // LUMIQ scale
+      if (score >= 71) return 'low';
+      if (score >= 51) return 'medium';
+      return 'high';
+    }
+    // FICO scale
+    if (score >= 670) return 'low';
+    if (score >= 580) return 'medium';
+    return 'high';
+  }
   return 'medium';
 }
 
@@ -111,16 +126,23 @@ function getRelationshipStage(createdAt?: string): 'prospect' | 'new' | 'growing
 }
 
 /**
+ * Strip sandbox [TEST] prefix from business names returned by the API.
+ */
+function cleanBusinessName(name: string): string {
+  return name.replace(/^\[TEST\]\s*/i, '');
+}
+
+/**
  * Transform a single SmbEntity from BFF to CustomerEntity for UI
  */
 export function adaptSmbEntityToCustomer(entity: SmbEntity): CustomerEntity {
-  const industry = entity.naicsCode 
+  const industry = entity.naicsCode
     ? (NAICS_TO_INDUSTRY[entity.naicsCode] || `NAICS ${entity.naicsCode}`)
     : entity.industry || 'Unknown';
 
   return {
     id: entity.id,
-    businessName: entity.legalName,
+    businessName: cleanBusinessName(entity.legalName),
     industry,
     naicsCode: entity.naicsCode || '',
     segment: getSegment(entity.annualRevenue),
@@ -178,7 +200,7 @@ export function adaptBffCustomerList(customers: BffCustomerListItem[]): Customer
 
     return {
       id: c.id,
-      businessName: c.businessName,
+      businessName: cleanBusinessName(c.businessName),
       industry,
       naicsCode: c.naicsCode || '',
       segment: getSegment(c.annualRevenue),

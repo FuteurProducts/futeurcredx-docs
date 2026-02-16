@@ -153,11 +153,11 @@ export default function Webhooks() {
         </p>
       </div>
 
-      {/* Coming Soon */}
-      <Callout type="info" title="Coming Soon">
-        Webhook delivery is currently in private beta. The event types and
-        payload structures below represent the planned implementation. Contact
-        your account manager to request early access.
+      {/* Availability */}
+      <Callout type="info" title="Sandbox Available">
+        Webhook delivery is available in the sandbox environment. The event types
+        and payload structures below are fully supported. Contact your account
+        manager for production webhook configuration.
       </Callout>
 
       {/* Event Types */}

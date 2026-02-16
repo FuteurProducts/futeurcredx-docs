@@ -268,7 +268,7 @@ const Documentation: React.FC = () => {
             'Unified SMB credit intelligence from Experian, D&B, Equifax, FICO SBSS, and internal data',
             'Signal-based risk indicators (not composite scores) for bank-safe decision support',
             'Portfolio-level analytics with drill-down to individual business relationships',
-            'Multi-tenant architecture with bank-grade isolation and audit controls',
+            'Multi-tenant architecture with tenant-isolated data and audit controls',
             'Decision support only — LumiqAI does not replace bureau scores, credit committee judgment, or issue lending decisions',
           ]} />
 

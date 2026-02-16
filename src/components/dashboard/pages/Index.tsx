@@ -144,7 +144,7 @@ const Index = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-display bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              LUMIQ AI Control Tower
+              LumiqAI Control Tower
             </h1>
             <p className="text-muted-foreground mt-1">
               Enterprise API Platform • Real-time Business Credit Intelligence

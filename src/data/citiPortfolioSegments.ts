@@ -1,7 +1,7 @@
 /**
  * citiPortfolioSegments.ts
  *
- * Citibank-specific portfolio analytics data for Lumiq AI Dashboard
+ * Citibank-specific portfolio analytics data for LumiqAI Dashboard
  * Based on citi.json + citi_segments.json: 450K clients, $98.4B exposure
  *
  * Key differentiators:

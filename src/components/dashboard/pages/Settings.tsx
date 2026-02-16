@@ -246,7 +246,7 @@ const Settings: React.FC = () => {
 
   // Billing handlers
   const handleUpgrade = () => {
-    toast({ title: "Contact sales", description: "A LUMIQ AI representative will reach out to discuss Enterprise tier options." });
+    toast({ title: "Contact sales", description: "A LumiqAI representative will reach out to discuss Enterprise tier options." });
   };
 
   // Render active panel based on section

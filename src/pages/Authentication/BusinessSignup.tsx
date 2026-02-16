@@ -192,7 +192,7 @@ const BusinessSignup: React.FC = () => {
           className="text-center"
         >
           <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
-          <h1 className="text-3xl font-black mb-2">Welcome to LUMIQ AI!</h1>
+          <h1 className="text-3xl font-black mb-2">Welcome to LumiqAI!</h1>
           <p className="text-muted-foreground mb-4">Your business profile has been created successfully.</p>
           <p className="text-sm text-muted-foreground">Redirecting to dashboard...</p>
         </motion.div>
@@ -214,7 +214,7 @@ const BusinessSignup: React.FC = () => {
               Complete Your Business Profile
             </h1>
             <p className="text-muted-foreground text-lg">
-              Welcome {user?.firstName}! Let's set up your business information to complete your LUMIQ AI account.
+              Welcome {user?.firstName}! Let's set up your business information to complete your LumiqAI account.
             </p>
           </div>
 

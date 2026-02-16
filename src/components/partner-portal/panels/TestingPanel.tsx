@@ -35,8 +35,8 @@ function downloadFile(content: string, filename: string, mimeType: string) {
 function generatePostmanCollection(): string {
   const collection = {
     info: {
-      name: 'Lumiq AI - Product API (Sandbox)',
-      description: 'Sandbox Postman collection for Lumiq AI product API endpoints. Generated from the Partner Portal.',
+      name: 'LumiqAI - Product API (Sandbox)',
+      description: 'Sandbox Postman collection for LumiqAI product API endpoints. Generated from the Partner Portal.',
       schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json',
     },
     auth: {
@@ -96,10 +96,10 @@ function generateOpenApiSpec(): string {
   const spec = {
     openapi: '3.0.3',
     info: {
-      title: 'Lumiq AI Product API',
-      description: 'Sandbox OpenAPI specification for the Lumiq AI product API. Generated from the Partner Portal.',
+      title: 'LumiqAI Product API',
+      description: 'Sandbox OpenAPI specification for the LumiqAI product API. Generated from the Partner Portal.',
       version: '1.0.0',
-      contact: { name: 'Lumiq AI Support', email: 'support@lumiq.ai' },
+      contact: { name: 'LumiqAI Support', email: 'support@lumiq.ai' },
     },
     servers: [
       { url: 'https://sandbox.api.lumiq.ai', description: 'Sandbox' },

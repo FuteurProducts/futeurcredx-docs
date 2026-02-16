@@ -368,9 +368,8 @@ dist = resp.json()["data"]
 print(f"Portfolio Score Distribution")
 print(f"Mean: {dist['mean']} | Median: {dist['median']}")
 print()
-for r in dist["ranges"]:
-    bar = "#" * int(r["percentage"])
-    print(f"  {r['min']:>3}-{r['max']:>3}: {bar} {r['count']:>10,} ({r['percentage']}%)")
+for range_key, count in dist["distribution"].items():
+    print(f"  {range_key}: {count:,}")
 
 print()
 print("Quickstart complete! Explore the full API reference for more endpoints.")`,
@@ -383,9 +382,8 @@ const { data: dist } = await distResp.json();
 
 console.log("Portfolio Score Distribution");
 console.log(\`Mean: \${dist.mean} | Median: \${dist.median}\`);
-dist.ranges.forEach((r) => {
-  const bar = "#".repeat(Math.round(r.percentage));
-  console.log(\`  \${r.min}-\${r.max}: \${bar} \${r.count.toLocaleString()} (\${r.percentage}%)\`);
+Object.entries(dist.distribution).forEach(([range, count]) => {
+  console.log(\`  \${range}: \${Number(count).toLocaleString()}\`);
 });
 
 console.log("\\nQuickstart complete! Explore the full API reference for more endpoints.");`,
@@ -402,15 +400,16 @@ fmt.Println("\\nQuickstart complete!")`,
     expectedResponse: {
       success: true,
       data: {
-        ranges: [
-          { min: 0, max: 20, count: 180000, percentage: 3.0 },
-          { min: 20, max: 40, count: 540000, percentage: 9.0 },
-          { min: 40, max: 60, count: 1200000, percentage: 20.0 },
-          { min: 60, max: 80, count: 2700000, percentage: 45.0 },
-          { min: 80, max: 100, count: 1380000, percentage: 23.0 },
-        ],
+        distribution: {
+          '0-20': 180000,
+          '21-40': 540000,
+          '41-60': 1200000,
+          '61-80': 2700000,
+          '81-100': 1380000,
+        },
         mean: 71.4,
         median: 73,
+        total: 6000000,
       },
       error: null,
       meta: {
@@ -464,8 +463,8 @@ for b in biz["data"]:
 # 5. Score distribution
 dist = requests.get(f"{BASE}/dashboard/scores/distribution", params={"portfolioId": pid}, headers=HEADERS).json()["data"]
 print(f"5. Score distribution — Mean: {dist['mean']}, Median: {dist['median']}")
-for r in dist["ranges"]:
-    print(f"   {r['min']:>3}-{r['max']:>3}: {'#' * int(r['percentage'])} ({r['percentage']}%)")
+for range_key, count in dist["distribution"].items():
+    print(f"   {range_key}: {count:,}")
 
 print("\\nDone! Explore the full API reference at docs.futeurcredx.com")
 `,
@@ -507,8 +506,8 @@ async function main() {
     await fetch(\`\${BASE}/dashboard/scores/distribution?portfolioId=\${portfolioId}\`, { headers })
   ).json();
   console.log(\`5. Score distribution — Mean: \${dist.mean}, Median: \${dist.median}\`);
-  dist.ranges.forEach((r) =>
-    console.log(\`   \${r.min}-\${r.max}: \${"#".repeat(Math.round(r.percentage))} (\${r.percentage}%)\`)
+  Object.entries(dist.distribution).forEach(([range, count]) =>
+    console.log(\`   \${range}: \${Number(count).toLocaleString()}\`)
   );
 
   console.log("\\nDone! Explore the full API reference at docs.futeurcredx.com");

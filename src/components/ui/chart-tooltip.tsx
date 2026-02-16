@@ -1,5 +1,5 @@
 // Chart Tooltip Component - Core 2 Design System
-// Standardized tooltip styling for Lumiq AI Dashboard charts
+// Standardized tooltip styling for LumiqAI Dashboard charts
 
 import React from 'react';
 import { cn } from '@/lib/utils';

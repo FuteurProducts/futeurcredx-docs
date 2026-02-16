@@ -1,0 +1,1 @@
+const e=`LumiqAI provides decision-support signals only. It does not replace bureau scores, credit committee judgment, or issue lending decisions.`,t=`Decision-support signals only — does not replace credit committee judgment.`;export{e as n,t};

@@ -379,7 +379,7 @@ const _chasePreQualKPIs: ProductKPI[] = [
     trendDirection: 'up',
     isPositiveTrend: true,
     tooltip: '4.02M businesses meeting pre-qualification criteria (67% of portfolio)',
-    dataSource: 'LUMIQ AI Signal Engine',
+    dataSource: 'LumiqAI Signal Engine',
     lastUpdated: '30 mins ago',
   },
   {
@@ -390,8 +390,8 @@ const _chasePreQualKPIs: ProductKPI[] = [
     trend: 3.8,
     trendDirection: 'up',
     isPositiveTrend: true,
-    tooltip: 'Pre-qualified businesses rated as likely to qualify based on LUMIQ scoring',
-    dataSource: 'LUMIQ AI Signal Engine',
+    tooltip: 'Pre-qualified businesses rated as likely to qualify based on LumiqAI scoring',
+    dataSource: 'LumiqAI Signal Engine',
     lastUpdated: '30 mins ago',
   },
   {
@@ -414,8 +414,8 @@ const _chasePreQualKPIs: ProductKPI[] = [
     trend: 2.1,
     trendDirection: 'up',
     isPositiveTrend: true,
-    tooltip: 'Average LUMIQ readiness score across 4.02M pre-qualified pipeline',
-    dataSource: 'LUMIQ AI Signal Engine',
+    tooltip: 'Average LumiqAI readiness score across 4.02M pre-qualified pipeline',
+    dataSource: 'LumiqAI Signal Engine',
     lastUpdated: '30 mins ago',
   },
 ];

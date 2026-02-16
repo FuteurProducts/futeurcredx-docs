@@ -14,6 +14,8 @@ const DataModels = lazy(() => import('@/docs/pages/DataModels'))
 const Webhooks = lazy(() => import('@/docs/pages/Webhooks'))
 const Changelog = lazy(() => import('@/docs/pages/Changelog'))
 const FAQ = lazy(() => import('@/docs/pages/FAQ'))
+const Privacy = lazy(() => import('@/docs/pages/Privacy'))
+const Terms = lazy(() => import('@/docs/pages/Terms'))
 
 function DocsLoadingFallback() {
   return (
@@ -44,6 +46,8 @@ export default function DocsApp() {
               <Route path="webhooks" element={<Webhooks />} />
               <Route path="changelog" element={<Changelog />} />
               <Route path="faq" element={<FAQ />} />
+              <Route path="privacy" element={<Privacy />} />
+              <Route path="terms" element={<Terms />} />
 
               {/* Legacy/expected redirects */}
               <Route path="api-docs" element={<Navigate to="/api-reference" replace />} />

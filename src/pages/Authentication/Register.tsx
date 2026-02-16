@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 
 const BENEFITS = [
   "Portfolio analytics across all SMB segments",
-  "AI-powered credit scoring and risk profiling",
+  "Algorithmic credit scoring and risk profiling",
   "Automated underwriting memo generation",
   "Real-time early warning system alerts",
   "Customizable API integration sandbox",
@@ -99,7 +99,7 @@ export default function Page() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Get access to the full LUMIQ platform. Set up your sandbox environment and integrate in minutes.
+              Get access to the full LumiqAI platform. Set up your sandbox environment and integrate in minutes.
             </motion.p>
 
             {/* Benefits list with stagger */}
@@ -134,13 +134,13 @@ export default function Page() {
           <div className="flex items-center gap-6 pt-8 border-t border-white/10">
             <div className="flex items-center gap-2 text-slate-500">
               <Shield className="w-4 h-4" />
-              <span className="text-xs font-medium">SOC 2 Type II</span>
+              <span className="text-xs font-medium">SOC 2 Type II In Progress</span>
             </div>
             <div className="flex items-center gap-2 text-slate-500">
               <Lock className="w-4 h-4" />
-              <span className="text-xs font-medium">Bank-Grade Encryption</span>
+              <span className="text-xs font-medium">AES-256 + TLS 1.3 Encryption</span>
             </div>
-            <div className="text-xs text-slate-600">ISO 27001 | GDPR</div>
+            <div className="text-xs text-slate-600">ISO 27001-Aligned | GDPR Framework</div>
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function Page() {
               </div>
               <div className="flex items-center gap-1.5">
                 <Shield className="h-3.5 w-3.5 text-indigo-400" />
-                <span>SOC 2 compliant</span>
+                <span>SOC 2 roadmap active</span>
               </div>
             </div>
           </FadeIn>
@@ -228,7 +228,7 @@ export default function Page() {
           <FadeIn delay={0.3}>
             <div className="text-center mt-6">
               <p className="text-slate-600 text-xs">
-                &copy; 2026 LUMIQ AI. All Rights Reserved.
+                &copy; 2026 FuteurCredX. All rights reserved.
               </p>
               <div className="flex items-center justify-center gap-4 mt-2">
                 <Link

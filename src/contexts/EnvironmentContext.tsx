@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useRef, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useCallback, useRef, ReactNode } from 'react';
 
 // ============================================
 // TYPES
@@ -101,11 +101,14 @@ function resolveInitialEnvironment(): Environment {
   return 'sandbox';
 }
 
-/** Document title prefix per mode */
+/**
+ * Document title per mode — used only when user switches environments at runtime.
+ * Initial page title is set in main.tsx based on hostname (more specific).
+ */
 const TITLE_MAP: Record<Environment, string> = {
-  demo: '[DEMO] LUMIQ AI Dashboard',
-  sandbox: '[SANDBOX] LUMIQ AI Dashboard',
-  production: 'LUMIQ AI Dashboard',
+  demo: 'LumiqAI Dashboard — Demo',
+  sandbox: 'LumiqAI Dashboard — Sandbox',
+  production: 'LumiqAI Dashboard',
 };
 
 export const EnvironmentProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -123,10 +126,9 @@ export const EnvironmentProvider: React.FC<{ children: ReactNode }> = ({ childre
     onSwitchCallbackRef.current = cb;
   }, []);
 
-  // Set document title on initial load based on persisted environment
-  useEffect(() => {
-    document.title = TITLE_MAP[currentEnvironment];
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // On initial load, main.tsx already sets the hostname-aware title.
+  // Only update title on subsequent environment switches (handled in switchEnvironment below).
+  // No-op useEffect kept as a reminder — do NOT overwrite the hostname-specific title here.
 
   const switchEnvironment = useCallback(async (env: Environment) => {
     if (env === currentEnvironment) return;

@@ -115,7 +115,11 @@ const ScoresBff: React.FC = () => {
         isDemoMode,
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- API response converted to component type
-      const scoreData = response.data as unknown as ScoreRecord[];
+      const scoreData = (response.data as unknown as ScoreRecord[]).map(s => ({
+        ...s,
+        // Strip sandbox [TEST] prefix from business names
+        businessName: s.businessName?.replace(/^\[TEST\]\s*/i, ''),
+      }));
       setScores(scoreData);
       setLastUpdated(response.meta?.lastUpdated || new Date().toISOString());
       if (source === 'live') {
@@ -150,7 +154,7 @@ const ScoresBff: React.FC = () => {
         riskClass?: string;
       }>).map(c => ({
         id: c.id,
-        businessName: c.businessName,
+        businessName: c.businessName?.replace(/^\[TEST\]\s*/i, '') || c.businessName,
         hasScore: !!c.latestScore,
         latestScore: c.latestScore,
         riskClass: c.riskClass,
@@ -334,8 +338,11 @@ const ScoresBff: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Average Score</p>
+                <p className="text-sm text-muted-foreground">Avg Bureau Score</p>
                 <p className="text-2xl font-bold">{avgScore || '-'}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {avgScore > 100 ? 'FICO-equivalent (300-850)' : 'LUMIQ Scale (0-100)'}
+                </p>
               </div>
               <Zap className="h-8 w-8 text-chart-2 opacity-20" />
             </div>
@@ -478,6 +485,9 @@ const ScoresBff: React.FC = () => {
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
                           <span className="font-semibold text-lg">{score.score}</span>
+                          <span className="text-[10px] text-muted-foreground">
+                            {score.score > 100 ? 'FICO' : 'LUMIQ'}
+                          </span>
                           <div className="flex items-center gap-1">
                             <RiskIcon className="h-4 w-4" style={{ color: riskConfig.color }} />
                             <span className="text-xs" style={{ color: riskConfig.color }}>

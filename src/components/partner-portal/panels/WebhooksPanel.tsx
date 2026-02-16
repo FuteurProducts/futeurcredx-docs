@@ -57,7 +57,7 @@ export const WebhooksPanel: React.FC = () => {
       return;
     }
 
-    const secret = 'whsec_' + Math.random().toString(36).substring(2, 15);
+    const secret = 'whsec_' + crypto.randomUUID().replace(/-/g, '').substring(0, 32);
     
     const newWebhook: WebhookEndpoint = {
       id: `wh-${Date.now()}`,

@@ -1,7 +1,7 @@
 /**
  * santanderPortfolioSegments.ts
  *
- * Santander-specific portfolio analytics data for Lumiq AI Dashboard
+ * Santander-specific portfolio analytics data for LumiqAI Dashboard
  * Based on sant_segments.json: 68,500 businesses, $5.8B exposure
  *
  * Regional focus: Northeast-heavy (63.5%), Hispanic business community partnership

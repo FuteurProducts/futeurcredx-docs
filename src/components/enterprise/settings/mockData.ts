@@ -241,8 +241,8 @@ export const mockDataSources: DataSource[] = [
 ];
 
 export const mockModelVersions: ModelVersion[] = [
-  { id: 'model-001', name: 'LUMIQ AI Signal Engine', version: 'v3.2.1', status: 'active', validatedOn: '2024-01-10T00:00:00Z', notes: 'Production model with improved cash flow features' },
-  { id: 'model-002', name: 'LUMIQ AI Signal Engine', version: 'v3.1.0', status: 'deprecated', validatedOn: '2023-11-15T00:00:00Z', notes: 'Previous stable version' },
+  { id: 'model-001', name: 'LumiqAI Signal Engine', version: 'v3.2.1', status: 'active', validatedOn: '2024-01-10T00:00:00Z', notes: 'Production model with improved cash flow features' },
+  { id: 'model-002', name: 'LumiqAI Signal Engine', version: 'v3.1.0', status: 'deprecated', validatedOn: '2023-11-15T00:00:00Z', notes: 'Previous stable version' },
   { id: 'model-003', name: 'Early Warning System', version: 'v2.0.0', status: 'active', validatedOn: '2024-01-05T00:00:00Z', notes: 'Enhanced deterioration detection' },
   { id: 'model-004', name: 'Cross-sell Propensity', version: 'v1.5.0', status: 'testing', validatedOn: '2024-01-12T00:00:00Z', notes: 'A/B testing in progress' },
 ];

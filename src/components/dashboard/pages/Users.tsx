@@ -537,7 +537,7 @@ const Users = () => {
           <DataLineageFooter
             meta={{
               lastUpdated: new Date().toISOString(),
-              dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data'],
+              dataSources: ['LumiqAI Signal Engine', 'Bureau Data'],
             }}
             className="mt-4"
           />

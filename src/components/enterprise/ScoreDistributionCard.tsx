@@ -74,7 +74,7 @@ export const ScoreDistributionCard: React.FC<ScoreDistributionCardProps> = ({
               Portfolio Score Distribution
             </h3>
             <p className="text-body-2 text-muted-foreground">
-              LUMIQ AI scores across {formatNumber(data.totalScored)} businesses
+              LumiqAI scores across {formatNumber(data.totalScored)} businesses
             </p>
           </div>
         </div>

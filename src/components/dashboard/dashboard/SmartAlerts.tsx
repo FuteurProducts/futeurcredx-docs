@@ -92,7 +92,7 @@ export function SmartAlerts() {
             </div>
             <div>
               <h2 className="text-xl font-bold">Smart Alerts & Insights</h2>
-              <p className="text-sm text-muted-foreground">AI-powered anomaly detection</p>
+              <p className="text-sm text-muted-foreground">Statistical anomaly detection</p>
             </div>
           </div>
           <Badge variant="destructive">{visibleAlerts.length} Active</Badge>

@@ -1,4 +1,5 @@
 import { FileCode, RefreshCw, Settings } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
 
@@ -63,17 +64,17 @@ const developerLinks = [
 ] as const;
 
 const legalLinks = [
-  { label: 'Privacy Policy', href: `${BASE}/legal` },
-  { label: 'Terms of Service', href: `${BASE}/legal` },
-  { label: 'Cookie Policy', href: `${BASE}/legal` },
-  { label: 'Data Processing', href: `${BASE}/legal` },
-  { label: 'GLBA Compliance', href: `${BASE}/legal` },
+  { label: 'Privacy Policy', href: '/privacy', internal: true },
+  { label: 'Terms of Service', href: '/terms', internal: true },
+  { label: 'Cookie Policy', href: `${BASE}/legal`, internal: false },
+  { label: 'Data Processing', href: `${BASE}/legal`, internal: false },
+  { label: 'GLBA Framework', href: `${BASE}/legal`, internal: false },
 ] as const;
 
 const disclaimers = [
   'Business Credit Services: FuteurCredX is a business credit technology platform and program manager. Our LUMIQ\u2122 platform provides business credit monitoring, building, and intelligence services to help businesses establish and grow their credit profiles without personal guarantees.',
-  'Enterprise Solutions: Our enterprise solutions provide financial institutions with AI-powered risk assessment tools, lending intelligence, and portfolio analytics to enhance decision-making processes and improve operational efficiency.',
-  'Data Security: FuteurCredX employs industry-leading security measures to protect your business data. All information is encrypted and stored according to the highest security standards in compliance with relevant regulations.',
+  'Enterprise Solutions: Our enterprise solutions provide financial institutions with algorithmic risk assessment tools, lending intelligence, and portfolio analytics to enhance decision-making processes and improve operational efficiency.',
+  'Data Security: FuteurCredX uses AES-256 encryption at rest and TLS 1.3 in transit to protect your business data. Our multi-tenant architecture enforces tenant isolation at the database level. SOC 2 Type II compliance roadmap is active.',
 ] as const;
 
 export function DocsFooter() {
@@ -150,15 +151,25 @@ export function DocsFooter() {
           </span>
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             {legalLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-white/50 transition-colors duration-200 hover:text-white/80"
-              >
-                {link.label}
-              </a>
+              link.internal ? (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className="text-xs text-white/50 transition-colors duration-200 hover:text-white/80"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-white/50 transition-colors duration-200 hover:text-white/80"
+                >
+                  {link.label}
+                </a>
+              )
             ))}
           </div>
         </div>
@@ -178,7 +189,7 @@ export function DocsFooter() {
         {/* Copyright */}
         <p className="mt-8 text-xs text-white/40">
           &copy; {new Date().getFullYear()} FuteurCredX. LUMIQ&trade; and
-          FuteurCredX&reg; are registered trademarks. All rights reserved.
+          FuteurCredX&trade; are trademarks of FuteurCredX Inc. All rights reserved.
         </p>
       </div>
     </footer>

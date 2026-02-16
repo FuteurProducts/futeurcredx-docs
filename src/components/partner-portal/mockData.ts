@@ -324,25 +324,54 @@ export const mockCertificationChecklists: CertificationChecklist[] = [
 export const mockComplianceStatuses: ComplianceStatus[] = [
   {
     framework: 'SOC2',
-    status: 'compliant',
-    lastAuditDate: '2024-12-15',
-    nextAuditDate: '2025-12-15',
-    certificateUrl: 'https://trust.lumiq.ai/soc2-report',
-    findings: [],
+    status: 'partially_compliant',
+    lastAuditDate: null,
+    nextAuditDate: '2026-06-01',
+    findings: [
+      {
+        id: 'find-soc2-001',
+        severity: 'medium',
+        title: 'SOC 2 Type II Audit In Progress',
+        description: 'SOC 2 Type II compliance roadmap is active. Formal audit engagement is being scheduled.',
+        remediation: 'Complete readiness assessment and engage audit firm',
+        status: 'in_progress',
+        dueDate: '2026-06-01',
+      },
+    ],
   },
   {
     framework: 'GDPR',
-    status: 'compliant',
-    lastAuditDate: '2024-11-01',
-    nextAuditDate: '2025-11-01',
-    findings: [],
+    status: 'partially_compliant',
+    lastAuditDate: null,
+    nextAuditDate: '2026-06-01',
+    findings: [
+      {
+        id: 'find-gdpr-001',
+        severity: 'low',
+        title: 'GDPR Framework Alignment In Progress',
+        description: 'Platform architecture follows GDPR principles. Formal compliance review pending.',
+        remediation: 'Complete data processing impact assessment',
+        status: 'in_progress',
+        dueDate: '2026-06-01',
+      },
+    ],
   },
   {
     framework: 'CCPA',
-    status: 'compliant',
-    lastAuditDate: '2024-10-15',
-    nextAuditDate: '2025-10-15',
-    findings: [],
+    status: 'partially_compliant',
+    lastAuditDate: null,
+    nextAuditDate: '2026-06-01',
+    findings: [
+      {
+        id: 'find-ccpa-001',
+        severity: 'low',
+        title: 'CCPA-Ready Data Practices',
+        description: 'Data handling follows CCPA principles. Formal compliance validation pending.',
+        remediation: 'Complete CCPA readiness checklist',
+        status: 'in_progress',
+        dueDate: '2026-06-01',
+      },
+    ],
   },
   {
     framework: 'FFIEC',
@@ -412,9 +441,9 @@ export const mockDataClassifications: DataClassification[] = [
 
 // ============ SLA Mock Data ============
 export const mockSlaMetrics: SlaMetrics = {
-  uptimePercentage: 99.97,
+  uptimePercentage: 99.9,
   targetUptime: 99.9,
-  mttr: 12,
+  mttr: 15,
   mtbf: 720,
   currentStatus: 'operational',
 };
@@ -431,7 +460,7 @@ export const mockIncidents: IncidentRecord[] = [
     resolvedAt: '2025-01-20T14:45:00Z',
     duration: 45,
     rootCause: 'Database connection pool exhaustion during peak traffic',
-    postmortemUrl: 'https://status.lumiq.ai/incidents/inc-001',
+    postmortemUrl: undefined,
   },
   {
     id: 'inc-002',

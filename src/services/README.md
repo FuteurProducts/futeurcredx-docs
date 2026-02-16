@@ -1,6 +1,6 @@
 # BFF Service Layer Guide
 
-**Lumiq AI Dashboard — Backend-for-Frontend (BFF) Service Architecture**
+**LumiqAI Dashboard — Backend-for-Frontend (BFF) Service Architecture**
 
 This guide covers the BFF service layer that handles all API communication between the Dashboard frontend and the NestJS backend. All services follow a standardized contract pattern with typed envelopes, portfolio scoping, and automatic auth injection.
 
@@ -835,4 +835,4 @@ All services follow the same pattern: `(portfolioId, params?) => Promise<BffResp
 ---
 
 **Last Updated:** 2025-02-12
-**Maintained By:** Lumiq AI Dashboard Team
+**Maintained By:** LumiqAI Dashboard Team

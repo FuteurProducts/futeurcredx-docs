@@ -1581,7 +1581,7 @@ export const ConversionLiftChart: React.FC = () => {
             </svg>
             <h3 className="text-lg font-semibold text-foreground">Conversion Lift Over Time</h3>
           </div>
-          <p className="text-sm text-muted-foreground">Comparing conversion rates with and without LUMIQ AI integration</p>
+          <p className="text-sm text-muted-foreground">Comparing conversion rates with and without LumiqAI integration</p>
         </div>
         <TimePeriodSelector
           value={timePeriod}
@@ -1594,11 +1594,11 @@ export const ConversionLiftChart: React.FC = () => {
       <div className="flex items-center gap-6 mb-4">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-muted-foreground" />
-          <span className="text-sm text-muted-foreground">Without LUMIQ AI</span>
+          <span className="text-sm text-muted-foreground">Without LumiqAI</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-success" />
-          <span className="text-sm font-medium text-success">With LUMIQ AI</span>
+          <span className="text-sm font-medium text-success">With LumiqAI</span>
         </div>
       </div>
 
@@ -1630,7 +1630,7 @@ export const ConversionLiftChart: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
                           <span className="text-sm text-muted-foreground">
-                            {entry.dataKey === 'with' ? 'With LUMIQ AI' : 'Without LUMIQ AI'}
+                            {entry.dataKey === 'with' ? 'With LumiqAI' : 'Without LumiqAI'}
                           </span>
                         </div>
                         <span className="text-sm font-semibold text-foreground">{entry.value?.toFixed(1)}%</span>
@@ -1671,7 +1671,7 @@ export const ConversionLiftChart: React.FC = () => {
           <div className="text-2xl font-semibold text-foreground">12.5%</div>
         </div>
         <div className="text-center">
-          <div className="text-xs text-muted-foreground">With LUMIQ AI Avg</div>
+          <div className="text-xs text-muted-foreground">With LumiqAI Avg</div>
           <div className="text-2xl font-semibold text-success">17.3%</div>
         </div>
         <div className="text-center">

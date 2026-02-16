@@ -3,4 +3,8 @@ dist
 .env
 .env.local
 .env.*.local
-dist
+
+# Secrets and credentials
+CLAUDE.local.md
+*.key
+*.pem

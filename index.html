@@ -4,10 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/lumiq-logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FuteurCredX Docs — LumiqAI API Documentation</title>
-    <meta name="description" content="Developer documentation for the LumiqAI credit analytics API. Quickstart guides, API reference, sandbox data, and integration examples." />
-    <meta property="og:title" content="FuteurCredX Docs — LumiqAI API Documentation" />
-    <meta property="og:description" content="Developer documentation for the LumiqAI credit analytics API. Quickstart guides, API reference, sandbox data, and integration examples." />
+    <meta name="author" content="FuteurCredX" />
+    <title>LumiqAI — Credit Intelligence Platform</title>
+    <meta name="description" content="LumiqAI by FuteurCredX — Enterprise credit analytics, risk scoring, and business intelligence platform for financial institutions." />
+    <meta property="og:title" content="LumiqAI — Credit Intelligence Platform" />
+    <meta property="og:description" content="LumiqAI by FuteurCredX — Enterprise credit analytics, risk scoring, and business intelligence platform for financial institutions." />
+    <script>
+      (function() {
+        var h = window.location.hostname;
+        if (h.indexOf('docs') === 0) document.title = 'FuteurCredX Docs — LumiqAI API Documentation';
+        else if (h.indexOf('chase.demo') === 0) document.title = 'Chase Demo — LumiqAI Dashboard';
+        else if (h.indexOf('wellsfargo.demo') === 0) document.title = 'Wells Fargo Demo — LumiqAI Dashboard';
+        else if (h.indexOf('santander.demo') === 0) document.title = 'Santander Demo — LumiqAI Dashboard';
+        else if (h.indexOf('citi.demo') === 0) document.title = 'Citibank Demo — LumiqAI Dashboard';
+        else if (h.indexOf('sandbox') !== -1) document.title = 'LumiqAI Dashboard — Sandbox';
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

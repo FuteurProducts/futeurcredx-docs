@@ -1,5 +1,5 @@
 /**
- * Centralized Demo Data for LUMIQ AI Control Tower
+ * Centralized Demo Data for LumiqAI Control Tower
  *
  * Data source: Chase demo dataset (6M businesses, $650B exposure).
  * Loaded from demo-data/chase/chase_dashboard_data.json via chaseDataLoader.

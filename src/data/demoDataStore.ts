@@ -148,8 +148,8 @@ function simulateScorePull(bizId: string): DemoCreditScore {
   const pulled: DemoCreditScore = {
     source: 'experian_biz',
     score: Math.min(score, 850),
-    riskClass: score >= 750 ? 'low' : score >= 650 ? 'moderate' : 'high',
-    factors: ['Score pulled via LUMIQ API', 'Data aggregated from bureau sources'],
+    riskClass: score >= 740 ? 'low' : score >= 670 ? 'moderate' : score >= 580 ? 'high' : 'very_high',
+    factors: ['Score pulled via LumiqAI API', 'Data aggregated from bureau sources'],
     pulledAt: new Date().toISOString(),
   };
 

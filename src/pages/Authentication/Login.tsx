@@ -4,9 +4,9 @@ import { CheckCircle, Shield, Zap } from "lucide-react"
 import { motion } from "framer-motion"
 
 const STATS = [
-  { value: "200+", label: "Financial Institutions" },
-  { value: "$2T+", label: "Assets Monitored" },
-  { value: "99.99%", label: "Uptime SLA" },
+  { value: "Enterprise", label: "Institutional Deployment" },
+  { value: "Scalable", label: "Asset Monitoring" },
+  { value: "High", label: "Availability" },
 ]
 
 function FadeIn({
@@ -109,11 +109,11 @@ export default function Page() {
             >
               <div className="flex items-center gap-2 text-sm text-slate-400">
                 <Shield className="h-4 w-4 text-indigo-400" />
-                <span>SOC 2 Certified</span>
+                <span>SOC 2 In Progress</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-400">
                 <Zap className="h-4 w-4 text-indigo-400" />
-                <span>99.99% Uptime</span>
+                <span>High Availability</span>
               </div>
             </motion.div>
           </div>
@@ -209,7 +209,7 @@ export default function Page() {
               </div>
               <div className="flex items-center gap-1.5">
                 <Shield className="h-3.5 w-3.5 text-indigo-400" />
-                <span>SOC 2 compliant</span>
+                <span>SOC 2 roadmap active</span>
               </div>
             </div>
           </FadeIn>
@@ -218,7 +218,7 @@ export default function Page() {
           <FadeIn delay={0.3}>
             <div className="text-center mt-6">
               <p className="text-slate-600 text-xs">
-                &copy; 2026 LUMIQ AI. All Rights Reserved.
+                &copy; 2026 FuteurCredX. All rights reserved.
               </p>
               <div className="flex items-center justify-center gap-4 mt-2">
                 <a

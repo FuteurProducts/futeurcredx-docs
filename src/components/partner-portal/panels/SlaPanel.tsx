@@ -101,11 +101,9 @@ export const SlaPanel: React.FC = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" asChild>
-            <a href="https://status.lumiq.ai" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Status Page
-            </a>
+          <Button variant="outline" disabled title="Status page coming soon">
+            <ExternalLink className="h-4 w-4 mr-2" />
+            Status Page (Coming Soon)
           </Button>
           <Button onClick={() => toast({ title: 'Create Support Ticket', description: 'For production support, email support@lumiq.ai or call the 24/7 hotline.' })}>
             <Plus className="h-4 w-4 mr-2" />
@@ -370,8 +368,8 @@ export const SlaPanel: React.FC = () => {
                     <Mail className="h-5 w-5 text-primary" />
                     <span className="font-medium">Email Support</span>
                   </div>
-                  <a href="mailto:support@lumiq.ai" className="text-sm text-primary hover:underline">
-                    support@lumiq.ai
+                  <a href="mailto:security@futeurcredx.com" className="text-sm text-primary hover:underline">
+                    security@futeurcredx.com
                   </a>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/50">
@@ -379,9 +377,9 @@ export const SlaPanel: React.FC = () => {
                     <Phone className="h-5 w-5 text-primary" />
                     <span className="font-medium">24/7 Critical Support</span>
                   </div>
-                  <a href="tel:+18001234567" className="text-sm text-primary hover:underline">
-                    +1 (800) 123-4567
-                  </a>
+                  <p className="text-sm text-muted-foreground">
+                    Contact security@futeurcredx.com for escalation
+                  </p>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/50">
                   <div className="flex items-center gap-3 mb-2">

@@ -246,7 +246,7 @@ export const FinlabOverview: React.FC = () => {
             )}
           </div>
           <p className="text-base md:text-lg text-blue-100 mt-2 max-w-2xl">
-            Monitor your connected businesses and API performance via LUMIQ AI
+            Monitor your connected businesses and API performance via LumiqAI
           </p>
 
           {/* Quick stats row */}
@@ -417,7 +417,7 @@ export const FinlabOverview: React.FC = () => {
       <DataLineageFooter
         meta={{
           lastUpdated: new Date().toISOString(),
-          dataSources: ['LUMIQ AI Signal Engine', 'Experian Business', 'Plaid Banking'],
+          dataSources: ['LumiqAI Signal Engine', 'Experian Business', 'Plaid Banking'],
         }}
       />
     </div>

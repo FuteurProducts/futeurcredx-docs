@@ -186,7 +186,7 @@ const Products = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-3">
-              {selectedProduct.status === 'Coming Soon' ? (
+              {selectedProduct.status === 'Preview' ? (
                 <Button
                   onClick={() => {
                     toast.success('You will be notified when this API launches.', {
@@ -292,8 +292,8 @@ const Products = () => {
               <span className="text-[0.8125rem] text-muted-foreground">Public beta -- API may change</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <Badge variant="secondary" className="text-[0.6875rem]">Coming Soon</Badge>
-              <span className="text-[0.8125rem] text-muted-foreground">In development -- not yet available</span>
+              <Badge variant="secondary" className="text-[0.6875rem]">Preview</Badge>
+              <span className="text-[0.8125rem] text-muted-foreground">Preview -- early access available</span>
             </div>
           </div>
         </div>
@@ -317,7 +317,7 @@ const Products = () => {
         <DataLineageFooter
           meta={{
             lastUpdated: new Date().toISOString(),
-            dataSources: ['LUMIQ AI Product Registry'],
+            dataSources: ['LumiqAI Product Registry'],
           }}
         />
       </div>

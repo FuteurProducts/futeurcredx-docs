@@ -24,7 +24,7 @@ export const mockPortfolioKPIs: PortfolioKPI[] = [
     trendDirection: 'up',
     isPositiveTrend: true,
     tooltip: 'Exposure-weighted average risk indicator across portfolio',
-    dataSource: 'LUMIQ AI Signal Engine',
+    dataSource: 'LumiqAI Signal Engine',
     lastUpdated: '2 mins ago',
   },
   {
@@ -36,7 +36,7 @@ export const mockPortfolioKPIs: PortfolioKPI[] = [
     trendDirection: 'up',
     isPositiveTrend: true,
     tooltip: 'Average signal change over last 90 days',
-    dataSource: 'LUMIQ AI Signal Engine',
+    dataSource: 'LumiqAI Signal Engine',
     lastUpdated: '2 mins ago',
   },
   {

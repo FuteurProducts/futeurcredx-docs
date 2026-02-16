@@ -612,15 +612,16 @@ fmt.Println(string(body))`,
     responseExample: {
       success: true,
       data: {
-        ranges: [
-          { min: 0, max: 20, count: 180000, percentage: 3.0 },
-          { min: 20, max: 40, count: 540000, percentage: 9.0 },
-          { min: 40, max: 60, count: 1200000, percentage: 20.0 },
-          { min: 60, max: 80, count: 2700000, percentage: 45.0 },
-          { min: 80, max: 100, count: 1380000, percentage: 23.0 },
-        ],
+        distribution: {
+          '0-20': 180000,
+          '21-40': 540000,
+          '41-60': 1200000,
+          '61-80': 2700000,
+          '81-100': 1380000,
+        },
         mean: 71.4,
         median: 73,
+        total: 6000000,
       },
       error: null,
       meta: {
@@ -640,19 +641,118 @@ resp = requests.get(
 )
 dist = resp.json()["data"]
 print(f"Mean: {dist['mean']}, Median: {dist['median']}")
-for r in dist["ranges"]:
-    print(f"  {r['min']}-{r['max']}: {r['count']:,} ({r['percentage']}%)")`,
+for range_key, count in dist["distribution"].items():
+    print(f"  {range_key}: {count:,}")`,
       node: `const resp = await fetch(
   \`${API_BASE}/dashboard/scores/distribution?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee\`,
   { headers: { "X-API-Key": "sk_test_your_key_here" } }
 );
 const { data: dist } = await resp.json();
 console.log("Mean:", dist.mean, "Median:", dist.median);
-dist.ranges.forEach((r) =>
-  console.log(\`  \${r.min}-\${r.max}: \${r.count.toLocaleString()} (\${r.percentage}%)\`)
+Object.entries(dist.distribution).forEach(([range, count]) =>
+  console.log(\`  \${range}: \${Number(count).toLocaleString()}\`)
 );`,
       go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/scores/distribution?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee", nil)
 req.Header.Set("X-API-Key", "sk_test_your_key_here")
+resp, _ := http.DefaultClient.Do(req)
+defer resp.Body.Close()
+body, _ := io.ReadAll(resp.Body)
+fmt.Println(string(body))`,
+    },
+  },
+
+  {
+    id: 'scores-pull',
+    method: 'POST',
+    path: '/api/v1/dashboard/scores/pull',
+    title: 'Trigger Credit Score Pull',
+    description:
+      'Initiates a credit score pull for a specific business. This triggers a fresh credit assessment using the latest available data. Returns the new score once calculation is complete.',
+    tag: 'scores',
+    auth: ['api-key', 'jwt'],
+    params: [
+      {
+        name: 'businessId',
+        type: 'body',
+        required: true,
+        dataType: 'string',
+        description: 'Business entity ID to pull the score for',
+      },
+      {
+        name: 'portfolioId',
+        type: 'body',
+        required: true,
+        dataType: 'string (UUID)',
+        description: 'Portfolio the business belongs to',
+      },
+    ],
+    responseExample: {
+      success: true,
+      data: {
+        scoreId: 'scr_01PULL001',
+        businessId: 'biz_01HQ3V7K8M2N4P5R6S7T8U9V0W',
+        score: 79,
+        previousScore: 78,
+        riskTier: 'low',
+        calculatedAt: '2026-02-15T22:35:00.000Z',
+      },
+      error: null,
+      meta: {
+        dataSources: ['prisma'],
+        lastUpdated: '2026-02-15T22:35:00.000Z',
+      },
+    },
+    errorExamples: [
+      {
+        status: 404,
+        body: {
+          success: false,
+          data: null,
+          error: { code: 'NOT_FOUND', message: 'Business not found in portfolio' },
+          meta: { requestId: 'req_pull001' },
+        },
+      },
+    ],
+    codeExamples: {
+      curl: `curl -X POST "${API_BASE}/dashboard/scores/pull" \\
+  -H "X-API-Key: sk_test_your_key_here" \\
+  -H "Content-Type: application/json" \\
+  -d '{"businessId": "biz_01HQ3V7K8M2N4P5R6S7T8U9V0W", "portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee"}'`,
+      python: `import requests
+
+resp = requests.post(
+    "${API_BASE}/dashboard/scores/pull",
+    headers={
+        "X-API-Key": "sk_test_your_key_here",
+        "Content-Type": "application/json",
+    },
+    json={
+        "businessId": "biz_01HQ3V7K8M2N4P5R6S7T8U9V0W",
+        "portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
+    }
+)
+result = resp.json()["data"]
+print(f"New score: {result['score']} (was {result['previousScore']})")`,
+      node: `const resp = await fetch("${API_BASE}/dashboard/scores/pull", {
+  method: "POST",
+  headers: {
+    "X-API-Key": "sk_test_your_key_here",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    businessId: "biz_01HQ3V7K8M2N4P5R6S7T8U9V0W",
+    portfolioId: "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
+  }),
+});
+const { data: result } = await resp.json();
+console.log(\`New score: \${result.score} (was \${result.previousScore})\`);`,
+      go: `payload := strings.NewReader(\`{
+  "businessId":"biz_01HQ3V7K8M2N4P5R6S7T8U9V0W",
+  "portfolioId":"33ae8a27-8718-4a96-8cd5-f472de6a77ee"
+}\`)
+req, _ := http.NewRequest("POST", "${API_BASE}/dashboard/scores/pull", payload)
+req.Header.Set("X-API-Key", "sk_test_your_key_here")
+req.Header.Set("Content-Type", "application/json")
 resp, _ := http.DefaultClient.Do(req)
 defer resp.Body.Close()
 body, _ := io.ReadAll(resp.Body)
@@ -736,12 +836,12 @@ fmt.Println(string(body))`,
     },
   },
   {
-    id: 'risk-events',
+    id: 'risk-ews',
     method: 'GET',
-    path: '/api/v1/dashboard/risk/events',
-    title: 'List Risk Events',
+    path: '/api/v1/dashboard/risk/ews',
+    title: 'Get Early Warning System Alerts',
     description:
-      'Returns a paginated list of risk events and alerts for the portfolio. Events include score drops, delinquency triggers, and watchlist additions.',
+      'Returns Early Warning System (EWS) alerts for the portfolio. EWS monitors businesses for deteriorating credit signals and generates proactive alerts before defaults occur. Critical for banks to take preventive action.',
     tag: 'risk',
     auth: ['api-key', 'jwt'],
     params: [
@@ -773,79 +873,82 @@ fmt.Println(string(body))`,
         type: 'query',
         required: false,
         dataType: 'string',
-        description: 'Filter by severity: info, warning, critical',
+        description: 'Filter by severity: low, medium, high, critical',
       },
     ],
     responseExample: {
       success: true,
       data: [
         {
-          id: 'evt_01RISK001',
-          type: 'SCORE_DROP',
-          severity: 'warning',
+          id: 'ews_01ALERT001',
           businessId: 'biz_02JR4W8L9N3O5Q6S7T8U0V1W2X',
           businessName: 'Bright Path Consulting',
-          description: 'Credit score dropped 12 points in 30 days',
-          previousValue: 77,
-          currentValue: 65,
-          createdAt: '2026-02-14T08:30:00.000Z',
+          severity: 'high',
+          signalType: 'SCORE_DECLINE',
+          description: 'Credit score declined 12 points over 30 days — approaching high-risk threshold',
+          currentScore: 65,
+          previousScore: 77,
+          recommendation: 'Review account for potential credit line reduction',
+          triggeredAt: '2026-02-14T08:30:00.000Z',
+          status: 'open',
         },
         {
-          id: 'evt_02RISK002',
-          type: 'DELINQUENCY',
-          severity: 'critical',
+          id: 'ews_02ALERT002',
           businessId: 'biz_03KS5X9M0O4P6R7T8U1V2W3Y4Z',
           businessName: 'Metro Auto Parts Inc',
+          severity: 'critical',
+          signalType: 'PAYMENT_DELINQUENCY',
           description: 'Payment 60+ days past due on Line of Credit',
-          previousValue: null,
-          currentValue: 62,
-          createdAt: '2026-02-13T14:15:00.000Z',
+          currentScore: 42,
+          previousScore: 58,
+          recommendation: 'Escalate to collections team immediately',
+          triggeredAt: '2026-02-13T14:15:00.000Z',
+          status: 'open',
         },
       ],
       error: null,
       meta: {
         page: 1,
         pageSize: 20,
-        total: 3200,
-        totalPages: 160,
+        total: 1450,
+        totalPages: 73,
         dataSources: ['prisma'],
         lastUpdated: '2026-02-15T22:27:27.323Z',
       },
     },
     codeExamples: {
-      curl: `curl -X GET "${API_BASE}/dashboard/risk/events?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee&severity=critical&page=1" \\
+      curl: `curl -X GET "${API_BASE}/dashboard/risk/ews?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee&severity=critical" \\
   -H "X-API-Key: sk_test_your_key_here"`,
       python: `import requests
 
 resp = requests.get(
-    "${API_BASE}/dashboard/risk/events",
+    "${API_BASE}/dashboard/risk/ews",
     params={
         "portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
         "severity": "critical",
-        "page": 1,
     },
     headers={"X-API-Key": "sk_test_your_key_here"}
 )
-events = resp.json()["data"]
-for evt in events:
-    print(f"[{evt['severity'].upper()}] {evt['businessName']}: {evt['description']}")`,
+alerts = resp.json()["data"]
+for alert in alerts:
+    print(f"[{alert['severity'].upper()}] {alert['businessName']}: {alert['description']}")
+    print(f"  Recommendation: {alert['recommendation']}")`,
       node: `const params = new URLSearchParams({
   portfolioId: "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
   severity: "critical",
-  page: "1",
 });
-const resp = await fetch(\`${API_BASE}/dashboard/risk/events?\${params}\`, {
+const resp = await fetch(\`${API_BASE}/dashboard/risk/ews?\${params}\`, {
   headers: { "X-API-Key": "sk_test_your_key_here" },
 });
-const { data: events } = await resp.json();
-events.forEach((e) =>
-  console.log(\`[\${e.severity.toUpperCase()}] \${e.businessName}: \${e.description}\`)
-);`,
-      go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/risk/events", nil)
+const { data: alerts } = await resp.json();
+alerts.forEach((a) => {
+  console.log(\`[\${a.severity.toUpperCase()}] \${a.businessName}: \${a.description}\`);
+  console.log(\`  Recommendation: \${a.recommendation}\`);
+});`,
+      go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/risk/ews", nil)
 q := req.URL.Query()
 q.Add("portfolioId", "33ae8a27-8718-4a96-8cd5-f472de6a77ee")
 q.Add("severity", "critical")
-q.Add("page", "1")
 req.URL.RawQuery = q.Encode()
 req.Header.Set("X-API-Key", "sk_test_your_key_here")
 resp, _ := http.DefaultClient.Do(req)
@@ -1133,149 +1236,6 @@ body, _ := io.ReadAll(resp.Body)
 fmt.Println(string(body))`,
     },
   },
-  {
-    id: 'kpis',
-    method: 'GET',
-    path: '/api/v1/dashboard/kpis',
-    title: 'Get Key Performance Indicators',
-    description:
-      'Returns the core KPIs for the portfolio including business counts, revenue metrics, lending performance, and risk indicators.',
-    tag: 'analytics',
-    auth: ['api-key', 'jwt'],
-    params: [
-      {
-        name: 'portfolioId',
-        type: 'query',
-        required: true,
-        dataType: 'string (UUID)',
-        description: 'Portfolio to query',
-      },
-    ],
-    responseExample: {
-      success: true,
-      data: {
-        totalBusinesses: 6000000,
-        activeAccounts: 4800000,
-        totalExposure: 650000000000,
-        avgLoanSize: 135416,
-        approvalRate: 69.9,
-        avgTimeToDecision: 2.4,
-        nplRatio: 0.65,
-        portfolioYield: 6.8,
-      },
-      error: null,
-      meta: {
-        dataSources: ['prisma'],
-        lastUpdated: '2026-02-15T22:27:27.323Z',
-      },
-    },
-    codeExamples: {
-      curl: `curl -X GET "${API_BASE}/dashboard/kpis?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee" \\
-  -H "X-API-Key: sk_test_your_key_here"`,
-      python: `import requests
-
-resp = requests.get(
-    "${API_BASE}/dashboard/kpis",
-    params={"portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee"},
-    headers={"X-API-Key": "sk_test_your_key_here"}
-)
-kpis = resp.json()["data"]
-print(f"Total businesses: {kpis['totalBusinesses']:,}")
-print(f"Approval rate: {kpis['approvalRate']}%")
-print(f"NPL ratio: {kpis['nplRatio']}%")`,
-      node: `const resp = await fetch(
-  \`${API_BASE}/dashboard/kpis?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee\`,
-  { headers: { "X-API-Key": "sk_test_your_key_here" } }
-);
-const { data: kpis } = await resp.json();
-console.log("Total businesses:", kpis.totalBusinesses.toLocaleString());
-console.log("Approval rate:", kpis.approvalRate + "%");`,
-      go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/kpis?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee", nil)
-req.Header.Set("X-API-Key", "sk_test_your_key_here")
-resp, _ := http.DefaultClient.Do(req)
-defer resp.Body.Close()
-body, _ := io.ReadAll(resp.Body)
-fmt.Println(string(body))`,
-    },
-  },
-  {
-    id: 'conversion-trend',
-    method: 'GET',
-    path: '/api/v1/dashboard/conversion-trend',
-    title: 'Get Conversion Trend',
-    description:
-      'Returns conversion rate trends over time. Useful for tracking how application-to-funding ratios change across periods.',
-    tag: 'analytics',
-    auth: ['api-key', 'jwt'],
-    params: [
-      {
-        name: 'portfolioId',
-        type: 'query',
-        required: true,
-        dataType: 'string (UUID)',
-        description: 'Portfolio to query',
-      },
-      {
-        name: 'period',
-        type: 'query',
-        required: false,
-        dataType: 'string',
-        default: '12m',
-        description: 'Time period: 3m, 6m, 12m, 24m',
-      },
-    ],
-    responseExample: {
-      success: true,
-      data: {
-        period: '12m',
-        dataPoints: [
-          { month: '2025-03', applications: 12400, approvals: 8680, conversionRate: 70.0 },
-          { month: '2025-06', applications: 13100, approvals: 9170, conversionRate: 70.0 },
-          { month: '2025-09', applications: 13800, approvals: 9660, conversionRate: 70.0 },
-          { month: '2025-12', applications: 14200, approvals: 9940, conversionRate: 70.0 },
-          { month: '2026-01', applications: 14500, approvals: 10150, conversionRate: 70.0 },
-          { month: '2026-02', applications: 14800, approvals: 10360, conversionRate: 70.0 },
-        ],
-      },
-      error: null,
-      meta: {
-        dataSources: ['prisma'],
-        lastUpdated: '2026-02-15T22:27:27.323Z',
-      },
-    },
-    codeExamples: {
-      curl: `curl -X GET "${API_BASE}/dashboard/conversion-trend?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee&period=12m" \\
-  -H "X-API-Key: sk_test_your_key_here"`,
-      python: `import requests
-
-resp = requests.get(
-    "${API_BASE}/dashboard/conversion-trend",
-    params={
-        "portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
-        "period": "12m",
-    },
-    headers={"X-API-Key": "sk_test_your_key_here"}
-)
-trend = resp.json()["data"]
-for dp in trend["dataPoints"]:
-    print(f"{dp['month']}: {dp['applications']:,} apps -> {dp['approvals']:,} approved ({dp['conversionRate']}%)")`,
-      node: `const resp = await fetch(
-  \`${API_BASE}/dashboard/conversion-trend?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee&period=12m\`,
-  { headers: { "X-API-Key": "sk_test_your_key_here" } }
-);
-const { data: trend } = await resp.json();
-trend.dataPoints.forEach((dp) =>
-  console.log(\`\${dp.month}: \${dp.applications} -> \${dp.approvals} (\${dp.conversionRate}%)\`)
-);`,
-      go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/conversion-trend?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee&period=12m", nil)
-req.Header.Set("X-API-Key", "sk_test_your_key_here")
-resp, _ := http.DefaultClient.Do(req)
-defer resp.Body.Close()
-body, _ := io.ReadAll(resp.Body)
-fmt.Println(string(body))`,
-    },
-  },
-
   // =========================================================================
   // API KEYS
   // =========================================================================
@@ -1481,101 +1441,16 @@ fmt.Println(string(body))`,
   },
 
   // =========================================================================
-  // REPORTS
+  // BATCH
   // =========================================================================
   {
-    id: 'list-reports',
-    method: 'GET',
-    path: '/api/v1/dashboard/reports',
-    title: 'List Reports',
-    description:
-      'Returns a paginated list of previously generated reports for the portfolio.',
-    tag: 'reports',
-    auth: ['api-key', 'jwt'],
-    params: [
-      {
-        name: 'portfolioId',
-        type: 'query',
-        required: true,
-        dataType: 'string (UUID)',
-        description: 'Portfolio to query',
-      },
-      {
-        name: 'page',
-        type: 'query',
-        required: false,
-        dataType: 'number',
-        default: '1',
-        description: 'Page number',
-      },
-      {
-        name: 'pageSize',
-        type: 'query',
-        required: false,
-        dataType: 'number',
-        default: '20',
-        description: 'Items per page (max 100)',
-      },
-    ],
-    responseExample: {
-      success: true,
-      data: [
-        {
-          id: 'rpt_01RPT001',
-          portfolioId: '33ae8a27-8718-4a96-8cd5-f472de6a77ee',
-          type: 'risk',
-          format: 'pdf',
-          status: 'completed',
-          generatedAt: '2026-02-14T16:00:00.000Z',
-          downloadUrl: '/api/v1/dashboard/reports/rpt_01RPT001/download',
-          fileSize: 2456789,
-        },
-      ],
-      error: null,
-      meta: {
-        page: 1,
-        pageSize: 20,
-        total: 45,
-        totalPages: 3,
-        dataSources: ['prisma'],
-        lastUpdated: '2026-02-15T22:27:27.323Z',
-      },
-    },
-    codeExamples: {
-      curl: `curl -X GET "${API_BASE}/dashboard/reports?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee" \\
-  -H "X-API-Key: sk_test_your_key_here"`,
-      python: `import requests
-
-resp = requests.get(
-    "${API_BASE}/dashboard/reports",
-    params={"portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee"},
-    headers={"X-API-Key": "sk_test_your_key_here"}
-)
-reports = resp.json()["data"]
-for r in reports:
-    print(f"{r['type']} report ({r['format']}) — {r['status']}")`,
-      node: `const resp = await fetch(
-  \`${API_BASE}/dashboard/reports?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee\`,
-  { headers: { "X-API-Key": "sk_test_your_key_here" } }
-);
-const { data: reports } = await resp.json();
-reports.forEach((r) => console.log(\`\${r.type} (\${r.format}) - \${r.status}\`));`,
-      go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/reports?portfolioId=33ae8a27-8718-4a96-8cd5-f472de6a77ee", nil)
-req.Header.Set("X-API-Key", "sk_test_your_key_here")
-resp, _ := http.DefaultClient.Do(req)
-defer resp.Body.Close()
-body, _ := io.ReadAll(resp.Body)
-fmt.Println(string(body))`,
-    },
-  },
-  {
-    id: 'create-report',
+    id: 'batch-submit',
     method: 'POST',
-    path: '/api/v1/dashboard/reports',
-    title: 'Generate Report',
+    path: '/api/v1/dashboard/batch/submit',
+    title: 'Submit Batch Processing Job',
     description:
-      'Initiates asynchronous generation of a new report. Returns immediately with a report ID. Poll the report status via GET /reports or use webhooks for completion notification.',
-    tag: 'reports',
+      'Submits a batch processing job for bulk operations such as credit score pulls, risk assessments, or data enrichment across multiple businesses. Returns a job ID for tracking progress. Use webhooks or poll the job status for completion.',
+    tag: 'batch',
     auth: ['api-key', 'jwt'],
     params: [
       {
@@ -1583,32 +1458,33 @@ fmt.Println(string(body))`,
         type: 'body',
         required: true,
         dataType: 'string (UUID)',
-        description: 'Portfolio to generate report for',
+        description: 'Portfolio to process',
       },
       {
-        name: 'type',
+        name: 'operation',
         type: 'body',
         required: true,
         dataType: 'string',
-        description: 'Report type: "risk", "compliance", or "performance"',
+        description: 'Batch operation type: "score_pull", "risk_assessment", "data_enrichment"',
       },
       {
-        name: 'format',
+        name: 'businessIds',
         type: 'body',
-        required: true,
-        dataType: 'string',
-        description: 'Output format: "pdf" or "csv"',
+        required: false,
+        dataType: 'string[]',
+        description: 'Optional list of business IDs to process. If omitted, processes entire portfolio.',
       },
     ],
     responseExample: {
       success: true,
       data: {
-        id: 'rpt_02RPT002',
+        jobId: 'batch_01JOB001',
         portfolioId: '33ae8a27-8718-4a96-8cd5-f472de6a77ee',
-        type: 'risk',
-        format: 'pdf',
-        status: 'processing',
-        estimatedCompletionAt: '2026-02-15T22:35:00.000Z',
+        operation: 'score_pull',
+        status: 'queued',
+        totalItems: 500,
+        processedItems: 0,
+        estimatedCompletionAt: '2026-02-15T23:00:00.000Z',
         createdAt: '2026-02-15T22:30:00.000Z',
       },
       error: null,
@@ -1625,35 +1501,39 @@ fmt.Println(string(body))`,
           data: null,
           error: {
             code: 'UNPROCESSABLE_ENTITY',
-            message: 'Invalid report configuration',
-            details: [{ field: 'type', issue: 'Must be one of: risk, compliance, performance' }],
+            message: 'Invalid batch configuration',
+            details: [{ field: 'operation', issue: 'Must be one of: score_pull, risk_assessment, data_enrichment' }],
           },
-          meta: { requestId: 'req_up001' },
+          meta: { requestId: 'req_batch001' },
         },
       },
     ],
     codeExamples: {
-      curl: `curl -X POST "${API_BASE}/dashboard/reports" \\
+      curl: `curl -X POST "${API_BASE}/dashboard/batch/submit" \\
   -H "X-API-Key: sk_test_your_key_here" \\
   -H "Content-Type: application/json" \\
-  -d '{"portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee", "type": "risk", "format": "pdf"}'`,
+  -d '{"portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee", "operation": "score_pull", "businessIds": ["biz_01HQ3V7K8M2N4P5R6S7T8U9V0W", "biz_02JR4W8L9N3O5Q6S7T8U0V1W2X"]}'`,
       python: `import requests
 
 resp = requests.post(
-    "${API_BASE}/dashboard/reports",
+    "${API_BASE}/dashboard/batch/submit",
     headers={
         "X-API-Key": "sk_test_your_key_here",
         "Content-Type": "application/json",
     },
     json={
         "portfolioId": "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
-        "type": "risk",
-        "format": "pdf",
+        "operation": "score_pull",
+        "businessIds": [
+            "biz_01HQ3V7K8M2N4P5R6S7T8U9V0W",
+            "biz_02JR4W8L9N3O5Q6S7T8U0V1W2X",
+        ],
     }
 )
-report = resp.json()["data"]
-print(f"Report {report['id']} is {report['status']}")`,
-      node: `const resp = await fetch("${API_BASE}/dashboard/reports", {
+job = resp.json()["data"]
+print(f"Batch job {job['jobId']} — Status: {job['status']}")
+print(f"Processing {job['totalItems']} items")`,
+      node: `const resp = await fetch("${API_BASE}/dashboard/batch/submit", {
   method: "POST",
   headers: {
     "X-API-Key": "sk_test_your_key_here",
@@ -1661,18 +1541,22 @@ print(f"Report {report['id']} is {report['status']}")`,
   },
   body: JSON.stringify({
     portfolioId: "33ae8a27-8718-4a96-8cd5-f472de6a77ee",
-    type: "risk",
-    format: "pdf",
+    operation: "score_pull",
+    businessIds: [
+      "biz_01HQ3V7K8M2N4P5R6S7T8U9V0W",
+      "biz_02JR4W8L9N3O5Q6S7T8U0V1W2X",
+    ],
   }),
 });
-const { data: report } = await resp.json();
-console.log(\`Report \${report.id} is \${report.status}\`);`,
+const { data: job } = await resp.json();
+console.log(\`Batch job \${job.jobId} — Status: \${job.status}\`);
+console.log(\`Processing \${job.totalItems} items\`);`,
       go: `payload := strings.NewReader(\`{
   "portfolioId":"33ae8a27-8718-4a96-8cd5-f472de6a77ee",
-  "type":"risk",
-  "format":"pdf"
+  "operation":"score_pull",
+  "businessIds":["biz_01HQ3V7K8M2N4P5R6S7T8U9V0W","biz_02JR4W8L9N3O5Q6S7T8U0V1W2X"]
 }\`)
-req, _ := http.NewRequest("POST", "${API_BASE}/dashboard/reports", payload)
+req, _ := http.NewRequest("POST", "${API_BASE}/dashboard/batch/submit", payload)
 req.Header.Set("X-API-Key", "sk_test_your_key_here")
 req.Header.Set("Content-Type", "application/json")
 resp, _ := http.DefaultClient.Do(req)
@@ -1816,7 +1700,7 @@ fmt.Println(string(body))`,
   {
     id: 'list-webhooks',
     method: 'GET',
-    path: '/api/v1/dashboard/webhooks',
+    path: '/api/v1/webhooks',
     title: 'List Webhook Subscriptions',
     description:
       'Returns all webhook subscriptions configured for the tenant. Each subscription defines a URL and the events it listens for.',
@@ -1844,25 +1728,25 @@ fmt.Println(string(body))`,
       },
     },
     codeExamples: {
-      curl: `curl -X GET "${API_BASE}/dashboard/webhooks" \\
+      curl: `curl -X GET "${API_BASE}/webhooks" \\
   -H "X-API-Key: sk_test_your_key_here"`,
       python: `import requests
 
 resp = requests.get(
-    "${API_BASE}/dashboard/webhooks",
+    "${API_BASE}/webhooks",
     headers={"X-API-Key": "sk_test_your_key_here"}
 )
 webhooks = resp.json()["data"]
 for wh in webhooks:
     print(f"{wh['url']} — Events: {', '.join(wh['events'])} [{wh['status']}]")`,
-      node: `const resp = await fetch("${API_BASE}/dashboard/webhooks", {
+      node: `const resp = await fetch("${API_BASE}/webhooks", {
   headers: { "X-API-Key": "sk_test_your_key_here" },
 });
 const { data: webhooks } = await resp.json();
 webhooks.forEach((wh) =>
   console.log(\`\${wh.url} — Events: \${wh.events.join(", ")} [\${wh.status}]\`)
 );`,
-      go: `req, _ := http.NewRequest("GET", "${API_BASE}/dashboard/webhooks", nil)
+      go: `req, _ := http.NewRequest("GET", "${API_BASE}/webhooks", nil)
 req.Header.Set("X-API-Key", "sk_test_your_key_here")
 resp, _ := http.DefaultClient.Do(req)
 defer resp.Body.Close()
@@ -1873,7 +1757,7 @@ fmt.Println(string(body))`,
   {
     id: 'create-webhook',
     method: 'POST',
-    path: '/api/v1/dashboard/webhooks',
+    path: '/api/v1/webhooks',
     title: 'Create Webhook Subscription',
     description:
       'Creates a new webhook subscription. The API will send POST requests to the specified URL when subscribed events occur. Optionally provide a secret for HMAC signature verification.',
@@ -1938,14 +1822,14 @@ fmt.Println(string(body))`,
       },
     ],
     codeExamples: {
-      curl: `curl -X POST "${API_BASE}/dashboard/webhooks" \\
+      curl: `curl -X POST "${API_BASE}/webhooks" \\
   -H "X-API-Key: sk_test_your_key_here" \\
   -H "Content-Type: application/json" \\
   -d '{"url": "https://example.com/webhooks/lumiq", "events": ["score.updated", "risk.alert"]}'`,
       python: `import requests
 
 resp = requests.post(
-    "${API_BASE}/dashboard/webhooks",
+    "${API_BASE}/webhooks",
     headers={
         "X-API-Key": "sk_test_your_key_here",
         "Content-Type": "application/json",
@@ -1959,7 +1843,7 @@ webhook = resp.json()["data"]
 # Save the secret for verifying webhook signatures
 print(f"Webhook created: {webhook['id']}")
 print(f"Secret: {webhook['secret']}")`,
-      node: `const resp = await fetch("${API_BASE}/dashboard/webhooks", {
+      node: `const resp = await fetch("${API_BASE}/webhooks", {
   method: "POST",
   headers: {
     "X-API-Key": "sk_test_your_key_here",
@@ -1977,7 +1861,7 @@ console.log("Secret:", webhook.secret);`,
   "url":"https://example.com/webhooks/lumiq",
   "events":["score.updated","risk.alert"]
 }\`)
-req, _ := http.NewRequest("POST", "${API_BASE}/dashboard/webhooks", payload)
+req, _ := http.NewRequest("POST", "${API_BASE}/webhooks", payload)
 req.Header.Set("X-API-Key", "sk_test_your_key_here")
 req.Header.Set("Content-Type", "application/json")
 resp, _ := http.DefaultClient.Do(req)
@@ -2007,7 +1891,7 @@ export const endpointTags = [
   { id: 'underwriting', label: 'Underwriting', icon: 'file-check' },
   { id: 'analytics', label: 'Analytics', icon: 'trending-up' },
   { id: 'api-keys', label: 'API Keys', icon: 'key' },
-  { id: 'reports', label: 'Reports', icon: 'file-text' },
+  { id: 'batch', label: 'Batch', icon: 'layers' },
   { id: 'audit', label: 'Audit', icon: 'scroll-text' },
   { id: 'webhooks', label: 'Webhooks', icon: 'webhook' },
 ] as const;

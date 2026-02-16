@@ -1,7 +1,7 @@
 /**
  * portfolioSegments.ts
  *
- * Portfolio analytics data for Lumiq AI Dashboard
+ * Portfolio analytics data for LumiqAI Dashboard
  * Defines industry segments, KPIs, geographic distribution, risk tiers,
  * concentration metrics, EWS alerts, campaigns, and product eligibility
  *

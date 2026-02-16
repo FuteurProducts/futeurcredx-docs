@@ -208,7 +208,7 @@ curl -X GET "https://api.sandbox.futeurcredx.com/api/v1/dashboard/customers\\
     id: 'tech-4',
     question: 'Does the API support webhooks?',
     answer:
-      'Yes. You can subscribe to events like score.updated, application.approved, application.declined, risk.alert, and report.completed. Create a subscription via POST /dashboard/webhooks with your HTTPS endpoint URL and desired events. Payloads are signed with HMAC-SHA256 using a shared secret (auto-generated or provided at creation). Verify the X-Lumiq-Signature header to authenticate webhook deliveries.',
+      'Yes. You can subscribe to events like score.updated, application.approved, application.declined, risk.alert, and report.completed. Create a subscription via POST /webhooks with your HTTPS endpoint URL and desired events. Payloads are signed with HMAC-SHA256 using a shared secret (auto-generated or provided at creation). Verify the X-Lumiq-Signature header to authenticate webhook deliveries.',
     category: 'technical',
     relatedEndpoints: ['list-webhooks', 'create-webhook'],
   },

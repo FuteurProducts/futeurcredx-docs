@@ -1,7 +1,7 @@
 /**
  * wellsfargoPortfolioSegments.ts
  *
- * Wells Fargo-specific portfolio analytics data for Lumiq AI Dashboard
+ * Wells Fargo-specific portfolio analytics data for LumiqAI Dashboard
  * Based on wellsfargo.json: 3.3M customers, $670B exposure
  *
  * FICO to LUMIQ conversion: Math.round((fico - 300) / 550 * 100)

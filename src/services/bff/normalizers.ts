@@ -107,6 +107,15 @@ const RELATIONSHIP_STAGE_MAP: Record<string, SmbEntity['relationshipStage']> = {
 // ============ Entity Normalizers ============
 
 /**
+ * Strip sandbox test prefixes from business names.
+ * The seeded sandbox data has "[TEST] " prefixed to all business names;
+ * the dashboard should display clean names.
+ */
+function cleanBusinessName(raw: string): string {
+  return raw.replace(/^\[TEST\]\s*/i, '');
+}
+
+/**
  * Normalize an API customer response to SmbEntity
  */
 export function normalizeCustomer(apiCustomer: Record<string, unknown>): SmbEntity {
@@ -115,7 +124,7 @@ export function normalizeCustomer(apiCustomer: Record<string, unknown>): SmbEnti
   return {
     id: String(apiCustomer.id || ''),
     tenantId: String(apiCustomer.tenantId || ''),
-    legalName: String(apiCustomer.legalName || apiCustomer.businessName || ''),
+    legalName: cleanBusinessName(String(apiCustomer.legalName || apiCustomer.businessName || '')),
     dba: apiCustomer.dba != null ? String(apiCustomer.dba) : undefined,
     ein: apiCustomer.ein != null ? String(apiCustomer.ein) : undefined,
     naicsCode: apiCustomer.naicsCode != null ? String(apiCustomer.naicsCode) : undefined,
@@ -226,7 +235,19 @@ export function normalizeScore(apiScore: Record<string, unknown>): CreditScore {
     score: apiScore.score != null ? Number(apiScore.score) : undefined,
     scoreRangeMin: apiScore.scoreRangeMin != null ? Number(apiScore.scoreRangeMin) : undefined,
     scoreRangeMax: apiScore.scoreRangeMax != null ? Number(apiScore.scoreRangeMax) : undefined,
-    riskClass: apiScore.riskClass != null ? String(apiScore.riskClass) : apiScore.risk_class != null ? String(apiScore.risk_class) : undefined,
+    riskClass: (() => {
+      const raw = apiScore.riskClass != null ? String(apiScore.riskClass) : apiScore.risk_class != null ? String(apiScore.risk_class) : undefined;
+      const scoreVal = apiScore.score != null ? Number(apiScore.score) : undefined;
+      // If the backend returned a riskClass but the score contradicts it
+      // (e.g. score 93 labelled "critical"), recompute from score.
+      if (raw && scoreVal != null) {
+        const computed = computeRiskClassFromScore(scoreVal);
+        if (raw === 'critical' && computed !== 'critical') return computed;
+      }
+      // If no riskClass from API but we have a score, compute it
+      if (!raw && scoreVal != null) return computeRiskClassFromScore(scoreVal);
+      return raw;
+    })(),
     factors,
     pulledAt: apiScore.pulledAt != null ? String(apiScore.pulledAt) : apiScore.pulled_at != null ? String(apiScore.pulled_at) : undefined,
     expiresAt: apiScore.expiresAt != null ? String(apiScore.expiresAt) : apiScore.expires_at != null ? String(apiScore.expires_at) : undefined,
@@ -435,6 +456,37 @@ export function computeHasMore(pagination: { page?: number; pageSize?: number; t
 }
 
 // ============ Helpers ============
+
+/**
+ * Compute riskClass from a numeric score.
+ *
+ * The backend currently applies FICO-scale thresholds (300-850) to LUMIQ-scale
+ * scores (0-100), causing every record to land in "critical".  This helper
+ * detects the scale and applies the correct mapping so the frontend displays
+ * accurate risk labels regardless of which scale the API returns.
+ *
+ * LUMIQ 0-100 thresholds:
+ *   0-30  critical | 31-50 high | 51-70 medium | 71-85 low | 86-100 minimal
+ *
+ * FICO 300-850 thresholds:
+ *   300-499 critical | 500-579 high | 580-669 medium | 670-739 low | 740-850 minimal
+ */
+export function computeRiskClassFromScore(score: number): string {
+  if (score <= 100) {
+    // LUMIQ scale (0-100)
+    if (score <= 30) return 'critical';
+    if (score <= 50) return 'high';
+    if (score <= 70) return 'medium';
+    if (score <= 85) return 'low';
+    return 'minimal';
+  }
+  // FICO scale (300-850)
+  if (score < 500) return 'critical';
+  if (score < 580) return 'high';
+  if (score < 670) return 'medium';
+  if (score < 740) return 'low';
+  return 'minimal';
+}
 
 function normalizeRiskTier(raw: unknown): SmbEntity['riskTier'] | undefined {
   if (raw == null) return undefined;

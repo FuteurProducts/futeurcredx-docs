@@ -29,7 +29,7 @@ export const FeatureImportanceChart: React.FC<FeatureImportanceChartProps> = ({ 
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold text-foreground">LUMIQ AI Signal Importance</h3>
+          <h3 className="text-lg font-semibold text-foreground">LumiqAI Signal Importance</h3>
           <div className="relative group">
             <Info className="w-4 h-4 text-muted-foreground cursor-help" />
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-foreground text-background text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-50">

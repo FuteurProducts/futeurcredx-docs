@@ -63,7 +63,7 @@ function adaptReportJobToGenerated(job: ReportJob): GeneratedReport {
     fileSize: undefined as unknown as string,
     downloadUrl: job.artifactUrl || '#',
     metadata: {
-      dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
+      dataSources: ['LumiqAI Signal Engine', 'Bureau Data Feed'],
       lastDataRefresh: job.completedAt || job.createdAt,
       transformationSummary: 'Aggregated by segment',
       tenantId: PILOT_CONFIG.bankId,
@@ -213,7 +213,7 @@ const Reports: React.FC = () => {
         fileSize: config.format === 'csv' ? '456 KB' : config.format === 'xlsx' ? '1.1 MB' : '2.4 MB',
         downloadUrl: '#',
         metadata: {
-          dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
+          dataSources: ['LumiqAI Signal Engine', 'Bureau Data Feed'],
           lastDataRefresh: new Date().toISOString(),
           transformationSummary: 'Aggregated by segment',
           tenantId: PILOT_CONFIG.bankId,
@@ -352,7 +352,7 @@ const Reports: React.FC = () => {
         <DataLineageFooter
           meta={{
             lastUpdated: new Date().toISOString(),
-            dataSources: ['LUMIQ AI Signal Engine', 'Bureau Data Feed'],
+            dataSources: ['LumiqAI Signal Engine', 'Bureau Data Feed'],
           }}
           onRefresh={handleRefreshHistory}
         />

@@ -132,7 +132,7 @@ export const CredentialsPanel: React.FC = () => {
 
     // All client-generated keys use lq_test_ prefix to make it clear they are sandbox-only
     const prefix = newKeyEnv === 'production' ? 'lq_test_prod_' : 'lq_test_';
-    const randomPart = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const randomPart = crypto.randomUUID().replace(/-/g, '').substring(0, 24);
     const fullKey = prefix + randomPart;
     const maskedKey = prefix + '****' + randomPart.slice(-4);
 
@@ -191,7 +191,7 @@ export const CredentialsPanel: React.FC = () => {
 
   const handleRotate = (credId: string) => {
     const prefix = 'lq_prod_';
-    const randomPart = Math.random().toString(36).substring(2, 15);
+    const randomPart = crypto.randomUUID().replace(/-/g, '').substring(0, 13);
     
     setCredentials(credentials.map(c => {
       if (c.id === credId) {

@@ -101,7 +101,7 @@ export const mockReportTemplates: ReportTemplate[] = [
     id: 'prequal-performance',
     name: 'Pre-qualification Performance',
     category: 'underwriting',
-    description: 'LUMIQ AI pre-qualification accuracy and conversion',
+    description: 'LumiqAI pre-qualification accuracy and conversion',
     supportedFormats: ['pdf', 'xlsx'],
     defaultFormat: 'pdf',
     options: [
@@ -248,7 +248,7 @@ export const mockGeneratedReports: GeneratedReport[] = [
     fileSize: '2.4 MB',
     downloadUrl: '#',
     metadata: {
-      dataSources: ['LUMIQ AI Score Engine', 'Bureau Data Feed', 'Internal CRM'],
+      dataSources: ['LumiqAI Score Engine', 'Bureau Data Feed', 'Internal CRM'],
       lastDataRefresh: '2026-01-15T12:00:00Z',
       transformationSummary: 'Aggregated by segment, filtered by product type',
       tenantId: 'BANK-001',
@@ -269,7 +269,7 @@ export const mockGeneratedReports: GeneratedReport[] = [
     fileSize: '1.1 MB',
     downloadUrl: '#',
     metadata: {
-      dataSources: ['LUMIQ AI Decision Engine', 'LOS System'],
+      dataSources: ['LumiqAI Decision Engine', 'LOS System'],
       lastDataRefresh: '2026-01-14T08:00:00Z',
       transformationSummary: 'Funnel stages computed from application lifecycle events',
       tenantId: 'BANK-001',
@@ -290,7 +290,7 @@ export const mockGeneratedReports: GeneratedReport[] = [
     fileSize: '456 KB',
     downloadUrl: '#',
     metadata: {
-      dataSources: ['LUMIQ AI EWS', 'Payment History', 'Bureau Alerts'],
+      dataSources: ['LumiqAI EWS', 'Payment History', 'Bureau Alerts'],
       lastDataRefresh: '2026-01-13T16:00:00Z',
       transformationSummary: 'Filtered by risk tier >= Medium, sorted by deterioration velocity',
       tenantId: 'BANK-001',
@@ -349,7 +349,7 @@ export const mockGeneratedReports: GeneratedReport[] = [
     fileSize: '890 KB',
     downloadUrl: '#',
     metadata: {
-      dataSources: ['LUMIQ AI Score Engine', 'Historical Score Archive'],
+      dataSources: ['LumiqAI Score Engine', 'Historical Score Archive'],
       lastDataRefresh: '2026-01-10T06:00:00Z',
       transformationSummary: 'Migration matrix computed from 90-day score snapshots',
       tenantId: 'BANK-001',

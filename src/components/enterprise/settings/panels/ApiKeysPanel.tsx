@@ -97,7 +97,7 @@ export const ApiKeysPanel: React.FC<ApiKeysPanelProps> = ({
           <EmptyState
             icon={Key}
             title="No API keys yet"
-            description="Create your first API key to start integrating with the LUMIQ AI platform."
+            description="Create your first API key to start integrating with the LumiqAI platform."
             action={{ label: "Create API Key", onClick: () => setShowDrawer(true) }}
           />
         ) : (

@@ -18,7 +18,7 @@ import { ExecutiveSummary } from '@/components/dashboard/dashboard/ExecutiveSumm
 
 const OverviewTab: React.FC = () => {
   const gettingStartedSteps = [
-    { text: 'Account Created', subtext: 'Welcome to LUMIQ AI!', completed: true },
+    { text: 'Account Created', subtext: 'Welcome to LumiqAI!', completed: true },
     { text: 'API Key Generated', subtext: 'Ready to make API calls', completed: true },
     { text: 'Make Your First API Call', subtext: 'Test the API with your key', completed: false },
   ];
@@ -134,7 +134,7 @@ const OverviewTab: React.FC = () => {
                         <p className="text-sm text-muted-foreground">Detailed usage insights</p>
                     </div>
                 </div>
-                <span className="text-xs font-bold uppercase text-muted-foreground bg-muted px-2 py-1 rounded-full">Coming Soon</span>
+                <span className="text-xs font-bold uppercase text-muted-foreground bg-muted px-2 py-1 rounded-full">Preview</span>
             </div>
           </div>
         </div>

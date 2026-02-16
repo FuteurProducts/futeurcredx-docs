@@ -238,7 +238,7 @@ const PartnerDashboard: React.FC<PartnerDashboardProps> = ({
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-headline text-foreground">Partner Dashboard</h2>
-          <p className="text-muted-foreground mt-1">Monitor your businesses using the LUMIQ AI API</p>
+          <p className="text-muted-foreground mt-1">Monitor your businesses using the LumiqAI API</p>
         </div>
         <div className="flex items-center gap-3">
           {lastUpdated && (
