@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Docs site sitemap
+Sitemap: https://docs.futeurcredx.com/sitemap.xml
+
+# Disallow dashboard/app paths that should not be indexed
+Disallow: /dashboard
+Disallow: /settings
+Disallow: /demo
+Disallow: /login
+Disallow: /register
+Disallow: /sign-in
+Disallow: /sign-up
