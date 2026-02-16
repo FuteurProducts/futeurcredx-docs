@@ -1,15 +1,63 @@
-import { useEffect, useMemo, useState } from 'react';
-
-import Prism from 'prismjs';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-go';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-python';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
 import { CopyButton } from '@/docs/components/shared/CopyButton';
+
+// ---------------------------------------------------------------------------
+// PrismJS loader — dynamic imports to work around rolldown-vite CJS interop.
+//
+// PrismJS is CJS. Its language plugins use `(function(Prism){…})(Prism)` IIFEs
+// that expect a scope-level `Prism` variable. Rolldown may split PrismJS core
+// and plugins into different chunks, breaking this reference. Loading everything
+// dynamically and setting `window.Prism` before plugin evaluation fixes it.
+// ---------------------------------------------------------------------------
+
+interface PrismLib {
+  languages: Record<string, unknown>;
+  highlight: (code: string, grammar: unknown, language: string) => string;
+  util: { encode: (text: string) => string | string[] };
+}
+
+let _prism: PrismLib | null = null;
+let _loadPromise: Promise<PrismLib> | null = null;
+
+function loadPrism(): Promise<PrismLib> {
+  if (_prism) return Promise.resolve(_prism);
+  if (_loadPromise) return _loadPromise;
+
+  _loadPromise = (async () => {
+    const mod = await import('prismjs');
+    const Prism = ((mod as Record<string, unknown>)['default'] ?? mod) as PrismLib;
+
+    // Expose globally so language plugins can find it via their IIFEs
+    (globalThis as Record<string, unknown>)['Prism'] = Prism;
+
+    // Load language plugins — must happen AFTER global is set.
+    // @ts-expect-error — CJS side-effect modules have no type declarations
+    await import('prismjs/components/prism-bash');
+    // @ts-expect-error — CJS side-effect module
+    await import('prismjs/components/prism-go');
+    // @ts-expect-error — CJS side-effect module
+    await import('prismjs/components/prism-javascript');
+    // @ts-expect-error — CJS side-effect module
+    await import('prismjs/components/prism-json');
+    // @ts-expect-error — CJS side-effect module
+    await import('prismjs/components/prism-python');
+
+    _prism = Prism;
+    return Prism;
+  })();
+
+  return _loadPromise;
+}
+
+// Start loading immediately when this module is first imported
+loadPrism();
+
+// ---------------------------------------------------------------------------
+// CodeBlock component
+// ---------------------------------------------------------------------------
 
 interface CodeBlockProps {
   code: string | Record<string, string>;
@@ -39,13 +87,21 @@ const languageToPrism: Record<string, string> = {
   javascript: 'javascript',
 };
 
-function highlightCode(source: string, lang: string): string {
+function highlightCode(prism: PrismLib | null, source: string, lang: string): string {
+  if (!prism) return escapeHtml(source);
   const prismLang = languageToPrism[lang] ?? lang;
-  const grammar = Prism.languages[prismLang];
+  const grammar = prism.languages[prismLang];
   if (!grammar) {
-    return Prism.util.encode(source) as string;
+    return prism.util.encode(source) as string;
   }
-  return Prism.highlight(source, grammar, prismLang);
+  return prism.highlight(source, grammar, prismLang);
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 export function CodeBlock({
@@ -63,6 +119,18 @@ export function CodeBlock({
   const [activeTab, setActiveTab] = useState<string>(
     isMultiLang ? tabs[0] : language,
   );
+  const [prism, setPrism] = useState<PrismLib | null>(_prism);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    if (!prism) {
+      loadPrism().then((p) => {
+        if (mountedRef.current) setPrism(p);
+      });
+    }
+    return () => { mountedRef.current = false; };
+  }, [prism]);
 
   useEffect(() => {
     if (isMultiLang && tabs.length > 0 && !tabs.includes(activeTab)) {
@@ -75,7 +143,7 @@ export function CodeBlock({
     : (code as string);
 
   const currentLang = isMultiLang ? activeTab : language;
-  const highlighted = highlightCode(currentCode, currentLang);
+  const highlighted = highlightCode(prism, currentCode, currentLang);
 
   const lines = currentCode.split('\n');
 
@@ -136,7 +204,7 @@ export function CodeBlock({
                   </span>
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: highlightCode(line, currentLang),
+                      __html: highlightCode(prism, line, currentLang),
                     }}
                   />
                 </div>
