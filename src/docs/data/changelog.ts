@@ -41,6 +41,58 @@ export const changeTypeMeta: Record<ChangeType, { label: string; color: string; 
 
 export const releases: ChangelogRelease[] = [
   {
+    version: '1.1.0',
+    date: '2026-02-16',
+    title: 'Security, Compliance & API Accuracy Release',
+    summary:
+      'Major security hardening across all platform surfaces, expanded API documentation with 34 new endpoints, improved credit score accuracy with dual-scale detection, and enhanced tenant data isolation.',
+    entries: [
+      {
+        type: 'security',
+        description:
+          'Enhanced tenant data isolation with ownership verification on all tenant management endpoints. All CRUD operations now validate that the requesting user has authorized access to the specified tenant.',
+        endpoints: ['tenants'],
+      },
+      {
+        type: 'security',
+        description:
+          'Replaced all non-cryptographic random number generation with cryptographically secure alternatives across the platform, strengthening credential generation and session management.',
+      },
+      {
+        type: 'security',
+        description:
+          'Added comprehensive security headers (Content-Security-Policy, X-Frame-Options, Referrer-Policy, Permissions-Policy) across all customer-facing web properties.',
+      },
+      {
+        type: 'fixed',
+        description:
+          'Improved credit score classification accuracy with dual-scale detection. The API now correctly distinguishes between LUMIQ proprietary scores (0\u2013100) and traditional FICO scores (300\u2013850), ensuring accurate risk class assignments.',
+        endpoints: ['dashboard'],
+      },
+      {
+        type: 'fixed',
+        description:
+          'Removed inaccurate regulatory compliance claims from the registration flow. All compliance references now reflect actual certifications and capabilities.',
+      },
+      {
+        type: 'added',
+        description:
+          'Expanded API documentation from 20 to 54 fully documented endpoints, covering compliance reporting, fair lending analysis, batch processing status, risk concentration, and campaign management.',
+        endpoints: ['compliance', 'reports', 'products', 'campaigns', 'settings', 'notifications'],
+      },
+      {
+        type: 'added',
+        description:
+          'Published SEO-optimized sitemap and search engine directives for the developer documentation portal, improving discoverability for integration engineers.',
+      },
+      {
+        type: 'changed',
+        description:
+          'Upgraded platform infrastructure to improve API reliability, including persistent memory management, automated process recovery, and a permanent static IP address for stable integrations.',
+      },
+    ],
+  },
+  {
     version: '1.0.0',
     date: '2026-02-15',
     title: 'Initial Public Release',
