@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { cn } from '@/lib/utils';
@@ -24,6 +24,26 @@ export function DocsLayout() {
 
   const handleSidebarClose = useCallback(() => {
     setSidebarOpen(false);
+  }, []);
+
+  // Set docs-specific browser tab title and meta tags
+  useEffect(() => {
+    document.title = 'FuteurCredX Docs — LumiqAI API Documentation';
+    const setMeta = (name: string, content: string) => {
+      const el = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
+      if (el) {
+        el.setAttribute('content', content);
+      } else {
+        const meta = document.createElement('meta');
+        meta.setAttribute(name.startsWith('og:') ? 'property' : 'name', name);
+        meta.setAttribute('content', content);
+        document.head.appendChild(meta);
+      }
+    };
+    const desc = 'Developer documentation for the LumiqAI credit analytics API. Quickstart guides, API reference, sandbox data, and integration examples.';
+    setMeta('description', desc);
+    setMeta('og:title', 'FuteurCredX Docs — LumiqAI API Documentation');
+    setMeta('og:description', desc);
   }, []);
 
   return (
